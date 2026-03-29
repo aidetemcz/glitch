@@ -1,0 +1,7 @@
+{
+  "type": "match",
+  "title": "Najdi svého chuťového dvojníka",
+  "instruction": "Podívej se na hodnocení. Kdo má nejpodobnější vkus jako TY? Klikni na jeho jméno!",
+  "items": ["Frozen", "Avengers", "Moana", "Spider-Man", "Coco"],
+  "users": ["Alex", "Sam", "Jordan", "Taylor"]
+}

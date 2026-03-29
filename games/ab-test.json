@@ -1,0 +1,16 @@
+{
+  "type": "sort",
+  "title": "Soudce A/B testu",
+  "instruction": "Spouštíš A/B test. Je tento výsledek VÝZNAMNÝ, nebo jen náhodný ŠUM?",
+  "buckets": ["Významný výsledek", "Náhodný šum"],
+  "items": [
+    { "text": "Verze A: 1 000 uživatelů, 52 % kliklo. Verze B: 1 000 uživatelů, 48 % kliklo.", "answer": 1 },
+    { "text": "Verze A: 10 000 uživatelů, 12 % koupilo. Verze B: 10 000 uživatelů, 8 % koupilo.", "answer": 0 },
+    { "text": "Verze A: 50 uživatelů, 60 % se líbilo. Verze B: 50 uživatelů, 40 % se líbilo.", "answer": 1 },
+    { "text": "Verze A: 100 000 uživatelů, 3,1 % konverzí. Verze B: 100 000 uživatelů, 3,5 % konverzí.", "answer": 0 },
+    { "text": "Verze A: 20 uživatelů, 5 se líbilo. Verze B: 20 uživatelů, 8 se líbilo.", "answer": 1 },
+    { "text": "Verze A: 5 000 uživatelů, 25 % zapojených. Verze B: 5 000 uživatelů, 15 % zapojených.", "answer": 0 },
+    { "text": "Verze A testována 2 hodiny. Verze B testována 2 týdny.", "answer": 1 },
+    { "text": "Obě verze testovány na 50 000 uživatelích po dobu 30 dní. B vyhrává o 4 %.", "answer": 0 }
+  ]
+}

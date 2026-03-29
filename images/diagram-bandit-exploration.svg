@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 520" width="680" height="520" font-family="system-ui, sans-serif">
+  <!-- Title -->
+  <text x="340" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#1C1917">Dilema průzkumu a využití</text>
+  <text x="340" y="42" text-anchor="middle" font-size="11" fill="#78716C">Máme doporučit to, co víme, že funguje, nebo zkusit něco nového?</text>
+
+  <!-- Person at crossroads -->
+  <circle cx="340" cy="80" r="10" fill="#1C1917" opacity="0.8"/>
+  <line x1="340" y1="90" x2="340" y2="112" stroke="#1C1917" stroke-width="2"/>
+  <line x1="328" y1="100" x2="352" y2="100" stroke="#1C1917" stroke-width="2"/>
+  <text x="340" y="70" text-anchor="middle" font-size="18" fill="#D97706" font-weight="bold">?</text>
+
+  <!-- Left arrow to Exploit -->
+  <path d="M325,105 C280,120 220,130 170,145" fill="none" stroke="#059669" stroke-width="2.5" opacity="0.5"/>
+  <!-- Right arrow to Explore -->
+  <path d="M355,105 C400,120 460,130 510,145" fill="none" stroke="#D97706" stroke-width="2.5" opacity="0.5"/>
+
+  <!-- VYUŽIJ box (left) -->
+  <rect x="30" y="148" width="280" height="100" rx="10" fill="#059669" fill-opacity="0.06" stroke="#059669" stroke-width="1.5"/>
+  <text x="170" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#059669">VYUŽIJ</text>
+  <text x="170" y="185" text-anchor="middle" font-size="10" fill="#78716C">Doporuč to, co víme, že funguje</text>
+  <!-- Known items -->
+  <g transform="translate(50, 198)">
+    <rect x="0" y="0" width="48" height="36" rx="5" fill="#059669" fill-opacity="0.15" stroke="#059669"/>
+    <text x="24" y="15" text-anchor="middle" font-size="9" fill="#059669" font-weight="bold">Item A</text>
+    <text x="24" y="30" text-anchor="middle" font-size="10" fill="#D97706">★★★★</text>
+  </g>
+  <g transform="translate(110, 198)">
+    <rect x="0" y="0" width="48" height="36" rx="5" fill="#059669" fill-opacity="0.15" stroke="#059669"/>
+    <text x="24" y="15" text-anchor="middle" font-size="9" fill="#059669" font-weight="bold">Item B</text>
+    <text x="24" y="30" text-anchor="middle" font-size="10" fill="#D97706">★★★★★</text>
+  </g>
+  <g transform="translate(170, 198)">
+    <rect x="0" y="0" width="48" height="36" rx="5" fill="#059669" fill-opacity="0.15" stroke="#059669"/>
+    <text x="24" y="15" text-anchor="middle" font-size="9" fill="#059669" font-weight="bold">Item C</text>
+    <text x="24" y="30" text-anchor="middle" font-size="10" fill="#D97706">★★★★</text>
+  </g>
+  <text x="170" y="256" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">Bezpečné, ale může uniknout lepší</text>
+
+  <!-- PROZKOUMEJ box (right) -->
+  <rect x="370" y="148" width="280" height="100" rx="10" fill="#D97706" fill-opacity="0.06" stroke="#D97706" stroke-width="1.5"/>
+  <text x="510" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#D97706">PROZKOUMEJ</text>
+  <text x="510" y="185" text-anchor="middle" font-size="10" fill="#78716C">Vyzkoušej položky s nejistým výsledkem</text>
+  <!-- Unknown items -->
+  <g transform="translate(390, 198)">
+    <rect x="0" y="0" width="48" height="36" rx="5" fill="#D97706" fill-opacity="0.1" stroke="#D97706" stroke-dasharray="4,3"/>
+    <text x="24" y="15" text-anchor="middle" font-size="9" fill="#D97706" font-weight="bold">Item X</text>
+    <text x="24" y="31" text-anchor="middle" font-size="13" fill="#D97706">?</text>
+  </g>
+  <g transform="translate(450, 198)">
+    <rect x="0" y="0" width="48" height="36" rx="5" fill="#D97706" fill-opacity="0.1" stroke="#D97706" stroke-dasharray="4,3"/>
+    <text x="24" y="15" text-anchor="middle" font-size="9" fill="#D97706" font-weight="bold">Item Y</text>
+    <text x="24" y="31" text-anchor="middle" font-size="13" fill="#D97706">?</text>
+  </g>
+  <g transform="translate(510, 198)">
+    <rect x="0" y="0" width="48" height="36" rx="5" fill="#D97706" fill-opacity="0.1" stroke="#D97706" stroke-dasharray="4,3"/>
+    <text x="24" y="15" text-anchor="middle" font-size="9" fill="#D97706" font-weight="bold">Item Z</text>
+    <text x="24" y="31" text-anchor="middle" font-size="13" fill="#D97706">?</text>
+  </g>
+  <text x="510" y="256" text-anchor="middle" font-size="9" fill="#D97706" font-style="italic">Riskantní, ale může najít skryté poklady</text>
+
+  <!-- UCB Bar Chart -->
+  <text x="340" y="290" text-anchor="middle" font-size="13" font-weight="bold" fill="#1C1917">Jak UCB řeší dilema: odměna + bonus za nejistotu</text>
+
+  <g transform="translate(80, 305)">
+    <!-- Axis -->
+    <line x1="0" y1="140" x2="500" y2="140" stroke="#E7E5E4" stroke-width="1"/>
+
+    <!-- Item A -->
+    <rect x="20" y="40" width="55" height="100" rx="4" fill="#059669" fill-opacity="0.3" stroke="#059669"/>
+    <rect x="20" y="30" width="55" height="10" rx="2" fill="#059669" fill-opacity="0.1" stroke="#059669" stroke-dasharray="3,2"/>
+    <text x="47" y="155" text-anchor="middle" font-size="9" fill="#1C1917" font-weight="bold">A</text>
+    <text x="47" y="95" text-anchor="middle" font-size="9" fill="#059669">4.0</text>
+
+    <!-- Item B -->
+    <rect x="110" y="25" width="55" height="115" rx="4" fill="#059669" fill-opacity="0.3" stroke="#059669"/>
+    <rect x="110" y="18" width="55" height="7" rx="2" fill="#059669" fill-opacity="0.1" stroke="#059669" stroke-dasharray="3,2"/>
+    <text x="137" y="155" text-anchor="middle" font-size="9" fill="#1C1917" font-weight="bold">B</text>
+    <text x="137" y="85" text-anchor="middle" font-size="9" fill="#059669">4.5</text>
+
+    <!-- Item C: WINNER (medium reward + high uncertainty) -->
+    <rect x="200" y="60" width="55" height="80" rx="4" fill="#D97706" fill-opacity="0.3" stroke="#D97706" stroke-width="2"/>
+    <rect x="200" y="10" width="55" height="50" rx="2" fill="#D97706" fill-opacity="0.12" stroke="#D97706" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="227" y="155" text-anchor="middle" font-size="9" fill="#D97706" font-weight="bold">C ★</text>
+    <text x="227" y="100" text-anchor="middle" font-size="9" fill="#D97706">3.2</text>
+    <text x="227" y="0" text-anchor="middle" font-size="8" fill="#D97706" font-weight="bold">Nejvyšší UCB!</text>
+
+    <!-- Item D -->
+    <rect x="290" y="80" width="55" height="60" rx="4" fill="#78716C" fill-opacity="0.2" stroke="#78716C"/>
+    <rect x="290" y="60" width="55" height="20" rx="2" fill="#78716C" fill-opacity="0.08" stroke="#78716C" stroke-dasharray="3,2"/>
+    <text x="317" y="155" text-anchor="middle" font-size="9" fill="#1C1917" font-weight="bold">D</text>
+    <text x="317" y="110" text-anchor="middle" font-size="9" fill="#78716C">2.5</text>
+
+    <!-- Item E -->
+    <rect x="380" y="95" width="55" height="45" rx="4" fill="#78716C" fill-opacity="0.2" stroke="#78716C"/>
+    <rect x="380" y="72" width="55" height="23" rx="2" fill="#78716C" fill-opacity="0.08" stroke="#78716C" stroke-dasharray="3,2"/>
+    <text x="407" y="155" text-anchor="middle" font-size="9" fill="#1C1917" font-weight="bold">E</text>
+    <text x="407" y="120" text-anchor="middle" font-size="9" fill="#78716C">1.8</text>
+
+    <!-- Legend -->
+    <rect x="10" y="170" width="12" height="8" rx="2" fill="#059669" fill-opacity="0.3" stroke="#059669" stroke-width="0.5"/>
+    <text x="27" y="178" font-size="9" fill="#78716C">Známá odměna</text>
+    <rect x="150" y="170" width="12" height="8" rx="2" fill="#D97706" fill-opacity="0.12" stroke="#D97706" stroke-width="0.5" stroke-dasharray="3,2"/>
+    <text x="167" y="178" font-size="9" fill="#78716C">Bonus za nejistotu</text>
+    <text x="330" y="178" font-size="9" fill="#D97706" font-weight="600">★ = systém vybere tuto k vyzkoušení</text>
+  </g>
+</svg>
