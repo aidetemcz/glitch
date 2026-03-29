@@ -4,7 +4,7 @@ type: spine
 title: "Buď datový detektiv – hned teď!"
 readingTime: 10
 standalone: true
-teaser: "Chyť si telefon a v reálném čase prošetři svůj algoritmus – přistihneš ho při učení!"
+teaser: "Vem si telefon a v reálném čase prozkoumej svůj algoritmus – přistihneš ho při učení!"
 voice: universal
 parent: null
 diagram: null
@@ -13,13 +13,13 @@ recallA: "Ano! Vyhledávej témata, která chceš, záměrně dávej lajky obsah
 status: accepted
 ---
 
-Chyť si telefon. Otevři YouTube. Budeme prošetřovat TVŮJ algoritmus v reálném čase. Celé to zabere asi 10 minut a na konci budeš mít důkaz o tom, jak rychle se algoritmus učí.
+Vem si telefon. Otevři YouTube. Budeme zkoumat TVŮJ algoritmus v reálném čase. Celé to zabere asi 10 minut a na konci budeš mít důkaz o tom, jak rychle se algoritmus učí.
 
 ---
 
-## Krok 1: Prohledej scénu
+## Krok 1: Prohledej prostředí
 
-Podívej se na svoji domovskou stránku YouTube. Ještě nescroluj – jen se podívej na prvních 10 doporučení, která jsou hned tam.
+Podívej se na svoji domovskou stránku YouTube. Pokud nechceš kazit svůj profil, můžeš místo YouTube použít třeba https://demo-content.recombee.com/. Ještě nescroluj – jen se podívej na prvních 10 doporučení, která jsou hned tam.
 
 Kolik z těch 10 je o tématech, která jsi předtím hledal nebo sledoval? Pravděpodobně většina z nich. Algoritmus ti ukazuje zrcadlo tvého minulého chování. Spočítej je v hlavě. Sedm z deseti? Osm? Toto číslo ti říká, jak moc je algoritmus přesvědčený o tvém vkusu.
 
@@ -45,7 +45,7 @@ Teď se vrať na domovskou stránku. Obnovuj stažením dolů. Změnilo se něco
 
 Tady to začíná být zábavné. Vyhledej něco, co jsi NIKDY předtím nevyhledával. Něco pro tebe úplně náhodného – zkus třeba **„tutoriál na origami jeřáb"** nebo **„jak žonglovat"** nebo **„záběry podmořské sopky".**
 
-Sleduj jedno video celé. Alespoň 30 sekund, ale více je lepší. Pak se vrať na domovskou stránku a obnovuj.
+Sleduj jedno video celé až do konce. Alespoň 30 sekund, ale čím déle tím lépe. Pak se vrať na domovskou stránku a obnov ji.
 
 Dokážeš najít nová doporučení spojená s tím, co jsi právě sledoval? Dívej se pozorně – mohou být promíchána s tvým obvyklým obsahem. Jedno origami video. Jedno „papírové tvoření pro začátečníky". Možná kompilace „uspokojivých skládacích videí".
 
