@@ -1,104 +1,157 @@
-# Contributing to "How Recommendations Work"
+# Přispívání do „Jak funguje doporučování online?"
 
-Thanks for helping make this book better! This guide explains how to contribute content.
+Díky, že pomáháš vylepšit tuto knihu! Tento průvodce vysvětluje, jak přispívat obsahem.
 
-## Content types
+## Typy obsahu
 
-| Type | Description | Frontmatter `type` |
-|------|-------------|-------------------|
-| Section | Educational content (the book's main text) | `spine` |
-| Question | Interactive quiz with choices | `question` |
-| Game | Click-based mini-game | `game` |
+| Typ | Popis | Frontmatter `type` |
+|-----|-------|-------------------|
+| Sekce | Vzdělávací obsah (hlavní text knihy) | `spine` |
+| Otázka | Interaktivní kvíz s výběrem odpovědí | `question` |
+| Hra | Klikací minihra | `game` |
 
-## How to contribute
+## Jak přispět
 
-### 1. Open an issue first
-Use the [New Content Proposal](../../issues/new?template=new-content.md) template to describe what you want to add. This helps avoid duplicate work.
+### 1. Nejdřív otevři issue
+Popiš, co chceš přidat. To pomůže předejít duplicitní práci.
 
-### 2. Create a branch
+### 2. Vytvoř větev
 ```
-git checkout -b content/ch2-my-new-section
+git checkout -b content/ch2-moje-nova-sekce
 ```
 
-### 3. Write your content
+### 3. Napiš obsah
 
-Create a markdown file in the appropriate `content/chN-*/` directory.
+Vytvoř markdown soubor v příslušném adresáři `content/chN-*/`.
 
-**File naming**: `{order}{letter}-{type}-{slug}.md`
-- Examples: `03a-spine-filter-bubbles.md`, `01c-game-signal-sort.md`
+**Pojmenování souborů**: `{pořadí}{písmeno}-{typ}-{slug}.md`
+- Příklady: `03a-spine-filtracni-bubliny.md`, `01c-game-trideni-signalu.md`
 
-**Frontmatter template**:
+**Šablona frontmatter**:
 ```yaml
 ---
-id: ch2-my-unique-id
+id: ch2-moje-unikatni-id
 type: spine
-title: "My Section Title"
+title: "Název mé sekce"
 readingTime: 3
 standalone: true
-teaser: "One sentence preview shown on cards"
-voice: universal
+teaser: "Jednovětý náhled zobrazený na kartičce"
+voice: universal           # universal | explorer | creator | thinker
 parent: null
-diagram: null
+diagram: null              # název SVG diagramu bez přípony (volitelné)
+core: false                # true = nutné pro certifikát
+recallQ: "Otázka pro rozložené opakování"
+recallA: "Odpověď na otázku"
 status: draft
 ---
 
-Your markdown content here...
+Tvůj markdown obsah zde...
 ```
 
-**Required fields**: `id`, `type`, `title`
-**Status**: Always set `status: draft` for new content. The main author will change it to `accepted` after review.
+### Povinná pole
 
-### 4. Add to book.json
-Add your filename to the `files` array in the appropriate chapter in `content/book.json`.
+| Pole | Popis | Příklad |
+|------|-------|---------|
+| `id` | Unikátní identifikátor bloku | `ch3-moje-sekce` |
+| `type` | Typ obsahu | `spine`, `question`, `game` |
+| `title` | Zobrazovaný název | `"Jak funguje filtrování"` |
+| `status` | Vždy `draft` pro nový obsah | `draft` |
+| `recallQ` | Otázka pro kartičku opakování | `"Co je kolaborativní filtrování?"` |
+| `recallA` | Odpověď na otázku | `"Hledání lidí s podobným vkusem..."` |
 
-### 5. Open a Pull Request
-CI will automatically validate your content (frontmatter, unique IDs, references). Fix any errors before requesting review.
+### Volitelná pole
 
-## Adding a game
+| Pole | Popis | Příklad |
+|------|-------|---------|
+| `readingTime` | Odhadovaný čas čtení v minutách | `3` |
+| `standalone` | Lze číst samostatně? | `true` / `false` |
+| `teaser` | Jednovětý náhled na kartičce | `"YouTube ví, co máš rád. Ale jak?"` |
+| `voice` | Styl čtení | `universal`, `explorer`, `creator`, `thinker` |
+| `core` | Nutné pro certifikát | `true` / `false` |
+| `diagram` | SVG diagram z `images/` | `kids-pipeline` |
+| `parent` | Rodičovský blok (pro hloubkové karty) | `ch3-friends` |
 
-1. Create a JSON file in `games/my-game.json`:
+### O otázkách a odpovědích (recallQ / recallA)
+
+Každá sekce by měla mít vlastní **otázku pro opakování** (`recallQ`) a **odpověď** (`recallA`). Tyto se zobrazují v kvízu (kartičky s rozloženým opakováním).
+
+**Pravidla pro dobré otázky:**
+- Ptej se na **klíčovou myšlenku** sekce, ne na detail
+- Formuluj pro děti 8–15 let — krátce, jasně, bez žargonu
+- Odpověď by měla být 1–2 věty, ne odstavec
+- Vyhni se otázkám typu ano/ne — lepší je „Co/Jak/Proč"
+
+**Příklady:**
+```yaml
+# Dobrá otázka:
+recallQ: "Jak kolaborativní filtrování najde, co se ti bude líbit?"
+recallA: "Najde lidi s podobným vkusem a doporučí ti, co se líbilo jim."
+
+# Dobrá otázka:
+recallQ: "Proč moderní systémy preferují implicitní zpětnou vazbu?"
+recallA: "Protože uživatelé málokdy hodnotí, ale čas sledování se měří automaticky u každé interakce."
+
+# Špatná otázka (příliš obecná):
+recallQ: "Co je důležité v kapitole 3?"
+recallA: "..." # Příliš vágní
+```
+
+### 4. Přidej do book.json
+Přidej název svého souboru do pole `files` v příslušné kapitole v `content/book.json`.
+
+### 5. Otevři Pull Request
+CI automaticky zvaliduje tvůj obsah (frontmatter, unikátní ID, reference). Oprav případné chyby před žádostí o review.
+
+## Přidání hry
+
+1. Vytvoř JSON soubor v `games/moje-hra.json`:
 ```json
 {
   "type": "sort",
-  "title": "My Game",
-  "instruction": "What the player should do",
-  "buckets": ["Option A", "Option B"],
+  "title": "Moje hra",
+  "instruction": "Co má hráč dělat",
+  "buckets": ["Možnost A", "Možnost B"],
   "items": [
-    { "text": "Item text", "answer": 0 }
+    { "text": "Text položky", "answer": 0 }
   ]
 }
 ```
 
-Game types: `sort` (classify), `match` (find twin), `pop` (click to collect), `order` (sequence)
+Typy her: `sort` (klasifikuj), `match` (najdi dvojníka), `pop` (klikej a sbírej), `order` (seřaď)
 
-2. Create a content file referencing it:
+2. Vytvoř obsahový soubor, který na ni odkazuje:
 ```yaml
 ---
-id: ch2-game-my
+id: ch2-game-moje
 type: game
-game: my-game
-title: "My Game Title"
+game: moje-hra
+title: "Název mé hry"
+recallQ: "Co ses naučil z této hry?"
+recallA: "..."
 status: draft
 ---
 ```
 
-## Adding an image
+## Přidání obrázku
 
-Place SVG files in `images/`. Reference from content via `diagram: my-diagram` in frontmatter.
+Vlož SVG soubory do `images/`. Odkazuj z obsahu přes `diagram: muj-diagram` ve frontmatter.
 
-## Style guide
+Pro inline obrázky v textu použij markdown: `![Popis](/images/muj-obrazek.svg)`
 
-- **Audience**: Kids ages 8-15
-- **Tone**: Friendly, encouraging, never condescending
-- **Reading time**: 2-5 minutes per section
-- **Examples**: Use YouTube, TikTok, Spotify, Netflix — apps kids actually use
-- **Avoid**: Jargon without explanation, long paragraphs, passive voice
-- **Include**: Real examples, analogies, "try this" prompts
+## Stylový průvodce
 
-## Review process
+- **Cílová skupina**: Děti 8–15 let
+- **Tón**: Kamarádský, povzbuzující, nikdy povýšený
+- **Délka čtení**: 2–5 minut na sekci
+- **Příklady**: Používej YouTube, TikTok, Spotify, Netflix — appky, které děti skutečně používají. V české verzi přidej i lokální příklady (Seznam, Mall.cz, Rohlík)
+- **Vyhni se**: Žargonu bez vysvětlení, dlouhým odstavcům, trpnému rodu
+- **Zahrň**: Reálné příklady, analogie, „zkus to" výzvy, „Věděl/a jsi?" zajímavosti
+- **Jazyk**: Tykej (ty-forma), krátké věty, přímé oslovení. Anglické termíny vysvětli v závorkách při prvním výskytu.
 
-1. Submit PR with `status: draft`
-2. CI validates content structure
-3. Main author reviews content quality and accuracy
-4. Main author sets `status: accepted` and merges
-5. Content appears in the book on next deploy
+## Proces review
+
+1. Odešli PR s `status: draft`
+2. CI zvaliduje strukturu obsahu
+3. Hlavní autor zkontroluje kvalitu a přesnost
+4. Hlavní autor nastaví `status: accepted` a mergne
+5. Obsah se zobrazí v knize při dalším deployi
