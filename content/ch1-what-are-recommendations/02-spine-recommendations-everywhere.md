@@ -31,27 +31,15 @@ Všimls si, jak Netflix říká věci jako „Protože jsi sledoval Stranger Thi
 **App Store a Google Play**
 „Mohlo by se ti líbit..." pod každou aplikací. Obchod se tě snaží navést k tvé příští oblíbené hře.
 
-**E-shopy — Mall.cz, Alza, Amazon**
-„Zákazníci, kteří koupili toto, koupili také..." Jeden z nejstarších doporučovacích triků na internetu. Český [Mall.cz](https://mall.cz) i [Alza](https://alza.cz) používají doporučení úplně stejně jako Amazon.
+**Amazon a e-shopy**
+„Zákazníci, kteří koupili toto, koupili také..." Jeden z nejstarších doporučovacích triků na internetu.
 
-**Rohlík — nákup potravin**
-Když nakupuješ na [Rohlíku](https://rohlik.cz), systém ti doporučuje produkty na základě tvých předchozích nákupů. Kupuješ každý týden mléko? Rohlík to ví a nabídne ti ho hned.
-
-**Seznam.cz — zprávy na homepage**
-I [Seznam.cz](https://blog.seznam.cz/2022/08/personalizace-obsahu-jak-doporucujeme-clanky-neprihlasenym-uzivatelum/) personalizuje obsah — články na hlavní stránce se liší podle toho, co tě zajímá, i když nejsi přihlášený.
-
-**FTV Prima — iVysílání**
-Česká televize [Prima](https://www.recombee.com/case-studies/ftv-prima-content) používá doporučovací systém Recombee pro personalizaci video obsahu. Když dosleduješ seriál, nabídne ti další, který by se ti mohl líbit.
-
-**Glami — módní e-commerce**
-Český módní portál [Glami](https://cc.cz/co-predtim-zabralo-tydny-ted-testujeme-za-15-minut-rika-sef-glami-na-ai-vsadili-pred-peti-lety/) vsadil na AI doporučování před 5 lety. Dnes testují nové algoritmy za 15 minut místo týdnů.
-
-**Roblox – „Doporučeno pro tebe"**
+**Roblox — „Doporučeno pro tebe"**
 Dokonce i Roblox používá doporučení, aby ti pomohl najít hry z milionů zkušeností.
 
 **Google a vyhledávače**
 Návrhy automatického doplňování? To jsou doporučení pro to, co bys mohl hledat — na základě toho, co hledali ostatní.
 
-To je nejméně **deset míst** a ještě jsme nemluvili o Instagramu, Pinterestu nebo zpravodajských appkách na telefonech tvých rodičů. A to je jen Česko — celosvětově je doporučení ještě víc!
+To je nejméně **osm míst** a ještě jsme nemluvili o Instagramu, Pinterestu nebo zpravodajských appkách na telefonech tvých rodičů. A doporučovací systémy používají i české firmy — o tom víc v další sekci!
 
 **Zamysli se!** Kolik doporučení myslíš, že za JEDEN den vidíš? Zkus je zítra počítat. Výsledek tě možná překvapí – většina lidí vidí stovky, aniž by si to vůbec uvědomila.

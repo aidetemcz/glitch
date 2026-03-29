@@ -4,42 +4,46 @@ type: spine
 title: "Doporučování v Česku"
 readingTime: 3
 standalone: true
-teaser: "Seznam, Rohlík, Prima, Glami — české firmy, které denně používají doporučovací systémy."
+teaser: "Seznam, Prima+, mujRozhlas, Glami, Zboží.cz — české firmy, které denně používají doporučovací systémy."
 voice: universal
 parent: null
 diagram: null
 core: false
 recallQ: "Jaké české firmy používají doporučovací systémy?"
-recallA: "Seznam.cz personalizuje zprávy, Rohlík doporučuje potraviny, FTV Prima personalizuje videa, Glami doporučuje módu — a všechny používají AI."
+recallA: "Seznam.cz personalizuje zprávy, Prima+ doporučuje pořady, mujRozhlas doporučuje podcasty, Glami doporučuje módu — a všechny používají AI."
 status: accepted
 ---
 
-Myslíš si, že doporučovací systémy jsou jen věc Ameriky? Ani náhodou — jsou všude kolem tebe, i v Česku. Tady je pár příkladů:
+Doporučovací systémy nejsou jen věc Silicon Valley. Používají je i české firmy, které znáš z každodenního života.
 
 ## Seznam.cz — zprávy na míru
 
-Když otevřeš [Seznam.cz](https://www.seznam.cz), články na hlavní stránce se liší podle toho, co tě zajímá. Tým Seznamu [napsal blog](https://blog.seznam.cz/2022/08/personalizace-obsahu-jak-doporucujeme-clanky-neprihlasenym-uzivatelum/), ve kterém vysvětluje, jak doporučují obsah i **nepřihlášeným uživatelům** — jen na základě toho, co si právě prohlížíš. Používají přitom kombinaci kolaborativního filtrování a filtrování podle obsahu.
+Když otevřeš [Seznam.cz](https://www.seznam.cz), články na hlavní stránce se liší podle toho, co tě zajímá — a to i když nejsi přihlášený. Tým Seznamu [popsal na blogu](https://blog.seznam.cz/2022/08/personalizace-obsahu-jak-doporucujeme-clanky-neprihlasenym-uzivatelum/), jak doporučují obsah jen na základě toho, co si právě prohlížíš. Používají kombinaci kolaborativního filtrování a filtrování podle obsahu.
 
-## Rohlík — nákup potravin
+## Prima+ — streamování pořadů
 
-[Rohlík](https://www.rohlik.cz) ví, že každý týden kupuješ mléko, banány a müsli. Tak ti je hned nabídne. Ale taky ti zkusí doporučit nové produkty — třeba bio jogurt, který kupují lidé s podobným košíkem. To je kolaborativní filtrování v praxi, jen místo filmů jsou to potraviny.
+Česká televize Prima provozuje streamovací platformu [Prima+](https://www.primaplus.cz), která používá doporučovací systém [Recombee](https://www.recombee.com/case-studies/ftv-prima-content) pro personalizaci obsahu. Když dosleduješ seriál, systém ti nabídne další — nejen ze stejného seriálu, ale i úplně jiné pořady, které by se ti mohly líbit na základě toho, co sledovali podobní diváci.
 
-## FTV Prima — iVysílání
+## mujRozhlas — podcasty a pořady
 
-Česká televize Prima používá doporučovací systém [Recombee](https://www.recombee.com/case-studies/ftv-prima-content) pro své online vysílání. Když dosleduješ jednu epizodu seriálu, systém ti nabídne další — ale nejen ze stejného seriálu. Najde i úplně jiné pořady, které by se ti mohly líbit, na základě toho, co sledovali podobní diváci.
+[mujRozhlas](https://www.mujrozhlas.cz) od Českého rozhlasu doporučuje podcasty a rozhlasové pořady pomocí Recombee. Máš rád kriminální podcasty? Systém ti najde další, které poslouchali lidé s podobným vkusem. To je kolaborativní filtrování v praxi — ale místo filmů jsou to rozhlasové pořady.
 
-## Glami — módní doporučování
+## Zboží.cz — srovnávač s doporučeními
 
-[Glami](https://www.glami.cz) je český módní portál, který vsadil na AI doporučování už před 5 lety. Šéf firmy [řekl pro CC.cz](https://cc.cz/co-predtim-zabralo-tydny-ted-testujeme-za-15-minut-rika-sef-glami-na-ai-vsadili-pred-peti-lety/): „Co předtím zabralo týdny, teď testujeme za 15 minut." Používají A/B testy (o kterých se dozvíš v kapitole 4) ke zjištění, které algoritmy fungují nejlépe.
+[Zboží.cz](https://www.zbozi.cz) od Seznamu nejen srovnává ceny, ale taky ti doporučuje produkty na základě toho, co si prohlížíš. Hledáš sluchátka? Systém ti ukáže nejen podobná sluchátka, ale i doplňky, které k nim ostatní kupovali.
 
-## Mall.cz a Alza — e-commerce
+## Glami — módní AI
 
-Na [Mall.cz](https://www.mall.cz) a [Alze](https://www.alza.cz) vidíš „Zákazníci také koupili" a „Doporučujeme k tomuto produktu" — to je klasické kolaborativní filtrování. Když si koupíš telefon, systém ví, že spousta lidí si k němu koupila i obal a nabíječku.
+Český módní portál [Glami](https://www.glami.cz) vsadil na AI doporučování už před 5 lety. Šéf firmy [řekl pro CC.cz](https://cc.cz/co-predtim-zabralo-tydny-ted-testujeme-za-15-minut-rika-sef-glami-na-ai-vsadili-pred-peti-lety/): „Co předtím zabralo týdny, teď testujeme za 15 minut." Používají A/B testy (o kterých se dozvíš v kapitole 4) ke zjištění, které algoritmy fungují nejlépe.
+
+## Mafra — zpravodajské portály
+
+Mediální dům [Mafra](https://www.mafra.cz) (iDNES.cz, Lidovky.cz) používá doporučovací systémy pro personalizaci zpráv. Každý čtenář vidí jiné „doporučené články" na základě toho, co čte — i dva lidi, co otevřou iDNES ve stejnou chvíli, uvidí jiný obsah.
 
 ## Recombee — český doporučovací engine
 
-A věděl jsi, že jeden z předních světových doporučovacích systémů pochází z Česka? [Recombee](https://www.recombee.com) vznikl na [FIT ČVUT v Praze](https://fit.cvut.cz) a dnes ho používají tisíce firem po celém světě — od mediálních domů přes e-shopy po herní platformy. Dokonce i tato kniha používá Recombee pro personalizaci obsahu!
+A věděl jsi, že jeden z předních světových doporučovacích systémů pochází z Česka? [Recombee](https://www.recombee.com) spolupracuje s výzkumnou laboratoří na [FIT ČVUT v Praze](https://kam.fit.cvut.cz/recombee-lab/) a dnes ho používají tisíce firem po celém světě — od mediálních domů přes e-shopy po herní platformy. Dokonce i tato kniha používá Recombee pro personalizaci obsahu!
 
 ---
 
-**Zkus to:** Příště, když budeš na Seznamu, Rohlíku nebo Alze, zkus si všimnout, kde všude vidíš doporučení. Kolik jich napočítáš za jednu návštěvu?
+**Zkus to:** Příště, když budeš na Seznamu, Zboží.cz nebo Prima+, zkus si všimnout, kde všude vidíš doporučení. Kolik jich napočítáš za jednu návštěvu?
