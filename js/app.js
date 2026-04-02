@@ -41,15 +41,22 @@ function enterApp() {
 
 // ── NAVIGATION ───────────────────────────────
 
+function updateSpotlight(index) {
+  const spotlight = document.querySelector('.nav-spotlight');
+  if (spotlight) spotlight.style.transform = `translateX(${index * 100}%)`;
+}
+
 function bindNav() {
-  document.querySelectorAll('.nav-btn').forEach(btn => {
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach((btn, i) => {
     btn.addEventListener('click', () => {
-      const view = btn.dataset.view;
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      showView(view);
+      updateSpotlight(i);
+      showView(btn.dataset.view);
     });
   });
+  updateSpotlight(0);
 }
 
 function showView(name) {
