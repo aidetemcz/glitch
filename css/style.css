@@ -13,7 +13,7 @@
   --border: rgba(255,255,255,0.08);
   --radius: 18px;
   --radius-sm: 10px;
-  --topbar-h: 56px;
+  --topbar-h: 72px;
   --nav-h: 64px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -136,16 +136,12 @@ html, body {
   border-bottom: 1px solid var(--border);
 }
 .topbar-logo {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 900;
-  font-size: 20px;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
 }
-.topbar-logo span {
-  font-family: 'Pacifico', cursive;
-  font-size: 17px;
-  color: var(--accent);
+.topbar-logo img {
+  height: 32px;
+  width: auto;
 }
 .topbar-profile {
   width: 38px; height: 38px;
