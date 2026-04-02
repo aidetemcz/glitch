@@ -374,7 +374,9 @@ function showQuiz(quiz, onDone) {
   block.className = 'quiz-block';
 
   const optionsHTML = quiz.options.map((opt, i) =>
-    '<button class="quiz-option" data-idx="' + i + '">' + opt + '</button>'
+    '<button class="quiz-option" data-idx="' + i + '">' +
+      '<span class="quiz-dot"></span><span>' + opt + '</span>' +
+    '</button>'
   ).join('');
 
   block.innerHTML =
@@ -390,8 +392,8 @@ function showQuiz(quiz, onDone) {
       optionsBtns.forEach(b => {
         b.disabled = true;
         const idx = parseInt(b.dataset.idx);
-        if (idx === quiz.correct) b.classList.add('correct');
-        else if (idx === chosen && !correct) b.classList.add('wrong');
+        if (idx === chosen) b.classList.add(correct ? 'correct' : 'wrong');
+        if (idx === chosen) b.classList.add('selected');
       });
 
       addUserBubble(quiz.options[chosen]);
