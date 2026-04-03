@@ -373,7 +373,7 @@ html, body {
 }
 .card-hook-pill {
   display: inline-block;
-  padding: 8px 18px;
+  padding: 3px 18px;
   border-radius: 100px;
   background: var(--accent);
   color: #342546;
