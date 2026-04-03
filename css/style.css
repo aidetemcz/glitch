@@ -480,6 +480,25 @@ html, body {
 /* ── MISSIONS — CATEGORY CAROUSEL ── */
 #category-carousel {
   padding: 20px 16px 0;
+  position: relative;
+}
+
+.cat-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+}
+.cat-arrow-left { left: 0; }
+.cat-arrow-right { right: 0; }
+
+@media (min-width: 600px) {
+  .cat-arrow { display: flex; align-items: center; justify-content: center; }
 }
 
 .cat-track {
