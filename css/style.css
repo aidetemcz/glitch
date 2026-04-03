@@ -554,10 +554,10 @@ html, body {
 .cat-star {
   width: 24px;
   height: 24px;
-  opacity: 0.2;
+  filter: hue-rotate(225deg) saturate(0.4) brightness(0.7);
 }
 .cat-star.filled {
-  opacity: 1;
+  filter: none;
 }
 
 .cat-blob-img {
@@ -614,10 +614,10 @@ html, body {
 .mission-star {
   width: 24px;
   height: 24px;
-  opacity: 0.2;
+  filter: hue-rotate(225deg) saturate(0.4) brightness(0.7);
 }
 .mission-star.filled {
-  opacity: 1;
+  filter: none;
 }
 
 .mission-go-btn {
