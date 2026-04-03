@@ -266,22 +266,28 @@ function renderCategoryCarousel() {
   const track = document.createElement('div');
   track.className = 'cat-track';
 
-  let scrollTimer;
-  track.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      if (!CATEGORIES.length) return;
-      const cardWidth = track.scrollWidth / CATEGORIES.length;
-      const idx = Math.min(Math.round(track.scrollLeft / cardWidth), CATEGORIES.length - 1);
-      const cat = CATEGORIES[idx];
-      if (cat && cat.id !== activeCategoryId) {
-        const dir = idx > activeCategoryIdx ? 'next' : 'prev';
-        activeCategoryId = cat.id;
-        activeCategoryIdx = idx;
-        renderMissionList(dir);
-      }
-    }, 120);
-  }, { passive: true });
+  function onScrollSettle() {
+    if (!CATEGORIES.length) return;
+    const cardWidth = track.scrollWidth / CATEGORIES.length;
+    const idx = Math.min(Math.round(track.scrollLeft / cardWidth), CATEGORIES.length - 1);
+    const cat = CATEGORIES[idx];
+    if (cat && cat.id !== activeCategoryId) {
+      const dir = idx > activeCategoryIdx ? 'next' : 'prev';
+      activeCategoryId = cat.id;
+      activeCategoryIdx = idx;
+      renderMissionList(dir);
+    }
+  }
+
+  if ('onscrollend' in window) {
+    track.addEventListener('scrollend', onScrollSettle, { passive: true });
+  } else {
+    let scrollTimer;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(onScrollSettle, 50);
+    }, { passive: true });
+  }
 
   CATEGORIES.forEach(cat => {
     const card = document.createElement('div');
