@@ -314,6 +314,7 @@ html, body {
   object-fit: cover;
   z-index: 1;
   pointer-events: none;
+  opacity: 0.5;
 }
 .card-overlay { display: none; }
 .card-content {
