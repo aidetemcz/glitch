@@ -97,7 +97,7 @@ html, body {
   border-radius: 100px;
   padding: 16px 40px;
   font-family: 'Inter', sans-serif;
-  font-weight: 900;
+  font-weight: 400;
   font-size: 18px;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
