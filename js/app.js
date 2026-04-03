@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   bindLoginModal();
 
   document.getElementById('splash-enter').addEventListener('click', enterApp);
+
+  document.addEventListener('wheel', (e) => {
+    const activeView = document.querySelector('.view.active');
+    if (activeView && !activeView.contains(e.target)) {
+      activeView.scrollBy({ top: e.deltaY, behavior: 'auto' });
+    }
+  }, { passive: true });
 });
 
 function enterApp() {
