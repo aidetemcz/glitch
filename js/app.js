@@ -251,23 +251,19 @@ function renderMapContent(container, query) {
 
 let activeCategoryId = null;
 
-let categoryScrollBound = false;
-
 function renderMissions() {
   activeCategoryId = activeCategoryId || (CATEGORIES[0] && CATEGORIES[0].id);
   renderCategoryCarousel();
   renderMissionList();
-  if (!categoryScrollBound) {
-    categoryScrollBound = true;
-    bindCategoryScroll();
-  }
 }
 
-function bindCategoryScroll() {
+function renderCategoryCarousel() {
   const carousel = document.getElementById('category-carousel');
-  if (!carousel) return;
-  const track = carousel.querySelector('.cat-track');
-  if (!track) return;
+  carousel.innerHTML = '';
+
+  const track = document.createElement('div');
+  track.className = 'cat-track';
+
   let scrollTimer;
   track.addEventListener('scroll', () => {
     clearTimeout(scrollTimer);
@@ -282,14 +278,6 @@ function bindCategoryScroll() {
       }
     }, 120);
   }, { passive: true });
-}
-
-function renderCategoryCarousel() {
-  const carousel = document.getElementById('category-carousel');
-  carousel.innerHTML = '';
-
-  const track = document.createElement('div');
-  track.className = 'cat-track';
 
   CATEGORIES.forEach(cat => {
     const card = document.createElement('div');
