@@ -551,14 +551,7 @@ html, body {
   padding-bottom: 4px;
 }
 
-.cat-star {
-  width: 24px;
-  height: 24px;
-  filter: hue-rotate(210deg) saturate(0.2) brightness(0.42);
-}
-.cat-star.filled {
-  filter: none;
-}
+.cat-star { width: 24px; height: 24px; }
 
 .cat-blob-img {
   width: 120px;
@@ -611,14 +604,7 @@ html, body {
   display: flex;
   gap: 4px;
 }
-.mission-star {
-  width: 24px;
-  height: 24px;
-  filter: hue-rotate(210deg) saturate(0.2) brightness(0.42);
-}
-.mission-star.filled {
-  filter: none;
-}
+.mission-star { width: 24px; height: 24px; }
 
 .mission-go-btn {
   width: 31px;
