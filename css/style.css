@@ -864,6 +864,21 @@ html, body {
 /* ── MISC UTILS ── */
 .hidden { display: none !important; }
 
+/* ── MOBILE margins 30px ── */
+@media (max-width: 599px) {
+  .topbar { padding-left: 30px; padding-right: 30px; }
+  #feed-container { padding-left: 30px; padding-right: 30px; }
+  .card-content { padding-left: 30px; padding-right: 30px; }
+  .card-header { padding-left: 30px; padding-right: 30px; }
+  .map-search-wrap { padding-left: 30px; padding-right: 30px; }
+  .map-topic-header { padding-left: 30px; padding-right: 30px; }
+  .map-tile { padding-left: 30px; padding-right: 30px; }
+  #category-carousel { padding-left: 30px; padding-right: 30px; }
+  .mission-card { padding-left: 30px; padding-right: 30px; }
+  .chat-container { padding-left: 30px; padding-right: 30px; }
+  .detail-header { padding-left: 30px; padding-right: 30px; }
+}
+
 /* ── DESKTOP adjustments ── */
 @media (min-width: 600px) {
   .main-content, .topbar, .bottom-nav { max-width: 500px; margin-left: auto; margin-right: auto; left: 50%; transform: translateX(-50%); right: auto; width: 500px; }
