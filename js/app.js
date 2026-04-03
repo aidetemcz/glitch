@@ -424,16 +424,16 @@ function renderMissionList(dir) {
   }
 
   // slide out
-  const outX = dir === 'next' ? '-28px' : '28px';
-  const inX  = dir === 'next' ?  '28px' : '-28px';
-  container.style.cssText = 'opacity:0;transform:translateX(' + outX + ');transition:opacity 0.13s ease,transform 0.13s ease;overflow:hidden';
+  const outX = dir === 'next' ? '-20px' : '20px';
+  const inX  = dir === 'next' ?  '20px' : '-20px';
+  container.style.cssText = 'opacity:0;transform:translateX(' + outX + ');transition:opacity 0.07s ease,transform 0.07s ease;overflow:hidden';
 
   setTimeout(() => {
     fillMissionList(container);
     container.style.cssText = 'opacity:0;transform:translateX(' + inX + ');transition:none;overflow:hidden';
     container.getBoundingClientRect(); // force reflow
-    container.style.cssText = 'opacity:1;transform:translateX(0);transition:opacity 0.22s ease,transform 0.22s ease;overflow:hidden';
-  }, 140);
+    container.style.cssText = 'opacity:1;transform:translateX(0);transition:opacity 0.14s ease,transform 0.14s ease;overflow:hidden';
+  }, 75);
 }
 
 function buildMissionStarsHtml(done, total) {
