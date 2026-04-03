@@ -232,9 +232,11 @@ function renderMapContent(container, query) {
       const tile = document.createElement('div');
       tile.className = 'map-tile' + (done ? ' done' : '');
       tile.innerHTML =
-        (done ? '<span class="map-tile-check">✓</span>' : '') +
-        '<div class="map-tile-title">' + g.title + '</div>' +
-        '<div class="map-tile-tag" style="color:' + topic.color + '">' + topic.label + '</div>';
+        '<div class="map-tile-body">' +
+          '<div class="map-tile-title">' + g.title + '</div>' +
+          '<div class="map-tile-tag">' + topic.label + '</div>' +
+        '</div>' +
+        (done ? '<div class="map-tile-check"><img src="assets/done.svg" width="21" height="21" alt=""></div>' : '');
       tile.addEventListener('click', () => openDetail(g.id));
       tilesEl.appendChild(tile);
     });
