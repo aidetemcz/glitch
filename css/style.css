@@ -247,9 +247,26 @@ html, body {
   color: var(--text-muted);
   transition: color 0.35s;
 }
-.nav-btn.active { color: #fff; }
-.nav-icon { width: 22px; height: 22px; fill: currentColor; display: block; }
-.nav-label { font-size: 11px; font-weight: 700; font-family: 'Inter', sans-serif; letter-spacing: 0.3px; }
+.nav-btn .nav-blob {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+  filter: hue-rotate(225deg) saturate(0.4) brightness(0.6);
+  transition: filter 0.35s;
+}
+.nav-btn.active .nav-blob {
+  filter: none;
+}
+.nav-label {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3px;
+  color: rgba(180,160,210,0.7);
+  transition: color 0.35s;
+}
+.nav-btn.active .nav-label { color: var(--accent); }
 
 /* ── FEED ── */
 #feed-container {

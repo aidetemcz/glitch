@@ -57,7 +57,7 @@ function bindNav() {
       showView(btn.dataset.view);
     });
   });
-  updateSpotlight(0);
+  updateSpotlight(1);
 }
 
 function showView(name) {
