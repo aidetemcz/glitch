@@ -3,7 +3,7 @@
    ============================================ */
 
 :root {
-  --bg: #13101f;
+  --bg: #241832;
   --bg2: #1c1830;
   --bg3: #252240;
   --accent: #FFE233;
@@ -831,7 +831,7 @@ html, body {
   .main-content, .topbar, .bottom-nav { max-width: 650px; margin-left: auto; margin-right: auto; left: 50%; transform: translateX(-50%); right: auto; width: 650px; }
   .overlay { max-width: 650px; left: 50%; transform: translateX(-50%); }
   .overlay.hidden { transform: translateX(-50%) translateY(20px); }
-  body { background: #0a0812; }
-  #splash { background: #0a0812; }
+  body { background: #241832; }
+  #splash { background: #241832; }
   .splash-inner { padding: 60px 40px; }
 }
