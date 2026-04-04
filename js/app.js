@@ -725,15 +725,30 @@ function showEndActions(glitch, withReadMore = false) {
       // Remove entire actions row, show deepdive, then show next btn below
       actionsEl.remove();
       addDeepdive(glitch);
+      const afterBtn = document.createElement('button');
+      afterBtn.className = 'chat-action-btn primary-action';
+      afterBtn.style.alignSelf = 'flex-start';
       if (nextGlitchId) {
-        const afterBtn = document.createElement('button');
-        afterBtn.className = 'chat-action-btn primary-action';
-        afterBtn.style.alignSelf = 'flex-start';
         afterBtn.textContent = 'Další glitch';
         afterBtn.addEventListener('click', () => openDetail(nextGlitchId));
         container.appendChild(afterBtn);
-        scrollChatToBottom();
+      } else {
+        const cat = CATEGORIES.find(c => c.missionIds.some(mid => {
+          const m = MISSIONS.find(ms => ms.id === mid);
+          return m && m.glitches.includes(glitch.id);
+        }));
+        if (cat && mission) {
+          const missionIdx = cat.missionIds.indexOf(mission.id);
+          const nextMissionId = cat.missionIds[missionIdx + 1];
+          const nextMission = nextMissionId && MISSIONS.find(m => m.id === nextMissionId);
+          if (nextMission && nextMission.glitches.length) {
+            afterBtn.textContent = 'Další kapitola';
+            afterBtn.addEventListener('click', () => openDetail(nextMission.glitches[0]));
+            container.appendChild(afterBtn);
+          }
+        }
       }
+      scrollChatToBottom();
     });
     actionsEl.appendChild(readMoreLink);
   }
