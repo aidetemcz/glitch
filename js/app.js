@@ -116,7 +116,7 @@ function openAccountPage() {
   const overlay = document.getElementById('account-overlay');
 
   // Populate nickname
-  document.getElementById('account-nickname-val').textContent = getUserNickname();
+  setAccountDisplayField('account-nickname-val', getUserNickname());
 
   // Populate fullName and email
   setAccountDisplayField('account-fullname-val', user.fullName);
@@ -163,38 +163,10 @@ function closeAccountPage() {
 function bindAccountPage() {
   document.getElementById('account-close').addEventListener('click', closeAccountPage);
 
-  // Nickname edit
-  const nicknameVal = document.getElementById('account-nickname-val');
-  const nicknameInput = document.getElementById('account-nickname-input');
-  const nicknameEditBtn = document.getElementById('account-nickname-edit');
-
-  function startEditNickname() {
-    nicknameInput.value = getUserNickname();
-    nicknameVal.classList.add('hidden');
-    nicknameEditBtn.classList.add('hidden');
-    nicknameInput.classList.remove('hidden');
-    nicknameInput.focus();
-  }
-  function saveNickname() {
-    const val = nicknameInput.value.trim();
-    if (val) {
-      if (!State.user) State.setUser({});
-      saveAccountField('nickname', val);
-      nicknameVal.textContent = val;
-      document.getElementById('account-logout').style.display = '';
-      updateProfileBtn();
-    }
-    nicknameVal.classList.remove('hidden');
-    nicknameEditBtn.classList.remove('hidden');
-    nicknameInput.classList.add('hidden');
-  }
-  nicknameEditBtn.addEventListener('click', startEditNickname);
-  nicknameInput.addEventListener('blur', saveNickname);
-  nicknameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); saveNickname(); } });
-
-  // Inline editable fields (fullName, email)
-  [['account-fullname-val', 'account-fullname-input', 'fullName'],
-   ['account-email-val',    'account-email-input',    'email']].forEach(([valId, inputId, field]) => {
+  // Inline editable fields
+  [['account-nickname-val',  'account-nickname-input', 'nickname'],
+   ['account-fullname-val',  'account-fullname-input', 'fullName'],
+   ['account-email-val',     'account-email-input',    'email']].forEach(([valId, inputId, field]) => {
     const valEl = document.getElementById(valId);
     const inputEl = document.getElementById(inputId);
     function startEdit() {
@@ -205,8 +177,15 @@ function bindAccountPage() {
     }
     function saveEdit() {
       const val = inputEl.value.trim();
-      saveAccountField(field, val);
-      setAccountDisplayField(valId, val);
+      if (field === 'nickname' && val && !State.user) State.setUser({});
+      if (State.user || val) saveAccountField(field, val);
+      if (field === 'nickname') {
+        setAccountDisplayField(valId, val);
+        document.getElementById('account-logout').style.display = val ? '' : 'none';
+        updateProfileBtn();
+      } else {
+        setAccountDisplayField(valId, val);
+      }
       valEl.classList.remove('hidden');
       inputEl.classList.add('hidden');
     }
