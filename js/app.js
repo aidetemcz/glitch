@@ -697,6 +697,24 @@ function showEndActions(glitch, withReadMore = false) {
     nextBtn.textContent = 'Další glitch';
     nextBtn.addEventListener('click', () => openDetail(nextGlitchId));
     actionsEl.appendChild(nextBtn);
+  } else {
+    // Find next mission in the same category
+    const cat = CATEGORIES.find(c => c.missionIds.some(mid => {
+      const m = MISSIONS.find(ms => ms.id === mid);
+      return m && m.glitches.includes(glitch.id);
+    }));
+    if (cat && mission) {
+      const missionIdx = cat.missionIds.indexOf(mission.id);
+      const nextMissionId = cat.missionIds[missionIdx + 1];
+      const nextMission = nextMissionId && MISSIONS.find(m => m.id === nextMissionId);
+      if (nextMission && nextMission.glitches.length) {
+        const chapBtn = document.createElement('button');
+        chapBtn.className = 'chat-action-btn primary-action';
+        chapBtn.textContent = 'Další kapitola';
+        chapBtn.addEventListener('click', () => openDetail(nextMission.glitches[0]));
+        actionsEl.appendChild(chapBtn);
+      }
+    }
   }
 
   if (withReadMore && glitch.deepdive && glitch.deepdive.length) {
