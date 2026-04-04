@@ -486,7 +486,7 @@ html, body {
   gap: 16px;
   transition: opacity 0.15s;
   overflow: hidden;
-  min-height: 110px;
+  height: 200px;
 }
 .map-cat-card:active { opacity: 0.8; }
 .map-cat-title {
@@ -602,7 +602,7 @@ html, body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  min-height: 190px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   transition: background 0.2s;
