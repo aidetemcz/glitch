@@ -502,29 +502,8 @@ html, body {
 }
 
 .map-cat-back-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   padding: 8px 16px 16px;
-}
-.map-cat-back-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 0;
-  transition: opacity 0.15s;
-}
-.map-cat-back-btn:active { opacity: 0.7; }
-.map-cat-heading {
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--text);
+  padding-bottom: 0;
 }
 
 #view-map { padding-top: 0; }

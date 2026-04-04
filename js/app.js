@@ -351,11 +351,11 @@ function renderMapCategory(container, cat) {
   if (stickyExtra) stickyExtra.innerHTML = '';
 
   const backRow = document.createElement('div');
-  backRow.className = 'map-cat-back-row';
+  backRow.className = 'detail-nav map-cat-back-row';
   backRow.innerHTML =
-    '<button class="map-cat-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="22" height="22" alt=""></button>' +
-    '<span class="map-cat-heading">' + cat.title + '</span>';
-  backRow.querySelector('.map-cat-back-btn').addEventListener('click', () => {
+    '<button class="detail-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="22" height="22" alt=""></button>' +
+    '<span class="detail-topic-pill">' + cat.title + '</span>';
+  backRow.querySelector('.detail-back-btn').addEventListener('click', () => {
     document.getElementById('map-search').value = '';
     renderMapDefault(container);
   });
