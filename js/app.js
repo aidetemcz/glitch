@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateProfileBtn();
   bindNav();
   bindProfileBtn();
+  document.getElementById('logo-btn').addEventListener('click', () => {
+    const feedBtn = document.querySelector('.nav-btn[data-view="feed"]');
+    if (feedBtn) feedBtn.click();
+  });
   bindDetailBack();
   bindLoginModal();
 
