@@ -331,10 +331,8 @@ function renderMap() {
 function renderMapDefault(container) {
   container.innerHTML = '';
 
-  const label = document.createElement('p');
-  label.className = 'map-section-label';
-  label.textContent = 'Nebo zvol téma';
-  container.appendChild(label);
+  const stickyExtra = document.getElementById('map-sticky-extra');
+  if (stickyExtra) stickyExtra.innerHTML = '<p class="map-section-label">Nebo zvol téma</p>';
 
   CATEGORIES.forEach(cat => {
     const card = document.createElement('div');
@@ -349,6 +347,8 @@ function renderMapDefault(container) {
 
 function renderMapCategory(container, cat) {
   container.innerHTML = '';
+  const stickyExtra = document.getElementById('map-sticky-extra');
+  if (stickyExtra) stickyExtra.innerHTML = '';
 
   const backRow = document.createElement('div');
   backRow.className = 'map-cat-back-row';
@@ -381,6 +381,8 @@ function renderMapCategory(container, cat) {
 
 function renderMapSearch(container, query) {
   container.innerHTML = '';
+  const stickyExtra = document.getElementById('map-sticky-extra');
+  if (stickyExtra) stickyExtra.innerHTML = '';
 
   const glitches = GLITCHES.filter(g =>
     g.title.toLowerCase().includes(query) ||
