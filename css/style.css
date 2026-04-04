@@ -534,7 +534,10 @@ html, body {
 .map-topic-header {
   display: flex;
   align-items: center;
-  padding: 16px 16px 8px;
+  padding: 50px 16px 8px;
+}
+.map-topic-group + .map-topic-group .map-topic-header {
+  padding-top: 30px;
 }
 .map-topic-label {
   font-size: 20px;
@@ -548,7 +551,7 @@ html, body {
 }
 .map-tile {
   background: transparent;
-  padding: 10px 16px;
+  padding: 7px 16px;
   cursor: pointer;
   transition: background 0.15s;
   position: relative;
