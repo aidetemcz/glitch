@@ -1093,6 +1093,19 @@ html, body {
 }
 .account-radio-opt.selected .account-dot { background: var(--accent); }
 
+.account-reset-confirm {
+  margin-top: 8px;
+}
+.account-reset-confirm p {
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+.account-reset-actions {
+  display: flex;
+  gap: 12px;
+}
 .account-reset-btn {
   background: none;
   border: none;

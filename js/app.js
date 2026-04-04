@@ -221,11 +221,23 @@ function bindAccountPage() {
   });
 
   // Reset progress
-  document.getElementById('account-reset').addEventListener('click', () => {
+  const resetBtn = document.getElementById('account-reset');
+  const resetConfirm = document.getElementById('account-reset-confirm');
+  resetBtn.addEventListener('click', () => {
+    resetBtn.classList.add('hidden');
+    resetConfirm.classList.remove('hidden');
+  });
+  document.getElementById('account-reset-yes').addEventListener('click', () => {
     localStorage.removeItem('tg_progress');
     renderFeed();
     renderMapContent(document.getElementById('map-container'), '');
+    resetConfirm.classList.add('hidden');
+    resetBtn.classList.remove('hidden');
     closeAccountPage();
+  });
+  document.getElementById('account-reset-no').addEventListener('click', () => {
+    resetConfirm.classList.add('hidden');
+    resetBtn.classList.remove('hidden');
   });
 
   // Logout
