@@ -55,10 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function enterApp() {
-  const splash = document.getElementById('splash');
-  const app = document.getElementById('app');
-  splash.style.display = 'none';
-  app.style.cssText = 'display:flex;opacity:1;transform:none;pointer-events:all;';
+  document.getElementById('splash').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
 }
 
 // ── NAVIGATION ───────────────────────────────
