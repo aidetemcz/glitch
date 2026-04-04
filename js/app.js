@@ -61,6 +61,10 @@ function bindNav() {
   const btns = document.querySelectorAll('.nav-btn');
   btns.forEach((btn, i) => {
     btn.addEventListener('click', () => {
+      const overlay = document.getElementById('detail-overlay');
+      if (overlay && !overlay.classList.contains('hidden')) {
+        closeDetail();
+      }
       btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       updateSpotlight(i);
