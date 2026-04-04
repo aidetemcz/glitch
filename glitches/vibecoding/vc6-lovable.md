@@ -15,7 +15,7 @@ Má integraci se Supabase (databáze) a je nejlepší pro moderně vypadající 
 - Aplikace běží rychleji
 * Celou aplikaci (design + funkce + databáze) vygeneruje z textového popisu
 - Funguje offline bez internetu
-! Správně! Lovable z jednoho textového popisu vygeneruje kompletní aplikaci včetně designu a databáze. To by ručně trvalo dny nebo týdny.
+! Správně! Lovable z jednoho textového popisu vygeneruje kompletní aplikaci včetně designu a databáze.
 
 +++
 10 milionů dolarů za 4 měsíce je ve světě startupů výjimečné, ale v tech bublinách se taková čísla berou s rezervou. Lovable existuje proto, že existuje obrovská poptávka po jednoduchém způsobu tvorby webových aplikací. Tisíce lidí platí za tento přístup — a to je validace, že nástroj řeší reálný problém. Ale zároveň je tu otázka: co se stane s tvými projekty, pokud firma za 2 roky zkrachuje nebo změní model?

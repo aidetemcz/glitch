@@ -15,7 +15,7 @@ Všechna ta data budují digitální dvojče — matematickou verzi tebe. Nezná
 - Záložní kopie tvých dat v cloudu
 * Matematický model vzorců tvého chování — aplikace si ho vytvoří z tvých dat, aniž by potřebovaly tvé jméno
 - Profil na sociálních sítích
-! Přesně! Digitální dvojče je matematický model tebe — předpovídá tvoje chování bez znalosti tvého jména. Tvoje vzorce chování jsou dost unikátní k identifikaci.
+! Přesně! Digitální dvojče je matematický model tebe — předpovídá tvoje chování bez znalosti tvého jména.
 
 +++
 Digitální dvojče jako koncept přesahuje doporučovací systémy — v průmyslu existují digitální dvojčata fyzických továrn, letadel nebo celých měst, která simulují chování originálu v reálném čase. Pro lidi je to znepokojivější, protože digitální dvojče tvého chování může předpovídat věci, které ty sám o sobě nevíš. Výzkum ukázal, že data z Facebooku dokáží předpovědět osobnostní rysy (Big Five) přesněji než tví kolegové z práce — a skoro tak přesně jako tvůj životní partner.

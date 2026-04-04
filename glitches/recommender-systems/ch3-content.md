@@ -11,11 +11,11 @@ Video nahráno před pěti minutami nemá žádná hodnocení. Kolaborativní fi
 Právě jsi sledoval Minecraft tutorial. Systém najde videa s podobnými vlastnostmi — název, tagy, délka — bez toho, aby věděl, co ostatní sledovali. Tohle je filtrování podle obsahu.
 
 ? Čím se filtrování podle obsahu liší od kolaborativního?
-- Filtrování podle obsahu je pomalejší
-- Filtrování podle obsahu potřebuje více uživatelů
-* Filtrování podle obsahu se dívá na VLASTNOSTI položky, kolaborativní na CHOVÁNÍ UŽIVATELŮ
-- Jsou to synonyma pro totéž
-! Přesně! Filtrování podle obsahu analyzuje, co položka JE — tagy, žánr, tempo. Kolaborativní se dívá, komu se co LÍBILO. Obě metody mají silné stránky.
+* Filtrování podle obsahu se dívá na vlastnosti položky, kolaborativní na chování ostatních uživatelů
+- Filtrování podle obsahu je přesnější, kolaborativní je rychlejší
+- Filtrování podle obsahu potřebuje víc uživatelů, kolaborativní méně
+- Kolaborativní doporučuje nový obsah, filtrování podle obsahu jen starší položky
+! Přesně! Filtrování podle obsahu analyzuje, co položka JE — tagy, žánr, tempo.
 
 +++
 Spotify Music Intelligence je jedním z nejpropracovanějších systémů filtrování podle obsahu na světě. Spotify analyzuje každou novou skladbu pomocí kombinace metadat (žánr, BPM, klíč, nálada) a přímo analýzy zvukové vlny — algoritmus „poslouchá" písničku a extrahuje rysy jako energii, akustičnost, tanečnost a valenci (pozitivnost). Tuto analýzu dělá pro miliony nových skladeb každý den.

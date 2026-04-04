@@ -11,11 +11,11 @@ Metoda průměrného rozdílu je dobrý začátek. Ale co když někdo hodnotí 
 Kosinová podobnost to řeší: místo čísel sleduje SMĚR. Alex [5, 4] a Sam [5, 5] ukazují téměř stejným směrem — vysoké skóre. Přísný hodnotitel, který nikdy nedá 5 hvězdiček, ale hodnotí ve stejném pořadí jako ty, je ti stále podobný.
 
 ? Co měří kosinová podobnost?
-- Průměrný rozdíl hodnocení dvou uživatelů
-- Celkový počet společně hodnocených položek
-* Úhel mezi dvěma vektory preferencí — stejný vzorec i v různém měřítku ukazuje vysokou podobnost
-- Počet shodných hodnocení
-! Přesně! Kosinová podobnost se stará o vzorec, ne o absolutní hodnoty. Přísný hodnotitel může být tvůj vkusový dvojník, i když nikdy nedá 5 hvězdiček.
+- Průměrný rozdíl hodnocení — čím blíže nule, tím podobnější vkus
+- Celkový součet hodnocení obou uživatelů
+- Kolik filmů oba uživatelé ohodnotili stejným číslem
+* Vzorec hodnocení — dva uživatelé hodnotící ve stejném pořadí jsou si podobní i tehdy, když jeden dává vždy nižší čísla
+! Přesně! Kosinová podobnost se stará o vzorec, ne o absolutní hodnoty.
 
 +++
 Pearsonova korelace je alternativa k průměrnému rozdílu a kosinové podobnosti, která ještě lépe zvládá přísné vs. benevolentní hodnotitele. Pearsonova korelace normalizuje hodnocení každého uživatele kolem jeho průměru — takže přísný hodnotitel s průměrem 2/5 a benevolentní s průměrem 4/5 jsou srovnatelní, pokud jejich relativní hodnocení odpovídají. Pro velká data je přesnější, ale výpočetně náročnější.

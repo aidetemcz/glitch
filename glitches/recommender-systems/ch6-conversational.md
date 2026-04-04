@@ -15,7 +15,7 @@ LLM chápou nuancované požadavky, doporučovací systém má tvá data o prefe
 - LLM zpřehlední existující algoritmy
 * POŽÁDÁŠ o to, co chceš, místo scrollování — LLM rozumí jazyku, doporučovací systémy mají data, dohromady jsou mocné
 - LLM pouze přeloží doporučení do různých jazyků
-! Přesně! Konverzační doporučování kombinuje sílu LLM (porozumění přirozenému jazyku) s daty doporučovacích systémů. Výsledkem je systém, který skutečně rozumí tomu, co chceš.
+! Přesně! Konverzační doporučování kombinuje sílu LLM (porozumění přirozenému jazyku) s daty doporučovacích systémů.
 
 +++
 Konverzační doporučování není jen o pohodlnosti — je o tom, jak lidé přirozeně přemýšlejí o tom, co chtějí. Klasické doporučovací systémy pracují s implicitními preferencemi (co jsi dělal), konverzační systémy mohou zachytit explicitní kontext („chci něco veselého, jsem po náročném dnu"). Tato kombinace implicit + explicit je daleko přesnější než každý přístup samostatně.

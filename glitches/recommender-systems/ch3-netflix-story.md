@@ -11,11 +11,11 @@ V roce 2006 Netflix vyhlásil soutěž: milion dolarů pro každého, kdo zlepš
 A tady přichází překvapení: Netflix vítězné řešení nikdy nepoužil. Bylo příliš složité — nedalo se provozovat v reálném čase pro miliony uživatelů.
 
 ? Jakou lekci přinesla soutěž Netflix Prize?
-- Složitější algoritmy jsou vždy lepší
-- Data jsou důležitější než algoritmy
-* Větší přesnost nevždy vyhrává — rychlost a jednoduchost jsou v reálných systémech důležitější než dokonalost
-- Větší týmy vždy porazí menší
-! Přesně! Vítězné řešení bylo příliš složité na provoz. Dost dobré a rychlé poráží dokonalé a pomalé — to platí v mnoha oblastech inženýrství.
+- Vyhrát ML soutěž znamená umět postavit nejlepší produkční systém
+* Dokonalý algoritmus, který je příliš pomalý nebo složitý na provoz, je k ničemu — rychlé a jednoduché řešení bývá lepší
+- Větší týmy s více lidmi vždy porazí menší specialisty
+- Nejlepší algoritmy vznikají na akademické půdě, ne v komerčních firmách
+! Přesně! Vítězné řešení bylo příliš složité na provoz.
 
 +++
 Netflix Prize je legendární v světě strojového učení a datové vědy — ale má i zajímavý etický aspekt. Netflix zveřejnil 100 milionů anonymizovaných hodnocení, ale výzkumníci z University of Texas brzy dokázali de-anonymizovat část dat kombinací s veřejnými hodnoceními na IMDb. Ukázalo se, že „anonymní" data nejsou tak anonymní, jak Netflix tvrdil. To vedlo k tomu, že plánované Netflix Prize 2 bylo zrušeno po soudní žalobě kvůli ochraně soukromí.

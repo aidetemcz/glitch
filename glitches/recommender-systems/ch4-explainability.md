@@ -11,11 +11,11 @@ Otevřeš Netflix a na první pozici vidíš dokumentář o chobotnicích. Nikdy
 Jedno doporučení může zahrnovat: kolaborativní filtrování, analýzu obsahu, průzkumný algoritmus, obchodní pravidla i filtr rozmanitosti. Který z těchto důvodů byl „skutečný"? Všechny dohromady. Proto „Protože jsi sledoval X" je jen zjednodušená aproximace.
 
 ? Proč platformy nemohou plně vysvětlit svá doporučení?
-- Protože by tím prozradily obchodní tajemství
-- Protože to uživatele nezajímá
-* Neuronové sítě používají stovky signálů — ani inženýři nedokážou přesně vysledovat, proč byla vybrána jedna konkrétní položka
-- Protože vysvětlení zpomalují systém
-! Přesně! Moderní doporučovací systémy jsou příliš složité, aby šlo doporučení plně vysvětlit. Vysvětlení jako „Protože jsi sledoval X" jsou užitečné aproximace, ne úplná pravda.
+- Ochrana obchodního tajemství — zveřejnění by umožnilo konkurenci kopírovat jejich přístup
+* Neuronové sítě kombinují stovky signálů najednou — ani inženýři nedokážou vysledovat, proč padla volba na konkrétní položku
+- Vysvětlení by bylo příliš složité a uživatelé by mu stejně nerozuměli
+- Algoritmy se mění tak rychle, že každé vysvětlení by bylo zastaralé ještě dříve, než by ho přečetl
+! Přesně! Moderní doporučovací systémy jsou příliš složité, aby šlo doporučení plně vysvětlit.
 
 +++
 Problém nevysvětlitelnosti AI systémů se nazývá „black box" problém — z vnějšku vidíš vstupy a výstupy, ale ne co se děje uvnitř. Je to celospolečenský problém: soudní systémy v USA používají AI pro předpověď recidivizmu trestanců, ale soudci nedokážou vysvětlit, proč algoritmus konkrétního člověka označil jako rizikového. Banky odmítají půjčky na základě algoritmů, jejichž logiku neumí zákazníkovi vysvětlit. EU proto v AI Actu z roku 2024 zavedla povinnost vysvětlitelnosti pro „high-risk" AI systémy.

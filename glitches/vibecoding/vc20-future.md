@@ -15,7 +15,7 @@ Klíčová dovednost budoucnosti není psaní kódu — je to schopnost popsat p
 - Matematika a statistika pro pochopení AI algoritmů
 * Schopnost jasně popsat problémy a kriticky hodnotit výsledky AI
 - Rychlé psaní na klávesnici
-! Správně! Komunikace, kritické myšlení a schopnost jasně formulovat problémy budou cennější než samotné technické znalosti programování. AI píše kód — ty musíš vědět CO chceš.
+! Správně! Komunikace, kritické myšlení a schopnost jasně formulovat problémy budou cennější než samotné technické znalosti programování.
 
 +++
 Predikce vývoje programování jsou ze zpětného pohledu vždy zajímavé. V roce 2000 se říkalo, že webový vývoj je módní vlna, která pomine. V roce 2010 se říkalo, že mobilní aplikace nahradí web. V roce 2020 se říkalo, že low-code platformy nahradí programátory. Nic z toho se nestalo — každý nový přístup rozšířil ekosystém, nevytlačil starý. Vibecoding pravděpodobně bude stejný příběh: rozšíří, kdo může tvořit software, ale nepovede k zániku programátorů.

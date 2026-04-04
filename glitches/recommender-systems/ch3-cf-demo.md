@@ -11,11 +11,11 @@ hook: Ale jak to funguje?
 Maya i Leo viděli Nimonu a oba ji milovali. Systém usoudí: Nimona se ti bude líbit taky. Není to jistota, ale silný tip.
 
 ? Co jsou vkusoví dvojníci v kolaborativním filtrování?
-- Uživatelé, kteří jsou přátelé na sociálních sítích
-- Uživatelé ze stejného města nebo věkové skupiny
-* Lidé, kteří měli rádi stejné věci jako ty — pokud se jim líbí i něco nového, pravděpodobně to budeš mít rád taky
-- Uživatelé s nejvyšším počtem zhlédnutí
-! Správně! Vkusoví dvojníci jsou lidé s podobnými preferencemi, ne nutně přátelé. Jejich budoucí výběry předpovídají tvoje.
+* Lidé, kteří hodnotili stejné věci podobně jako ty — jejich budoucí výběry pak předpovídají tvoje
+- Lidé, kteří sledují stejné kanály nebo jsou přihlášení k odběru stejných tvůrců
+- Uživatelé přibližně stejného věku a ze stejné oblasti
+- Lidé, kteří strávili na platformě stejný počet hodin jako ty
+! Správně! Vkusoví dvojníci jsou lidé s podobnými preferencemi, ne nutně přátelé.
 
 +++
 Myšlenka vkusových dvojníků je intuitivní, ale skrývá fascinující matematiku. V reálných systémech není „vkusový dvojník" jeden člověk — je to vážený průměr stovek lidí, kteří se každý částečně s tebou shodují. Ty a Maya sdílíte vkus na animované filmy, ty a Jirka sdílíte zájem o sci-fi, ty a Lucie sdílíte oblíbenou hudbu. Žádný z nich není tvůj ideální dvojník, ale dohromady tvoří poměrně přesný model tvého vkusu.

@@ -11,11 +11,11 @@ Klepneš na YouTube. Za 0,1 sekundy systém shrne tvoji historii — 6 Minecraft
 Za 0,2 sekundy kandidáti: kolaborativní dá 200, filtrování podle obsahu 150, odběry 30, trending 50, průzkum 70. Zhruba 500 kandidátů za zlomek sekundy. Za 0,7 sekundy zkontroluje rozmanitost a vhodnost — a výsledek je na obrazovce dřív, než mrkneš.
 
 ? Jak YouTube najde 20 videí z 800 milionů za 0,2 sekundy?
-- Náhodným výběrem z populárních videí
-- Prohledáváním jen nových videí
+- Prohledá jen videa z kanálů, ke kterým jsi přihlášený k odběru
 * Doporučovací pipeline — rychlé hrubé filtry zúží miliony na 500 kandidátů, pak přesné seřazení vybere nejlepších 20
-- Cachováním stejných výsledků pro všechny uživatele
-! Přesně! Pipeline umožňuje zpracovat 800 milionů videí v milisekundách tím, že každá fáze dramaticky zúží počet kandidátů.
+- Vybere videa, která jsou právě populární a trendující ve tvé zemi
+- Načte výsledky připravené dopředu pro všechny uživatele se stejným profilem
+! Pipeline zúží 800 milionů videí na 500 kandidátů pomocí rychlých filtrů a pak z nich vybere nejlepších 20 přesným seřazením.
 
 +++
 Ty 0,7 sekundy celého procesu jsou v realitě rozloženy přes desítky fyzických serverů na různých místech světa. Když otevřeš YouTube v Praze, část výpočtu proběhne v datovém centru v Dublinu, část ve Frankfurtu a část možná ve Varšavě. Všechno je synchronizováno s přesností na milisekundy pomocí sofistikovaných distribuovaných systémů. Takový systém by v 90. letech potřeboval budovu plnou superpočítačů — dnes běží na stovkách standardních serverů.

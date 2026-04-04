@@ -11,11 +11,11 @@ Starší systémy porovnávaly štítky — „oba filmy mají tag Akce, takže 
 Moderní systémy převedou každou píseň na seznam čísel — embedding. Dvě písničky blízko sebe v tomhle matematickém prostoru jsou si podobné, i když jsou z různých žánrů. Neuronová síť se tohle naučí prohlédnutím milionů příkladů sama.
 
 ? Co jsou embeddingy v doporučovacích systémech?
-- Záložky pro oblíbené položky
-- Hodnocení uživatelů v čísle od 0 do 1
 * Položky převedené na seznamy čísel — blízké vektory znamenají podobné položky
-- Reklamní sloty v aplikaci
-! Přesně! Embedding je matematická reprezentace položky nebo uživatele. Podobné položky mají blízké vektory. Neuronové sítě tyto vzory nacházejí samy z dat.
+- Štítky a klíčová slova, která redaktoři ručně přiřadí každé položce
+- Hodnocení, která uživatelé dávají na stupnici od 1 do 5
+- Skupiny obsahu rozdělené do kategorií jako Akce, Komedie nebo Sport
+! Přesně! Embedding je matematická reprezentace položky nebo uživatele.
 
 +++
 Embeddingy jsou jedním z nejdůležitějších vynálezů moderní AI. Myšlenka, že lze libovolný objekt — písničku, film, slovo, obrázek, uživatele — převést na seznam čísel (vektor) tak, aby podobné objekty měly blízké vektory, je základem celé moderní AI. ChatGPT ji používá pro slova, doporučovací systémy pro obsah. Je to v podstatě způsob, jak naučit počítač „cítit" podobnost.

@@ -15,7 +15,7 @@ Která je pro tebe? Začni s nástrojem, kde kód nevidíš vůbec — Lovable, 
 - v0 — specializuje se na UI design
 * Lovable, Bolt nebo Macaly — generují celou aplikaci bez viditelného kódu
 - Replit — má nejlepší komunitu
-! Přesně! Pro začátečníky jsou nejlepší nástroje, kde nevidíš kód vůbec a jen popisuješ, co chceš. Lovable, Bolt a česká Macaly jsou v tomhle skvělé.
+! Přesně! Pro začátečníky jsou nejlepší nástroje, kde nevidíš kód vůbec a jen popisuješ, co chceš.
 
 +++
 Ekosystém vibecoding nástrojů roste explodující rychlostí. V lednu 2025 existovaly 3–4 relevantní nástroje. Do konce roku 2025 jich jsou desítky. Každý hledá svoji niku — některé se specializují na mobilní aplikace, jiné na hry, jiné na datové dashboardy. Jako s chytrými telefony v roce 2010: platformy vznikají, konkurují si, a nakonec zůstanou 2–3 dominantní hráči. Dnes je zajímavé sledovat, kdo přežije.

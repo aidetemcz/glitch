@@ -10,12 +10,12 @@ YouTube má přes 2 miliardy uživatelů, kteří sledují přes 1 miliardu hodi
 
 A 70 % sledovací doby pochází z doporučení — ne z vyhledávání. Většinu toho, co lidé na YouTube sledují, nevyhledali sami. Vybral to za ně algoritmus.
 
-? Kolik procent sledovací doby na YouTube pochází z doporučení?
-- Asi 20 %
-- Přibližně 40 %
-* 70 %! Algoritmy — ne uživatelé při hledání — řídí většinu sledování
-- Kolem 50 %
-! Správně! 70 % sledovací doby pochází z doporučení. Algoritmus rozhoduje o tom, co miliardy lidí sledují — proto je tak důležité ho dělat správně.
+? Kolik procent sledovací doby na YouTube pochází z doporučení, ne z vyhledávání?
+- Asi 30 % — lidé si většinu obsahu najdou sami
+- Zhruba 50 % — vyhledávání a doporučení jsou přibližně vyrovnané
+- Přibližně 85 % — vyhledávání hraje jen okrajovou roli
+* 70 % — algoritmus řídí většinu sledování, ne uživatel sám
+! Správně! 70 % sledovací doby pochází z doporučení.
 
 +++
 1 miliarda hodin denně je číslo, které je těžké uchopit. Je to 114 tisíc let sledování každý den. Nebo: lidstvo jako celek stráví sledováním YouTube více hodin, než je stáří Homo sapiens v rocích. Toto měřítko staví doporučovací algoritmus YouTube do role, která nemá historickou analogii — žádné médium nikdy nemělo takový vliv na to, co lidé sledují a čemu věnují pozornost.

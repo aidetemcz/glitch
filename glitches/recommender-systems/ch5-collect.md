@@ -11,11 +11,11 @@ Vyber 10 filmů, co většina lidí zná. Najdi 10 lidí a každého se zeptej: 
 Nakresli mřížku: lidé po straně, filmy nahoře. Toto je tvoje hodnotící matice. Netflix má 3,4 bilionu takových buněk — s 99 % prázdných.
 
 ? Co je hodnotící matice?
-- Graf zobrazující popularitu filmů v čase
-- Seznam nejlepších doporučení pro každého uživatele
-* Uživatelé jako řádky, položky jako sloupce, hodnocení v buňkách — většina buněk je prázdná
-- Tabulka s průměrnými hodnoceními filmů
-! Přesně! Hodnotící matice zachycuje, co kdo ohodnotil. Prázdné buňky jsou to, co se snažíš předpovědět — to je podstata kolaborativního filtrování.
+- Přehled průměrných hodnocení každého filmu od všech uživatelů dohromady
+- Seznam doporučení seřazených od nejlepšího po nejhorší pro každého uživatele
+- Databáze s informacemi o obsahu filmů — žánr, délka, herci
+* Tabulka kde každý řádek je uživatel, každý sloupec je film a buňky obsahují hodnocení — většina buněk je prázdná
+! Přesně! Hodnotící matice zachycuje, co kdo ohodnotil.
 
 +++
 Průzkum hodnocení mezi kamarády může odhalit překvapivé vzorce. V rámci třídy nebo skupiny přátel jsou lidé obvykle v jednom nebo dvou velkých „vkusových klastrech" — ti, kdo mají rádi akci a napětí, a ti, kdo mají rádi příběhy a emoce. Když toto vizualizuješ v tabulce, tyto klastry jsou nápadné i bez jakéhokoliv algoritmu. Přesně to dělají systémy s miliardami dat — jen rychleji a přesněji.

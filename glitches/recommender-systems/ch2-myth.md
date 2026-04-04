@@ -10,12 +10,12 @@ Mluvíš o nových teniskách — a za hodinu máš reklamu na tenisky. Odposlou
 
 Jedno divné video zničí doporučení navždy? Taky ne. Systém hodnotí nedávné chování víc než staré — za pár dní to opadne.
 
-? Pravda nebo lež: tvůj telefon odposlouchává rozhovory kvůli reklamám.
-- Pravda — mikrofon je neustále zapnutý
-- Pravda — ale jen ve vybraných aplikacích
-* Lež — algoritmy předpovídají z kliknutí tak dobře, že to vypadá jako odposlech, ale není
-- Lež — reklamy jsou zcela náhodné
-! Správně! Algoritmy jsou tak přesné, že výsledky vypadají jako odposlech. Ve skutečnosti čtou tvé digitální chování — co vyhledáváš, na co klikáš, co kupuješ.
+? Proč se někdy zdá, že telefon tě odposlouchává — i když jsi o věci jen mluvil?
+* Algoritmy sledují tvoje kliknutí tak dobře, že dokážou předpovídat zájem dřív, než ho sám rozpoznáš
+- Aplikace skutečně nahrávají zvuk, ale jen krátké úseky a jen s tvým souhlasem
+- Reklamy se shodují náhodou — za den vidíš stovky reklam, takže shody jsou nevyhnutelné
+- Telefon sdílí data s přáteli, kteří si danou věc vyhledali
+! Správně! Algoritmy jsou tak přesné, že výsledky vypadají jako odposlech.
 
 +++
 Mýtus o odposlouchávání je tak rozšířený, protože lidé přirozeně hledají jednoduché vysvětlení pro záhadné jevy. Realita — že algoritmus tě zná tak dobře jen z kliknutí — je vlastně děsivější než odposlech, protože je legální a obtížněji kontrolovatelná. Výzkumníci z Northeastern University v USA tento mýtus pečlivě testovali: záměrně se bavili o produktech nahlas, aniž by je vyhledávali, a výsledek byl jasný: žádné cílené reklamy. Klíčem jsou data z chování.

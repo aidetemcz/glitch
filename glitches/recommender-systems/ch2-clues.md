@@ -11,11 +11,11 @@ Systém používá tři indicie. Co je k dispozici — název videa, žánr, dé
 Ta třetí indicie je nejsilnější. Systém věří tomu, co děláš — ne tomu, co říkáš.
 
 ? Které indicie jsou pro doporučování nejdůležitější?
+* Co DĚLÁŠ — tvoje akce a chování
 - Co je k dispozici — katalog obsahu
 - Kdo jsi — věk a jazyk
-* Co DĚLÁŠ — tvoje akce a chování
 - Všechny tři jsou stejně důležité
-! Správně! Tvoje akce jsou nejdůležitější, protože odhalují, kým opravdu jsi. Systém věří tomu, co děláš — ne tomu, co říkáš.
+! Správně! Tvoje akce jsou nejdůležitější, protože odhalují, kým opravdu jsi.
 
 +++
 Tyhle tři druhy indicií se v praxi kombinují různě. Při studeném startu (nový uživatel bez historie) jsou důležité informace o TOM, KDO jsi — věk, jazyk, zařízení. Jakmile nasbíráš historii, akce ji přehlasují. Netflix odhaduje, že po 50 hodnoceních filmů jsou akce uživatele tak silné, že demografické informace jako věk nebo pohlaví téměř přestanou hrát roli.

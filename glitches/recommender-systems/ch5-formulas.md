@@ -11,11 +11,11 @@ Kosinová podobnost: vynásob hodnocení párově, sečti, dělíš délkami vek
 Alex hodnotí [5, 4, 5], Sam [4, 3, 4]. Oba hodnotí ve stejném vzoru, jen Sam o trochu níž — kosinová podobnost to pozná a dá jim vysoké skóre.
 
 ? Co vlastně měří kosinová podobnost?
-- Počet společně hodnocených filmů
-- Průměr všech hodnocení obou uživatelů
-* Úhel mezi dvěma vektory preferencí — stejný vzorec hodnocení i v různém měřítku dává vysokou podobnost
-- Vzdálenost mezi dvěma uživateli v prostoru
-! Přesně! Kosinová podobnost sleduje směr, ne velikost. Dva uživatelé hodnotící v přesně stejném pořadí mají podobnost 1 — i když jeden dává vždy o 2 hvězdičky méně.
+- Kolik filmů oba uživatelé společně hodnotili
+- Průměrný rozdíl v hodnocení každého společně viděného filmu
+- O kolik se liší celkový součet všech hodnocení obou uživatelů
+* Vzorec hodnocení — dva uživatelé hodnotící ve stejném pořadí mají vysokou podobnost i když jeden dává vždy nižší čísla
+! Přesně! Kosinová podobnost sleduje směr, ne velikost.
 
 +++
 Kosinová podobnost má etymologii v trigonometrii — kosinus úhlu mezi dvěma vektory. Pokud dva vektory ukazují stejným směrem, úhel je 0° a cos(0°) = 1. Pokud jsou kolmé (žádná podobnost), úhel je 90° a cos(90°) = 0. Pokud ukazují opačně, úhel je 180° a cos(180°) = -1. Proto výsledek kosinové podobnosti je vždy mezi -1 a 1 — a interpretace je přirozená.

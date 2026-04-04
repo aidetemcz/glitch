@@ -13,9 +13,9 @@ Doporučovací systém je motor, který to pohání — vždy má připravené p
 ? Jmenuj 2 designové triky, které tě udržují u scrollování.
 - Barevné notifikace a odznáčky
 - Lajky a komentáře od přátel
-* Nekonečné scrollování (žádný konec) a autoplay (další video se spustí automaticky)
 - Rychlé načítání a hezký design
-! Přesně! Nekonečné scrollování a autoplay jsou záměrná designová rozhodnutí. Bez přirozeného konce aplikace nemáš přirozený signál k zastavení.
+* Nekonečné scrollování (žádný konec) a autoplay (další video se spustí automaticky)
+! Přesně! Nekonečné scrollování a autoplay jsou záměrná designová rozhodnutí.
 
 +++
 Nekonečné scrollování vynalezl Aza Raskin v roce 2006, tehdy pracující pro Firefox. Původní záměr byl pozitivní — eliminovat otravné klikání na „další stránka." Raskin ale záhy pochopil, co vytvořil, a v roce 2018 veřejně vyjádřil lítost: „Odhaduji, že nekonečné scrollování stojí lidstvo zhruba 200 000 hodin denně." Stalo se standardem ve všech sociálních sítích — přestože jeho tvůrce ho zpětně označil za chybu.

@@ -11,11 +11,11 @@ Vyber 8 populárních filmů. Zeptej se 10 spolužáků: líbil se ti tento film
 Pro každou dvojici spolužáků spočítej, u kolika filmů se shodli. Velká shoda? Pokud jeden neviděl film, který druhý miloval — předpověz, že se bude líbit i jemu.
 
 ? Lze kolaborativní filtrování vyzkoušet bez počítače?
-- Ne, potřebuješ výkonný server
-- Jen s tabulkovým procesorem
 * Ano — průzkum, tabulka hodnocení a ruční výpočet podobnosti stačí
-- Ne, potřebuješ alespoň 1000 uživatelů
-! Ano! Základní kolaborativní filtrování zvládneš na papíře. Velké systémy dělají to samé — jen s miliony uživatelů a výkonnými počítači.
+- Ne, algoritmus potřebuje alespoň tisíc uživatelů, jinak výsledky nedávají smysl
+- Lze to zkusit, ale výsledky bez počítače jsou příliš nepřesné na to, aby cokoliv ukázaly
+- Ne, kolaborativní filtrování vyžaduje speciální databázový software
+! Ano! Základní kolaborativní filtrování zvládneš na papíře.
 
 +++
 Tento ruční experiment s kolaborativním filtrováním je přesně to, co v 90. letech dělali výzkumníci z GroupLens projektu na University of Minnesota. Oni sbírali hodnocení filmů od tisíců lidí e-mailem — v době před internetem jako ho znáš — a ručně hledali vzory. Jejich práce je základem moderního doporučování. Takže i ručně dělaný experiment má přímé historické kořeny.

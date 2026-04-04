@@ -15,7 +15,7 @@ Je to stejný mechanismus jako u hracích automatů — nepředvídatelnost tě 
 - Aplikace blokují možnost odejít
 * Dopamin! Mozek ho uvolňuje při anticipaci a nejistotě — stejný mechanismus jako u hracích automatů
 - Sociální tlak od přátel, kteří sledují totéž
-! Přesně! Dopamin se uvolňuje při OČEKÁVÁNÍ odměny, ne při samotné odměně. Nepředvídatelný feed vyvolává největší dopaminový efekt — proto je tak těžké přestat.
+! Přesně! Dopamin se uvolňuje při OČEKÁVÁNÍ odměny, ne při samotné odměně.
 
 +++
 Dopaminový systém odměn byl popsán v 70. letech neurovědcem Wolfem Schultzem. Schultz trénoval opice, aby stiskly páku po záblesku světla za odměnu džusu. Zjistil, že dopaminové neurony se aktivovaly ne při příjmu džusu, ale při záblesku světla — tedy při signálu předcházejícím odměně. Toto zjištění bylo revolucí v neurovědě a je přímým základem pro pochopení návykovosti sociálních sítí.

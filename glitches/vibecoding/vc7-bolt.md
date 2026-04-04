@@ -15,7 +15,7 @@ Silné stránky: full-stack aplikace (vizuální část + databáze) a stažení
 - Generuje nejhezčí design
 * Vše běží přímo v prohlížeči bez jakékoli instalace
 - Podporuje nejvíce programovacích jazyků
-! Přesně! Bolt.new funguje kompletně v prohlížeči — žádná instalace ani nastavení. Otevřeš, napíšeš, stavíš.
+! Přesně! Bolt.new funguje kompletně v prohlížeči — žádná instalace ani nastavení.
 
 +++
 StackBlitz, firma za Boltem, původně postavil WebContainers — technologii, která umožňuje spouštět Node.js (serverový JavaScript) přímo v prohlížeči. To bylo technicky náročné a dříve nemožné. Bolt.new je přímá aplikace této technologie — proto jako první nástroj zvládl full-stack vývoj přímo v prohlížeči bez instalace. Je to fundamentální technický průlom, ne jen AI vrstvička nahoře.

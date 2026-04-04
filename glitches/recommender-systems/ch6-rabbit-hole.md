@@ -15,7 +15,7 @@ Algoritmus optimalizuje pro JEDNO další video — nikdy se nezastaví a nepomy
 - Příliš mnoho videí na jedno téma v krátkém čase
 * Každý doporučený krok se zdá malý, ale celková cesta vede někam nečekaně — algoritmus optimalizuje pro další video, ne pro celou cestu
 - Uváznout v jednom typu obsahu bez možnosti úniku
-! Přesně! Algoritmus vidí jen jeden krok dopředu. Každý jednotlivý návrh může být v pořádku, ale postupně tě mohou odvést daleko od toho, kde jsi začal.
+! Přesně! Algoritmus vidí jen jeden krok dopředu.
 
 +++
 Efekt králičí nory byl poprvé popsán jako fenomén v investigativní žurnalistice v roce 2018, kdy novináři sledovali YouTube algoritmus a dokumentovali cesty od mainstreamových videí k extrémistickému obsahu. Výzkumníci Guillaume Chaslot (bývalý inženýr YouTube) zveřejnil data ukazující, jak YouTube doporučoval stále radikálnější obsah — ne záměrně, ale jako emergentní efekt optimalizace na dobu sledování. Extremistický obsah generuje silné emoce, emoce = dlouhé sledování, = dobrý signal pro algoritmus.

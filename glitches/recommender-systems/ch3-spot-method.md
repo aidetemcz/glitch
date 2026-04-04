@@ -11,11 +11,11 @@ Tři metody. KF = kolaborativní filtrování (vkus podobných lidí). FO = filt
 Klíč: „Fanoušci TAKÉ poslouchají" = páruji lidi (KF). „Protože jsi sledoval X" = páruji obsah (FO). „Nejsledovanější" = popularita (POP).
 
 ? „Protože jsi sledoval X" využívá jakou metodu?
-- Kolaborativní filtrování — hledá podobné uživatele
-- Popularitu — ukazuje trending obsah
-* Filtrování podle obsahu — porovnává vlastnosti položek
-- Kombinaci všech tří metod
-! Přesně! „Protože jsi sledoval X" = systém se podíval na vlastnosti X (žánr, téma, styl) a hledal podobné položky. To je filtrování podle obsahu. „Fanoušci X také sledují" je naopak kolaborativní filtrování.
+- Kolaborativní filtrování — hledá uživatele se stejnými zájmy jako ty
+* Filtrování podle obsahu — porovnává vlastnosti položek a hledá podobné
+- Popularitu — ukazuje, co teď sledují ostatní
+- Hybridní přístup kombinující všechny tři metody dohromady
+! Přesně! „Protože jsi sledoval X" = systém se podíval na vlastnosti X (žánr, téma, styl) a hledal podobné položky.
 
 +++
 Textová vysvětlení jako „Protože jsi sledoval X" jsou ve skutečnosti zjednodušení marketingová, ne technická. Skutečný algoritmus použil stovky signálů — ale uživatelům ukázat složitý vzorec by bylo matoucí. Studie ukázaly, že jednoduchá vysvětlení doporučení zvyšují důvěru uživatelů a pravděpodobnost kliknutí — i když tato vysvětlení jsou nepřesná. Firmy proto záměrně ukazují zjednodušené důvody.

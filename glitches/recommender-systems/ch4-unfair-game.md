@@ -11,11 +11,11 @@ Učitel volá Majku pokaždé. Do pátku ji volá skoro vždy. Mezitím Kuba př
 Přesně tohle se děje s doporučeními: populární dostává viditelnost, viditelnost dělá populárním. Skvělé nové video? Nikdo ho nevidí.
 
 ? Jak mohou platformy udělat doporučení spravedlivějšími?
-- Zakázat populárním tvůrcům nahrávat více videí
-- Omezit počet sledovatelů na kanál
-* Náhodné výběry, garantovaná viditelnost pro nový obsah, testování na malých skupinách
-- Platit uživatelům za sledování méně populárního obsahu
-! Přesně! Testovací okruhy, průzkumné sloty a garantovaná minimální viditelnost jsou techniky, které platformy používají k prolomení efektu bohatí bohatnou.
+- Snížit maximální počet zhlédnutí, který může jedno video dosáhnout
+- Automaticky zvyšovat hodnocení nových kanálů, aby bylo srovnatelné se staršími
+- Skrýt statistiky počtu sledujících, aby uživatelé volili obsah jen podle kvality
+* Testovat nový obsah na malých náhodných skupinách a garantovat mu minimální viditelnost
+! Testovací okruhy a průzkumné sloty dávají novému obsahu šanci — každé video se nejdřív ukáže malé skupině a teprve podle reakce se šíří dál.
 
 +++
 Analogie s třídou je trefná, protože přesně zachycuje psychologický efekt neviditelnosti. Výzkumy ukazují, že žáci, kteří jsou ve třídě ignorováni — i kdyby to bylo náhodně — postupně přestávají zkoušet. Stejný efekt nastává u malých tvůrců: pokud algoritmus jejich obsah nezobrazí, dostávají méně zpětné vazby, ztrácejí motivaci a přestanou tvořit. Výsledkem je chudší ekosystém obsahu pro všechny.

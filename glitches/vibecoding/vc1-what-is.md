@@ -15,7 +15,7 @@ Termín vymyslel v únoru 2025 Andrej Karpathy z OpenAI a Tesly. Před pár lety
 * Tvorba aplikací pomocí přirozené řeči místo psaní kódu
 - Hra, ve které programuješ virtuální roboty
 - Oprava chyb v kódu pomocí AI
-! Přesně! Vibecoding = říkáš AI, co chceš, a ona píše kód za tebe. Žádné znalosti programování nejsou nutné.
+! Přesně! Vibecoding = říkáš AI, co chceš, a ona píše kód za tebe.
 
 +++
 Vibecoding je revolučním posunem v přístupu k tvorbě software, ale má zajímavý kontext. Podobné demokratizační vlny proběhly v jiných oborech: fotografování (fotoaparáty) zpřístupnilo tvorbu obrazu každému, desktop publishing (PageMaker, Word) zpřístupnilo tisk. Vibecoding zpřístupňuje tvorbu softwaru. Pokaždé, když se takový nástroj zpřístupní, obor se změní — a nové věci se staly možnými.

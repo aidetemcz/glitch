@@ -10,12 +10,12 @@ Stejná filmová aplikace se třemi různými cíli dá úplně jiná doporučen
 
 U předplatného (Netflix, Spotify) jsi zákazník — algoritmus optimalizuje tvůj zážitek. U bezplatných služeb (YouTube, TikTok) zákazníci jsou inzerenti — algoritmus tě musí udržet u sledování.
 
-? O co se algoritmus vlastně snaží?
-- Vždy o tvoji spokojenost
-- O nejrychlejší načítání obsahu
-* Záleží! Předplatné optimalizují tvoji spokojenost, reklamní služby optimalizují příjmy inzerentů
-- O minimalizaci serverových nákladů
-! Přesně! Cíle algoritmu jsou různé podle obchodního modelu. Vědět, kdo platí (ty nebo inzerenti), ti pomůže pochopit, proč doporučení vypadají tak, jak vypadají.
+? YouTube je zdarma a Netflix stojí peníze. Proč to ovlivňuje, jak jejich algoritmy fungují?
+- YouTube může dovolit lepší doporučení, protože má více uživatelů a dat
+* YouTube optimalizuje pro sledovanou dobu (reklamy), Netflix pro spokojenost (aby nepřestal platit)
+- Placené platformy mají dražší servery a musí šetřit výpočetní kapacitu
+- Rozdíl v ceně nemá na algoritmus žádný vliv, cíle jsou stejné
+! Přesně! Cíle algoritmu jsou různé podle obchodního modelu.
 
 +++
 Obchodní model je asi nejdůležitější věc pro pochopení chování algoritmů. TikTok je zadarmo — zákazníci jsou inzerenti. TikTok proto optimalizuje pro čas strávený v aplikaci, protože víc času = víc reklam = víc peněz. Výsledkem je aplikace navržená tak, aby tě udržela co nejdéle. Toto není vedlejší efekt — je to primární cíl.

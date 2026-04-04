@@ -15,7 +15,7 @@ Kde je limit? Komplexní systémy pro banky nebo nemocnice stále potřebují pr
 - Kvízová hra v prohlížeči
 - Sledovač návyků
 * Komplexní systém pro banku s miliony uživatelů
-! Správně! Vibecoding je skvělý pro osobní projekty a prototypy. Pro kritické systémy (banky, nemocnice) stále potřebuješ profesionální vývojáře a bezpečnostní odborníky.
+! Správně! Vibecoding je skvělý pro osobní projekty a prototypy.
 
 +++
 Hranice mezi tím, co vibecoding zvládne a co ne, se neustále posunuje. V lednu 2025 bylo vibecoding vhodné pro jednoduché weby. V dubnu 2025 zvládá i aplikace s databází, přihlašováním uživatelů a platebními systémy. Za rok bude možné víc. Je proto důležité si pravidla nekopat do betonu — co dnes „nejde," může za 6 měsíců být standardní funkce.

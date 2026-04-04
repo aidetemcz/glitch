@@ -11,11 +11,11 @@ Vytvořil sis nový účet a doporučení jsou divná, obecná, nudná? Systém 
 Ale dej tomu týden. Začneš se projevovat — a algoritmus si začne budovat obrázek. Po prvním týdnu jsou doporučení skutečně tvá.
 
 ? Co je problém studeného startu?
-- Aplikace je příliš pomalá při spuštění
-- Algoritmus zapomíná tvou historii po každém restartu
-* Nový účet nemá žádná data — systém neví, kdo jsi, a ukazuje populární obsah pro všechny
-- Studený počítač dělá chyby ve výpočtech
-! Přesně! Bez dat o tobě systém neví, co doporučit — proto na začátku vidíš obecná populární doporučení, dokud ho nenautrénuješ svým chováním.
+* Nový účet nemá žádná data — systém neví, kdo jsi, a zobrazuje populární obsah pro všechny stejně
+- Systém ztratí tvoji historii, pokud přepneš na jiné zařízení
+- Nové aplikace mají na začátku pomalejší doporučení kvůli přetíženým serverům
+- Doporučení se po výpadku internetu resetují na výchozí nastavení
+! Bez dat o tobě systém neví, co doporučit — proto na začátku vidíš obecná doporučení pro všechny, dokud ho nenautrénuješ svým chováním.
 
 +++
 Problém studeného startu má dvě strany: nový uživatel (o tobě nemáme data) a nová položka (o tomto videu/songu nemáme data). Nová položka je v některých ohledech ještě těžší — na YouTube se nahraje každou minutu 500 hodin nového obsahu. Jak algoritmus ví, komu doporučit video, které před hodinou vůbec neexistovalo a nikdo ho ještě neviděl?

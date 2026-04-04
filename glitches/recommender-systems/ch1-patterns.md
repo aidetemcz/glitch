@@ -11,9 +11,9 @@ Diamanty v Minecraftu se nejčastěji vyskytují mezi vrstvami 5 a 12. Odkud to 
 Doporučovací systém hledá vzory u milionů lidí najednou a nachází spojitosti, které by nikdo ručně nenašel. „Uživatelé, kteří přeskočí prvních 30 sekund, video většinou nedokouká." Proto potřebujeme počítače.
 
 ? Proč je hledání vzorů pro algoritmy superschopností?
+* Počítače hledají vzory u milionů lidí najednou — nacházejí spojitosti, které člověk ručně nenajde
 - Algoritmy jsou chytřejší než lidé
 - Vzory jsou vždy správné a spolehlivé
-* Počítače hledají vzory u milionů lidí najednou — nacházejí spojitosti, které člověk ručně nenajde
 - Algoritmy nepotřebují data, stačí jim logika
 ! Počítače dokážou hledat vzory u milionů lidí najednou — nacházejí spojitosti, které by žádný člověk ručně nikdy nenašel.
 

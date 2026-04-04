@@ -15,7 +15,7 @@ Inženýři definovali „dobré doporučení" jako: co tě udrží nejdéle. Je
 - Tvoji přátelé sdílejí obsah, který dostanou do feedu
 * Algoritmus — ne ty, ne tvoji rodiče, ne zaměstnanci TikToku — optimalizuje pro co tě udrží u sledování nejdéle
 - Náhodný výběr z populárního obsahu
-! Přesně! Algoritmus rozhoduje na základě dat o tvém chování. Optimalizuje pro engagement — ale engagement nemusí být totéž jako tvůj zájem nebo pohoda.
+! Přesně! Algoritmus rozhoduje na základě dat o tvém chování.
 
 +++
 Rozhodování algoritmem bez lidského dohledu (full automation) je přesně to, co AI Act EU kategorizuje jako „high-risk" v určitých oblastech. TikTok doporučující obsah je „low-risk" — nejhorší, co se může stát, je, že strávíš příliš čas na telefonu. Ale stejný algoritmus rozhodující o tom, které zdravotnické záznamy vidí lékař nebo o úvěrovém skóre — to je jiná kategorie rizika. Hranice, kde algoritmus smí rozhodovat sám, je jednou z klíčových regulačních otázek.

@@ -10,12 +10,12 @@ TikTok? AI vybírá za tebe všechno — ani nikoho nesleduješ. Reddit? Přidal
 
 YouTube, Instagram i X kombinují obojí: ty si vybíráš kanály, ale algoritmus přimíchává obsah, který jsi nehledal. Čím víc dat o tobě má, tím přesněji tě zná.
 
-? Který model dává uživateli NEJVĚTŠÍ kontrolu nad tím, co vidí?
-- Na základě algoritmu — AI rozhoduje za tebe
+? Který model dává uživateli největší kontrolu nad tím, co vidí?
+- Na základě algoritmu — AI vybírá obsah podle tvého chování
 - Na základě popularity — vidíš, co sledují všichni
-* Na základě sledování — ty si vybíráš, koho sledovat
-- Na základě skupin — komunita rozhoduje
-! Správně! Při modelu sledování si TY aktivně vybíráš zdroje obsahu. Při algoritmickém modelu rozhoduje AI — a může tě překvapit, ale kontrolu nemáš.
+- Na základě skupin — komunita hlasuje o obsahu
+* Na základě sledování — ty si sám vybíráš, koho sledovat
+! Správně! Při modelu sledování si TY aktivně vybíráš zdroje obsahu.
 
 +++
 Každá platforma si vědomě vybrala svůj model na základě toho, co chce od uživatelů. Twitter/X začal jako model sledování — ty si vybiráš koho sledovat — ale postupně přidával algoritmický feed, protože data ukázala, že lidé stráví víc času, když jim algoritmus servíruje obsah automaticky. Tím pádem více reklam, více peněz.

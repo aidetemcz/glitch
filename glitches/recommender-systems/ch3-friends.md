@@ -11,11 +11,11 @@ Ty a Maya jste oba milovali Spider-Verse, Encanto, Mitchellovy i Červenou. Shod
 Tomu se říká kolaborativní filtrování. Systém nepotřebuje chápat, PROČ se vám filmy líbí. Stačí vzor.
 
 ? Jak funguje kolaborativní filtrování?
-- Analyzuje obsah každého videa a hledá podobné
-- Ukazuje nejpopulárnější obsah všem uživatelům
 * Najde lidi s podobným vkusem a doporučí, co tito lidé měli rádi a ty ještě neznáš
-- Sleduje tvoje vyhledávání a navrhuje podobné výrazy
-! Přesně! Kolaborativní filtrování páruje lidi, ne obsah. Najde tvoje vkusové dvojníky a doporučí ti, co jim se líbilo — i bez toho, aby rozumělo, co ten obsah vlastně je.
+- Prohledá vlastnosti každého videa a najde ta, která jsou si vizuálně nebo tematicky podobná
+- Vybere obsah, který je právě populární mezi tvými přáteli na sociálních sítích
+- Sleduje tvoje vyhledávání a doporučuje obsah s podobnými klíčovými slovy
+! Přesně! Kolaborativní filtrování páruje lidi, ne obsah.
 
 +++
 Kolaborativní filtrování bylo prvně popsáno ve vědecké práci v roce 1992 na MIT — tehdy jako systém pro e-mailové doporučování dokumentů. Autoři ho nazvali „social filtering," protože podstata byla sociální: ptáme se jiných lidí, co se jim líbilo. Přejmenování na „collaborative filtering" přišlo o rok později. Dnes je to základ doporučení hodnoty bilionů dolarů.

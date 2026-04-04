@@ -11,11 +11,11 @@ Skutečné systémy si nevybírají jednu metodu — používají všechno ve sp
 NAJDI: z milionů položek rychle sesbírej pár stovek kandidátů. Cílem není dokonalost, ale rychlost. SEŘAĎ: pro každého kandidáta spočítej skóre — pravděpodobnost kliknutí, sledovaná doba. ZKONTROLUJ: ne 10 Minecraft videí za sebou, čerstvost, vhodnost.
 
 ? Jaké jsou 3 fáze doporučovacího pipeline?
-- Sbírej data, analyzuj, prezentuj
-- Přihlás uživatele, načti historii, zobraz feed
-* Najdi kandidáty (rychle a hrubě), seřaď je (přesné skórování), zkontroluj rozmanitost
-- Filtruj nevhodný obsah, doporuč populární, přimíchej nové
-! Přesně! Třífázový pipeline: rychlé nalezení stovek kandidátů, přesné seřazení, závěrečná kontrola rozmanitosti a kvality.
+- Sbírej data, trénuj model, nasaď algoritmus
+* Najdi kandidáty rychle a hrubě, seřaď je přesným skórováním, zkontroluj rozmanitost
+- Filtruj nevhodný obsah, doporuč nejoblíbenější, přimíchej nové trendy
+- Analyzuj historii, předpověz zájem, zobraz výsledky
+! Třífázový pipeline: rychlé nalezení stovek kandidátů z milionů, přesné seřazení, závěrečná kontrola rozmanitosti a kvality.
 
 +++
 Pipeline architektura je obecný princip, který se používá daleko za hranicemi doporučovacích systémů. Použiješ ho při hledání v e-shopu, při filtrování e-mailů, při vyhledávání v Googlu. Základní myšlenka je vždy stejná: hrubá, rychlá filtrace → přesné hodnocení malé skupiny. Je to efektivnější než aplikovat přesné hodnocení na vše hned.

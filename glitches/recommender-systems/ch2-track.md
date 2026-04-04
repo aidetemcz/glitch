@@ -11,11 +11,11 @@ Kliknutí a lajky jsou jen začátek. Systém sleduje, jak dlouho se díváš na
 Nejsilnější signály: dokončení videa, opakované přehrání, vyhledávání. Příště, když přeskočíš video — právě jsi algoritmu něco řekl.
 
 ? Který signál je silnější: kliknout na video nebo sledovat ho až do konce?
+* Sledování až do konce je MNOHEM silnější — systém měří čas sledování, ne jen kliknutí
 - Kliknutí je silnější — říká, že tě zaujal název
 - Obě akce jsou stejně silné
-* Sledování až do konce je MNOHEM silnější — systém měří čas sledování, ne jen kliknutí
 - Záleží na délce videa
-! Správně! Sledování celého videa je jeden z nejsilnějších signálů. Systém ví, že ses o obsah skutečně zajímal — ne jen kliknul na clickbait.
+! Správně! Sledování celého videa je jeden z nejsilnějších signálů.
 
 +++
 Seznam věcí, které platformy sledují, se neustále rozšiřuje jak roste výkon zařízení. Moderní aplikace na telefonu mohou sledovat i pohyby gyroskopu (jak držíš telefon), teplotu baterie (zda jsi u počítače nebo venku) nebo jas obrazovky. Ne proto, aby tě špiclily — ale proto, že kontext zlepšuje přesnost doporučení. Video o outdoor aktivitách doporučené ve chvíli, kdy jsi venku za slunečného dne, má vyšší šanci, že ho oceníš.

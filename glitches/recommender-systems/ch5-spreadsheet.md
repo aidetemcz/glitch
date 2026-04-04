@@ -11,11 +11,11 @@ Otevři Google Sheets. Buňka A1: „Jméno". B1 až K1: názvy filmů. Řádky 
 Trik: vyber všechna hodnocení a použij podmíněné formátování — červená pro 1–2, žlutá pro 3, zelená pro 4–5. Najednou vizuálně vidíš vzorce vkusu, aniž bys počítal jedinou cifru.
 
 ? Proč ti tabulkový procesor pomůže postavit doporučení?
-- Automaticky vypočítá doporučení bez vstupu uživatele
-- Synchronizuje data s filmovými databázemi
-* Barevně označená hodnocení odhalují vzorce vkusu vizuálně — vidíš podobnosti ještě před jakoukoli matematikou
-- Ukládá data do cloudu pro sdílení
-! Přesně! Podmíněné formátování v tabulce ti umožní vizuálně rozpoznat vkusové vzorce a podobné uživatele — ještě před tím, než uděláš jakýkoli výpočet.
+- Automaticky spočítá kosinovou podobnost a předpovědi bez programování
+- Propojí tvoje data s veřejnými databázemi filmů a doplní hodnocení od kritiků
+- Umožní sdílet projekt s kamarády v reálném čase a hromadně sbírat hodnocení
+* Barevné označení hodnocení odhaluje vzorce vkusu vizuálně — podobnosti vidíš ještě před jakoukoli matematikou
+! Podmíněné formátování ti umožní vizuálně rozpoznat vkusové vzorce a podobné uživatele — a to ještě před jakýmkoli výpočtem.
 
 +++
 Vizualizace dat je v datové vědě téměř stejně důležitá jako matematika. Před tím, než začneš počítat, je vždy dobré se na data podívat — co vidíš, jaké vzory jsou nápadné, jsou tam outlieři nebo neočekávané hodnoty? Barevná tabulka je primitivní vizualizace, ale přesně tento princip používají sofistikované nástroje jako Tableau nebo Power BI, jen s daleko více možnostmi.

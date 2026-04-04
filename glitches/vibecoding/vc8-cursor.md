@@ -15,7 +15,7 @@ Pro naprosté začátečníky není ideální — vidíš kód. Ale pokud tě pr
 * Pro lidi, kteří se chtějí o programování trochu přiučit a mít AI jako asistenta
 - Pro profesionální vývojáře, kteří nepotřebují žádnou pomoc
 - Pouze pro návrháře UI/UX
-! Správně! Cursor je nejlepší pro ty, kdo jsou na půli cesty — chtějí trochu rozumět kódu, ale zároveň chtějí AI jako silného pomocníka.
+! Správně! Cursor je nejlepší pro ty, kdo chtějí trochu rozumět kódu, ale zároveň mít AI jako silného pomocníka.
 
 +++
 Cursor byl původně fork (větev) populárního editoru VS Code od Microsoftu — zakladatelé vzali open-source VS Code a přidali AI funkce. Tato strategie jim umožnila rychle postavit produkt, který vypadá profesionálně a má všechny funkce VS Code, plus AI navrch. V roce 2025 dosáhl Cursor 1 milion platících uživatelů — převážně profesionální vývojáři, kteří tvrdí, že jsou s Cursorem produktivnější o 50–100 %.

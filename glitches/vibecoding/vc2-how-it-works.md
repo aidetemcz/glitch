@@ -15,7 +15,7 @@ Kódu rozumět nemusíš. Ale je dobré vědět TROCHU — když AI udělá chyb
 - Rychlé psaní na klávesnici
 * Schopnost jasně popsat, co chceš a co nefunguje
 - Matematika a algoritmy
-! Správně! Vibecoding je hlavně o komunikaci. Čím přesněji dokážeš popsat svůj záměr a problémy, tím lepší výsledky dostaneš.
+! Správně! Vibecoding je hlavně o komunikaci.
 
 +++
 Cyklus popis → kód → testování → zpřesnění je přesně stejný postup, jaký používají profesionální vývojáři — jen bez manuálního psaní kódu. V softwarovém inženýrství se tomu říká iterativní vývoj. Velké firmy jako Google nebo Apple vyvíjejí software ve sprintech — krátkých cyklech, kde se vždy něco přidá, otestuje a zpřesní. Vibecoding tento princip zpřístupnil i lidem bez technického vzdělání.

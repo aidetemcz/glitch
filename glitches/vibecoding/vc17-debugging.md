@@ -15,7 +15,7 @@ Pokud oprava nepomůže, zkus „implementuj to jinak" nebo použij rollback na 
 - Obvinit AI ze špatné práce a zkusit jiný nástroj
 * Přesně popsat co se stane a sdílet případnou chybovou hlášku z konzole
 - Počkat den a doufat, že se to opraví samo
-! Přesně! Přesný popis problému + chybová hláška z konzole jsou to nejcennější, co můžeš AI dát k opravení chyby.
+! Přesně! Přesný popis problému a chybová hláška z konzole jsou to nejcennější, co můžeš AI dát k opravení chyby.
 
 +++
 Vývojářské nástroje v prohlížeči (DevTools) jsou mocný nástroj, který většina lidí ignoruje. Klávesa F12 otevře celý svět diagnostiky — konzole zobrazuje chyby a výstupy kódu, síťová karta zobrazuje, jaká data aplikace posílá a přijímá, inspektor ukazuje HTML a CSS strukturu stránky. Profesionální vývojáři tráví v DevTools desítky procent svého pracovního dne. I základní znalost konzole — jak ji otevřít a přečíst červenou chybu — výrazně zvyšuje tvoji schopnost debugovat.

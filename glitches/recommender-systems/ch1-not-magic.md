@@ -11,11 +11,11 @@ Sledoval/a jsi 10 videí s kočkami? Zapsáno. Přeskočil/a jsi každé sportov
 Tvoje kliknutí jsou stopy, chování ostatních jsou svědci a doporučení je vyřešený případ. Discover Weekly se generuje každé pondělí pro 600+ milionů uživatelů — 600 milionů unikátních playlistů najednou.
 
 ? Na čem stojí doporučovací systémy?
-- Na čtení myšlenek uživatele
-- Na náhodném výběru
-* Na hledání vzorů v datech
-- Na doporučeních od přátel
-! Přesně! Sleduj → najdi vzory → předpovídej. Jako detektiv hledající stopy — žádná magie, jen matematika.
+* Na hledání vzorů v datech z chování uživatelů
+- Na doporučeních od přátel a rodiny
+- Na ručním výběru redaktorů
+- Na popularitě obsahu v daném regionu
+! Přesně! Sleduj → najdi vzory → předpovídej.
 
 +++
 Vzorové hledání má překvapivé limity. Algoritmus vidí, co DĚLÁŠ, ale neví PROČ to děláš. Sledoval sis horory před Halloweenem? Systém si myslí, že miluješ horory — a bombarduje tě jimi i v lednu. Tohle je klasická chyba doporučovacích systémů: zaměňují korelaci za zálibu.

@@ -15,7 +15,7 @@ Proč je to geniální? Někdy nevíš jak popsat co chceš — ale víš, na co
 * K přímé úpravě prvků aplikace kliknutím — bez psaní promptů
 - K exportu kódu do různých formátů
 - K pozvání spolupracovníků do projektu
-! Přesně! Edit Mode ti umožňuje kliknout přímo na prvek aplikace a upravit ho bez nutnosti psát textový příkaz do chatu.
+! Přesně! Edit Mode ti umožňuje kliknout přímo na prvek aplikace a upravit ho bez nutnosti psát textový příkaz.
 
 +++
 WYSIWYG (What You See Is What You Get) editory mají dlouhou historii. Když Apple v roce 1984 uvedl Macintosh s grafickým rozhraním, textové editory přešly z příkazové řádky na klikání a psaní přímo do dokumentu. Stejný přechod teď probíhá u webových aplikací — Edit Mode v Macaly je krokem k přímé manipulaci aplikace bez mezivrstvičky promptů. Je to evoluce k přirozenějšímu tvůrčímu procesu.

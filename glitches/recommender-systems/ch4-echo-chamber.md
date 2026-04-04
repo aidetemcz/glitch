@@ -10,12 +10,12 @@ Klikneš na zprávu. Algoritmus ukáže další s podobným pohledem. Brzy vidí
 
 Dva lidé na stejné aplikaci žijí v úplně jiných realitách. Každý přesvědčený, že ta jejich je ta správná.
 
-? Proč je ozvěnová komora horší než filtrační bublina?
-- Ozvěnová komora spotřebuje více dat
-- Je hůře vypnutelná
-* Ozvěnová komora tě přesvědčí, že VŠICHNI souhlasí s tebou — různí lidé vidí různé reality o tom samém tématu
-- Ozvěnová komora trvá kratší dobu
-! Přesně! V ozvěnové komoře nikdy neslyšíš opačný pohled. Dvě osoby na stejné platformě mohou mít úplně různé obrázky světa — každá přesvědčená, že ta jejich je ta správná.
+? Co způsobuje ozvěnová komora, co samotná filtrační bublina ne?
+- Způsobuje, že vidíš méně obsahu než ostatní uživatelé
+* Přesvědčí tě, že všichni lidé kolem sdílí tvůj názor — přitom jiní lidé na stejné platformě vidí opačnou realitu
+- Vytváří závislost na jednom typu obsahu, ze které se velmi těžko vychází
+- Způsobuje, že algoritmus přestane fungovat správně a doporučení jsou náhodná
+! Přesně! V ozvěnové komoře nikdy neslyšíš opačný pohled.
 
 +++
 Ozvěnová komora je ve skutečnosti starší než internet — existovala vždy, když si lidé vybírali informace, které potvrzují jejich přesvědčení. Psychologové tomu říkají „potvrzovací zkreslení" (confirmation bias). Sociální sítě ho jen zesílily — a algoritmy mu daly turbo, protože automaticky a neviditelně filtrují obsah tak, aby potvrzoval to, čemu věříme.

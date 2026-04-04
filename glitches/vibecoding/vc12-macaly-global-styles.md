@@ -15,7 +15,7 @@ Chceš změnit modrou na zelenou — ale modrá je na 15 místech v aplikaci. Mu
 - K synchronizaci aplikace mezi zařízeními
 * K definování jednotného vizuálního stylu, který platí pro celou aplikaci najednou
 - K exportu aplikace na různé platformy
-! Správně! Global Styles ti umožní nastavit design jednou (barvy, fonty, zaoblení...) a tento styl se automaticky aplikuje na celou aplikaci konzistentně.
+! Správně! Global Styles ti umožní nastavit design jednou a tento styl se automaticky aplikuje konzistentně na celou aplikaci.
 
 +++
 Global Styles jsou implementací principu DRY — Don't Repeat Yourself (neopakuj se). Je to jeden ze základních principů dobrého programování. Pokud máš barvu na 15 místech a změníš ji na každém místě zvlášť, pravděpodobně na jedno místo zapomeneš a aplikace bude nekonzistentní. Global Styles toto řeší: jedna změna, všude se projeví. Profesionální webové aplikace používají CSS variables nebo design tokeny — přesně pro stejný účel.

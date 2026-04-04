@@ -11,11 +11,11 @@ Video se stane populárním → dostane se na trending → miliony dalších lid
 Na YouTube dostane top 3 % kanálů přes 90 % všech zhlédnutí. TikTok tohle rozbíjí: každé nové video nejdřív ukáže malé náhodné skupině. Pokud se líbí, jde dál. Fér šance pro každého.
 
 ? Co je problém „bohatí bohatnou" v doporučování?
-- Bohatí uživatelé dostávají lepší doporučení
-- Placený obsah dominuje feedu
-* Populární obsah získá více viditelnosti → více zhlédnutí → zůstane populární, noví tvůrci jsou pohřbeni
-- Algoritmy upřednostňují starší obsah před novým
-! Přesně! Popularita se sama posiluje — populární věci jsou doporučovány, doporučené věci jsou populárnější. TikTok's testovací okruh a Spotify Discover Weekly pomáhají novým tvůrcům prolomit tento cyklus.
+- Platformy záměrně upřednostňují tvůrce, kteří platí za propagaci
+* Populární obsah dostane více viditelnosti → více zhlédnutí → zůstane populární, noví tvůrci se nikdy nedostanou do feedu
+- Algoritmus upřednostňuje obsah, který je starší a má ověřenou kvalitu
+- Uživatelé s více followers dostávají přesnější doporučení než ostatní
+! Přesně! Popularita se sama posiluje — populární věci jsou doporučovány, doporučené věci jsou populárnější.
 
 +++
 Efekt „bohatí bohatnou" má v ekonomii jméno: Matoušův efekt (podle biblického výroku „kdo má, tomu bude dáno"). V digitálním světě je extrémně silný, protože šíření obsahu je téměř bez nákladů. Na fyzickém trhu musíš zaplatit za výrobu a distribuci každé kopie — to přirozeně omezuje dominanci jednoho produktu. Na YouTube je šíření jakéhokoliv videa prakticky zadarmo, takže nic nebrání tomu, aby jedno video dostalo miliardu zhlédnutí.

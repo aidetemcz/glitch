@@ -10,12 +10,12 @@ Napíšeš „boty" v e-shopu. Vidíš ty a tvůj kamarád stejné výsledky? As
 
 „Lidé také hledali" od Googlu je čisté kolaborativní filtrování aplikované na dotazy. Vyhledávání a doporučování se slévají — technologie za oběma je stále více stejná.
 
-? Jsou výsledky vyhledávání stejné pro každého?
-- Ano, vyhledávání je objektivní a stejné pro všechny
-- Jen na mobilu jsou výsledky jiné než na počítači
-* Ne! Výsledky jsou stále více personalizované podle tvé historie, polohy a minulého chování
-- Jen placené výsledky jsou personalizované
-! Správně! Vyhledávání je personalizované — tvoje minulé kliknutí, poloha a chování ovlivňují, co vidíš. Tvůj Google není můj Google.
+? Co se stane, když ty a kamarád hledáte na Googlu totéž?
+- Dostanete úplně stejné výsledky, protože Google pracuje objektivně
+* Výsledky budou jiné — Google je přizpůsobí vaší historii, poloze a minulém chování
+- Kamarád uvidí více reklam, pokud Google nemá o něm dostatek dat
+- Výsledky jsou stejné, ale v jiném pořadí podle rychlosti internetu
+! Správně! Vyhledávání je personalizované — tvoje minulé kliknutí, poloha a chování ovlivňují, co vidíš.
 
 +++
 Personalizované vyhledávání spustil Google v roce 2009 — a bylo to kontroverzní. Kritici varovali, že pokud každý vidí jiné výsledky, přestávají existovat „objektivní fakta" dostupná všem stejně. Eli Pariser tento fenomén v roce 2011 pojmenoval jako „filtrační bublina" — jeho kniha o tom předcházela virálním diskuzím o algoritmech o celé desetiletí. Google personalizaci od té doby trochu omezil, ale nikdy nezrušil.

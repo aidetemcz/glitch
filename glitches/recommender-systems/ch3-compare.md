@@ -11,11 +11,11 @@ Kolaborativní filtrování tě dokáže překvapit — doporučí něco, co bys
 Nejlepší systémy kombinují obě metody. YouTube, Spotify, Netflix, TikTok — všechny jsou hybridní.
 
 ? Kdy je filtrování podle obsahu lepší než kolaborativní?
-- Když máme miliony uživatelů s bohatou historií
-- Nikdy — kolaborativní je vždy lepší
-* Pro nové položky bez hodnocení a pro niche zájmy
-- Pouze pro hudbu, ne pro videa
-! Správně! Filtrování podle obsahu funguje hned pro nové položky a niche témata. Kolaborativní potřebuje data od podobných uživatelů — a je lepší pro překvapivé objevy.
+* Pro nové položky bez hodnocení a pro úzce zaměřené zájmy, kde málo lidí sdílí stejný vkus
+- Když platforma má miliony uživatelů s bohatou historií sledování
+- Vždy, pokud záleží na rychlosti — filtrování podle obsahu je výrazně rychlejší
+- Pro hudbu a podcasty, kde jsou tagy a žánry přesnější než u videí
+! Správně! Filtrování podle obsahu funguje hned pro nové položky a niche témata.
 
 +++
 Hybridní přístup je dnes standard, ale cesta k němu trvala dvě desetiletí pokusů a omylů. Netflix v roce 2006 použil převážně filtrování podle obsahu — porovnával žánry, hercé, režiséry. Bylo to přesné, ale doporučení byla předvídatelná. Po přechodu na hybridní přístup s kolaborativním filtrováním se výrazně zvýšil počet „překvapivých hitů" — filmů, které uživatelé nečekali, ale pak milovali.

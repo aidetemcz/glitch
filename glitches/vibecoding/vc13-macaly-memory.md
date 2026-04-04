@@ -15,7 +15,7 @@ Praktický dopad: příští den pokračuješ tam, kde jsi skončil. Prostě nap
 - Sdílení projektu s kamarády
 * To, že AI si pamatuje kontext projektu a nemusíš ho pokaždé znovu vysvětlovat
 - Přeložení aplikace do různých jazyků
-! Přesně! Agent Memory zajišťuje, že AI si pamatuje tvůj projekt, tvoje preference a rozhodnutí — takže vždy pokračuješ tam, kde jsi skončil/a.
+! Přesně! Agent Memory zajišťuje, že AI si pamatuje tvůj projekt a preference — takže vždy pokračuješ tam, kde jsi skončil.
 
 +++
 Problém kontextového okna je technickým základem toho, proč AI „zapomíná." LLM (velké jazykové modely) jako GPT-4 nebo Claude mají omezené kontextové okno — množství textu, které „udrží v hlavě" najednou. Starší modely měly okno 4 000 tokenů (zhruba 3 000 slov), novější mají 128 000 nebo více. Ale i velké okno nestačí pro dlouhé projekty. Agent Memory obchází tento limit ukládáním kontextu externě a načítáním relevantních částí podle potřeby.

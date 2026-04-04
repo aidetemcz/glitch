@@ -10,12 +10,12 @@ YouTube má 800 milionů videí. Celý pipeline musí proběhnout za méně než
 
 Kdybys lidský knihovník procházel 800 milionů videí rychlostí jedno video za sekundu, trvalo by mu to 25 LET. YouTube to zvládne dřív, než stihneš mrknout.
 
-? Jak dlouho by trvalo člověku udělat to, co YouTube zvládne za 1 sekundu?
-- Hodinu
-- Týden
-* 25 LET! Proto potřebujeme algoritmy — takové měřítko je pro lidi nemyslitelné
-- Jeden den
-! Přesně! Při jednom videu za sekundu by procházení 800 milionů videí trvalo 25 let. Algoritmy to zvládnou za zlomek sekundy díky chytrému pipeline designu.
+? Jak dlouho by trvalo člověku projít všechna YouTube videa, pokud by si jedno přehrával za sekundu?
+- Zhruba rok, pokud by pracoval bez přestávky
+* 25 let — proto potřebujeme algoritmy, takové měřítko je pro člověka nemyslitelné
+- Asi měsíc, pokud by to dělal nepřetržitě
+- Přibližně jeden týden intenzivní práce
+! Přesně! Při jednom videu za sekundu by procházení 800 milionů videí trvalo 25 let.
 
 +++
 200 milisekund je hranice, za kterou si lidé začínají uvědomovat zpomalení — vědecky se tomu říká „just noticeable delay." Pokud stránka načítá déle než 200 ms, začínáš být nervózní. Pokud déle než 1 sekundu, pravděpodobně ji zavřeš. Proto jsou doporučovací systémy navrženy tak, aby odpovídaly pod touto hranicí — a proto jsou technicky tak náročné. Pomalejší algoritmus, byť přesnější, ve výsledku selhává, protože ho nikdo nečeká.

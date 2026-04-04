@@ -11,11 +11,11 @@ Máš nad svými stopami víc kontroly, než si myslíš. Na YouTube tři tečky
 Smazání historie je jako vymazat stopy ve sněhu — systém musí začít znovu. Oddělené profily zajistí, že tátovy reklamy na sekačky nezkazí tvůj feed.
 
 ? Jak můžeš ovlivnit svá doporučení?
+* Tlačítkem „Nezajímá mě", smazáním historie nebo oddělenými profily
 - Nedá se to ovlivnit — algoritmus rozhoduje sám
 - Jen smazáním celého účtu
-* Tlačítkem „Nezajímá mě", smazáním historie nebo oddělenými profily
 - Platbou za prémiový účet
-! Přesně! Máš superschopnosti: Nezajímá mě, smazání historie, oddělené profily, anonymní režim nebo nastavení aplikace.
+! Přesně! Tlačítko „Nezajímá mě", smazání historie a oddělené profily jsou tvoje nástroje pro trénování algoritmu.
 
 +++
 Tlačítko „Nezajímá mě" je mocnější, než vypadá. Výzkumníci testovali, jak moc ho YouTube bere vážně — a zjistili, že po kliknutí na „Nezajímá mě" se podobný obsah zobrazí zhruba o 11 % méně. Zní to málo, ale pokud to děláš konzistentně, efekt se kumuluje. Naopak tlačítko „Toto video nesdílet" (skrýt) je mnohem silnější — snižuje podobný obsah až o 50 %.

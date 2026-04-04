@@ -15,7 +15,7 @@ TikTok: Profil → Nastavení a soukromí → Stáhnout svá data. Dostaneš cel
 - V Google Maps
 * myactivity.google.com — zobrazuje každé vyhledávání, video i kliknutí, s možností nastavit automatické mazání
 - Nelze to zjistit
-! Přesně! myactivity.google.com zobrazuje celou tvoji Google historii. Mnoho lidí je šokováno množstvím dat. Tam také nastavíš automatické mazání starých dat.
+! Přesně! myactivity.google.com zobrazuje celou tvoji Google historii.
 
 +++
 Množství dat, které na sebe najdeš, bývá šokující — ale je důležité si uvědomit, že to je jen data, která platforma ti ukazuje dobrovolně. To nejsou všechna data, která o tobě má. Metadata (kdy jsi se přihlásil, ze které IP adresy, jak dlouho jsi byl aktivní) typicky v těchto exportech chybí. A data o tvém chování, která byla použita k trénování modelů, jsou uložena jinak. Export dat je tedy první krok k transparentnosti, ne úplný obrázek.

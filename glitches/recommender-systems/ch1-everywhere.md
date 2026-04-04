@@ -10,12 +10,12 @@ YouTube ti ukazuje videa, než cokoli napíšeš. Netflix říká „Protože js
 
 Netflix přiznal, že 80 % toho, co lidé sledují, pochází z doporučení. Ne z vyhledávání. Algoritmus vybírá za tebe víc, než si uvědomuješ.
 
-? Která platforma NEPOUŽÍVÁ doporučovací systém?
-- TikTok
-- Spotify
-* Obyčejná tiskárna
-- Netflix
-! Správně! Tiskárna žádný algoritmus nemá. Všechny ostatní — TikTok, Spotify, Netflix — jsou postaveny na doporučovacích systémech.
+? Jakou roli hraje algoritmus na Netflixu při výběru toho, co sleduješ?
+* Vybírá 80 % toho, co lidé sledují — víc než jejich vlastní vyhledávání
+- Seřadí filmy abecedně podle názvu
+- Zobrazí filmy, které jsou právě v kinech
+- Doporučuje filmy, které naposledy přidali ostatní uživatelé
+! Správně! Tiskárna žádný algoritmus nemá.
 
 +++
 Doporučovací systémy jsou dnes tak všudypřítomné, že si jejich absenci ani nedokážeme představit. Ještě v roce 2005 musel člověk procházet stovky videí na YouTube ručně, protože žádný algoritmus neexistoval — YouTube tehdy doporučoval jen „nejsledovanější." Dnes by byl takový YouTube k ničemu.

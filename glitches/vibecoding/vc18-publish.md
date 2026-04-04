@@ -15,7 +15,7 @@ Vlastní doménu (třeba moje-hra.cz) řeš až když víš, že projekt chceš 
 - Koupit hosting a doménu a nastavit server
 * Kliknout na tlačítko „Publikovat" v Macaly a sdílet vygenerovaný odkaz
 - Kontaktovat Macaly zákaznickou podporu o pomoc s publikováním
-! Správně! Macaly má vestavěné jedno-klikové publikování. Klikneš na Publikovat, dostaneš odkaz, sdílíš kamarádům. Jednoduché!
+! Správně! Macaly má vestavěné jedno-klikové publikování.
 
 +++
 Vercel a Netlify jsou fascinující příklady toho, jak infrastruktura pro vývojáře se stala komoditou. Dřív hostování webu vyžadovalo pronajmout server, nainstalovat webový server (Apache nebo Nginx), nastavit DNS, spravovat certifikáty SSL. Dnes Vercel nebo Netlify udělají vše automaticky — nahraješ kód, dostaneš URL s HTTPS za 2 minuty, zdarma. Tohle masivně snížilo bariéru vstupu pro tvůrce.

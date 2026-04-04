@@ -11,11 +11,11 @@ Za poslední rok jsi zhlédl 500 videí. Má YouTube zacházet se všemi stejně
 Self-attention — stejná technologie jako za ChatGPT — přiřadí každé položce v historii váhu. Nedávné a podobné dostávají velkou váhu, staré a náhodné skoro žádnou. Proto doporučení reaguje na tvoji aktuální náladu.
 
 ? Proč doporučovač nezachází se všemi tvými minulými interakcemi stejně?
-- Starší interakce jsou uloženy na pomalejším serveru
-- Algoritmus náhodně vybírá, co počítat
-* Nedávné a kontextově relevantní interakce jsou mnohem cennější — self-attention se naučí, na které se zaměřit
-- Systém má kapacitu jen na posledních 10 interakcí
-! Přesně! Self-attention přiřazuje různé váhy různým historickým interakcím podle kontextu. Proto stejná historie dává různá doporučení ráno a večer.
+* Nedávné a kontextově relevantní interakce jsou cennější — self-attention se naučí, na které se zaměřit
+- Starší data jsou méně přesná kvůli změnám v katalogu obsahu
+- Každý uživatel má jiný limit počtu interakcí, které systém uloží
+- Platforma maže starší data kvůli ochraně soukromí
+! Přesně! Self-attention přiřazuje různé váhy různým historickým interakcím podle kontextu.
 
 +++
 Self-attention je klíčová technologie za GPT-4, Claude a dalšími jazykovými modely — ale původně vznikla pro jiné účely. Transformer architektura, která self-attention využívá, byla publikována v roce 2017 v práci „Attention Is All You Need" od týmu z Googlu. Tehdy ji vynalezli pro překlady textu — a ukázalo se, že funguje skvěle i pro doporučovací systémy, hudební generování, obrazové rozpoznávání a desítky dalších oblastí.

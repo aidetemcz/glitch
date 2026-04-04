@@ -11,11 +11,11 @@ Otevřeš YouTube a hned vidíš přesně to, co chceš. Nic jsi nehledal — pr
 Na TikToku má každý úplně jinou stránku „Pro tebe". Stejná appka, úplně jiný svět.
 
 ? Co si YouTube „zapisuje", aby tě poznal?
+* Jak dlouho u každého videa vydržíš
 - Kdy se přihlašuješ a odkud
 - Co píšeš v komentářích
-* Jak dlouho u každého videa vydržíš
 - Jaký máš profil — věk a jméno
-! Algoritmus neřeší, co ŘÍKÁŠ, že máš rád. Věří jen tomu, u čeho skutečně zůstaneš.
+! Algoritmus neřeší, co ŘÍKÁŠ, že máš rád.
 
 +++
 Doporučovací systémy jsou staré víc, než si možná myslíš. Amazon je začal používat už v roce 1998 — tehdy to byl prostý algoritmus „kdo koupil toto, koupil i to." Přesto byl tak účinný, že tržby vzrostly o desítky procent. Dnes jsou algoritmy nesrovnatelně sofistikovanější, ale princip zůstává stejný.

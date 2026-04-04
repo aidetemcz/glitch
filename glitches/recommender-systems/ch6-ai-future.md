@@ -13,9 +13,9 @@ TVOJE generace je první v lidské historii vyrůstající s algoritmy formujíc
 ? Proč TVOJE generace algoritmům rozumí lépe než většina dospělých?
 - Protože jsou mladší a rychleji se učí
 - Protože mají přístup k lepšímu vzdělání
-* Vyrůstali jste S nimi — všimnete si podivných doporučení, víte, jak algoritmus ošálit, a cítíte tah nekonečného scrollování
 - Protože programování se nyní učí ve školách
-! Přesně! Žít v systému od dětství dává jedinečné pochopení, které se nedá naučit z knih. Tato zkušenost je cenná — při budování i regulování těchto technologií.
+* Vyrůstali jste S nimi — všimnete si podivných doporučení, víte, jak algoritmus ošálit, a cítíte tah nekonečného scrollování
+! Přesně! Žít v systému od dětství dává jedinečné pochopení, které se nedá naučit z knih.
 
 +++
 Historické paralely jsou poučné. Generace, která vyrůstala s televizí, jako první pochopila, jak televize manipuluje emocemi, jak reklamy cílí na podvědomí, jak reality show zkresluje realitu. Mediální gramotnost (schopnost kriticky číst mediální sdělení) vznikla právě proto, že lidé, kteří s televizí vyrostli, chtěli chránit sami sebe i ostatní. Algoritmická gramotnost je přesnou analogií pro vaši generaci.

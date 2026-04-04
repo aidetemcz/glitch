@@ -11,11 +11,11 @@ Staré SEO: cpej klíčová slova, obelsti algoritmus. Nové SEO: piš přirozen
 Výsledky vyhledávání jsou personalizované — „být na 1. místě" neexistuje. Tvůj obsah může být první pro tvoje cílové publikum a neviditelný pro všechny ostatní.
 
 ? Proč dnes „být na 1. místě Googlu" neexistuje?
-- Protože Google zrušil číslování výsledků
-- Protože výsledky se aktualizují každou minutu
-* Výsledky jsou personalizované — tvůj obsah může být č. 1 pro tvoje publikum a neviditelný pro všechny ostatní
-- Protože reklamy obsadily první pozice
-! Přesně! Personalizované vyhledávání znamená, že každý vidí jiné výsledky. Cílem není být první pro všechny — ale být nejlepší shoda pro tvoje konkrétní cílové publikum.
+- Výsledky se mění příliš rychle, aby bylo možné udržet první místo déle než pár hodin
+- Google přidal tolik reklam, že organické výsledky jsou vždy až na 2. nebo 3. místě
+- Příliš mnoho webů soutěží o první místo, takže se stále střídají
+* Výsledky jsou personalizované — tvůj obsah může být č. 1 pro tvoje cílové publikum a přitom neviditelný pro ostatní
+! Přesně! Personalizované vyhledávání znamená, že každý vidí jiné výsledky.
 
 +++
 SEO (Search Engine Optimization) je miliardový průmysl a fascinující příklad závodu ve zbrojení mezi tvůrci a algoritmy. Tvůrci hledají způsoby, jak algoritmus přimět zobrazit jejich obsah výše — algoritmy se adaptují, aby tyhle triky penalizovaly. Každá aktualizace Google algoritmu způsobí výkyvy v návštěvnosti tisíců webů. Firmy zaměstnávají celé týmy SEO specialistů, jejichž práce je sledovat tyto změny a přizpůsobovat obsah.

@@ -15,7 +15,7 @@ Je to jako „Sledovat změny" ve Wordu, ale pro aplikace. Dává ti kontrolu na
 - K přepnutí mezi světlým a tmavým designem
 * K zobrazení přesně co AI změnila v kódu — než změny přijmeš nebo odmítneš
 - K záloze projektu před větší změnou
-! Přesně! Diff Mode ti ukáže co přidala a co odebrala — a ty rozhodneš, zda změny přijmout. Dává ti to kontrolu nad tím, co AI dělá.
+! Přesně! Diff Mode ti ukáže co přidala a co odebrala — a ty rozhodneš, zda změny přijmout.
 
 +++
 Diff formát (zobrazení rozdílů s + a - a barvami) je standard v softwarovém vývoji od 70. let. Původně byl nástrojem pro porovnávání verzí dokumentů a kódu na Unixu. Dnes ho používají GitHub, GitLab a všechny moderní vývojové nástroje. Faktem, že Macaly přijal tento formát, ukazuje, jak vibecoding přebírá osvědčené praktiky z profesionálního vývoje a zpřístupňuje je začátečníkům.

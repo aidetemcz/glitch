@@ -15,7 +15,7 @@ Velké platformy mají armády právníků a zákony jsou vždy pomalejší než
 - Právo na bezplatné doporučovací systémy
 * Právo odmítnout algoritmická doporučení a zákaz profilování dětí pro cílení
 - Právo vědět, kdo programoval daný algoritmus
-! Přesně! Digital Services Act (DSA) dává uživatelům právo odmítnout algoritmické feedy a zakazuje profilování nezletilých. V praxi je vymáhání složité, ale právo existuje.
+! Přesně! Digital Services Act (DSA) dává uživatelům právo odmítnout algoritmické feedy a zakazuje profilování nezletilých.
 
 +++
 DSA (Digital Services Act) je součástí širší EU strategie regulace digitálního prostoru. Spolu s ním přišel DMA (Digital Markets Act) zaměřený na monopoly, AI Act (regulace AI systémů) a GDPR pro soukromí. Dohromady tvoří nejkomplexnější regulační rámec pro tech firmy na světě. USA, Čína ani žádná jiná jurisdikce nemá srovnatelnou ochranu uživatelů — proto EU regulace ovlivňují globální standardy, i když firma sídlí jinde.

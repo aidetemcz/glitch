@@ -11,11 +11,11 @@ Koukneš se na jedno Minecraft video. Algoritmus ukáže další. Kouknout na ta
 Záludné je, že je to neviditelné — tvůj feed ti přijde normální, protože nevidíš, co ti chybí.
 
 ? Co je filtrační bublina?
-- Chyba v algoritmu, která způsobuje opakování obsahu
-- Reklamní systém, který tě sleduje po internetu
-* Když ti algoritmus ukazuje jen věci, které už máš rád — nikdy neobjevíš nic nového
-- Systém, který blokuje nevhodný obsah
-! Přesně! Filtrační bublina je neviditelná — nevíš, v ní jsi, protože nevidíš, co ti chybí. Algoritmus tě chrání před neznámým, ale zároveň tě omezuje.
+- Funkce platformy, která filtruje nevhodný nebo nebezpečný obsah
+* Stav, kdy algoritmus ukazuje jen věci podobné tomu, co máš rád — a ty nevidíš, co ti chybí
+- Situace, kdy algoritmus přestane fungovat a zobrazuje pořád to samé video
+- Osobní seznam oblíbených videí, který si sám vytvoříš
+! Přesně! Filtrační bublina je neviditelná — nevíš, v ní jsi, protože nevidíš, co ti chybí.
 
 +++
 Termín „filtrační bublina" popularizoval Eli Pariser v knize z roku 2011. Pariser si všiml, že když on a jeho konzervativní kamarádi na Facebooku sdíleli stejné zprávy, každý viděl jiné. Algoritmus Facebooku mu ukryl konzervativní perspektivy, protože s nimi málo interagoval. To bylo pro Parisera znepokojivé — nešlo o to, co chtěl, ale o to, že mu byl obsah skrytý bez jeho vědomí.

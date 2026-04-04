@@ -15,7 +15,7 @@ A UDRŽET — aplikacím záleží na tom, abys je dál používal. Tenhle úkol
 * Odkrývat, nacházet a udržovat zájem
 - Prodávat, inzerovat, profilovat
 - Filtrovat, třídit, mazat
-! Přesně! ODKRÝVAT nové věci, NACHÁZET věci rychleji v obrovských katalozích a UDRŽOVAT zájem — to jsou tři pilíře každého doporučovače.
+! Přesně! Doporučovač musí zároveň odhalovat nové věci, pomáhat ti je najít a udržet tvůj zájem — v rovnováze.
 
 +++
 Tyto tři úkoly jsou ve skutečném napětí. Systém, který je příliš dobrý v udržení zájmu, tě nenechá objevovat nové věci — pořád ti servíruje to, co URČITĚ máš rád. A systém příliš zaměřený na objevování ti bude doporučovat věci, které tě vůbec nezajímají. Najít rovnováhu je jeden z největších technických výzev v oboru.

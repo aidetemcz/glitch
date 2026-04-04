@@ -11,11 +11,11 @@ Inženýři doporučení na YouTube, Spotify nebo v českém Recombee tráví dn
 Potřebuješ matematiku, programování v Pythonu a zvídavost. Nejlepší inženýři se ptají „proč?": Proč ta předpověď selhala? Proč se uživatelé v Česku chovají jinak než v Japonsku?
 
 ? Jaké dovednosti potřebuje inženýr doporučení?
-- Jen programování v Pythonu
-- Designové dovednosti pro uživatelské rozhraní
-* Matematiku (statistiku, lineární algebru), programování, kreativitu a zvídavost ohledně chování uživatelů
-- Pouze datovou analýzu
-! Přesně! Kombinace matematiky, programování a pochopení lidského chování je klíčová. Bez zvídavosti a kreativity nejlepší algoritmus nestačí.
+- Hlavně designové dovednosti — doporučení musí vypadat přehledně a líbit se uživatelům
+- Především znalost databází a správy serverů pro ukládání dat
+- Zkušenosti s marketingem a pochopení, co uživatele přiměje kliknout
+* Matematiku a statistiku, programování a zvídavost ohledně chování uživatelů — proč to selhalo?
+! Přesně! Kombinace matematiky, programování a pochopení lidského chování je klíčová.
 
 +++
 ML inženýři a datoví vědci jsou jedni z nejvíce žádaných a nejlépe placených profesí v tech průmyslu. Průměrný senior ML inženýr v Praze vydělává 150–200 tisíc Kč měsíčně, v Londýně nebo Berlíně dvojnásobek a v San Francisku trojnásobek. Zájem výrazně převyšuje nabídku — proto firmy jako Recombee aktivně spolupracují s českými univerzitami a hledají absolventy, kteří rozumějí jak matematice, tak programování.

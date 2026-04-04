@@ -11,11 +11,11 @@ Python skript na kolaborativní filtrování. Ulož data jako ratings.csv: jmén
 Funkce similarity: projdi filmy, které oba hodnotili, spočítej průměrný absolutní rozdíl. Funkce recommend: najdi nejpodobnějšího uživatele a doporuč filmy, které dosud neviděl. Celkem asi 20 řádků — stejná logika jako Netflix.
 
 ? Kolik řádků Pythonu stačí na základní kolaborativní filtrování?
-- Alespoň 500 řádků
-- Kolem 200 řádků
-* Asi 20! Načítání dat, výpočet podobnosti a předpověď — základní logika je překvapivě jednoduchá
-- Potřebuješ specializovanou knihovnu, ne vlastní kód
-! Přesně! Základní kolaborativní filtrování je překvapivě jednoduché implementovat. Velké systémy přidávají optimalizace pro škálování, ale základní myšlenka je stejná.
+- Alespoň 500 řádků — algoritmus je příliš složitý na méně
+- Kolem 100 řádků, pokud použiješ základní knihovny
+- Základní logiku nelze napsat bez specializované knihovny
+* Asi 20 řádků stačí — načítání dat, výpočet podobnosti a předpověď jsou překvapivě jednoduché
+! Přesně! Základní kolaborativní filtrování je překvapivě jednoduché implementovat.
 
 +++
 20 řádků Pythonu je hezký příklad, jak matematická myšlenka se dá elegantně vyjádřit kódem. Python byl záměrně navržen tak, aby kód byl čitelný — proto je tak populární v datové vědě a ML. Kód pro kolaborativní filtrování, který by v C++ nebo Javě zabral stovky řádků, je v Pythonu přehledný a srozumitelný. To je jeden z důvodů, proč se Python stal dominantním jazykem v ML světě.

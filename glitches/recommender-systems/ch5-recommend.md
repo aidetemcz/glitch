@@ -11,11 +11,11 @@ Sam neviděl Mario. Alex (velmi podobný Samovi) dal 3 hvězdičky. Maya (střed
 Udělej to pro každý film, který Sam neviděl. Seřaď podle předpovězených hodnocení. Filmy nad 4 hvězdičky — doporuč. Pod 3 — nedoporučuj. Hotovo.
 
 ? Jak předpovíš hodnocení neviděné položky?
-- Vezmeš průměr hodnocení od všech uživatelů
-- Podíváš se na hodnocení kritiků v médiích
-* Najdeš 2–3 nejpodobnější uživatele, kteří ji hodnotili, a zprůměruješ jejich hodnocení
-- Náhodně přiřadíš hodnocení mezi 1 a 5
-! Přesně! Průměr hodnocení od vkusových dvojníků je jednoduchá, ale účinná metoda předpovídání. Čím přesnější jsou skóre podobnosti, tím lepší jsou předpovědi.
+- Vezmeš celkový průměr hodnocení dané položky od všech uživatelů
+- Podíváš se na to, jak podobný obsah hodnotil daný uživatel v minulosti
+- Odhadneš hodnocení na základě žánru a délky položky
+* Najdeš 2–3 uživatele nejpodobnějšího vkusu a zprůměruješ jejich hodnocení dané položky
+! Přesně! Průměr hodnocení od vkusových dvojníků je jednoduchá, ale účinná metoda předpovídání.
 
 +++
 Vážený průměr (weighted average) je vylepšení čistého průměru — místo aby každý vkusový dvojník měl stejnou váhu, dostane váhu podle míry své podobnosti s tebou. Alex, který s tebou souhlasí v 9 z 10 filmů, má větší váhu než Maya, která souhlasí v 6 z 10. Výsledné předpovědi jsou přesnější. Tato technika se nazývá user-based collaborative filtering s váženým průměrem a je přesnější než jednoduchý průměr ve většině případů.

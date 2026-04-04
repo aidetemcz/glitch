@@ -15,7 +15,7 @@ Test miniatury: než klikneš, zastav se na vteřinu a zeptej se: „Chci to opr
 - Hodnocení kvality miniatury algoritmem
 * Zastav se před kliknutím a zeptej se: Chci to OPRAVDU sledovat? Přeruší to autopilota a vrátí tě zpět za volant
 - Kontrola, zda miniatura odpovídá obsahu videa
-! Přesně! Jednosekundová pauza před kliknutím rozbije automatické chování. Místo unášení se začínáš skutečně rozhodovat, co sledovat.
+! Přesně! Jednosekundová pauza před kliknutím rozbije automatické chování.
 
 +++
 Zapnutí/vypnutí autoplay je možná nejjednodušší věc s největším dopadem. Výzkumy z Harvardu ukázaly, že uživatelé, kteří sledují s vypnutým autoplay, strávili v průměru o 30 minut méně denně na streaming platformách — a zároveň reportovali vyšší spokojenost s tím, co sledovali. Je to paradox: méně strávených hodin, ale více spokojenosti. Autoplay nevede k lepšímu obsahu, jen k více obsahu.

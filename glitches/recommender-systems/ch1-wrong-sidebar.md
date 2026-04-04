@@ -11,11 +11,11 @@ Sleduješ JEDNO video o tom, jak se vyrábí sliz — a najednou je celý YouTub
 Systém vidí jen kliknutí, ne důvody. Nerozlišuje tvůj záměr od náhody — a to ho ošálí překvapivě snadno.
 
 ? Proč doporučení někdy selhávají?
-- Algoritmus je příliš pomalý
-- Platformy záměrně ukazují špatný obsah
 * Systém vidí jen kliknutí, ne důvody — nerozlišuje tvůj záměr od náhody
-- Doporučení jsou vždy dokonalá
-! Systém vidí jen kliknutí, ne důvody. Bráchova Prasátka Pepa nebo jedno náhodné video snadno zmátnou celý feed.
+- Algoritmus se učí příliš pomalu a nestíhá reagovat na nový obsah
+- Platformy mají málo dat o méně populárních tématech
+- Doporučení fungují dobře jen pro starší uživatele s dlouhou historií
+! Systém vidí jen kliknutí, ne důvody — proto ho jedno náhodné video nebo bráchova Prasátka Pepa snadno zmátnou.
 
 +++
 Problém záměny kliknutí za zájem je v oboru dobře znám pod názvem „clickbait trap." Tvůrci obsahu to vědí a záměrně navrhují miniatury tak, aby přinutily kliknout — i lidi, které téma vůbec nezajímá. YouTube pak vidí kliknutí jako signál zájmu, ale nízká doba sledování ho zase opravuje. Proto YouTube v posledních letech přešel z optimalizace na kliknutí na optimalizaci na sledovanou dobu.

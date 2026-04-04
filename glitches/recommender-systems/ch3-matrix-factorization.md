@@ -11,11 +11,11 @@ Netflix má 230 milionů uživatelů a 15 000 filmů. Tabulka hodnocení by měl
 Maticová faktorizace řeší: neuchovávej tu obrovskou tabulku. Popiš každého uživatele a každý film krátkým seznamem skrytých čísel — třeba 50. Tato čísla systém nikdy nezná předem — objeví je sám ze vzorců v hodnoceních. Přesně tato technika vyhrála milionovou cenu Netflixu.
 
 ? Co dělá maticová faktorizace s obrovskou maticí hodnocení?
-- Ukládá ji komprimovanou na disk
-- Ignoruje prázdné buňky a počítá jen vyplněné
-* Rozloží ji na dvě menší matice — pro uživatele a položky — každá s latentními dimenzemi vkusu
-- Převede hodnocení na binární hodnoty ano/ne
-! Přesně! Rozkladem na dvě menší matice systém odhalí skryté dimenze vkusu a dokáže předpovědět hodnocení pro položky, které uživatel nikdy neviděl.
+- Doplní prázdné buňky průměrným hodnocením od ostatních uživatelů
+* Rozloží ji na dvě menší matice — pro uživatele a položky — každá se skrytými dimenzemi vkusu
+- Odstraní uživatele, kteří hodnotili méně než 10 položek
+- Sloučí podobné filmy do skupin, aby bylo méně dat k zpracování
+! Rozkladem na dvě menší matice systém odhalí skryté dimenze vkusu a dokáže předpovědět hodnocení pro položky, které uživatel nikdy neviděl.
 
 +++
 Skryté dimenze jsou záhadné a fascinující. Nikdo je systému nepojmenoval — systém si je sám vymyslel z dat. V praxi vědci někdy zkoumají, co tyto dimenze zachycují. V analýzách filmových dat se ukázalo, že jedna dimenze zachycuje přibližně „mainstreamové vs. artové filmy," jiná „vážné vs. komediální," další „americké vs. evropské." Ale systém si také vymýšlí dimenze, které žádné přímé pojmenování nemají — zachycují subtilní vzory, které lidé nedokážou jednoduše popsat.

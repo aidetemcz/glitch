@@ -10,12 +10,12 @@ Stavíš mini systém — 5 kamarádů, 6 filmů, 30 buněk. Netflix má 230 mil
 
 Spotifyho by ve stejném měřítku jako tabulka na lepítku sahala za Měsíc. YouTubova za celou sluneční soustavu. A přesto algoritmy nacházejí vzorce v těchto neuvěřitelně řídkých datech.
 
-? Kolik možných kombinací uživatel-položka má Netflix?
-- 230 milionů (počet uživatelů)
-- 15 000 (počet filmů)
-* 3,4 BILIONU! A většina buněk je prázdná
-- 1 trilion
-! Přesně! 230 milionů uživatelů × 15 000 filmů = 3,4 bilionu kombinací. Přesto algoritmy nacházejí vzorce v těchto řídkých datech — to je skutečná magie.
+? Kolik možných kombinací uživatel-film má Netflix (230 milionů uživatelů × 15 000 filmů)?
+- Přibližně 230 milionů — zhruba počet uživatelů
+- Přibližně 3,5 miliardy — jako počet lidí s internetem
+- Přibližně 345 miliard — deset tisíckrát víc než uživatelů
+* 3,4 bilionu — a přitom 99 % buněk je prázdných, protože nikdo neviděl vše
+! Přesně! 230 milionů uživatelů × 15 000 filmů = 3,4 bilionu kombinací.
 
 +++
 Řídkost (sparsity) dat je jeden z klíčových problémů, ale zároveň jedna z klíčových příležitostí. Pokud by každý Netflix uživatel viděl každý film (tabulka by byla plná), doporučení by bylo jednoduché. Ale právě proto, že 99 % buněk je prázdných, je doporučení cenné — přesně ten 1 % věcí, které jsi viděl, říká víc o tobě než celá plná tabulka.

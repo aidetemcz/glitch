@@ -11,10 +11,10 @@ Doporučovací systémy nejsou jen věc Silicon Valley. Seznam.cz personalizuje 
 A Recombee — jeden z předních světových doporučovacích enginů — pochází přímo z Česka, z týmu FIT ČVUT v Praze.
 
 ? Která česká firma vyvinula doporučovací systém, který dnes používají tisíce firem po celém světě?
-- Seznam.cz
-- Prima+
+- Kiwi.com
 * Recombee
-- Glami
+- Seznam.cz
+- Avast
 ! Recombee vznikl ve spolupráci s FIT ČVUT v Praze a dnes ho využívají tisíce firem globálně — a dokonce i tato kniha.
 
 +++

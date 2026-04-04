@@ -15,7 +15,7 @@ Mají děti mít jiné algoritmy? Mohou firmy vydělávat na maximalizaci sledov
 - Kolik stojí provoz doporučovacích systémů
 * Mají děti mít jiné algoritmy? Kdo definuje škodlivé? Mají algoritmy ukazovat nesouhlas? Správné odpovědi zatím neexistují
 - Jak zvýšit přesnost doporučení
-! Přesně! Tyto etické otázky nemají jednoznačné odpovědi — odborníci, politici a filozofové je aktivně debatují. Tvůj pohled jako člověka, který s algoritmy vyrůstá, je cenný.
+! Přesně! Tyto etické otázky nemají jednoznačné odpovědi — odborníci, politici a filozofové je aktivně debatují.
 
 +++
 Otázka věkové diferenciace algoritmů je aktuálně nejdiskutovanější v regulacích. Austrálie v roce 2024 zavedla zákon zakazující dětem pod 16 let přístup k sociálním sítím — první takový zákon na světě. Platformy musí ověřovat věk uživatelů. Kritici tvrdí, že děti najdou způsoby, jak to obejít, a mezitím přijdou o vzdělávací obsah i bezpečné prostory online. Zastánci říkají, že alespoň část dětí ochrání. Kdo má pravdu?

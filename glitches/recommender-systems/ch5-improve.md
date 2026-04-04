@@ -10,12 +10,12 @@ Největší zlepšení jedním krokem: více dat. Víc hodnocení od víc lidí 
 
 Kombinuj filtrování podle obsahu (žánr filmů) s kolaborativním. Sleduj, co lidé DĚLAJÍ — film sledovaný třikrát je oblíbenec, i bez hvězdičkového hodnocení. A každou změnu testuj A/B testem.
 
-? Co je jediné největší zlepšení doporučovacího systému?
-- Lepší algoritmus pro výpočet podobnosti
-- Hezčí uživatelské rozhraní
-* Více dat! Více uživatelů a hodnocení vytváří více spojení a lepší předpovědi
-- Rychlejší server
-! Přesně! Více dat je nejsilnější páka. Proto má Netflix tak dobré doporučení — 230 milionů uživatelů hodnotí tisíce filmů. Data poráží chytrost algoritmu.
+? Co nejrychleji zlepší tvůj doporučovací systém?
+- Použít složitější matematiku pro výpočet podobnosti
+- Přidat více kategorií a žánrů pro lepší třídění obsahu
+- Spustit algoritmus na rychlejším serveru
+* Získat více dat — víc hodnocení od víc lidí vytváří více spojení a lepší předpovědi
+! Přesně! Více dat je nejsilnější páka.
 
 +++
 „Data poráží chytrost algoritmu" je v ML světě téměř axiom. Googlers Peter Norvig a Alon Halevy to popsali v slavném článku „The Unreasonable Effectiveness of Data" z roku 2009 — ukázali, že jednoduchý algoritmus s obrovským množstvím dat poráží sofistikovaný algoritmus s malým množstvím dat. To vysvětluje, proč velké firmy (Google, Meta, Amazon) jsou tak posedlé sběrem dat — je to jejich hlavní konkurenční výhoda.

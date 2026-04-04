@@ -13,9 +13,9 @@ Nepotřebuješ programovat. Na první verzi stačí tužka, papír a základní 
 ? Jaké jsou 4 kroky k sestavení doporučovacího systému?
 - Nainstaluj software, připoj databázi, naprogramuj algoritmus, spusť
 - Sbírej uživatele, zobrazuj reklamy, měř kliknutí, optimalizuj
-* Sbírej data → hledej podobné uživatele → vytvárej předpovědi → testuj a zlepšuj
 - Hledej data, čisti data, vizualizuj data, prezentuj data
-! Přesně! Čtyři základní kroky: data, podobnost, předpovědi, testování. Tato smyčka je základem každého doporučovacího systému — od tvého papírového projektu po Netflix.
+* Sbírej data → hledej podobné uživatele → vytvárej předpovědi → testuj a zlepšuj
+! Přesně! Čtyři základní kroky: data, podobnost, předpovědi, testování.
 
 +++
 „Postav první, optimalizuj druhé" je zlaté pravidlo softwarového vývoje. Netflix nezačal s maticovou faktorizací a neuronovými sítěmi — začal s jednoduchými pravidly a postupně přidával komplexitu, kde dat ukazovalo, že to pomáhá. Stejně tak tvůj ruční experiment s papírem a tužkou je legitimní první verze — a lepší výchozí bod než žádný.

@@ -11,11 +11,11 @@ Věž uživatelů: síť vezme vše o tobě a vytvoří jeden embedding. Věž p
 Genialita je v oddělení: embeddingy videí se předpočítají a uloží. Když otevřeš aplikaci, spočítá se jen TVŮJ embedding — a pak stačí najít nejbližší sousedy. Milisekundy.
 
 ? Co jsou dvě věže v architektuře dvou věží?
-- Dva datové servery ve dvou různých zemích
-- Dva různé algoritmy pro různé věkové skupiny
-* Jedna věž kóduje uživatele a druhá položky — obě produkují embeddingy ve stejném prostoru
-- Dva typy doporučení: populární a personalizovaná
-! Přesně! Dvě věže fungují nezávisle — věž položek vytváří embeddingy předem, věž uživatelů je aktualizuje v reálném čase. Proto je systém tak rychlý.
+- Dvě záložní kopie databáze v různých datových centrech pro případ výpadku
+* Jedna věž zpracovává uživatele, druhá položky — obě produkují embeddingy ve stejném matematickém prostoru
+- Dvě fáze doporučovacího pipeline: hrubý výběr kandidátů a přesné seřazení
+- Dva paralelní algoritmy, které dávají návrhy a pak hlasují o výsledku
+! Přesně! Dvě věže fungují nezávisle — věž položek vytváří embeddingy předem, věž uživatelů je aktualizuje v reálném čase.
 
 +++
 Architektura dvou věží je geniální kvůli asymetrii v nákladech. Věž položek přepočítává embeddingy jednou za čas — nové video se zpracuje při nahrání, pak je uloženo. Věž uživatelů musí reagovat v reálném čase na každou akci — nové kliknutí, nové vyhledávání. Oddělením těchto dvou věží YouTube nemusí přepočítávat embeddingy 800 milionů videí pokaždé, když otevřeš aplikaci. Počítá jen tvůj uživatelský embedding.

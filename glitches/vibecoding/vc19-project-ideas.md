@@ -15,7 +15,7 @@ Klíč: vyber projekt, který TEBE baví. Motivace je nejdůležitější ingred
 - Kopie velké aplikace jako Instagram nebo TikTok
 * Jednoduchý projekt, který tě zajímá — sledovač filmů, kvíz, countdown
 - Projekt, který bude vydělávat peníze od prvního dne
-! Přesně! Začni s jednoduchým projektem, který tě baví. Motivace je klíčová — a z jednoduché aplikace se naučíš víc než z nedokončeného složitého projektu.
+! Přesně! Začni s jednoduchým projektem, který tě baví.
 
 +++
 „Scratch your own itch" (škrábi tam, kde tě to svrbí) je mantra indie vývojářů — buduj věci, které sám potřebuješ. Nejúspěšnější aplikace z jednoho člověka vznikly takhle: Superhuman (rychlý emailový klient) vznikl proto, že zakladatel nenáviděl, jak pomalý a nepřehledný je Gmail. Notion vznikl proto, že zakladatelé nenašli nástroj pro poznámky, který by jim vyhovoval. Tvůj problém je pravděpodobně sdílen s tisíci dalšími lidmi.

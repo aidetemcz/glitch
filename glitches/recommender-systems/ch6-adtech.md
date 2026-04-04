@@ -13,9 +13,9 @@ Doporučovací systém funguje v rámci jedné služby: Spotify navrhuje písně
 ? Jaký je rozdíl mezi doporučeními a reklamami?
 - Doporučení jsou zdarma, reklamy jsou placené
 - Doporučení jsou personalizovaná, reklamy jsou pro všechny stejné
-* Doporučení ti pomáhají v rámci JEDNÉ aplikace, adtech tě sleduje napříč CELÝM internetem
 - Doporučení jsou od firem, reklamy od uživatelů
-! Přesně! Doporučovací systém pracuje se daty jedné platformy pro tvůj prospěch. Adtech tě sleduje po celém internetu a prodává tvou pozornost inzerentům.
+* Doporučení ti pomáhají v rámci JEDNÉ aplikace, adtech tě sleduje napříč CELÝM internetem
+! Přesně! Doporučovací systém pracuje se daty jedné platformy pro tvůj prospěch.
 
 +++
 Adtech ekosystém je fascinující a děsivý zároveň. Průměrné webové stránky mají 50–80 třetích stran, které tě sledují — reklamní sítě, analytické nástroje, sociální widgety. Každá z nich přidá malý pixel (1×1 pixel obrázek) na stránku, který při načtení odešle informaci „tento uživatel byl tady v tento čas." Kombinací těchto zpráv od tisíců webů vznikne detailní profil tvojí online aktivity.

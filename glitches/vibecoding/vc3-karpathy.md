@@ -15,7 +15,7 @@ Za pár týdnů se vibecoding stal globálním fenoménem. Tisíce lidí bez tec
 - Zakladatel Minecraftu
 * Andrej Karpathy, AI výzkumník, v roce 2025
 - Vzniklo spontánně na internetu
-! Přesně tak! Andrej Karpathy — jeden z předních AI výzkumníků světa — popsal vibecoding jako způsob, kdy se zcela vzdáváš rozumění kódu a necháváš AI dělat vše.
+! Přesně tak! Andrej Karpathy popsal vibecoding jako způsob, kdy se vzdáváš rozumění kódu a necháváš AI dělat vše.
 
 +++
 Andrej Karpathy je výjimečná osobnost proto, že je jeden z mála lidí, kteří stáli u zrodu moderní AI a zároveň jsou schopni ji srozumitelně vysvětlit. Jeho YouTube kanál o neurálních sítích má miliony zhlédnutí — přednáší tak, aby mu rozuměli studenti středních škol i PhD studenti zároveň. Když takový člověk řekne „vibecoding je budoucnost," svět to bere vážně.

@@ -11,11 +11,11 @@ Alex a Sam — oba dali Frozenu 5 hvězdiček, Spider-Manovi 3, Moaně a Encantu
 Alex a Jordan — Frozen: Alex 5, Jordan 2. Moana: Alex 4, Jordan 2. Průměrný rozdíl přes 2. Úplně různý vkus. Teď, když víš, kdo je komu podobný, můžeš předpovídat.
 
 ? Jak najdeš sousedy vkusu?
-- Porovnáš jejich věk a pohlaví
-- Podíváš se, kdo sleduje stejné kanály
-* Porovnáš hodnocení u společných položek — nižší průměrný rozdíl znamená podobnější vkus
-- Zeptáš se jich na oblíbené žánry
-! Přesně! Matematická podobnost hodnocení odhalí vkusové dvojníky. Čím menší průměrný rozdíl ve sdílených hodnoceních, tím podobnější vkus.
+- Porovnáš, kolik hodin sledování mají oba uživatelé za sebou
+- Podíváš se, které kanály nebo tvůrce oba sledují
+- Zeptáš se jich na oblíbené žánry a témata
+* Porovnáš hodnocení u položek, které oba viděli — čím menší průměrný rozdíl, tím podobnější vkus
+! Přesně! Matematická podobnost hodnocení odhalí vkusové dvojníky.
 
 +++
 Výpočet podobnosti na papíře je elegantní způsob, jak pochopit, co dělá počítač. Ale v produkčním systému musíš spočítat podobnost pro každý pár uživatelů — a to je obrovský počet výpočtů. Netflix s 230 miliony uživateli má přibližně 26 kvadrilionů párů. I kdybys jeden výpočet zvládl za nanosekundu, trvalo by ti to miliony let. Proto se používají aproximativní metody a předpočítávání.

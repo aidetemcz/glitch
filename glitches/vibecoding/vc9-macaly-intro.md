@@ -15,7 +15,7 @@ Verze 3.0 přinesla Edit Mode, Global Styles, Agent Memory a vestavěnou databá
 * Je to česká platforma navržená přímo pro vibecoding s českou podporou
 - Generuje nejrychlejší aplikace na světě
 - Funguje pouze na Macu a iPhonu
-! Přesně! Macaly je česká platforma, navržená od základů pro vibecoding. Česká podpora a komunita jsou velkou výhodou pro začínající uživatele.
+! Přesně! Macaly je česká platforma, navržená od základů pro vibecoding.
 
 +++
 Česká tech scéna je překvapivě silná v poměru k velikosti země. Kromě Macaly a Recombee vznikly v Česku globálně úspěšné projekty jako Avast, JetBrains (tvůrci IntelliJ IDEA — vývojového prostředí používaného miliony programátorů), Productboard nebo Kiwi.com. Praha se stala jedním z nejvýznamnějších technologických center ve střední a východní Evropě. Macaly je součástí této tradice.

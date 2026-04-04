@@ -11,11 +11,11 @@ Radši bys dostával doporučení, která jsou vždy přesná — ale nikdy tě 
 Tohle nejsou jen zábavné otázky. Jsou to skutečné kompromisy, se kterými se inženýři perou každý den. Perfektní odpověď neexistuje — každá volba má svou cenu.
 
 ? Jaký je hlavní kompromis v doporučeních?
+* Lepší doporučení potřebují více dat, ale více dat znamená, že firmy o tobě vědí víc
 - Rychlost versus přesnost algoritmu
 - Velikost databáze versus rychlost odpovědi
-* Lepší doporučení potřebují více dat, ale více dat znamená, že firmy o tobě vědí víc
 - Barevné rozhraní versus jednoduché rozhraní
-! Přesně! Soukromí versus personalizace je jeden z největších kompromisů v navrhování doporučovacích systémů. Více dat = lepší doporučení, ale také více informací o tobě u firem.
+! Přesně! Soukromí versus personalizace je jeden z největších kompromisů v navrhování doporučovacích systémů.
 
 +++
 Tenhle kompromis není jen akademická otázka — firmy ho musí řešit každý den. Apple se rozhodl jít cestou soukromí: iPhone upozorní, když tě aplikace sleduje, a umožní ti to zakázat. Výsledek? Reklamy na iPhonech jsou méně přesné, ale Apple to bere jako výhodu a prodává ji jako hodnotu. Meta (Facebook, Instagram) šla opačnou cestou a maximalizuje data — a vydělává na reklamách násobně více.

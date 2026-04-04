@@ -11,11 +11,11 @@ Dáš filmu 4 hvězdičky — to je explicitní zpětná vazba. Koukáš na seri
 Jen 1 % zhlédnutí vedlo k hodnocení. Netflix to věděl, a v roce 2017 přešel z 5 hvězdiček na palec nahoru/dolů — jednodušší, ale o dost užitečnější data.
 
 ? Proč moderní doporučovací systémy preferují implicitní zpětnou vazbu?
+* Protože uživatelé málokdy hodnotí a implicitní signály se sbírají automaticky u každé interakce
 - Protože explicitní hodnocení jsou příliš přesná
 - Protože uživatelé mají rádi jednoduchost
-* Protože uživatelé málokdy hodnotí a implicitní signály se sbírají automaticky u každé interakce
 - Protože implicitní zpětná vazba je levnější na zpracování
-! Přesně! Jen 1 % zhlédnutí vede k hodnocení. Implicitní signály jako doba sledování jsou dostupné u každé interakce a hůře se záměrně zkreslují.
+! Přesně! Jen 1 % zhlédnutí vede k hodnocení.
 
 +++
 Netflix přechod z hvězdiček na palec nahoru/dolů byl datově podložený experiment. Zjistili, že lidé hodnotí filmy, které viděli v kině nebo které jsou kulturně „prestižní," výše než to, co skutečně pravidelně sledují. Jinými slovy — dávali 5 hvězdiček Schindlerovu seznamu, ale sledovali reality show. Palec nahoru/dolů tuto mezeru zmenšil, protože je jednodušší a méně „sociálně zatížený."

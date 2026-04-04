@@ -10,12 +10,12 @@ Jsi hlavní inženýr v hudební aplikaci. Strategie A: ukaž všem 30 nejpřehr
 
 Po dvou týdnech na 10 000 uživatelích: B vyhrává ve všem. O 37 % více písniček, 4× více nových umělců, vyšší denní návratnost. Data porazila intuici.
 
-? Fungují personalizovaná doporučení skutečně lépe než „ukaž populární"?
-- Ne, uživatelé preferují oblíbené hity
-- Záleží na žánru hudby
-* Ano! Testy ukazují o 37 % více přehraných písniček, 4× více objevených umělců a vyšší zapojení
-- Výsledky jsou vždy stejné
-! Ano! Data jasně ukazují, že personalizovaná doporučení vyhrávají — ale za cenu vyšší výpočetní náročnosti. A/B test poskytl přesvědčivé důkazy místo pouhého hádání.
+? Co ukázal A/B test porovnávající personalizaci s „ukaž populární"?
+- Populární doporučení vyhrála, protože uživatelé mají rádi obsah, který všichni znají
+* Personalizace vyhrála — o 37 % více přehraných písniček, 4× více nových umělců a vyšší denní návratnost
+- Výsledky byly přibližně stejné, záleží hlavně na žánru hudby
+- Personalizace vedla k více poslechu, ale uživatelé byli méně spokojení
+! Přesně! Data porazila intuici — personalizace o 37 % více přehraných písniček, 4× více nových umělců a vyšší denní návratnost.
 
 +++
 A/B testování je standard v celé tech industrii — a je fascinující, jak moc ho firmy využívají. Netflix v každém okamžiku provádí stovky A/B testů najednou — testuje barvy tlačítek, pořadí obsahu, formáty miniatur, typ písma. Každý uživatel Netflixu je pravděpodobně součástí desítek experimentů, aniž by o tom věděl. Výsledky těchto testů určují, jak produkt vypadá.

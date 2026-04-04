@@ -11,11 +11,11 @@ Otevři YouTube. Podívej se na prvních 10 doporučení — kolik z nich je o t
 Zkus to: vyhledej „tutoriál na origami jeřáb," sleduj jedno video celé a obnov stránku. Doporučení o origami budou tam. JEDNO video a feed se začal měnit.
 
 ? Dá se algoritmus záměrně natrénovat?
+* Ano — záměrné vyhledávání, lajkování a tlačítko Nezajímá mě trénují tvůj algoritmus
 - Ne, algoritmus nelze ovlivnit
 - Jen přihlášením k odběru kanálů
-* Ano — záměrné vyhledávání, lajkování a tlačítko Nezajímá mě trénují tvůj algoritmus
 - Jen pomocí placených nástrojů
-! Ano! Každá akce je signál. Záměrně sleduj témata, která chceš, používej Nezajímá mě na nežádoucí obsah — a algoritmus tě poslechne.
+! Ano! Každá akce je signál.
 
 +++
 Záměrné trénování algoritmu je technika, kterou používají content creatorové k výzkumu svého publika. Profesionální YouTubeři si vytvářejí „testovací účty" — přihlásí se, sledují videa přesně v kategorii svého kanálu, a pak sledují, co jim algoritmus začne doporučovat. Tím zjistí, kteří tvůrci jsou jejich přímí konkurenti a jaký obsah algoritmus považuje za podobný tomu jejich.
