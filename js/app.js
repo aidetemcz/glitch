@@ -54,9 +54,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.addEventListener('wheel', (e) => {
     const activeView = document.querySelector('.view.active');
-    if (activeView && !activeView.contains(e.target)) {
-      activeView.scrollBy({ top: e.deltaY, behavior: 'auto' });
+    if (!activeView) return;
+    let el = e.target;
+    while (el) {
+      if (el === activeView) return; // view scrolls natively
+      if (el.scrollHeight > el.clientHeight + 1 &&
+          ['auto', 'scroll'].includes(getComputedStyle(el).overflowY)) return;
+      el = el.parentElement;
     }
+    activeView.scrollBy({ top: e.deltaY, behavior: 'auto' });
   }, { passive: true });
 });
 
