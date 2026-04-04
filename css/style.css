@@ -925,9 +925,10 @@ html, body {
 @media (min-width: 600px) {
   .main-content { max-width: 500px; margin-left: auto; margin-right: auto; left: 50%; transform: translateX(-50%); right: auto; width: 500px; }
   .cat-card { flex: 0 0 300px; }
-  #view-missions { overflow: visible; display: flex; flex-direction: column; }
+  .screen, .main-content, #view-missions, #category-carousel { overflow: visible !important; }
+  #view-missions { display: flex; flex-direction: column; }
   .missions-body { flex: 1; overflow-y: auto; overflow-x: clip; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; min-height: 0; scrollbar-width: none; }
-  .cat-track { width: calc(50vw + 234px); } /* extend track to right viewport edge */
+  .cat-track { width: calc(50vw + 234px); }
   .overlay { max-width: 500px; left: 50%; transform: translateX(-50%); }
   .overlay.hidden { transform: translateX(-50%) translateY(20px); }
   body { background: #241832; }
