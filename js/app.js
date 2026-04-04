@@ -485,7 +485,15 @@ function renderCategoryCarousel() {
   carousel.appendChild(track);
   carousel.appendChild(nextBtn);
 
-  requestAnimationFrame(updateArrows);
+  // Restore scroll position to match active category
+  requestAnimationFrame(() => {
+    if (activeCategoryIdx > 0) {
+      const card = track.querySelector('.cat-card');
+      const cardWidth = card ? card.offsetWidth : track.offsetWidth;
+      track.scrollLeft = activeCategoryIdx * (cardWidth + 12);
+    }
+    updateArrows();
+  });
   track.addEventListener('scroll', updateArrows, { passive: true });
 }
 
