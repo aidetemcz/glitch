@@ -150,11 +150,6 @@ html, body {
   display: flex;
   align-items: center;
 }
-.avatar-wrap {
-  position: relative;
-  width: 42px;
-  height: 42px;
-}
 .topbar-profile {
   width: 42px; height: 42px;
   border-radius: 50%;
@@ -162,13 +157,14 @@ html, body {
   border: none;
   cursor: pointer;
   padding: 0;
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  flex-shrink: 0;
 }
 .avatar-img {
   width: 100%; height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  display: block;
 }
 .bell-icon {
   position: absolute;
@@ -177,6 +173,7 @@ html, body {
   cursor: pointer;
   animation: bell-wobble 1.8s ease-in-out infinite;
   transform-origin: top center;
+  pointer-events: none;
 }
 .bell-icon.hidden { display: none; }
 @keyframes bell-wobble {

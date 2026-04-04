@@ -27,9 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateProfileBtn();
   bindNav();
   bindProfileBtn();
-  const bell = document.getElementById('bell-icon');
-  if (bell) bell.addEventListener('click', openLoginModal);
-
   document.getElementById('logo-btn').addEventListener('click', () => {
     const feedBtn = document.querySelector('.nav-btn[data-view="feed"]');
     if (feedBtn) feedBtn.click();
