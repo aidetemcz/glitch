@@ -15,7 +15,7 @@ Na TikToku má každý úplně jinou stránku „Pro tebe". Stejná appka, úpln
 - Kdy se přihlašuješ a odkud
 - Co píšeš v komentářích
 - Jaký máš profil — věk a jméno
-! Algoritmus neřeší, co ŘÍKÁŠ, že máš rád.
+! Přesně! Čas sledování je nejsilnější signál — YouTube vidí, jak dlouho u každého videa vydržíš, a to mu říká mnohem víc než tvoje slova nebo věk v profilu.
 
 +++
 Doporučovací systémy jsou staré víc, než si možná myslíš. Amazon je začal používat už v roce 1998 — tehdy to byl prostý algoritmus „kdo koupil toto, koupil i to." Přesto byl tak účinný, že tržby vzrostly o desítky procent. Dnes jsou algoritmy nesrovnatelně sofistikovanější, ale princip zůstává stejný.

@@ -15,7 +15,7 @@ Netflix přiznal, že 80 % toho, co lidé sledují, pochází z doporučení. Ne
 - Seřadí filmy abecedně podle názvu
 - Zobrazí filmy, které jsou právě v kinech
 - Doporučuje filmy, které naposledy přidali ostatní uživatelé
-! Správně! Tiskárna žádný algoritmus nemá.
+! Správně! Netflix sám přiznal, že algoritmus vybírá 80 % toho, co lidé sledují — to znamená, že bez doporučení bys skončil u sledování stále stejných věcí, které znáš.
 
 +++
 Doporučovací systémy jsou dnes tak všudypřítomné, že si jejich absenci ani nedokážeme představit. Ještě v roce 2005 musel člověk procházet stovky videí na YouTube ručně, protože žádný algoritmus neexistoval — YouTube tehdy doporučoval jen „nejsledovanější." Dnes by byl takový YouTube k ničemu.
