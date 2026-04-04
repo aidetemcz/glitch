@@ -364,9 +364,19 @@ function renderCategoryCarousel() {
     if (t) t.scrollTo({ left: newIdx * t.offsetWidth, behavior: 'smooth' });
   });
 
+  function updateArrows() {
+    const canLeft = track.scrollLeft > 1;
+    const canRight = track.scrollLeft < track.scrollWidth - track.offsetWidth - 1;
+    prevBtn.style.visibility = canLeft ? 'visible' : 'hidden';
+    nextBtn.style.visibility = canRight ? 'visible' : 'hidden';
+  }
+
   carousel.appendChild(prevBtn);
   carousel.appendChild(track);
   carousel.appendChild(nextBtn);
+
+  requestAnimationFrame(updateArrows);
+  track.addEventListener('scroll', updateArrows, { passive: true });
 }
 
 const STAR_PATH = 'M8.65934 5.11583C10.0559 2.79522 13.4203 2.79522 14.8168 5.11583C15.3186 5.94952 16.1369 6.54409 17.0849 6.76363C19.7234 7.37474 20.7631 10.5745 18.9876 12.6198C18.3498 13.3546 18.0372 14.3166 18.1213 15.286C18.3555 17.9843 15.6337 19.9618 13.1398 18.9053C12.2439 18.5257 11.2323 18.5257 10.3364 18.9053C7.84252 19.9618 5.12069 17.9843 5.35486 15.286C5.43899 14.3166 5.1264 13.3546 4.48856 12.6198C2.71309 10.5745 3.75274 7.37474 6.39134 6.76363C7.33926 6.54409 8.15762 5.94952 8.65934 5.11583Z';
