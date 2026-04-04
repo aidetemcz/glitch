@@ -706,6 +706,7 @@ function showEndActions(glitch, withReadMore = false) {
       if (nextGlitchId) {
         const afterBtn = document.createElement('button');
         afterBtn.className = 'chat-action-btn primary-action';
+        afterBtn.style.alignSelf = 'flex-start';
         afterBtn.textContent = 'Další glitch';
         afterBtn.addEventListener('click', () => openDetail(nextGlitchId));
         container.appendChild(afterBtn);
