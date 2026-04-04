@@ -224,20 +224,20 @@ function bindAccountPage() {
   const resetBtn = document.getElementById('account-reset');
   const resetConfirm = document.getElementById('account-reset-confirm');
   resetBtn.addEventListener('click', () => {
-    resetBtn.classList.add('hidden');
-    resetConfirm.classList.remove('hidden');
+    resetBtn.style.display = 'none';
+    resetConfirm.style.display = 'block';
   });
   document.getElementById('account-reset-yes').addEventListener('click', () => {
     localStorage.removeItem('tg_progress');
     renderFeed();
     renderMapContent(document.getElementById('map-container'), '');
-    resetConfirm.classList.add('hidden');
-    resetBtn.classList.remove('hidden');
+    resetConfirm.style.display = 'none';
+    resetBtn.style.display = '';
     closeAccountPage();
   });
   document.getElementById('account-reset-no').addEventListener('click', () => {
-    resetConfirm.classList.add('hidden');
-    resetBtn.classList.remove('hidden');
+    resetConfirm.style.display = 'none';
+    resetBtn.style.display = '';
   });
 
   // Logout
