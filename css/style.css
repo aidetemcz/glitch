@@ -696,7 +696,7 @@ html, body {
 .detail-back-btn {
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: var(--accent);
+  background: none;
   border: none;
   cursor: pointer;
   display: flex;
