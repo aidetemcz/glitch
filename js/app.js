@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const feedBtn = document.querySelector('.nav-btn[data-view="feed"]');
     if (feedBtn) feedBtn.click();
   });
-  bindDetailBack();
   bindLoginModal();
 
   document.getElementById('splash-enter').addEventListener('click', enterApp);
@@ -488,13 +487,28 @@ function openDetail(glitchId) {
   if (!glitch) return;
   currentGlitchId = glitchId;
 
-  document.getElementById('detail-title').textContent = glitch.title;
-  document.getElementById('chat-container').innerHTML = '';
+  const chatContainer = document.getElementById('chat-container');
+  chatContainer.innerHTML = '';
   document.getElementById('detail-overlay').classList.remove('hidden');
+
+  // Nav row: yellow circle back btn + topic pill
+  const topic = TOPICS[glitch.topic];
+  const navRow = document.createElement('div');
+  navRow.className = 'detail-nav';
+  navRow.innerHTML =
+    '<button class="detail-back-btn" aria-label="Zpět">←</button>' +
+    '<span class="detail-topic-pill">' + (topic ? topic.label : '') + '</span>';
+  navRow.querySelector('.detail-back-btn').addEventListener('click', closeDetail);
+  chatContainer.appendChild(navRow);
+
+  // Large title
+  const titleEl = document.createElement('h1');
+  titleEl.className = 'detail-title-large';
+  titleEl.textContent = glitch.title;
+  chatContainer.appendChild(titleEl);
 
   const progress = State.progress[glitchId];
   if (progress && progress.completed) {
-    // Already done — show deepdive then end actions
     showDeepDiveAndEnd(glitch, !progress.correct);
   } else {
     runChat(glitch);
@@ -547,10 +561,6 @@ function closeDetail() {
     document.getElementById('map-container'),
     document.getElementById('map-search').value.toLowerCase()
   );
-}
-
-function bindDetailBack() {
-  document.getElementById('detail-back').addEventListener('click', closeDetail);
 }
 
 // ── CHAT ENGINE ──────────────────────────────
@@ -682,36 +692,23 @@ function showEndActions(glitch, withReadMore = false) {
   if (nextGlitchId) {
     const nextBtn = document.createElement('button');
     nextBtn.className = 'chat-action-btn primary-action';
-    nextBtn.textContent = 'Další glitch →';
+    nextBtn.textContent = 'Další glitch';
     nextBtn.addEventListener('click', () => openDetail(nextGlitchId));
     actionsEl.appendChild(nextBtn);
   }
 
-  const backBtn = document.createElement('button');
-  backBtn.className = 'chat-action-btn';
-  backBtn.textContent = '← Zpět na feed';
-  backBtn.addEventListener('click', () => {
-    closeDetail();
-    showView('feed');
-    document.querySelectorAll('.nav-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.view === 'feed');
-    });
-  });
-  actionsEl.appendChild(backBtn);
-
-  container.appendChild(actionsEl);
-
   if (withReadMore && glitch.deepdive && glitch.deepdive.length) {
-    const readMoreBtn = document.createElement('button');
-    readMoreBtn.className = 'chat-action-btn read-more-btn';
-    readMoreBtn.textContent = 'Číst více →';
-    readMoreBtn.addEventListener('click', () => {
-      readMoreBtn.remove();
+    const readMoreLink = document.createElement('button');
+    readMoreLink.className = 'read-more-link';
+    readMoreLink.textContent = 'Nebo si přečti více →';
+    readMoreLink.addEventListener('click', () => {
+      readMoreLink.remove();
       addDeepdive(glitch);
     });
-    container.appendChild(readMoreBtn);
+    actionsEl.appendChild(readMoreLink);
   }
 
+  container.appendChild(actionsEl);
   scrollChatToBottom();
 }
 
