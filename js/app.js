@@ -314,52 +314,106 @@ function triggerFeedAnimations() {
 
 function renderMap() {
   const container = document.getElementById('map-container');
-  renderMapContent(container, '');
+  const searchInput = document.getElementById('map-search');
 
-  document.getElementById('map-search').addEventListener('input', e => {
-    renderMapContent(container, e.target.value.toLowerCase());
+  renderMapDefault(container);
+
+  searchInput.addEventListener('input', e => {
+    const query = e.target.value.toLowerCase().trim();
+    if (query) {
+      renderMapSearch(container, query);
+    } else {
+      renderMapDefault(container);
+    }
   });
 }
 
-function renderMapContent(container, query) {
+function renderMapDefault(container) {
   container.innerHTML = '';
 
-  Object.keys(TOPICS).forEach(topicKey => {
-    const topic = TOPICS[topicKey];
-    const glitches = GLITCHES.filter(g =>
-      g.topic === topicKey &&
-      (!query || g.title.toLowerCase().includes(query) || topic.label.toLowerCase().includes(query))
-    );
-    if (!glitches.length) return;
+  const label = document.createElement('p');
+  label.className = 'map-section-label';
+  label.textContent = 'Nebo zvol téma';
+  container.appendChild(label);
 
-    const group = document.createElement('div');
-    group.className = 'map-topic-group';
-    group.innerHTML =
-      '<div class="map-topic-header">' +
-        '<span class="map-topic-label">' + topic.label + '</span>' +
-      '</div>' +
-      '<div class="map-tiles"></div>';
-
-    const tilesEl = group.querySelector('.map-tiles');
-    glitches.forEach(g => {
-      const done = State.isDone(g.id);
-      const tile = document.createElement('div');
-      tile.className = 'map-tile' + (done ? ' done' : '');
-      tile.innerHTML =
-        '<div class="map-tile-body">' +
-          '<div class="map-tile-title">' + g.title + '</div>' +
-          '<div class="map-tile-tag">' + topic.label + '</div>' +
-        '</div>' +
-        (done ? '<div class="map-tile-check"><img src="assets/done.svg" width="21" height="21" alt=""></div>' : '');
-      tile.addEventListener('click', () => openDetail(g.id));
-      tilesEl.appendChild(tile);
-    });
-
-    container.appendChild(group);
+  CATEGORIES.forEach(cat => {
+    const card = document.createElement('div');
+    card.className = 'map-cat-card';
+    card.innerHTML =
+      '<div class="map-cat-title">' + cat.title + '</div>' +
+      '<img class="map-cat-blob" src="assets/' + cat.blob + '" alt="">';
+    card.addEventListener('click', () => renderMapCategory(container, cat));
+    container.appendChild(card);
   });
+}
 
-  if (!container.children.length) {
+function renderMapCategory(container, cat) {
+  container.innerHTML = '';
+
+  const backRow = document.createElement('div');
+  backRow.className = 'map-cat-back-row';
+  backRow.innerHTML =
+    '<button class="map-cat-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="22" height="22" alt=""></button>' +
+    '<span class="map-cat-heading">' + cat.title + '</span>';
+  backRow.querySelector('.map-cat-back-btn').addEventListener('click', () => {
+    document.getElementById('map-search').value = '';
+    renderMapDefault(container);
+  });
+  container.appendChild(backRow);
+
+  const missions = MISSIONS.filter(m => cat.missionIds.includes(m.id));
+  const glitchIds = missions.flatMap(m => m.glitches);
+  const glitches = GLITCHES.filter(g => glitchIds.includes(g.id));
+
+  glitches.forEach(g => {
+    const done = State.isDone(g.id);
+    const tile = document.createElement('div');
+    tile.className = 'map-tile';
+    tile.innerHTML =
+      '<div class="map-tile-body">' +
+        '<div class="map-tile-title">' + g.title + '</div>' +
+      '</div>' +
+      (done ? '<div class="map-tile-check"><img src="assets/done.svg" width="21" height="21" alt=""></div>' : '');
+    tile.addEventListener('click', () => openDetail(g.id));
+    container.appendChild(tile);
+  });
+}
+
+function renderMapSearch(container, query) {
+  container.innerHTML = '';
+
+  const glitches = GLITCHES.filter(g =>
+    g.title.toLowerCase().includes(query) ||
+    (TOPICS[g.topic] && TOPICS[g.topic].label.toLowerCase().includes(query))
+  );
+
+  if (!glitches.length) {
     container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px 0">Žádný glitch nenalezen.</p>';
+    return;
+  }
+
+  glitches.forEach(g => {
+    const done = State.isDone(g.id);
+    const topic = TOPICS[g.topic];
+    const tile = document.createElement('div');
+    tile.className = 'map-tile';
+    tile.innerHTML =
+      '<div class="map-tile-body">' +
+        '<div class="map-tile-title">' + g.title + '</div>' +
+        '<div class="map-tile-tag">' + (topic ? topic.label : '') + '</div>' +
+      '</div>' +
+      (done ? '<div class="map-tile-check"><img src="assets/done.svg" width="21" height="21" alt=""></div>' : '');
+    tile.addEventListener('click', () => openDetail(g.id));
+    container.appendChild(tile);
+  });
+}
+
+// Compatibility wrapper used by closeDetail and account reset
+function renderMapContent(container, query) {
+  if (query) {
+    renderMapSearch(container, query);
+  } else {
+    renderMapDefault(container);
   }
 }
 
