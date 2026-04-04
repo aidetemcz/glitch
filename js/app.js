@@ -207,11 +207,10 @@ function bindAccountPage() {
 
   // Reset progress
   document.getElementById('account-reset').addEventListener('click', () => {
-    if (confirm('Opravdu chceš resetovat všechny splněné glitche?')) {
-      localStorage.removeItem('tg_progress');
-      renderFeed();
-      renderMapContent(document.getElementById('map-container'), '');
-    }
+    localStorage.removeItem('tg_progress');
+    renderFeed();
+    renderMapContent(document.getElementById('map-container'), '');
+    closeAccountPage();
   });
 
   // Logout
