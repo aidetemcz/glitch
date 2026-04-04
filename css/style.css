@@ -498,7 +498,7 @@ html, body {
 .map-cat-blob {
   position: absolute;
   right: 12px;
-  bottom: 0;
+  top: 0;
   width: 120px;
   height: auto;
 }
