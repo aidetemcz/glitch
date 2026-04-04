@@ -1011,6 +1011,9 @@ function showEndActions(glitch, withReadMore = false) {
 function scrollChatToBottom() {
   const container = document.getElementById('chat-container');
   setTimeout(() => {
-    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    const distFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    if (distFromBottom < 150) {
+      container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    }
   }, 50);
 }
