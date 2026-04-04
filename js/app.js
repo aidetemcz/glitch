@@ -505,6 +505,7 @@ function renderCategoryCarousel() {
   CATEGORIES.forEach(cat => {
     const card = document.createElement('div');
     card.className = 'cat-card' + (cat.id === activeCategoryId ? ' active' : '');
+    card.dataset.catId = cat.id;
 
     const starsHtml = buildStarsHtml(cat);
 

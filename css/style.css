@@ -665,8 +665,10 @@ html, body {
   bottom: 0;
   width: 120px;
   height: auto;
-  display: block;
-  flex-shrink: 0;
+}
+.cat-card[data-cat-id="vibecoding"] .cat-blob-img {
+  bottom: auto;
+  top: 16px;
 }
 
 /* ── MISSIONS — LIST ── */
