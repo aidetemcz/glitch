@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=36">
+  <link rel="stylesheet" href="css/style.css?v=37">
 </head>
 <body>
 
@@ -27,7 +27,12 @@
     <!-- Top bar -->
     <header class="topbar">
       <div class="topbar-logo" id="logo-btn" style="cursor:pointer"><img src="assets/TinyGlitch-wide.png" alt="Tiny Glitch"></div>
-      <button class="topbar-profile" id="profile-btn" aria-label="Profil"></button>
+      <div class="topbar-right">
+        <img id="bell-icon" class="bell-icon hidden" src="assets/dingdong.svg" width="22" height="22" alt="Přihlásit se">
+        <button class="topbar-profile" id="profile-btn" aria-label="Profil">
+          <img src="assets/avatar.png" class="avatar-img" alt="">
+        </button>
+      </div>
     </header>
 
     <!-- Views -->
@@ -90,7 +95,7 @@
     </div>
   </div>
 
-  <script src="js/data.js?v=36"></script>
-  <script src="js/app.js?v=36"></script>
+  <script src="js/data.js?v=37"></script>
+  <script src="js/app.js?v=37"></script>
 </body>
 </html>

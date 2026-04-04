@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateProfileBtn();
   bindNav();
   bindProfileBtn();
+  const bell = document.getElementById('bell-icon');
+  if (bell) bell.addEventListener('click', openLoginModal);
+
   document.getElementById('logo-btn').addEventListener('click', () => {
     const feedBtn = document.querySelector('.nav-btn[data-view="feed"]');
     if (feedBtn) feedBtn.click();
@@ -86,14 +89,14 @@ function showView(name) {
 
 function updateProfileBtn() {
   const btn = document.getElementById('profile-btn');
+  const bell = document.getElementById('bell-icon');
   const user = State.user;
   if (user) {
-    btn.textContent = user.name.charAt(0).toUpperCase();
-    btn.classList.add('has-user');
     btn.title = user.name;
+    if (bell) bell.classList.add('hidden');
   } else {
-    btn.textContent = '👤';
-    btn.classList.remove('has-user');
+    btn.title = 'Přihlásit se';
+    if (bell) bell.classList.remove('hidden');
   }
 }
 
