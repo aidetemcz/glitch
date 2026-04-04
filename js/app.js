@@ -254,7 +254,8 @@ function bindAccountPage() {
 function renderFeed() {
   const container = document.getElementById('feed-container');
   container.innerHTML = '';
-  GLITCHES.forEach((g, i) => container.appendChild(buildFeedCard(g, i)));
+  GLITCHES.filter(g => !State.isDone(g.id))
+    .forEach((g, i) => container.appendChild(buildFeedCard(g, i)));
   triggerFeedAnimations();
 }
 
