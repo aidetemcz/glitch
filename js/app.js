@@ -700,8 +700,17 @@ function showEndActions(glitch, withReadMore = false) {
     readMoreLink.className = 'read-more-link';
     readMoreLink.textContent = 'Nebo si přečti více →';
     readMoreLink.addEventListener('click', () => {
-      readMoreLink.remove();
+      // Remove entire actions row, show deepdive, then show next btn below
+      actionsEl.remove();
       addDeepdive(glitch);
+      if (nextGlitchId) {
+        const afterBtn = document.createElement('button');
+        afterBtn.className = 'chat-action-btn primary-action';
+        afterBtn.textContent = 'Další glitch';
+        afterBtn.addEventListener('click', () => openDetail(nextGlitchId));
+        container.appendChild(afterBtn);
+        scrollChatToBottom();
+      }
     });
     actionsEl.appendChild(readMoreLink);
   }
