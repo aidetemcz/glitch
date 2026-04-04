@@ -353,7 +353,7 @@ function renderMapCategory(container, cat) {
   const backRow = document.createElement('div');
   backRow.className = 'detail-nav map-cat-back-row';
   backRow.innerHTML =
-    '<button class="detail-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="22" height="22" alt=""></button>' +
+    '<button class="detail-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="30" height="30" alt=""></button>' +
     '<span class="detail-topic-pill">' + cat.title + '</span>';
   backRow.querySelector('.detail-back-btn').addEventListener('click', () => {
     document.getElementById('map-search').value = '';
@@ -689,7 +689,7 @@ function openDetail(glitchId) {
   const navRow = document.createElement('div');
   navRow.className = 'detail-nav';
   navRow.innerHTML =
-    '<button class="detail-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="22" height="22" alt=""></button>' +
+    '<button class="detail-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="30" height="30" alt=""></button>' +
     '<span class="detail-topic-pill">' + (topic ? topic.label : '') + '</span>';
   navRow.querySelector('.detail-back-btn').addEventListener('click', closeDetail);
   chatContainer.appendChild(navRow);
