@@ -655,16 +655,14 @@ html, body {
   display: flex;
   gap: 4px;
   align-items: center;
-  padding-bottom: 4px;
 }
 
 .cat-star { width: 24px; height: 24px; }
 
 .cat-blob-img {
   position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 0;
+  bottom: 0;
   width: 120px;
   height: auto;
   display: block;
