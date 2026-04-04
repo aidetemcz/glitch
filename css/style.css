@@ -98,7 +98,7 @@ html, body {
   color: #1a1200;
   border: none;
   border-radius: 100px;
-  padding: 16px 40px;
+  padding: 10px 40px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 18px;
@@ -864,9 +864,9 @@ html, body {
   background: var(--bg2);
   border: 1.5px solid var(--border);
   border-radius: 100px;
-  padding: 12px 24px;
-  font-size: 15px;
-  font-weight: 700;
+  padding: 8px 24px;
+  font-size: 18px;
+  font-weight: 400;
   font-family: 'Inter', sans-serif;
   color: var(--text);
   cursor: pointer;
