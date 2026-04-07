@@ -3,13 +3,20 @@
 const SUPABASE_URL = 'https://pfpqwxqayuvihnqnuyvv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_xUSlFUWpapqMCW--b6LDsQ_P0HCKsg6';
 
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+if (!window.supabase) {
+  console.warn('Supabase CDN not loaded');
+}
+
+const sb = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
 
 let sbCurrentUser = null;
 
 // ── INIT ─────────────────────────────────────
 
 async function sbInit() {
+  if (!sb) return null;
   const { data: { user } } = await sb.auth.getUser();
   sbCurrentUser = user;
   if (user) await sbMergeToLocal(user.id);
@@ -45,14 +52,14 @@ async function sbSignOut() {
 // ── PROFILE ──────────────────────────────────
 
 async function sbSaveProfile(fields) {
-  if (!sbCurrentUser) return;
+  if (!sb || !sbCurrentUser) return;
   await sb.from('profiles').upsert({ id: sbCurrentUser.id, ...fields });
 }
 
 // ── PROGRESS ─────────────────────────────────
 
 async function sbSaveGlitchDone(glitchId, correct) {
-  if (!sbCurrentUser) return;
+  if (!sb || !sbCurrentUser) return;
   await sb.from('progress').upsert({
     user_id: sbCurrentUser.id,
     glitch_id: glitchId,
@@ -63,7 +70,7 @@ async function sbSaveGlitchDone(glitchId, correct) {
 }
 
 async function sbResetProgress() {
-  if (!sbCurrentUser) return;
+  if (!sb || !sbCurrentUser) return;
   await sb.from('progress').delete().eq('user_id', sbCurrentUser.id);
 }
 
