@@ -105,6 +105,49 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    // ---- OAUTH LOGIN (upsert for social providers) ----
+    if (action === 'oauth-login') {
+      if (!email) return res.status(400).json({ error: 'email required' });
+      const emailLower = email.toLowerCase().trim();
+
+      const existing = await supabase('GET', `user_profiles?email=eq.${encodeURIComponent(emailLower)}&select=*`);
+      if (existing.ok && Array.isArray(existing.data) && existing.data.length > 0) {
+        // Existing user — refresh session token and return profile
+        const user = existing.data[0];
+        const sessionToken = generateToken();
+        await supabase('PATCH', `user_profiles?email=eq.${encodeURIComponent(emailLower)}`, {
+          session_token: sessionToken,
+          updated_at: new Date().toISOString(),
+        });
+        return res.status(200).json({
+          ok: true,
+          token: sessionToken,
+          displayName: user.display_name,
+          profileData: user.profile_data || {},
+        });
+      }
+
+      // New user — create profile without password
+      const sessionToken = generateToken();
+      const row = {
+        email: emailLower,
+        password_hash: null,
+        display_name: (displayName || '').trim().substring(0, 60) || null,
+        session_token: sessionToken,
+        profile_data: profileData || {},
+        updated_at: new Date().toISOString(),
+      };
+      const result = await supabase('POST', 'user_profiles', row);
+      if (!result.ok) return res.status(500).json({ error: 'OAuth registration failed.' });
+
+      return res.status(200).json({
+        ok: true,
+        token: sessionToken,
+        displayName: row.display_name,
+        profileData: row.profile_data,
+      });
+    }
+
     // ---- UPDATE ACCOUNT (name, password) ----
     if (action === 'update') {
       if (!email) return res.status(401).json({ error: 'not authenticated' });

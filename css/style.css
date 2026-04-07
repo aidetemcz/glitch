@@ -995,6 +995,14 @@ pre code { font-family: var(--font-mono); font-size: .82rem; line-height: 1.5; b
 .auth-logout-btn { padding: .3em .7em; border-radius: 6px; border: 1px solid var(--border); color: var(--text-3); font-family: var(--font-ui); font-size: .72rem; }
 .auth-logout-btn:hover { color: #dc2626; border-color: #dc2626; }
 .auth-error { font-family: var(--font-ui); font-size: .75rem; color: #dc2626; margin-top: .4em; min-height: 1.2em; }
+/* Social login */
+.auth-social-btns { display: flex; gap: .4em; margin-bottom: .6em; }
+.auth-social-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: .4em; padding: .55em .5em; border-radius: 8px; border: 1.5px solid var(--border); background: var(--surface); font-family: var(--font-ui); font-size: .78rem; font-weight: 600; color: var(--text); cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.auth-social-btn:hover { border-color: var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.auth-social-btn svg { flex-shrink: 0; }
+.auth-social-github { color: var(--text); }
+.auth-divider { display: flex; align-items: center; gap: .7em; margin-bottom: .5em; color: var(--text-3); font-family: var(--font-ui); font-size: .7rem; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
 /* Gamification */
 .gami-hero { display: flex; align-items: center; gap: .8em; padding: 1em; background: linear-gradient(135deg, var(--accent-bg), var(--surface)); border: 2px solid var(--accent); border-radius: var(--radius); margin-bottom: 1em; }

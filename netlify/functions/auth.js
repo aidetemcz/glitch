@@ -64,6 +64,23 @@ exports.handler = async function(event) {
       return { statusCode: 200, headers: h, body: JSON.stringify({ ok: true, token: sessionToken, displayName: user.display_name, profileData: user.profile_data || {} }) };
     }
 
+    if (action === 'oauth-login') {
+      if (!email) return { statusCode: 400, headers: h, body: '{"error":"email required"}' };
+      const emailLower = email.toLowerCase().trim();
+      const existing = await supabase('GET', `user_profiles?email=eq.${encodeURIComponent(emailLower)}&select=*`);
+      if (existing.ok && Array.isArray(existing.data) && existing.data.length > 0) {
+        const user = existing.data[0];
+        const sessionToken = generateToken();
+        await supabase('PATCH', `user_profiles?email=eq.${encodeURIComponent(emailLower)}`, { session_token: sessionToken, updated_at: new Date().toISOString() });
+        return { statusCode: 200, headers: h, body: JSON.stringify({ ok: true, token: sessionToken, displayName: user.display_name, profileData: user.profile_data || {} }) };
+      }
+      const sessionToken = generateToken();
+      const row = { email: emailLower, password_hash: null, display_name: (displayName || '').trim().substring(0, 60) || null, session_token: sessionToken, profile_data: profileData || {}, updated_at: new Date().toISOString() };
+      const result = await supabase('POST', 'user_profiles', row);
+      if (!result.ok) return { statusCode: 500, headers: h, body: '{"error":"OAuth registration failed."}' };
+      return { statusCode: 200, headers: h, body: JSON.stringify({ ok: true, token: sessionToken, displayName: row.display_name, profileData: row.profile_data }) };
+    }
+
     if (action === 'update') {
       if (!email) return { statusCode: 401, headers: h, body: '{"error":"not authenticated"}' };
       const emailLower = email.toLowerCase().trim();
