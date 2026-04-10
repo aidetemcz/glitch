@@ -72,7 +72,11 @@
         "vc12-macaly-global-styles",
         "vc13-macaly-memory",
         "vc14-macaly-database",
-        "vc15-macaly-diff"
+        "vc15-macaly-diff",
+        "vc21-macaly-tips",
+        "vc22-macaly-notion",
+        "vc23-macaly-publish",
+        "vc24-macaly-recreate"
       ]
     }
   ],
@@ -96,6 +100,10 @@
     "vibecoding/vc17-debugging.md",
     "vibecoding/vc18-publish.md",
     "vibecoding/vc19-project-ideas.md",
-    "vibecoding/vc20-future.md"
+    "vibecoding/vc20-future.md",
+    "vibecoding/vc21-macaly-tips.md",
+    "vibecoding/vc22-macaly-notion.md",
+    "vibecoding/vc23-macaly-publish.md",
+    "vibecoding/vc24-macaly-recreate.md"
   ]
 }
