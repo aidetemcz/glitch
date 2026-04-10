@@ -1,331 +1,172 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#FAFAF7">
-<title>Vibecoding &mdash; tvo&#345; aplikace bez k&oacute;du</title>
-<meta name="description" content="Bezplatn&aacute; interaktivn&iacute; kniha o vibecoding pro d&#283;ti a za&ccaron;&aacute;te&ccaron;n&iacute;ky. Nau&ccaron; se tvo&#345;it aplikace pomoc&iacute; AI &mdash; bez psan&iacute; k&oacute;du. S kv&iacute;zy a praktick&yacute;mi tipy.">
-<meta name="author" content="Pavel Kord&iacute;k">
-<meta name="keywords" content="vibecoding, AI programov&aacute;n&iacute;, tvorba aplikac&iacute;, Lovable, Bolt, Cursor, Macaly, no-code, d&#283;ti, vzd&#283;l&aacute;v&aacute;n&iacute;, um&#283;l&aacute; inteligence, digit&aacute;ln&iacute; gramotnost">
-<link rel="canonical" href="https://recsysbook-kids-cs.vercel.app/">
-<!-- Open Graph -->
-<meta property="og:type" content="book">
-<meta property="og:title" content="Vibecoding &mdash; tvo&#345; aplikace bez k&oacute;du">
-<meta property="og:description" content="Bezplatn&aacute; interaktivn&iacute; kniha o vibecoding. Nau&ccaron; se tvo&#345;it aplikace pomoc&iacute; AI.">
-<meta property="og:url" content="https://recsysbook-kids-cs.vercel.app/">
-<meta property="og:site_name" content="Vibecoding &mdash; p-book">
-<meta property="og:image" content="https://recsysbook-kids-cs.vercel.app/images/og-cover.svg">
-<meta property="og:locale" content="cs_CZ">
-<meta property="book:author" content="Pavel Kord&iacute;k">
-<meta property="book:tag" content="vibecoding">
-<meta property="book:tag" content="AI programov&aacute;n&iacute;">
-<meta property="book:tag" content="digit&aacute;ln&iacute; gramotnost">
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vibecoding &mdash; tvo&#345; aplikace bez k&oacute;du">
-<meta name="twitter:description" content="Bezplatn&aacute; interaktivn&iacute; kniha o vibecoding. Tvo&#345; aplikace pomoc&iacute; AI bez psan&iacute; k&oacute;du.">
-<meta name="twitter:image" content="https://recsysbook-kids-cs.vercel.app/images/og-cover.svg">
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Book",
-  "name": "Vibecoding \u2014 tvo\u0159 aplikace bez k\u00f3du",
-  "alternateName": "p-book: Vibecoding",
-  "author": {
-    "@type": "Person",
-    "name": "Pavel Kord\u00edk",
-    "jobTitle": "Spoluzakladatel Recombee",
-    "affiliation": { "@type": "Organization", "name": "Recombee" }
-  },
-  "description": "Bezplatn\u00e1 interaktivn\u00ed kniha o vibecoding. Nau\u010d se tvo\u0159it aplikace pomoc\u00ed AI bez psan\u00ed k\u00f3du.",
-  "url": "https://recsysbook-kids-cs.vercel.app/",
-  "inLanguage": "cs",
-  "audience": { "@type": "EducationalAudience", "educationalRole": "student", "typicalAgeRange": "8-15" },
-  "educationalLevel": "z\u00e1kladn\u00ed \u0161kola",
-  "genre": ["Vzd\u011bl\u00e1v\u00e1n\u00ed", "Technologie", "Vibecoding", "AI"],
-  "numberOfPages": 20,
-  "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-  "isAccessibleForFree": true,
-  "publisher": { "@type": "Organization", "name": "Recombee", "url": "https://www.recombee.com" }
-}
-</script>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<link rel="stylesheet" href="css/style.css?v=3.8.0">
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#13101f">
+  <title>Tiny Glitch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=53">
 </head>
 <body>
 
-<!-- ONBOARDING -->
-<div class="overlay" id="onboarding">
-  <div class="onboarding-card">
+  <!-- SPLASH -->
+  <div id="splash" class="screen">
+    <div class="splash-inner">
+      <img src="assets/TinyGlitch.png" alt="Tiny Glitch" class="splash-logo-img">
+<p class="splash-sub">Vzdělávací sociální síť</p>
+      <button id="splash-enter" class="btn-primary">Vstoupit</button>
+    </div>
+  </div>
 
-    <!-- Step 0: Welcome screen -->
-    <div class="step active" data-step="0">
-      <h1 class="intro-title">Jak funguje doporu&ccaron;ov&aacute;n&iacute; online?</h1>
-      <img src="images/hero-recsys.svg" alt="Jak funguj&iacute; doporu&ccaron;ov&aacute;n&iacute;" class="intro-hero">
-      <p class="intro-tagline">Poznej algoritmy, kter&eacute; rozhoduj&iacute; o tom, co uvid&iacute;&scaron;</p>
+  <!-- APP -->
+  <div id="app" class="screen hidden">
 
-      <div class="intro-author-visible">
-        <p class="intro-author-name"><a href="https://kordikp.github.io/" target="_blank" rel="noopener">Pavel Kord&iacute;k</a></p>
-        <p class="intro-author-role">Spoluzakladatel <a href="https://recombee.com" target="_blank" rel="noopener">Recombee</a> &amp; <a href="https://aidetem.cz" target="_blank" rel="noopener">AI&nbsp;d&#283;tem</a> &middot; Docent na <a href="https://kam.fit.cvut.cz" target="_blank" rel="noopener">&Ccaron;VUT v Praze</a></p>
-        <p class="intro-author-text">Ka&zcaron;d&yacute; den ti doporu&ccaron;ovac&iacute; algoritmy navrhnou tis&iacute;ce polo&zcaron;ek &mdash; na soci&aacute;ln&iacute;ch s&iacute;t&iacute;ch, streamovac&iacute;ch slu&zcaron;b&aacute;ch, v&nbsp;e-shopech. M&#283;l/a bys v&#283;d&#283;t, jak funguj&iacute;.</p>
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="topbar-logo" id="logo-btn" style="cursor:pointer"><img src="assets/TinyGlitch-wide.png" alt="Tiny Glitch"></div>
+        <div class="topbar-right">
+          <button class="topbar-profile" id="profile-btn" aria-label="Profil">
+            <img src="assets/avatar.png" class="avatar-img" alt="">
+            <img id="bell-icon" class="bell-icon hidden" src="assets/dingdong.svg" width="18" height="18" alt="Přihlásit se">
+          </button>
+        </div>
       </div>
+    </header>
 
-      <button class="btn-primary btn-large" onclick="app.startRandom()">Za&ccaron;&iacute;t &ccaron;&iacute;st &#128640;</button>
+    <!-- Views -->
+    <main class="main-content">
 
-      <h3 class="intro-section-title">Tv&#367;j styl u&ccaron;en&iacute;</h3>
-      <div class="intro-voices">
-        <button class="intro-voice" data-voice="explorer" onclick="document.querySelectorAll('.intro-voice').forEach(v=>v.classList.remove('selected'));this.classList.add('selected')">
-          <span>&#128269;</span> Pr&#367;zkumn&iacute;k
+      <!-- FEED -->
+      <section id="view-feed" class="view active">
+        <div id="feed-container"></div>
+      </section>
+
+      <!-- MAP -->
+      <section id="view-map" class="view hidden">
+        <div class="map-search-wrap">
+          <input type="search" id="map-search" placeholder="Hledej Glitch..." autocomplete="off">
+          <div id="map-sticky-extra"></div>
+        </div>
+        <div id="map-container"></div>
+      </section>
+
+      <!-- MISSIONS -->
+      <section id="view-missions" class="view hidden">
+        <div id="category-carousel"></div>
+        <div class="missions-body">
+          <div id="missions-container"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom nav -->
+    <nav class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <div class="nav-spotlight"></div>
+        <button class="nav-btn" data-view="map">
+          <span class="nav-label">Hledej</span>
         </button>
-        <button class="intro-voice" data-voice="creator" onclick="document.querySelectorAll('.intro-voice').forEach(v=>v.classList.remove('selected'));this.classList.add('selected')">
-          <span>&#127912;</span> Tv&#367;rce
+        <button class="nav-btn active" data-view="feed">
+          <span class="nav-label">GlitchFeed</span>
         </button>
-        <button class="intro-voice" data-voice="thinker" onclick="document.querySelectorAll('.intro-voice').forEach(v=>v.classList.remove('selected'));this.classList.add('selected')">
-          <span>&#129504;</span> Myslitel
-        </button>
-        <button class="intro-voice selected" data-voice="universal" onclick="document.querySelectorAll('.intro-voice').forEach(v=>v.classList.remove('selected'));this.classList.add('selected')">
-          <span>&#128218;</span> V&scaron;e
+        <button class="nav-btn" data-view="missions">
+          <span class="nav-label">Questy</span>
         </button>
       </div>
+    </nav>
 
-      <h3 class="intro-section-title">Nebo zvol zp&#367;sob &ccaron;ten&iacute;</h3>
-      <div class="home-modes" style="padding:0;margin-bottom:.6em">
-        <div class="home-mode" onclick="app.startWithVoiceAndGo('glossary')">
-          <span class="home-mode-icon">&#127919;</span>
-          <span class="home-mode-label">Mise</span>
-          <span class="home-mode-desc">P&rcaron;&iacute;b&#283;hov&eacute; &uacute;koly s&nbsp;fin&aacute;ln&iacute;m bossem</span>
+  </div>
+
+  <!-- GLITCH DETAIL (overlay in content area) -->
+  <div id="detail-overlay" class="overlay hidden">
+    <div id="chat-container" class="chat-container"></div>
+  </div>
+
+  <!-- ACCOUNT OVERLAY -->
+  <div id="account-overlay" class="account-overlay hidden">
+    <div class="account-wrap">
+
+      <button class="account-close-btn" id="account-close">✕</button>
+
+      <!-- Auth section -->
+      <div id="account-auth-section" class="account-field">
+        <div id="account-auth-logged-out">
+          <div class="account-label">Přihlásit se / Registrovat</div>
+          <input type="email" id="auth-email-input" class="account-input" placeholder="E-mail" autocomplete="email">
+          <input type="password" id="auth-password-input" class="account-input" placeholder="Heslo (min. 6 znaků)" autocomplete="current-password">
+          <div id="auth-error" class="auth-error" style="display:none"></div>
+          <div class="auth-btn-row">
+            <button class="chat-action-btn" id="auth-login-btn">Přihlásit se</button>
+            <button class="chat-action-btn" id="auth-register-btn">Registrovat</button>
+          </div>
         </div>
-        <div class="home-mode" onclick="app.startWithVoiceAndGo('home')">
-          <span class="home-mode-icon">&#127916;</span>
-          <span class="home-mode-label">Proch&aacute;zet</span>
-          <span class="home-mode-desc">Netflix styl &mdash; vyber si, co t&#283; zaj&iacute;m&aacute;</span>
-        </div>
-        <div class="home-mode" onclick="app.startWithVoiceAndGo('read')">
-          <span class="home-mode-icon">&#128214;</span>
-          <span class="home-mode-label">&Ccaron;&iacute;st</span>
-          <span class="home-mode-desc">Nekone&ccaron;n&yacute; personalizovan&yacute; feed</span>
-        </div>
-        <div class="home-mode" onclick="app.startWithVoiceAndGo('map')">
-          <span class="home-mode-icon">&#128506;</span>
-          <span class="home-mode-label">Mapa</span>
-          <span class="home-mode-desc">Ru&ccaron;n&iacute; v&yacute;b&#283;r z&nbsp;p&rcaron;ehledu</span>
+        <div id="account-auth-logged-in" style="display:none">
+          <div class="account-label">Přihlášen/a jako</div>
+          <div id="account-auth-email" class="account-value"></div>
         </div>
       </div>
 
-      <details class="intro-details" style="margin-top:2em">
-        <summary>P&rcaron;izp&#367;sobit funkce <span class="toggle-hint">(gamifikace, personalizace, opakov&aacute;n&iacute;, mise, hry)</span></summary>
-        <div class="intro-toggles">
-          <label class="intro-toggle">
-            <input type="checkbox" id="optGamification" checked>
-            <div><b>Gamifikace</b><br><span class="toggle-desc">XP, &uacute;rovn&#283;, odznaky a certifik&aacute;t. Bez n&iacute; je kniha oby&ccaron;ejn&aacute; &ccaron;te&ccaron;ka.</span></div>
-          </label>
-          <label class="intro-toggle">
-            <input type="checkbox" id="optPersonalization" checked>
-            <div><b>Personalizovan&aacute; doporu&ccaron;en&iacute;</b><br><span class="toggle-desc">Poháněno <a href="https://recombee.com" target="_blank" rel="noopener">Recombee</a>. Bez n&iacute; se obsah zobraz&iacute; ve v&yacute;choz&iacute;m po&rcaron;ad&iacute;.</span></div>
-          </label>
-          <label class="intro-toggle">
-            <input type="checkbox" id="optRecall" checked>
-            <div><b>Rozlo&zcaron;en&eacute; opakov&aacute;n&iacute;</b><br><span class="toggle-desc">Kv&iacute;zy pro zapamatov&aacute;n&iacute;. Bez n&#283;j &zcaron;&aacute;dn&eacute; p&rcaron;ipom&iacute;nky.</span></div>
-          </label>
-          <label class="intro-toggle">
-            <input type="checkbox" id="optMissions" checked>
-            <div><b>Mise</b><br><span class="toggle-desc">P&rcaron;&iacute;b&#283;hov&eacute; cesty s&nbsp;fin&aacute;ln&iacute;m kv&iacute;zem. Bez nich je z&aacute;lo&zcaron;ka Mise skryt&aacute;.</span></div>
-          </label>
-          <label class="intro-toggle">
-            <input type="checkbox" id="optGames" checked>
-            <div><b>Minihry</b><br><span class="toggle-desc">8 interaktivn&iacute;ch her s&nbsp;60s &ccaron;asova&ccaron;em. Bez nich jsou hern&iacute; bloky skryt&eacute;.</span></div>
-          </label>
-          <label class="intro-toggle">
-            <input type="checkbox" id="optHighlights" checked>
-            <div><b>AI shrnut&iacute;</b><br><span class="toggle-desc">Kl&iacute;&ccaron;ov&eacute; body zobrazen&eacute; jako pozn&aacute;mky vedle ka&zcaron;d&eacute; sekce.</span></div>
-          </label>
+      <div class="account-field">
+        <div class="account-label">Tvá přezdívka</div>
+        <div class="account-value account-editable" id="account-nickname-val" data-field="nickname" data-placeholder="Nevyplněno"></div>
+        <input type="text" id="account-nickname-input" class="account-input hidden" placeholder="Tvoje přezdívka" maxlength="30" autocomplete="off">
+      </div>
+
+      <div class="account-field">
+        <div class="account-label">Tvé jméno a příjmení</div>
+        <div class="account-value account-editable" id="account-fullname-val" data-field="fullName" data-placeholder="Nevyplněno"></div>
+        <input type="text" id="account-fullname-input" class="account-input hidden" placeholder="Jméno a příjmení" autocomplete="name">
+      </div>
+
+      <div class="account-field">
+        <div class="account-label">Tvůj e-mail</div>
+        <div class="account-value account-editable" id="account-email-val" data-field="email" data-placeholder="Nevyplněno"></div>
+        <input type="email" id="account-email-input" class="account-input hidden" placeholder="e-mail" autocomplete="email">
+      </div>
+
+      <div class="account-field">
+        <div class="account-label">Gender</div>
+        <div class="account-radio-row" id="account-gender">
+          <button class="account-radio-opt" data-group="gender" data-val="holka"><span class="account-dot"></span><span>Holka</span></button>
+          <button class="account-radio-opt" data-group="gender" data-val="kluk"><span class="account-dot"></span><span>Kluk</span></button>
+          <button class="account-radio-opt" data-group="gender" data-val="jine"><span class="account-dot"></span><span>Vlastní</span></button>
         </div>
-        <p style="font-size:.68rem;color:var(--text-3);margin-top:.3em">V&iacute;ce informac&iacute; v&nbsp;<a href="https://github.com/kordikp/recsysbook-kids-cs#readme" target="_blank" rel="noopener">README projektu</a>.</p>
-      </details>
-
-      <div class="intro-credits">
-        <p>S&nbsp;podporou <a href="https://recombee.com" target="_blank" rel="noopener">Recombee</a>, <a href="https://aidetem.cz" target="_blank" rel="noopener">AI d&#283;tem</a>, <a href="https://www.google.org/" target="_blank" rel="noopener">Google.org</a> a <a href="https://www.tacr.cz" target="_blank" rel="noopener">TA&Ccaron;R</a></p>
-        <p><a href="https://github.com/kordikp/recsysbook-kids-cs" target="_blank" rel="noopener">Open source na GitHubu</a> &middot; <a href="https://github.com/kordikp/recsysbook-kids-cs#create-your-own-p-book" target="_blank" rel="noopener">Vytvo&rcaron; si vlastn&iacute; p-book</a></p>
       </div>
-    </div>
 
-  </div>
-</div>
-
-<!-- SEARCH OVERLAY -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="search-header">
-    <div class="search-input-wrap">
-      <span class="search-icon">&#128269;</span>
-      <input type="text" id="searchInput" placeholder="Hledat v&nbsp;knize..." autocomplete="off" oninput="app.onSearch(this.value)">
-    </div>
-    <button class="btn-ghost" onclick="app.closeSearch()">Zru&scaron;it</button>
-  </div>
-  <div class="search-results" id="searchResults"></div>
-</div>
-
-<!-- TOP BAR -->
-<header class="topbar" id="topbar">
-  <div class="topbar-left">
-    <span class="topbar-title" onclick="app.showWelcome()">p-book</span>
-  </div>
-  <div class="mission-bar-inline" id="missionBarInline" style="display:none"></div>
-  <button class="topbar-search" onclick="app.openSearch()">
-    <span>&#128269;</span>
-    <span class="search-placeholder">Hledat...</span>
-  </button>
-  <div class="topbar-right">
-    <button class="xp-badge" id="xpBadge" onclick="app.switchView('profile')"></button>
-    <button class="topbar-icon" id="settingsBtn" onclick="app.toggleSettings()">&#9881;</button>
-  </div>
-</header>
-
-<!-- MAIN VIEWS -->
-<main id="appMain">
-
-  <!-- HOME VIEW (Netflix-style) -->
-  <div class="view active" id="view-home">
-    <div class="home-inner" id="homeContent"></div>
-  </div>
-
-  <!-- READ VIEW -->
-  <div class="view" id="view-read">
-    <div class="read-layout">
-      <div class="read-pane" id="readPane"></div>
-    </div>
-  </div>
-
-  <!-- MAP VIEW -->
-  <div class="view" id="view-map">
-    <div class="map-inner" id="mapContent"></div>
-  </div>
-
-  <!-- GLOSSARY VIEW -->
-  <div class="view" id="view-glossary">
-    <div class="glossary-inner" id="glossaryContent"></div>
-  </div>
-
-  <!-- PROFILE VIEW -->
-  <div class="view" id="view-profile">
-    <div class="profile-inner" id="profileContent"></div>
-  </div>
-
-  <!-- QUIZ VIEW -->
-  <div class="view" id="view-quiz">
-    <div class="quiz-inner" id="quizContent"></div>
-  </div>
-
-  <!-- TUTOR VIEW -->
-  <div class="view" id="view-chat">
-    <div class="chat-view-inner">
-      <div class="tutor-header">
-        <span class="tutor-avatar">&#128104;&#8205;&#128187;</span>
-        <div class="tutor-info">
-          <span class="tutor-name">Pavel&#367;v AI asistent</span>
-          <span class="tutor-status" id="tutorStatus">Zn&aacute;m knihu nazpam&#283;&tcaron;. Zeptej se m&#283; na cokoliv!</span>
+      <div class="account-field">
+        <div class="account-label">Jak se chceš učit</div>
+        <div class="account-radio-col" id="account-learning">
+          <button class="account-radio-opt" data-group="learning" data-val="explorer"><span class="account-dot"></span><span>Baví mě zkoumat hodně věcí</span></button>
+          <button class="account-radio-opt" data-group="learning" data-val="creator"><span class="account-dot"></span><span>Učím se tak, že tvořím</span></button>
+          <button class="account-radio-opt" data-group="learning" data-val="depth"><span class="account-dot"></span><span>Zkoumám raději jednu věc pořádně</span></button>
         </div>
-        <button class="tutor-author-btn" onclick="app.escalateToAuthor()" title="Poslat zpr&aacute;vu skute&ccaron;n&eacute;mu Pavlovi">&#9993; Napsat Pavlovi</button>
       </div>
-      <div class="chat-messages" id="chatMessagesFull">
-        <div class="chat-msg bot">Ahoj! Jsem Pavel&#367;v AI asistent. T&yacute;m Recombee m&#283; nau&ccaron;il v&scaron;e o doporu&ccaron;ovac&iacute;ch syst&eacute;mech. Zeptej se m&#283; na cokoliv z&nbsp;knihy &mdash; nebo klikni na &bdquo;Napsat Pavlovi&ldquo; pro kontakt se skute&ccaron;n&yacute;m autorem!</div>
+
+      <div class="account-field">
+        <div class="account-label">Tvůj postup</div>
+        <button class="account-reset-btn" id="account-reset">Chci resetovat všechny své odpovědi.</button>
+        <div id="account-reset-confirm" class="account-reset-confirm" style="display:none">
+          <p>Opravdu chceš vymazat všechen svůj postup?</p>
+          <div class="account-reset-actions">
+            <button class="chat-action-btn reset-confirm-btn" id="account-reset-yes">Ano</button>
+            <button class="chat-action-btn reset-confirm-btn" id="account-reset-no">Ne</button>
+          </div>
+        </div>
       </div>
-      <div class="tutor-typing" id="tutorTyping" style="display:none"><span></span><span></span><span></span></div>
-      <div class="chat-input-wrap">
-        <input type="text" id="chatInputFull" placeholder="Zeptej se na doporu&ccaron;ov&aacute;n&iacute;..." onkeydown="if(event.key==='Enter')app.sendFullChat()">
-        <button onclick="app.sendFullChat()">&#10148;</button>
-      </div>
+
+      <button class="btn-primary account-logout-btn" id="account-logout">Odhlásit se</button>
+
     </div>
   </div>
 
-</main>
-
-<!-- HIGHLIGHT POPUP -->
-<div class="highlight-popup" id="highlightPopup" style="display:none">
-  <button onclick="app.highlightSelection()" title="Zv&yacute;raznit">&#127912;</button>
-  <button onclick="app.highlightAndNote()" title="Zv&yacute;raznit + pozn&aacute;mka">&#128221;</button>
-</div>
-
-<!-- BOTTOM TAB NAV -->
-<nav class="bottom-nav" id="bottomNav">
-  <button class="tab active" data-view="home" onclick="app.switchView('home')">
-    <span class="tab-icon">&#127916;</span>
-    <span class="tab-label">Proch&aacute;zet</span>
-  </button>
-  <button class="tab" data-view="read" onclick="app.switchView('read')">
-    <span class="tab-icon">&#128214;</span>
-    <span class="tab-label">&Ccaron;&iacute;st</span>
-  </button>
-  <button class="tab" data-view="map" onclick="app.switchView('map')">
-    <span class="tab-icon">&#128506;</span>
-    <span class="tab-label">Mapa</span>
-  </button>
-  <button class="tab" data-view="glossary" onclick="app.switchView('glossary')">
-    <span class="tab-icon">&#127919;</span>
-    <span class="tab-label">Mise</span>
-  </button>
-  <button class="tab" data-view="quiz" onclick="app.switchView('quiz')">
-    <span class="tab-icon">&#129504;</span>
-    <span class="tab-label">Kv&iacute;z</span>
-  </button>
-  <button class="tab" data-view="profile" onclick="app.switchView('profile')">
-    <span class="tab-icon">&#128100;</span>
-    <span class="tab-label">Profil</span>
-  </button>
-</nav>
-
-<!-- XP Toast -->
-<div class="xp-toast" id="xpToast"></div>
-
-<!-- SETTINGS PANEL -->
-<div class="settings-drawer" id="settingsDrawer">
-  <div class="settings-inner">
-    <div class="settings-head">
-      <h3>Nastaven&iacute;</h3>
-      <button onclick="app.toggleSettings()">&#10005;</button>
-    </div>
-    <!-- Account -->
-    <div class="sg" id="settingsAccount"></div>
-    <!-- Theme -->
-    <div class="sg"><label>Motiv (odemkni zv&yacute;&scaron;en&iacute;m &uacute;rovn&#283;)</label>
-      <div id="settingsThemes"></div>
-    </div>
-    <!-- Font size -->
-    <div class="sg"><label>Velikost p&iacute;sma</label>
-      <div class="sg-row">
-        <button class="sg-opt" data-fs="small" onclick="app.setFontSize('small')">Mal&eacute;</button>
-        <button class="sg-opt active" data-fs="medium" onclick="app.setFontSize('medium')">St&rcaron;edn&iacute;</button>
-        <button class="sg-opt" data-fs="large" onclick="app.setFontSize('large')">Velk&eacute;</button>
-      </div>
-    </div>
-    <!-- Features -->
-    <div class="sg"><label>Funkce</label>
-      <div style="display:flex;flex-direction:column;gap:.3em;font-size:.75rem">
-        <label style="display:flex;align-items:center;gap:.4em"><input type="checkbox" id="sGamification" onchange="app.updateSettingsFeature()"> Gamifikace (XP, &uacute;rovn&#283;, odznaky)</label>
-        <label style="display:flex;align-items:center;gap:.4em"><input type="checkbox" id="sPersonalization" onchange="app.updateSettingsFeature()"> Personalizace (Recombee)</label>
-        <label style="display:flex;align-items:center;gap:.4em"><input type="checkbox" id="sRecall" onchange="app.updateSettingsFeature()"> Rozlo&zcaron;en&eacute; opakov&aacute;n&iacute;</label>
-        <label style="display:flex;align-items:center;gap:.4em"><input type="checkbox" id="sMissions" onchange="app.updateSettingsFeature()"> Mise</label>
-        <label style="display:flex;align-items:center;gap:.4em"><input type="checkbox" id="sGames" onchange="app.updateSettingsFeature()"> Minihry</label>
-        <label style="display:flex;align-items:center;gap:.4em"><input type="checkbox" id="sHighlights" onchange="app.updateSettingsFeature()"> AI shrnut&iacute; (bo&ccaron;n&iacute; pozn&aacute;mky)</label>
-      </div>
-    </div>
-    <!-- Data -->
-    <div class="sg"><label>Tvoje data</label>
-      <div style="display:flex;gap:.4em;flex-wrap:wrap">
-        <button class="btn-ghost" style="border:1px solid var(--accent);border-radius:6px;padding:.3em .8em;font-size:.72rem;color:var(--accent)" onclick="app.exportData()">St&aacute;hnout v&scaron;echna data</button>
-        <button class="btn-ghost" style="border:1px solid var(--accent);border-radius:6px;padding:.3em .8em;font-size:.72rem;color:var(--accent)" onclick="localStorage.removeItem('pbook-tour-done');app.startTour()">P&rcaron;ehr&aacute;t prohl&iacute;dku</button>
-        <button class="btn-ghost" style="border:1px solid #dc2626;border-radius:6px;padding:.3em .8em;font-size:.72rem;color:#dc2626" onclick="app.resetAll()">Smazat v&scaron;e a za&ccaron;&iacute;t znovu</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script type="module" src="js/app.js?v=3.8.0"></script>
-<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/data.js?v=53"></script>
+  <script src="js/app.js?v=53"></script>
 </body>
 </html>
