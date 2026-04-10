@@ -769,7 +769,7 @@ function addDeepdive(glitch) {
   section.className = 'deepdive-section';
   glitch.deepdive.forEach(para => {
     const p = document.createElement('p');
-    p.textContent = para;
+    p.innerHTML = renderBotText(para);
     section.appendChild(p);
   });
   container.appendChild(section);
