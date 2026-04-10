@@ -1211,19 +1211,21 @@ html, body {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 12px;
-  margin-top: 8px;
+  padding: 13px 16px;
+  margin-top: 10px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border);
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
+  border: none;
+  background: #fff;
+  color: #3c4043;
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color .15s, background .15s;
+  transition: box-shadow .2s, transform .1s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
 }
-.social-login-btn:hover { border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.social-login-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+.social-login-btn:active { transform: scale(0.98); }
 .social-login-btn svg { flex-shrink: 0; }
 .auth-divider {
   display: flex;

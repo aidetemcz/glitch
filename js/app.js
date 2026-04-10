@@ -1069,7 +1069,11 @@ function showEndActions(glitch, withReadMore = false) {
           }
         }
       }
-      scrollChatToBottom();
+      // Scroll to deepdive section (force, user clicked "read more")
+      const deepdiveEl = container.querySelector('.deepdive-section');
+      if (deepdiveEl) {
+        setTimeout(() => deepdiveEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+      }
     });
     actionsEl.appendChild(readMoreLink);
   }
