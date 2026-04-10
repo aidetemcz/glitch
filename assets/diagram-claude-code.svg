@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140" fill="none">
+  <rect width="400" height="140" rx="16" fill="#1c1830"/>
+  <!-- Terminal -->
+  <rect x="20" y="20" width="160" height="100" rx="10" fill="#252240" stroke="#342546" stroke-width="1.5"/>
+  <circle cx="35" cy="34" r="4" fill="#FF4D4D"/>
+  <circle cx="47" cy="34" r="4" fill="#FFE233"/>
+  <circle cx="59" cy="34" r="4" fill="#69FF47"/>
+  <text x="30" y="58" font-family="monospace" font-size="9" fill="#8a85aa">$ claude</text>
+  <text x="30" y="72" font-family="monospace" font-size="9" fill="#FFE233">? </text>
+  <text x="42" y="72" font-family="monospace" font-size="9" fill="#f0eeff">fix auth bug</text>
+  <text x="30" y="86" font-family="monospace" font-size="9" fill="#69FF47">✓ Reading files...</text>
+  <text x="30" y="100" font-family="monospace" font-size="9" fill="#69FF47">✓ Fixed in user.ts</text>
+  <text x="30" y="114" font-family="monospace" font-size="9" fill="#69FF47">✓ Tests passing</text>
+  <!-- Arrow -->
+  <path d="M185 70 L215 70" stroke="#FFE233" stroke-width="2" stroke-linecap="round" marker-end="url(#ca)"/>
+  <!-- Actions -->
+  <rect x="220" y="20" width="160" height="100" rx="10" fill="#252240"/>
+  <text x="300" y="38" text-anchor="middle" font-family="system-ui" font-size="9" font-weight="700" fill="#8a85aa">CLAUDE CODE UMÍ</text>
+  <rect x="232" y="46" width="136" height="16" rx="4" fill="#342546"/>
+  <text x="300" y="57" text-anchor="middle" font-family="system-ui" font-size="9" fill="#FF6BD6">📂 Číst a editovat soubory</text>
+  <rect x="232" y="66" width="136" height="16" rx="4" fill="#342546"/>
+  <text x="300" y="77" text-anchor="middle" font-family="system-ui" font-size="9" fill="#00E5FF">⚡ Pouštět příkazy</text>
+  <rect x="232" y="86" width="136" height="16" rx="4" fill="#342546"/>
+  <text x="300" y="97" text-anchor="middle" font-family="system-ui" font-size="9" fill="#69FF47">🔀 Git commit & PR</text>
+  <rect x="232" y="106" width="136" height="16" rx="4" fill="#342546"/>
+  <text x="300" y="117" text-anchor="middle" font-family="system-ui" font-size="9" fill="#FFE233">🧪 Psát a pouštět testy</text>
+  <defs>
+    <marker id="ca" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#FFE233" stroke-width="1.5"/></marker>
+  </defs>
+</svg>

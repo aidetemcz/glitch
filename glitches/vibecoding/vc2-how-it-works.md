@@ -6,6 +6,8 @@ teaser: Popis → kód → aplikace. Takhle jednoduchý je ten proces.
 hook: Ale jak to funguje?
 ---
 
+![Vibecoding flow](assets/diagram-vibecoding-flow.svg)
+
 Popíšeš co chceš, AI vygeneruje kód, ty ho vidíš v akci, pak řekneš co změnit. Je to konverzace — „Přidej tlačítko. Změň barvu. Přidej upomínky."
 
 Kódu rozumět nemusíš. Ale je dobré vědět TROCHU — když AI udělá chybu, „tlačítko nefunguje" je lepší než „je to rozbité." Čím přesněji popíšeš problém, tím rychleji ho AI opraví.

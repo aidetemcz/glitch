@@ -827,6 +827,11 @@ html, body {
   font-weight: 700;
 }
 
+.chat-inline-img { display: block; max-width: 100%; border-radius: 12px; margin: 8px 0 4px; }
+.chat-bubble strong { font-weight: 700; color: var(--accent); }
+.deepdive-section .chat-inline-img { display: block; max-width: 100%; border-radius: 12px; margin: 10px 0; }
+.deepdive-section strong { font-weight: 700; color: var(--accent); }
+
 .typing-indicator {
   display: flex;
   gap: 5px;

@@ -6,6 +6,8 @@ teaser: Lovable, Bolt, v0, Cursor, Replit — jaký je mezi nimi rozdíl?
 hook: Který nástroj je nejlepší?
 ---
 
+![Porovnání nástrojů](assets/diagram-tools-compare.svg)
+
 Nástroje pro začátečníky (nevidíš kód): Lovable, Bolt, Macaly — napíšeš zadání, ony vygenerují celou aplikaci. Nástroje pro pokročilejší: Cursor a GitHub Copilot — vidíš kód, ale AI ho píše za tebe.
 
 Která je pro tebe? Začni s nástrojem, kde kód nevidíš vůbec — Lovable, Bolt nebo česká Macaly.

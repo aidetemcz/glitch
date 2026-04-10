@@ -6,6 +6,8 @@ teaser: Zapomeň na chatovací okénka. Claude Code čte tvůj kód, edituje sou
 hook: AI co opravdu kóduje?
 ---
 
+![Claude Code](assets/diagram-claude-code.svg)
+
 Claude Code je AI nástroj od Anthropicu, který pracuje přímo s tvým kódem. Neotvíráš chatovací okénko — spustíš ho v terminálu, IDE nebo prohlížeči a on čte tvůj projekt, edituje soubory, pouští testy a commituje změny.
 
 Co umí? Popíšeš co chceš přirozeným jazykem: „Napiš testy pro auth modul, spusť je a oprav chyby." Claude Code to udělá — najde soubory, napíše kód, ověří že funguje. Není to autocomplete — je to agent, který pracuje samostatně.

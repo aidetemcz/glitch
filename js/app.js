@@ -821,7 +821,7 @@ function replayFull(glitch) {
       bubble.className = 'chat-bubble bot';
       bubble.style.opacity = '1';
       bubble.style.transform = 'none';
-      bubble.textContent = step.bot;
+      bubble.innerHTML = renderBotText(step.bot);
       container.appendChild(bubble);
     } else if (step.quiz) {
       const quiz = step.quiz;
@@ -856,7 +856,7 @@ function replayFull(glitch) {
     section.className = 'deepdive-section';
     glitch.deepdive.forEach(para => {
       const p = document.createElement('p');
-      p.textContent = para;
+      p.innerHTML = renderBotText(para);
       section.appendChild(p);
     });
     container.appendChild(section);
@@ -893,11 +893,19 @@ function runChat(glitch) {
   setTimeout(nextStep, 300);
 }
 
+function renderBotText(text) {
+  // Support ![alt](url) images and **bold**
+  let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img class="chat-inline-img" src="$2" alt="$1">');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  return html;
+}
+
 function addBotBubble(text) {
   const container = document.getElementById('chat-container');
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble bot';
-  bubble.textContent = text;
+  bubble.innerHTML = renderBotText(text);
   container.appendChild(bubble);
   scrollChatToBottom();
 }
