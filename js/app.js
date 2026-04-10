@@ -34,11 +34,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   try {
-    await sbInit();
+    // Handle OAuth redirect before anything else
+    const oauthUser = await sbHandleOAuthCallback();
+    if (!oauthUser) await sbInit();
+
     await loadGlitches();
     renderFeed();
     renderMap();
     renderMissions();
+
+    // If OAuth login just happened, skip splash and go straight to app
+    if (oauthUser) enterApp();
   } catch (e) {
     console.error('Init error:', e);
   }
@@ -290,6 +296,17 @@ function bindAccountPage() {
   }
   document.getElementById('auth-login-btn').addEventListener('click', () => handleAuth(false));
   document.getElementById('auth-register-btn').addEventListener('click', () => handleAuth(true));
+
+  // Google OAuth
+  document.getElementById('auth-google-btn').addEventListener('click', async () => {
+    try {
+      await sbSignInWithGoogle();
+    } catch (e) {
+      const errEl = document.getElementById('auth-error');
+      errEl.textContent = e.message || 'Google přihlášení selhalo.';
+      errEl.style.display = '';
+    }
+  });
 
   // Logout
   document.getElementById('account-logout').addEventListener('click', async () => {

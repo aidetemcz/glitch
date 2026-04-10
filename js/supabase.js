@@ -49,6 +49,35 @@ async function sbSignIn(email, password) {
   return data;
 }
 
+async function sbSignInWithGoogle() {
+  if (!sb) throw new Error('Supabase není dostupné');
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + window.location.pathname },
+  });
+  if (error) throw error;
+}
+
+async function sbHandleOAuthCallback() {
+  if (!sb) return null;
+  // Check URL for OAuth tokens
+  const hash = window.location.hash;
+  const params = new URLSearchParams(window.location.search);
+  if (!hash.includes('access_token') && !params.has('code')) return null;
+
+  const { data: { session }, error } = await sb.auth.getSession();
+  if (error || !session?.user) return null;
+
+  sbCurrentUser = session.user;
+  await sbCreateProfile(sbCurrentUser.id);
+  await sbSyncLocalToSupabase(sbCurrentUser.id);
+  await sbMergeToLocal(sbCurrentUser.id);
+
+  // Clean URL
+  history.replaceState(null, '', window.location.pathname);
+  return sbCurrentUser;
+}
+
 async function sbSignOut() {
   await sb.auth.signOut();
   sbCurrentUser = null;

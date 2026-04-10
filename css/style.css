@@ -1205,6 +1205,40 @@ html, body {
 .auth-btn-row .chat-action-btn {
   flex: 1;
 }
+.social-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.social-login-btn:hover { border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.social-login-btn svg { flex-shrink: 0; }
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.auth-divider::before, .auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
 .auth-error {
   font-size: 13px;
   color: #ff6b6b;
