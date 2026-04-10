@@ -2,7 +2,7 @@
 
 export const CONFIG = {
   book: {
-    title: 'Jak funguje doporučování online?',
+    title: 'Vibecoding — tvoř aplikace bez kódu',
     author: 'Pavel Kordík',
     contentDir: 'content',
     bookIndex: 'content/book.json'

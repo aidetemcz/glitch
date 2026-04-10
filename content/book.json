@@ -1,174 +1,69 @@
 {
-  "title": "Jak funguje doporučování online?",
+  "title": "Vibecoding — tvoř aplikace bez kódu",
   "author": "Pavel Kordík",
-  "version": "0.2",
+  "version": "1.0",
   "chapters": [
     {
-      "id": "ch1-what-are-recommendations",
+      "id": "ch1-co-je-vibecoding",
       "number": 1,
-      "title": "Co jsou doporučovací systémy?",
-      "subtitle": "Jak YouTube, TikTok a Spotify vědí, co máš rád/a",
-      "directory": "ch1-what-are-recommendations",
-      "files": [
-        "01-spine-have-you-noticed.md",
-        "02-spine-recommendations-everywhere.md",
-        "02a-sidebar-czech-recsys.md",
-        "03-spine-not-magic.md",
-        "03a-sidebar-wrong-recs.md",
-        "03b-depth-thinker-patterns.md",
-        "04-spine-three-jobs.md",
-        "04b-sidebar-would-you-rather.md",
-        "05-question-what-type.md",
-        "06-spine-worksheet-match-apps.md"
-      ]
-    },
-    {
-      "id": "ch2-how-they-learn",
-      "number": 2,
-      "title": "Co a jak se o tobě učí?",
-      "subtitle": "Stopy, které zanecháváš při každém kliknutí, sledování a přeskočení",
-      "directory": "ch2-how-they-learn",
-      "files": [
-        "01-spine-digital-footprints.md",
-        "01a-depth-explorer-what-they-track.md",
-        "01b-sidebar-guess-the-signal.md",
-        "01c-game-signal-sort.md",
-        "01d-depth-thinker-interactions.md",
-        "02-spine-three-types-of-clues.md",
-        "02a-sidebar-incognito.md",
-        "02b-sidebar-myth-buster.md",
-        "02c-game-cold-start.md",
-        "03-spine-your-data-your-choice.md",
-        "03b-depth-creator-experiment.md",
-        "04-spine-worksheet-data-detective.md"
-      ]
-    },
-    {
-      "id": "ch3-different-ways",
-      "number": 3,
-      "title": "Různé způsoby doporučování",
-      "subtitle": "Od ptaní se kamarádů po strojové učení",
-      "directory": "ch3-different-ways-to-recommend",
-      "files": [
-        "01-spine-ask-your-friends.md",
-        "01a-depth-explorer-cf-demo.md",
-        "01b-depth-creator-build-cf.md",
-        "01c-sidebar-netflix-story.md",
-        "01e-game-taste-match.md",
-        "02-spine-look-at-the-thing.md",
-        "02a-depth-thinker-compare.md",
-        "02b-sidebar-spot-the-method.md",
-        "02c-game-method-match.md",
-        "02d-spine-bandits.md",
-        "02e-spine-deep-similarity.md",
-        "02f-depth-explorer-two-tower.md",
-        "02g-depth-thinker-matrix-factorization.md",
-        "02h-depth-thinker-attention.md",
-        "03-spine-whats-popular.md",
-        "03a-sidebar-popularity-trap.md",
-        "04-spine-the-pipeline.md",
-        "04a-depth-explorer-pipeline-visual.md",
-        "04b-sidebar-speed-challenge.md",
-        "04c-game-pipeline.md",
-        "04d-spine-search-and-recs.md",
-        "05-question-method.md"
-      ]
-    },
-    {
-      "id": "ch4-making-them-better",
-      "number": 4,
-      "title": "Jak doporučování vylepšit",
-      "subtitle": "Filtrační bubliny, férovost a proč na tom záleží",
-      "directory": "ch4-making-them-better",
-      "files": [
-        "01-spine-filter-bubbles.md",
-        "01a-depth-thinker-echo-chamber.md",
-        "01c-sidebar-experiment-idea.md",
-        "01d-game-bubble-pop.md",
-        "02-spine-fairness.md",
-        "02a-sidebar-youtube-algorithm.md",
-        "02b-sidebar-unfair-game.md",
-        "02c-spine-objectives.md",
-        "02d-spine-explainability.md",
-        "03-spine-testing.md",
-        "03a-depth-explorer-ab-test.md",
-        "03b-game-ab-test.md",
-        "04-question-ethics.md"
-      ]
-    },
-    {
-      "id": "ch5-build-your-own",
-      "number": 5,
-      "title": "Postav si vlastní!",
-      "subtitle": "Vytvoř jednoduchý doporučovací systém krok za krokem",
-      "directory": "ch5-build-your-own",
-      "files": [
-        "01-spine-you-can-do-it.md",
-        "02-spine-step1-collect.md",
-        "02a-depth-creator-spreadsheet.md",
-        "03-spine-step2-find-similar.md",
-        "03a-depth-thinker-math.md",
-        "03b-sidebar-real-numbers.md",
-        "03c-depth-thinker-formulas.md",
-        "04-spine-step3-recommend.md",
-        "04a-depth-creator-code.md",
-        "04b-sidebar-debug-challenge.md",
-        "05-spine-step4-improve.md",
-        "05a-sidebar-career.md",
-        "05b-spine-get-recommended.md",
-        "05c-spine-seo-for-algorithms.md",
-        "06-question-next.md"
-      ]
-    },
-    {
-      "id": "ch6-ethics-and-you",
-      "number": 6,
-      "title": "Etika a ty",
-      "subtitle": "Kdo rozhoduje, co vidíš, a co s tím můžeš dělat?",
-      "directory": "ch6-ethics-and-you",
-      "files": [
-        "01-spine-who-decides.md",
-        "01b-sidebar-rabbit-hole.md",
-        "02-spine-addictive-design.md",
-        "02a-depth-creator-take-control.md",
-        "02b-sidebar-dopamine.md",
-        "02c-spine-adtech-vs-recs.md",
-        "03-spine-privacy-for-real.md",
-        "03a-depth-explorer-check-your-data.md",
-        "03b-sidebar-age-guessing.md",
-        "03d-game-privacy-spotter.md",
-        "04-spine-ai-and-you.md",
-        "04a-depth-thinker-hard-questions.md",
-        "04b-sidebar-eu-law.md",
-        "04c-spine-conversational-recs.md",
-        "05-question-ethics.md"
-      ]
-    },
-    {
-      "id": "ch7-vibecoding",
-      "number": 7,
-      "title": "Vibecoding — tvoř aplikace bez kódu",
-      "subtitle": "Jak AI mění programování a jak s ním můžeš začít i ty",
+      "title": "Co je vibecoding?",
+      "subtitle": "Programování bez kódu — jak to funguje a co všechno dokážeš",
       "directory": "ch7-vibecoding",
       "files": [
         "vc1-what-is.md",
         "vc2-how-it-works.md",
         "vc3-karpathy.md",
-        "vc4-what-can-build.md",
+        "vc4-what-can-build.md"
+      ]
+    },
+    {
+      "id": "ch2-nastroje",
+      "number": 2,
+      "title": "Nástroje pro vibecoding",
+      "subtitle": "Lovable, Bolt, Cursor a další — který je pro tebe?",
+      "directory": "ch7-vibecoding",
+      "files": [
         "vc5-tools-overview.md",
         "vc6-lovable.md",
         "vc7-bolt.md",
-        "vc8-cursor.md",
+        "vc8-cursor.md"
+      ]
+    },
+    {
+      "id": "ch3-macaly",
+      "number": 3,
+      "title": "Macaly — česká platforma",
+      "subtitle": "Od prvního projektu po databázi — vše krok za krokem",
+      "directory": "ch7-vibecoding",
+      "files": [
         "vc9-macaly-intro.md",
         "vc10-macaly-first-project.md",
         "vc11-macaly-edit-mode.md",
         "vc12-macaly-global-styles.md",
         "vc13-macaly-memory.md",
         "vc14-macaly-database.md",
-        "vc15-macaly-diff.md",
+        "vc15-macaly-diff.md"
+      ]
+    },
+    {
+      "id": "ch4-tipy-a-ladeni",
+      "number": 4,
+      "title": "Jak na to — tipy a ladění",
+      "subtitle": "Dobré prompty, debugging a publikování tvé aplikace",
+      "directory": "ch7-vibecoding",
+      "files": [
         "vc16-prompting-tips.md",
         "vc17-debugging.md",
-        "vc18-publish.md",
+        "vc18-publish.md"
+      ]
+    },
+    {
+      "id": "ch5-co-dal",
+      "number": 5,
+      "title": "Co dál?",
+      "subtitle": "Nápady na projekty a budoucnost vibecoding",
+      "directory": "ch7-vibecoding",
+      "files": [
         "vc19-project-ideas.md",
         "vc20-future.md"
       ]
