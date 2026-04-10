@@ -1,0 +1,25 @@
+---
+id: vc1-what-is
+topic: coJeVibecoding
+title: Co je vibecoding?
+teaser: Programování bez znalosti kódu? Zní to divně, ale funguje to.
+hook: A co to vlastně je?
+---
+
+Vibecoding = tvorba aplikací pomocí přirozené řeči. Řekneš AI: „Udělej mi stránku, kde si zapisuji úkoly" — a ona to postaví.
+
+Termín vymyslel v únoru 2025 Andrej Karpathy z OpenAI a Tesly. Před pár lety trvalo vytvoření aplikace měsíce a stálo statisíce — dnes to teenager zvládne za hodinu zadarmo.
+
+? Co je vibecoding?
+- Speciální programovací jazyk pro začátečníky
+* Tvorba aplikací pomocí přirozené řeči místo psaní kódu
+- Hra, ve které programuješ virtuální roboty
+- Oprava chyb v kódu pomocí AI
+! Přesně! Vibecoding = říkáš AI, co chceš, a ona píše kód za tebe.
+
++++
+Vibecoding je revolučním posunem v přístupu k tvorbě software, ale má zajímavý kontext. Podobné demokratizační vlny proběhly v jiných oborech: fotografování (fotoaparáty) zpřístupnilo tvorbu obrazu každému, desktop publishing (PageMaker, Word) zpřístupnilo tisk. Vibecoding zpřístupňuje tvorbu softwaru. Pokaždé, když se takový nástroj zpřístupní, obor se změní — a nové věci se staly možnými.
+
+Karpathyho myšlenka „vzdávám se porozumění kódu" je záměrně provokativní. Ve skutečnosti Karpathy kód velmi dobře rozumí — ale poukázal na to, že pro mnoho úkolů to není nutné. Stejně jako nemusíš rozumět motorové technologii, abys řídil auto. To neznamená, že mechanici jsou zbyteční — ale že řidič a mechanik jsou různé profese s různými dovednostmi.
+
+Klíčová historická změna je v přístupu. Dřív bylo programování elitní dovednost vyžadující roky studia. Vibecoding posouvá programování do kategorie „kreativního nástroje" — jako Photoshop, video editor nebo textový procesor. Každý ho může používat na základní úrovni, profesionálové se ho naučí hlouběji. Tato demokratizace je fundamentálně dobrá věc, i když mění, co znamená „být programátor."

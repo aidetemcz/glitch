@@ -143,6 +143,35 @@
         "04c-spine-conversational-recs.md",
         "05-question-ethics.md"
       ]
+    },
+    {
+      "id": "ch7-vibecoding",
+      "number": 7,
+      "title": "Vibecoding — tvoř aplikace bez kódu",
+      "subtitle": "Jak AI mění programování a jak s ním můžeš začít i ty",
+      "directory": "ch7-vibecoding",
+      "files": [
+        "vc1-what-is.md",
+        "vc2-how-it-works.md",
+        "vc3-karpathy.md",
+        "vc4-what-can-build.md",
+        "vc5-tools-overview.md",
+        "vc6-lovable.md",
+        "vc7-bolt.md",
+        "vc8-cursor.md",
+        "vc9-macaly-intro.md",
+        "vc10-macaly-first-project.md",
+        "vc11-macaly-edit-mode.md",
+        "vc12-macaly-global-styles.md",
+        "vc13-macaly-memory.md",
+        "vc14-macaly-database.md",
+        "vc15-macaly-diff.md",
+        "vc16-prompting-tips.md",
+        "vc17-debugging.md",
+        "vc18-publish.md",
+        "vc19-project-ideas.md",
+        "vc20-future.md"
+      ]
     }
   ]
 }
