@@ -4,7 +4,7 @@
       "id": "vibecoding",
       "title": "Co to je vibecoding a jak na něj",
       "blob": "Tiny_Glitch_Blobs_05_2.svg",
-      "missionIds": ["mission-vc1", "mission-vc2", "mission-vc3"]
+      "missionIds": ["mission-vc1", "mission-vc2", "mission-vc3", "mission-vc4"]
     }
   ],
   "topics": {
@@ -25,6 +25,12 @@
       "emoji": "🇨🇿",
       "color": "#69FF47",
       "bg": "linear-gradient(135deg, #001a00 0%, #003300 50%, #005500 100%)"
+    },
+    "claudeCode": {
+      "label": "Claude Code",
+      "emoji": "🖥️",
+      "color": "#D4A574",
+      "bg": "linear-gradient(135deg, #1a1000 0%, #3d2800 50%, #6b4400 100%)"
     }
   },
   "missions": [
@@ -79,6 +85,19 @@
         "vc24-macaly-recreate"
       ]
     }
+    {
+      "id": "mission-vc4",
+      "title": "Claude Code pro pokročilé",
+      "description": "AI agent v terminálu — čte kód, edituje soubory, pouští příkazy.",
+      "emoji": "🖥️",
+      "topic": "claudeCode",
+      "glitches": [
+        "vc25-claude-code-intro",
+        "vc26-claude-code-install",
+        "vc27-claude-code-workflows",
+        "vc28-claude-code-advanced"
+      ]
+    }
   ],
   "glitches": [
     "vibecoding/vc1-what-is.md",
@@ -104,6 +123,10 @@
     "vibecoding/vc21-macaly-tips.md",
     "vibecoding/vc22-macaly-notion.md",
     "vibecoding/vc23-macaly-publish.md",
-    "vibecoding/vc24-macaly-recreate.md"
+    "vibecoding/vc24-macaly-recreate.md",
+    "vibecoding/vc25-claude-code-intro.md",
+    "vibecoding/vc26-claude-code-install.md",
+    "vibecoding/vc27-claude-code-workflows.md",
+    "vibecoding/vc28-claude-code-advanced.md"
   ]
 }
