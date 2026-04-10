@@ -45,6 +45,9 @@
         "vc2-how-it-works",
         "vc3-karpathy",
         "vc4-what-can-build",
+        "vc29-zasady",
+        "vc30-databaze",
+        "vc31-jak-funguje-ai",
         "vc19-project-ideas",
         "vc20-future"
       ]
@@ -62,7 +65,8 @@
         "vc8-cursor",
         "vc16-prompting-tips",
         "vc17-debugging",
-        "vc18-publish"
+        "vc18-publish",
+        "vc32-webove-technologie"
       ]
     },
     {
@@ -127,6 +131,10 @@
     "vibecoding/vc25-claude-code-intro.md",
     "vibecoding/vc26-claude-code-install.md",
     "vibecoding/vc27-claude-code-workflows.md",
-    "vibecoding/vc28-claude-code-advanced.md"
+    "vibecoding/vc28-claude-code-advanced.md",
+    "vibecoding/vc29-zasady.md",
+    "vibecoding/vc30-databaze.md",
+    "vibecoding/vc31-jak-funguje-ai.md",
+    "vibecoding/vc32-webove-technologie.md"
   ]
 }
