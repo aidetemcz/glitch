@@ -49,18 +49,52 @@ async function sbSignIn(email, password) {
   return data;
 }
 
-async function sbSignInWithGoogle() {
-  if (!sb) throw new Error('Supabase není dostupné');
-  const { error } = await sb.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.origin + window.location.pathname },
+function sbSignInWithGoogle() {
+  return new Promise(async (resolve, reject) => {
+    if (!sb) { reject(new Error('Supabase není dostupné')); return; }
+
+    // Get OAuth URL without redirecting
+    const { data, error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname,
+        skipBrowserRedirect: true,
+      },
+    });
+    if (error) { reject(error); return; }
+
+    // Open popup
+    const w = 500, h = 600;
+    const left = window.screenX + (window.outerWidth - w) / 2;
+    const top = window.screenY + (window.outerHeight - h) / 2;
+    const popup = window.open(data.url, 'google-login',
+      'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',popup=yes');
+
+    if (!popup) { reject(new Error('Popup byl zablokován prohlížečem.')); return; }
+
+    // Poll for popup close & session
+    const poll = setInterval(async () => {
+      if (!popup || popup.closed) {
+        clearInterval(poll);
+        // Check if we got a session
+        const { data: { session } } = await sb.auth.getSession();
+        if (session?.user) {
+          sbCurrentUser = session.user;
+          await sbCreateProfile(sbCurrentUser.id);
+          await sbSyncLocalToSupabase(sbCurrentUser.id);
+          await sbMergeToLocal(sbCurrentUser.id);
+          resolve(sbCurrentUser);
+        } else {
+          reject(new Error('Přihlášení bylo zrušeno.'));
+        }
+      }
+    }, 500);
   });
-  if (error) throw error;
 }
 
 async function sbHandleOAuthCallback() {
   if (!sb) return null;
-  // Check URL for OAuth tokens
+  // Check URL for OAuth tokens (fallback for when popup doesn't work)
   const hash = window.location.hash;
   const params = new URLSearchParams(window.location.search);
   if (!hash.includes('access_token') && !params.has('code')) return null;

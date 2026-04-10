@@ -297,14 +297,21 @@ function bindAccountPage() {
   document.getElementById('auth-login-btn').addEventListener('click', () => handleAuth(false));
   document.getElementById('auth-register-btn').addEventListener('click', () => handleAuth(true));
 
-  // Google OAuth
+  // Google OAuth (popup)
   document.getElementById('auth-google-btn').addEventListener('click', async () => {
+    const errEl = document.getElementById('auth-error');
+    errEl.style.display = 'none';
     try {
       await sbSignInWithGoogle();
+      updateProfileBtn();
+      openAccountPage();
+      renderFeed();
+      renderMissions();
     } catch (e) {
-      const errEl = document.getElementById('auth-error');
-      errEl.textContent = e.message || 'Google přihlášení selhalo.';
-      errEl.style.display = '';
+      if (e.message !== 'Přihlášení bylo zrušeno.') {
+        errEl.textContent = e.message || 'Google přihlášení selhalo.';
+        errEl.style.display = '';
+      }
     }
   });
 

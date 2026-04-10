@@ -1205,28 +1205,41 @@ html, body {
 .auth-btn-row .chat-action-btn {
   flex: 1;
 }
-.social-login-btn {
+.google-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  transition: box-shadow .2s;
+}
+.google-btn:hover { box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+.google-btn:active { background: #f1f1f1; }
+.google-btn-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 13px 16px;
-  margin-top: 10px;
-  border-radius: var(--radius-sm);
-  border: none;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
   background: #fff;
-  color: #3c4043;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: box-shadow .2s, transform .1s;
-  box-shadow: 0 1px 3px rgba(0,0,0,.3);
 }
-.social-login-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.4); }
-.social-login-btn:active { transform: scale(0.98); }
-.social-login-btn svg { flex-shrink: 0; }
+.google-btn-text {
+  flex: 1;
+  padding: 0 12px;
+  font-family: 'Roboto', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c4043;
+  letter-spacing: .2px;
+  text-align: center;
+}
 .auth-divider {
   display: flex;
   align-items: center;
