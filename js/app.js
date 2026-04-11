@@ -1017,13 +1017,14 @@ function showQuiz(quiz, onDone) {
       optionsBtns.forEach(b => {
         b.disabled = true;
         const idx = parseInt(b.dataset.idx);
-        if (idx === chosen) b.classList.add(correct ? 'correct' : 'wrong');
+        if (idx === quiz.correct) b.classList.add('correct');
+        if (idx === chosen && !correct) b.classList.add('wrong');
         if (idx === chosen) b.classList.add('selected');
       });
 
       const explanation = document.createElement('div');
-      explanation.className = 'quiz-explanation';
-      explanation.textContent = quiz.explanation;
+      explanation.className = 'quiz-explanation ' + (correct ? 'correct' : 'wrong');
+      explanation.textContent = correct ? quiz.explanation : 'To není správně. ' + quiz.explanation;
       block.appendChild(explanation);
 
       scrollChatToBottom();

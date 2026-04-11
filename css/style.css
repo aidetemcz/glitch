@@ -901,19 +901,26 @@ html, body {
   flex-shrink: 0;
   transition: background 0.2s;
 }
-.quiz-option.selected .quiz-dot { background: var(--accent); }
-.quiz-option.correct .quiz-dot  { background: var(--accent); }
-.quiz-option.wrong .quiz-dot    { background: var(--bg3); }
+.quiz-option.correct { border-color: #34d399; }
+.quiz-option.correct .quiz-dot  { background: #34d399; }
+.quiz-option.wrong { border-color: #f87171; opacity: .7; }
+.quiz-option.wrong .quiz-dot    { background: #f87171; }
 
 .quiz-explanation {
   margin-top: 16px;
   padding: 16px 18px;
   background: transparent;
-  border: 1.5px solid var(--accent);
   border-radius: var(--radius);
   font-size: 15px;
   line-height: 1.5;
-  color: var(--accent);
+}
+.quiz-explanation.correct {
+  border: 1.5px solid #34d399;
+  color: #34d399;
+}
+.quiz-explanation.wrong {
+  border: 1.5px solid #f87171;
+  color: #f87171;
 }
 
 .chat-actions {
