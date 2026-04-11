@@ -1076,6 +1076,33 @@ function showEndActions(glitch, withReadMore = false) {
     }
   }
 
+  // Mission progress: show all glitches in the mission as a mini-list
+  if (mission) {
+    const progressEl = document.createElement('div');
+    progressEl.className = 'mission-progress';
+    const mTitle = document.createElement('div');
+    mTitle.className = 'mission-progress-title';
+    mTitle.textContent = mission.title;
+    progressEl.appendChild(mTitle);
+
+    mission.glitches.forEach(gId => {
+      const g = GLITCHES.find(gl => gl.id === gId);
+      if (!g) return;
+      const done = State.isDone(gId);
+      const isCurrent = gId === glitch.id;
+      const row = document.createElement('button');
+      row.className = 'mission-progress-item' + (done ? ' done' : '') + (isCurrent ? ' current' : '');
+      row.innerHTML =
+        '<span class="mp-dot">' + (done ? '<img src="assets/done.svg" width="14" height="14" alt="">' : '') + '</span>' +
+        '<span class="mp-title">' + g.title + '</span>';
+      if (!isCurrent) {
+        row.addEventListener('click', () => openDetail(gId));
+      }
+      progressEl.appendChild(row);
+    });
+    actionsEl.appendChild(progressEl);
+  }
+
   if (withReadMore && glitch.deepdive && glitch.deepdive.length) {
     const readMoreLink = document.createElement('button');
     readMoreLink.className = 'read-more-link';

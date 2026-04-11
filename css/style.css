@@ -925,12 +925,64 @@ html, body {
 
 .chat-actions {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
   margin-top: 8px;
   animation: bubble-in 0.3s ease forwards;
   opacity: 0;
 }
+.chat-actions > .chat-action-btn { align-self: flex-start; }
+
+/* Mission progress tracker */
+.mission-progress {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-top: 4px;
+}
+.mission-progress-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+.mission-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 4px;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: color .15s;
+}
+.mission-progress-item:first-of-type { border-top: none; }
+.mission-progress-item:hover { color: var(--text); }
+.mission-progress-item.current { color: var(--accent); font-weight: 700; cursor: default; }
+.mission-progress-item.done { color: var(--text-muted); }
+.mission-progress-item.done .mp-title { text-decoration: line-through; opacity: .6; }
+.mp-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.mission-progress-item.done .mp-dot { border-color: #34d399; background: rgba(52,211,153,.15); }
+.mission-progress-item.current .mp-dot { border-color: var(--accent); background: rgba(255,226,51,.15); }
 .chat-action-btn {
   background: var(--bg2);
   border: 1.5px solid var(--border);
