@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <rect width="400" height="120" rx="16" fill="#1c1830"/>
+  <text x="200" y="20" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#8a85aa">KONTEXTOVÉ OKNO AI</text>
+  <!-- Window frame -->
+  <rect x="20" y="32" width="360" height="50" rx="8" fill="#252240" stroke="#342546" stroke-width="1.5"/>
+  <!-- Visible blocks (green) -->
+  <rect x="28" y="40" width="40" height="34" rx="4" fill="#69FF47" opacity="0.3"/>
+  <text x="48" y="62" text-anchor="middle" font-family="monospace" font-size="8" fill="#69FF47">modul A</text>
+  <rect x="74" y="40" width="40" height="34" rx="4" fill="#69FF47" opacity="0.3"/>
+  <text x="94" y="62" text-anchor="middle" font-family="monospace" font-size="8" fill="#69FF47">modul B</text>
+  <rect x="120" y="40" width="40" height="34" rx="4" fill="#69FF47" opacity="0.3"/>
+  <text x="140" y="62" text-anchor="middle" font-family="monospace" font-size="8" fill="#69FF47">prompt</text>
+  <!-- Overflow blocks (red, faded) -->
+  <rect x="168" y="40" width="40" height="34" rx="4" fill="#FF4D4D" opacity="0.15"/>
+  <text x="188" y="62" text-anchor="middle" font-family="monospace" font-size="8" fill="#FF4D4D" opacity="0.5">modul C</text>
+  <rect x="214" y="40" width="40" height="34" rx="4" fill="#FF4D4D" opacity="0.1"/>
+  <text x="234" y="62" text-anchor="middle" font-family="monospace" font-size="8" fill="#FF4D4D" opacity="0.3">modul D</text>
+  <rect x="260" y="40" width="40" height="34" rx="4" fill="#FF4D4D" opacity="0.05"/>
+  <rect x="306" y="40" width="40" height="34" rx="4" fill="#FF4D4D" opacity="0.03"/>
+  <!-- Divider line -->
+  <line x1="164" y1="36" x2="164" y2="78" stroke="#FFE233" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="164" y="92" text-anchor="middle" font-family="system-ui" font-size="9" font-weight="700" fill="#FFE233">limit okna</text>
+  <!-- Labels -->
+  <text x="80" y="106" text-anchor="middle" font-family="system-ui" font-size="9" fill="#69FF47">AI vidí</text>
+  <text x="270" y="106" text-anchor="middle" font-family="system-ui" font-size="9" fill="#FF4D4D" opacity="0.5">AI nevidí</text>
+</svg>

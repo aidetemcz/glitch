@@ -1,0 +1,118 @@
+{
+  "categories": [
+    {
+      "id": "vibecoding",
+      "title": "Vibecoding — tvoř aplikace bez kódu",
+      "blob": "Tiny_Glitch_Blobs_05_2.svg",
+      "missionIds": ["mission-zaklady", "mission-nastroje", "mission-praxe", "mission-pod-kapotou"]
+    }
+  ],
+  "topics": {
+    "coJeVibecoding": {
+      "label": "Základy",
+      "emoji": "⚡",
+      "color": "#FF6BD6",
+      "bg": "linear-gradient(135deg, #1a0028 0%, #3d005e 50%, #6b0080 100%)"
+    },
+    "nastrojePro": {
+      "label": "Nástroje",
+      "emoji": "🔧",
+      "color": "#00E5FF",
+      "bg": "linear-gradient(135deg, #00141a 0%, #003344 50%, #005566 100%)"
+    },
+    "praxe": {
+      "label": "Praxe",
+      "emoji": "🎯",
+      "color": "#69FF47",
+      "bg": "linear-gradient(135deg, #001a00 0%, #003300 50%, #005500 100%)"
+    },
+    "podKapotou": {
+      "label": "Pod kapotou",
+      "emoji": "🧠",
+      "color": "#D4A574",
+      "bg": "linear-gradient(135deg, #1a1000 0%, #3d2800 50%, #6b4400 100%)"
+    }
+  },
+  "missions": [
+    {
+      "id": "mission-zaklady",
+      "title": "Co je vibecoding?",
+      "description": "Co to je, jak to funguje, co můžeš postavit a jaká jsou pravidla.",
+      "emoji": "⚡",
+      "topic": "coJeVibecoding",
+      "glitches": [
+        "vc1-what-is",
+        "vc2-how-it-works",
+        "vc4-what-can-build",
+        "vc29-zasady",
+        "vc36-bezpecnost",
+        "vc19-project-ideas"
+      ]
+    },
+    {
+      "id": "mission-nastroje",
+      "title": "Nástroje pro vibecoding",
+      "description": "Upřímné srovnání nástrojů — který sedí tobě?",
+      "emoji": "🔧",
+      "topic": "nastrojePro",
+      "glitches": [
+        "vc5-tools-overview",
+        "vc33-lovable-bolt",
+        "vc34-macaly-all",
+        "vc8-cursor",
+        "vc35-jak-vybrat"
+      ]
+    },
+    {
+      "id": "mission-praxe",
+      "title": "Jak na to — praktický průvodce",
+      "description": "Prompting, debugging, databáze, publikování a technický slovníček.",
+      "emoji": "🎯",
+      "topic": "praxe",
+      "glitches": [
+        "vc16-prompting-tips",
+        "vc17-debugging",
+        "vc30-databaze",
+        "vc18-publish",
+        "vc32-webove-technologie"
+      ]
+    },
+    {
+      "id": "mission-pod-kapotou",
+      "title": "Pod kapotou — pro zvídavé",
+      "description": "Jak AI funguje, Claude Code pro pokročilé, budoucnost a kam dál.",
+      "emoji": "🧠",
+      "topic": "podKapotou",
+      "glitches": [
+        "vc31-jak-funguje-ai",
+        "vc25-claude-code-intro",
+        "vc27-claude-code-workflows",
+        "vc20-future",
+        "vc38-zdroje"
+      ]
+    }
+  ],
+  "glitches": [
+    "vibecoding/vc1-what-is.md",
+    "vibecoding/vc2-how-it-works.md",
+    "vibecoding/vc4-what-can-build.md",
+    "vibecoding/vc29-zasady.md",
+    "vibecoding/vc36-bezpecnost.md",
+    "vibecoding/vc19-project-ideas.md",
+    "vibecoding/vc5-tools-overview.md",
+    "vibecoding/vc33-lovable-bolt.md",
+    "vibecoding/vc34-macaly-all.md",
+    "vibecoding/vc8-cursor.md",
+    "vibecoding/vc35-jak-vybrat.md",
+    "vibecoding/vc16-prompting-tips.md",
+    "vibecoding/vc17-debugging.md",
+    "vibecoding/vc30-databaze.md",
+    "vibecoding/vc18-publish.md",
+    "vibecoding/vc32-webove-technologie.md",
+    "vibecoding/vc31-jak-funguje-ai.md",
+    "vibecoding/vc25-claude-code-intro.md",
+    "vibecoding/vc27-claude-code-workflows.md",
+    "vibecoding/vc20-future.md",
+    "vibecoding/vc38-zdroje.md"
+  ]
+}

@@ -1,0 +1,201 @@
+// ── SUPABASE CLIENT ──────────────────────────
+
+const SUPABASE_URL = 'https://pfpqwxqayuvihnqnuyvv.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_xUSlFUWpapqMCW--b6LDsQ_P0HCKsg6';
+
+if (!window.supabase) {
+  console.warn('Supabase CDN not loaded');
+}
+
+const sb = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+let sbCurrentUser = null;
+
+// ── INIT ─────────────────────────────────────
+
+async function sbInit() {
+  if (!sb) return null;
+  const { data: { user } } = await sb.auth.getUser();
+  sbCurrentUser = user;
+  if (user) await sbMergeToLocal(user.id);
+  return user;
+}
+
+// ── AUTH ─────────────────────────────────────
+
+async function sbSignUp(email, password) {
+  const { data, error } = await sb.auth.signUp({ email, password });
+  if (error) throw error;
+  sbCurrentUser = data.user;
+  if (sbCurrentUser && data.session) {
+    await sbCreateProfile(sbCurrentUser.id);
+    await sbSyncLocalToSupabase(sbCurrentUser.id);
+    await sbMergeToLocal(sbCurrentUser.id);
+  }
+  return data;
+}
+
+async function sbSignIn(email, password) {
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  sbCurrentUser = data.user;
+  if (sbCurrentUser) {
+    await sbCreateProfile(sbCurrentUser.id);
+    await sbSyncLocalToSupabase(sbCurrentUser.id);
+    await sbMergeToLocal(sbCurrentUser.id);
+  }
+  return data;
+}
+
+function sbSignInWithGoogle() {
+  return new Promise(async (resolve, reject) => {
+    if (!sb) { reject(new Error('Supabase není dostupné')); return; }
+
+    // Get OAuth URL without redirecting
+    const { data, error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname,
+        skipBrowserRedirect: true,
+      },
+    });
+    if (error) { reject(error); return; }
+
+    // Open popup
+    const w = 500, h = 600;
+    const left = window.screenX + (window.outerWidth - w) / 2;
+    const top = window.screenY + (window.outerHeight - h) / 2;
+    const popup = window.open(data.url, 'google-login',
+      'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',popup=yes');
+
+    if (!popup) { reject(new Error('Popup byl zablokován prohlížečem.')); return; }
+
+    // Poll for popup close & session
+    const poll = setInterval(async () => {
+      if (!popup || popup.closed) {
+        clearInterval(poll);
+        // Check if we got a session
+        const { data: { session } } = await sb.auth.getSession();
+        if (session?.user) {
+          sbCurrentUser = session.user;
+          await sbCreateProfile(sbCurrentUser.id);
+          await sbSyncLocalToSupabase(sbCurrentUser.id);
+          await sbMergeToLocal(sbCurrentUser.id);
+          resolve(sbCurrentUser);
+        } else {
+          reject(new Error('Přihlášení bylo zrušeno.'));
+        }
+      }
+    }, 500);
+  });
+}
+
+async function sbHandleOAuthCallback() {
+  if (!sb) return null;
+  // Check URL for OAuth tokens (fallback for when popup doesn't work)
+  const hash = window.location.hash;
+  const params = new URLSearchParams(window.location.search);
+  if (!hash.includes('access_token') && !params.has('code')) return null;
+
+  const { data: { session }, error } = await sb.auth.getSession();
+  if (error || !session?.user) return null;
+
+  sbCurrentUser = session.user;
+  await sbCreateProfile(sbCurrentUser.id);
+  await sbSyncLocalToSupabase(sbCurrentUser.id);
+  await sbMergeToLocal(sbCurrentUser.id);
+
+  // Clean URL
+  history.replaceState(null, '', window.location.pathname);
+  return sbCurrentUser;
+}
+
+async function sbSignOut() {
+  await sb.auth.signOut();
+  sbCurrentUser = null;
+}
+
+// ── PROFILE ──────────────────────────────────
+
+async function sbCreateProfile(userId) {
+  const local = JSON.parse(localStorage.getItem('tg_user') || '{}');
+  await sb.from('profiles').upsert({
+    id: userId,
+    nickname: local.nickname || null,
+    full_name: local.fullName || null,
+    gender: local.gender || null,
+    learning_style: local.learningStyle || null,
+  }, { onConflict: 'id', ignoreDuplicates: true });
+}
+
+async function sbSaveProfile(fields) {
+  if (!sb || !sbCurrentUser) return;
+  await sb.from('profiles').upsert({ id: sbCurrentUser.id, ...fields });
+}
+
+// ── PROGRESS ─────────────────────────────────
+
+async function sbSaveGlitchDone(glitchId, correct) {
+  if (!sb || !sbCurrentUser) return;
+  await sb.from('progress').upsert({
+    user_id: sbCurrentUser.id,
+    glitch_id: glitchId,
+    completed: true,
+    quiz_answer: correct ? 'correct' : 'incorrect',
+    completed_at: new Date().toISOString()
+  }, { onConflict: 'user_id,glitch_id' });
+}
+
+async function sbResetProgress() {
+  if (!sb || !sbCurrentUser) return;
+  await sb.from('progress').delete().eq('user_id', sbCurrentUser.id);
+}
+
+// ── SYNC ─────────────────────────────────────
+
+async function sbSyncLocalToSupabase(userId) {
+  const local = JSON.parse(localStorage.getItem('tg_progress') || '{}');
+  const entries = Object.entries(local);
+  if (!entries.length) return;
+  const rows = entries.map(([glitchId, d]) => ({
+    user_id: userId,
+    glitch_id: glitchId,
+    completed: d.completed,
+    quiz_answer: d.correct ? 'correct' : 'incorrect',
+    completed_at: d.ts ? new Date(d.ts).toISOString() : new Date().toISOString()
+  }));
+  await sb.from('progress').upsert(rows, { onConflict: 'user_id,glitch_id' });
+}
+
+async function sbMergeToLocal(userId) {
+  // Progress: Supabase → localStorage (add missing entries)
+  const { data: rows } = await sb.from('progress').select('*').eq('user_id', userId);
+  if (rows && rows.length) {
+    const local = JSON.parse(localStorage.getItem('tg_progress') || '{}');
+    rows.forEach(row => {
+      if (!local[row.glitch_id]) {
+        local[row.glitch_id] = {
+          completed: row.completed,
+          correct: row.quiz_answer === 'correct',
+          ts: row.completed_at ? new Date(row.completed_at).getTime() : Date.now()
+        };
+      }
+    });
+    localStorage.setItem('tg_progress', JSON.stringify(local));
+  }
+
+  // Profile: Supabase → localStorage
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', userId).single();
+  if (profile) {
+    const user = JSON.parse(localStorage.getItem('tg_user') || '{}');
+    localStorage.setItem('tg_user', JSON.stringify({
+      ...user,
+      nickname: profile.nickname || user.nickname,
+      fullName: profile.full_name || user.fullName,
+      gender: profile.gender || user.gender,
+      learningStyle: profile.learning_style || user.learningStyle,
+    }));
+  }
+}
