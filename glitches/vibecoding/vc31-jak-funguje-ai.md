@@ -1,6 +1,6 @@
 ---
 id: vc31-jak-funguje-ai
-topic: coJeVibecoding
+topic: podKapotou
 title: Jak AI vlastně generuje kód?
 teaser: Transformery, tokeny a kontextové okno — co se děje pod kapotou.
 hook: Co se děje pod kapotou?

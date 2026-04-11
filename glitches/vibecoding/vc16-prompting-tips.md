@@ -1,6 +1,6 @@
 ---
 id: vc16-prompting-tips
-topic: nastrojePro
+topic: praxe
 title: Jak psát dobré prompty
 teaser: Špatný prompt = frustrující výsledek. Dobrý prompt = magie.
 hook: Jak psát správně?

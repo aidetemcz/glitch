@@ -1,6 +1,6 @@
 ---
 id: vc30-databaze
-topic: coJeVibecoding
+topic: praxe
 title: Co je databáze a proč ji potřebuješ
 teaser: Aplikace bez databáze je jako zápisník z písku — zavřeš a je pryč.
 hook: Kam se ukládají data?

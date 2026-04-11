@@ -1,25 +1,40 @@
 ---
 id: vc4-what-can-build
 topic: coJeVibecoding
-title: Co všechno můžeš postavit?
-teaser: Web, hra, aplikace, chatbot — bez jediného řádku kódu napsaného rukou.
-hook: Co bys postavil dnes?
+title: Co můžeš postavit -- a co ne?
+teaser: Vibecoding má obrovský potenciál, ale i jasné limity. Tady jsou oba.
+hook: Kde jsou hranice?
 ---
 
-Webové stránky, nástroje, hry v prohlížeči, chatboty — skoro cokoli, co běží v prohlížeči nebo na telefonu. 14letý kluk z USA postavil aplikaci pro sledování školních úkolů za 3 hodiny — bez jediné hodiny programování.
+**Co funguje skvěle:** osobní weby a portfolia, jednoduché hry v prohlížeči (kvízy, pexeso, had), sledovače návyků a úkolů, kalkulačky a převodníky, chatboty, prototypy aplikací, které chceš ukázat kamarádům nebo investorům.
 
-Kde je limit? Komplexní systémy pro banky nebo nemocnice stále potřebují profesionální vývojáře. Vibecoding je mocný pro osobní projekty a prototypy.
+**Co vibecoding nezvládne:** aplikace pro tisíce uživatelů najednou (sociální sítě, e-shopy s velkým provozem), bezpečnostně kritický software (bankovnictví, zdravotnictví), systémy zpracovávající citlivá osobní data bez bezpečnostního auditu, komplexní aplikace s desítkami provázaných funkcí.
+
+Klíčové pravidlo: pokud by selhání aplikace mohlo někomu uškodit (ztráta peněz, únik dat, špatná diagnóza), vibecoding nestačí.
 
 ? Co NEJDE (nebo jde velmi těžko) vytvořit pomocí vibecoding?
-- Jednoduchá webová stránka
-- Kvízová hra v prohlížeči
-- Sledovač návyků
-* Komplexní systém pro banku s miliony uživatelů
-! Správně! Vibecoding je skvělý pro osobní projekty a prototypy.
+- Jednoduchý osobní web
+- Kvízovou hru v prohlížeči
+- Sledovač návyků pro sebe
+* Bankovní systém zpracovávající platby tisíců lidí
+! Správně! Vibecoding je skvělý pro osobní projekty a prototypy. Pro kritické systémy s mnoha uživateli potřebuješ profesionální vývoj.
 
 +++
-Hranice mezi tím, co vibecoding zvládne a co ne, se neustále posunuje. V lednu 2025 bylo vibecoding vhodné pro jednoduché weby. V dubnu 2025 zvládá i aplikace s databází, přihlašováním uživatelů a platebními systémy. Za rok bude možné víc. Je proto důležité si pravidla nekopat do betonu — co dnes „nejde," může za 6 měsíců být standardní funkce.
 
-14letý kluk z USA, který postavil aplikaci pro rodiče, je reálný příběh — ale je dobré ho zasadit do kontextu. Šlo o jednoduchou webovou aplikaci bez plateb, bez citlivých dat a bez složité logiky. Pro takový projekt je vibecoding perfektní. Pokud by chtěl postavit aplikaci pro nemocniční záznamy pacientů, to je jiná kategorie — tam by potřeboval profesionály a certifikace.
+**Konkrétní příklady toho, co můžeš postavit:**
 
-Nejcennější výsledek vibecoding nemusí být výsledná aplikace, ale proces. Budování vlastní aplikace tě naučí, jak software funguje, jaké problémy řeší, co jsou databáze a co jsou uživatelská rozhraní. Tato zkušenost je cenná i pokud se nikdy nestaneš programátorem — rozumíš produktům a technologiím, které ovlivňují tvůj život. A pokud tě programování zaujme, máš skvělý základ pro hlubší studium.
+Řekneš AI: "Vytvoř webovou stránku, kde zadám název filmu a dostanu hodnocení z 1 do 5 hvězdiček, s historií všech hodnocení." Tohle je ideální vibecoding projekt -- jednoduchá logika, malé množství dat, jeden uživatel.
+
+Řekneš AI: "Udělej hru had v prohlížeči, kde se had pohybuje šipkami a roste po snězení jablka." Za pár minut máš funkční hru. Přidej: "Přidej počítadlo skóre a tabulku nejlepších výsledků." Tohle vibecoding zvládá výborně.
+
+Řekneš AI: "Vytvoř webovou stránku mého portfolia s třemi sekcemi: o mně, moje projekty, kontakt." Tohle je ideální první projekt -- jednoduchý, vizuální, užitečný.
+
+**Proč komplexní projekty nefungují:**
+
+Problém není v AI samotné, ale v tom, jak funguje. AI pracuje s **kontextovým oknem** -- omezeným množstvím textu, které si najednou "pamatuje". Jednoduchá aplikace má stovky řádků kódu. Instagram jich má miliony. Když AI nevidí celý kód najednou, může změnit jednu část a rozbít jinou.
+
+Druhý problém je **bezpečnost**. AI-generovaný kód může obsahovat zranitelnosti, které laik neodhalí. U osobního projektu to nevadí. U aplikace, kde lidé zadávají čísla kreditních karet, to je katastrofa.
+
+**Hranice se posouvají:**
+
+V lednu 2025 vibecoding zvládal jednoduché weby. O pár měsíců později zvládá i aplikace s databází, přihlašováním a API. Co dnes "nejde," může za rok být standardní funkce. Ale princip zůstává: čím víc je v sázce (peníze, data, bezpečnost), tím víc potřebuješ profesionála.

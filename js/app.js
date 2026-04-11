@@ -127,8 +127,9 @@ function updateProfileBtn() {
   const btn = document.getElementById('profile-btn');
   const bell = document.getElementById('bell-icon');
   const user = State.user;
-  if (user) {
-    btn.title = getUserNickname();
+  const loggedIn = user || sbCurrentUser;
+  if (loggedIn) {
+    btn.title = getUserNickname() || (sbCurrentUser && sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || '';
     if (bell) bell.classList.add('hidden');
   } else {
     btn.title = 'Přihlásit se';
@@ -161,7 +162,19 @@ function openAccountPage() {
   if (sbCurrentUser) {
     document.getElementById('account-auth-logged-out').style.display = 'none';
     document.getElementById('account-auth-logged-in').style.display = '';
-    document.getElementById('account-auth-email').textContent = sbCurrentUser.email;
+    const meta = sbCurrentUser.user_metadata || {};
+    const displayName = meta.full_name || meta.name || sbCurrentUser.email;
+    document.getElementById('account-auth-email').textContent = displayName;
+    // Pre-fill profile fields from Google metadata if empty
+    if (!user.nickname && (meta.full_name || meta.name)) {
+      setAccountDisplayField('account-nickname-val', meta.full_name || meta.name);
+    }
+    if (!user.fullName && meta.full_name) {
+      setAccountDisplayField('account-fullname-val', meta.full_name);
+    }
+    if (!user.email && sbCurrentUser.email) {
+      setAccountDisplayField('account-email-val', sbCurrentUser.email);
+    }
   } else {
     document.getElementById('account-auth-logged-out').style.display = '';
     document.getElementById('account-auth-logged-in').style.display = 'none';
@@ -272,6 +285,29 @@ function bindAccountPage() {
     resetBtn.style.display = '';
   });
 
+  // Shared: after successful login, save name, close modal, refresh UI
+  function afterLogin() {
+    // Save name from Supabase user metadata to local state
+    if (sbCurrentUser) {
+      const meta = sbCurrentUser.user_metadata || {};
+      const user = State.user || {};
+      if (!user.nickname && (meta.full_name || meta.name)) {
+        user.nickname = meta.full_name || meta.name;
+      }
+      if (!user.email && sbCurrentUser.email) {
+        user.email = sbCurrentUser.email;
+      }
+      if (!user.fullName && meta.full_name) {
+        user.fullName = meta.full_name;
+      }
+      State.setUser(user);
+    }
+    updateProfileBtn();
+    closeAccountPage();
+    renderFeed();
+    renderMissions();
+  }
+
   // Auth: login / register
   async function handleAuth(isRegister) {
     const email = document.getElementById('auth-email-input').value.trim();
@@ -285,10 +321,7 @@ function bindAccountPage() {
       } else {
         await sbSignIn(email, password);
       }
-      updateProfileBtn();
-      openAccountPage();
-      renderFeed();
-      renderMissions();
+      afterLogin();
     } catch (e) {
       errEl.textContent = e.message || 'Chyba přihlášení.';
       errEl.style.display = '';
@@ -303,10 +336,7 @@ function bindAccountPage() {
     errEl.style.display = 'none';
     try {
       await sbSignInWithGoogle();
-      updateProfileBtn();
-      openAccountPage();
-      renderFeed();
-      renderMissions();
+      afterLogin();
     } catch (e) {
       if (e.message !== 'Přihlášení bylo zrušeno.') {
         errEl.textContent = e.message || 'Google přihlášení selhalo.';

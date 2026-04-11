@@ -1,6 +1,6 @@
 ---
 id: vc25-claude-code-intro
-topic: claudeCode
+topic: podKapotou
 title: Claude Code — AI přímo v terminálu
 teaser: Zapomeň na chatovací okénka. Claude Code čte tvůj kód, edituje soubory a pouští příkazy.
 hook: AI co opravdu kóduje?

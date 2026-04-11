@@ -1,6 +1,6 @@
 ---
 id: vc18-publish
-topic: nastrojePro
+topic: praxe
 title: Publikování — svět uvidí tvou aplikaci
 teaser: Hotová aplikace? Sdílej ji s kamarády. Tady jak na to.
 hook: Chceš to světu ukázat?

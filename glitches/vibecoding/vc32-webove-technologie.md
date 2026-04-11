@@ -1,6 +1,6 @@
 ---
 id: vc32-webove-technologie
-topic: nastrojePro
+topic: praxe
 title: Slovníček — technologie pod kapotou
 teaser: HTML, CSS, JavaScript, API, hosting — co to vlastně je?
 hook: Co je pod kapotou?

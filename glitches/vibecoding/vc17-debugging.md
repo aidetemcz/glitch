@@ -1,6 +1,6 @@
 ---
 id: vc17-debugging
-topic: nastrojePro
+topic: praxe
 title: Když něco nefunguje — jak ladit
 teaser: AI dělá chyby. Ale ví jak je opravit — když ji správně popíšeš.
 hook: Jak ji naučíš opravit?

@@ -1,6 +1,6 @@
 ---
 id: vc27-claude-code-workflows
-topic: claudeCode
+topic: podKapotou
 title: Jak s Claude Code pracovat
 teaser: Průzkum kódu, debugging, refaktoring, testy, pull requesty — vše v jednom nástroji.
 hook: Co s ním vlastně dělat?
