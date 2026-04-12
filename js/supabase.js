@@ -76,6 +76,8 @@ function sbSignInWithGoogle() {
     const poll = setInterval(async () => {
       if (!popup || popup.closed) {
         clearInterval(poll);
+        // Wait a moment for Supabase to persist session from popup's localStorage
+        await new Promise(r => setTimeout(r, 800));
         // Check if we got a session
         const { data: { session } } = await sb.auth.getSession();
         if (session?.user) {
