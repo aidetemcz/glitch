@@ -1241,6 +1241,7 @@ function renderKomunitaFeed() {
 
   sorted.forEach(tip => {
     const tagMeta = communityData.tags.find(t => t.id === tip.tag);
+    const upvoted = (JSON.parse(localStorage.getItem('tg_upvotes') || '[]')).includes(tip.id);
     const card = document.createElement('div');
     card.className = 'tip-card';
     card.innerHTML = `
@@ -1251,10 +1252,16 @@ function renderKomunitaFeed() {
       <div class="tip-title">${tip.title}</div>
       <div class="tip-preview">${tip.content}</div>
       <div class="tip-footer">
-        <span class="tip-upvotes">&hearts; ${tip.upvotes}</span>
-        <span class="tip-comments">&bull; ${tip.comments ? tip.comments.length : 0} komentářů</span>
+        <button class="tip-upvote-btn ${upvoted ? 'upvoted' : ''}" data-tipid="${tip.id}">&hearts; ${tip.upvotes}</button>
+        <span class="tip-comments">${tip.comments ? tip.comments.length : 0} odpovědí</span>
       </div>
     `;
+    card.querySelector('.tip-upvote-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleUpvote(tip);
+      e.target.textContent = '\u2665 ' + tip.upvotes;
+      e.target.classList.toggle('upvoted');
+    });
     card.addEventListener('click', () => openTipDetail(tip.id));
     container.appendChild(card);
   });
@@ -1294,11 +1301,40 @@ function renderKomunitaFeed() {
   }
 }
 
+function toggleUpvote(tip) {
+  const upvotes = JSON.parse(localStorage.getItem('tg_upvotes') || '[]');
+  const idx = upvotes.indexOf(tip.id);
+  if (idx >= 0) {
+    upvotes.splice(idx, 1);
+    tip.upvotes = Math.max(0, tip.upvotes - 1);
+  } else {
+    upvotes.push(tip.id);
+    tip.upvotes++;
+  }
+  localStorage.setItem('tg_upvotes', JSON.stringify(upvotes));
+}
+
 function openTipDetail(tipId) {
   const tip = communityData.tips.find(t => t.id === tipId);
   if (!tip) return;
   const tagMeta = communityData.tags.find(t => t.id === tip.tag);
+  const upvoted = (JSON.parse(localStorage.getItem('tg_upvotes') || '[]')).includes(tip.id);
   const overlay = document.getElementById('tip-detail-overlay');
+
+  const commentsHtml = (tip.comments || []).map(c => `
+    <div class="tip-comment">
+      <span class="tip-comment-author">${c.author}</span>
+      <span class="tip-comment-text">${c.text}</span>
+    </div>
+  `).join('');
+
+  const replyForm = `
+    <div class="tip-reply-form">
+      <textarea class="tip-reply-input" id="tip-reply-text" placeholder="${sbCurrentUser ? 'Napiš odpověď...' : 'Pro odpověď se nejdřív přihlas'}" ${sbCurrentUser ? '' : 'disabled'}></textarea>
+      <button class="tip-reply-btn" id="tip-reply-submit" ${sbCurrentUser ? '' : 'disabled'}>Odpovědět</button>
+    </div>
+  `;
+
   overlay.innerHTML = `
     <div class="tip-detail-inner">
       <button class="tip-detail-close">&times;</button>
@@ -1308,24 +1344,49 @@ function openTipDetail(tipId) {
       </div>
       <div class="tip-title" style="font-size:20px;margin:12px 0">${tip.title}</div>
       <div class="tip-detail-content">${tip.content}</div>
-      <div class="tip-footer" style="margin:16px 0 20px">
-        <span class="tip-upvotes">&hearts; ${tip.upvotes}</span>
+      <div class="tip-detail-actions">
+        <button class="tip-upvote-btn detail-upvote ${upvoted ? 'upvoted' : ''}" id="detail-upvote-btn">&hearts; ${tip.upvotes}</button>
       </div>
-      <div class="tip-detail-comments-header">Komentáře (${tip.comments ? tip.comments.length : 0})</div>
-      <div class="tip-detail-comments">
-        ${(tip.comments || []).map(c => `
-          <div class="tip-comment">
-            <span class="tip-comment-author">${c.author}</span>
-            <span class="tip-comment-text">${c.text}</span>
-          </div>
-        `).join('')}
-      </div>
+      <div class="tip-detail-comments-header">Odpovědi (${tip.comments ? tip.comments.length : 0})</div>
+      <div class="tip-detail-comments" id="tip-comments-list">${commentsHtml}</div>
+      ${replyForm}
     </div>
   `;
+
   overlay.classList.remove('hidden');
   overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
     overlay.classList.add('hidden');
+    renderKomunitaFeed();
   });
+
+  document.getElementById('detail-upvote-btn').addEventListener('click', () => {
+    toggleUpvote(tip);
+    const btn = document.getElementById('detail-upvote-btn');
+    btn.textContent = '\u2665 ' + tip.upvotes;
+    btn.classList.toggle('upvoted');
+  });
+
+  const submitBtn = document.getElementById('tip-reply-submit');
+  if (submitBtn && sbCurrentUser) {
+    submitBtn.addEventListener('click', () => {
+      const text = document.getElementById('tip-reply-text').value.trim();
+      if (!text) return;
+      const user = State.user || {};
+      const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
+      const newComment = { author: authorName, text: text };
+      if (!tip.comments) tip.comments = [];
+      tip.comments.push(newComment);
+      document.getElementById('tip-reply-text').value = '';
+      // Re-render comments
+      const list = document.getElementById('tip-comments-list');
+      const el = document.createElement('div');
+      el.className = 'tip-comment new';
+      el.innerHTML = '<span class="tip-comment-author">' + authorName + '</span><span class="tip-comment-text">' + text + '</span>';
+      list.appendChild(el);
+      // Update header count
+      overlay.querySelector('.tip-detail-comments-header').textContent = 'Odpovědi (' + tip.comments.length + ')';
+    });
+  }
 }
 
 function openAddTip() {

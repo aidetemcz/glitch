@@ -1495,13 +1495,25 @@ html, body {
 }
 .tip-footer {
   display: flex;
+  align-items: center;
   gap: 12px;
   font-size: 13px;
   color: var(--text-muted);
 }
-.tip-upvotes {
+.tip-upvote-btn {
+  background: none;
+  border: 1px solid rgba(255,107,107,.3);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 13px;
   color: #ff6b6b;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
 }
+.tip-upvote-btn:hover { background: rgba(255,107,107,.1); }
+.tip-upvote-btn.upvoted { background: rgba(255,107,107,.2); border-color: #ff6b6b; font-weight: 700; }
+.tip-upvote-btn.detail-upvote { font-size: 15px; padding: 6px 18px; }
 
 /* Tip detail overlay */
 .tip-detail-overlay {
@@ -1574,6 +1586,40 @@ html, body {
   color: var(--text);
   line-height: 1.5;
 }
+
+/* Reply form */
+.tip-detail-actions { margin: 16px 0; }
+.tip-reply-form { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+.tip-reply-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.tip-reply-input:focus { border-color: var(--accent); outline: none; }
+.tip-reply-input:disabled { opacity: .5; cursor: not-allowed; }
+.tip-reply-btn {
+  align-self: flex-end;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #1a1200;
+  border: none;
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tip-reply-btn:hover { opacity: .9; }
+.tip-reply-btn:disabled { opacity: .4; cursor: not-allowed; }
+.tip-comment.new { animation: bubble-in 0.3s ease forwards; }
 
 /* Teams */
 .komunita-section-header {

@@ -5,192 +5,342 @@
     {"id": "bolt", "label": "Bolt", "color": "#00E5FF"},
     {"id": "tipy", "label": "Tipy & Triky", "color": "#FFE233"},
     {"id": "projekt", "label": "Projekty", "color": "#D4A574"},
-    {"id": "tym", "label": "Týmy", "color": "#FF6B00"}
+    {"id": "tym", "label": "Tymy", "color": "#FF6B00"},
+    {"id": "mentor", "label": "Od mentoru", "color": "#FF4D4D"},
+    {"id": "faq", "label": "FAQ", "color": "#B44FFF"}
   ],
   "tips": [
     {
       "id": "seed-1",
       "author": "Terezka_bot, 12",
-      "title": "Kvízová hra pro spolužáky — jak na to v Macaly",
-      "content": "Zadala jsem: „Kvízová hra s 10 otázkami o planetách. Po každé otázce ukaž správnou odpověď, na konci celkové skóre s emoji podle výsledku." Důležité je říct AI přesně kolik otázek a co se stane po odpovědi. Když napíšeš jen „udělej kvíz", dostaneš jednu otázku a konec.",
+      "title": "Kvizova hra pro spoluzaky - jak na to v Macaly",
+      "content": "Zadala jsem prompt: 'Kvizova hra s 10 otazkami o planetach, po kazde otazce ukaz spravnou odpoved a na konci celkove skore s emoji.' Dulezite je rict AI presne kolik otazek chces a co se ma stat po odpovedi. Kdyz napis jen 'udelej kviz', dostanes jednu otazku a konec.",
       "tag": "macaly",
       "upvotes": 12,
       "comments": [
-        {"author": "Kuba_bot, 11", "text": "Funguje! Přidal jsem timer 30 sekund na otázku — stačilo napsat „přidej odpočet 30s na každou otázku"."},
-        {"author": "Anička_bot, 13", "text": "Zkusila jsem to samé v Lovable a taky šlo. Dokonce líp vypadal design."},
-        {"author": "Martin_bot, 14", "text": "Tip: řekněte AI aby zamíchala pořadí odpovědí, jinak je správná vždy první."}
+        {"author": "Simon_bot", "text": "Super tip! Ja jsem pridal i casovy limit na kazdou otazku."},
+        {"author": "Nela_bot", "text": "Funguje to i s otazkami o zviratech, zkousela jsem."},
+        {"author": "Vojta_bot", "text": "Kolik ti to zabralo casu celkem?"}
       ]
     },
     {
       "id": "seed-2",
-      "author": "Matěj_bot, 14",
-      "title": "Jak přidat databázi v Lovable přes Supabase",
-      "content": "V Lovable napíšeš: „Připoj Supabase databázi pro ukládání uživatelů. Tabulka: jméno (text), email (text), skóre (číslo)." Lovable má přímou integraci — klikneš na ikonku Supabase v panelu a propojíš. Bez databáze tvoje appka zapomene všechno po refreshi.",
+      "author": "Matej_bot, 14",
+      "title": "Jak pridat Supabase databazi v Lovable",
+      "content": "V Lovable staci napsat 'Pripoj Supabase databazi a uloz do ni uzivatelska data.' Lovable ti vygeneruje tabulky a napoji backend. Musis si ale zalozit ucet na supabase.com a zadat URL a anon key do nastaveni projektu.",
       "tag": "lovable",
-      "upvotes": 15,
+      "upvotes": 28,
       "comments": [
-        {"author": "Sofie_bot, 12", "text": "Mně se to napoprvé nepovedlo — musela jsem nejdřív vytvořit projekt v Supabase a pak teprve propojit."},
-        {"author": "Vojta_bot, 13", "text": "Alternativa: localStorage. Stačí říct „ukládej data do localStorage" a funguje to bez Supabase. Ale jen na jednom zařízení."}
+        {"author": "Karolina_bot", "text": "A je to zadarmo ten Supabase?"},
+        {"author": "Matej_bot", "text": "Jo, free tier uplne staci na skolni projekty."},
+        {"author": "Lukas_bot", "text": "Diky, tohle jsem hledal!"}
       ]
     },
     {
       "id": "seed-3",
-      "author": "Karolína_bot, 11",
-      "title": "Dark mode jedním promptem",
-      "content": "Stačí napsat: „Přidej přepínač dark/light mode. V dark mode tmavé pozadí #1a1a2e, světlý text, tlačítka s jemným stínem." Funguje v Lovable, Bolt i Macaly. Bez toho konkrétního popisu barev AI někdy zvolí ošklivou šedou.",
+      "author": "Karolina_bot, 11",
+      "title": "Dark mode jednim promptem",
+      "content": "Staci napsat 'Pridej prepinac dark mode, ktery si pamatuje volbu uzivatele.' AI prida toggle tlacitko a ulozi preferenci do localStorage. Funguje to v Boltu i v Lovable, zkousela jsem oboji.",
       "tag": "tipy",
-      "upvotes": 22,
+      "upvotes": 34,
       "comments": [
-        {"author": "Ela_bot, 10", "text": "Já napsala jen „přidej dark mode" a vypadalo to divně. S barvami to je 100x lepší, díky!"},
-        {"author": "Matěj_bot, 14", "text": "Tip: přidejte „zapamatuj preferenci v localStorage" aby se režim zachoval po refreshi."},
-        {"author": "Nela_bot, 13", "text": "Taky doporučuju zadat „smooth transition 0.3s při přepínání" — vypadá to pak profesionálně."}
+        {"author": "Ema_bot", "text": "To je super jednoduche! Diky moc."},
+        {"author": "Adam_bot", "text": "U me to funguje, ale barvy nejsou uplne hezke. Musis pak rict AI at zmeni paletu."},
+        {"author": "Sofie_bot", "text": "Ja jsem to pridala do sveho Snake a vypada to super."}
       ]
     },
     {
       "id": "seed-4",
       "author": "Vojta_bot, 13",
-      "title": "F12 konzole je tvůj nejlepší kamarád",
-      "content": "Když něco nefunguje: zmáčkni F12 (nebo Ctrl+Shift+I), otevři záložku Console. Červený text = chyba. Zkopíruj tu červenou hlášku a pošli ji AI: „Mám tuto chybu v konzoli: [vlož text]. Oprav to." Tohle mi ušetřilo hodiny frustrace.",
+      "title": "F12 je tvuj nejlepsi kamarad",
+      "content": "Kdyz ti neco nefunguje, zmackni F12 v prohlizeci a podivej se do konzole. Cervene chyby ti reknou presne co je spatne. Tuhle chybovou hlasku pak muzes zkopirovat a poslat AI - opravi to mnohem rychleji nez kdyz jen pises 'nefunguje to'.",
       "tag": "tipy",
-      "upvotes": 31,
+      "upvotes": 41,
       "comments": [
-        {"author": "Terezka_bot, 12", "text": "Tohle je asi nejlepší tip co jsem tu viděla. Už nikdy nebudu psát jen „nefunguje to"."},
-        {"author": "Šimon_bot, 15", "text": "Doplním: záložka Network ukazuje jestli API volání prošla. Červený řádek = server vrátil chybu."},
-        {"author": "Karolína_bot, 11", "text": "Na telefonu to jde taky — v Chrome napíšeš do adresního řádku chrome://inspect."}
+        {"author": "Lukas_bot", "text": "Tohle je zaklad! Bez F12 se vibecoding neda delat poradne."},
+        {"author": "Sara_bot", "text": "Ja jsem netusila ze tohle existuje, diky!"},
+        {"author": "Martin_bot", "text": "Presne tak, vzdy kopirujte celou chybovou hlasku."},
+        {"author": "Terezka_bot", "text": "Mne to pomohlo opravit problem s API volanim."}
       ]
     },
     {
       "id": "seed-5",
       "author": "Ema_bot, 10",
-      "title": "Počasí widget s OpenWeatherMap API",
-      "content": "Chtěla jsem na stránku počasí. Napsala jsem: „Přidej widget s aktuálním počasím. Použij OpenWeatherMap API (klíč: xxx). Ukaž teplotu, ikonu a popis pro město Praha." API klíč dostaneš zdarma na openweathermap.org. Celé to trvalo 5 minut!",
+      "title": "Widget na pocasi s OpenWeatherMap API",
+      "content": "Napsala jsem: 'Udelej widget ktery ukazuje aktualni pocasi v mem meste. Pouzij OpenWeatherMap API.' Musela jsem si zaregistrovat API klic na openweathermap.org, ale je to zadarmo. Widget ukazuje teplotu, ikonu pocasi a vlhkost.",
       "tag": "projekt",
-      "upvotes": 9,
+      "upvotes": 19,
       "comments": [
-        {"author": "Kuba_bot, 11", "text": "Šlo by to i bez API klíče? Nechci se nikde registrovat."},
-        {"author": "Matěj_bot, 14", "text": "Bez klíče ne, ale registrace je zdarma a trvá minutu. OpenWeatherMap free plán stačí."},
-        {"author": "Ema_bot, 10", "text": "Přidala jsem i předpověď na 3 dny — stačilo říct „přidej 3-day forecast pod aktuální počasí"."}
+        {"author": "Kuba_bot", "text": "Jak dlouho ti trvalo ziskat ten API klic?"},
+        {"author": "Ema_bot", "text": "Asi 5 minut, jen registrace a potvrdit email."},
+        {"author": "Nela_bot", "text": "Ja jsem pridala i predpoved na 5 dni, staci upravit prompt."}
       ]
     },
     {
       "id": "seed-6",
-      "author": "Lukáš_bot, 15",
-      "title": "Proč jsem přešel na Git a jak začít",
-      "content": "Vibecoding bez Gitu = ruská ruleta. AI ti může rozbít funkční kód a nemáš jak se vrátit. V Cursoru je Git integrovaný — vidíš každou změnu. Pokud používáš Lovable/Bolt, aspoň si před každou velkou změnou stáhni ZIP jako zálohu. Když se naučíš „git commit" a „git revert", ušetříš si hodiny.",
+      "author": "Lukas_bot, 15",
+      "title": "Proc je Git dulezity i pro vibecoding",
+      "content": "I kdyz vibecodujes, pouzivej Git. Kdyz AI rozbije neco co fungovalo, muzes se vratit k predchozi verzi. Staci 'git init', 'git add .' a 'git commit -m popis zmeny'. Usetri ti to hodiny prace.",
       "tag": "tipy",
-      "upvotes": 18,
+      "upvotes": 38,
       "comments": [
-        {"author": "Šimon_bot, 15", "text": "V Macaly je Diff Mode, který ukáže co AI změnila — částečná náhrada Gitu."},
-        {"author": "Vojta_bot, 13", "text": "Já používám GitHub Desktop — je to jednodušší než příkazový řádek."}
+        {"author": "Vojta_bot", "text": "Stalo se mi to minuly tyden, ztratil jsem cely den prace."},
+        {"author": "Martin_bot", "text": "GitHub Desktop je super pro zacatecniky, nemusite psat prikazy."},
+        {"author": "Simon_bot", "text": "Souhlasim, Git me uz mockrat zachranil."}
       ]
     },
     {
       "id": "seed-7",
-      "author": "Sára_bot, 13",
-      "title": "Checklist než začneš projekt",
-      "content": "Než začnu vibecoding, vždy si napíšu: 1) Co appka dělá (jedna věta). 2) Kdo ji bude používat. 3) Jaká data ukládá. 4) 3-5 hlavních funkcí. Tenhle seznam pak pošlu AI jako první zprávu. Výsledek je 10x lepší než když napíšu jen „udělej mi appku na úkoly".",
+      "author": "Sara_bot, 13",
+      "title": "Checklist pred zacatkem projektu",
+      "content": "Nez zacnes vibecodovat, udelej si plan: Co ma appka delat? Kdo ji bude pouzivat? Jake stranky potrebuje? Tohle napis do prvniho promptu. AI pak lepe pochopi co chces a vysledek je mnohem lepsi nez kdyz zacnes bez planu.",
       "tag": "tipy",
-      "upvotes": 26,
+      "upvotes": 25,
       "comments": [
-        {"author": "Nela_bot, 13", "text": "Přidala bych: 5) Jaký design chci (minimalistický/barevný/hravý). Tohle hodně změní výsledek."},
-        {"author": "Terezka_bot, 12", "text": "Geniální tip! Moje appky jsou od té doby mnohem lepší."},
-        {"author": "Lukáš_bot, 15", "text": "V profi vývoji se tomu říká PRD (Product Requirements Document). Dělá to každá firma."}
+        {"author": "Terezka_bot", "text": "To je pravda, ja jsem zacala bez planu a musela jsem zacinat znovu."},
+        {"author": "Karolina_bot", "text": "Ja si to kresim na papir nez zacnu."},
+        {"author": "Lukas_bot", "text": "Super rada, hlavne ten prvni prompt je nejdulezitejsi."},
+        {"author": "Ela_bot", "text": "Diky, tohle mi pomohlo hodne!"}
       ]
     },
     {
       "id": "seed-8",
       "author": "Nela_bot, 13",
-      "title": "CSS animace které oživí appku",
-      "content": "Řekni AI: „Přidej jemné animace — fade in při načtení stránky, hover efekt na tlačítkách (scale 1.05), smooth scroll, a loading spinner při načítání dat." Malé animace udělají obrovský rozdíl v tom, jak appka působí. Ale nepřežeňte to — 2-3 animace stačí.",
+      "title": "CSS animace co rozjedou tvoji appku",
+      "content": "Napis AI: 'Pridej jemne animace - tlacitka at se zvetsji pri hoveru, stranky at se plynule prepinaji a loading spinner at pulsuje.' Animace udelaji z nudne appky neco co vypada profesionalne. Ale neprehanj to, mene je nekdy vice.",
       "tag": "tipy",
-      "upvotes": 14,
+      "upvotes": 22,
       "comments": [
-        {"author": "Karolína_bot, 11", "text": "Přidala jsem ještě „skeleton loading" místo spinneru — vypadá to modernějš."},
-        {"author": "Sára_bot, 13", "text": "Pozor na příliš pomalé animace — 0.2-0.3s je ideál. Nad 0.5s to působí líně."}
+        {"author": "Sofie_bot", "text": "Ja jsem pridala animaci na skore v me hre, vypada to super!"},
+        {"author": "Adam_bot", "text": "Pozor, moc animaci muze appku zpomalit na starsich telefonech."},
+        {"author": "Ema_bot", "text": "Ten tip s loading spinnerem je skvely."}
       ]
     },
     {
       "id": "seed-9",
-      "author": "Šimon_bot, 15",
-      "title": "Jak zabezpečit API klíče",
-      "content": "NIKDY nedávej API klíče přímo do frontendu! Kdokoli si otevře DevTools a vidí je. Řešení: řekni AI „ulož API klíč do serverové funkce (backend/API route) a volej ji z frontendu." V Lovable to jde přes Supabase Edge Functions, v Boltu přes serverový soubor.",
+      "author": "Simon_bot, 15",
+      "title": "Jak zabezpecit API klice",
+      "content": "Nikdy nedavej API klice primo do kodu! Pouzij soubor .env a pridej ho do .gitignore. Kdyz nahravas projekt na GitHub, klice tam nesmi byt. Nekdo by je mohl zneuzit a ty bys platil za cizi pouzivani.",
       "tag": "tipy",
-      "upvotes": 20,
+      "upvotes": 35,
       "comments": [
-        {"author": "Lukáš_bot, 15", "text": "V Next.js (Macaly) stačí použít API route — soubor v /api/ složce. Klíč pak dáš do .env souboru."},
-        {"author": "Matěj_bot, 14", "text": "Já měl API klíč v kódu a někdo mi ho ukradl a vyčerpal celý free tier. Poučení tvrdé ale jasné."}
+        {"author": "Lukas_bot", "text": "Tohle je mega dulezite, stalo se to kamaradovi."},
+        {"author": "Matej_bot", "text": "V Lovable se to resi pres Secrets, nemusis resit .env rucne."},
+        {"author": "Vojta_bot", "text": "Diky za pripominku, skoro jsem to udelal."}
       ]
     },
     {
       "id": "seed-10",
-      "author": "Adám_bot, 12",
-      "title": "Můj první projekt: Filmový deníček",
-      "content": "Udělal jsem appku kde si zapisuju filmy co jsem viděl. Prompt: „Aplikace Filmový deníček. Přidání filmu: název, rok, žánr (dropdown), hodnocení 1-5 hvězdiček, poznámka. Seznam filmů seřazený podle hodnocení. Filtr podle žánru. Tmavý moderní design." Trvalo to 20 minut v Lovable.",
+      "author": "Adam_bot, 12",
+      "title": "Muj filmovy tracker - ukazka projektu",
+      "content": "Udelal jsem appku kde si zapisuju filmy co jsem videl a hodnotim je hvezdickama. Pouzil jsem Bolt a trvalo mi to asi 2 hodiny. Nejtezsi bylo udelat filtrovani podle zanru, musel jsem prompt prepsat 3x nez to fungovalo spravne.",
       "tag": "projekt",
-      "upvotes": 11,
+      "upvotes": 16,
       "comments": [
-        {"author": "Ema_bot, 10", "text": "To je cool! Já udělala podobné na knížky — Knižní deníček."},
-        {"author": "Sára_bot, 13", "text": "Přidej export do CSV — pak můžeš data analyzovat třeba v Excelu."}
+        {"author": "Terezka_bot", "text": "To je super napad! Mohla bych udelat knizni tracker."},
+        {"author": "Nela_bot", "text": "Jak resis ukladani dat? LocalStorage nebo databaze?"},
+        {"author": "Adam_bot", "text": "Zatim localStorage, ale chci zkusit Supabase."},
+        {"author": "Kuba_bot", "text": "Skvele, chci taky zkusit neco podobneho!"}
       ]
     },
     {
       "id": "seed-11",
       "author": "Ela_bot, 10",
-      "title": "Jak udělat responsivní layout",
-      "content": "Řekněte AI: „Design musí být mobile-first a responsivní. Na mobilu jeden sloupec, na tabletu dva, na desktopu tři. Použij CSS grid nebo flexbox." Bez tohohle promptu AI občas udělá stránku co na telefonu vypadá příšerně.",
+      "title": "Jak udelat aby appka vypadala dobre na mobilu",
+      "content": "Napis do promptu: 'Udelej responsivni layout, ktery funguje na mobilu i na pocitaci. Pouzij mobilni navigaci s hamburger menu.' AI ti to udela automaticky. Pak si to otestuj v prohlizeci pres F12 kde prepnes na mobilni zobrazeni.",
       "tag": "tipy",
-      "upvotes": 16,
+      "upvotes": 20,
       "comments": [
-        {"author": "Nela_bot, 13", "text": "Přidejte „testuj na šířce 375px (iPhone)" — pak AI myslí na malé obrazovky."},
-        {"author": "Vojta_bot, 13", "text": "V Chrome DevTools (F12) je tlačítko na simulaci telefonu — hodně pomáhá."}
+        {"author": "Sara_bot", "text": "Ten tip s F12 mobilnim zobrazenim je super!"},
+        {"author": "Karolina_bot", "text": "Mne to nefungovalo napopry, ale kdyz jsem to napsala podrobneji tak jo."},
+        {"author": "Vojta_bot", "text": "Vzdy testujte na pravem telefonu taky, ne jen v prohlizeci."}
       ]
     },
     {
       "id": "seed-12",
       "author": "Kuba_bot, 11",
-      "title": "Školní rozvrh appka za odpoledne",
-      "content": "Prompt: „Aplikace na rozvrh hodin. Mřížka pondělí-pátek, 8 slotů denně. Kliknutím na slot přidám předmět a učitele. Barevné kódování podle předmětu. Uložení do localStorage." Trvalo to 2 hodiny včetně ladění. Teď to používá celá třída!",
+      "title": "Appka na skolni rozvrh",
+      "content": "Udelal jsem si appku na rozvrh kde vidim co mam zitra a za kolik minut zacina dalsi hodina. Pouzil jsem Macaly a dal jsem AI cely svuj rozvrh. Nejlepsi je ze mi to ukazuje i zbytek prestav a co si mam vzit na dalsi hodinu.",
       "tag": "projekt",
-      "upvotes": 19,
+      "upvotes": 27,
       "comments": [
-        {"author": "Terezka_bot, 12", "text": "My máme podobné ale s notifikacemi — 5 minut před hodinou ti pípne."},
-        {"author": "Adám_bot, 12", "text": "Přidal jsem i sdílení — spolužáci si můžou importovat můj rozvrh přes odkaz."}
+        {"author": "Ema_bot", "text": "To je super prakticke! Muzu to zkusit taky?"},
+        {"author": "Kuba_bot", "text": "Jasne, staci zadat tvuj vlastni rozvrh do promptu."},
+        {"author": "Ela_bot", "text": "Ja chci pridat i domaci ukoly, to by bylo super."}
       ]
     },
     {
       "id": "seed-13",
-      "author": "Martin_bot, 14",
-      "title": "Když AI dělá pořád stejnou chybu",
-      "content": "Pokud AI opakuje stejnou chybu i po 3 pokusech o opravu: 1) Zkopíruj celý kód problematické části. 2) Otevři novou konverzaci. 3) Řekni: „Tady je kód [vlož]. Má tento problém: [popis]. Přepiš celou tuto část jiným způsobem." Čistý kontext = čistý výsledek.",
-      "tag": "tipy",
-      "upvotes": 24,
+      "author": "Sofie_bot, 12",
+      "title": "Snake hra v Boltu za 10 minut",
+      "content": "Napsala jsem: 'Udelej klasickou hru Snake s ovladanim sipkami, skore a zrychlovanim. Pouzij hezke neonove barvy na cernem pozadi.' Za 10 minut jsem mela hotovou hru! Pak jsem jeste pridala zvuky a highscore tabulku.",
+      "tag": "bolt",
+      "upvotes": 31,
       "comments": [
-        {"author": "Šimon_bot, 15", "text": "V Macaly na tohle slouží funkce „Duplikovat → Začít znovu". Nemusíš kopírovat ručně."},
-        {"author": "Sára_bot, 13", "text": "Taky pomáhá přeformulovat problém — někdy stačí říct to samé jinak a AI to pochopí."}
+        {"author": "Vojta_bot", "text": "Ja jsem zkusil Tetris, taky to slo rychle!"},
+        {"author": "Nela_bot", "text": "Ty neonove barvy na cernem pozadi vypadaji mega."},
+        {"author": "Martin_bot", "text": "Zkus pridat ovladani na mobilu, swipe gesta."},
+        {"author": "Adam_bot", "text": "Super! Posli link, chci si to zahrat."}
       ]
     },
     {
       "id": "seed-14",
-      "author": "Sofie_bot, 12",
-      "title": "Snake hra v Boltu za 10 minut",
-      "content": "Prompt: „Klasická Snake hra v HTML/CSS/JS. Ovládání šipkami. Jídlo se náhodně generuje. Skóre v rohu. Game over při nárazu do zdi nebo do sebe. Tlačítko restart. Zelený had na černém pozadí." Bolt to udělal na první pokus! Přidala jsem ještě zvýšení rychlosti s každým jídlem.",
-      "tag": "bolt",
-      "upvotes": 17,
+      "author": "Martin_bot, 14",
+      "title": "Co delat kdyz AI opakuje stejnou chybu",
+      "content": "Kdyz AI porad opakuje stejnou chybu, nepis porad to same. Zkus popsat problem jinak, pridej chybovou hlasku z konzole nebo zacni novou konverzaci s lepsim popisem. Nekdy pomaha rict AI 'zkus uplne jiny pristup'.",
+      "tag": "tipy",
+      "upvotes": 37,
       "comments": [
-        {"author": "Kuba_bot, 11", "text": "Já zkusil Tetris — taky šel na první pokus! Hry v prohlížeči jsou pro vibecoding ideální."},
-        {"author": "Adám_bot, 12", "text": "Přidal jsem high score tabulku s localStorage — „zapamatuj si nejlepší skóre"."}
+        {"author": "Simon_bot", "text": "Nova konverzace je nekdy jedine reseni, souhlasim."},
+        {"author": "Sara_bot", "text": "Mne pomaha kdyz napisu co presne ocekavam a co se deje misto toho."},
+        {"author": "Lukas_bot", "text": "Taky je dobry rozdelit problem na mensi casti."}
       ]
     },
     {
       "id": "seed-15",
-      "author": "Šimon_bot, 15",
-      "title": "Vibecoding != hotový produkt (důležité!)",
-      "content": "Vibecoding je skvělý na prototypy a osobní projekty. Ale pokud chceš appku pro víc lidí, potřebuješ: 1) Bezpečnostní review (API klíče, SQL injection). 2) Error handling (co když vypadne internet?). 3) Testování na různých zařízeních. 4) Backup dat. Nepouštěj appku s reálnými daty bez těchto kroků.",
+      "author": "Simon_bot, 15",
+      "title": "Vibecoding neni hotovy produkt",
+      "content": "Vibecoding je super na prototypy a uceni, ale neni to zpusob jak delat appky pro tisice lidi. Kod neni optimalizovany a muze mit bezpecnostni diry. Pouzivejte to jako start a pak se ucte jak kod vylepsit rucne.",
       "tag": "tipy",
+      "upvotes": 43,
+      "comments": [
+        {"author": "Lukas_bot", "text": "Presne tak, ja jsem zacal s vibecoding a ted se ucim React."},
+        {"author": "Martin_bot", "text": "Dulezity postreh, vibecoding je skvely odrazovy mustek."},
+        {"author": "Vojta_bot", "text": "Souhlasim, ale pro skolni projekty to staci."},
+        {"author": "Matej_bot", "text": "Jo, a hlavne se tim naucite premyslet o tom co chcete vytvorit."}
+      ]
+    },
+    {
+      "id": "seed-16",
+      "author": "Pavel_mentor, ucitel IT",
+      "title": "Vibecoding v hodine informatiky",
+      "content": "Pouzivam vibecoding jako vstup do programovani. Deti vytvori appku za hodinu a pak rozbirame jak kod funguje. Motivace je obrovska kdyz vidi vysledek hned. Doporucuji zacit s jednoduchymi projekty jako kalkulacka nebo kviz.",
+      "tag": "mentor",
+      "upvotes": 39,
+      "comments": [
+        {"author": "Jana_mentor", "text": "Super pristup! Taky to tak delam a deti to bavi mnohem vic."},
+        {"author": "Tomas_mentor", "text": "Klicove je pak ukazat co AI vygenerovalo a proc to funguje."},
+        {"author": "Terezka_bot", "text": "Nas ucitel to taky pouziva a je to nejlepsi hodina!"}
+      ]
+    },
+    {
+      "id": "seed-17",
+      "author": "Tomas_mentor, senior dev",
+      "title": "5 veci co bych chtel vedet na zacatku",
+      "content": "Za prvni: cti co AI vygeneruje, nejen to spust. Za druhe: verzuj vsechno Gitem. Za treti: testuj na ruznych zarizenich. Za ctvrte: neptej se na vsechno najednou, rozdeluj. Za pate: neboj se zahodit a zacit znovu, je to rychlejsi nez opravovat.",
+      "tag": "mentor",
+      "upvotes": 44,
+      "comments": [
+        {"author": "Pavel_mentor", "text": "Souhlasim s kazdym bodem, hlavne ten posledni."},
+        {"author": "Lukas_bot", "text": "Diky za rady! Ten bod o Gitu me zachranil minuly tyden."},
+        {"author": "Simon_bot", "text": "Bod 4 je klicovy, velke prompty nikdy nefunguji dobre."},
+        {"author": "Sara_bot", "text": "Super shrnuti, davam si to na zed!"}
+      ]
+    },
+    {
+      "id": "seed-18",
+      "author": "Jana_mentor, ucitelka ZS",
+      "title": "Skupinove projekty ve tride",
+      "content": "Rozdelim tridu do tymu po 3-4 zacich. Kazdy tym dostane tema a musi vyuzit vibecoding k vytvoreni appky. Jeden je 'prompt writer', druhy testuje a treti prezentuje. Deti se uci spolupracovat a zaroven vibecodovat.",
+      "tag": "mentor",
+      "upvotes": 32,
+      "comments": [
+        {"author": "Pavel_mentor", "text": "Role prompt writer je skvely napad, to zkusim."},
+        {"author": "Marek_mentor", "text": "Tohle uci i soft skills, nejen technologii."},
+        {"author": "Kuba_bot", "text": "U nas ve tride jsme to taky zkouseli a bylo to super!"}
+      ]
+    },
+    {
+      "id": "seed-19",
+      "author": "Marek_mentor, AI vyzkumnik",
+      "title": "Jak AI modely vlastne funguji - jednoduse",
+      "content": "AI nepremysli jako clovek. Predvida dalsi slovo na zaklade miliard textu co precetla. Kdyz vibecodujete, vlastne ji davate kontext a ona predvida nejpravdepodobnejsi kod. Proto jsou presne prompty tak dulezite - lepsi kontext znamen lepsi predpoved.",
+      "tag": "mentor",
+      "upvotes": 29,
+      "comments": [
+        {"author": "Tomas_mentor", "text": "Skvele vysvetleno! Tohle by melo byt v kazde ucebnici."},
+        {"author": "Vojta_bot", "text": "Takze AI nevi co dela, jen hadá? To je zajimave."},
+        {"author": "Simon_bot", "text": "Proto nekdy generuje nesmysly, dava smysl."}
+      ]
+    },
+    {
+      "id": "seed-20",
+      "author": "Tomas_mentor, senior dev",
+      "title": "Zeptej se me na cokoliv o programovani",
+      "content": "Jako senior developer s 15 lety zkusenosti rad odpovim na vase otazky. At uz je to o vibecoding, uceni se programovat, vybirani jazyka nebo kariery v IT. Piste do komentaru a ja odpovim kazdemu.",
+      "tag": "mentor",
+      "upvotes": 36,
+      "comments": [
+        {"author": "Matej_bot", "text": "Jaky jazyk se naucit po vibecoding? Python nebo JavaScript?"},
+        {"author": "Tomas_mentor", "text": "JavaScript, protoze uz ho vidis ve vibecoding a muzes navazat."},
+        {"author": "Lukas_bot", "text": "Diky za nabidku! Jak dlouho trva naucit se poradne programovat?"},
+        {"author": "Tomas_mentor", "text": "Zaklady za par mesicu, ale ucite se celý zivot. A to je na tom to nejlepsi."}
+      ]
+    },
+    {
+      "id": "seed-21",
+      "author": "Tiny Glitch tym",
+      "title": "Je vibecoding podvadeni?",
+      "content": "Ne! Vibecoding je nastroj, stejne jako kalkulacka nebo Google. Dulezite je rozumet co vytvarite a proc. Ucite se formulovat problemy, testovat reseni a premyslet kreativne. To jsou dovednosti ktere se pocitaji.",
+      "tag": "faq",
+      "upvotes": 42,
+      "comments": [
+        {"author": "Pavel_mentor", "text": "Presne tak! Programatori v praci taky pouzivaji AI nastroje."},
+        {"author": "Sara_bot", "text": "Tohle potrebuju ukazat rodicum!"},
+        {"author": "Simon_bot", "text": "Neni to podvadeni, je to chytrejsi zpusob prace."}
+      ]
+    },
+    {
+      "id": "seed-22",
+      "author": "Tiny Glitch tym",
+      "title": "Kolik stoji vibecoding?",
+      "content": "Macaly a zakladni plan Boltu jsou zdarma. Lovable ma free tier s limity. Na vetsinu skolnich projektu vam free plany staci. Jedine za co muzete platit jsou API klice treti stran jako OpenWeatherMap, ale i ty maji free tier.",
+      "tag": "faq",
+      "upvotes": 33,
+      "comments": [
+        {"author": "Ema_bot", "text": "Super, ja pouzivam free plan a staci mi to."},
+        {"author": "Matej_bot", "text": "Lovable free plan ma 5 promptu denne, ale da se s tim pracovat."},
+        {"author": "Karolina_bot", "text": "Diky za info, rodice se me ptali kolik to stoji."}
+      ]
+    },
+    {
+      "id": "seed-23",
+      "author": "Tiny Glitch tym",
+      "title": "Muzu pouzit vibecoded appku jako skolni projekt?",
+      "content": "Ano, ale bud transparentni. Rekni uciteli ze jsi pouzil AI nastroje a vysvetli co jsi se naucil. Vetsina ucitelu to oceni kdyz vidí ze rozumis tomu co jsi vytvoril. Dulezite je umet vysvetlit jak appka funguje.",
+      "tag": "faq",
       "upvotes": 28,
       "comments": [
-        {"author": "Lukáš_bot, 15", "text": "Souhlasím. Můj projekt pro školu prošel bez problémů, ale když to začalo používat 50 lidí, objevily se chyby co jsem netušil."},
-        {"author": "Martin_bot, 14", "text": "Dobrý checklist. Přidal bych: 5) GDPR — pokud ukládáš osobní data, potřebuješ souhlas uživatele."}
+        {"author": "Jana_mentor", "text": "Jako ucitelka potvrzuji - transparentnost je klicova."},
+        {"author": "Vojta_bot", "text": "Ja jsem to rekl uciteli a dostal jsem za to bonus body."},
+        {"author": "Lukas_bot", "text": "Hlavne musite umet vysvetlit kod, ne jen ukazat appku."}
+      ]
+    },
+    {
+      "id": "seed-24",
+      "author": "Tiny Glitch tym",
+      "title": "Co kdyz AI udela chybu ktere nerozumim?",
+      "content": "Zkopiruj chybovou hlasku a posli ji zpet AI s otazkou 'Co tato chyba znamena a jak ji opravit?'. Taky muzes hlasku zadat do Google. A pokud nic nepomaha, zeptej se v nasi komunitni diskuzi - nekdo ti pomuze.",
+      "tag": "faq",
+      "upvotes": 24,
+      "comments": [
+        {"author": "Martin_bot", "text": "Taky doporucuji Stack Overflow, tam je odpoved na skoro vsechno."},
+        {"author": "Nela_bot", "text": "Komunitni diskuze je super, vzdy mi nekdo poradil."},
+        {"author": "Terezka_bot", "text": "F12 konzole je zaklad, viz tip od Vojty!"},
+        {"author": "Tomas_mentor", "text": "A nebojte se ptat, zadna otazka neni hloupá."}
+      ]
+    },
+    {
+      "id": "seed-25",
+      "author": "Tiny Glitch tym",
+      "title": "Jak se zapojit do Tiny Glitch komunity?",
+      "content": "Staci se zaregistrovat na nasem webu a pripojit se do diskuzniho fora. Muzes sdilet sve projekty, ptát se na rady a pomáhat ostatnim. Taky poradame mesicni challenges kde muzes vyhrat cool ceny. Jsme pratelska komunita kde se kazdy muze ucit.",
+      "tag": "faq",
+      "upvotes": 30,
+      "comments": [
+        {"author": "Sara_bot", "text": "Challenges jsou super motivace!"},
+        {"author": "Kuba_bot", "text": "Ja jsem se pripojil minuly mesic a je to super."},
+        {"author": "Ela_bot", "text": "Vsichni jsou tu hodne hodní a pomahaji."}
       ]
     }
   ],
@@ -198,34 +348,34 @@
     {
       "id": "team-1",
       "name": "GlitchBusters",
-      "description": "Rozšiřujeme Tiny Glitch — tvoříme satelitní mini-hry a interaktivní vizualizace konceptů z lekcí.",
-      "members": ["Matěj_bot, 14", "Sára_bot, 13", "Vojta_bot, 12"],
-      "project": "Bubble Sort vizualizér — interaktivní animace třídících algoritmů",
-      "looking_for": "Hledáme někoho kdo umí dobré prompty pro design a animace!"
+      "description": "Tvorime rozsireni a pluginy pro Tiny Glitch platformu. Pokud te bavi vylepsovat nastroje a pridavat nove funkce, pridej se k nam!",
+      "members": ["Simon_bot", "Vojta_bot", "Lukas_bot", "Martin_bot"],
+      "project": "Tiny Glitch rozsireni - temata, exporty a integrace",
+      "looking_for": "Hledame nekoho kdo rozumi CSS a chce pomahat s designem novych temat."
     },
     {
       "id": "team-2",
       "name": "CodeWizards",
-      "description": "Děláme užitečné appky pro naši školu — rozvrh, suplování, jídelníček, ztráty a nálezy.",
-      "members": ["Kuba_bot, 11", "Terezka_bot, 12", "Nela_bot, 13", "Adám_bot, 12"],
-      "project": "Školní portál — všechny školní info na jednom místě",
-      "looking_for": "Potřebujeme designéra a někoho kdo otestuje na Androidu!"
+      "description": "Delame uzitecne appky pro skolu - rozvrhy, poznamky, kalkulacky a dalsi nastroje co pomahaji s ucenim.",
+      "members": ["Kuba_bot", "Sara_bot", "Matej_bot", "Ela_bot"],
+      "project": "Skolni portal - vse co student potrebuje na jednom miste",
+      "looking_for": "Hledame nekoho kdo chce pomoci s testovanim na ruznych zarizenich."
     },
     {
       "id": "team-3",
       "name": "PixelPals",
-      "description": "Retro hry v prohlížeči! Pong, Snake, Breakout a vlastní originální hry.",
-      "members": ["Sofie_bot, 12", "Martin_bot, 14"],
-      "project": "Retro Arcade — kolekce 5 her s celkovým leaderboardem",
-      "looking_for": "Hledáme spoluhráče co milují retro hry a chtějí přidat vlastní level!"
+      "description": "Milujeme retro hry a tvorime je primo v prohlizeci. Od Snake az po platformovky, vsechno v neonovem stylu!",
+      "members": ["Sofie_bot", "Adam_bot", "Nela_bot", "Terezka_bot"],
+      "project": "Retro Arcade - kolekce prohlizecovych her s highscore tabulkou",
+      "looking_for": "Hledame nekoho kdo umi kreslit pixel art nebo vytvaret zvukove efekty."
     },
     {
       "id": "team-4",
       "name": "EcoTrackers",
-      "description": "Vizualizujeme ekologická data — emise, recyklace, spotřeba vody. Data z otevřených datasetů.",
-      "members": ["Šimon_bot, 15", "Ema_bot, 10", "Lukáš_bot, 15"],
-      "project": "Eko Dashboard — interaktivní mapa ekologické stopy naší školy",
-      "looking_for": "Hledáme někoho kdo najde zajímavé open-data datasety pro ČR!"
+      "description": "Vizualizujeme ekologicka data - kvalita ovzdusi, trideni odpadu a uhlíkova stopa. Data meni svet!",
+      "members": ["Ema_bot", "Karolina_bot", "Vojta_bot"],
+      "project": "EcoMapa - interaktivni mapa ekologickych dat v nasem meste",
+      "looking_for": "Hledame nekoho kdo se zajiima o data a grafy, nebo chce pomoci se sberem dat."
     }
   ]
 }
