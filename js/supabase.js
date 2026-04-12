@@ -1,7 +1,7 @@
 // ── SUPABASE CLIENT ──────────────────────────
 
-const SUPABASE_URL = 'https://pfpqwxqayuvihnqnuyvv.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_xUSlFUWpapqMCW--b6LDsQ_P0HCKsg6';
+const SUPABASE_URL = 'https://tnjvbamehdhymmcktxuy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_7HdCbfsTLiI3IH7FFmEQdw_A9sIqTcI';
 
 if (!window.supabase) {
   console.warn('Supabase CDN not loaded');
