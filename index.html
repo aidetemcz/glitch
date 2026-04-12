@@ -66,9 +66,9 @@
       <!-- KOMUNITA -->
       <section id="view-komunita" class="view hidden">
         <div class="komunita-header">
-          <h2 class="komunita-title">Tiny Wiki</h2>
-          <p class="komunita-sub">Tipy a triky od studentů</p>
-          <button class="komunita-add-btn" id="add-tip-btn">+ Přidat tip</button>
+          <h2 class="komunita-title">Komunita</h2>
+          <p class="komunita-sub">Tipy, otázky a odpovědi od studentů, mentorů a vývojářů</p>
+          <button class="komunita-add-btn" id="add-tip-btn">+ Přidat příspěvek</button>
         </div>
         <div class="komunita-tags" id="komunita-tags"></div>
         <div id="komunita-feed"></div>
@@ -197,6 +197,13 @@
   <script src="js/supabase.js"></script>
   <script src="js/data.js?v=60"></script>
   <script src="js/app.js?v=60"></script>
-  <script>if('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then(r => r.forEach(w => w.unregister()));</script>
+  <script>
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(function(regs){
+      regs.forEach(function(r){r.unregister()});
+    });
+    caches.keys().then(function(k){k.forEach(function(n){caches.delete(n)})});
+  }
+  </script>
 </body>
 </html>

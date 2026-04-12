@@ -1270,7 +1270,8 @@ function renderKomunitaFeed() {
   if (!activeTag || activeTag === 'tym') {
     const teamHeader = document.createElement('div');
     teamHeader.className = 'komunita-section-header';
-    teamHeader.innerHTML = '<h3>Týmy</h3><p class="komunita-sub">Přidej se k týmu nebo založ vlastní</p>';
+    teamHeader.innerHTML = '<h3>Týmy</h3><p class="komunita-sub">Přidej se k týmu nebo založ vlastní</p>' +
+      '<button class="komunita-add-btn" style="margin-top:8px;font-size:12px;padding:6px 14px" id="create-team-btn">+ Založit tým</button>';
     container.appendChild(teamHeader);
 
     communityData.teams.forEach(team => {
@@ -1298,7 +1299,38 @@ function renderKomunitaFeed() {
       });
       container.appendChild(card);
     });
+
+    // "Založit tým" button handler
+    const createTeamBtn = document.getElementById('create-team-btn');
+    if (createTeamBtn) {
+      createTeamBtn.addEventListener('click', () => {
+        if (!sbCurrentUser) { alert('Pro založení týmu se nejdřív přihlas!'); return; }
+        openAddTip();
+        // Pre-select "Týmy" tag
+        setTimeout(() => {
+          const tagSel = document.getElementById('add-tip-tag');
+          if (tagSel) tagSel.value = 'tym';
+        }, 100);
+      });
+    }
   }
+
+  // "Napsat vývojovému týmu" footer
+  const devFooter = document.createElement('div');
+  devFooter.className = 'komunita-dev-footer';
+  devFooter.innerHTML = '<p>Máš nápad, chybu nebo zpětnou vazbu?</p>' +
+    '<button class="komunita-dev-btn" id="dev-msg-btn">Napsat vývojovému týmu</button>';
+  container.appendChild(devFooter);
+  document.getElementById('dev-msg-btn').addEventListener('click', () => {
+    if (!sbCurrentUser) { alert('Pro odeslání zprávy se nejdřív přihlas!'); return; }
+    openAddTip();
+    setTimeout(() => {
+      const tagSel = document.getElementById('add-tip-tag');
+      if (tagSel) tagSel.value = 'faq';
+      const titleEl = document.getElementById('add-tip-title');
+      if (titleEl) titleEl.placeholder = 'Tvoje otázka nebo zpětná vazba...';
+    }, 100);
+  });
 }
 
 function toggleUpvote(tip) {

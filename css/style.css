@@ -1621,6 +1621,27 @@ html, body {
 .tip-reply-btn:disabled { opacity: .4; cursor: not-allowed; }
 .tip-comment.new { animation: bubble-in 0.3s ease forwards; }
 
+/* Dev footer */
+.komunita-dev-footer {
+  margin-top: 32px;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.komunita-dev-footer p { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+.komunita-dev-btn {
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.komunita-dev-btn:hover { border-color: var(--accent); color: var(--accent); }
+
 /* Teams */
 .komunita-section-header {
   margin-top: 28px;
