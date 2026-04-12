@@ -1191,11 +1191,59 @@ function scrollChatToBottom() {
 
 let communityData = null;
 let activeTag = null;
+let supabaseTeams = [];
+let supabaseTeamMembers = [];
+
+function isUUID(str) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+}
 
 async function loadCommunity() {
   if (communityData) return;
   const resp = await fetch('glitches/community.json');
   communityData = await resp.json();
+
+  // Merge Supabase tips on top of seed data
+  try {
+    if (sb) {
+      const { data: sbTips, error } = await sb.from('community_tips').select('*').neq('tag', 'dev-message').order('created_at', { ascending: false });
+      if (!error && sbTips && sbTips.length) {
+        const sbMapped = sbTips.map(t => ({
+          id: t.id,
+          author: t.author_name,
+          title: t.title,
+          content: t.content,
+          tag: t.tag,
+          upvotes: t.upvotes || 0,
+          comments: [],
+          _supabase: true
+        }));
+        // Load comments for Supabase tips
+        const tipIds = sbTips.map(t => t.id);
+        try {
+          const { data: sbComments } = await sb.from('tip_comments').select('*').in('tip_id', tipIds).order('created_at', { ascending: true });
+          if (sbComments) {
+            sbComments.forEach(c => {
+              const tip = sbMapped.find(t => t.id === c.tip_id);
+              if (tip) tip.comments.push({ author: c.author_name, text: c.content });
+            });
+          }
+        } catch (e) { console.warn('Chyba při načítání komentářů:', e); }
+        // Supabase tips go on top (newest first)
+        communityData.tips = [...sbMapped, ...communityData.tips];
+      }
+    }
+  } catch (e) { console.warn('Chyba při načítání tipů ze Supabase:', e); }
+
+  // Load Supabase teams
+  try {
+    if (sb) {
+      const { data: teams } = await sb.from('community_teams').select('*').order('created_at', { ascending: false });
+      if (teams) supabaseTeams = teams;
+      const { data: members } = await sb.from('team_members').select('*');
+      if (members) supabaseTeamMembers = members;
+    }
+  } catch (e) { console.warn('Chyba při načítání týmů:', e); }
 }
 
 function renderKomunita() {
@@ -1274,6 +1322,55 @@ function renderKomunitaFeed() {
       '<button class="komunita-add-btn" style="margin-top:8px;font-size:12px;padding:6px 14px" id="create-team-btn">+ Založit tým</button>';
     container.appendChild(teamHeader);
 
+    // Render Supabase teams first (newest)
+    supabaseTeams.forEach(team => {
+      const members = supabaseTeamMembers.filter(m => m.team_id === team.id);
+      const isMember = sbCurrentUser && members.some(m => m.user_id === sbCurrentUser.id);
+      const card = document.createElement('div');
+      card.className = 'team-card';
+      card.innerHTML = `
+        <div class="team-name">${team.name}</div>
+        <div class="team-desc">${team.description}</div>
+        ${team.project ? '<div class="team-project"><strong>Projekt:</strong> ' + team.project + '</div>' : ''}
+        <div class="team-members-row">
+          ${members.map(m => '<span class="team-member">' + m.display_name + '</span>').join('')}
+        </div>
+        ${team.looking_for ? '<div class="team-looking">' + team.looking_for + '</div>' : ''}
+        <button class="team-join-btn ${isMember ? 'sent' : ''}" ${isMember ? 'disabled' : ''}>${isMember ? 'Jsi v týmu!' : 'Chci se přidat'}</button>
+      `;
+      if (!isMember) {
+        card.querySelector('.team-join-btn').addEventListener('click', async (e) => {
+          e.stopPropagation();
+          if (!sbCurrentUser) { alert('Pro připojení k týmu se nejdřív přihlas!'); return; }
+          const btn = e.target;
+          btn.textContent = 'Přidávám...';
+          btn.disabled = true;
+          try {
+            const user = State.user || {};
+            const displayName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
+            const { error } = await sb.from('team_members').insert({
+              team_id: team.id,
+              user_id: sbCurrentUser.id,
+              display_name: displayName,
+              role: 'member'
+            });
+            if (error) throw error;
+            supabaseTeamMembers.push({ team_id: team.id, user_id: sbCurrentUser.id, display_name: displayName, role: 'member' });
+            btn.textContent = 'Jsi v týmu!';
+            btn.classList.add('sent');
+            // Re-render to show updated member list
+            renderKomunitaFeed();
+          } catch (err) {
+            console.error('Chyba při přidávání do týmu:', err);
+            btn.textContent = 'Chyba, zkus znovu';
+            btn.disabled = false;
+          }
+        });
+      }
+      container.appendChild(card);
+    });
+
+    // Render seed teams
     communityData.teams.forEach(team => {
       const card = document.createElement('div');
       card.className = 'team-card';
@@ -1293,7 +1390,7 @@ function renderKomunitaFeed() {
           alert('Pro připojení k týmu se nejdřív přihlas!');
           return;
         }
-        e.target.textContent = 'Žádost odeslána!';
+        e.target.textContent = 'Jsi v týmu!';
         e.target.disabled = true;
         e.target.classList.add('sent');
       });
@@ -1305,12 +1402,7 @@ function renderKomunitaFeed() {
     if (createTeamBtn) {
       createTeamBtn.addEventListener('click', () => {
         if (!sbCurrentUser) { alert('Pro založení týmu se nejdřív přihlas!'); return; }
-        openAddTip();
-        // Pre-select "Týmy" tag
-        setTimeout(() => {
-          const tagSel = document.getElementById('add-tip-tag');
-          if (tagSel) tagSel.value = 'tym';
-        }, 100);
+        openCreateTeamModal();
       });
     }
   }
@@ -1323,13 +1415,155 @@ function renderKomunitaFeed() {
   container.appendChild(devFooter);
   document.getElementById('dev-msg-btn').addEventListener('click', () => {
     if (!sbCurrentUser) { alert('Pro odeslání zprávy se nejdřív přihlas!'); return; }
-    openAddTip();
-    setTimeout(() => {
-      const tagSel = document.getElementById('add-tip-tag');
-      if (tagSel) tagSel.value = 'faq';
-      const titleEl = document.getElementById('add-tip-title');
-      if (titleEl) titleEl.placeholder = 'Tvoje otázka nebo zpětná vazba...';
-    }, 100);
+    openDevMessageModal();
+  });
+}
+
+// ── CREATE TEAM MODAL ───────────────────────
+
+function openCreateTeamModal() {
+  const overlay = document.getElementById('add-tip-overlay');
+  const user = State.user || {};
+  const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
+
+  overlay.innerHTML = `
+    <div class="tip-detail-inner">
+      <button class="tip-detail-close">&times;</button>
+      <h3 style="margin-bottom:16px;color:var(--accent)">Založit nový tým</h3>
+      <label class="add-tip-label">Název týmu</label>
+      <input type="text" id="team-name-input" class="add-tip-input" placeholder="Název tvého týmu..." maxlength="60">
+      <label class="add-tip-label">Popis</label>
+      <textarea id="team-desc-input" class="add-tip-input add-tip-textarea" placeholder="Čím se tým zabývá..." maxlength="500" style="min-height:80px"></textarea>
+      <label class="add-tip-label">Projektový nápad</label>
+      <input type="text" id="team-project-input" class="add-tip-input" placeholder="Na čem chcete pracovat..." maxlength="120">
+      <label class="add-tip-label">Koho hledáte</label>
+      <input type="text" id="team-looking-input" class="add-tip-input" placeholder="Hledáme někoho, kdo..." maxlength="200">
+      <button class="komunita-add-btn" id="team-create-submit" style="margin-top:16px;width:100%">Založit tým</button>
+      <div id="team-create-error" class="auth-error" style="display:none;margin-top:8px"></div>
+    </div>
+  `;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('.tip-detail-close').addEventListener('click', () => overlay.classList.add('hidden'));
+
+  document.getElementById('team-create-submit').addEventListener('click', async () => {
+    const name = document.getElementById('team-name-input').value.trim();
+    const description = document.getElementById('team-desc-input').value.trim();
+    const project = document.getElementById('team-project-input').value.trim();
+    const lookingFor = document.getElementById('team-looking-input').value.trim();
+    const errEl = document.getElementById('team-create-error');
+
+    if (!name || !description) {
+      errEl.textContent = 'Vyplň název i popis týmu.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const submitBtn = document.getElementById('team-create-submit');
+    submitBtn.textContent = 'Vytvářím...';
+    submitBtn.disabled = true;
+
+    try {
+      if (!sb) throw new Error('Supabase není dostupné');
+
+      const { data: teamData, error: teamError } = await sb.from('community_teams').insert({
+        name: name,
+        description: description,
+        project: project || null,
+        looking_for: lookingFor || null,
+        created_by: sbCurrentUser.id
+      }).select().single();
+
+      if (teamError) throw teamError;
+
+      // Add creator as first member
+      const { error: memberError } = await sb.from('team_members').insert({
+        team_id: teamData.id,
+        user_id: sbCurrentUser.id,
+        display_name: authorName,
+        role: 'leader'
+      });
+      if (memberError) throw memberError;
+
+      // Update local state
+      supabaseTeams.unshift(teamData);
+      supabaseTeamMembers.push({ team_id: teamData.id, user_id: sbCurrentUser.id, display_name: authorName, role: 'leader' });
+
+      overlay.classList.add('hidden');
+      renderKomunitaFeed();
+    } catch (err) {
+      errEl.textContent = 'Chyba při vytváření týmu: ' + err.message;
+      errEl.style.display = 'block';
+      submitBtn.textContent = 'Založit tým';
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+// ── DEV MESSAGE MODAL ───────────────────────
+
+function openDevMessageModal() {
+  const overlay = document.getElementById('add-tip-overlay');
+  const user = State.user || {};
+  const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
+
+  overlay.innerHTML = `
+    <div class="tip-detail-inner">
+      <button class="tip-detail-close">&times;</button>
+      <h3 style="margin-bottom:16px;color:var(--accent)">Napsat vývojovému týmu</h3>
+      <label class="add-tip-label">Předmět</label>
+      <input type="text" id="dev-msg-subject" class="add-tip-input" placeholder="Nápad, chyba, zpětná vazba..." maxlength="100">
+      <label class="add-tip-label">Zpráva</label>
+      <textarea id="dev-msg-content" class="add-tip-input add-tip-textarea" placeholder="Popiš svůj nápad, chybu nebo zpětnou vazbu..." maxlength="2000"></textarea>
+      <button class="komunita-add-btn" id="dev-msg-submit" style="margin-top:16px;width:100%">Odeslat zprávu</button>
+      <div id="dev-msg-error" class="auth-error" style="display:none;margin-top:8px"></div>
+    </div>
+  `;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('.tip-detail-close').addEventListener('click', () => overlay.classList.add('hidden'));
+
+  document.getElementById('dev-msg-submit').addEventListener('click', async () => {
+    const subject = document.getElementById('dev-msg-subject').value.trim();
+    const content = document.getElementById('dev-msg-content').value.trim();
+    const errEl = document.getElementById('dev-msg-error');
+
+    if (!subject || !content) {
+      errEl.textContent = 'Vyplň předmět i zprávu.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const submitBtn = document.getElementById('dev-msg-submit');
+    submitBtn.textContent = 'Odesílám...';
+    submitBtn.disabled = true;
+
+    try {
+      if (!sb) throw new Error('Supabase není dostupné');
+
+      await sb.from('community_tips').insert({
+        user_id: sbCurrentUser.id,
+        author_name: authorName,
+        title: subject,
+        content: content,
+        tag: 'dev-message',
+        upvotes: 0
+      });
+
+      // Show confirmation
+      overlay.innerHTML = `
+        <div class="tip-detail-inner" style="text-align:center;padding:40px 20px">
+          <button class="tip-detail-close">&times;</button>
+          <div style="font-size:48px;margin-bottom:16px">&#10004;</div>
+          <h3 style="color:var(--accent);margin-bottom:8px">Zpráva odeslána!</h3>
+          <p style="color:var(--text-muted);font-size:14px">Děkujeme za zpětnou vazbu. Odpovíme co nejdříve.</p>
+        </div>
+      `;
+      overlay.querySelector('.tip-detail-close').addEventListener('click', () => overlay.classList.add('hidden'));
+    } catch (err) {
+      errEl.textContent = 'Chyba při odesílání: ' + err.message;
+      errEl.style.display = 'block';
+      submitBtn.textContent = 'Odeslat zprávu';
+      submitBtn.disabled = false;
+    }
   });
 }
 
@@ -1353,71 +1587,101 @@ function openTipDetail(tipId) {
   const upvoted = (JSON.parse(localStorage.getItem('tg_upvotes') || '[]')).includes(tip.id);
   const overlay = document.getElementById('tip-detail-overlay');
 
-  const commentsHtml = (tip.comments || []).map(c => `
-    <div class="tip-comment">
-      <span class="tip-comment-author">${c.author}</span>
-      <span class="tip-comment-text">${c.text}</span>
-    </div>
-  `).join('');
-
-  const replyForm = `
-    <div class="tip-reply-form">
-      <textarea class="tip-reply-input" id="tip-reply-text" placeholder="${sbCurrentUser ? 'Napiš odpověď...' : 'Pro odpověď se nejdřív přihlas'}" ${sbCurrentUser ? '' : 'disabled'}></textarea>
-      <button class="tip-reply-btn" id="tip-reply-submit" ${sbCurrentUser ? '' : 'disabled'}>Odpovědět</button>
-    </div>
-  `;
-
-  overlay.innerHTML = `
-    <div class="tip-detail-inner">
-      <button class="tip-detail-close">&times;</button>
-      <div class="tip-card-top">
-        <span class="tip-author">${tip.author}</span>
-        <span class="tip-tag-badge" style="background:${tagMeta ? tagMeta.color : 'var(--accent)'}; color:#1a1200">${tagMeta ? tagMeta.label : tip.tag}</span>
+  // Load comments from Supabase for Supabase tips if not already loaded
+  const showDetail = (comments) => {
+    const commentsHtml = (comments || []).map(c => `
+      <div class="tip-comment">
+        <span class="tip-comment-author">${c.author}</span>
+        <span class="tip-comment-text">${c.text}</span>
       </div>
-      <div class="tip-title" style="font-size:20px;margin:12px 0">${tip.title}</div>
-      <div class="tip-detail-content">${tip.content}</div>
-      <div class="tip-detail-actions">
-        <button class="tip-upvote-btn detail-upvote ${upvoted ? 'upvoted' : ''}" id="detail-upvote-btn">&hearts; ${tip.upvotes}</button>
+    `).join('');
+
+    const replyForm = `
+      <div class="tip-reply-form">
+        <textarea class="tip-reply-input" id="tip-reply-text" placeholder="${sbCurrentUser ? 'Napiš odpověď...' : 'Pro odpověď se nejdřív přihlas'}" ${sbCurrentUser ? '' : 'disabled'}></textarea>
+        <button class="tip-reply-btn" id="tip-reply-submit" ${sbCurrentUser ? '' : 'disabled'}>Odpovědět</button>
       </div>
-      <div class="tip-detail-comments-header">Odpovědi (${tip.comments ? tip.comments.length : 0})</div>
-      <div class="tip-detail-comments" id="tip-comments-list">${commentsHtml}</div>
-      ${replyForm}
-    </div>
-  `;
+    `;
 
-  overlay.classList.remove('hidden');
-  overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
-    overlay.classList.add('hidden');
-    renderKomunitaFeed();
-  });
+    overlay.innerHTML = `
+      <div class="tip-detail-inner">
+        <button class="tip-detail-close">&times;</button>
+        <div class="tip-card-top">
+          <span class="tip-author">${tip.author}</span>
+          <span class="tip-tag-badge" style="background:${tagMeta ? tagMeta.color : 'var(--accent)'}; color:#1a1200">${tagMeta ? tagMeta.label : tip.tag}</span>
+        </div>
+        <div class="tip-title" style="font-size:20px;margin:12px 0">${tip.title}</div>
+        <div class="tip-detail-content">${tip.content}</div>
+        <div class="tip-detail-actions">
+          <button class="tip-upvote-btn detail-upvote ${upvoted ? 'upvoted' : ''}" id="detail-upvote-btn">&hearts; ${tip.upvotes}</button>
+        </div>
+        <div class="tip-detail-comments-header">Odpovědi (${comments ? comments.length : 0})</div>
+        <div class="tip-detail-comments" id="tip-comments-list">${commentsHtml}</div>
+        ${replyForm}
+      </div>
+    `;
 
-  document.getElementById('detail-upvote-btn').addEventListener('click', () => {
-    toggleUpvote(tip);
-    const btn = document.getElementById('detail-upvote-btn');
-    btn.textContent = '\u2665 ' + tip.upvotes;
-    btn.classList.toggle('upvoted');
-  });
-
-  const submitBtn = document.getElementById('tip-reply-submit');
-  if (submitBtn && sbCurrentUser) {
-    submitBtn.addEventListener('click', () => {
-      const text = document.getElementById('tip-reply-text').value.trim();
-      if (!text) return;
-      const user = State.user || {};
-      const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
-      const newComment = { author: authorName, text: text };
-      if (!tip.comments) tip.comments = [];
-      tip.comments.push(newComment);
-      document.getElementById('tip-reply-text').value = '';
-      // Re-render comments
-      const list = document.getElementById('tip-comments-list');
-      const el = document.createElement('div');
-      el.className = 'tip-comment new';
-      el.innerHTML = '<span class="tip-comment-author">' + authorName + '</span><span class="tip-comment-text">' + text + '</span>';
-      list.appendChild(el);
-      // Update header count
-      overlay.querySelector('.tip-detail-comments-header').textContent = 'Odpovědi (' + tip.comments.length + ')';
+    overlay.classList.remove('hidden');
+    overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
+      overlay.classList.add('hidden');
+      renderKomunitaFeed();
     });
+
+    document.getElementById('detail-upvote-btn').addEventListener('click', () => {
+      toggleUpvote(tip);
+      const btn = document.getElementById('detail-upvote-btn');
+      btn.textContent = '\u2665 ' + tip.upvotes;
+      btn.classList.toggle('upvoted');
+    });
+
+    const submitBtn = document.getElementById('tip-reply-submit');
+    if (submitBtn && sbCurrentUser) {
+      submitBtn.addEventListener('click', async () => {
+        const text = document.getElementById('tip-reply-text').value.trim();
+        if (!text) return;
+        const user = State.user || {};
+        const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
+        const newComment = { author: authorName, text: text };
+        if (!tip.comments) tip.comments = [];
+        tip.comments.push(newComment);
+        document.getElementById('tip-reply-text').value = '';
+
+        // Save to Supabase if it's a Supabase tip
+        if (isUUID(tip.id) && sb) {
+          try {
+            await sb.from('tip_comments').insert({
+              tip_id: tip.id,
+              user_id: sbCurrentUser.id,
+              author_name: authorName,
+              content: text
+            });
+          } catch (e) { console.warn('Chyba při ukládání komentáře:', e); }
+        }
+
+        // Re-render comments
+        const list = document.getElementById('tip-comments-list');
+        const el = document.createElement('div');
+        el.className = 'tip-comment new';
+        el.innerHTML = '<span class="tip-comment-author">' + authorName + '</span><span class="tip-comment-text">' + text + '</span>';
+        list.appendChild(el);
+        // Update header count
+        overlay.querySelector('.tip-detail-comments-header').textContent = 'Odpovědi (' + tip.comments.length + ')';
+      });
+    }
+  };
+
+  // If Supabase tip, refresh comments from DB
+  if (isUUID(tipId) && sb) {
+    sb.from('tip_comments').select('*').eq('tip_id', tipId).order('created_at', { ascending: true })
+      .then(({ data }) => {
+        if (data) {
+          tip.comments = data.map(c => ({ author: c.author_name, text: c.content }));
+        }
+        showDetail(tip.comments);
+      })
+      .catch(() => showDetail(tip.comments));
+  } else {
+    showDetail(tip.comments);
   }
 }
 
@@ -1477,34 +1741,39 @@ function openAddTip() {
     submitBtn.disabled = true;
 
     try {
+      let newId = 'user-' + Date.now();
+
       // Save to Supabase
       if (sb) {
-        await sb.from('community_tips').insert({
+        const { data: inserted, error } = await sb.from('community_tips').insert({
           user_id: sbCurrentUser.id,
           author_name: authorName,
           title: title,
           content: content,
           tag: tag,
           upvotes: 0
-        });
+        }).select().single();
+        if (error) throw error;
+        if (inserted) newId = inserted.id;
       }
 
       // Add to local data
       const newTip = {
-        id: 'user-' + Date.now(),
+        id: newId,
         author: authorName,
         title: title,
         content: content,
         tag: tag,
         upvotes: 0,
-        comments: []
+        comments: [],
+        _supabase: isUUID(newId)
       };
       communityData.tips.unshift(newTip);
 
       overlay.classList.add('hidden');
       renderKomunitaFeed();
     } catch (err) {
-      errEl.textContent = 'Chyba při odesílání:' + err.message;
+      errEl.textContent = 'Chyba při odesílání: ' + err.message;
       errEl.style.display = 'block';
       submitBtn.textContent = 'Odeslat tip';
       submitBtn.disabled = false;

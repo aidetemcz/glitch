@@ -76,3 +76,17 @@ alter table tip_upvotes enable row level security;
 create policy "Anyone can read upvotes" on tip_upvotes for select using (true);
 create policy "Authenticated users can upvote" on tip_upvotes for insert with check (auth.uid() = user_id);
 create policy "Users can remove own upvotes" on tip_upvotes for delete using (auth.uid() = user_id);
+
+-- Progress
+create table if not exists progress (
+  user_id uuid references auth.users(id) on delete cascade,
+  glitch_id text not null,
+  completed boolean default true,
+  quiz_answer text,
+  completed_at timestamptz default now(),
+  primary key (user_id, glitch_id)
+);
+alter table progress enable row level security;
+create policy "Anyone can read progress" on progress for select using (true);
+create policy "Users insert own progress" on progress for insert with check (auth.uid() = user_id);
+create policy "Users update own progress" on progress for update using (auth.uid() = user_id);

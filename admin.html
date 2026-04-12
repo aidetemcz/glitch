@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiny Glitch — Admin</title>
+  <link rel="icon" type="image/png" href="assets/avatar.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #241832;
+      --bg2: #1e1330;
+      --bg3: #342546;
+      --accent: #FFE233;
+      --text: #f0eeff;
+      --text-muted: #958BB7;
+      --border: rgba(255,255,255,0.08);
+      --danger: #ff6b6b;
+      --success: #34d399;
+      --radius: 12px;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .admin-header {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .admin-header h1 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .admin-header h1 span { color: var(--text-muted); font-weight: 400; font-size: 14px; margin-left: 8px; }
+    .admin-user-info {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .admin-logout-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      transition: all .15s;
+    }
+    .admin-logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .admin-tabs::-webkit-scrollbar { display: none; }
+    .admin-tab {
+      padding: 12px 20px;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .admin-tab:hover { color: var(--text); }
+    .admin-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* Content */
+    .admin-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+
+    /* Stats cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Tables */
+    .admin-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 12px 14px;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      background: var(--bg3);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .td-id {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .td-date {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Buttons */
+    .btn-delete {
+      background: none;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      transition: all .15s;
+    }
+    .btn-delete:hover { background: var(--danger); color: #fff; }
+    .btn-action {
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      transition: all .15s;
+    }
+    .btn-action:hover { background: var(--accent); color: #1a1200; }
+
+    /* Login screen */
+    .admin-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .admin-login-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+    }
+    .admin-login-box h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .admin-login-box p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .google-login-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 24px;
+      background: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      font-family: inherit;
+      box-shadow: 0 1px 3px rgba(0,0,0,.25);
+      transition: box-shadow .15s;
+    }
+    .google-login-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+    .admin-denied {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--danger);
+      font-size: 18px;
+    }
+    .admin-loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    /* Reply form in messages */
+    .msg-reply-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .msg-reply-input {
+      flex: 1;
+      padding: 6px 10px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .msg-reply-input:focus { border-color: var(--accent); outline: none; }
+    .empty-msg {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .admin-content { padding: 16px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      table { font-size: 12px; }
+      th, td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="admin-app"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────
+const SUPABASE_URL = 'https://tnjvbamehdhymmcktxuy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_7HdCbfsTLiI3IH7FFmEQdw_A9sIqTcI';
+const ADMIN_EMAILS = ['kordik@fit.cvut.cz'];
+
+const sb = window.supabase
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+let sbCurrentUser = null;
+let activeTab = 'overview';
+
+const app = document.getElementById('admin-app');
+
+// ── INIT ────────────────────────────────────
+async function init() {
+  if (!sb) {
+    app.innerHTML = '<div class="admin-denied">Supabase SDK se nepodařilo načíst.</div>';
+    return;
+  }
+
+  app.innerHTML = '<div class="admin-loading">Načítám...</div>';
+
+  try {
+    // Handle OAuth callback
+    const hash = window.location.hash || '';
+    const search = window.location.search || '';
+    if (hash.includes('access_token') || search.includes('code=')) {
+      await sb.auth.getSession();
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    const { data: { user } } = await sb.auth.getUser();
+    sbCurrentUser = user;
+  } catch (e) {
+    console.error('Auth error:', e);
+  }
+
+  if (!sbCurrentUser) {
+    showLogin();
+    return;
+  }
+
+  if (!ADMIN_EMAILS.includes(sbCurrentUser.email)) {
+    app.innerHTML = `
+      <div class="admin-denied">
+        <p style="font-size:48px;margin-bottom:16px">&#128274;</p>
+        <p>Nemáš přístup</p>
+        <p style="font-size:14px;color:var(--text-muted);margin-top:8px">${sbCurrentUser.email} není v seznamu administrátorů.</p>
+        <button class="admin-logout-btn" style="margin-top:20px" onclick="logout()">Odhlásit se</button>
+      </div>`;
+    return;
+  }
+
+  showAdmin();
+}
+
+// ── LOGIN ───────────────────────────────────
+function showLogin() {
+  app.innerHTML = `
+    <div class="admin-login">
+      <div class="admin-login-box">
+        <h2>Tiny Glitch Admin</h2>
+        <p>Přihlašte se pro přístup do administrace</p>
+        <button class="google-login-btn" id="google-login-btn">
+          <svg viewBox="0 0 48 48" width="18" height="18">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.94 23.94 0 0 0 0 24c0 3.77.9 7.35 2.56 10.52l7.97-5.93z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.93C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          Přihlásit se přes Google
+        </button>
+      </div>
+    </div>`;
+
+  document.getElementById('google-login-btn').addEventListener('click', async () => {
+    try {
+      await sb.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + window.location.pathname }
+      });
+    } catch (e) {
+      alert('Chyba při přihlašování: ' + e.message);
+    }
+  });
+}
+
+async function logout() {
+  await sb.auth.signOut();
+  sbCurrentUser = null;
+  showLogin();
+}
+
+// ── ADMIN UI ────────────────────────────────
+function showAdmin() {
+  app.innerHTML = `
+    <header class="admin-header">
+      <h1>Tiny Glitch Admin <span>Administrace</span></h1>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="admin-user-info">${sbCurrentUser.email}</span>
+        <button class="admin-logout-btn" id="admin-logout">Odhlásit se</button>
+      </div>
+    </header>
+    <nav class="admin-tabs" id="admin-tabs">
+      <button class="admin-tab active" data-tab="overview">Přehled</button>
+      <button class="admin-tab" data-tab="tips">Příspěvky</button>
+      <button class="admin-tab" data-tab="comments">Komentáře</button>
+      <button class="admin-tab" data-tab="teams">Týmy</button>
+      <button class="admin-tab" data-tab="messages">Zprávy</button>
+      <button class="admin-tab" data-tab="users">Uživatelé</button>
+    </nav>
+    <div class="admin-content">
+      <div id="panel-overview" class="admin-panel active"></div>
+      <div id="panel-tips" class="admin-panel"></div>
+      <div id="panel-comments" class="admin-panel"></div>
+      <div id="panel-teams" class="admin-panel"></div>
+      <div id="panel-messages" class="admin-panel"></div>
+      <div id="panel-users" class="admin-panel"></div>
+    </div>`;
+
+  document.getElementById('admin-logout').addEventListener('click', logout);
+
+  document.querySelectorAll('.admin-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const panelId = 'panel-' + tab.dataset.tab;
+      document.getElementById(panelId).classList.add('active');
+      activeTab = tab.dataset.tab;
+      loadTab(activeTab);
+    });
+  });
+
+  loadTab('overview');
+}
+
+async function loadTab(tab) {
+  switch (tab) {
+    case 'overview': return loadOverview();
+    case 'tips': return loadTips();
+    case 'comments': return loadComments();
+    case 'teams': return loadTeams();
+    case 'messages': return loadMessages();
+    case 'users': return loadUsers();
+  }
+}
+
+function formatDate(d) {
+  if (!d) return '-';
+  return new Date(d).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function truncate(str, len) {
+  if (!str) return '';
+  return str.length > len ? str.substring(0, len) + '...' : str;
+}
+
+function shortId(id) {
+  if (!id) return '-';
+  return id.substring(0, 8) + '...';
+}
+
+// ── OVERVIEW ────────────────────────────────
+async function loadOverview() {
+  const panel = document.getElementById('panel-overview');
+  panel.innerHTML = '<div class="admin-loading">Načítám statistiky...</div>';
+
+  try {
+    const [profiles, tips, comments, teams, members] = await Promise.all([
+      sb.from('profiles').select('id', { count: 'exact', head: true }),
+      sb.from('community_tips').select('id', { count: 'exact', head: true }),
+      sb.from('tip_comments').select('id', { count: 'exact', head: true }),
+      sb.from('community_teams').select('id', { count: 'exact', head: true }),
+      sb.from('team_members').select('id', { count: 'exact', head: true }),
+    ]);
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Přehled</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">${profiles.count || 0}</div>
+          <div class="stat-label">Uživatelé</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${tips.count || 0}</div>
+          <div class="stat-label">Příspěvky</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${comments.count || 0}</div>
+          <div class="stat-label">Komentáře</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${teams.count || 0}</div>
+          <div class="stat-label">Týmy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${members.count || 0}</div>
+          <div class="stat-label">Členové týmů</div>
+        </div>
+      </div>`;
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba při načítání: ' + e.message + '</div>';
+  }
+}
+
+// ── TIPS ────────────────────────────────────
+async function loadTips() {
+  const panel = document.getElementById('panel-tips');
+  panel.innerHTML = '<div class="admin-loading">Načítám příspěvky...</div>';
+
+  try {
+    const { data, error } = await sb.from('community_tips').select('*').neq('tag', 'dev-message').order('created_at', { ascending: false });
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      panel.innerHTML = '<div class="empty-msg">Žádné příspěvky</div>';
+      return;
+    }
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Příspěvky (${data.length})</h2>
+      <div class="admin-table-wrap">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Autor</th><th>Název</th><th>Tag</th><th>Hlasy</th><th>Datum</th><th>Akce</th></tr>
+          </thead>
+          <tbody id="tips-tbody">
+            ${data.map(t => `
+              <tr id="tip-row-${t.id}">
+                <td class="td-id" title="${t.id}">${shortId(t.id)}</td>
+                <td>${t.author_name || '-'}</td>
+                <td title="${t.title}">${truncate(t.title, 40)}</td>
+                <td>${t.tag}</td>
+                <td>${t.upvotes || 0}</td>
+                <td class="td-date">${formatDate(t.created_at)}</td>
+                <td><button class="btn-delete" data-id="${t.id}" data-type="tip">Smazat</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    panel.querySelectorAll('.btn-delete[data-type="tip"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteTip(btn.dataset.id));
+    });
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba: ' + e.message + '</div>';
+  }
+}
+
+async function deleteTip(tipId) {
+  if (!confirm('Opravdu smazat tento příspěvek? Smaže se i se všemi komentáři.')) return;
+  try {
+    const { error } = await sb.from('community_tips').delete().eq('id', tipId);
+    if (error) throw error;
+    const row = document.getElementById('tip-row-' + tipId);
+    if (row) row.remove();
+  } catch (e) {
+    alert('Chyba při mazání: ' + e.message);
+  }
+}
+
+// ── COMMENTS ────────────────────────────────
+async function loadComments() {
+  const panel = document.getElementById('panel-comments');
+  panel.innerHTML = '<div class="admin-loading">Načítám komentáře...</div>';
+
+  try {
+    const { data, error } = await sb.from('tip_comments').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      panel.innerHTML = '<div class="empty-msg">Žádné komentáře</div>';
+      return;
+    }
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Komentáře (${data.length})</h2>
+      <div class="admin-table-wrap">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Autor</th><th>Obsah</th><th>Tip ID</th><th>Datum</th><th>Akce</th></tr>
+          </thead>
+          <tbody>
+            ${data.map(c => `
+              <tr id="comment-row-${c.id}">
+                <td class="td-id" title="${c.id}">${shortId(c.id)}</td>
+                <td>${c.author_name || '-'}</td>
+                <td title="${c.content}">${truncate(c.content, 50)}</td>
+                <td class="td-id" title="${c.tip_id}">${shortId(c.tip_id)}</td>
+                <td class="td-date">${formatDate(c.created_at)}</td>
+                <td><button class="btn-delete" data-id="${c.id}" data-type="comment">Smazat</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    panel.querySelectorAll('.btn-delete[data-type="comment"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteComment(btn.dataset.id));
+    });
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba: ' + e.message + '</div>';
+  }
+}
+
+async function deleteComment(commentId) {
+  if (!confirm('Opravdu smazat tento komentář?')) return;
+  try {
+    const { error } = await sb.from('tip_comments').delete().eq('id', commentId);
+    if (error) throw error;
+    const row = document.getElementById('comment-row-' + commentId);
+    if (row) row.remove();
+  } catch (e) {
+    alert('Chyba při mazání: ' + e.message);
+  }
+}
+
+// ── TEAMS ───────────────────────────────────
+async function loadTeams() {
+  const panel = document.getElementById('panel-teams');
+  panel.innerHTML = '<div class="admin-loading">Načítám týmy...</div>';
+
+  try {
+    const { data: teams, error } = await sb.from('community_teams').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+
+    const { data: allMembers } = await sb.from('team_members').select('*');
+    const membersByTeam = {};
+    if (allMembers) {
+      allMembers.forEach(m => {
+        if (!membersByTeam[m.team_id]) membersByTeam[m.team_id] = [];
+        membersByTeam[m.team_id].push(m);
+      });
+    }
+
+    if (!teams || !teams.length) {
+      panel.innerHTML = '<div class="empty-msg">Žádné týmy</div>';
+      return;
+    }
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Týmy (${teams.length})</h2>
+      <div class="admin-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Název</th><th>Popis</th><th>Členů</th><th>Datum</th><th>Akce</th></tr>
+          </thead>
+          <tbody>
+            ${teams.map(t => `
+              <tr id="team-row-${t.id}">
+                <td><strong>${t.name}</strong></td>
+                <td title="${t.description}">${truncate(t.description, 50)}</td>
+                <td>${(membersByTeam[t.id] || []).length}</td>
+                <td class="td-date">${formatDate(t.created_at)}</td>
+                <td><button class="btn-delete" data-id="${t.id}" data-type="team">Smazat</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    panel.querySelectorAll('.btn-delete[data-type="team"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteTeam(btn.dataset.id));
+    });
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba: ' + e.message + '</div>';
+  }
+}
+
+async function deleteTeam(teamId) {
+  if (!confirm('Opravdu smazat tento tým? Smaží se i všichni členové.')) return;
+  try {
+    const { error } = await sb.from('community_teams').delete().eq('id', teamId);
+    if (error) throw error;
+    const row = document.getElementById('team-row-' + teamId);
+    if (row) row.remove();
+  } catch (e) {
+    alert('Chyba při mazání: ' + e.message);
+  }
+}
+
+// ── MESSAGES ────────────────────────────────
+async function loadMessages() {
+  const panel = document.getElementById('panel-messages');
+  panel.innerHTML = '<div class="admin-loading">Načítám zprávy...</div>';
+
+  try {
+    const { data, error } = await sb.from('community_tips').select('*').eq('tag', 'dev-message').order('created_at', { ascending: false });
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      panel.innerHTML = '<div class="empty-msg">Žádné zprávy od uživatelů</div>';
+      return;
+    }
+
+    // Load replies (comments) for each message
+    const msgIds = data.map(m => m.id);
+    let repliesByTip = {};
+    try {
+      const { data: replies } = await sb.from('tip_comments').select('*').in('tip_id', msgIds).order('created_at', { ascending: true });
+      if (replies) {
+        replies.forEach(r => {
+          if (!repliesByTip[r.tip_id]) repliesByTip[r.tip_id] = [];
+          repliesByTip[r.tip_id].push(r);
+        });
+      }
+    } catch (e) { /* ignore */ }
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Zprávy od uživatelů (${data.length})</h2>
+      ${data.map(msg => {
+        const replies = repliesByTip[msg.id] || [];
+        return `
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px" id="msg-${msg.id}">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+            <div>
+              <div style="font-weight:700;color:var(--accent);font-size:14px">${msg.author_name || 'Anonym'}</div>
+              <div style="font-size:12px;color:var(--text-muted)">${formatDate(msg.created_at)}</div>
+            </div>
+            <button class="btn-delete" data-id="${msg.id}" data-type="message">Smazat</button>
+          </div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px">${msg.title}</div>
+          <div style="font-size:14px;color:var(--text-muted);line-height:1.5;margin-bottom:12px">${msg.content}</div>
+          ${replies.length ? '<div style="border-top:1px solid var(--border);padding-top:10px;margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:8px">Odpovědi:</div>' +
+            replies.map(r => '<div style="background:var(--bg3);border-radius:8px;padding:8px 10px;margin-bottom:6px"><span style="font-size:12px;font-weight:700;color:var(--accent)">' + (r.author_name || 'Admin') + '</span> <span style="font-size:13px;color:var(--text)">' + r.content + '</span></div>').join('') +
+            '</div>' : ''}
+          <div class="msg-reply-form">
+            <input type="text" class="msg-reply-input" placeholder="Napsat odpověď..." data-tipid="${msg.id}">
+            <button class="btn-action reply-btn" data-tipid="${msg.id}">Odpovědět</button>
+          </div>
+        </div>`;
+      }).join('')}`;
+
+    panel.querySelectorAll('.btn-delete[data-type="message"]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Opravdu smazat tuto zprávu?')) return;
+        try {
+          await sb.from('community_tips').delete().eq('id', btn.dataset.id);
+          const el = document.getElementById('msg-' + btn.dataset.id);
+          if (el) el.remove();
+        } catch (e) { alert('Chyba: ' + e.message); }
+      });
+    });
+
+    panel.querySelectorAll('.reply-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const tipId = btn.dataset.tipid;
+        const input = panel.querySelector('.msg-reply-input[data-tipid="' + tipId + '"]');
+        const text = input.value.trim();
+        if (!text) return;
+
+        btn.textContent = 'Odesílám...';
+        btn.disabled = true;
+
+        try {
+          await sb.from('tip_comments').insert({
+            tip_id: tipId,
+            user_id: sbCurrentUser.id,
+            author_name: 'Admin',
+            content: text
+          });
+          input.value = '';
+          btn.textContent = 'Odpovědět';
+          btn.disabled = false;
+          // Refresh messages
+          loadMessages();
+        } catch (e) {
+          alert('Chyba: ' + e.message);
+          btn.textContent = 'Odpovědět';
+          btn.disabled = false;
+        }
+      });
+    });
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba: ' + e.message + '</div>';
+  }
+}
+
+// ── USERS ───────────────────────────────────
+async function loadUsers() {
+  const panel = document.getElementById('panel-users');
+  panel.innerHTML = '<div class="admin-loading">Načítám uživatele...</div>';
+
+  try {
+    const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      panel.innerHTML = '<div class="empty-msg">Žádní uživatelé</div>';
+      return;
+    }
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Uživatelé (${data.length})</h2>
+      <div class="admin-table-wrap">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Přezdívka</th><th>Celé jméno</th><th>Registrace</th></tr>
+          </thead>
+          <tbody>
+            ${data.map(u => `
+              <tr>
+                <td class="td-id" title="${u.id}">${shortId(u.id)}</td>
+                <td>${u.nickname || '-'}</td>
+                <td>${u.full_name || '-'}</td>
+                <td class="td-date">${formatDate(u.created_at)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba: ' + e.message + '</div>';
+  }
+}
+
+// ── START ───────────────────────────────────
+init();
+</script>
+</body>
+</html>
