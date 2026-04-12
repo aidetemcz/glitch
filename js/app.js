@@ -101,6 +101,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   bindAccountPage();
 
+  // Deep link handling
+  handleDeepLink();
+  window.addEventListener('hashchange', handleDeepLink);
+
   document.addEventListener('wheel', (e) => {
     const activeView = document.querySelector('.view.active');
     if (!activeView) return;
@@ -848,13 +852,17 @@ function openDetail(glitchId) {
   chatContainer.scrollTop = 0;
   document.getElementById('detail-overlay').classList.remove('hidden');
 
-  // Nav row: yellow circle back btn + topic pill
+  history.replaceState(null, '', '#glitch/' + glitchId);
+
+  // Nav row: back btn + topic pill + share btn
   const topic = TOPICS[glitch.topic];
   const navRow = document.createElement('div');
   navRow.className = 'detail-nav';
   navRow.innerHTML =
     '<button class="detail-back-btn" aria-label="Zpět"><img src="assets/back.svg" width="30" height="30" alt=""></button>' +
-    '<span class="detail-topic-pill">' + (topic ? topic.label : '') + '</span>';
+    '<span class="detail-topic-pill">' + (topic ? topic.label : '') + '</span>' +
+    '<button class="share-btn" aria-label="Sdílet">&#x1F517;</button>';
+  navRow.querySelector('.share-btn').addEventListener('click', (e) => { e.stopPropagation(); shareLink('glitch', glitchId); });
   navRow.querySelector('.detail-back-btn').addEventListener('click', closeDetail);
   chatContainer.appendChild(navRow);
 
@@ -917,6 +925,7 @@ function showRetryQuiz(glitch) {
 function closeDetail() {
   document.getElementById('detail-overlay').classList.add('hidden');
   currentGlitchId = null;
+  history.replaceState(null, '', window.location.pathname);
   renderFeed();
   renderMapContent(
     document.getElementById('map-container'),
@@ -1532,6 +1541,7 @@ function renderKomunitaFeed() {
 // ── TEAM DETAIL OVERLAY ─────────────────────
 
 function openTeamDetailOverlay(team) {
+  history.replaceState(null, '', '#team/' + team.id);
   const overlay = document.getElementById('tip-detail-overlay');
   const members = supabaseTeamMembers.filter(m => m.team_id === team.id);
   const isLeader = sbCurrentUser && members.some(m => m.user_id === sbCurrentUser.id && m.role === 'leader');
@@ -1565,7 +1575,8 @@ function openTeamDetailOverlay(team) {
         <h3 style="color:var(--accent);margin-bottom:4px">${team.name}</h3>
         <p style="color:var(--text-muted);font-size:14px;margin-bottom:8px">${team.description}</p>
         ${team.project ? '<p style="font-size:13px;margin-bottom:12px"><strong>Projekt:</strong> ' + team.project + '</p>' : ''}
-        <div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:6px">Clenove (${members.length})</div>
+        <div class="tip-detail-actions"><button class="share-btn" id="team-share-btn">&#x1F517; Sdílet pozvánku</button></div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:6px">Členové (${members.length})</div>
         <div style="margin-bottom:16px">${membersHtml}</div>
         <div class="tip-detail-comments-header">Diskuze (${comments.length})</div>
         <div class="tip-detail-comments">${commentsHtml}</div>
@@ -1578,8 +1589,11 @@ function openTeamDetailOverlay(team) {
     overlay.classList.remove('hidden');
     overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
       overlay.classList.add('hidden');
+      history.replaceState(null, '', window.location.pathname);
       renderKomunitaFeed();
     });
+
+    document.getElementById('team-share-btn').addEventListener('click', () => shareLink('team', team.id));
 
     // Reply handler
     const replyBtn = document.getElementById('team-reply-submit');
@@ -1822,6 +1836,7 @@ function openTipDetail(tipId) {
   trackEvent('tip_view', { tipId });
   const tip = communityData.tips.find(t => t.id === tipId);
   if (!tip) return;
+  history.replaceState(null, '', '#tip/' + tipId);
   const tagMeta = communityData.tags.find(t => t.id === tip.tag);
   const upvoted = (JSON.parse(localStorage.getItem('tg_upvotes') || '[]')).includes(tip.id);
   const overlay = document.getElementById('tip-detail-overlay');
@@ -1854,6 +1869,7 @@ function openTipDetail(tipId) {
         <div class="tip-detail-actions">
           <button class="tip-upvote-btn detail-upvote ${upvoted ? 'upvoted' : ''}" id="detail-upvote-btn">&hearts; ${tip.upvotes}</button>
           ${(tip._supabase && sbCurrentUser && tip._userId === sbCurrentUser.id) ? '<button class="tip-edit-btn" id="tip-edit-btn">Upravit</button><button class="tip-delete-btn" id="tip-delete-btn">Smazat</button>' : ''}
+          <button class="share-btn" id="tip-share-btn">&#x1F517; Sdílet</button>
         </div>
         <div class="tip-detail-comments-header">Odpovědi (${comments ? comments.length : 0})</div>
         <div class="tip-detail-comments" id="tip-comments-list">${commentsHtml}</div>
@@ -1864,8 +1880,11 @@ function openTipDetail(tipId) {
     overlay.classList.remove('hidden');
     overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
       overlay.classList.add('hidden');
+      history.replaceState(null, '', window.location.pathname);
       renderKomunitaFeed();
     });
+
+    document.getElementById('tip-share-btn').addEventListener('click', () => shareLink('tip', tipId));
 
     document.getElementById('detail-upvote-btn').addEventListener('click', () => {
       toggleUpvote(tip);
@@ -2043,4 +2062,51 @@ function openAddTip() {
       submitBtn.disabled = false;
     }
   });
+}
+
+// ── DEEP LINKS & SHARING ────────────────────
+
+function handleDeepLink() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) return;
+
+  // Skip OAuth tokens
+  if (hash.includes('access_token') || hash.includes('error')) return;
+
+  enterApp();
+
+  if (hash.startsWith('glitch/')) {
+    const id = hash.slice(7);
+    if (GLITCHES.find(g => g.id === id)) openDetail(id);
+  } else if (hash.startsWith('tip/')) {
+    const id = hash.slice(4);
+    const nav = document.querySelector('.nav-btn[data-view="komunita"]');
+    if (nav) nav.click();
+    loadCommunity().then(() => openTipDetail(id));
+  } else if (hash.startsWith('team/')) {
+    const id = hash.slice(5);
+    const nav = document.querySelector('.nav-btn[data-view="komunita"]');
+    if (nav) nav.click();
+    loadCommunity().then(() => {
+      const team = supabaseTeams.find(t => t.id === id) || communityData.teams.find(t => t.id === id);
+      if (team) openTeamDetailOverlay(team);
+    });
+  }
+}
+
+function shareLink(type, id) {
+  const url = window.location.origin + '/#' + type + '/' + id;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('Odkaz zkopírován!'));
+  } else {
+    prompt('Zkopíruj odkaz:', url);
+  }
+}
+
+function showToast(text) {
+  const el = document.createElement('div');
+  el.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:#1a1200;padding:10px 24px;border-radius:100px;font-size:14px;font-weight:700;z-index:999;animation:badge-pop .3s ease';
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2000);
 }

@@ -1755,6 +1755,13 @@ html, body {
   cursor: pointer;
 }
 .team-conv-btn:hover { background: rgba(255,226,51,.2); }
+.share-btn {
+  background: none; border: 1px solid var(--border); border-radius: 100px;
+  padding: 4px 12px; font-size: 12px; color: var(--text-muted);
+  font-family: inherit; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.share-btn:hover { border-color: var(--accent); color: var(--accent); }
+.detail-nav .share-btn { margin-left: auto; }
 .tip-edit-btn, .tip-delete-btn {
   background: none; border: 1px solid var(--border); border-radius: 100px;
   padding: 4px 12px; font-size: 12px; color: var(--text-muted);
