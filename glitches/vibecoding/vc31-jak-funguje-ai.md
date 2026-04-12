@@ -2,50 +2,59 @@
 id: vc31-jak-funguje-ai
 topic: podKapotou
 title: Jak AI vlastně generuje kód?
-teaser: Transformery, tokeny a kontextové okno — co se děje pod kapotou.
+teaser: Transformer, attention, decoder — jak to doopravdy funguje uvnitř.
 hook: Co se děje pod kapotou?
-flashQ: Jak AI (velký jazykový model) generuje kód?
-flashA: AI předpovídá další token (slovo) na základě vzorů naučených z miliard textů. Nepřemýšlí — předpovídá nejpravděpodobnější pokračování, proto je důležité výsledky kontrolovat.
+flashQ: Jak transformer generuje kód a proč občas dělá chyby?
+flashA: Transformer je neuronová síť, která zpracovává celý vstup najednou díky mechanismu attention. Decoder pak generuje výstup token po tokenu — každý další token vybírá na základě pravděpodobnostního rozložení. Chyby dělá protože vybírá statisticky nejpravděpodobnější pokračování, ne logicky správné.
 ---
 
-AI, která píše kód za tebe, se jmenuje **velký jazykový model** (LLM — Large Language Model). Funguje jednoduše: přečte tvůj text a předpovídá, jaké slovo (token) má přijít dál. Dělá to tisíckrát za sekundu — a výsledek vypadá jako inteligentní odpověď.
+Když napíšeš prompt, AI ho nezpracovává jako člověk. Vstupní text se rozseká na **tokeny** — kousky slov (celé krátké slovo nebo část delšího). Slovo 'programování' jsou 2-3 tokeny. Kód se taky seká na tokeny — každý závorka, klíčové slovo, název proměnné.
 
-**Jak se to naučila?** Přečetla miliardy stránek textu — knihy, weby, kód na GitHubu, dokumentace. Nikdo ji neprogramoval pravidlo po pravidlu. Místo toho se naučila vzory: „po tomto kódu obvykle následuje toto." Je to jako když se učíš jazyk poslechem — neučíš se gramatická pravidla, ale slyšíš tolik vět, že intuitivně víš, co zní správně.
+Tyto tokeny vstoupí do **transformeru** — architektury neuronové sítě, kterou v roce 2017 vynalezli výzkumníci z Googlu (paper 'Attention Is All You Need'). Klíčový mechanismus je **self-attention**: pro každý token model spočítá, jak moc souvisí se všemi ostatními tokeny ve vstupu. Ve větě 'Kočka seděla na rohožce a olizovala si tlapky' attention mechanismus propojí 'tlapky' s 'kočka', ne s 'rohožka' — protože se naučil, že tlapky patří ke kočce.
 
-**Transformer** je architektura (návrh), na které běží všechny moderní LLM — ChatGPT, Claude, Gemini. Klíčový vynález je **attention** (pozornost): model se umí „podívat zpět" na celý vstupní text a rozhodnout, která slova jsou pro aktuální odpověď nejdůležitější.
+Jazykové modely jako Claude nebo GPT používají **decoder** — část transformeru, která generuje výstup **token po tokenu**. Pro každý nový token model spočítá pravděpodobnostní rozložení přes celý slovník (desítky tisíc tokenů) a vybere jeden. Pak ho přidá ke vstupu a generuje další. Takhle vzniká celá odpověď — slovo po slově, ale s 'vědomím' celého předchozího kontextu.
 
-? Jak AI generuje kód?
-- Má databázi hotových programů a vybírá ten nejpodobnější | AI nemá databázi hotových programů — generuje kód token po tokenu na základě naučených vzorů.
-- Postupuje podle pevně naprogramovaných pravidel | AI se neřídí pevnými pravidly — naučila se vzory ze miliard textů sama.
-* Předpovídá další token (slovo) na základě vzorů naučených z miliard textů | Přesně! LLM předpovídá token po tokenu — každé další slovo na základě všeho předchozího.
-- Kopíruje kód z internetu v reálném čase | AI nepřistupuje k internetu v reálném čase — vzory se naučila během tréninku.
-! Přesně! LLM předpovídá token po tokenu — každé další slovo na základě všeho předchozího.
+? Jak transformer zpracovává vstupní text?
+- Čte ho zleva doprava, slovo po slově, jako člověk | Tak fungovali starší modely (RNN). Transformer vidí celý vstup najednou díky attention.
+* Zpracovává všechny tokeny najednou a pomocí attention počítá vztahy mezi nimi | Přesně! Self-attention umožňuje každému tokenu 'vidět' všechny ostatní a pochopit kontext.
+- Hledá klíčová slova a podle nich vybere šablonu odpovědi | Transformer nepracuje s šablonami — generuje odpověď token po tokenu na základě naučených vzorů.
+- Pošle text na internet a stáhne odpověď z databáze | AI nepřistupuje k internetu při generování — vše počítá lokálně v neuronové síti.
+! Self-attention je klíč: každý token vidí všechny ostatní a model tak rozumí kontextu celé věty najednou.
 
 +++
 
 ```mermaid
-graph LR
-    A["Prompt"] --> B["Tokeny"]
-    B --> C["Transformer"]
-    C --> D["Předpověď"]
-    D --> E["Token"]
-    E --> C
+graph TD
+    A["Tvůj prompt"] --> B["Tokenizace"]
+    B --> C["Encoder/Attention"]
+    C --> D["Decoder"]
+    D --> E{"Další token"}
+    E -->|"pokračuj"| D
+    E -->|"konec"| F["Hotová odpověď"]
 ```
 
-**Transformer — trochu víc do hloubky:**
+**Trénink vs. inference — dva různé režimy:**
 
-Transformer vynalezli výzkumníci z Googlu v roce 2017 (slavný paper „Attention Is All You Need"). Před ním AI zpracovávala text postupně zleva doprava — jako čtení knihy. Transformer umí „vidět" celý text najednou a rozhodnout, na co se zaměřit.
+Při **tréninku** model přečetl miliardy textů (knihy, web, kód z GitHubu, dokumentace). Pro každou pozici v textu se snažil předpovědět další token a porovnával svou předpověď se skutečností. Rozdíl (chyba) se zpětně propagoval sítí a upravil miliardy parametrů (vah). Claude má řádově stovky miliard parametrů. Trénink trvá měsíce na tisících GPU.
 
-**Příklad attention mechanismu:** Ve větě „Kočka seděla na rohožce a olizovala si *tlapky*" — model potřebuje vědět, že „tlapky" patří ke „kočce", ne k „rohožce". Attention tohle řeší — vytvoří vazby mezi slovy podle jejich významu.
+Při **inferenci** (když ti odpovídá) model dostane tvůj prompt, zpracuje ho přes attention vrstvy a pak decoder generuje odpověď token po tokenu. Každý token je výběr z pravděpodobnostního rozložení — proto při stejném promptu můžeš dostat různé odpovědi.
 
-**Co je token?** Token není přesně slovo. „Programování" může být 2-3 tokeny. Čísla, interpunkce, kód — vše se rozseká na tokeny. Jeden token je zhruba 4 znaky nebo 3/4 slova.
+**Attention podrobněji:**
 
-**Proč AI dělá chyby?** Protože nepřemýšlí — předpovídá. Někdy je nejpravděpodobnější pokračování špatné. Proto je důležité výsledky kontrolovat a testovat. AI je nástroj, ne neomylný expert.
+Self-attention počítá tři vektory pro každý token: **Query** (co hledám?), **Key** (co nabízím?) a **Value** (jakou informaci nesu?). Pro každý token se spočítá skóre podobnosti jeho Query se všemi Key — tím model zjistí, na které tokeny se má 'zaměřit'. Výsledek je vážený průměr Values. Moderní modely mají desítky attention hlav běžících paralelně — každá se zaměřuje na jiný typ vztahu (syntaktický, sémantický, pozicový).
 
-**Kontextové okno** — jak moc si AI „pamatuje":**
+**Reasoning modely — Claude, o1, Gemini Thinking:**
 
-Představ si AI jako člověka, který čte tvůj dopis. Kontextové okno je délka dopisu, který se vejde na stůl. Claude má okno ~200 000 tokenů, GPT-4 ~128 000. Když je tvůj projekt větší, AI vidí jen jeho část — proto je modulární přístup tak důležitý.
+Novější modely umí 'přemýšlet' před odpovědí. Nejde o skutečné myšlení — model generuje řetězec mezikroků (chain-of-thought), kde každý krok zpřesňuje kontext pro další. Claude s extended thinking nejdřív vygeneruje analýzu problému (vidíš ji jako 'thinking'), a teprve pak odpověď. Díky tomu řeší složitější problémy — rozklad na podúlohy, kontrola vlastních kroků, zvážení alternativ. Je to stále predikce dalšího tokenu, ale s delším 'náběhem' který umožňuje komplexnější uvažování.
 
-**Teplota (temperature):** Nastavení, jak „kreativní" má AI být. Nízká teplota = předvídatelné, konzistentní odpovědi. Vysoká teplota = kreativnější, ale méně spolehlivé. Pro kód chceš nízkou teplotu.
+**Proč AI dělá chyby a 'halucinuje'?**
 
-**Hallucinations (halucinace):** AI někdy vymýšlí věci, které neexistují — funkce, knihovny, API. Proto vždy testuj výsledek. Pokud AI říká „použij funkci xyz", ověř že existuje.
+Model nemá 'paměť na fakta' — má statistické vzory. Když se zeptáš na konkrétní funkci knihovny, model generuje název, který je nejpravděpodobnější v daném kontextu — ale ta funkce nemusí existovat. Tomuto se říká **halucinace**. Reasoning modely halucinují méně (díky chain-of-thought kontrole), ale ne nulově.
+
+**Kontextové okno:**
+
+Každý model má limit kolik tokenů najednou zpracuje. Claude má ~200 000 tokenů, GPT-4 ~128 000. Celý kód středně velké aplikace má 500 000+ tokenů. Když pošleš víc než se vejde, model starší část 'zapomene'. Proto je modulární přístup tak důležitý — menší kontext = přesnější odpovědi.
+
+**Temperature (teplota):**
+
+Parametr, který ovlivňuje jak model vybírá z pravděpodobnostního rozložení. Nízká teplota (0.0-0.3) = vybírá nejpravděpodobnější token, výsledek je konzistentní a předvídatelný. Vysoká teplota (0.7-1.0) = dává šanci i méně pravděpodobným tokenům, výsledek je kreativnější ale méně spolehlivý. Pro generování kódu chceš nízkou teplotu.
