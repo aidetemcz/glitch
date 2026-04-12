@@ -113,6 +113,7 @@ function showView(name) {
     target.classList.add('active');
     if (name === 'feed') triggerFeedAnimations();
     if (name === 'missions') renderMissions();
+    if (name === 'komunita') renderKomunita();
   }
 }
 
@@ -1183,4 +1184,236 @@ function scrollChatToBottom() {
       container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
     }
   }, 50);
+}
+
+// ── KOMUNITA ────────────────────────────────
+
+let communityData = null;
+let activeTag = null;
+
+async function loadCommunity() {
+  if (communityData) return;
+  const resp = await fetch('glitches/community.json');
+  communityData = await resp.json();
+}
+
+function renderKomunita() {
+  loadCommunity().then(() => {
+    renderKomunitaTags();
+    renderKomunitaFeed();
+    document.getElementById('add-tip-btn').onclick = openAddTip;
+  });
+}
+
+function renderKomunitaTags() {
+  const container = document.getElementById('komunita-tags');
+  if (!container || !communityData) return;
+  const allBtn = document.createElement('button');
+  allBtn.className = 'komunita-tag' + (activeTag === null ? ' active' : '');
+  allBtn.textContent = 'Vse';
+  allBtn.style.setProperty('--tag-color', 'var(--accent)');
+  allBtn.addEventListener('click', () => { activeTag = null; renderKomunitaTags(); renderKomunitaFeed(); });
+  container.innerHTML = '';
+  container.appendChild(allBtn);
+
+  communityData.tags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'komunita-tag' + (activeTag === tag.id ? ' active' : '');
+    btn.textContent = tag.label;
+    btn.style.setProperty('--tag-color', tag.color);
+    btn.addEventListener('click', () => { activeTag = tag.id; renderKomunitaTags(); renderKomunitaFeed(); });
+    container.appendChild(btn);
+  });
+}
+
+function renderKomunitaFeed() {
+  const container = document.getElementById('komunita-feed');
+  if (!container || !communityData) return;
+  container.innerHTML = '';
+
+  const tips = activeTag
+    ? communityData.tips.filter(t => t.tag === activeTag)
+    : communityData.tips;
+
+  // Sort by upvotes descending
+  const sorted = [...tips].sort((a, b) => b.upvotes - a.upvotes);
+
+  sorted.forEach(tip => {
+    const tagMeta = communityData.tags.find(t => t.id === tip.tag);
+    const card = document.createElement('div');
+    card.className = 'tip-card';
+    card.innerHTML = `
+      <div class="tip-card-top">
+        <span class="tip-author">${tip.author}</span>
+        <span class="tip-tag-badge" style="background:${tagMeta ? tagMeta.color : 'var(--accent)'}; color:#1a1200">${tagMeta ? tagMeta.label : tip.tag}</span>
+      </div>
+      <div class="tip-title">${tip.title}</div>
+      <div class="tip-preview">${tip.content}</div>
+      <div class="tip-footer">
+        <span class="tip-upvotes">&hearts; ${tip.upvotes}</span>
+        <span class="tip-comments">&bull; ${tip.comments ? tip.comments.length : 0} komentaru</span>
+      </div>
+    `;
+    card.addEventListener('click', () => openTipDetail(tip.id));
+    container.appendChild(card);
+  });
+
+  // Teams section (only when no tag filter or 'tym' tag)
+  if (!activeTag || activeTag === 'tym') {
+    const teamHeader = document.createElement('div');
+    teamHeader.className = 'komunita-section-header';
+    teamHeader.innerHTML = '<h3>Tymy</h3><p class="komunita-sub">Pridej se k tymu nebo zaloz vlastni</p>';
+    container.appendChild(teamHeader);
+
+    communityData.teams.forEach(team => {
+      const card = document.createElement('div');
+      card.className = 'team-card';
+      card.innerHTML = `
+        <div class="team-name">${team.name}</div>
+        <div class="team-desc">${team.description}</div>
+        <div class="team-project"><strong>Projekt:</strong> ${team.project}</div>
+        <div class="team-members-row">
+          ${team.members.map(m => '<span class="team-member">' + m + '</span>').join('')}
+        </div>
+        <div class="team-looking">${team.looking_for}</div>
+        <button class="team-join-btn">Chci se pridat</button>
+      `;
+      card.querySelector('.team-join-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!sbCurrentUser) {
+          alert('Pro pripojeni k tymu se nejdriv prihlas!');
+          return;
+        }
+        e.target.textContent = 'Zadost odeslana!';
+        e.target.disabled = true;
+        e.target.classList.add('sent');
+      });
+      container.appendChild(card);
+    });
+  }
+}
+
+function openTipDetail(tipId) {
+  const tip = communityData.tips.find(t => t.id === tipId);
+  if (!tip) return;
+  const tagMeta = communityData.tags.find(t => t.id === tip.tag);
+  const overlay = document.getElementById('tip-detail-overlay');
+  overlay.innerHTML = `
+    <div class="tip-detail-inner">
+      <button class="tip-detail-close">&times;</button>
+      <div class="tip-card-top">
+        <span class="tip-author">${tip.author}</span>
+        <span class="tip-tag-badge" style="background:${tagMeta ? tagMeta.color : 'var(--accent)'}; color:#1a1200">${tagMeta ? tagMeta.label : tip.tag}</span>
+      </div>
+      <div class="tip-title" style="font-size:20px;margin:12px 0">${tip.title}</div>
+      <div class="tip-detail-content">${tip.content}</div>
+      <div class="tip-footer" style="margin:16px 0 20px">
+        <span class="tip-upvotes">&hearts; ${tip.upvotes}</span>
+      </div>
+      <div class="tip-detail-comments-header">Komentare (${tip.comments ? tip.comments.length : 0})</div>
+      <div class="tip-detail-comments">
+        ${(tip.comments || []).map(c => `
+          <div class="tip-comment">
+            <span class="tip-comment-author">${c.author}</span>
+            <span class="tip-comment-text">${c.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
+    overlay.classList.add('hidden');
+  });
+}
+
+function openAddTip() {
+  const overlay = document.getElementById('add-tip-overlay');
+  if (!sbCurrentUser) {
+    overlay.innerHTML = `
+      <div class="tip-detail-inner">
+        <button class="tip-detail-close">&times;</button>
+        <div class="add-tip-login-msg">
+          <p>Prihlas se pro pridani tipu</p>
+          <button class="komunita-add-btn" onclick="document.getElementById('add-tip-overlay').classList.add('hidden'); document.getElementById('profile-btn').click();">Prihlasit se</button>
+        </div>
+      </div>
+    `;
+    overlay.classList.remove('hidden');
+    overlay.querySelector('.tip-detail-close').addEventListener('click', () => overlay.classList.add('hidden'));
+    return;
+  }
+
+  const user = State.user || {};
+  const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonymni';
+
+  overlay.innerHTML = `
+    <div class="tip-detail-inner">
+      <button class="tip-detail-close">&times;</button>
+      <h3 style="margin-bottom:16px;color:var(--accent)">Novy tip</h3>
+      <label class="add-tip-label">Nazev</label>
+      <input type="text" id="add-tip-title" class="add-tip-input" placeholder="Nazev tveho tipu..." maxlength="100">
+      <label class="add-tip-label">Obsah</label>
+      <textarea id="add-tip-content" class="add-tip-input add-tip-textarea" placeholder="Podelej se o svuj tip nebo trik..." maxlength="1000"></textarea>
+      <label class="add-tip-label">Tag</label>
+      <select id="add-tip-tag" class="add-tip-input">
+        ${communityData.tags.map(t => '<option value="' + t.id + '">' + t.label + '</option>').join('')}
+      </select>
+      <button class="komunita-add-btn" id="add-tip-submit" style="margin-top:16px;width:100%">Odeslat tip</button>
+      <div id="add-tip-error" class="auth-error" style="display:none;margin-top:8px"></div>
+    </div>
+  `;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('.tip-detail-close').addEventListener('click', () => overlay.classList.add('hidden'));
+
+  document.getElementById('add-tip-submit').addEventListener('click', async () => {
+    const title = document.getElementById('add-tip-title').value.trim();
+    const content = document.getElementById('add-tip-content').value.trim();
+    const tag = document.getElementById('add-tip-tag').value;
+    const errEl = document.getElementById('add-tip-error');
+
+    if (!title || !content) {
+      errEl.textContent = 'Vyplnete nazev i obsah.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const submitBtn = document.getElementById('add-tip-submit');
+    submitBtn.textContent = 'Odesilam...';
+    submitBtn.disabled = true;
+
+    try {
+      // Save to Supabase
+      if (sb) {
+        await sb.from('community_tips').insert({
+          user_id: sbCurrentUser.id,
+          author_name: authorName,
+          title: title,
+          content: content,
+          tag: tag,
+          upvotes: 0
+        });
+      }
+
+      // Add to local data
+      const newTip = {
+        id: 'user-' + Date.now(),
+        author: authorName,
+        title: title,
+        content: content,
+        tag: tag,
+        upvotes: 0,
+        comments: []
+      };
+      communityData.tips.unshift(newTip);
+
+      overlay.classList.add('hidden');
+      renderKomunitaFeed();
+    } catch (err) {
+      errEl.textContent = 'Chyba pri odesilani: ' + err.message;
+      errEl.style.display = 'block';
+      submitBtn.textContent = 'Odeslat tip';
+      submitBtn.disabled = false;
+    }
+  });
 }
