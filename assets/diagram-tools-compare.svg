@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" fill="none">
+  <rect width="400" height="160" rx="16" fill="#1c1830"/>
+  <!-- Header -->
+  <text x="200" y="24" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="700" fill="#8a85aa">NÁSTROJE PRO VIBECODING</text>
+  <!-- Scale: No Code ← → Full Code -->
+  <line x1="30" y1="48" x2="370" y2="48" stroke="#342546" stroke-width="3" stroke-linecap="round"/>
+  <text x="30" y="42" font-family="system-ui" font-size="9" fill="#8a85aa">Bez kódu</text>
+  <text x="370" y="42" text-anchor="end" font-family="system-ui" font-size="9" fill="#8a85aa">S kódem</text>
+  <!-- Lovable -->
+  <circle cx="80" cy="48" r="6" fill="#FF6BD6"/>
+  <rect x="50" y="62" width="60" height="36" rx="8" fill="#342546"/>
+  <text x="80" y="78" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#FF6BD6">Lovable</text>
+  <text x="80" y="91" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8a85aa">SaaS, weby</text>
+  <!-- Bolt -->
+  <circle cx="140" cy="48" r="6" fill="#00E5FF"/>
+  <rect x="110" y="62" width="60" height="36" rx="8" fill="#342546"/>
+  <text x="140" y="78" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#00E5FF">Bolt</text>
+  <text x="140" y="91" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8a85aa">V prohlížeči</text>
+  <!-- Macaly -->
+  <circle cx="200" cy="48" r="6" fill="#69FF47"/>
+  <rect x="170" y="62" width="60" height="36" rx="8" fill="#342546"/>
+  <text x="200" y="78" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#69FF47">Macaly</text>
+  <text x="200" y="91" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8a85aa">Česká, DB</text>
+  <!-- Cursor -->
+  <circle cx="310" cy="48" r="6" fill="#D4A574"/>
+  <rect x="280" y="62" width="60" height="36" rx="8" fill="#342546"/>
+  <text x="310" y="78" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#D4A574">Cursor</text>
+  <text x="310" y="91" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8a85aa">Editor + AI</text>
+  <!-- Claude Code -->
+  <circle cx="360" cy="48" r="6" fill="#FFE233"/>
+  <rect x="330" y="62" width="60" height="36" rx="8" fill="#342546"/>
+  <text x="360" y="78" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#FFE233">Claude</text>
+  <text x="360" y="91" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8a85aa">Terminál</text>
+  <!-- Legend -->
+  <rect x="30" y="110" width="340" height="36" rx="8" fill="#252240"/>
+  <circle cx="60" cy="128" r="4" fill="#FF6BD6"/><text x="70" y="131" font-family="system-ui" font-size="8" fill="#f0eeff">Začátečník</text>
+  <circle cx="160" cy="128" r="4" fill="#69FF47"/><text x="170" y="131" font-family="system-ui" font-size="8" fill="#f0eeff">Střední</text>
+  <circle cx="250" cy="128" r="4" fill="#FFE233"/><text x="260" y="131" font-family="system-ui" font-size="8" fill="#f0eeff">Pokročilý</text>
+</svg>
