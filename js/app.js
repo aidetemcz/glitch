@@ -1408,8 +1408,12 @@ function renderKomunitaFeed() {
     ? communityData.tips.filter(t => t.tag === activeTag)
     : communityData.tips;
 
-  // Sort by upvotes descending
-  const sorted = [...tips].sort((a, b) => b.upvotes - a.upvotes);
+  // Supabase tips first (newest), then seed tips
+  const sorted = [...tips].sort((a, b) => {
+    if (a._supabase && !b._supabase) return -1;
+    if (!a._supabase && b._supabase) return 1;
+    return 0;
+  });
 
   sorted.forEach(tip => {
     const tagMeta = communityData.tags.find(t => t.id === tip.tag);
