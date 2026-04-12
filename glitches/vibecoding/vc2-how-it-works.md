@@ -8,14 +8,6 @@ flashQ: Jaká je nejdůležitější dovednost při vibecoding?
 flashA: Schopnost jasně popsat, co chceš a co nefunguje. Vibecoding je hlavně o komunikaci s AI, ne o znalosti kódu.
 ---
 
-```mermaid
-graph LR
-    A["Popiš co chceš"] --> B["AI generuje kód"]
-    B --> C["Vidíš výsledek"]
-    C --> D["Upřesníš"]
-    D --> A
-```
-
 Popíšeš co chceš, AI vygeneruje kód, ty ho vidíš v akci, pak řekneš co změnit. Je to konverzace — „Přidej tlačítko. Změň barvu. Přidej upomínky."
 
 Kódu rozumět nemusíš. Ale je dobré vědět TROCHU — když AI udělá chybu, „tlačítko nefunguje" je lepší než „je to rozbité." Čím přesněji popíšeš problém, tím rychleji ho AI opraví.
@@ -28,6 +20,15 @@ Kódu rozumět nemusíš. Ale je dobré vědět TROCHU — když AI udělá chyb
 ! Správně! Vibecoding je hlavně o komunikaci.
 
 +++
+
+```mermaid
+graph TD
+    A["1. Popiš co chceš"] --> B["2. AI generuje kód"]
+    B --> C["3. Vidíš výsledek"]
+    C --> D["4. Upřesníš zadání"]
+    D --> A
+```
+
 Cyklus popis → kód → testování → zpřesnění je přesně stejný postup, jaký používají profesionální vývojáři — jen bez manuálního psaní kódu. V softwarovém inženýrství se tomu říká iterativní vývoj. Velké firmy jako Google nebo Apple vyvíjejí software ve sprintech — krátkých cyklech, kde se vždy něco přidá, otestuje a zpřesní. Vibecoding tento princip zpřístupnil i lidem bez technického vzdělání.
 
 Analogie s autem je trefná, ale má jednu důležitou mez. Pokud auto přestane fungovat, zavoláš mechanika. Pokud vibecoding projekt přestane fungovat, jsi sám mechanik i řidič zároveň — musíš umět AI říct, co je rozbité. Proto ti trochu technické gramotnosti (vědět, co je tlačítko vs. databáze, co je chyba v konzoli) výrazně pomůže. Nejsi programátor, ale jsi kooperující s programátorem (AI) — a dobrá spolupráce vyžaduje sdílený slovník.

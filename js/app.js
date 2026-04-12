@@ -845,6 +845,7 @@ function openDetail(glitchId) {
 
   const chatContainer = document.getElementById('chat-container');
   chatContainer.innerHTML = '';
+  chatContainer.scrollTop = 0;
   document.getElementById('detail-overlay').classList.remove('hidden');
 
   // Nav row: yellow circle back btn + topic pill

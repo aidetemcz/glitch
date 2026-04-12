@@ -14,15 +14,6 @@ AI, která píše kód za tebe, se jmenuje **velký jazykový model** (LLM — L
 
 **Transformer** je architektura (návrh), na které běží všechny moderní LLM — ChatGPT, Claude, Gemini. Klíčový vynález je **attention** (pozornost): model se umí „podívat zpět" na celý vstupní text a rozhodnout, která slova jsou pro aktuální odpověď nejdůležitější.
 
-```mermaid
-graph LR
-    A["Tvůj prompt"] --> B["Tokenizace"]
-    B --> C["Transformer"]
-    C --> D["Předpověď"]
-    D --> E["Další token"]
-    E --> C
-```
-
 ? Jak AI generuje kód?
 - Má databázi hotových programů a vybírá ten nejpodobnější | AI nemá databázi hotových programů — generuje kód token po tokenu na základě naučených vzorů.
 - Postupuje podle pevně naprogramovaných pravidel | AI se neřídí pevnými pravidly — naučila se vzory ze miliard textů sama.
@@ -31,6 +22,15 @@ graph LR
 ! Přesně! LLM předpovídá token po tokenu — každé další slovo na základě všeho předchozího.
 
 +++
+
+```mermaid
+graph LR
+    A["Prompt"] --> B["Tokeny"]
+    B --> C["Transformer"]
+    C --> D["Předpověď"]
+    D --> E["Token"]
+    E --> C
+```
 
 **Transformer — trochu víc do hloubky:**
 
