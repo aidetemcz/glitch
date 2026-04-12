@@ -24,15 +24,21 @@ create policy "Users can update own tips" on community_tips for update using (au
 drop policy if exists "Users can delete own tips" on community_tips;
 create policy "Users can delete own tips" on community_tips for delete using (auth.uid() = user_id);
 
--- Tip comments
+-- Comments (used for tips AND team discussions)
 create table if not exists tip_comments (
   id uuid default gen_random_uuid() primary key,
-  tip_id uuid references community_tips(id) on delete cascade,
+  tip_id uuid not null,
   user_id uuid references auth.users(id),
   author_name text not null,
   content text not null,
   created_at timestamptz default now()
 );
+
+-- Drop FK if it exists (allows tip_id to reference tips OR teams)
+do $$ begin
+  alter table tip_comments drop constraint if exists tip_comments_tip_id_fkey;
+exception when others then null;
+end $$;
 alter table tip_comments enable row level security;
 drop policy if exists "Anyone can read comments" on tip_comments;
 create policy "Anyone can read comments" on tip_comments for select using (true);
