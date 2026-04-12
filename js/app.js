@@ -159,9 +159,17 @@ function showView(name) {
   if (target) {
     target.classList.remove('hidden');
     target.classList.add('active');
-    if (name === 'feed') triggerFeedAnimations();
-    if (name === 'missions') renderMissions();
-    if (name === 'komunita') { trackEvent('community_view', {}); renderKomunita(); }
+    if (name === 'feed') { trackEvent('feed_view', {}); triggerFeedAnimations(); }
+    if (name === 'map') trackEvent('map_view', {});
+    if (name === 'missions') { trackEvent('missions_view', {}); renderMissions(); }
+    if (name === 'komunita') {
+      trackEvent('community_view', {
+        tag: activeTag || 'all',
+        tipsCount: communityData ? communityData.tips.length : 0,
+        teamsCount: supabaseTeams ? supabaseTeams.length : 0
+      });
+      renderKomunita();
+    }
   }
 }
 
@@ -1834,6 +1842,7 @@ function toggleUpvote(tip) {
     tip.upvotes++;
   }
   localStorage.setItem('tg_upvotes', JSON.stringify(upvotes));
+  trackEvent('tip_upvote', { tipId: tip.id, action: idx >= 0 ? 'remove' : 'add' });
 }
 
 function openTipDetail(tipId) {
