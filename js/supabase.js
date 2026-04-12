@@ -142,6 +142,21 @@ async function sbSyncLocalToSupabase(userId) {
   await sb.from('progress').upsert(rows, { onConflict: 'user_id,glitch_id' });
 }
 
+// ── ACTIVITY TRACKING ───────────────────────
+
+async function sbTrackEvent(eventType, data) {
+  if (!sb || !sbCurrentUser) return;
+  try {
+    await sb.from('activity_log').insert({
+      user_id: sbCurrentUser.id,
+      event_type: eventType,
+      event_data: data
+    });
+  } catch(e) { /* silent */ }
+}
+
+// ── SYNC ─────────────────────────────────────
+
 async function sbMergeToLocal(userId) {
   // Progress: Supabase → localStorage (add missing entries)
   const { data: rows } = await sb.from('progress').select('*').eq('user_id', userId);

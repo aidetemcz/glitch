@@ -1126,6 +1126,23 @@ html, body {
 /* ── MISC UTILS ── */
 .hidden { display: none !important; }
 
+/* Badge celebration */
+.badge-overlay { position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.7); animation: fade-in .3s ease; }
+.badge-card { text-align:center; padding:40px; background:var(--bg); border:2px solid var(--accent); border-radius:var(--radius); animation: badge-pop .5s ease; }
+.badge-emoji { font-size:64px; margin-bottom:16px; }
+.badge-title { font-size:20px; font-weight:900; color:var(--accent); margin-bottom:8px; }
+.badge-sub { font-size:14px; color:var(--text-muted); }
+@keyframes badge-pop { 0% { transform:scale(0.5); opacity:0; } 50% { transform:scale(1.1); } 100% { transform:scale(1); opacity:1; } }
+@keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+
+/* My teams */
+.my-teams-section { margin-bottom:20px; }
+.my-teams-title { font-size:14px; font-weight:700; color:var(--accent); margin-bottom:10px; }
+
+/* Badges in account */
+.badges-section { margin-top:16px; }
+.badge-item { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:rgba(255,226,51,.1); border:1px solid var(--accent); border-radius:100px; font-size:12px; color:var(--accent); margin:4px; }
+
 /* ── MOBILE margins 30px ── */
 @media (max-width: 599px) {
   .topbar-inner { padding-left: 30px; padding-right: 30px; }

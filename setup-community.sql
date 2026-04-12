@@ -90,3 +90,20 @@ alter table progress enable row level security;
 create policy "Anyone can read progress" on progress for select using (true);
 create policy "Users insert own progress" on progress for insert with check (auth.uid() = user_id);
 create policy "Users update own progress" on progress for update using (auth.uid() = user_id);
+
+-- Activity log
+create table if not exists activity_log (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users(id) on delete cascade,
+  event_type text not null,
+  event_data jsonb default '{}',
+  created_at timestamptz default now()
+);
+alter table activity_log enable row level security;
+create policy "Users insert own events" on activity_log for insert with check (auth.uid() = user_id);
+create policy "Admins can read all" on activity_log for select using (true);
+
+-- Leaders can delete members
+create policy "Leaders can delete members" on team_members for delete using (
+  auth.uid() in (select user_id from team_members tm2 where tm2.team_id = team_members.team_id and tm2.role = 'leader')
+);

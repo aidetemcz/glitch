@@ -405,6 +405,7 @@ function showAdmin() {
       <button class="admin-tab" data-tab="teams">Týmy</button>
       <button class="admin-tab" data-tab="messages">Zprávy</button>
       <button class="admin-tab" data-tab="users">Uživatelé</button>
+      <button class="admin-tab" data-tab="analytics">Analytika</button>
     </nav>
     <div class="admin-content">
       <div id="panel-overview" class="admin-panel active"></div>
@@ -413,6 +414,7 @@ function showAdmin() {
       <div id="panel-teams" class="admin-panel"></div>
       <div id="panel-messages" class="admin-panel"></div>
       <div id="panel-users" class="admin-panel"></div>
+      <div id="panel-analytics" class="admin-panel"></div>
     </div>`;
 
   document.getElementById('admin-logout').addEventListener('click', logout);
@@ -440,6 +442,7 @@ async function loadTab(tab) {
     case 'teams': return loadTeams();
     case 'messages': return loadMessages();
     case 'users': return loadUsers();
+    case 'analytics': return loadAnalytics();
   }
 }
 
@@ -803,6 +806,83 @@ async function loadUsers() {
                 <td>${u.nickname || '-'}</td>
                 <td>${u.full_name || '-'}</td>
                 <td class="td-date">${formatDate(u.created_at)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  } catch (e) {
+    panel.innerHTML = '<div class="admin-denied">Chyba: ' + e.message + '</div>';
+  }
+}
+
+// ── ANALYTICS ──────────────────────────────
+async function loadAnalytics() {
+  const panel = document.getElementById('panel-analytics');
+  panel.innerHTML = '<div class="admin-loading">Načítám analytiku...</div>';
+
+  try {
+    // Total events count
+    const { count: totalEvents } = await sb.from('activity_log').select('id', { count: 'exact', head: true });
+
+    // Most viewed glitches
+    const { data: viewsRaw } = await sb.from('activity_log').select('event_data').eq('event_type', 'glitch_view');
+    const viewCounts = {};
+    (viewsRaw || []).forEach(r => {
+      const gid = r.event_data && r.event_data.glitchId;
+      if (gid) viewCounts[gid] = (viewCounts[gid] || 0) + 1;
+    });
+    const topViewed = Object.entries(viewCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+    // Most completed glitches
+    const { data: completesRaw } = await sb.from('activity_log').select('event_data').eq('event_type', 'glitch_complete');
+    const completeCounts = {};
+    (completesRaw || []).forEach(r => {
+      const gid = r.event_data && r.event_data.glitchId;
+      if (gid) completeCounts[gid] = (completeCounts[gid] || 0) + 1;
+    });
+    const topCompleted = Object.entries(completeCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+    // Active users last 7 days
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const { data: activeRaw } = await sb.from('activity_log').select('user_id').gte('created_at', weekAgo);
+    const activeUsers = new Set((activeRaw || []).map(r => r.user_id)).size;
+
+    // Recent 20 events
+    const { data: recentEvents } = await sb.from('activity_log').select('*').order('created_at', { ascending: false }).limit(20);
+
+    function renderTable(title, rows, colA, colB) {
+      if (!rows.length) return '<p style="color:var(--text-muted);font-size:13px">Žádná data</p>';
+      return `<div class="admin-table-wrap" style="margin-bottom:20px">
+        <table><thead><tr><th>${colA}</th><th>${colB}</th></tr></thead><tbody>
+        ${rows.map(([k, v]) => '<tr><td>' + k + '</td><td>' + v + '</td></tr>').join('')}
+        </tbody></table></div>`;
+    }
+
+    panel.innerHTML = `
+      <h2 style="margin-bottom:20px;color:var(--accent)">Analytika</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">${totalEvents || 0}</div><div class="stat-label">Celkem událostí</div></div>
+        <div class="stat-card"><div class="stat-number">${activeUsers}</div><div class="stat-label">Aktivní (7 dní)</div></div>
+      </div>
+
+      <h3 style="margin:16px 0 8px;color:var(--text)">Nejprohlíženější glitche</h3>
+      ${renderTable('Nejprohlíženější', topViewed, 'Glitch ID', 'Zobrazení')}
+
+      <h3 style="margin:16px 0 8px;color:var(--text)">Nejdokončovanější glitche</h3>
+      ${renderTable('Nejdokončovanější', topCompleted, 'Glitch ID', 'Dokončení')}
+
+      <h3 style="margin:16px 0 8px;color:var(--text)">Poslední aktivita</h3>
+      <div class="admin-table-wrap">
+        <table>
+          <thead><tr><th>Čas</th><th>Uživatel</th><th>Událost</th><th>Data</th></tr></thead>
+          <tbody>
+            ${(recentEvents || []).map(e => `
+              <tr>
+                <td class="td-date">${formatDate(e.created_at)}</td>
+                <td class="td-id" title="${e.user_id || ''}">${shortId(e.user_id)}</td>
+                <td>${e.event_type}</td>
+                <td style="font-size:12px;color:var(--text-muted)">${JSON.stringify(e.event_data || {})}</td>
               </tr>
             `).join('')}
           </tbody>

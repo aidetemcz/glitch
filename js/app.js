@@ -14,9 +14,50 @@ const State = {
     p[id] = { completed: true, correct, ts: Date.now() };
     localStorage.setItem('tg_progress', JSON.stringify(p));
     sbSaveGlitchDone(id, correct);
+    trackEvent('glitch_complete', { glitchId: id, correct });
+    setTimeout(() => checkMissionComplete(id), 500);
   },
   isDone(id) { return !!(this.progress[id]?.completed); },
 };
+
+// ── ACTIVITY TRACKING ───────────────────────
+
+function trackEvent(eventType, data) {
+  const events = JSON.parse(localStorage.getItem('tg_events') || '[]');
+  events.push({ type: eventType, data: data || {}, ts: Date.now() });
+  localStorage.setItem('tg_events', JSON.stringify(events));
+  sbTrackEvent(eventType, data || {});
+}
+
+// ── BADGE / QUEST CELEBRATION ───────────────
+
+function checkMissionComplete(glitchId) {
+  const mission = MISSIONS.find(m => m.glitches.includes(glitchId));
+  if (!mission) return;
+  const allDone = mission.glitches.every(gId => State.isDone(gId));
+  if (!allDone) return;
+  // Check if badge already earned
+  const badges = JSON.parse(localStorage.getItem('tg_badges') || '[]');
+  if (badges.some(b => b.missionId === mission.id)) return;
+  badges.push({ missionId: mission.id, title: mission.title, ts: Date.now() });
+  localStorage.setItem('tg_badges', JSON.stringify(badges));
+  trackEvent('mission_complete', { missionId: mission.id });
+  showBadgeCelebration(mission.title);
+}
+
+function showBadgeCelebration(missionTitle) {
+  const el = document.createElement('div');
+  el.className = 'badge-overlay';
+  el.innerHTML = `
+    <div class="badge-card">
+      <div class="badge-emoji">\uD83C\uDF96\uFE0F</div>
+      <div class="badge-title">Quest dokoncen!</div>
+      <div class="badge-sub">${missionTitle}</div>
+    </div>`;
+  el.addEventListener('click', () => el.remove());
+  document.body.appendChild(el);
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 3000);
+}
 
 // ── INIT ─────────────────────────────────────
 
@@ -116,7 +157,7 @@ function showView(name) {
     target.classList.add('active');
     if (name === 'feed') triggerFeedAnimations();
     if (name === 'missions') renderMissions();
-    if (name === 'komunita') renderKomunita();
+    if (name === 'komunita') { trackEvent('community_view', {}); renderKomunita(); }
   }
 }
 
@@ -189,6 +230,17 @@ function openAccountPage() {
 
   // Show logout only when logged in (local or Supabase)
   document.getElementById('account-logout').style.display = (State.user || sbCurrentUser) ? '' : 'none';
+
+  // Render badges
+  const badgesEl = document.getElementById('account-badges');
+  const badges = JSON.parse(localStorage.getItem('tg_badges') || '[]');
+  if (badges.length) {
+    badgesEl.innerHTML = '<div class="account-label">Moje odznaky</div>' +
+      badges.map(b => '<span class="badge-item">\uD83C\uDF96\uFE0F ' + b.title + '</span>').join('');
+    badgesEl.style.display = '';
+  } else {
+    badgesEl.style.display = 'none';
+  }
 
   overlay.classList.remove('hidden');
   overlay.scrollTop = 0;
@@ -789,6 +841,7 @@ function openDetail(glitchId) {
   const glitch = GLITCHES.find(g => g.id === glitchId);
   if (!glitch) return;
   currentGlitchId = glitchId;
+  trackEvent('glitch_view', { glitchId });
 
   const chatContainer = document.getElementById('chat-container');
   chatContainer.innerHTML = '';
@@ -1280,6 +1333,32 @@ function renderKomunitaFeed() {
   if (!container || !communityData) return;
   container.innerHTML = '';
 
+  // "Moje tymy" section at top if logged in and has teams
+  if (sbCurrentUser && (!activeTag || activeTag === 'tym')) {
+    const myTeams = supabaseTeams.filter(t =>
+      supabaseTeamMembers.some(m => m.team_id === t.id && m.user_id === sbCurrentUser.id)
+    );
+    if (myTeams.length) {
+      const section = document.createElement('div');
+      section.className = 'my-teams-section';
+      section.innerHTML = '<div class="my-teams-title">Moje tymy</div>';
+      myTeams.forEach(team => {
+        const members = supabaseTeamMembers.filter(m => m.team_id === team.id);
+        const card = document.createElement('div');
+        card.className = 'team-card';
+        card.style.cursor = 'pointer';
+        card.innerHTML = `
+          <div class="team-name">${team.name}</div>
+          <div class="team-desc">${team.description}</div>
+          <div class="team-members-row">${members.map(m => '<span class="team-member">' + m.display_name + '</span>').join('')}</div>
+        `;
+        card.addEventListener('click', () => openTeamDetailOverlay(team));
+        section.appendChild(card);
+      });
+      container.appendChild(section);
+    }
+  }
+
   const tips = activeTag
     ? communityData.tips.filter(t => t.tag === activeTag)
     : communityData.tips;
@@ -1417,6 +1496,104 @@ function renderKomunitaFeed() {
     if (!sbCurrentUser) { alert('Pro odeslání zprávy se nejdřív přihlas!'); return; }
     openDevMessageModal();
   });
+}
+
+// ── TEAM DETAIL OVERLAY ─────────────────────
+
+function openTeamDetailOverlay(team) {
+  const overlay = document.getElementById('tip-detail-overlay');
+  const members = supabaseTeamMembers.filter(m => m.team_id === team.id);
+  const isLeader = sbCurrentUser && members.some(m => m.user_id === sbCurrentUser.id && m.role === 'leader');
+
+  async function loadAndRender() {
+    let comments = [];
+    try {
+      if (sb) {
+        const { data } = await sb.from('tip_comments').select('*').eq('tip_id', team.id).order('created_at', { ascending: true });
+        if (data) comments = data;
+      }
+    } catch(e) { /* silent */ }
+
+    const membersHtml = members.map(m => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>${m.display_name} <span style="font-size:11px;color:var(--text-muted)">(${m.role === 'leader' ? 'vedouci' : 'clen'})</span></span>
+        ${isLeader && m.user_id !== sbCurrentUser.id ? '<button class="btn-delete remove-member-btn" data-uid="' + m.user_id + '" style="font-size:11px;padding:2px 8px">Odebrat</button>' : ''}
+      </div>
+    `).join('');
+
+    const commentsHtml = comments.map(c => `
+      <div class="tip-comment">
+        <span class="tip-comment-author">${c.author_name}</span>
+        <span class="tip-comment-text">${c.content}</span>
+      </div>
+    `).join('');
+
+    overlay.innerHTML = `
+      <div class="tip-detail-inner">
+        <button class="tip-detail-close">&times;</button>
+        <h3 style="color:var(--accent);margin-bottom:4px">${team.name}</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:8px">${team.description}</p>
+        ${team.project ? '<p style="font-size:13px;margin-bottom:12px"><strong>Projekt:</strong> ' + team.project + '</p>' : ''}
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:6px">Clenove (${members.length})</div>
+        <div style="margin-bottom:16px">${membersHtml}</div>
+        <div class="tip-detail-comments-header">Diskuze (${comments.length})</div>
+        <div class="tip-detail-comments">${commentsHtml}</div>
+        <div class="tip-reply-form">
+          <textarea class="tip-reply-input" id="team-reply-text" placeholder="${sbCurrentUser ? 'Napsat do diskuze...' : 'Pro diskuzi se nejdriv prihlas'}" ${sbCurrentUser ? '' : 'disabled'}></textarea>
+          <button class="tip-reply-btn" id="team-reply-submit" ${sbCurrentUser ? '' : 'disabled'}>Odpovedět</button>
+        </div>
+      </div>`;
+
+    overlay.classList.remove('hidden');
+    overlay.querySelector('.tip-detail-close').addEventListener('click', () => {
+      overlay.classList.add('hidden');
+      renderKomunitaFeed();
+    });
+
+    // Reply handler
+    const replyBtn = document.getElementById('team-reply-submit');
+    if (replyBtn && sbCurrentUser) {
+      replyBtn.addEventListener('click', async () => {
+        const text = document.getElementById('team-reply-text').value.trim();
+        if (!text) return;
+        replyBtn.disabled = true;
+        replyBtn.textContent = 'Odesilam...';
+        try {
+          const user = State.user || {};
+          const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
+          await sb.from('tip_comments').insert({
+            tip_id: team.id,
+            user_id: sbCurrentUser.id,
+            author_name: authorName,
+            content: text
+          });
+          loadAndRender();
+        } catch(e) {
+          replyBtn.textContent = 'Chyba';
+          replyBtn.disabled = false;
+        }
+      });
+    }
+
+    // Remove member handlers
+    if (isLeader) {
+      overlay.querySelectorAll('.remove-member-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const uid = btn.dataset.uid;
+          if (!confirm('Odebrat clena z tymu?')) return;
+          try {
+            await sb.from('team_members').delete().eq('team_id', team.id).eq('user_id', uid);
+            const idx = supabaseTeamMembers.findIndex(m => m.team_id === team.id && m.user_id === uid);
+            if (idx >= 0) supabaseTeamMembers.splice(idx, 1);
+            loadAndRender();
+          } catch(e) { alert('Chyba: ' + e.message); }
+        });
+      });
+    }
+  }
+
+  loadAndRender();
 }
 
 // ── CREATE TEAM MODAL ───────────────────────
@@ -1581,6 +1758,7 @@ function toggleUpvote(tip) {
 }
 
 function openTipDetail(tipId) {
+  trackEvent('tip_view', { tipId });
   const tip = communityData.tips.find(t => t.id === tipId);
   if (!tip) return;
   const tagMeta = communityData.tags.find(t => t.id === tip.tag);

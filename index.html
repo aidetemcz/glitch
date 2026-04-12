@@ -72,8 +72,6 @@
         </div>
         <div class="komunita-tags" id="komunita-tags"></div>
         <div id="komunita-feed"></div>
-        <div id="tip-detail-overlay" class="tip-detail-overlay hidden"></div>
-        <div id="add-tip-overlay" class="tip-detail-overlay hidden"></div>
       </section>
 
     </main>
@@ -188,10 +186,17 @@
         </div>
       </div>
 
+      <!-- Badges -->
+      <div class="account-field badges-section" id="account-badges"></div>
+
       <button class="btn-primary account-logout-btn" id="account-logout">Odhlásit se</button>
 
     </div>
   </div>
+
+  <!-- Community overlays (outside main content for proper z-index) -->
+  <div id="tip-detail-overlay" class="tip-detail-overlay hidden"></div>
+  <div id="add-tip-overlay" class="tip-detail-overlay hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/supabase.js"></script>
