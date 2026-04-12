@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: Co je vibecoding?
 teaser: Programování bez znalosti kódu -- zní to divně, ale funguje to.
 hook: A co to vlastně je?
+flashQ: Co je vibecoding a kdo tento termín vymyslel?
+flashA: Vibecoding je tvorba aplikací pomocí přirozené řeči místo psaní kódu. Termín vymyslel Andrej Karpathy v únoru 2025.
 ---
 
 Vibecoding znamená tvorbu aplikací pomocí přirozené řeči. Napíšeš AI: "Udělej mi stránku, kde si zapisuji úkoly" -- a ona vygeneruje funkční aplikaci. Nepíšeš kód, jen popisuješ, co chceš.
@@ -13,10 +15,10 @@ Termín vymyslel v únoru 2025 Andrej Karpathy -- bývalý šéf AI v Tesle a v�
 Buď ale upřímný sám k sobě: vibecoding je skvělý pro prototypy, osobní projekty a jednoduché webovky. Pro bankovní systémy nebo nemocniční software to není -- tam potřebuješ profesionální vývojáře, kteří každému řádku kódu rozumí.
 
 ? Co je vibecoding?
-- Speciální programovací jazyk pro začátečníky
-* Tvorba aplikací pomocí přirozené řeči místo psaní kódu
-- Hra, ve které programuješ virtuální roboty
-- Oprava chyb v kódu pomocí AI
+- Speciální programovací jazyk pro začátečníky | Ne, vibecoding naopak žádný speciální jazyk nepotřebuje — mluvíš přirozeně.
+* Tvorba aplikací pomocí přirozené řeči místo psaní kódu | Přesně! Popisuješ co chceš a AI píše kód za tebe.
+- Hra, ve které programuješ virtuální roboty | Vibecoding není hra, ale způsob tvorby skutečných aplikací pomocí přirozeného jazyka.
+- Oprava chyb v kódu pomocí AI | To je jen jedna z věcí, které AI umí — vibecoding je mnohem širší pojem.
 ! Přesně! Vibecoding = říkáš AI, co chceš, a ona píše kód za tebe.
 
 +++

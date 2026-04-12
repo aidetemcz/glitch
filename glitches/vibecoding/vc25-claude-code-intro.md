@@ -4,6 +4,8 @@ topic: podKapotou
 title: Claude Code — AI přímo v terminálu
 teaser: Zapomeň na chatovací okénka. Claude Code čte tvůj kód, edituje soubory a pouští příkazy.
 hook: AI co opravdu kóduje?
+flashQ: Čím se Claude Code liší od běžných AI chatbotů?
+flashA: Claude Code je agent, který pracuje přímo s tvým projektem — čte soubory, edituje kód, pouští příkazy a commituje změny. Není to jen chatbot, ale autonomní asistent.
 ---
 
 ![Claude Code](assets/diagram-claude-code.svg)
@@ -15,10 +17,10 @@ Co umí? Popíšeš co chceš přirozeným jazykem: „Napiš testy pro auth mod
 Běží v terminálu, VS Code, JetBrains, desktopové aplikaci i v prohlížeči na claude.ai/code. Potřebuješ placený Claude účet (Pro, Max, Team nebo Enterprise).
 
 ? Čím se Claude Code liší od běžných AI chatbotů?
-- Generuje kód, který musíš ručně zkopírovat do projektů
-- Je to jen vylepšený autocomplete v editoru
-* Pracuje přímo s tvým projektem — čte soubory, edituje kód, pouští příkazy a commituje
-- Je to vizuální nástroj pro tvorbu webů bez kódu
+- Generuje kód, který musíš ručně zkopírovat do projektů | To dělají běžné chatboty — Claude Code kód přímo zapisuje do souborů.
+- Je to jen vylepšený autocomplete v editoru | Autocomplete doplňuje jednotlivé řádky — Claude Code autonomně řeší celé úkoly.
+* Pracuje přímo s tvým projektem — čte soubory, edituje kód, pouští příkazy a commituje | Správně! Claude Code je agent, který pracuje samostatně přímo ve tvém projektu.
+- Je to vizuální nástroj pro tvorbu webů bez kódu | Claude Code pracuje s kódem v terminálu — pro vizuální tvorbu slouží Lovable nebo Bolt.
 ! Přesně! Claude Code je agent — pracuje přímo v tvém projektu, čte kód, edituje soubory a pouští příkazy. Není to jen chatbot, který odpovídá.
 
 +++

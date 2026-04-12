@@ -4,6 +4,8 @@ topic: praxe
 title: Publikování — svět uvidí tvou aplikaci
 teaser: Hotová aplikace? Sdílej ji s kamarády. Tady jak na to.
 hook: Chceš to světu ukázat?
+flashQ: Jak nejjednodušeji publikuješ vibecoding aplikaci na internet?
+flashA: V Macaly stačí kliknout na „Publikovat" a sdílet odkaz. V Boltu stáhneš kód jako ZIP a nahraješ na Vercel nebo Netlify zdarma.
 ---
 
 Macaly: klikneš na „Publikovat" a dostaneš odkaz — sdílíš, kdokoli otevře v prohlížeči. Bolt: stáhneš kód jako ZIP a nasadíš na Vercel nebo Netlify (oboje zdarma) — nahraneš kód, za 2 minuty máš veřejnou URL.
@@ -11,10 +13,10 @@ Macaly: klikneš na „Publikovat" a dostaneš odkaz — sdílíš, kdokoli otev
 Vlastní doménu (třeba moje-hra.cz) řeš až když víš, že projekt chceš provozovat dlouhodobě — stojí od 100–300 Kč ročně.
 
 ? Jaký je nejjednodušší způsob, jak publikovat aplikaci z Macaly?
-- Stáhnout kód, nahrát na FTP server a nastavit DNS záznamy
-- Koupit hosting a doménu a nastavit server
-* Kliknout na tlačítko „Publikovat" v Macaly a sdílet vygenerovaný odkaz
-- Kontaktovat Macaly zákaznickou podporu o pomoc s publikováním
+- Stáhnout kód, nahrát na FTP server a nastavit DNS záznamy | FTP a DNS jsou zbytečně složité — Macaly tohle dělá automaticky jedním kliknutím.
+- Koupit hosting a doménu a nastavit server | Hosting a doména nejsou nutné pro začátek — Macaly hostuje aplikaci za tebe zdarma.
+* Kliknout na tlačítko „Publikovat" v Macaly a sdílet vygenerovaný odkaz | Správně! Macaly má vestavěné jedno-klikové publikování bez jakéhokoli nastavení.
+- Kontaktovat Macaly zákaznickou podporu o pomoc s publikováním | Podporu kontaktovat nemusíš — publikování je plně automatické tlačítkem v rozhraní.
 ! Správně! Macaly má vestavěné jedno-klikové publikování.
 
 +++

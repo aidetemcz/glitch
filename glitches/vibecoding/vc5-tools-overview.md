@@ -4,6 +4,8 @@ topic: nastrojePro
 title: Přehled nástrojů pro vibecoding
 teaser: Lovable, Bolt, Macaly, Cursor -- každý je jiný. Který sedí tobě?
 hook: Který nástroj je nejlepší?
+flashQ: Jaké jsou čtyři hlavní vibecoding nástroje a čím se liší?
+flashA: Lovable (nejrychlejší prototypování), Bolt (běží v prohlížeči bez instalace), Macaly (česká platforma s vestavěnou databází a lepším SEO) a Cursor (AI editor, kde vidíš kód).
 ---
 
 ![Porovnání nástrojů](assets/diagram-tools-compare.svg)
@@ -13,10 +15,10 @@ hook: Který nástroj je nejlepší?
 Upřímně: žádný z nich není "nejlepší." Lovable je nejrychlejší na prototyp, ale špatný pro SEO. Macaly má vestavěnou databázi, ale omezenější free plán a potřebuješ vlastní API klíče. Bolt funguje bez instalace, ale ztrácí kontext u složitých projektů. Cursor je nejmocnější, ale vyžaduje ochotu učit se kód.
 
 ? Který typ nástrojů je nejlepší pro úplné začátečníky?
-- Cursor -- je nejpopulárnější mezi profesionály
-- Žádný -- vibecoding se bez kódu nedá dělat
-* Lovable, Bolt nebo Macaly -- generují celou aplikaci z textového popisu
-- Všechny jsou stejně jednoduché
+- Cursor -- je nejpopulárnější mezi profesionály | Cursor je skvělý pro pokročilejší, ale začátečníkům ukazuje kód, což může být matoucí.
+- Žádný -- vibecoding se bez kódu nedá dělat | Právě naopak — vibecoding je celý o tom, že kód píše AI za tebe.
+* Lovable, Bolt nebo Macaly -- generují celou aplikaci z textového popisu | Přesně! Tyto nástroje ti kód schovají a ty jen popisuješ, co chceš.
+- Všechny jsou stejně jednoduché | Každý nástroj má jinou křivku učení — Cursor vyžaduje ochotu pracovat s kódem.
 ! Přesně! Pro začátečníky jsou nejlepší nástroje, kde nevidíš kód a jen popisuješ, co chceš. Lovable, Bolt a Macaly tohle umí nejlépe.
 
 +++

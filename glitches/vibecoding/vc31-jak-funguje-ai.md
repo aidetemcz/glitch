@@ -4,6 +4,8 @@ topic: podKapotou
 title: Jak AI vlastně generuje kód?
 teaser: Transformery, tokeny a kontextové okno — co se děje pod kapotou.
 hook: Co se děje pod kapotou?
+flashQ: Jak AI (velký jazykový model) generuje kód?
+flashA: AI předpovídá další token (slovo) na základě vzorů naučených z miliard textů. Nepřemýšlí — předpovídá nejpravděpodobnější pokračování, proto je důležité výsledky kontrolovat.
 ---
 
 AI, která píše kód za tebe, se jmenuje **velký jazykový model** (LLM — Large Language Model). Funguje jednoduše: přečte tvůj text a předpovídá, jaké slovo (token) má přijít dál. Dělá to tisíckrát za sekundu — a výsledek vypadá jako inteligentní odpověď.
@@ -13,10 +15,10 @@ AI, která píše kód za tebe, se jmenuje **velký jazykový model** (LLM — L
 **Transformer** je architektura (návrh), na které běží všechny moderní LLM — ChatGPT, Claude, Gemini. Klíčový vynález je **attention** (pozornost): model se umí „podívat zpět" na celý vstupní text a rozhodnout, která slova jsou pro aktuální odpověď nejdůležitější.
 
 ? Jak AI generuje kód?
-- Má databázi hotových programů a vybírá ten nejpodobnější
-- Postupuje podle pevně naprogramovaných pravidel
-* Předpovídá další token (slovo) na základě vzorů naučených z miliard textů
-- Kopíruje kód z internetu v reálném čase
+- Má databázi hotových programů a vybírá ten nejpodobnější | AI nemá databázi hotových programů — generuje kód token po tokenu na základě naučených vzorů.
+- Postupuje podle pevně naprogramovaných pravidel | AI se neřídí pevnými pravidly — naučila se vzory ze miliard textů sama.
+* Předpovídá další token (slovo) na základě vzorů naučených z miliard textů | Přesně! LLM předpovídá token po tokenu — každé další slovo na základě všeho předchozího.
+- Kopíruje kód z internetu v reálném čase | AI nepřistupuje k internetu v reálném čase — vzory se naučila během tréninku.
 ! Přesně! LLM předpovídá token po tokenu — každé další slovo na základě všeho předchozího.
 
 +++

@@ -4,6 +4,8 @@ topic: praxe
 title: Když něco nefunguje — jak ladit
 teaser: AI dělá chyby. Ale ví jak je opravit — když ji správně popíšeš.
 hook: Jak ji naučíš opravit?
+flashQ: Co je nejlepší udělat, když po příkazu AI aplikace nefunguje?
+flashA: Přesně popsat, co se děje, a zkopírovat chybovou hlášku z konzole prohlížeče (F12). Čím konkrétnější popis problému, tím rychleji ho AI opraví.
 ---
 
 AI dělá chyby — to je normální. Klíč je přesný popis: „Tlačítko Přidat nefunguje. Vyplním formulář, kliknu, formulář zmizí, ale položka se neobjeví v seznamu." Otevři konzoli (F12) a zkopíruj červený text — to je zlatý důl pro AI.
@@ -11,10 +13,10 @@ AI dělá chyby — to je normální. Klíč je přesný popis: „Tlačítko P�
 Pokud oprava nepomůže, zkus „implementuj to jinak" nebo použij rollback na starší verzi. Chyby nejsou selhání — jsou to informace.
 
 ? Co je nejlepší udělat, když po příkazu AI aplikace nefunguje?
-- Smazat celý projekt a začít znovu
-- Obvinit AI ze špatné práce a zkusit jiný nástroj
-* Přesně popsat co se stane a sdílet případnou chybovou hlášku z konzole
-- Počkat den a doufat, že se to opraví samo
+- Smazat celý projekt a začít znovu | Mazání celého projektu je zbytečné — většina chyb se dá opravit přesným popisem problému.
+- Obvinit AI ze špatné práce a zkusit jiný nástroj | Změna nástroje neřeší konkrétní chybu — lepší je popsat problém přesněji.
+* Přesně popsat co se stane a sdílet případnou chybovou hlášku z konzole | Správně! Chybová hláška z konzole (F12) je zlatý důl informací pro AI.
+- Počkat den a doufat, že se to opraví samo | Chyby v kódu se samy neopraví — potřebuješ aktivně komunikovat s AI.
 ! Přesně! Přesný popis problému a chybová hláška z konzole jsou to nejcennější, co můžeš AI dát k opravení chyby.
 
 +++

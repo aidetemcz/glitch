@@ -4,6 +4,8 @@ topic: podKapotou
 title: Jak s Claude Code pracovat
 teaser: Průzkum kódu, debugging, refaktoring, testy, pull requesty — vše v jednom nástroji.
 hook: Co s ním vlastně dělat?
+flashQ: Jak nejlépe popsat chybu Claude Code, aby ji rychle opravil?
+flashA: Popsat co se děje, kdy se chyba objevuje, a přiložit chybovou hlášku. Čím víc kontextu dáš, tím přesnější a rychlejší bude oprava.
 ---
 
 **Průzkum kódu:** Přišel jsi k novému projektu? Zeptej se: „Dej mi přehled architektury." Pak se ptej konkrétněji: „Jak funguje autentizace?" Claude prohledá soubory a vysvětlí.
@@ -17,10 +19,10 @@ hook: Co s ním vlastně dělat?
 **Pull requesty:** „Vytvoř PR pro moje změny." Claude commitne, vytvoří branch a otevře PR s popisem.
 
 ? Jaký je nejlepší způsob, jak popsat chybu Claude Code?
-- „Je to rozbité, oprav to"
-- Jen zkopírovat název souboru kde je chyba
-* Popsat co se děje, kdy se chyba objevuje, a přiložit chybovou hlášku
-- Přepsat celý kód a požádat o kontrolu
+- „Je to rozbité, oprav to" | Příliš vágní — AI neví, co je rozbité, a musí hádat, kde hledat.
+- Jen zkopírovat název souboru kde je chyba | Název souboru pomůže, ale bez popisu problému a chybové hlášky AI neví, co opravit.
+* Popsat co se děje, kdy se chyba objevuje, a přiložit chybovou hlášku | Správně! Konkrétní popis + chybová hláška = nejrychlejší cesta k opravě.
+- Přepsat celý kód a požádat o kontrolu | Přepisování celého kódu je zbytečné — stačí popsat problém a nechat AI najít a opravit příčinu.
 ! Přesně! Konkrétní popis + chybová hláška = nejrychlejší oprava. Čím víc kontextu, tím lepší výsledek.
 
 +++

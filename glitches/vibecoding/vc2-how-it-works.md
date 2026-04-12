@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: Jak vibecoding funguje?
 teaser: Popis → kód → aplikace. Takhle jednoduchý je ten proces.
 hook: Ale jak to funguje?
+flashQ: Jaká je nejdůležitější dovednost při vibecoding?
+flashA: Schopnost jasně popsat, co chceš a co nefunguje. Vibecoding je hlavně o komunikaci s AI, ne o znalosti kódu.
 ---
 
 ![Vibecoding flow](assets/diagram-vibecoding-flow.svg)
@@ -13,10 +15,10 @@ Popíšeš co chceš, AI vygeneruje kód, ty ho vidíš v akci, pak řekneš co 
 Kódu rozumět nemusíš. Ale je dobré vědět TROCHU — když AI udělá chybu, „tlačítko nefunguje" je lepší než „je to rozbité." Čím přesněji popíšeš problém, tím rychleji ho AI opraví.
 
 ? Co je nejdůležitější dovednost při vibecoding?
-- Znalost HTML a CSS
-- Rychlé psaní na klávesnici
-* Schopnost jasně popsat, co chceš a co nefunguje
-- Matematika a algoritmy
+- Znalost HTML a CSS | HTML a CSS se hodí znát, ale AI je napíše za tebe — klíčová je komunikace.
+- Rychlé psaní na klávesnici | Rychlost psaní nehraje roli, důležitý je obsah toho, co napíšeš.
+* Schopnost jasně popsat, co chceš a co nefunguje | Přesně! Čím lépe popíšeš problém, tím lepší kód AI vygeneruje.
+- Matematika a algoritmy | Algoritmy řeší AI za tebe — ty potřebuješ umět popsat, co má aplikace dělat.
 ! Správně! Vibecoding je hlavně o komunikaci.
 
 +++

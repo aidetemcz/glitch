@@ -4,6 +4,8 @@ topic: praxe
 title: Co je databáze a proč ji potřebuješ
 teaser: Aplikace bez databáze je jako zápisník z písku — zavřeš a je pryč.
 hook: Kam se ukládají data?
+flashQ: Proč potřebuješ databázi a co se stane bez ní?
+flashA: Bez databáze data zmizí po zavření prohlížeče, protože žijí jen v dočasné paměti. Databáze je trvalé úložiště na internetu — jako tabulka v Excelu, ale dostupná odkudkoli.
 ---
 
 Když zavřeš prohlížeč, tvoje aplikace zapomene všechno. Proč? Protože data žila jen v **paměti prohlížeče** — dočasně, jako v RAM počítače. Databáze je trvalé úložiště — jako pevný disk, ale na internetu.
@@ -15,10 +17,10 @@ Když zavřeš prohlížeč, tvoje aplikace zapomene všechno. Proč? Protože d
 **Jak ji přidat ve vibecoding?** Nástroje jako Macaly mají databázi vestavěnou — popíšeš co chceš ukládat a je to. V jiných nástrojích řekni AI: „Použij Supabase jako databázi" — Supabase je bezplatná databáze v cloudu, kterou zvládne nastavit i začátečník.
 
 ? Proč potřebuješ databázi?
-- Aby aplikace běžela rychleji
-- Aby vypadala profesionálněji
-* Aby si data pamatovala i po zavření prohlížeče
-- Aby fungovala na telefonu
+- Aby aplikace běžela rychleji | Databáze rychlost přímo nezvyšuje — slouží k trvalému ukládání dat.
+- Aby vypadala profesionálněji | Profesionální vzhled závisí na designu, ne na databázi.
+* Aby si data pamatovala i po zavření prohlížeče | Přesně! Bez databáze data žijí jen v dočasné paměti a po zavření zmizí.
+- Aby fungovala na telefonu | Fungování na telefonu závisí na responsivním designu, ne na databázi.
 ! Správně! Bez databáze všechna data zmizí po zavření prohlížeče. Databáze je trvalé úložiště.
 
 +++

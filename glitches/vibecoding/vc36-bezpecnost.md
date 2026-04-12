@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: Bezpečnost a limity vibecoding
 teaser: AI generuje kód rychle, ale ne vždy bezpečně. Na co si dát pozor?
 hook: Je vibecoding bezpečný?
+flashQ: Jaké je největší bezpečnostní riziko vibecoding a jak se mu vyhnout?
+flashA: AI-generovaný kód může obsahovat zranitelnosti, které laik neodhalí. Nikdy nedávej API klíče do frontendu a veřejné aplikace s daty uživatelů nech zkontrolovat odborníkem.
 ---
 
 AI-generovaný kód může obsahovat bezpečnostní díry, které neodhalíš, pokud kódu nerozumíš. To je největší riziko vibecoding: stavíš něco, co neumíš zkontrolovat. Pro osobní projekt (sledovač filmů, hra pro kamarády) to nevadí. Pro cokoli, kde jsou v hře peníze nebo osobní data jiných lidí, je to problém.
@@ -13,10 +15,10 @@ Nejčastější chyba: **API klíče ve frontendovém kódu.** Když v Lovable n
 Co s vibecoding **nikdy nedělej:** nezpracovávej skutečné platby bez bezpečnostního auditu, neukládej citlivá osobní data (rodná čísla, zdravotní záznamy) a nepouštěj takovou aplikaci pro veřejnost bez kontroly někým, kdo kódu rozumí.
 
 ? Jaké je největší bezpečnostní riziko vibecoding?
-- AI generuje pomalý kód
-- Aplikace nefungují na mobilech
-* Kód může obsahovat zranitelnosti, které laik neodhalí
-- Vibecoding nástroje kradou tvoje nápady
+- AI generuje pomalý kód | Pomalost kódu je spíš optimalizační problém, ne bezpečnostní riziko.
+- Aplikace nefungují na mobilech | Responsivita je designový problém, ne bezpečnostní hrozba.
+* Kód může obsahovat zranitelnosti, které laik neodhalí | Správně! Bez znalosti kódu nemůžeš ověřit, jestli je bezpečný — to je hlavní riziko vibecoding.
+- Vibecoding nástroje kradou tvoje nápady | Krádež nápadů není typické riziko — skutečné riziko jsou skryté zranitelnosti v kódu.
 ! Správně! Když nerozumíš kódu, nemůžeš ověřit, jestli je bezpečný. Pro osobní projekty to nevadí, pro veřejné aplikace s daty uživatelů je to riziko.
 
 +++

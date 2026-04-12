@@ -4,6 +4,8 @@ topic: nastrojePro
 title: Lovable a Bolt -- detailní srovnání
 teaser: Dva nejpopulárnější vibecoding nástroje pod lupou. Co umí a kde selhávají?
 hook: Který z nich vybrat?
+flashQ: Jaká je klíčová výhoda Boltu oproti Lovable?
+flashA: Bolt běží kompletně v prohlížeči díky technologii WebContainers — nepotřebuješ žádnou instalaci. Navíc umožňuje export kódu jako ZIP.
 ---
 
 **Lovable** (lovable.dev): napíšeš "Vytvoř aplikaci pro sledování tréninků s historií a grafy" -- a za minutu máš funkční prototyp s moderním designem. Obrovská výhoda: nejštědřejší free tier, velká komunita, skvělé výsledky na první pokus. Nevýhoda: slabé SEO, a pokud použiješ API klíče, pozor -- můžou být viditelné ve frontendovém kódu.
@@ -13,10 +15,10 @@ hook: Který z nich vybrat?
 Oba nástroje jsou zdarma na vyzkoušení, ale mají limity na počet zpráv. Začni s jedním, zkus druhý -- zjistíš, co ti sedí víc.
 
 ? Jaká je hlavní výhoda Boltu oproti Lovable?
-- Generuje hezčí design
-- Má lepší AI model
-* Funguje kompletně v prohlížeči bez jakékoli instalace
-- Je úplně zdarma bez omezení
+- Generuje hezčí design | Design závisí na promptu a šablonách, ne na nástroji — Lovable má často dokonce lepší design.
+- Má lepší AI model | Oba nástroje používají podobné AI modely — rozdíl je v přístupu, ne v kvalitě AI.
+* Funguje kompletně v prohlížeči bez jakékoli instalace | Správně! Díky technologii WebContainers běží Bolt celý v prohlížeči — stačí otevřít web.
+- Je úplně zdarma bez omezení | Bolt má free tier, ale s omezeným počtem zpráv — není neomezeně zdarma.
 ! Přesně! Bolt běží celý v prohlížeči díky technologii WebContainers -- žádná instalace, žádné nastavení.
 
 +++

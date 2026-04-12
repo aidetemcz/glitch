@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: 10 nápadů na první projekt
 teaser: Nevíš co postavit? Tady je 10 nápadů, které zvládneš za odpoledne.
 hook: Co bys postavil dnes?
+flashQ: Jaký typ projektu je ideální pro začátek s vibecoding?
+flashA: Jednoduchý projekt, který tě osobně baví — třeba sledovač filmů, kvíz nebo countdown. Motivace je klíčová a jednoduchý projekt zvládneš za odpoledne.
 ---
 
 Od nejjednoduššího: kvízová hra pro spolužáky, sledovač filmů s hodnocením, generátor náhodných jídel, countdown do prázdnin, tracker návyků se streaky, anketa pro třídu, portfolio, planner pro týden, mini blog, mini e-shop bez platby.
@@ -11,10 +13,10 @@ Od nejjednoduššího: kvízová hra pro spolužáky, sledovač filmů s hodnoce
 Klíč: vyber projekt, který TEBE baví. Motivace je nejdůležitější ingredience.
 
 ? Jaký je nejlepší první projekt pro vibecoding?
-- Co nejsložitější projekt, ať se naučíš co nejvíc najednou
-- Kopie velké aplikace jako Instagram nebo TikTok
-* Jednoduchý projekt, který tě zajímá — sledovač filmů, kvíz, countdown
-- Projekt, který bude vydělávat peníze od prvního dne
+- Co nejsložitější projekt, ať se naučíš co nejvíc najednou | Příliš složitý projekt vede k frustraci — AI nezvládne obří zadání najednou.
+- Kopie velké aplikace jako Instagram nebo TikTok | Kopírování velkých aplikací je daleko nad možnosti vibecoding kvůli omezenému kontextovému oknu AI.
+* Jednoduchý projekt, který tě zajímá — sledovač filmů, kvíz, countdown | Přesně! Jednoduchý projekt dokončíš rychle a motivace z vlastního zájmu tě udrží.
+- Projekt, který bude vydělávat peníze od prvního dne | Monetizace je předčasná — nejdřív se nauč tvořit, pak řeš byznys.
 ! Přesně! Začni s jednoduchým projektem, který tě baví.
 
 +++

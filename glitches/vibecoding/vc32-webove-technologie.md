@@ -4,6 +4,8 @@ topic: praxe
 title: Slovníček — technologie pod kapotou
 teaser: HTML, CSS, JavaScript, API, hosting — co to vlastně je?
 hook: Co je pod kapotou?
+flashQ: Co je HTML, CSS a JavaScript a jakou roli hrají na webové stránce?
+flashA: HTML je kostra stránky (co na ní je), CSS je vzhled (barvy, fonty, rozložení) a JavaScript je chování (co se stane po kliknutí, jak se mění obsah).
 ---
 
 Vibecoding ti umožňuje tvořit bez znalosti technologií. Ale trocha orientace ti pomůže líp komunikovat s AI a řešit problémy.
@@ -19,10 +21,10 @@ Vibecoding ti umožňuje tvořit bez znalosti technologií. Ale trocha orientace
 **Hosting** — místo kde tvoje aplikace žije na internetu. Vercel, Netlify, Macaly — servery, které ukazují tvou stránku světu. Jako adresa domu.
 
 ? Co je JavaScript?
-- Jazyk pro stylování webových stránek
-- Databázový systém pro ukládání dat
-* Programovací jazyk, který řídí chování a interaktivitu webové stránky
-- Protokol pro přenos souborů po internetu
+- Jazyk pro stylování webových stránek | Stylování zajišťuje CSS — JavaScript řídí chování a logiku stránky.
+- Databázový systém pro ukládání dat | Databáze je samostatná technologie — JavaScript řídí interaktivitu v prohlížeči.
+* Programovací jazyk, který řídí chování a interaktivitu webové stránky | Správně! JavaScript reaguje na kliknutí, mění obsah a komunikuje se serverem.
+- Protokol pro přenos souborů po internetu | Přenos souborů zajišťují protokoly jako HTTP/FTP — JavaScript je programovací jazyk.
 ! Správně! JavaScript přidává stránce interaktivitu — reaguje na kliknutí, mění obsah, komunikuje se serverem.
 
 +++

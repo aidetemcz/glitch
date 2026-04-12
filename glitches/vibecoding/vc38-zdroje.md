@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: Zdroje a kam dál
 teaser: Nejlepší zdroje, odkazy a tipy, jak se posunout dál ve vibecoding i programování.
 hook: Kam dál?
+flashQ: Jaký je nejlepší další krok, pokud tě vibecoding baví a chceš se posunout dál?
+flashA: Zkusit Cursor (vidíš kód, který AI generuje) a bezplatné zdroje jako freeCodeCamp. Kombinace vibecoding + postupné učení kódu je nejefektivnější cesta.
 ---
 
 Vibecoding je začátek, ne konec. Tady jsou nejlepší zdroje, které ti pomůžou jít dál -- ať už chceš zůstat u vibecoding, nebo se naučit opravdu programovat.
@@ -13,10 +15,10 @@ Vibecoding je začátek, ne konec. Tady jsou nejlepší zdroje, které ti pomů�
 Pokud tě programování zaujalo a chceš víc než vibecoding: začni s Cursorem a zkus freeCodeCamp.org -- tisíce hodin bezplatných kurzů programování. Vibecoding a klasické programování se nevylučují -- doplňují se.
 
 ? Co je nejlepší další krok, pokud tě vibecoding baví a chceš se posunout dál?
-- Přestat s vibecoding a učit se jen z knih
-- Zaplatit drahý kurz programování
-* Zkusit Cursor a bezplatné zdroje jako freeCodeCamp
-- Počkat, až bude AI ještě lepší
+- Přestat s vibecoding a učit se jen z knih | Vibecoding a klasické programování se nevylučují — nejlepší je je kombinovat.
+- Zaplatit drahý kurz programování | Existují výborné bezplatné zdroje jako freeCodeCamp — platit za kurz na začátku není nutné.
+* Zkusit Cursor a bezplatné zdroje jako freeCodeCamp | Správně! Cursor ti ukáže kód a freeCodeCamp tě naučí mu rozumět — ideální kombinace.
+- Počkat, až bude AI ještě lepší | Čekání nemá smysl — nejlepší čas začít je teď, protože se učíš dovednosti užitečné i s budoucí AI.
 ! Správně! Cursor ti ukáže kód, který AI generuje, a bezplatné zdroje jako freeCodeCamp ti pomohou kódu postupně rozumět. Kombinace vibecoding + učení je nejefektivnější cesta.
 
 +++

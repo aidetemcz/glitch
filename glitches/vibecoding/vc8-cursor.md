@@ -4,6 +4,8 @@ topic: nastrojePro
 title: Cursor — AI editor pro budoucí profíky
 teaser: Jako VS Code, ale AI ti píše kód přímo do editoru.
 hook: AI píše kód za tebe?
+flashQ: Pro koho je Cursor ideální a čím se liší od Lovable nebo Boltu?
+flashA: Cursor je nejlepší pro ty, kdo se chtějí naučit programovat — vidíš kód, který AI píše, a učíš se vedle AI „kolegy". Na rozdíl od Lovable/Boltu pracuješ přímo s kódem.
 ---
 
 Cursor je textový editor pro kód s vestavěnou AI. Označíš část kódu, zmáčkneš Ctrl+K a napíšeš: „Přidej tlačítko, které tohle schová" — AI upraví kód přímo na místě.
@@ -11,10 +13,10 @@ Cursor je textový editor pro kód s vestavěnou AI. Označíš část kódu, zm
 Pro naprosté začátečníky není ideální — vidíš kód. Ale pokud tě programování zajímá hlouběji, Cursor je nejlepší způsob jak se ho naučit vedle zkušeného AI kolegy.
 
 ? Pro koho je Cursor nejvhodnější?
-- Pro naprosté začátečníky bez jakýchkoli zkušeností
-* Pro lidi, kteří se chtějí o programování trochu přiučit a mít AI jako asistenta
-- Pro profesionální vývojáře, kteří nepotřebují žádnou pomoc
-- Pouze pro návrháře UI/UX
+- Pro naprosté začátečníky bez jakýchkoli zkušeností | Pro úplné začátečníky jsou vhodnější Lovable nebo Bolt, kde kód nevidíš.
+* Pro lidi, kteří se chtějí o programování trochu přiučit a mít AI jako asistenta | Správně! Cursor je ideální kombinace — vidíš kód a zároveň máš AI, která ti pomáhá.
+- Pro profesionální vývojáře, kteří nepotřebují žádnou pomoc | I profíci Cursor používají — právě díky AI asistenci jsou produktivnější.
+- Pouze pro návrháře UI/UX | Cursor je editor kódu, ne designový nástroj — pro čistý UI/UX design existují jiné nástroje.
 ! Správně! Cursor je nejlepší pro ty, kdo chtějí trochu rozumět kódu, ale zároveň mít AI jako silného pomocníka.
 
 +++

@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: Zlaté pravidlo vibecoding — malé kousky
 teaser: AI nezvládne obří projekt najednou. Klíč je rozděl a panuj.
 hook: Proč to nefunguje najednou?
+flashQ: Proč je potřeba rozdělit vibecoding projekt na malé moduly?
+flashA: Protože AI má omezené kontextové okno a nevidí celý kód najednou. Menší moduly znamenají lepší výsledky a snazší hledání chyb.
 ---
 
 ![Kontextové okno](assets/diagram-context-window.svg)
@@ -17,10 +19,10 @@ Největší chyba začátečníků: „Udělej mi celou aplikaci jako Instagram.
 **Pravidlo č. 3: Postupuj od jednoduchého ke složitému.** Nejdřív základ, pak detaily. Nejdřív seznam položek, pak filtrování, pak řazení, pak design. Každý krok otestuj než přidáš další.
 
 ? Proč je lepší rozdělit velký projekt na menší části?
-- Aby to vypadalo profesionálněji
-- Kvůli bezpečnosti dat
-* Protože AI má omezené kontextové okno a lépe pracuje s menšími úkoly
-- Protože menší projekty jsou levnější
+- Aby to vypadalo profesionálněji | Profesionální vzhled nesouvisí s velikostí modulů, ale s designem.
+- Kvůli bezpečnosti dat | Bezpečnost dat je důležitá, ale není hlavním důvodem pro modulární přístup.
+* Protože AI má omezené kontextové okno a lépe pracuje s menšími úkoly | Přesně! AI si najednou „pamatuje" jen omezené množství kódu, takže menší moduly = lepší výsledky.
+- Protože menší projekty jsou levnější | Cena nesouvisí s modulárním přístupem — jde o omezení kontextového okna AI.
 ! Přesně! AI si najednou „pamatuje" jen omezené množství kódu. Menší moduly = lepší výsledky.
 
 +++

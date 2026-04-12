@@ -887,7 +887,7 @@ function replayFull(glitch) {
       const optionsHTML = quiz.options.map((opt, i) => {
         const isCorrect = i === quiz.correct;
         return '<button class="quiz-option' + (isCorrect ? ' correct' : '') + '" disabled>' +
-          '<span class="quiz-dot' + (isCorrect ? ' correct' : '') + '"></span><span>' + opt + '</span>' +
+          '<span class="quiz-dot' + (isCorrect ? ' correct' : '') + '"></span><span>' + opt.text + '</span>' +
         '</button>';
       }).join('');
 
@@ -916,6 +916,7 @@ function replayFull(glitch) {
     container.appendChild(section);
   }
 
+  showFlashcard(glitch);
   showEndActions(glitch, false);
 }
 
@@ -938,7 +939,10 @@ function runChat(glitch) {
       setTimeout(() => {
         showQuiz(step.quiz, correct => {
           State.setGlitchDone(glitch.id, correct);
-          setTimeout(() => showEndActions(glitch, true), 800);
+          setTimeout(() => {
+            showFlashcard(glitch);
+            showEndActions(glitch, true);
+          }, 800);
         });
       }, 400);
     }
@@ -1000,7 +1004,7 @@ function showQuiz(quiz, onDone) {
 
   const optionsHTML = quiz.options.map((opt, i) =>
     '<button class="quiz-option" data-idx="' + i + '">' +
-      '<span class="quiz-dot"></span><span>' + opt + '</span>' +
+      '<span class="quiz-dot"></span><span>' + opt.text + '</span>' +
     '</button>'
   ).join('');
 
@@ -1013,6 +1017,7 @@ function showQuiz(quiz, onDone) {
     btn.addEventListener('click', () => {
       const chosen = parseInt(btn.dataset.idx);
       const correct = chosen === quiz.correct;
+      const chosenOpt = quiz.options[chosen];
 
       optionsBtns.forEach(b => {
         b.disabled = true;
@@ -1022,9 +1027,11 @@ function showQuiz(quiz, onDone) {
         if (idx === chosen) b.classList.add('selected');
       });
 
+      // Per-option feedback or fallback to general explanation
       const explanation = document.createElement('div');
       explanation.className = 'quiz-explanation ' + (correct ? 'correct' : 'wrong');
-      explanation.textContent = correct ? quiz.explanation : 'To není správně. ' + quiz.explanation;
+      const feedbackText = chosenOpt.feedback || quiz.explanation;
+      explanation.textContent = correct ? feedbackText : feedbackText;
       block.appendChild(explanation);
 
       scrollChatToBottom();
@@ -1033,6 +1040,27 @@ function showQuiz(quiz, onDone) {
   });
 
   container.appendChild(block);
+  scrollChatToBottom();
+}
+
+function showFlashcard(glitch) {
+  if (!glitch.flashcard) return;
+  const container = document.getElementById('chat-container');
+  const card = document.createElement('div');
+  card.className = 'flashcard';
+  card.innerHTML =
+    '<div class="flashcard-label">Zapamatuj si</div>' +
+    '<div class="flashcard-q">' + glitch.flashcard.q + '</div>' +
+    '<div class="flashcard-a hidden">' + glitch.flashcard.a + '</div>';
+  const revealBtn = document.createElement('button');
+  revealBtn.className = 'flashcard-reveal';
+  revealBtn.textContent = 'Ukaž odpověď';
+  revealBtn.addEventListener('click', () => {
+    card.querySelector('.flashcard-a').classList.remove('hidden');
+    revealBtn.remove();
+  });
+  card.appendChild(revealBtn);
+  container.appendChild(card);
   scrollChatToBottom();
 }
 

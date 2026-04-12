@@ -4,6 +4,8 @@ topic: nastrojePro
 title: Jak vybrat správný nástroj?
 teaser: Rozhodovací strom -- odpověz na 3 otázky a víš, co použít.
 hook: Který nástroj je pro tebe?
+flashQ: Který vibecoding nástroj je nejlepší pro český firemní web, který mají najít lidé přes Google?
+flashA: Macaly, protože používá Next.js se server-side renderingem, díky čemuž Google stránky lépe indexuje. Navíc má českou podporu a vestavěnou databázi.
 ---
 
 Není jeden "nejlepší" nástroj -- záleží na tom, co stavíš. Tady je jednoduchý návod: **Chceš zkusit vibecoding zdarma a rychle?** Lovable. **Chceš český web s dobrým SEO?** Macaly. **Chceš rozumět kódu a učit se programovat?** Cursor. **Nechceš nic instalovat?** Bolt.
@@ -11,10 +13,10 @@ Není jeden "nejlepší" nástroj -- záleží na tom, co stavíš. Tady je jedn
 Nemusíš se rozhodnout navždy. Většina vibecoding nástrojů má free tier -- zkus dva nebo tři a zjisti, co ti sedí. Projekt z jednoho nástroje můžeš často přestavět v jiném za hodinu.
 
 ? Který nástroj je nejlepší volba, pokud chceš vytvořit českou firemní webovku, kterou mají najít lidé přes Google?
-- Lovable -- má nejhezčí design
-- Bolt -- funguje v prohlížeči
-- Cursor -- je nejmocnější
-* Macaly -- používá Next.js s lepším SEO
+- Lovable -- má nejhezčí design | Lovable má hezký design, ale generuje SPA stránky, které Google špatně indexuje.
+- Bolt -- funguje v prohlížeči | Bolt je skvělý na rychlé prototypy, ale SEO pro firemní weby neřeší.
+- Cursor -- je nejmocnější | Cursor je mocný, ale SEO závisí na tobě — musíš vědět, co děláš.
+* Macaly -- používá Next.js s lepším SEO | Přesně! Next.js generuje stránky na serveru, takže Google je lépe najde a zaindexuje.
 ! Přesně! Macaly díky Next.js generuje stránky, které Google lépe indexuje. Pro české firemní weby je to výhoda.
 
 +++

@@ -4,6 +4,8 @@ topic: podKapotou
 title: Budoucnost vibecoding
 teaser: Toto není trend — je to změna způsobu, jak lidstvo tvoří software.
 hook: Budeš u toho?
+flashQ: Jaká bude nejdůležitější dovednost pro práci s AI v budoucnosti?
+flashA: Schopnost jasně popsat problémy a kriticky hodnotit výsledky AI. Komunikace, kreativita a kritické myšlení budou cennější než samotné psaní kódu.
 ---
 
 Historicky: programování = roky studia, znalost desítek technologií, přístupné jen pro pár procent lidí. Dnes: kdokoli s dobrým nápadem a schopností ho popsat může postavit funkční aplikaci.
@@ -11,10 +13,10 @@ Historicky: programování = roky studia, znalost desítek technologií, příst
 Klíčová dovednost budoucnosti není psaní kódu — je to schopnost popsat problém tak jasně, aby ho AI vyřešila správně. Komunikace + kreativita + kritické myšlení.
 
 ? Jaká bude nejdůležitější dovednost pro práci s AI nástroji v budoucnosti?
-- Schopnost psát kód v Pythonu a Javascriptu
-- Matematika a statistika pro pochopení AI algoritmů
-* Schopnost jasně popsat problémy a kriticky hodnotit výsledky AI
-- Rychlé psaní na klávesnici
+- Schopnost psát kód v Pythonu a Javascriptu | Psaní kódu bude stále méně nutné — AI ho píše za tebe, klíčové je umět říct co chceš.
+- Matematika a statistika pro pochopení AI algoritmů | Pochopení AI algoritmů je užitečné pro výzkumníky, ale běžní uživatelé potřebují hlavně komunikační dovednosti.
+* Schopnost jasně popsat problémy a kriticky hodnotit výsledky AI | Správně! Komunikace a kritické myšlení jsou klíčové — AI řeší techniku, ty řídíš směr.
+- Rychlé psaní na klávesnici | Rychlost psaní nehraje roli — důležitý je obsah a přesnost toho, co formuluješ.
 ! Správně! Komunikace, kritické myšlení a schopnost jasně formulovat problémy budou cennější než samotné technické znalosti programování.
 
 +++

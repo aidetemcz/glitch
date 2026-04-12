@@ -4,6 +4,8 @@ topic: praxe
 title: Jak psát dobré prompty
 teaser: Špatný prompt = frustrující výsledek. Dobrý prompt = magie.
 hook: Jak psát správně?
+flashQ: Jaký je rozdíl mezi dobrým a špatným promptem pro vibecoding?
+flashA: Dobrý prompt je konkrétní a popisuje přesné funkce a datová pole (např. „sledovač knih: název, autor, hodnocení 1-5"). Špatný prompt je vágní (např. „udělej cool aplikaci").
 ---
 
 Buď konkrétní a popisuj výsledek, ne proces: „Aplikace kde zadám cvičení — název, počet opakování, váha — uložím do databáze a vidím historii posledních 7 dní" je dobrý prompt. „Udělej fitness aplikaci" je špatný.
@@ -11,10 +13,10 @@ Buď konkrétní a popisuj výsledek, ne proces: „Aplikace kde zadám cvičen�
 Přidávej jednu věc najednou a chyby popisuj přesně: „Když kliknu na Uložit, nic se nestane a v konzoli vidím chybu XYZ" je perfektní. „Nefunguje to" je k ničemu.
 
 ? Jaký prompt bude mít nejlepší výsledek?
-- „Udělej cool aplikaci"
-- „Potřebuju pomoc s projektem"
-* „Aplikace pro sledování knih: název, autor, hodnocení 1–5, přečteno ano/ne. Seznam seřazený podle hodnocení."
-- „Zkopíruj něco podobného jako Goodreads"
+- „Udělej cool aplikaci" | Příliš vágní — AI neví, co „cool" znamená, a výsledek bude náhodný.
+- „Potřebuju pomoc s projektem" | Chybí jakékoli detaily — AI nemá z čeho vycházet.
+* „Aplikace pro sledování knih: název, autor, hodnocení 1–5, přečteno ano/ne. Seznam seřazený podle hodnocení." | Výborně! Konkrétní popis s přesnými datovými poli dá AI jasné zadání.
+- „Zkopíruj něco podobného jako Goodreads" | Kopírování velké aplikace je příliš složité a neurčité — AI neví, které části chceš.
 ! Správně! Konkrétní popis s přesnými funkcemi a datovými poli dá AI přesně to, co potřebuje k dobrému výsledku.
 
 +++

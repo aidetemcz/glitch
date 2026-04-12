@@ -17,6 +17,12 @@ function parseFrontmatter(text) {
   return result;
 }
 
+function parseOption(line) {
+  // "Option text | feedback" → { text, feedback }
+  const parts = line.split(' | ');
+  return { text: parts[0].trim(), feedback: parts[1] ? parts[1].trim() : null };
+}
+
 function parseMd(text) {
   const fmMatch = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!fmMatch) return null;
@@ -47,9 +53,9 @@ function parseMd(text) {
         const line = lines[i];
         if (line.startsWith('* ')) {
           correct = options.length;
-          options.push(line.slice(2).trim());
+          options.push(parseOption(line.slice(2)));
         } else if (line.startsWith('- ')) {
-          options.push(line.slice(2).trim());
+          options.push(parseOption(line.slice(2)));
         } else if (line.startsWith('! ')) {
           explanation = line.slice(2).trim();
         }
@@ -66,7 +72,12 @@ function parseMd(text) {
     ? deepdiveRaw.split(/\n\n+/).map(p => p.trim()).filter(Boolean)
     : null;
 
-  return { id: frontmatter.id, topic: frontmatter.topic, title: frontmatter.title, teaser: frontmatter.teaser, hook: frontmatter.hook || null, chat, deepdive };
+  // Flashcard from frontmatter
+  const flashcard = (frontmatter.flashQ && frontmatter.flashA)
+    ? { q: frontmatter.flashQ, a: frontmatter.flashA }
+    : null;
+
+  return { id: frontmatter.id, topic: frontmatter.topic, title: frontmatter.title, teaser: frontmatter.teaser, hook: frontmatter.hook || null, chat, deepdive, flashcard };
 }
 
 async function loadGlitches() {

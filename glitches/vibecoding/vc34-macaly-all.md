@@ -4,6 +4,8 @@ topic: nastrojePro
 title: Macaly -- kompletní průvodce českou platformou
 teaser: Česká platforma pro vibecoding od A do Z. Všechno na jednom místě.
 hook: Co všechno Macaly umí?
+flashQ: Jaké jsou hlavní výhody Macaly oproti zahraniční konkurenci?
+flashA: Macaly používá Next.js (lepší SEO), má vestavěnou databázi (nepotřebuješ Supabase), českou podporu a funkce jako Edit Mode, Global Styles a Agent Memory.
 ---
 
 Macaly (macaly.com) je česká vibecoding platforma z Prahy. Oproti zahraniční konkurenci má tři výhody: vestavěnou databázi (nepotřebuješ Supabase), lepší SEO díky Next.js a českou podporu. Nevýhody: omezenější free plán než Lovable a potřebuješ si zařídit vlastní API klíče pro AI modely.
@@ -11,10 +13,10 @@ Macaly (macaly.com) je česká vibecoding platforma z Prahy. Oproti zahraniční
 Verze 3.0 přinesla klíčové funkce: **Edit Mode** (klikneš na prvek a změníš ho bez promptu), **Global Styles** (nastavíš barvy a fonty pro celou aplikaci najednou), **Agent Memory** (AI si pamatuje tvoje preference mezi konverzacemi) a **Diff Mode** (vidíš přesně, co AI změnila). Plus vestavěná databáze a publikování jedním kliknutím.
 
 ? Co je hlavní technická výhoda Macaly oproti Lovable?
-- Je rychlejší
-- Má víc šablon
-* Používá Next.js, což znamená lepší SEO a vestavěnou databázi
-- Má více AI modelů
+- Je rychlejší | Rychlost generování závisí na AI modelu, ne na platformě — to není hlavní rozdíl.
+- Má víc šablon | Počet šablon není hlavní technická výhoda Macaly oproti Lovable.
+* Používá Next.js, což znamená lepší SEO a vestavěnou databázi | Správně! Next.js umožňuje server-side rendering, díky čemuž Google lépe indexuje stránky.
+- Má více AI modelů | Macaly vyžaduje vlastní API klíče — množství modelů závisí na tom, jaké klíče si nastavíš.
 ! Správně! Next.js umožňuje server-side rendering, díky čemuž Google lépe indexuje stránky vytvořené v Macaly.
 
 +++

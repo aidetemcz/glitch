@@ -4,6 +4,8 @@ topic: coJeVibecoding
 title: Co můžeš postavit -- a co ne?
 teaser: Vibecoding má obrovský potenciál, ale i jasné limity. Tady jsou oba.
 hook: Kde jsou hranice?
+flashQ: Jaké projekty vibecoding nezvládne a proč?
+flashA: Vibecoding nezvládne bezpečnostně kritické systémy (banky, zdravotnictví) ani aplikace pro tisíce uživatelů, protože AI-generovaný kód nemusí být bezpečný a AI má omezené kontextové okno.
 ---
 
 **Co funguje skvěle:** osobní weby a portfolia, jednoduché hry v prohlížeči (kvízy, pexeso, had), sledovače návyků a úkolů, kalkulačky a převodníky, chatboty, prototypy aplikací, které chceš ukázat kamarádům nebo investorům.
@@ -13,10 +15,10 @@ hook: Kde jsou hranice?
 Klíčové pravidlo: pokud by selhání aplikace mohlo někomu uškodit (ztráta peněz, únik dat, špatná diagnóza), vibecoding nestačí.
 
 ? Co NEJDE (nebo jde velmi těžko) vytvořit pomocí vibecoding?
-- Jednoduchý osobní web
-- Kvízovou hru v prohlížeči
-- Sledovač návyků pro sebe
-* Bankovní systém zpracovávající platby tisíců lidí
+- Jednoduchý osobní web | Osobní web je naopak ideální vibecoding projekt — jednoduchá logika, jeden uživatel.
+- Kvízovou hru v prohlížeči | Kvíz v prohlížeči je skvělý vibecoding projekt — jednoduchá logika bez bezpečnostních rizik.
+- Sledovač návyků pro sebe | Sledovač pro osobní použití vibecoding zvládne výborně.
+* Bankovní systém zpracovávající platby tisíců lidí | Správně! Kritické systémy s penězi a daty vyžadují profesionální vývoj a bezpečnostní audity.
 ! Správně! Vibecoding je skvělý pro osobní projekty a prototypy. Pro kritické systémy s mnoha uživateli potřebuješ profesionální vývoj.
 
 +++
