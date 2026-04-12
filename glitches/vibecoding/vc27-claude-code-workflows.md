@@ -1,51 +1,46 @@
 ---
 id: vc27-claude-code-workflows
 topic: podKapotou
-title: Jak s Claude Code pracovat
-teaser: Průzkum kódu, debugging, refaktoring, testy, pull requesty — vše v jednom nástroji.
-hook: Co s ním vlastně dělat?
-flashQ: Jak nejlépe popsat chybu Claude Code, aby ji rychle opravil?
-flashA: Popsat co se děje, kdy se chyba objevuje, a přiložit chybovou hlášku. Čím víc kontextu dáš, tím přesnější a rychlejší bude oprava.
+title: Tipy a triky pro Claude Code
+teaser: CLAUDE.md, Plan Mode, checkpointy, subagenti, hooks — vše co potřebuješ vědět.
+hook: Jak z toho vytěžit maximum?
+flashQ: K čemu slouží soubor CLAUDE.md?
+flashA: CLAUDE.md je soubor s instrukcemi, který Claude Code čte na začátku každé session. Nastavíš tam coding standardy, architekturu a pravidla pro svůj projekt.
 ---
 
-**Průzkum kódu:** Přišel jsi k novému projektu? Zeptej se: „Dej mi přehled architektury." Pak se ptej konkrétněji: „Jak funguje autentizace?" Claude prohledá soubory a vysvětlí.
+**CLAUDE.md — paměť projektu.** Vytvoř soubor `CLAUDE.md` v kořeni projektu. Claude Code ho čte při startu každé session. Nastav tam: coding standardy, architekturu, preferované knihovny, build příkazy. Funguje ve třech úrovních: osobní (`~/.claude/CLAUDE.md`), projektové (`./CLAUDE.md`) a adresářové (`src/api/CLAUDE.md`).
 
-**Debugging:** Máš chybu? Řekni: „Vidím tuto chybu když spustím npm test." Claude najde příčinu, navrhne opravu a aplikuje ji. Přidej screenshot nebo chybovou hlášku pro lepší kontext.
+**Plan Mode** — zmáčkni `Shift+Tab` dvakrát. Claude analyzuje kód ale nic nemění. Perfektní před velkým refaktoringem. Zmáčkni `Ctrl+G` a uprav plán v editoru. Až budeš spokojený, přepni zpět a Claude ho provede.
 
-**Refaktoring:** „Přepiš utils.js na moderní ES2024." Claude změní kód, zachová chování a spustí testy.
+**Checkpointy a Rewind** — Claude automaticky ukládá stav při každém tvém promptu. Zmáčkni `Esc Esc` nebo napiš `/rewind` a vrať se na předchozí stav. Můžeš bezpečně experimentovat — když to dopadne špatně, vrátíš se jedním příkazem.
 
-**Testy:** „Najdi funkce bez testů v auth modulu a napiš pro ně testy." Claude napíše testy podle existujících konvencí v projektu.
+**Praktické příklady promptů:** 'Prozkoumej tento projekt a dej mi přehled architektury.' 'Vidím tuto chybu při npm test: [vlož chybu]. Oprav to.' 'Přepiš utils.js na ES2024.' 'Najdi funkce bez testů a napiš pro ně testy.' 'Commitni změny s popisným commit message a vytvoř PR.'
 
-**Pull requesty:** „Vytvoř PR pro moje změny." Claude commitne, vytvoří branch a otevře PR s popisem.
-
-? Jaký je nejlepší způsob, jak popsat chybu Claude Code?
-- „Je to rozbité, oprav to" | Příliš vágní — AI neví, co je rozbité, a musí hádat, kde hledat.
-- Jen zkopírovat název souboru kde je chyba | Název souboru pomůže, ale bez popisu problému a chybové hlášky AI neví, co opravit.
-* Popsat co se děje, kdy se chyba objevuje, a přiložit chybovou hlášku | Správně! Konkrétní popis + chybová hláška = nejrychlejší cesta k opravě.
-- Přepsat celý kód a požádat o kontrolu | Přepisování celého kódu je zbytečné — stačí popsat problém a nechat AI najít a opravit příčinu.
-! Přesně! Konkrétní popis + chybová hláška = nejrychlejší oprava. Čím víc kontextu, tím lepší výsledek.
+? K čemu slouží soubor CLAUDE.md?
+- K dokumentaci pro uživatele projektu | README je pro uživatele — CLAUDE.md je pro AI asistenta.
+- K nastavení CI/CD pipeline | CI/CD se nastavuje v jiných konfiguracích — CLAUDE.md instruuje Claude Code.
+* K instrukcím pro Claude Code — coding standardy, architektura, pravidla projektu | Správně! CLAUDE.md je paměť projektu, kterou Claude čte při každé session.
+- K automatickému generování README | CLAUDE.md neslouží ke generování — je to zdroj instrukcí pro AI.
+! CLAUDE.md je soubor s instrukcemi pro Claude Code. Nastavíš tam jak má pracovat s tvým projektem.
 
 +++
 
-Příklady promptů pro Claude Code:
+**Pokročilé funkce:**
 
-**Průzkum:**
-- `give me an overview of this codebase`
-- `how is authentication handled?`
-- `trace the login process from front-end to database`
+- **Extended Thinking** — `Alt+T` zapne hluboké promýšlení. Claude přemýšlí krok za krokem. Vidíš jeho myšlenky přes `Ctrl+O` (verbose mode). Napiš 'ultrathink' do promptu pro extra hluboké zamyšlení.
 
-**Debugging:**
-- `I'm seeing an error when I run npm test`
-- `suggest a few ways to fix the @ts-ignore in user.ts`
+- **Subagenti** — Claude může spustit více agentů paralelně. Jeden refaktoruje, druhý píše testy, třetí kontroluje bezpečnost. Vytvoř vlastní v `.claude/agents/` nebo napiš `/agents`.
 
-**Refaktoring:**
-- `find deprecated API usage in our codebase`
-- `refactor utils.js to use ES2024 features while maintaining the same behavior`
+- **MCP (Model Context Protocol)** — propoj Claude s externími zdroji. GitHub: `claude mcp add github -- npx -y @modelcontextprotocol/server-github`. Pak Claude čte issues, vytváří PR, reaguje na komentáře.
 
-**Testy:**
-- `find functions in NotificationsService.swift that are not covered by tests`
-- `add test cases for edge conditions in the notification service`
+- **Hooks** — automatické akce při editaci. Auto-format po každé změně, lint před commitem, security scan po modifikaci. Nastavení v `~/.claude/settings.json`.
 
-**PR:**
-- `summarize the changes I've made to the authentication module`
-- `create a pr`
+- **Skills (vlastní příkazy)** — vytvoř `.claude/commands/deploy.md` a spusť `/deploy`. Opakovatelné workflow sdílené s celým týmem.
+
+- **Worktrees** — `claude --worktree feature-auth` spustí Claude v izolované kopii repozitáře. Víc sessions paralelně, bez kolizí.
+
+- **Pipy** — `cat error.log | claude -p 'analyzuj tuto chybu' > report.txt`. Claude funguje jako unixový nástroj.
+
+- **Session management** — `claude -n auth-refactor` pojmenuje session. `claude --resume auth-refactor` se vrátí. `/resume` otevře picker se všemi sessions.
+
+**Zdroj:** Kompletní průvodce na github.com/luongnv89/claude-howto
