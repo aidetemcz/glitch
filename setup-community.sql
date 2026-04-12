@@ -3,6 +3,23 @@
 -- Safe to re-run (uses IF NOT EXISTS / DROP IF EXISTS)
 -- ============================================
 
+-- Profiles
+create table if not exists profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  nickname text,
+  full_name text,
+  gender text,
+  learning_style text,
+  created_at timestamptz default now()
+);
+alter table profiles enable row level security;
+drop policy if exists "Anyone can read profiles" on profiles;
+create policy "Anyone can read profiles" on profiles for select using (true);
+drop policy if exists "Users insert own profile" on profiles;
+create policy "Users insert own profile" on profiles for insert with check (auth.uid() = id);
+drop policy if exists "Users update own profile" on profiles;
+create policy "Users update own profile" on profiles for update using (auth.uid() = id);
+
 -- Community tips
 create table if not exists community_tips (
   id uuid default gen_random_uuid() primary key,

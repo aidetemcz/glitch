@@ -94,13 +94,17 @@ async function sbSignOut() {
 
 async function sbCreateProfile(userId) {
   const local = JSON.parse(localStorage.getItem('tg_user') || '{}');
-  await sb.from('profiles').upsert({
-    id: userId,
-    nickname: local.nickname || null,
-    full_name: local.fullName || null,
-    gender: local.gender || null,
-    learning_style: local.learningStyle || null,
-  }, { onConflict: 'id', ignoreDuplicates: true });
+  const meta = sbCurrentUser && sbCurrentUser.user_metadata || {};
+  try {
+    const { error } = await sb.from('profiles').upsert({
+      id: userId,
+      nickname: local.nickname || meta.full_name || meta.name || null,
+      full_name: local.fullName || meta.full_name || null,
+      gender: local.gender || null,
+      learning_style: local.learningStyle || null,
+    }, { onConflict: 'id' });
+    if (error) console.warn('Profile upsert error:', error.message);
+  } catch (e) { console.warn('Profile create error:', e); }
 }
 
 async function sbSaveProfile(fields) {
