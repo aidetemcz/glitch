@@ -18,29 +18,35 @@ function parseFrontmatter(text) {
 }
 
 function parseOption(line) {
-  // "Option text | feedback" → { text, feedback }
   const parts = line.split(' | ');
   return { text: parts[0].trim(), feedback: parts[1] ? parts[1].trim() : null };
 }
 
-function parseMd(text) {
-  const fmMatch = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  if (!fmMatch) return null;
+function extractMermaid(text) {
+  // Extract ```mermaid ... ``` blocks, replace with placeholders
+  const blocks = [];
+  const replaced = text.replace(/```mermaid\n([\s\S]*?)```/g, (_, code) => {
+    blocks.push(code.trim());
+    return '\n\nMERMAID_BLOCK_' + (blocks.length - 1) + '\n\n';
+  });
+  return { text: replaced, blocks };
+}
 
-  const frontmatter = parseFrontmatter(fmMatch[1]);
-  const fullBody = fmMatch[2].trim();
-
-  // Split off deepdive section (after +++)
-  const deepdiveSplit = fullBody.split(/\n\+\+\+\n/);
-  const body = deepdiveSplit[0].trim();
-  const deepdiveRaw = deepdiveSplit[1] ? deepdiveSplit[1].trim() : null;
-
+function parseBody(body, mermaidBlocks) {
   const paragraphs = body.split(/\n\n+/);
   const chat = [];
 
   for (const para of paragraphs) {
     const trimmed = para.trim();
     if (!trimmed) continue;
+
+    // Mermaid placeholder
+    const mermaidMatch = trimmed.match(/^MERMAID_BLOCK_(\d+)$/);
+    if (mermaidMatch) {
+      chat.push({ mermaid: mermaidBlocks[parseInt(mermaidMatch[1])] });
+      continue;
+    }
+
     const lines = trimmed.split('\n');
 
     if (lines[0].startsWith('? ')) {
@@ -67,12 +73,39 @@ function parseMd(text) {
     }
   }
 
-  // Parse deepdive into paragraphs
-  const deepdive = deepdiveRaw
-    ? deepdiveRaw.split(/\n\n+/).map(p => p.trim()).filter(Boolean)
-    : null;
+  return chat;
+}
 
-  // Flashcard from frontmatter
+function parseMd(text) {
+  const fmMatch = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!fmMatch) return null;
+
+  const frontmatter = parseFrontmatter(fmMatch[1]);
+  const fullBody = fmMatch[2].trim();
+
+  // Extract mermaid blocks before any splitting
+  const { text: cleanBody, blocks: mermaidBlocks } = extractMermaid(fullBody);
+
+  // Split off deepdive section (after +++)
+  const deepdiveSplit = cleanBody.split(/\n\+\+\+\n/);
+  const body = deepdiveSplit[0].trim();
+  const deepdiveRaw = deepdiveSplit[1] ? deepdiveSplit[1].trim() : null;
+
+  const chat = parseBody(body, mermaidBlocks);
+
+  // Parse deepdive — also handle mermaid placeholders
+  let deepdive = null;
+  if (deepdiveRaw) {
+    deepdive = [];
+    deepdiveRaw.split(/\n\n+/).forEach(p => {
+      const t = p.trim();
+      if (!t) return;
+      const mm = t.match(/^MERMAID_BLOCK_(\d+)$/);
+      if (mm) deepdive.push({ mermaid: mermaidBlocks[parseInt(mm[1])] });
+      else deepdive.push(t);
+    });
+  }
+
   const flashcard = (frontmatter.flashQ && frontmatter.flashA)
     ? { q: frontmatter.flashQ, a: frontmatter.flashA }
     : null;

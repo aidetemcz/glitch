@@ -43,3 +43,13 @@ Popíšeš co chceš přirozeným jazykem: 'Napiš testy pro auth modul, spusť 
 - `Esc Esc` — rewind na předchozí stav konverzace
 - `Alt+T` — zapnout/vypnout extended thinking (hlubší promýšlení)
 - `/help` — nápověda
+
+```mermaid
+graph TD
+    A["claude"] --> B["Čte projekt"]
+    B --> C["Plánuje změny"]
+    C --> D["Edituje soubory"]
+    D --> E["Pouští testy"]
+    E -->|"Testy OK"| F["Commituje"]
+    E -->|"Chyba"| D
+```

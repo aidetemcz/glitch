@@ -8,7 +8,13 @@ flashQ: Jaká je nejdůležitější dovednost při vibecoding?
 flashA: Schopnost jasně popsat, co chceš a co nefunguje. Vibecoding je hlavně o komunikaci s AI, ne o znalosti kódu.
 ---
 
-![Vibecoding flow](assets/diagram-vibecoding-flow.svg)
+```mermaid
+graph LR
+    A["Popiš co chceš"] --> B["AI generuje kód"]
+    B --> C["Vidíš výsledek"]
+    C --> D["Upřesníš"]
+    D --> A
+```
 
 Popíšeš co chceš, AI vygeneruje kód, ty ho vidíš v akci, pak řekneš co změnit. Je to konverzace — „Přidej tlačítko. Změň barvu. Přidej upomínky."
 

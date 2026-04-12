@@ -31,4 +31,15 @@ Upřímně: žádný z nich není "nejlepší." Lovable je nejrychlejší na pro
 
 **Cursor** je fork VS Code s vestavěnou AI. Vidíš kód, ale AI ho píše za tebe. Označíš část, zmáčkneš Ctrl+K a řekneš co chceš změnit. Je to nejlepší cesta, pokud se chceš naučit opravdu programovat -- učíš se vedle AI "kolegy." Ale pro naprosté začátečníky, kteří chtějí jen rychle něco postavit, je to zbytečně komplikované.
 
+```mermaid
+graph TD
+    A["Co chci postavit?"] --> B{"Chci vidět kód?"}
+    B -->|"Ne"| C{"Potřebuju SEO?"}
+    B -->|"Ano"| D["Cursor"]
+    C -->|"Ano"| E["Macaly"]
+    C -->|"Ne"| F{"Chci instalovat?"}
+    F -->|"Ne"| G["Bolt"]
+    F -->|"Jedno"| H["Lovable"]
+```
+
 Podrobné srovnání Lovable vs. Macaly najdeš na sbruch.com/lovable-vs-macaly -- nezávislá recenze s konkrétními testy obou nástrojů.

@@ -877,9 +877,13 @@ function addDeepdive(glitch) {
   const section = document.createElement('div');
   section.className = 'deepdive-section';
   glitch.deepdive.forEach(para => {
-    const p = document.createElement('p');
-    p.innerHTML = renderBotText(para);
-    section.appendChild(p);
+    if (typeof para === 'object' && para.mermaid) {
+      addMermaidBlock(para.mermaid, section);
+    } else {
+      const p = document.createElement('p');
+      p.innerHTML = renderBotText(para);
+      section.appendChild(p);
+    }
   });
   container.appendChild(section);
   scrollChatToBottom();
@@ -932,6 +936,8 @@ function replayFull(glitch) {
       bubble.style.transform = 'none';
       bubble.innerHTML = renderBotText(step.bot);
       container.appendChild(bubble);
+    } else if (step.mermaid) {
+      addMermaidBlock(step.mermaid, container);
     } else if (step.quiz) {
       const quiz = step.quiz;
       const block = document.createElement('div');
@@ -964,9 +970,13 @@ function replayFull(glitch) {
     const section = document.createElement('div');
     section.className = 'deepdive-section';
     glitch.deepdive.forEach(para => {
-      const p = document.createElement('p');
-      p.innerHTML = renderBotText(para);
-      section.appendChild(p);
+      if (typeof para === 'object' && para.mermaid) {
+        addMermaidBlock(para.mermaid, section);
+      } else {
+        const p = document.createElement('p');
+        p.innerHTML = renderBotText(para);
+        section.appendChild(p);
+      }
     });
     container.appendChild(section);
   }
@@ -983,12 +993,15 @@ function runChat(glitch) {
     if (stepIndex >= steps.length) return;
     const step = steps[stepIndex++];
 
-    if (step.bot) {
+    if (step.mermaid) {
+      showTyping().then(() => {
+        addMermaidBlock(step.mermaid);
+        if (stepIndex < steps.length) setTimeout(nextStep, 600);
+      });
+    } else if (step.bot) {
       showTyping().then(() => {
         addBotBubble(step.bot);
-        if (stepIndex < steps.length) {
-          setTimeout(nextStep, 600);
-        }
+        if (stepIndex < steps.length) setTimeout(nextStep, 600);
       });
     } else if (step.quiz) {
       setTimeout(() => {
@@ -1020,6 +1033,17 @@ function addBotBubble(text) {
   bubble.className = 'chat-bubble bot';
   bubble.innerHTML = renderBotText(text);
   container.appendChild(bubble);
+  scrollChatToBottom();
+}
+
+function addMermaidBlock(code, container) {
+  if (!container) container = document.getElementById('chat-container');
+  const wrapper = document.createElement('div');
+  wrapper.className = 'mermaid-block';
+  const id = 'mermaid-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
+  wrapper.innerHTML = '<div class="mermaid" id="' + id + '">' + code + '</div>';
+  container.appendChild(wrapper);
+  try { mermaid.run({ nodes: [document.getElementById(id)] }); } catch(e) {}
   scrollChatToBottom();
 }
 

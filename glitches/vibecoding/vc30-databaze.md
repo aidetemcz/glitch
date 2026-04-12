@@ -40,4 +40,12 @@ Když zavřeš prohlížeč, tvoje aplikace zapomene všechno. Proč? Protože d
 
 **API — jak aplikace mluví s databází:**
 
+```mermaid
+graph LR
+    A["Tvoje appka"] -->|"API požadavek"| B["Server"]
+    B -->|"SQL dotaz"| C["Databáze"]
+    C -->|"Data"| B
+    B -->|"JSON odpověď"| A
+```
+
 API (Application Programming Interface) je „poštovní schránka" mezi tvou aplikací a databází. Aplikace pošle požadavek („dej mi všechny úkoly"), API ho předá databázi a vrátí odpověď. Nemusíš rozumět detailům — AI to napíše za tebe. Ale je dobré vědět, že existuje.

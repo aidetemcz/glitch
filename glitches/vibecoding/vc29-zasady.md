@@ -41,6 +41,18 @@ Chceš vytvořit aplikaci pro sledování filmů? Rozděl ji:
 
 Každý modul řeš samostatně. Když funguje, přejdi na další. Když se něco rozbije, víš přesně kde hledat.
 
+```mermaid
+graph TD
+    A["Velký projekt"] --> B["Modul 1: Formulář"]
+    A --> C["Modul 2: Seznam"]
+    A --> D["Modul 3: Detail"]
+    A --> E["Modul 4: Statistiky"]
+    B -.-> F["Testuj každý zvlášť"]
+    C -.-> F
+    D -.-> F
+    E -.-> F
+```
+
 **Co znamená „nevynalézej kolo":**
 
 - Potřebuješ ikony? Použij Font Awesome nebo Lucide — stovky hotových ikon zdarma.
