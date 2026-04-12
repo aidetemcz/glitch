@@ -1269,7 +1269,8 @@ async function loadCommunity() {
           tag: t.tag,
           upvotes: t.upvotes || 0,
           comments: [],
-          _supabase: true
+          _supabase: true,
+          _userId: t.user_id
         }));
         // Load comments for Supabase tips
         const tipIds = sbTips.map(t => t.id);
@@ -1419,8 +1420,23 @@ function renderKomunitaFeed() {
           ${isMember
             ? '<button class="team-conv-btn">Konverzace</button>'
             : '<button class="team-join-btn">Chci se přidat</button>'}
+          ${sbCurrentUser && team.created_by === sbCurrentUser.id
+            ? '<button class="tip-delete-btn team-del-btn">Smazat tým</button>'
+            : ''}
         </div>
       `;
+      const delTeamBtn = card.querySelector('.team-del-btn');
+      if (delTeamBtn) {
+        delTeamBtn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          if (!confirm('Opravdu chceš smazat tým "' + team.name + '"?')) return;
+          try {
+            await sb.from('community_teams').delete().eq('id', team.id);
+            supabaseTeams = supabaseTeams.filter(t => t.id !== team.id);
+            renderKomunitaFeed();
+          } catch (err) { alert('Chyba při mazání: ' + err.message); }
+        });
+      }
       if (isMember) {
         card.querySelector('.team-conv-btn').addEventListener('click', (e) => { e.stopPropagation(); openTeamDetailOverlay(team); });
       } else {
@@ -1724,6 +1740,36 @@ function openDevMessageModal() {
   });
 }
 
+function openEditTip(tip) {
+  const overlay = document.getElementById('add-tip-overlay');
+  overlay.innerHTML = `
+    <div class="tip-detail-inner">
+      <button class="tip-detail-close">&times;</button>
+      <h3 style="margin-bottom:16px;color:var(--accent)">Upravit příspěvek</h3>
+      <label class="add-tip-label">Název</label>
+      <input type="text" id="edit-tip-title" class="add-tip-input" value="${tip.title.replace(/"/g, '&quot;')}" maxlength="100">
+      <label class="add-tip-label">Obsah</label>
+      <textarea id="edit-tip-content" class="add-tip-input add-tip-textarea" maxlength="1000">${tip.content}</textarea>
+      <button class="komunita-add-btn" id="edit-tip-submit" style="margin-top:16px;width:100%">Uložit změny</button>
+      <div id="edit-tip-error" class="auth-error" style="display:none;margin-top:8px"></div>
+    </div>
+  `;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('.tip-detail-close').addEventListener('click', () => overlay.classList.add('hidden'));
+  document.getElementById('edit-tip-submit').addEventListener('click', async () => {
+    const title = document.getElementById('edit-tip-title').value.trim();
+    const content = document.getElementById('edit-tip-content').value.trim();
+    if (!title || !content) { document.getElementById('edit-tip-error').textContent = 'Vyplň název i obsah.'; document.getElementById('edit-tip-error').style.display = 'block'; return; }
+    try {
+      await sb.from('community_tips').update({ title, content }).eq('id', tip.id);
+      tip.title = title;
+      tip.content = content;
+      overlay.classList.add('hidden');
+      renderKomunitaFeed();
+    } catch (e) { document.getElementById('edit-tip-error').textContent = 'Chyba: ' + e.message; document.getElementById('edit-tip-error').style.display = 'block'; }
+  });
+}
+
 function toggleUpvote(tip) {
   const upvotes = JSON.parse(localStorage.getItem('tg_upvotes') || '[]');
   const idx = upvotes.indexOf(tip.id);
@@ -1772,6 +1818,7 @@ function openTipDetail(tipId) {
         <div class="tip-detail-content">${tip.content}</div>
         <div class="tip-detail-actions">
           <button class="tip-upvote-btn detail-upvote ${upvoted ? 'upvoted' : ''}" id="detail-upvote-btn">&hearts; ${tip.upvotes}</button>
+          ${(tip._supabase && sbCurrentUser && tip._userId === sbCurrentUser.id) ? '<button class="tip-edit-btn" id="tip-edit-btn">Upravit</button><button class="tip-delete-btn" id="tip-delete-btn">Smazat</button>' : ''}
         </div>
         <div class="tip-detail-comments-header">Odpovědi (${comments ? comments.length : 0})</div>
         <div class="tip-detail-comments" id="tip-comments-list">${commentsHtml}</div>
@@ -1791,6 +1838,28 @@ function openTipDetail(tipId) {
       btn.textContent = '\u2665 ' + tip.upvotes;
       btn.classList.toggle('upvoted');
     });
+
+    // Edit own tip
+    const editBtn = document.getElementById('tip-edit-btn');
+    if (editBtn) {
+      editBtn.addEventListener('click', () => {
+        overlay.classList.add('hidden');
+        openEditTip(tip);
+      });
+    }
+    // Delete own tip
+    const deleteBtn = document.getElementById('tip-delete-btn');
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', async () => {
+        if (!confirm('Opravdu chceš smazat tento příspěvek?')) return;
+        try {
+          await sb.from('community_tips').delete().eq('id', tip.id);
+          communityData.tips = communityData.tips.filter(t => t.id !== tip.id);
+          overlay.classList.add('hidden');
+          renderKomunitaFeed();
+        } catch (e) { alert('Chyba při mazání: ' + e.message); }
+      });
+    }
 
     const submitBtn = document.getElementById('tip-reply-submit');
     if (submitBtn && sbCurrentUser) {
@@ -1820,7 +1889,9 @@ function openTipDetail(tipId) {
         const list = document.getElementById('tip-comments-list');
         const el = document.createElement('div');
         el.className = 'tip-comment new';
-        el.innerHTML = '<span class="tip-comment-author">' + authorName + '</span><span class="tip-comment-text">' + text + '</span>';
+        const aSpan = document.createElement('span'); aSpan.className = 'tip-comment-author'; aSpan.textContent = authorName;
+        const tSpan = document.createElement('span'); tSpan.className = 'tip-comment-text'; tSpan.textContent = text;
+        el.appendChild(aSpan); el.appendChild(tSpan);
         list.appendChild(el);
         // Update header count
         overlay.querySelector('.tip-detail-comments-header').textContent = 'Odpovědi (' + tip.comments.length + ')';
@@ -1861,7 +1932,7 @@ function openAddTip() {
   }
 
   const user = State.user || {};
-  const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonymni';
+  const authorName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
 
   overlay.innerHTML = `
     <div class="tip-detail-inner">

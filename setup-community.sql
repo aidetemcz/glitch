@@ -19,8 +19,10 @@ drop policy if exists "Anyone can read tips" on community_tips;
 create policy "Anyone can read tips" on community_tips for select using (true);
 drop policy if exists "Authenticated users can insert tips" on community_tips;
 create policy "Authenticated users can insert tips" on community_tips for insert with check (auth.uid() = user_id);
-drop policy if exists "Admins can delete tips" on community_tips;
-create policy "Admins can delete tips" on community_tips for delete using (true);
+drop policy if exists "Users can update own tips" on community_tips;
+create policy "Users can update own tips" on community_tips for update using (auth.uid() = user_id);
+drop policy if exists "Users can delete own tips" on community_tips;
+create policy "Users can delete own tips" on community_tips for delete using (auth.uid() = user_id);
 
 -- Tip comments
 create table if not exists tip_comments (
@@ -54,8 +56,10 @@ drop policy if exists "Anyone can read teams" on community_teams;
 create policy "Anyone can read teams" on community_teams for select using (true);
 drop policy if exists "Authenticated users can create teams" on community_teams;
 create policy "Authenticated users can create teams" on community_teams for insert with check (auth.uid() = created_by);
-drop policy if exists "Admins can delete teams" on community_teams;
-create policy "Admins can delete teams" on community_teams for delete using (true);
+drop policy if exists "Creators can update own teams" on community_teams;
+create policy "Creators can update own teams" on community_teams for update using (auth.uid() = created_by);
+drop policy if exists "Creators can delete own teams" on community_teams;
+create policy "Creators can delete own teams" on community_teams for delete using (auth.uid() = created_by);
 
 -- Team members
 create table if not exists team_members (

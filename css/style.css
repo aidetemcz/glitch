@@ -1749,6 +1749,14 @@ html, body {
   cursor: pointer;
 }
 .team-conv-btn:hover { background: rgba(255,226,51,.2); }
+.tip-edit-btn, .tip-delete-btn {
+  background: none; border: 1px solid var(--border); border-radius: 100px;
+  padding: 4px 12px; font-size: 12px; color: var(--text-muted);
+  font-family: inherit; cursor: pointer; transition: all .15s;
+}
+.tip-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+.tip-delete-btn:hover { border-color: #f87171; color: #f87171; }
+.tip-detail-actions { display: flex; align-items: center; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
 .seed-team { opacity: .55; }
 .team-seed-badge {
   font-size: 10px;
