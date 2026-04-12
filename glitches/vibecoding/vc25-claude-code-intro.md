@@ -8,8 +8,6 @@ flashQ: Čím se Claude Code liší od běžných AI chatbotů?
 flashA: Claude Code je agent, který pracuje přímo s tvým projektem — čte soubory, edituje kód, pouští příkazy a commituje. Nepotřebuješ kopírovat kód tam a zpět.
 ---
 
-![Claude Code](assets/diagram-claude-code.svg)
-
 Claude Code je AI nástroj od Anthropic. Není to chatbot — je to **agent**, který pracuje přímo s tvým projektem. Spustíš ho v terminálu příkazem `claude` a on čte soubory, edituje kód, pouští testy, commituje změny a vytváří pull requesty.
 
 Popíšeš co chceš přirozeným jazykem: 'Napiš testy pro auth modul, spusť je a oprav chyby.' Claude Code to udělá sám — najde soubory, napíše kód, spustí testy, opraví co nefunguje. Funguje v terminálu, VS Code, JetBrains, desktopové aplikaci i na webu (claude.ai/code).

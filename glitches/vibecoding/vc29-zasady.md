@@ -8,8 +8,6 @@ flashQ: Proč je potřeba rozdělit vibecoding projekt na malé moduly?
 flashA: Protože AI má omezené kontextové okno a nevidí celý kód najednou. Menší moduly znamenají lepší výsledky a snazší hledání chyb.
 ---
 
-![Kontextové okno](assets/diagram-context-window.svg)
-
 Největší chyba začátečníků: „Udělej mi celou aplikaci jako Instagram." AI to nezvládne — a ne proto, že je hloupá. Má omezené **kontextové okno** — množství textu, které si najednou pamatuje. Představ si to jako pracovní stůl: vejde se na něj jen určitý počet papírů. Když jich je moc, některé spadnou na zem.
 
 **Pravidlo č. 1: Rozděl projekt na malé moduly.** Místo jedné obří aplikace udělej několik menších částí. Registrační formulář zvlášť. Seznam položek zvlášť. Každý modul řeš v samostatné konverzaci.

@@ -8,8 +8,6 @@ flashQ: Jaké jsou čtyři hlavní vibecoding nástroje a čím se liší?
 flashA: Lovable (nejrychlejší prototypování), Bolt (běží v prohlížeči bez instalace), Macaly (česká platforma s vestavěnou databází a lepším SEO) a Cursor (AI editor, kde vidíš kód).
 ---
 
-![Porovnání nástrojů](assets/diagram-tools-compare.svg)
-
 Čtyři hlavní nástroje a každý má jinou sílu. **Lovable** (lovable.dev) -- nejrychlejší pro prototypování, nejštědřejší free tier, obrovská komunita. **Bolt** (bolt.new) -- běží celý v prohlížeči, zero instalace. **Macaly** (macaly.com) -- česká platforma, vestavěná databáze, lepší SEO díky Next.js. **Cursor** (cursor.com) -- pro ty, kdo chtějí vidět a rozumět kódu.
 
 Upřímně: žádný z nich není "nejlepší." Lovable je nejrychlejší na prototyp, ale špatný pro SEO. Macaly má vestavěnou databázi, ale omezenější free plán a potřebuješ vlastní API klíče. Bolt funguje bez instalace, ale ztrácí kontext u složitých projektů. Cursor je nejmocnější, ale vyžaduje ochotu učit se kód.
