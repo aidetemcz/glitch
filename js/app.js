@@ -1022,6 +1022,8 @@ function runChat(glitch) {
 function renderBotText(text) {
   // Support ![alt](url) images and **bold**
   let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Fix relative asset paths to absolute
+  html = html.replace(/!\[([^\]]*)\]\(assets\//g, '![$1](/assets/');
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img class="chat-inline-img" src="$2" alt="$1">');
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   return html;
@@ -1041,9 +1043,17 @@ function addMermaidBlock(code, container) {
   const wrapper = document.createElement('div');
   wrapper.className = 'mermaid-block';
   const id = 'mermaid-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6);
-  wrapper.innerHTML = '<div class="mermaid" id="' + id + '">' + code + '</div>';
+  const mDiv = document.createElement('div');
+  mDiv.className = 'mermaid';
+  mDiv.id = id;
+  mDiv.textContent = code;
+  wrapper.appendChild(mDiv);
   container.appendChild(wrapper);
-  try { mermaid.run({ nodes: [document.getElementById(id)] }); } catch(e) {}
+  try {
+    if (typeof mermaid !== 'undefined') {
+      mermaid.run({ nodes: [mDiv] });
+    }
+  } catch(e) { console.warn('Mermaid render error:', e); }
   scrollChatToBottom();
 }
 
