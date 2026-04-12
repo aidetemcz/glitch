@@ -1415,64 +1415,44 @@ function renderKomunitaFeed() {
           ${members.map(m => '<span class="team-member">' + m.display_name + '</span>').join('')}
         </div>
         ${team.looking_for ? '<div class="team-looking">' + team.looking_for + '</div>' : ''}
-        <button class="team-join-btn ${isMember ? 'sent' : ''}" ${isMember ? 'disabled' : ''}>${isMember ? 'Jsi v týmu!' : 'Chci se přidat'}</button>
+        <div class="team-actions">
+          ${isMember
+            ? '<button class="team-conv-btn">Konverzace</button>'
+            : '<button class="team-join-btn">Chci se přidat</button>'}
+        </div>
       `;
-      if (!isMember) {
+      if (isMember) {
+        card.querySelector('.team-conv-btn').addEventListener('click', (e) => { e.stopPropagation(); openTeamDetailOverlay(team); });
+      } else {
         card.querySelector('.team-join-btn').addEventListener('click', async (e) => {
           e.stopPropagation();
           if (!sbCurrentUser) { alert('Pro připojení k týmu se nejdřív přihlas!'); return; }
           const btn = e.target;
-          btn.textContent = 'Přidávám...';
-          btn.disabled = true;
+          btn.textContent = 'Přidávám...'; btn.disabled = true;
           try {
             const user = State.user || {};
             const displayName = user.nickname || (sbCurrentUser.user_metadata && sbCurrentUser.user_metadata.full_name) || sbCurrentUser.email || 'Anonym';
-            const { error } = await sb.from('team_members').insert({
-              team_id: team.id,
-              user_id: sbCurrentUser.id,
-              display_name: displayName,
-              role: 'member'
-            });
-            if (error) throw error;
+            await sb.from('team_members').insert({ team_id: team.id, user_id: sbCurrentUser.id, display_name: displayName, role: 'member' });
             supabaseTeamMembers.push({ team_id: team.id, user_id: sbCurrentUser.id, display_name: displayName, role: 'member' });
-            btn.textContent = 'Jsi v týmu!';
-            btn.classList.add('sent');
-            // Re-render to show updated member list
             renderKomunitaFeed();
-          } catch (err) {
-            console.error('Chyba při přidávání do týmu:', err);
-            btn.textContent = 'Chyba, zkus znovu';
-            btn.disabled = false;
-          }
+          } catch (err) { btn.textContent = 'Chyba'; btn.disabled = false; }
         });
       }
       container.appendChild(card);
     });
 
-    // Render seed teams
+    // Seed teams (inspiration only, no actions)
     communityData.teams.forEach(team => {
       const card = document.createElement('div');
-      card.className = 'team-card';
+      card.className = 'team-card seed-team';
       card.innerHTML = `
-        <div class="team-name">${team.name}</div>
+        <div class="team-name">${team.name} <span class="team-seed-badge">inspirace</span></div>
         <div class="team-desc">${team.description}</div>
         <div class="team-project"><strong>Projekt:</strong> ${team.project}</div>
         <div class="team-members-row">
           ${team.members.map(m => '<span class="team-member">' + m + '</span>').join('')}
         </div>
-        <div class="team-looking">${team.looking_for}</div>
-        <button class="team-join-btn">Chci se přidat</button>
       `;
-      card.querySelector('.team-join-btn').addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!sbCurrentUser) {
-          alert('Pro připojení k týmu se nejdřív přihlas!');
-          return;
-        }
-        e.target.textContent = 'Jsi v týmu!';
-        e.target.disabled = true;
-        e.target.classList.add('sent');
-      });
       container.appendChild(card);
     });
 

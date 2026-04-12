@@ -144,15 +144,19 @@ async function sbSyncLocalToSupabase(userId) {
 
 // ── ACTIVITY TRACKING ───────────────────────
 
+let _activityLogAvailable = null;
 async function sbTrackEvent(eventType, data) {
   if (!sb || !sbCurrentUser) return;
+  if (_activityLogAvailable === false) return;
   try {
-    await sb.from('activity_log').insert({
+    const { error } = await sb.from('activity_log').insert({
       user_id: sbCurrentUser.id,
       event_type: eventType,
       event_data: data
     });
-  } catch(e) { /* silent */ }
+    if (error) _activityLogAvailable = false;
+    else _activityLogAvailable = true;
+  } catch(e) { _activityLogAvailable = false; }
 }
 
 // ── SYNC ─────────────────────────────────────

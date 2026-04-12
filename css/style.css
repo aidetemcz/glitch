@@ -1735,6 +1735,32 @@ html, body {
   color: var(--text-muted);
 }
 
+/* Team actions */
+.team-actions { display: flex; gap: 8px; margin-top: 10px; }
+.team-conv-btn {
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1.5px solid var(--accent);
+  background: rgba(255,226,51,.1);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.team-conv-btn:hover { background: rgba(255,226,51,.2); }
+.seed-team { opacity: .55; }
+.team-seed-badge {
+  font-size: 10px;
+  font-weight: 400;
+  padding: 2px 8px;
+  background: var(--border);
+  border-radius: 100px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
 /* Add tip form */
 .add-tip-login-msg {
   text-align: center;
