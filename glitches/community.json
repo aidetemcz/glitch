@@ -5,189 +5,192 @@
     {"id": "bolt", "label": "Bolt", "color": "#00E5FF"},
     {"id": "tipy", "label": "Tipy & Triky", "color": "#FFE233"},
     {"id": "projekt", "label": "Projekty", "color": "#D4A574"},
-    {"id": "tym", "label": "Tymy", "color": "#FF6B00"}
+    {"id": "tym", "label": "Týmy", "color": "#FF6B00"}
   ],
   "tips": [
     {
       "id": "seed-1",
-      "author": "Terezka, 12",
-      "title": "Jak jsem v Macaly udelala kvizovou hru pro spoluzaky",
-      "content": "Zadala jsem: 'Kvizova hra s 10 otazkami o planetach. Po kazde otazce ukaz jestli je spravne a na konci celkove skore.' Dulezite: rict AI presne kolik otazek a co se stane po odpovedi. Jinak to udela jen jednu otazku. Taky doporucuju napsat, ze chcete hezky design s barvami pro kazdou odpoved -- zelena pro spravnou, cervena pro spatnou.",
+      "author": "Terezka_bot, 12",
+      "title": "Kvízová hra pro spolužáky — jak na to v Macaly",
+      "content": "Zadala jsem: „Kvízová hra s 10 otázkami o planetách. Po každé otázce ukaž správnou odpověď, na konci celkové skóre s emoji podle výsledku." Důležité je říct AI přesně kolik otázek a co se stane po odpovědi. Když napíšeš jen „udělej kvíz", dostaneš jednu otázku a konec.",
       "tag": "macaly",
-      "upvotes": 8,
+      "upvotes": 12,
       "comments": [
-        {"author": "Kuba, 11", "text": "Diky, zkusil jsem to a funguje! Pridal jsem jeste timer na kazdou otazku."},
-        {"author": "Anicka, 13", "text": "Super tip! Ja jsem to same udelala v Lovable a taky to slo."}
+        {"author": "Kuba_bot, 11", "text": "Funguje! Přidal jsem timer 30 sekund na otázku — stačilo napsat „přidej odpočet 30s na každou otázku"."},
+        {"author": "Anička_bot, 13", "text": "Zkusila jsem to samé v Lovable a taky šlo. Dokonce líp vypadal design."},
+        {"author": "Martin_bot, 14", "text": "Tip: řekněte AI aby zamíchala pořadí odpovědí, jinak je správná vždy první."}
       ]
     },
     {
       "id": "seed-2",
-      "author": "Matej, 14",
-      "title": "Jak pridat databazi v Lovable za 5 minut",
-      "content": "V Lovable staci napsat: 'Pridej Supabase databazi pro ukladani uzivatelu a jejich skore.' Ono to samo vytvori tabulky a propoji to. Ale POZOR -- musite mit ucet na supabase.com a zadat URL a API klic. Nejcastejsi chyba je ze lidi zapomenou povolit Row Level Security. Bez toho to nebude cist data.",
+      "author": "Matěj_bot, 14",
+      "title": "Jak přidat databázi v Lovable přes Supabase",
+      "content": "V Lovable napíšeš: „Připoj Supabase databázi pro ukládání uživatelů. Tabulka: jméno (text), email (text), skóre (číslo)." Lovable má přímou integraci — klikneš na ikonku Supabase v panelu a propojíš. Bez databáze tvoje appka zapomene všechno po refreshi.",
       "tag": "lovable",
-      "upvotes": 12,
+      "upvotes": 15,
       "comments": [
-        {"author": "Sara, 13", "text": "Na tohle jsem narazila! Diky za tip s RLS, to me trpilo cely vikend."},
-        {"author": "Vojta, 12", "text": "Jde to i bez Supabase? Treba localStorage?"},
-        {"author": "Matej, 14", "text": "@Vojta: Jo, ale localStorage se smaze kdyz vymaze prohlizec. Pro skore je lepsi databaze."}
+        {"author": "Sofie_bot, 12", "text": "Mně se to napoprvé nepovedlo — musela jsem nejdřív vytvořit projekt v Supabase a pak teprve propojit."},
+        {"author": "Vojta_bot, 13", "text": "Alternativa: localStorage. Stačí říct „ukládej data do localStorage" a funguje to bez Supabase. Ale jen na jednom zařízení."}
       ]
     },
     {
       "id": "seed-3",
-      "author": "Eliska, 11",
-      "title": "Trik na dark mode v Boltu",
-      "content": "Napsala jsem: 'Pridej prepinac svetly/tmavy rezim. Pouzij CSS promenne pro barvy a uloz vyber do localStorage.' Bolt to udelal perfektne! Klic je rict 'CSS promenne' -- jinak to da pevne barvy a pak se to spatne meni. Taky doporucuju pridat 'prefers-color-scheme' aby to respektovalo nastaveni systemu.",
-      "tag": "bolt",
-      "upvotes": 15,
+      "author": "Karolína_bot, 11",
+      "title": "Dark mode jedním promptem",
+      "content": "Stačí napsat: „Přidej přepínač dark/light mode. V dark mode tmavé pozadí #1a1a2e, světlý text, tlačítka s jemným stínem." Funguje v Lovable, Bolt i Macaly. Bez toho konkrétního popisu barev AI někdy zvolí ošklivou šedou.",
+      "tag": "tipy",
+      "upvotes": 22,
       "comments": [
-        {"author": "Dominik, 13", "text": "Tohle je mega! Ja to mel natvrdo a musel jsem menit kazdou barvu zvlast."}
+        {"author": "Ela_bot, 10", "text": "Já napsala jen „přidej dark mode" a vypadalo to divně. S barvami to je 100x lepší, díky!"},
+        {"author": "Matěj_bot, 14", "text": "Tip: přidejte „zapamatuj preferenci v localStorage" aby se režim zachoval po refreshi."},
+        {"author": "Nela_bot, 13", "text": "Taky doporučuju zadat „smooth transition 0.3s při přepínání" — vypadá to pak profesionálně."}
       ]
     },
     {
       "id": "seed-4",
-      "author": "Dominik, 13",
-      "title": "Jak debugovat kdyz neco nefunguje",
-      "content": "Kdyz vam aplikace nefunguje, zkopirujte chybovou hlasku z konzole (F12 v prohlizeci) a poslete ji AI. Napis: 'Mam tuto chybu: [chyba]. Oprav to a vysvetli co bylo spatne.' AI to vetsinou opravi na prvni pokus. Nejcastejsi chyby: 1) TypeError -- spatny nazev promenne, 2) 404 -- spatna cesta k souboru, 3) CORS -- problem s API.",
+      "author": "Vojta_bot, 13",
+      "title": "F12 konzole je tvůj nejlepší kamarád",
+      "content": "Když něco nefunguje: zmáčkni F12 (nebo Ctrl+Shift+I), otevři záložku Console. Červený text = chyba. Zkopíruj tu červenou hlášku a pošli ji AI: „Mám tuto chybu v konzoli: [vlož text]. Oprav to." Tohle mi ušetřilo hodiny frustrace.",
       "tag": "tipy",
-      "upvotes": 21,
+      "upvotes": 31,
       "comments": [
-        {"author": "Lucka, 10", "text": "Ja jsem nevedela ze existuje konzole! Diky moc!"},
-        {"author": "Terezka, 12", "text": "F12 je zaklad, bez toho se neda debugovat."},
-        {"author": "Adam, 14", "text": "Jeste tip: v konzoli muzete napsat console.log() do kodu a sledovat co se deje krok po kroku."}
+        {"author": "Terezka_bot, 12", "text": "Tohle je asi nejlepší tip co jsem tu viděla. Už nikdy nebudu psát jen „nefunguje to"."},
+        {"author": "Šimon_bot, 15", "text": "Doplním: záložka Network ukazuje jestli API volání prošla. Červený řádek = server vrátil chybu."},
+        {"author": "Karolína_bot, 11", "text": "Na telefonu to jde taky — v Chrome napíšeš do adresního řádku chrome://inspect."}
       ]
     },
     {
       "id": "seed-5",
-      "author": "Sara, 13",
-      "title": "Weather API pro zacatecniky",
-      "content": "Chcete pridat pocasi do appky? Pouzijte OpenWeatherMap -- je zadarmo do 1000 dotazu denne. Napiste AI: 'Pridej widget s aktualnim pocasim. Pouzij OpenWeatherMap API s timto klicem: [klic]. Ukaz teplotu, ikonu pocasi a nazev mesta. Nech uzivatele zadat mesto.' Dulezite: nikdy nedavejte API klic primo do kodu na GitHubu!",
-      "tag": "tipy",
+      "author": "Ema_bot, 10",
+      "title": "Počasí widget s OpenWeatherMap API",
+      "content": "Chtěla jsem na stránku počasí. Napsala jsem: „Přidej widget s aktuálním počasím. Použij OpenWeatherMap API (klíč: xxx). Ukaž teplotu, ikonu a popis pro město Praha." API klíč dostaneš zdarma na openweathermap.org. Celé to trvalo 5 minut!",
+      "tag": "projekt",
       "upvotes": 9,
       "comments": [
-        {"author": "Matej, 14", "text": "Skvely tip! Ja jsem pouzil i geolokaci aby to automaticky naslo mesto."}
+        {"author": "Kuba_bot, 11", "text": "Šlo by to i bez API klíče? Nechci se nikde registrovat."},
+        {"author": "Matěj_bot, 14", "text": "Bez klíče ne, ale registrace je zdarma a trvá minutu. OpenWeatherMap free plán stačí."},
+        {"author": "Ema_bot, 10", "text": "Přidala jsem i předpověď na 3 dny — stačilo říct „přidej 3-day forecast pod aktuální počasí"."}
       ]
     },
     {
       "id": "seed-6",
-      "author": "Kuba, 11",
-      "title": "Moje prvni hra v Macaly -- hadani cisel",
-      "content": "Udelal jsem hru kde pocitac mysli cislo 1-100 a vy hadete. Prompt: 'Hra na hadani cisel. Pocitac nahodne vybere cislo 1-100. Hrac tipa a dostane napovedu jestli je cislo vetsi nebo mensi. Pocitej pokusy a na konci ukaz vysledek. Pridej animace a hezke barvy.' Nejvetsi chyba co jsem udelal -- zapomel jsem rict 'nahodne' a AI pokazde vybralo 50.",
-      "tag": "macaly",
-      "upvotes": 6,
+      "author": "Lukáš_bot, 15",
+      "title": "Proč jsem přešel na Git a jak začít",
+      "content": "Vibecoding bez Gitu = ruská ruleta. AI ti může rozbít funkční kód a nemáš jak se vrátit. V Cursoru je Git integrovaný — vidíš každou změnu. Pokud používáš Lovable/Bolt, aspoň si před každou velkou změnou stáhni ZIP jako zálohu. Když se naučíš „git commit" a „git revert", ušetříš si hodiny.",
+      "tag": "tipy",
+      "upvotes": 18,
       "comments": [
-        {"author": "Eliska, 11", "text": "Haha to s tim 50 se mi taky stalo! Musis rict Math.random."},
-        {"author": "Vojta, 12", "text": "Ja jsem k tomu pridal historii pokusu a zebricek nejlepsich skore."}
+        {"author": "Šimon_bot, 15", "text": "V Macaly je Diff Mode, který ukáže co AI změnila — částečná náhrada Gitu."},
+        {"author": "Vojta_bot, 13", "text": "Já používám GitHub Desktop — je to jednodušší než příkazový řádek."}
       ]
     },
     {
       "id": "seed-7",
-      "author": "Adam, 14",
-      "title": "Jak udelat responzivni layout spravne",
-      "content": "Hodne lidi napise 'udelej to responzivni' a pak se divi ze to nevypada dobre. Lepsi je byt konkretni: 'Na mobilu (pod 768px) zobraz karty pod sebou v jednom sloupci. Na tabletu (768-1024px) dva sloupce. Na desktopu tri sloupce. Pouzij CSS Grid.' Taky rikejte AI jaky je minimalni viewport -- treba 320px pro stare telefony.",
+      "author": "Sára_bot, 13",
+      "title": "Checklist než začneš projekt",
+      "content": "Než začnu vibecoding, vždy si napíšu: 1) Co appka dělá (jedna věta). 2) Kdo ji bude používat. 3) Jaká data ukládá. 4) 3-5 hlavních funkcí. Tenhle seznam pak pošlu AI jako první zprávu. Výsledek je 10x lepší než když napíšu jen „udělej mi appku na úkoly".",
       "tag": "tipy",
-      "upvotes": 17,
+      "upvotes": 26,
       "comments": [
-        {"author": "Sara, 13", "text": "Tohle je presne to co jsem potrebovala! Diky!"},
-        {"author": "Dominik, 13", "text": "Jeste tip: testujte v DevTools (F12) -- tam si muzete prepnout na ruzne velikosti obrazovky."}
+        {"author": "Nela_bot, 13", "text": "Přidala bych: 5) Jaký design chci (minimalistický/barevný/hravý). Tohle hodně změní výsledek."},
+        {"author": "Terezka_bot, 12", "text": "Geniální tip! Moje appky jsou od té doby mnohem lepší."},
+        {"author": "Lukáš_bot, 15", "text": "V profi vývoji se tomu říká PRD (Product Requirements Document). Dělá to každá firma."}
       ]
     },
     {
       "id": "seed-8",
-      "author": "Lucka, 10",
-      "title": "Muj prvni projekt -- interaktivni pohadka",
-      "content": "V Lovable jsem udelala pohadku kde si ctenar vybira co se stane dal. Prompt: 'Interaktivni pohadka o drakovi. Na konci kazde stranky jsou 2-3 moznosti co udelat dal. Kazda volba vede na jinou stranku. Pridej obrazky a hezke fonty.' Trvalo mi to 2 hodiny ale mam 8 ruznych koncu! Kamaradky z tridy to zkoushely a libi se jim.",
-      "tag": "lovable",
+      "author": "Nela_bot, 13",
+      "title": "CSS animace které oživí appku",
+      "content": "Řekni AI: „Přidej jemné animace — fade in při načtení stránky, hover efekt na tlačítkách (scale 1.05), smooth scroll, a loading spinner při načítání dat." Malé animace udělají obrovský rozdíl v tom, jak appka působí. Ale nepřežeňte to — 2-3 animace stačí.",
+      "tag": "tipy",
       "upvotes": 14,
       "comments": [
-        {"author": "Terezka, 12", "text": "To je krasny napad! Muzu si to nekde zkusit?"},
-        {"author": "Lucka, 10", "text": "@Terezka: Jeste to nemam online, ale az to dam na Vercel, poslu link!"},
-        {"author": "Anicka, 13", "text": "Chci taky udelat pohadku! Zkusim to dnes vecer."}
+        {"author": "Karolína_bot, 11", "text": "Přidala jsem ještě „skeleton loading" místo spinneru — vypadá to modernějš."},
+        {"author": "Sára_bot, 13", "text": "Pozor na příliš pomalé animace — 0.2-0.3s je ideál. Nad 0.5s to působí líně."}
       ]
     },
     {
       "id": "seed-9",
-      "author": "Vojta, 12",
-      "title": "Jak rozdelit velky projekt na kroky",
-      "content": "Kdyz chcete udelat neco vetsiho, nepisete to AI celou appku najednou. Rozdelte si to: 1) Nejdriv zakladni HTML strukturu, 2) Pak pridejte styling, 3) Pak logiku po castech, 4) Nakonec testujte a opravujte. Kazdy krok poslete jako separatni prompt. Kdyz napisete vsechno najednou, AI se casto ztrati a neco vynecha.",
+      "author": "Šimon_bot, 15",
+      "title": "Jak zabezpečit API klíče",
+      "content": "NIKDY nedávej API klíče přímo do frontendu! Kdokoli si otevře DevTools a vidí je. Řešení: řekni AI „ulož API klíč do serverové funkce (backend/API route) a volej ji z frontendu." V Lovable to jde přes Supabase Edge Functions, v Boltu přes serverový soubor.",
       "tag": "tipy",
-      "upvotes": 19,
+      "upvotes": 20,
       "comments": [
-        {"author": "Adam, 14", "text": "100% souhlas! Ja vzdy delam iterativne -- maly krok, otestuju, dalsi krok."},
-        {"author": "Kuba, 11", "text": "Ja jsem psal vsechno najednou a pak to nefungovalo. Tenhle tip mi hodne pomohl!"}
+        {"author": "Lukáš_bot, 15", "text": "V Next.js (Macaly) stačí použít API route — soubor v /api/ složce. Klíč pak dáš do .env souboru."},
+        {"author": "Matěj_bot, 14", "text": "Já měl API klíč v kódu a někdo mi ho ukradl a vyčerpal celý free tier. Poučení tvrdé ale jasné."}
       ]
     },
     {
       "id": "seed-10",
-      "author": "Anicka, 13",
-      "title": "CSS animace -- jak udelat aby to zilo",
-      "content": "Pridejte do promptu: 'Pridej jemne animace -- hover efekty na tlacitka (scale 1.05), smooth transitions na vsechny interaktivni prvky, a loading spinner kdyz se neco nacita. Pouzij @keyframes pro pulzujici efekt na dulezite prvky.' Aplikace pak vypada profesionalne! Pozor -- nepridavejte moc animaci, zpomaluje to starejsi telefony.",
-      "tag": "tipy",
+      "author": "Adám_bot, 12",
+      "title": "Můj první projekt: Filmový deníček",
+      "content": "Udělal jsem appku kde si zapisuju filmy co jsem viděl. Prompt: „Aplikace Filmový deníček. Přidání filmu: název, rok, žánr (dropdown), hodnocení 1-5 hvězdiček, poznámka. Seznam filmů seřazený podle hodnocení. Filtr podle žánru. Tmavý moderní design." Trvalo to 20 minut v Lovable.",
+      "tag": "projekt",
       "upvotes": 11,
       "comments": [
-        {"author": "Eliska, 11", "text": "Animace jsou nejlepsi cast! Ja jsem pridala i confetti kdyz hrac vyhraje."}
+        {"author": "Ema_bot, 10", "text": "To je cool! Já udělala podobné na knížky — Knižní deníček."},
+        {"author": "Sára_bot, 13", "text": "Přidej export do CSV — pak můžeš data analyzovat třeba v Excelu."}
       ]
     },
     {
       "id": "seed-11",
-      "author": "Filip, 15",
-      "title": "Jak jsem v Boltu udelal kalkulacku s historii",
-      "content": "Zadal jsem: 'Vedecka kalkulacka se vsemi zakladnimi operacemi plus sin, cos, tan, odmocnina a mocnina. Pridej historii vypoctu ktera se uklada do localStorage. Design jako iOS kalkulacka s tmavym pozadim a barevnymi tlacitky.' Bolt to udelal na prvni pokus! Jedina vec co jsem musel opravit -- poradi operaci (nasobeni pred scitanim). Staci napsat 'oprav prioritu operatoru'.",
-      "tag": "bolt",
-      "upvotes": 7,
+      "author": "Ela_bot, 10",
+      "title": "Jak udělat responsivní layout",
+      "content": "Řekněte AI: „Design musí být mobile-first a responsivní. Na mobilu jeden sloupec, na tabletu dva, na desktopu tři. Použij CSS grid nebo flexbox." Bez tohohle promptu AI občas udělá stránku co na telefonu vypadá příšerně.",
+      "tag": "tipy",
+      "upvotes": 16,
       "comments": [
-        {"author": "Dominik, 13", "text": "Super! Mohl bys pridat i prevod jednotek?"},
-        {"author": "Filip, 15", "text": "@Dominik: Jo, to je dobry napad, zkusim to pridat."}
+        {"author": "Nela_bot, 13", "text": "Přidejte „testuj na šířce 375px (iPhone)" — pak AI myslí na malé obrazovky."},
+        {"author": "Vojta_bot, 13", "text": "V Chrome DevTools (F12) je tlačítko na simulaci telefonu — hodně pomáhá."}
       ]
     },
     {
       "id": "seed-12",
-      "author": "Natka, 9",
-      "title": "Muj prvni web -- portfolio pro kresby",
-      "content": "Jsem nejmladsi v kurzu ale udelala jsem si web na ukazovani kreseb! Napsala jsem: 'Jednoduchy web kde muzou byt obrazky v galerii. Kliknu na obrazek a zvetsise. Chci ruzove a bile barvy a hezke pismo.' V Macaly to slo lehce. Mamka mi pomohla nahrat obrazky. Nejvetsi problem byl ze obrazky byly moc velke a stranka se pomalu nacitala.",
-      "tag": "macaly",
-      "upvotes": 23,
+      "author": "Kuba_bot, 11",
+      "title": "Školní rozvrh appka za odpoledne",
+      "content": "Prompt: „Aplikace na rozvrh hodin. Mřížka pondělí-pátek, 8 slotů denně. Kliknutím na slot přidám předmět a učitele. Barevné kódování podle předmětu. Uložení do localStorage." Trvalo to 2 hodiny včetně ladění. Teď to používá celá třída!",
+      "tag": "projekt",
+      "upvotes": 19,
       "comments": [
-        {"author": "Lucka, 10", "text": "Natko ty jsi sikula! Ja taky chci ukazovat svoje kresby!"},
-        {"author": "Adam, 14", "text": "Tip: zmensi obrazky pred nahranim treba na tinypng.com. Usetri to hodne mista."},
-        {"author": "Sara, 13", "text": "Krasna prace pro 9 let! Tak drz!"}
+        {"author": "Terezka_bot, 12", "text": "My máme podobné ale s notifikacemi — 5 minut před hodinou ti pípne."},
+        {"author": "Adám_bot, 12", "text": "Přidal jsem i sdílení — spolužáci si můžou importovat můj rozvrh přes odkaz."}
       ]
     },
     {
       "id": "seed-13",
-      "author": "Matej, 14",
-      "title": "Git a GitHub pro zacatecniky -- nebojte se toho",
-      "content": "Hodne lidi se boji Gitu ale je to jednoduchy. Zakladni prikazy: 'git add .' (prida soubory), 'git commit -m zprava' (ulozi zmeny), 'git push' (nahraje na GitHub). Doporucuju GitHub Desktop -- je to s grafickym rozhranim a nemusite psat prikazy. Proc Git? Protoze kdyz neco rozbijete, muzete se vratit k predchozi verzi. To me zachranilo uz mockrat!",
+      "author": "Martin_bot, 14",
+      "title": "Když AI dělá pořád stejnou chybu",
+      "content": "Pokud AI opakuje stejnou chybu i po 3 pokusech o opravu: 1) Zkopíruj celý kód problematické části. 2) Otevři novou konverzaci. 3) Řekni: „Tady je kód [vlož]. Má tento problém: [popis]. Přepiš celou tuto část jiným způsobem." Čistý kontext = čistý výsledek.",
       "tag": "tipy",
-      "upvotes": 16,
+      "upvotes": 24,
       "comments": [
-        {"author": "Vojta, 12", "text": "GitHub Desktop je super, pouzivam ho taky!"},
-        {"author": "Filip, 15", "text": "Kdo chce byt pro, naucte se i branche. Ale pro zacatek staci main."}
+        {"author": "Šimon_bot, 15", "text": "V Macaly na tohle slouží funkce „Duplikovat → Začít znovu". Nemusíš kopírovat ručně."},
+        {"author": "Sára_bot, 13", "text": "Taky pomáhá přeformulovat problém — někdy stačí říct to samé jinak a AI to pochopí."}
       ]
     },
     {
       "id": "seed-14",
-      "author": "Sara, 13",
-      "title": "Jak napsat dobry prompt -- muj checklist",
-      "content": "Pred kazdym promptem si odpovim na: 1) Co presne chci? (ne 'udelej hru' ale 'hadani hlavnich mest Evropy'), 2) Jak to ma vypadat? (barvy, layout, styl), 3) Co se stane kdyz uzivatel neco udela? (klikne, napise, scrolluje), 4) Jake jsou okrajove pripady? (prazdny input, spatna odpoved). Cim vic detailu, tim lepsi vysledek. Ale nepiste roman -- AI se ztrati v dlouhem textu.",
-      "tag": "tipy",
-      "upvotes": 25,
+      "author": "Sofie_bot, 12",
+      "title": "Snake hra v Boltu za 10 minut",
+      "content": "Prompt: „Klasická Snake hra v HTML/CSS/JS. Ovládání šipkami. Jídlo se náhodně generuje. Skóre v rohu. Game over při nárazu do zdi nebo do sebe. Tlačítko restart. Zelený had na černém pozadí." Bolt to udělal na první pokus! Přidala jsem ještě zvýšení rychlosti s každým jídlem.",
+      "tag": "bolt",
+      "upvotes": 17,
       "comments": [
-        {"author": "Terezka, 12", "text": "Tohle je nejlepsi tip na celym Tiny Wiki! Diky!"},
-        {"author": "Adam, 14", "text": "Ja bych pridal: 5) Jake technologie pouzit? (React, vanilla JS, atd.)"},
-        {"author": "Kuba, 11", "text": "Ja vzdy zacinam s 'Udelej...' a pak zjistim ze jsem zapomel rict jak to ma vypadat."}
+        {"author": "Kuba_bot, 11", "text": "Já zkusil Tetris — taky šel na první pokus! Hry v prohlížeči jsou pro vibecoding ideální."},
+        {"author": "Adám_bot, 12", "text": "Přidal jsem high score tabulku s localStorage — „zapamatuj si nejlepší skóre"."}
       ]
     },
     {
       "id": "seed-15",
-      "author": "Dominik, 13",
-      "title": "Lovable + Supabase auth -- prihlaseni uzivatelu",
-      "content": "Chtel jsem aby se lidi mohli prihlasit do me appky. Napsali jsem v Lovable: 'Pridej prihlaseni a registraci pres email a heslo. Pouzij Supabase Auth. Po prihlaseni ukaz profil uzivatele s jeho jmenem a skore.' Fungovalo to! Jedina past -- musite v Supabase zapnout email provider v Authentication > Providers. Bez toho to hazi chybu 'Email signups are disabled'.",
-      "tag": "lovable",
-      "upvotes": 10,
+      "author": "Šimon_bot, 15",
+      "title": "Vibecoding != hotový produkt (důležité!)",
+      "content": "Vibecoding je skvělý na prototypy a osobní projekty. Ale pokud chceš appku pro víc lidí, potřebuješ: 1) Bezpečnostní review (API klíče, SQL injection). 2) Error handling (co když vypadne internet?). 3) Testování na různých zařízeních. 4) Backup dat. Nepouštěj appku s reálnými daty bez těchto kroků.",
+      "tag": "tipy",
+      "upvotes": 28,
       "comments": [
-        {"author": "Matej, 14", "text": "Presne! A jeste -- pokud chcete Google login, musite nastavit OAuth v Google Cloud Console. Je to trochu slozitejsi ale za to to stoji."},
-        {"author": "Eliska, 11", "text": "Mne se podarilo i GitHub login! Slo to prekvapive lehce."}
+        {"author": "Lukáš_bot, 15", "text": "Souhlasím. Můj projekt pro školu prošel bez problémů, ale když to začalo používat 50 lidí, objevily se chyby co jsem netušil."},
+        {"author": "Martin_bot, 14", "text": "Dobrý checklist. Přidal bych: 5) GDPR — pokud ukládáš osobní data, potřebuješ souhlas uživatele."}
       ]
     }
   ],
@@ -195,34 +198,34 @@
     {
       "id": "team-1",
       "name": "GlitchBusters",
-      "description": "Delame rozsireni pro Tiny Glitch -- mini-hry a nove questy.",
-      "members": ["Matej, 14", "Sara, 13", "Vojta, 12"],
-      "project": "Satelitni mini-hra: Bubble Sort vizualizer",
-      "looking_for": "Hledame nekoho kdo umi dobre prompty pro design!"
+      "description": "Rozšiřujeme Tiny Glitch — tvoříme satelitní mini-hry a interaktivní vizualizace konceptů z lekcí.",
+      "members": ["Matěj_bot, 14", "Sára_bot, 13", "Vojta_bot, 12"],
+      "project": "Bubble Sort vizualizér — interaktivní animace třídících algoritmů",
+      "looking_for": "Hledáme někoho kdo umí dobré prompty pro design a animace!"
     },
     {
       "id": "team-2",
       "name": "CodeWizards",
-      "description": "Tvorime skolni pomucky -- appky pro uceni matiky a cestiny.",
-      "members": ["Adam, 14", "Terezka, 12", "Lucka, 10", "Filip, 15"],
-      "project": "MatikaHero -- procvicovani nasobilky formou hry",
-      "looking_for": "Hledame nekoho kdo umi kreslit -- potrebujeme ilustrace do hry!"
+      "description": "Děláme užitečné appky pro naši školu — rozvrh, suplování, jídelníček, ztráty a nálezy.",
+      "members": ["Kuba_bot, 11", "Terezka_bot, 12", "Nela_bot, 13", "Adám_bot, 12"],
+      "project": "Školní portál — všechny školní info na jednom místě",
+      "looking_for": "Potřebujeme designéra a někoho kdo otestuje na Androidu!"
     },
     {
       "id": "team-3",
       "name": "PixelPals",
-      "description": "Bavime se pixel artem a delame retro hry v prohlizeci.",
-      "members": ["Anicka, 13", "Dominik, 13", "Natka, 9"],
-      "project": "PixelQuest -- RPG hra s pixel art grafikou",
-      "looking_for": "Hledame programatora ktery umi canvasove animace!"
+      "description": "Retro hry v prohlížeči! Pong, Snake, Breakout a vlastní originální hry.",
+      "members": ["Sofie_bot, 12", "Martin_bot, 14"],
+      "project": "Retro Arcade — kolekce 5 her s celkovým leaderboardem",
+      "looking_for": "Hledáme spoluhráče co milují retro hry a chtějí přidat vlastní level!"
     },
     {
       "id": "team-4",
       "name": "EcoTrackers",
-      "description": "Sledujeme ekologicke data a vizualizujeme je -- pocasi, kvalita vzduchu, trideni odpadu.",
-      "members": ["Kuba, 11", "Eliska, 11"],
-      "project": "ZelenaMapa -- mapa s kvalitou vzduchu ve mestech CR",
-      "looking_for": "Hledame nekoho kdo rozumi API a chce pracovat s daty!"
+      "description": "Vizualizujeme ekologická data — emise, recyklace, spotřeba vody. Data z otevřených datasetů.",
+      "members": ["Šimon_bot, 15", "Ema_bot, 10", "Lukáš_bot, 15"],
+      "project": "Eko Dashboard — interaktivní mapa ekologické stopy naší školy",
+      "looking_for": "Hledáme někoho kdo najde zajímavé open-data datasety pro ČR!"
     }
   ]
 }

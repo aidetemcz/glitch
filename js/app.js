@@ -106,7 +106,10 @@ function bindNav() {
 }
 
 function showView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.remove('active');
+    v.classList.add('hidden');
+  });
   const target = document.getElementById('view-' + name);
   if (target) {
     target.classList.remove('hidden');
@@ -1208,7 +1211,7 @@ function renderKomunitaTags() {
   if (!container || !communityData) return;
   const allBtn = document.createElement('button');
   allBtn.className = 'komunita-tag' + (activeTag === null ? ' active' : '');
-  allBtn.textContent = 'Vse';
+  allBtn.textContent = 'Vše';
   allBtn.style.setProperty('--tag-color', 'var(--accent)');
   allBtn.addEventListener('click', () => { activeTag = null; renderKomunitaTags(); renderKomunitaFeed(); });
   container.innerHTML = '';
@@ -1249,7 +1252,7 @@ function renderKomunitaFeed() {
       <div class="tip-preview">${tip.content}</div>
       <div class="tip-footer">
         <span class="tip-upvotes">&hearts; ${tip.upvotes}</span>
-        <span class="tip-comments">&bull; ${tip.comments ? tip.comments.length : 0} komentaru</span>
+        <span class="tip-comments">&bull; ${tip.comments ? tip.comments.length : 0} komentářů</span>
       </div>
     `;
     card.addEventListener('click', () => openTipDetail(tip.id));
@@ -1260,7 +1263,7 @@ function renderKomunitaFeed() {
   if (!activeTag || activeTag === 'tym') {
     const teamHeader = document.createElement('div');
     teamHeader.className = 'komunita-section-header';
-    teamHeader.innerHTML = '<h3>Tymy</h3><p class="komunita-sub">Pridej se k tymu nebo zaloz vlastni</p>';
+    teamHeader.innerHTML = '<h3>Týmy</h3><p class="komunita-sub">Přidej se k týmu nebo založ vlastní</p>';
     container.appendChild(teamHeader);
 
     communityData.teams.forEach(team => {
@@ -1274,15 +1277,15 @@ function renderKomunitaFeed() {
           ${team.members.map(m => '<span class="team-member">' + m + '</span>').join('')}
         </div>
         <div class="team-looking">${team.looking_for}</div>
-        <button class="team-join-btn">Chci se pridat</button>
+        <button class="team-join-btn">Chci se přidat</button>
       `;
       card.querySelector('.team-join-btn').addEventListener('click', (e) => {
         e.stopPropagation();
         if (!sbCurrentUser) {
-          alert('Pro pripojeni k tymu se nejdriv prihlas!');
+          alert('Pro připojení k týmu se nejdřív přihlas!');
           return;
         }
-        e.target.textContent = 'Zadost odeslana!';
+        e.target.textContent = 'Žádost odeslána!';
         e.target.disabled = true;
         e.target.classList.add('sent');
       });
@@ -1308,7 +1311,7 @@ function openTipDetail(tipId) {
       <div class="tip-footer" style="margin:16px 0 20px">
         <span class="tip-upvotes">&hearts; ${tip.upvotes}</span>
       </div>
-      <div class="tip-detail-comments-header">Komentare (${tip.comments ? tip.comments.length : 0})</div>
+      <div class="tip-detail-comments-header">Komentáře (${tip.comments ? tip.comments.length : 0})</div>
       <div class="tip-detail-comments">
         ${(tip.comments || []).map(c => `
           <div class="tip-comment">
@@ -1332,8 +1335,8 @@ function openAddTip() {
       <div class="tip-detail-inner">
         <button class="tip-detail-close">&times;</button>
         <div class="add-tip-login-msg">
-          <p>Prihlas se pro pridani tipu</p>
-          <button class="komunita-add-btn" onclick="document.getElementById('add-tip-overlay').classList.add('hidden'); document.getElementById('profile-btn').click();">Prihlasit se</button>
+          <p>Pro přidání tipu se nejdřív přihlas</p>
+          <button class="komunita-add-btn" onclick="document.getElementById('add-tip-overlay').classList.add('hidden'); document.getElementById('profile-btn').click();">Přihlásit se</button>
         </div>
       </div>
     `;
@@ -1348,11 +1351,11 @@ function openAddTip() {
   overlay.innerHTML = `
     <div class="tip-detail-inner">
       <button class="tip-detail-close">&times;</button>
-      <h3 style="margin-bottom:16px;color:var(--accent)">Novy tip</h3>
-      <label class="add-tip-label">Nazev</label>
-      <input type="text" id="add-tip-title" class="add-tip-input" placeholder="Nazev tveho tipu..." maxlength="100">
+      <h3 style="margin-bottom:16px;color:var(--accent)">Nový tip</h3>
+      <label class="add-tip-label">Název</label>
+      <input type="text" id="add-tip-title" class="add-tip-input" placeholder="Název tvého tipu..." maxlength="100">
       <label class="add-tip-label">Obsah</label>
-      <textarea id="add-tip-content" class="add-tip-input add-tip-textarea" placeholder="Podelej se o svuj tip nebo trik..." maxlength="1000"></textarea>
+      <textarea id="add-tip-content" class="add-tip-input add-tip-textarea" placeholder="Poděl se o svůj tip nebo trik..." maxlength="1000"></textarea>
       <label class="add-tip-label">Tag</label>
       <select id="add-tip-tag" class="add-tip-input">
         ${communityData.tags.map(t => '<option value="' + t.id + '">' + t.label + '</option>').join('')}
@@ -1371,13 +1374,13 @@ function openAddTip() {
     const errEl = document.getElementById('add-tip-error');
 
     if (!title || !content) {
-      errEl.textContent = 'Vyplnete nazev i obsah.';
+      errEl.textContent = 'Vyplň název i obsah.';
       errEl.style.display = 'block';
       return;
     }
 
     const submitBtn = document.getElementById('add-tip-submit');
-    submitBtn.textContent = 'Odesilam...';
+    submitBtn.textContent = 'Odesílám...';
     submitBtn.disabled = true;
 
     try {
@@ -1408,7 +1411,7 @@ function openAddTip() {
       overlay.classList.add('hidden');
       renderKomunitaFeed();
     } catch (err) {
-      errEl.textContent = 'Chyba pri odesilani: ' + err.message;
+      errEl.textContent = 'Chyba při odesílání:' + err.message;
       errEl.style.display = 'block';
       submitBtn.textContent = 'Odeslat tip';
       submitBtn.disabled = false;
