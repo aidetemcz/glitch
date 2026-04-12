@@ -860,10 +860,14 @@ async function loadAnalytics() {
     }
 
     panel.innerHTML = `
-      <h2 style="margin-bottom:20px;color:var(--accent)">Analytika</h2>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="color:var(--accent);margin:0">Analytika</h2>
+        <button onclick="loadAnalytics()" style="padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;font-size:13px">Obnovit</button>
+      </div>
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-number">${totalEvents || 0}</div><div class="stat-label">Celkem událostí</div></div>
-        <div class="stat-card"><div class="stat-number">${activeUsers}</div><div class="stat-label">Aktivní (7 dní)</div></div>
+        <div class="stat-card"><div class="stat-number">${activeUsers}</div><div class="stat-label">Aktivní uživatelé (7 dní)</div></div>
+        <div class="stat-card"><div class="stat-number">${Object.keys(viewCounts).length}</div><div class="stat-label">Různých glitchů</div></div>
       </div>
 
       <h3 style="margin:16px 0 8px;color:var(--text)">Nejprohlíženější glitche</h3>
