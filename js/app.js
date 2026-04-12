@@ -20,28 +20,6 @@ const State = {
 
 // ── INIT ─────────────────────────────────────
 
-// If this page loaded inside an OAuth popup, let Supabase store the session, then close
-(function checkPopupOAuth() {
-  if (!window.opener) return;
-  const h = window.location.hash || '';
-  const s = window.location.search || '';
-  if (!h.includes('access_token') && !s.includes('code=')) return;
-
-  // We're in the popup after OAuth redirect.
-  // Supabase SDK processes the hash automatically on createClient().
-  // Give it a moment to store the session in localStorage, then close.
-  document.documentElement.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#241832;color:#f0eeff;font-family:sans-serif">Přihlašuji...</div>';
-
-  const tryClose = () => {
-    if (sb) {
-      sb.auth.getSession().then(() => window.close()).catch(() => window.close());
-    } else {
-      window.close();
-    }
-  };
-  setTimeout(tryClose, 1500);
-})();
-
 document.addEventListener('DOMContentLoaded', async () => {
   let appReady = false;
 
@@ -56,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   try {
-    // Handle OAuth redirect (fallback when popup didn't close)
+    // Handle OAuth redirect (user returning from Google login)
     const oauthUser = await sbHandleOAuthCallback();
     if (!oauthUser) await sbInit();
 
@@ -353,18 +331,16 @@ function bindAccountPage() {
   document.getElementById('auth-login-btn').addEventListener('click', () => handleAuth(false));
   document.getElementById('auth-register-btn').addEventListener('click', () => handleAuth(true));
 
-  // Google OAuth (popup)
+  // Google OAuth (redirect)
   document.getElementById('auth-google-btn').addEventListener('click', async () => {
     const errEl = document.getElementById('auth-error');
     errEl.style.display = 'none';
     try {
       await sbSignInWithGoogle();
-      afterLogin();
+      // Browser redirects to Google — nothing further happens here
     } catch (e) {
-      if (e.message !== 'Přihlášení bylo zrušeno.') {
-        errEl.textContent = e.message || 'Google přihlášení selhalo.';
-        errEl.style.display = '';
-      }
+      errEl.textContent = e.message || 'Google přihlášení selhalo.';
+      errEl.style.display = '';
     }
   });
 
