@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drátěná koule</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; }
+  #container { width: 100%; height: 100vh; background: #000; position: relative; touch-action: none; cursor: grab; }
+  #c { display: block; width: 100%; height: 100%; }
+  #score { position: absolute; top: 16px; left: 16px; font-family: sans-serif; font-size: 14px; color: rgba(255,255,255,0.6); pointer-events: none; }
+  #hint { position: absolute; bottom: 24px; left: 0; right: 0; text-align: center; font-family: sans-serif; font-size: 13px; color: rgba(255,255,255,0.35); pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="container">
+  <canvas id="c"></canvas>
+  <div id="score">trefeno 0 / 0</div>
+  <div id="hint">tažením otočíš · ťuknutím trefíš díru vpředu</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var container = document.getElementById('container');
+  var canvas = document.getElementById('c');
+  var scoreEl = document.getElementById('score');
+  var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+  renderer.setClearColor(0x000000, 1);
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  camera.position.set(0, 0, 6.2);
+
+  var group = new THREE.Group();
+  scene.add(group);
+
+  var baseGeo = new THREE.SphereGeometry(1, 22, 14);
+  var wireGeo = new THREE.WireframeGeometry(baseGeo);
+  var baseMat = new THREE.LineBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.14});
+  group.add(new THREE.LineSegments(wireGeo, baseMat));
+
+  // --- parametry vzoru děr (stejná logika jako v OpenSCAD skriptu) ---
+  var lineCount = 8;
+  var steps = 12;
+  var turns = 2;
+  var holeRadius = 0.13;
+  var sphereR = 1.0;
+  var ringMat = new THREE.LineBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.6});
+
+  var hitMeshes = [];
+  var pulsing = [];
+  var hitCount = 0;
+
+  function addHole(theta, phi){
+    var x = sphereR * Math.cos(theta) * Math.cos(phi);
+    var y = sphereR * Math.cos(theta) * Math.sin(phi);
+    var z = sphereR * Math.sin(theta);
+    var normal = new THREE.Vector3(x, y, z).normalize();
+    var quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,0,1), normal);
+    var pos = normal.clone().multiplyScalar(sphereR);
+
+    var seg = 14;
+    var ringPts = [];
+    for (var s = 0; s <= seg; s++){
+      var a = (s / seg) * Math.PI * 2;
+      ringPts.push(new THREE.Vector3(Math.cos(a) * holeRadius, Math.sin(a) * holeRadius, 0));
+    }
+    var ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
+    var ringLine = new THREE.LineLoop(ringGeo, ringMat);
+    ringLine.quaternion.copy(quat);
+    ringLine.position.copy(pos);
+    group.add(ringLine);
+
+    // neviditelný (zatím) vyplněný kotouč - slouží k detekci zásahu i k rozsvícení
+    var discGeo = new THREE.CircleGeometry(holeRadius * 0.92, seg);
+    var discMat = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false});
+    var disc = new THREE.Mesh(discGeo, discMat);
+    disc.quaternion.copy(quat);
+    disc.position.copy(pos);
+    disc.userData.hit = false;
+    group.add(disc);
+    hitMeshes.push(disc);
+  }
+
+  function addSpiral(offsetDeg, dirSign){
+    for (var i = 0; i <= steps; i++){
+      var t = i / steps;
+      var thetaDeg = t * 180 - 90;
+      var phiDeg = t * 360 * turns * dirSign + offsetDeg;
+      addHole(thetaDeg * Math.PI / 180, phiDeg * Math.PI / 180);
+    }
+  }
+
+  for (var li = 0; li < lineCount; li++){
+    var offset = li * 360 / lineCount;
+    addSpiral(offset, 1);
+    addSpiral(offset, -1);
+  }
+
+  scoreEl.textContent = 'trefeno 0 / ' + hitMeshes.length;
+
+  // --- detekce zásahu (raycasting) - jen pro díry natočené směrem ke kameře (vpředu) ---
+  var raycaster = new THREE.Raycaster();
+  var mouseNDC = new THREE.Vector2();
+  var tmpQuat = new THREE.Quaternion();
+  var tmpPos = new THREE.Vector3();
+  var tmpNormal = new THREE.Vector3();
+
+  function handleTap(clientX, clientY){
+    group.updateMatrixWorld(true);
+    var rect = container.getBoundingClientRect();
+    mouseNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouseNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouseNDC, camera);
+    var intersects = raycaster.intersectObjects(hitMeshes, false);
+    if (intersects.length === 0) return;
+    var mesh = intersects[0].object;
+
+    // normála díry ve světových souřadnicích - musí mířit k nám, jinak je díra vzadu
+    mesh.getWorldQuaternion(tmpQuat);
+    tmpNormal.set(0, 0, 1).applyQuaternion(tmpQuat);
+    mesh.getWorldPosition(tmpPos);
+    var toCam = camera.position.clone().sub(tmpPos).normalize();
+
+    if (tmpNormal.dot(toCam) <= 0) return; // díra je natočená od nás - ťuknutí se nepočítá
+
+    if (!mesh.userData.hit){
+      mesh.userData.hit = true;
+      mesh.material.opacity = 1;
+      mesh.scale.set(1.5, 1.5, 1.5);
+      pulsing.push({mesh: mesh, t0: performance.now()});
+      hitCount++;
+      scoreEl.textContent = 'trefeno ' + hitCount + ' / ' + hitMeshes.length;
+    }
+  }
+
+  // --- ovládání tažením (myš i dotyk) + rozlišení od ťuknutí ---
+  var isDragging = false;
+  var downX = 0, downY = 0;
+  var velX = 0, velY = 0.0025;
+
+  function onDown(e){
+    isDragging = true;
+    container.style.cursor = 'grabbing';
+    downX = e.clientX;
+    downY = e.clientY;
+  }
+  function onMove(e){
+    if (!isDragging) return;
+    var dx = e.movementX || 0;
+    var dy = e.movementY || 0;
+    velY = dx * 0.006;
+    velX = dy * 0.006;
+    group.rotation.y += velY;
+    group.rotation.x += velX;
+    e.preventDefault();
+  }
+  function onUp(e){
+    isDragging = false;
+    container.style.cursor = 'grab';
+    var dx = e.clientX - downX;
+    var dy = e.clientY - downY;
+    if (Math.sqrt(dx*dx + dy*dy) < 6){
+      handleTap(e.clientX, e.clientY);
+    }
+  }
+
+  container.addEventListener('pointerdown', onDown);
+  window.addEventListener('pointermove', onMove, {passive: false});
+  window.addEventListener('pointerup', onUp);
+
+  function resize(){
+    var w = container.clientWidth;
+    var h = container.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function animate(){
+    requestAnimationFrame(animate);
+    if (!isDragging){
+      group.rotation.y += velY;
+      group.rotation.x += velX;
+      velY *= 0.96;
+      velX *= 0.96;
+      if (Math.abs(velY) < 0.0008) velY += (0.0025 - velY) * 0.01;
+    }
+    var now = performance.now();
+    for (var i = pulsing.length - 1; i >= 0; i--){
+      var p = pulsing[i];
+      var elapsed = now - p.t0;
+      var f = Math.min(elapsed / 220, 1);
+      var s = 1.5 - 0.5 * f;
+      p.mesh.scale.set(s, s, s);
+      if (f >= 1) pulsing.splice(i, 1);
+    }
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>
