@@ -8,19 +8,6 @@
 
   /* ---------- Pixel ikony ---------- */
   const ICON = {
-    // Chevron „další Glitch" (pixelová šipka vpravo)
-    chevron:
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#000">' +
-      '<rect x="6" y="3" width="4" height="4"/><rect x="10" y="7" width="4" height="4"/>' +
-      '<rect x="14" y="11" width="4" height="4"/><rect x="10" y="15" width="4" height="4"/>' +
-      '<rect x="6" y="19" width="4" height="4"/></g></svg>',
-    // Maskot (pixelová tvář) — potvrzení / pokračování
-    mascot:
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#000">' +
-      '<rect x="5" y="8" width="3" height="4"/><rect x="16" y="8" width="3" height="4"/>' +
-      '<rect x="8" y="14" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/>' +
-      '<rect x="12" y="16" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/>' +
-      '</g></svg>',
     // Malá pixelová dekorace „+"
     plus:
       '<svg viewBox="0 0 12 12" aria-hidden="true"><g fill="#000">' +
@@ -52,7 +39,8 @@
 
     { type: "quest_intro", category: "Vibe Coding", chapterNo: 1,
       title: "Vibe Coding",
-      body: "Vibe Coding je programování v přirozeném jazyce. Zjisti, jak vznikl a jak to celé funguje." },
+      body: "Vibe Coding je programování v přirozeném jazyce. Zjisti, jak vznikl a jak to celé funguje.",
+      video: "assets/videos/vibecoding_video_01.mp4" },
 
     { type: "quick_challenge", category: "Rychlá výzva",
       question: "310×15=",
@@ -109,8 +97,8 @@
 
   const badge = (c) => c.category ? `<div class="badge">${esc(c.category)}</div>` : "";
   const bottombar = () => `<div class="card-bottombar"></div>`;
-  const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch">${ICON.chevron}</button>`;
-  const mascot  = () => `<button class="nav-mascot" data-nav="next" aria-label="Pokračovat">${ICON.mascot}</button>`;
+  const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
+  const mascot  = () => `<button class="nav-mascot" data-nav="next" aria-label="Pokračovat"><img src="assets/ui/scroll-down.svg" alt="" width="56" height="56"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
 
@@ -157,7 +145,10 @@
     },
 
     quest_intro(c) {
-      return `<div class="quest-bg"></div>${badge(c)}
+      const bg = c.video
+        ? `<video class="quest-video" autoplay muted loop playsinline preload="auto"><source src="${c.video}" type="video/mp4"></video><div class="quest-scrim"></div>`
+        : `<div class="quest-bg"></div>`;
+      return `${bg}${badge(c)}
         <div class="card-body quest-body">
           ${chapter(c.chapterNo)}
           <h1 class="card-title g-h1">${esc(c.title)}</h1>
