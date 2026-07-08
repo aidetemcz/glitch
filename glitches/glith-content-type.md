@@ -45,7 +45,7 @@ Každý typ má vlastní barvu pozadí. Ve variables jsou jen `Red` a `BlackDark
 - 2D diagram: osa Y = ENERGIE (0–100), osa X = SOUSTŘEDĚNÍ (0–100). Tenké černé osy, popisky `glitch_caps`.
 - Interakce: uživatel potažením umístí černou tečku (⌀ ~45 px) do diagramu. Hodnota (x, y) se uloží a ovlivní výběr Glitchů pro daný den.
 - Dole žlutý maskot-ikona (potvrzení/pokračování).
-- Zdrojový soubor v html: 
+- Zdrojový soubor v html: https://github.com/aidetemcz/glitch/blob/claude/glitch-refactor-fgexm8/assets/3Dvizualizations/mood.html
 
 ## 3. Dechové cvičení (Wellbeing)
 
@@ -57,6 +57,7 @@ Každý typ má vlastní barvu pozadí. Ve variables jsou jen `Red` a `BlackDark
 - Střed: velký šedý kruh (`Grey15`, ⌀ ~178 px) s číslem — při cvičení animovaně roste/zmenšuje se v rytmu dechu a odpočítává.
 - Instrukce (`glitch_p-s`): „Pohodlně se usaď a stiskni tlačítko začít."
 - CTA: bílé tlačítko „Začít" (radius ~8, text černý).
+- Zdrojový soubor v html: https://github.com/aidetemcz/glitch/blob/claude/glitch-refactor-fgexm8/assets/3Dvizualizations/breathing-excercise.html
 
 ## 4. Glitch Quest — intro karta
 
@@ -97,6 +98,7 @@ Každý typ má vlastní barvu pozadí. Ve variables jsou jen `Red` a `BlackDark
 - H1/H3: zadání hry („Kolik zvládneš označit děr v časovém limitu?").
 - Střed: interaktivní 3D objekt (koule s děrami) — tap označuje cíle.
 - Dole žlutý maskot-ikona.
+- Zdrojový soubor v html: https://github.com/aidetemcz/glitch/blob/claude/glitch-refactor-fgexm8/assets/3Dvizualizations/sphere-holes.html
 
 ## 8. Algoritmus (animace)
 
