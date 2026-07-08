@@ -1,17 +1,29 @@
 # Wellbeing
 
-Interaktivní karty ve feedu — selectory a hry. Součást feedu, ne přeskočitelné „nice to have".
+Interaktivní karty ve feedu — selectory a hry. Součást feedu, ne přeskočitelné „nice to have". **Bez chatbota.**
 
-Typy: **mood selector**, **dechové cvičení**, **hra na pozornost**.
+📄 **Vzory:** [`dechove-cviceni.md`](./dechove-cviceni.md) · [`mood-selector.md`](./mood-selector.md)
 
-## Navrhovaná struktura souboru *(k doladění)*
+## Frontmatter (YAML)
 
-- **0 Identifikace** — id, název, typ (`mood_selector` | `breathing` | `attention_game`), verze, jazyk.
-- **1 Karta ve feedu** — štítek („Wellbeing" / „Hra na pozornost"), titulek, text/instrukce.
-- **2 Interakce** — parametry aktivity:
-  - mood selector: osy (energie × soustředění), uložení hodnoty pro personalizaci feedu;
-  - dechové cvičení: počet cyklů, délky fází (nádech/zadrž/výdech);
-  - hra na pozornost: zdroj vizualizace (`assets/3Dvizualizations/…`), pravidla, **opt-in** časovač.
-- **6 Bezpečnost** — časovače vždy opt-in; žádné srovnávání; emoční data se neukládají jako signál.
+Společná pole: `id`, `type: wellbeing`, `subtype`, `title`, `version`, `trust`, `lang`, `card { badge, heading, text }`.
 
-Soubory: `{typ}-{nazev}.md`, např. `mood-selector.md`, `dechove-cviceni.md`.
+`subtype` určuje obsah `config`:
+
+| `subtype` | `config` pole |
+|---|---|
+| `breathing` | `cycles` (výchozí počet), `phases { inhale, hold, exhale }` (s), `hint`, `cta` |
+| `mood_selector` | `axisX`, `axisY` (popisky os 0–100), `savesTo` (kam se ukládá hodnota pro personalizaci) |
+| `attention_game` | `media { kind: iframe, src }` (vizualizace, např. `assets/3Dvizualizations/sphere-holes.html`), `timer { optIn: true }` |
+
+> ⚠️ Text s čárkou/dvojtečkou v YAML do uvozovek.
+
+## Zásady (neporušovat)
+
+- Časovače/odpočty vždy **opt-in**, nikdy automatické.
+- Žádné srovnávání mezi žáky.
+- Emoční data se **neukládají** jako signál pro doporučování.
+
+## Tělo (volitelné)
+
+Uživateli se nezobrazuje — jen redakční poznámky.

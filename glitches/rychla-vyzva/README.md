@@ -1,17 +1,29 @@
 # Rychlá výzva
 
-Nerozklikávací Glitch. Dítě splní výzvu přímo na úvodní obrazovce (vybere odpověď) a scrolluje dál. Žádný rozklik, žádný chatbot.
+Nerozklikávací Glitch. Dítě splní výzvu přímo na úvodní obrazovce (vybere odpověď), dostane okamžitou zpětnou vazbu a scrolluje dál. **Žádný rozklik, žádný chatbot.**
 
-## Navrhovaná struktura souboru *(k doladění)*
+📄 **Vzor:** [`matematika-nasobeni-310x15.md`](./matematika-nasobeni-310x15.md)
 
-- **0 Identifikace** — id, název, verze, jazyk, stav důvěry.
-- **1 Karta ve feedu**
-  - varianta zadání: `vypocet` | `slovni-uloha` | `obrazec`;
-  - text zadání (velký) + volitelná podotázka;
-  - u obrazce: odkaz na SVG / obrázek;
-  - **odpovědi** — seznam možností, právě jedna správná (`correct: true`);
-  - rozložení tlačítek: `2x2` | `1xN` | řada;
-  - **opt-in** časovač (nikdy automatický).
-- **Zpětná vazba** — okamžité správně/špatně po výběru.
+## Frontmatter (YAML)
 
-Soubory: `{tema-nebo-typ}-{nazev}.md`, např. `matematika-nasobeni-310x15.md`.
+| pole | typ | popis |
+|---|---|---|
+| `id` | slug | `{predmet-nebo-tema}-{nazev}` |
+| `type` | `rychla-vyzva` | typ obsahu |
+| `title` | text | interní název |
+| `subject` | text | předmět / téma (Matematika, Logika…) |
+| `variant` | `vypocet`\|`slovni-uloha`\|`obrazec` | druh zadání |
+| `version`, `trust`, `lang` | | metadata |
+| `card.badge` | text | „Rychlá výzva" |
+| `card.prompt` | text | velké zadání (u `vypocet` např. `310×15=`, u `slovni-uloha`/`obrazec` delší text) |
+| `card.question` | text | podotázka (volitelné) |
+| `card.figure` | objekt | jen u `obrazec`: `{ kind: svg, src: … }` — obrazec k otázce |
+| `card.layout` | `2x2`\|`1xN`\|`row` | rozložení tlačítek |
+| `card.timer.optIn` | bool | vždy `true` — **časovač nikdy automaticky** |
+| `answers` | seznam | `{ label, correct }`; **právě jedna** `correct: true` |
+
+> ⚠️ Text s čárkou/dvojtečkou v YAML do uvozovek.
+
+## Tělo (volitelné)
+
+Uživateli se nezobrazuje. Slouží jen redakci (postup řešení, zdroj) — např. `## Poznámka`.
