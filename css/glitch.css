@@ -1,0 +1,402 @@
+/* ==========================================================================
+   Glitch — Design System
+   Zdroj tokenů: assets/glitch-design-tokens.md (Figma „Glitch 2.0")
+   ========================================================================== */
+
+:root {
+  /* Barvy (color variables) */
+  --c-black:      #000000;
+  --c-dark:       #1a1a1a;
+  --c-white:      #ffffff;
+  --c-grey-15:    #d0d0d0;
+  --c-grey-50:    #747474;
+  --c-yellow:     #ffff00;
+  --c-red:        #ff7171;
+  --c-red-15:     #ffcfcf;
+
+  /* Barvy pozadí karet (odečteno ze screenshotů — potvrdit s Figmou) */
+  --c-blue:       #6490ff;
+  --c-purple:     #70558d;
+  --c-teal:       #558d86;
+  --c-pink:       #ff6ea9;   /* dlaždice u Fun fact */
+
+  /* Layout */
+  --card-pad:     28px;
+  --bottombar-h:  48px;
+  --feed-max:     480px;
+
+  /* Typografie */
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --tracking: -0.04em;
+}
+
+/* ---------- Reset ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+body { overflow: hidden; }
+
+img, svg, iframe { display: block; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* ==========================================================================
+   Typografické styly (tokeny)
+   ========================================================================== */
+.g-h1        { font-size: 40px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
+.g-chapter-no{ font-size: 30px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
+.g-h3        { font-size: 25px; font-weight: 600; line-height: 1.08; letter-spacing: var(--tracking); }
+.g-category  { font-size: 16px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
+.g-p         { font-size: 16px; font-weight: 400; line-height: 1.375;letter-spacing: var(--tracking); }
+.g-p-s       { font-size: 15px; font-weight: 400; line-height: 1.33; letter-spacing: var(--tracking); }
+.g-caps      { font-size: 15px; font-weight: 400; line-height: 1;    letter-spacing: 0; }
+
+/* ==========================================================================
+   Feed (vertikální swipe, 1 karta = celá obrazovka)
+   ========================================================================== */
+#glitch-feed {
+  position: relative;
+  height: 100dvh;
+  max-width: var(--feed-max);
+  margin: 0 auto;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  background: var(--c-black);
+}
+#glitch-feed::-webkit-scrollbar { display: none; }
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  color: var(--fg, var(--c-white));
+  background: var(--bg, var(--c-dark));
+}
+
+/* Barevné varianty */
+.card--white  { --bg: var(--c-white);  --fg: var(--c-black); }
+.card--dark   { --bg: var(--c-dark);   --fg: var(--c-white); }
+.card--black  { --bg: var(--c-black);  --fg: var(--c-white); }
+.card--red    { --bg: var(--c-red);    --fg: var(--c-white); }
+.card--blue   { --bg: var(--c-blue);   --fg: var(--c-white); }
+.card--purple { --bg: var(--c-purple); --fg: var(--c-white); }
+.card--teal   { --bg: var(--c-teal);   --fg: var(--c-white); }
+
+/* Vnitřní obsah karty */
+.card-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 64px var(--card-pad) calc(var(--bottombar-h) + 24px);
+  min-height: 0;
+}
+
+/* ==========================================================================
+   Sdílené prvky karet
+   ========================================================================== */
+
+/* Badge kategorie (vpravo nahoře) */
+.badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 5;
+  background: var(--c-yellow);
+  color: var(--c-black);
+  padding: 8px 13px 7px;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* Číslo kapitoly (pill) */
+.chapter-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  background: var(--c-grey-15);
+  color: var(--c-black);
+  border-radius: 8px;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking);
+}
+
+/* Spodní lišta + linka */
+.card-bottombar {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--bottombar-h);
+  background: var(--c-dark);
+  border-top: 1px solid rgba(208,208,208,0.22);
+  z-index: 4;
+}
+
+/* Navigační chevron (další Glitch) */
+.nav-chevron {
+  position: absolute;
+  right: 22px;
+  bottom: calc(var(--bottombar-h) + 22px);
+  width: 56px; height: 56px;
+  background: var(--c-yellow);
+  border-radius: 13px;
+  display: grid; place-items: center;
+  z-index: 5;
+  transition: transform .12s ease;
+}
+.nav-chevron:active { transform: scale(0.92); }
+.nav-chevron svg { width: 26px; height: 26px; }
+
+/* Maskot (potvrzení / pokračování u interaktivních karet) */
+.nav-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--bottombar-h) + 22px);
+  transform: translateX(-50%);
+  width: 56px; height: 56px;
+  background: var(--c-yellow);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  z-index: 5;
+  transition: transform .12s ease;
+}
+.nav-mascot:active { transform: translateX(-50%) scale(0.92); }
+.nav-mascot svg { width: 30px; height: 30px; }
+
+/* Titulky / text helpery */
+.card-title  { margin: 0; }
+.card-lead   { margin-top: 14px; max-width: 34ch; opacity: .96; }
+.text-center { text-align: center; }
+.stack-bottom{ margin-top: auto; }
+
+/* ==========================================================================
+   Welcome
+   ========================================================================== */
+.welcome-body { justify-content: flex-end; }
+.welcome-logo-wrap {
+  position: absolute;
+  top: 15%; left: 0; right: 0;
+  display: grid; place-items: center;
+}
+.welcome-logo { width: 150px; height: auto; }
+.welcome-body .card-title { margin-bottom: 0; }
+.welcome-body .card-lead  { max-width: 32ch; }
+
+/* Pixelové dekorace „+" na světlých kartách */
+.pixel-deco { position: absolute; z-index: 1; pointer-events: none; opacity: .92; }
+.pixel-deco svg { width: 100%; height: 100%; }
+
+/* ==========================================================================
+   Shrnutí (konec dne)
+   ========================================================================== */
+.summary-mascot-wrap {
+  position: absolute; top: 12%; left: 0; right: 0;
+  display: grid; place-items: center;
+}
+.summary-mascot { width: 150px; height: auto; }
+.summary-body { justify-content: flex-end; }
+.summary-title { margin-bottom: 8px; }
+.summary-stats { margin-top: 6px; }
+.summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--c-grey-15);
+  font-size: 16px; letter-spacing: var(--tracking);
+}
+.summary-row:first-child { border-top: 1px solid var(--c-grey-15); }
+.summary-row-val { font-weight: 400; }
+.summary-link {
+  margin-top: 14px; color: var(--c-grey-50);
+  font-size: 15px; letter-spacing: var(--tracking); text-align: left;
+}
+.summary-outro { margin-top: 28px; color: var(--c-black); max-width: 32ch; }
+
+/* ==========================================================================
+   Mood selector (2D diagram)
+   ========================================================================== */
+.mood-diagram { width: 100%; margin-top: 20px; flex: 1; min-height: 0; touch-action: none; }
+.mood-dot { cursor: grab; }
+.mood-dot:active { cursor: grabbing; }
+.mood-axis-label { font-size: 15px; font-weight: 400; letter-spacing: 0; fill: var(--c-black); }
+
+/* ==========================================================================
+   Dechové cvičení
+   ========================================================================== */
+.breath-body { align-items: center; text-align: center; }
+.breath-counter {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 34px;
+}
+.breath-step {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid rgba(208,208,208,0.5);
+  display: grid; place-items: center;
+  color: var(--c-grey-15); font-size: 20px; line-height: 1;
+}
+.breath-value {
+  min-width: 54px; height: 40px; padding: 0 8px;
+  border-radius: 22px;
+  border: 1.5px solid rgba(208,208,208,0.5);
+  display: grid; place-items: center;
+  font-size: 15px; letter-spacing: var(--tracking);
+}
+.breath-circle {
+  margin: 40px auto 0;
+  width: 178px; height: 178px; border-radius: 50%;
+  background: var(--c-grey-15);
+  color: var(--c-black);
+  display: grid; place-items: center;
+  font-size: 34px; font-weight: 600; letter-spacing: var(--tracking);
+  transition: transform 4s ease-in-out, background .4s ease;
+  will-change: transform;
+}
+.breath-hint { margin-top: auto; margin-bottom: 18px; opacity: .9; }
+.breath-cta {
+  align-self: center;
+  background: var(--c-white); color: var(--c-black);
+  padding: 15px 40px; border-radius: 9px;
+  font-size: 16px; font-weight: 600; letter-spacing: var(--tracking);
+  margin-bottom: 66px;
+}
+
+/* ==========================================================================
+   Opt-in časovač (Rychlá výzva, Hra na pozornost)
+   ========================================================================== */
+.timer-row {
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 10px;
+}
+.timer-toggle {
+  flex: none;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: var(--c-white);
+  position: relative;
+}
+.timer-note {
+  color: rgba(255,255,255,0.72);
+  max-width: 22ch;
+}
+.card--dark .timer-row, .card--black .timer-row {
+  background: rgba(255,255,255,0.05);
+  padding: 16px; border-radius: 14px; margin: 0 calc(var(--card-pad) * -1) 6px;
+  padding-left: var(--card-pad); padding-right: var(--card-pad);
+}
+
+/* ==========================================================================
+   Rychlá výzva (kvíz)
+   ========================================================================== */
+.quiz-prompt { margin-top: auto; }
+.quiz-sub { margin-top: 14px; color: rgba(255,255,255,0.75); }
+.quiz-options {
+  margin-top: 30px; margin-bottom: 20px;
+  display: grid; gap: 14px;
+}
+.quiz-options.cols-2 { grid-template-columns: 1fr 1fr; }
+.quiz-options.cols-1 { grid-template-columns: 1fr; }
+.quiz-options.cols-3 { grid-template-columns: repeat(3, 1fr); justify-content: start; }
+.quiz-options.cols-3 .quiz-opt { min-width: 64px; }
+.quiz-opt {
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 11px;
+  background: transparent;
+  color: var(--c-white);
+  padding: 16px 18px;
+  font-size: 22px; font-weight: 600; letter-spacing: var(--tracking);
+  text-align: center;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
+.quiz-opt.is-wrong   { opacity: .4; }
+.quiz-figure { margin: 14px 0 24px; }
+
+/* ==========================================================================
+   Media karty (Quest intro, Algoritmus, Fun fact, Najdi chybu)
+   ========================================================================== */
+.media-frame {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--c-black);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.viz-frame { width: 100%; border: 0; background: var(--c-black); }
+
+/* Quest intro — fullscreen obrázek */
+.card--image { --fg: var(--c-white); }
+.quest-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 80% at 70% 20%, #3a3a3a 0%, #141414 55%, #000 100%);
+  z-index: 0;
+}
+.quest-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%);
+}
+.quest-body { position: relative; z-index: 1; justify-content: flex-end; }
+.quest-body .chapter-no { margin-bottom: 16px; }
+
+/* Fun fact */
+.funfact-tile {
+  width: 100%; aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  background: var(--c-pink);
+  display: grid; place-items: center;
+  overflow: hidden;
+  margin-bottom: 26px;
+}
+.funfact-body { justify-content: flex-start; }
+.funfact-body .card-title { margin-top: 4px; }
+.funfact-body .card-lead  { margin-top: 16px; max-width: 32ch; }
+
+/* Najdi chybu */
+.mistake-photo {
+  width: 100%; aspect-ratio: 1 / 1;
+  border-radius: 6px; overflow: hidden;
+  background: #2c2c2c;
+  filter: grayscale(1);
+  margin-bottom: 26px;
+}
+.mistake-body { justify-content: flex-start; }
+.mistake-claim { margin-top: 4px; font-weight: 700; }
+.mistake-context { margin-top: 16px; color: rgba(255,255,255,0.78); max-width: 34ch; }
+
+/* Algoritmus */
+.algo-body { justify-content: space-between; }
+.algo-viz { width: 100%; aspect-ratio: 1 / 1; }
+.algo-text .chapter-no { margin-bottom: 14px; }
+
+/* Placeholder pro chybějící média */
+.asset-missing {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px; letter-spacing: 0;
+  text-align: center; padding: 20px;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, transparent 10px 20px);
+}
+
+/* Utility */
+.hidden { display: none !important; }
