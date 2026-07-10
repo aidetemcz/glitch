@@ -60,13 +60,18 @@ Průřezové značky napříč tématy, hodí se pro filtr i pro „AI průřezo
 - Všechny `prerekvizity`/`souvisi` odkazují na existující `id` (ověřeno, žádné visící odkazy).
 - Pokrytí RVP: všech **12** očekávaných výstupů oboru Informatika pro 2. stupeň je namapováno na koncepty.
 
-## Propojení (hrany) — verze 0.2
+## Propojení (hrany) — verze 0.3
 
-Propojení bylo v 0.2 zhuštěno. Dva typy hran:
-- `prerekvizity` (směrové, „nauč se A, než začneš B") — **nově i napříč tématy** (35 mezitématických), takže témata nejsou izolované ostrovy: programování staví na informatickém myšlení, weby/aplikace na programování, AI na datech atd.
-- `souvisi` (laterální příbuznost, převážně napříč tématy) — včetně realizace **AI průřezové vrstvy** jako hran (koncepty s AI nástrojem odkazují na jádro AI: `Ověřování výstupů`, `Prompt`, `Bias`…) a překrývajících se konceptů bezpečí/etiky/soukromí.
+Dva typy hran:
+- `prerekvizity` (směrové, „nauč se A, než začneš B") — i napříč tématy (35 mezitématických), takže témata nejsou izolované ostrovy: programování staví na informatickém myšlení, weby/aplikace na programování, AI na datech atd. Tvoří acyklický graf (DAG, ověřeno).
+- `souvisi` (laterální příbuznost, převážně napříč tématy) — v 0.3 výrazně zhuštěno tak, aby vytáhlo **průřezová témata** na povrch.
 
-Stav: 210 hran, průměrný stupeň uzlu ~3,1, žádný izolovaný uzel. Prerekvizity tvoří acyklický graf (DAG, ověřeno). `souvisi` nikdy neduplikuje `prerekvizitu`.
+**Jak `souvisi` v 0.3 vzniká (systematicky přes tag-vlákna):**
+- Koncepty sdílející stejné průřezové **vlákno (tag)** se propojí napříč tématy: malá/střední vlákna (`soukromi`, `etika`, `deepfake`, `sit`, `cloud`, `rizeni-toku`, `design`, `udalosti`, `ml`, `postoj`…) jako plný klastr; velká vlákna (`data`, `bezpeci`, `programovani`) přes hub-and-spoke na kotvu, aby nevznikl chuchvalec.
+- **AI průřezová vrstva:** každý koncept s tagem `ai-prurez` odkazuje na jádro AI (`Ověřování výstupů`, `Kdy AI (ne)použít a disclosure`, `Bias a férovost`).
+- Tag `ai` (39 konceptů) se záměrně **neklastruje celý** — AI se protahuje jen přes `ai-prurez`, jinak by vzniklo ~560 hran.
+
+Stav 0.3: **338 hran** (souvisí 190, prerekvizita 148), průměrný stupeň uzlu ~5,0, žádný izolovaný uzel, nejvíc propojené uzly ~14 hran (přirozené huby: Reprezentace dat, Bias a férovost, Doporučovací systémy…). `souvisi` nikdy neduplikuje `prerekvizitu` ani není symetricky dvakrát.
 
 **Doporučení k UI (důležité kvůli čitelnosti):** při vyšší hustotě hran je klíčové, aby graf nebyl „chuchvalec". Přidej prosím:
 1. **Zvýraznění sousedství** při najetí/kliknutí na uzel (zbytek grafu ztlum) — nejúčinnější nástroj proti přehlcení.

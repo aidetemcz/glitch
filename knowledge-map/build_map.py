@@ -425,6 +425,56 @@ for a, b in EXTRA_SOUVISI:
     if ai_ in byid and bi_ in byid and ai_ != bi_ and bi_ not in byid[ai_]['souvisi']:
         byid[ai_]['souvisi'].append(bi_)
 
+# ============ TAG-VLÁKNA: hromadné "souvisí" napříč tématy (v0.3) ============
+# Průřezová témata realizujeme jako hrany: koncepty sdílející stejné vlákno (tag)
+# se propojí NAPŘÍČ tématy. Malá/střední vlákna = plný klastr; velká vlákna =
+# hub-and-spoke na kotvu (jinak by vznikl chuchvalec). Tag `ai` (39 konceptů)
+# se neklastruje celý — AI se protahuje přes vrstvu `ai-prurez` na jádro AI.
+from itertools import combinations as _comb
+_tagmem = {}
+for c in concepts:
+    for t in c['tagy']:
+        _tagmem.setdefault(t, []).append(c)
+
+def add_souvisi(aid, bid):
+    if aid == bid or aid not in byid or bid not in byid:
+        return
+    if bid in byid[aid]['souvisi'] or aid in byid[bid]['souvisi']:
+        return
+    byid[aid]['souvisi'].append(bid)
+
+# malá a střední vlákna → plný klastr (jen mezitématické dvojice)
+FULL_CLIQUE_TAGS = ['soukromi', 'etika', 'deepfake', 'sit', 'cloud', 'api', 'design',
+ 'abstrakce', 'hodnoceni', 'udalosti', 'postoj', 'ml', 'hardware', 'ladeni',
+ 'rizeni-toku', 'databaze', 'verzovani', 'spoluprace', 'prompt', 'dekompozice',
+ 'opakovani', 'kdyz-tak']
+for tag in FULL_CLIQUE_TAGS:
+    for a, b in _comb(_tagmem.get(tag, []), 2):
+        if a['tema'] != b['tema']:
+            add_souvisi(a['id'], b['id'])
+
+# velká vlákna → hub-and-spoke na kotvu (mezitématicky)
+HUB_TAGS = {
+ 'data': [('data-databaze', 'Datová gramotnost'), ('digitalni-zaklady', 'Reprezentace dat')],
+ 'bezpeci': [('kyberbezpecnost', 'Základní hygiena')],
+ 'programovani': [('programovani', 'Blokové vs. textové programování')],
+}
+for tag, anchors in HUB_TAGS.items():
+    for c in _tagmem.get(tag, []):
+        for at, an in anchors:
+            anc = cid(at, an)
+            if anc in byid and c['tema'] != byid[anc]['tema']:
+                add_souvisi(c['id'], anc)
+
+# AI průřezová vrstva: každý `ai-prurez` koncept → kotvy jádra AI
+AI_ANCHORS = [cid('umela-inteligence', 'Ověřování výstupů'),
+              cid('umela-inteligence', 'Kdy AI (ne)použít a disclosure'),
+              cid('umela-inteligence', 'Bias a férovost')]
+for c in concepts:
+    if 'ai-prurez' in c['tagy']:
+        for anc in AI_ANCHORS:
+            add_souvisi(c['id'], anc)
+
 # --- dedup: souvisí nesmí duplikovat prerekvizitu (ani opačně) a nesmí být symetricky dvakrát ---
 prereq_pairs = set()
 for c in concepts:
@@ -467,7 +517,7 @@ temata = [{'id': i, 'nazev': n, 'vrstva_mapy': v, 'popis': p, 'barva': b, 'navaz
 
 data = {
     'meta': {
-        'verze': '0.2-draft',
+        'verze': '0.3-draft',
         'popis': 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.',
         'paleta': ['#ffff00', '#ffffff', '#000000'],
         'uroven': '2. stupeň ZŠ s přesahem výš',
