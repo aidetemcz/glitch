@@ -12,6 +12,7 @@
   };
   const VRSTVA = { core: "Core koncept", navazujici: "Navazující" };
   const NORVP = "__norvp__";
+  const LINEH = 1.5;   // řádkování textu v bublinách (CSS i výpočet fit)
 
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -22,14 +23,15 @@
     return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#000000" : "#ffffff";
   }
 
-  /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem */
+  /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem.
+     Konzervativní: širší odhad znaku + reálné řádkování + větší vnitřní okraj. */
   function fitFont(label, size) {
-    const usableW = size * 0.78, usableH = size * 0.78;
+    const usableW = size * 0.72, usableH = size * 0.72;
     const words = String(label).split(/\s+/);
     const longest = words.reduce((m, w) => Math.max(m, w.length), 0);
-    for (let f = 11; f >= 6; f -= 0.5) {
-      const charW = f * 0.56, lineH = f * 1.4;
-      if (longest * charW > usableW) continue;
+    for (let f = 10; f >= 5; f -= 0.5) {
+      const charW = f * 0.60, lineH = f * LINEH;
+      if (longest * charW > usableW) continue;          // nejdelší slovo se musí vejít na šířku
       const maxChars = Math.max(3, Math.floor(usableW / charW));
       let lines = 1, cur = 0;
       for (const w of words) {
@@ -39,7 +41,7 @@
       }
       if (lines * lineH <= usableH) return f;
     }
-    return 6;
+    return 5;
   }
 
   const statusEl = document.getElementById("status");
@@ -78,9 +80,9 @@
     const deg = {};
     edges.forEach((e) => { deg[e.data.source] = (deg[e.data.source] || 0) + 1; deg[e.data.target] = (deg[e.data.target] || 0) + 1; });
     const sizeFor = (c) => {
-      let s = 30 + (deg[c.id] || 0) * 6;
-      s = Math.max(s, c.vrstva === "core" ? 50 : 36);
-      return Math.min(s, 80);
+      let s = 32 + (deg[c.id] || 0) * 6;
+      s = Math.max(s, c.vrstva === "core" ? 58 : 46);
+      return Math.min(s, 84);
     };
 
     const nodes = [];
@@ -90,7 +92,7 @@
       nodes.push({ data: {
         id: c.id, type: "concept", parent: "grp-" + groupOf(c, mode),
         label: c.nazev, vrstva: c.vrstva, stav: c.stav || "draft", tagy: c.tagy || [],
-        size: sz, textw: Math.round(sz * 0.78), fontsize: fitFont(c.nazev, sz), _c: c
+        size: sz, textw: Math.round(sz * 0.72), fontsize: fitFont(c.nazev, sz), _c: c
       }});
     });
     return [...nodes, ...edges];
@@ -117,7 +119,7 @@
         { selector: "node[type='concept']", style: {
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
-          "text-valign": "center", "text-halign": "center", "text-line-height": 1.4,
+          "text-valign": "center", "text-halign": "center", "text-line-height": LINEH,
           "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
         { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
@@ -194,7 +196,7 @@
     const groups = cy.nodes("[type='group']");
     const G = groups.length;
     const cols = Math.ceil(Math.sqrt(G));
-    const spread = 44;
+    const spread = 50;
     const maxK = Math.max(1, ...groups.map((g) => g.children("[type='concept']").length));
     const cell = Math.max(560, spread * Math.sqrt(maxK) * 2 + 200);
     const GOLDEN = Math.PI * (3 - Math.sqrt(5));
