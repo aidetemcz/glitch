@@ -85,8 +85,9 @@
       return Math.min(s, 84);
     };
 
+    const labelcolor = mode === "oblast" ? "#ffff00" : "#ffffff";  // témata bíle, RVP oblasti žlutě
     const nodes = [];
-    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: g.nazev, barva: g.barva, popis: g.popis } }));
+    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: g.nazev, labelcolor, popis: g.popis } }));
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
       nodes.push({ data: {
@@ -113,7 +114,7 @@
           "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "180px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -12,
-          "color": "data(barva)", "font-size": "13px", "font-weight": "600",
+          "color": "data(labelcolor)", "font-size": "13px", "font-weight": "600",
           "text-transform": "uppercase", "padding": "26px"
         }},
         { selector: "node[type='concept']", style: {
@@ -214,7 +215,7 @@
 
   function buildGroupFilter(mode) {
     const groups = groupDefs(mode);
-    buildChips("filter-group", groups.map((g) => ({ val: g.id, label: g.nazev, color: g.barva })), "group", true);
+    buildChips("filter-group", groups.map((g) => ({ val: g.id, label: g.nazev })), "group", true);
   }
 
   /* ---------- Filtry ---------- */
@@ -278,11 +279,11 @@
   function openDetail(node) {
     cy.$(":selected").unselect(); node.select();
     if (node.data("type") === "group") {
-      const gid = node.data("gid"), barva = node.data("barva");
+      const gid = node.data("gid"), bg = viewMode === "tema" ? "#ffffff" : "#ffff00";
       const cores = DATA.concepts.filter((c) => groupOf(c, viewMode) === gid && c.vrstva === "core");
       const all = DATA.concepts.filter((c) => groupOf(c, viewMode) === gid);
       detailBody.innerHTML =
-        `<span class="d-badge" style="background:${esc(barva)};color:${esc(textOn(barva))}">${viewMode === "tema" ? "Téma" : "Oblast RVP"}</span>
+        `<span class="d-badge" style="background:${bg};color:#000000">${viewMode === "tema" ? "Téma" : "Oblast RVP"}</span>
          <h2 class="d-title">${esc(node.data("label"))}</h2>
          <p class="d-desc">${esc(node.data("popis"))}</p>
          <div class="d-section"><h3>Konceptů: ${all.length}</h3></div>
@@ -306,7 +307,6 @@
   function conceptHtml(c) {
     const tema = (DATA.temata.find((t) => t.id === c.tema) || {});
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
-    const barva = tema.barva || "#ffffff";
     const rvp = (c.rvp || []).length
       ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(r.vystup)}</div>`).join("")
       : '<span class="d-empty">—</span>';
@@ -314,7 +314,7 @@
     const links = (arr) => (arr && arr.length) ? arr.map(link).join("") : '<span class="d-empty">—</span>';
     const zdroj = (c.zdroj || []).length ? c.zdroj.map((z) => `<div class="d-rvp">${esc(z)}</div>`).join("") : '<span class="d-empty">—</span>';
     return `
-      <span class="d-badge" style="background:${esc(barva)};color:${esc(textOn(barva))}">${esc(tema.nazev || c.tema)}</span>
+      <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>
       <h2 class="d-title">${esc(c.nazev)}</h2>
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
@@ -369,8 +369,7 @@
         if (group.hasClass("filtered")) return;
         const kids = group.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
         if (kids.length === 0) return;
-        const col = group.data("barva") || "#ffffff";
-        ctx.strokeStyle = col === "#ffffff" ? "rgba(255,255,255,0.34)" : "rgba(255,255,0,0.42)";
+        ctx.strokeStyle = "rgba(255,255,255,0.32)";
         const pts = [];
         kids.forEach((n) => {
           const p = n.renderedPosition(), r = n.renderedWidth() / 2 + 16;
