@@ -55,7 +55,7 @@ Zdroj pravdy: **`app/data/knowledge-map.yaml`**. Dva typy záznamů — `areas` 
 | `popis` | text | co koncept je |
 | `cile` | seznam | vzdělávací cíle gradované podle úrovně: `{ uroven, text, orientacne_rocnik? }` |
 | `kriteria` | seznam | kritéria hodnocení, stejná gradace: `{ uroven, text, orientacne_rocnik? }` |
-| `rvp` | seznam | napojení na RVP (očekávané výstupy / kódy) |
+| `rvp` | seznam | napojení na RVP: `{ kod, vystup }` — kód i **znění** očekávaného výstupu |
 | `zdroj` | seznam | grounding: odkaz na `main-sources` + strana (dohledatelnost) |
 | `tagy` | seznam | průřezová témata / podobnost (filtrování) |
 | `prerekvizity` | seznam id | koncepty, které musí předcházet |
@@ -105,7 +105,9 @@ concepts:
         text: "Z několika textů vybere ty, které jsou algoritmem, a zdůvodní proč."
       - uroven: vyuziti-znalosti
         text: "Sestaví funkční postup o 4–6 krocích a opraví záměrně vloženou chybu."
-    rvp: ["I-9-2-01"]          # ověřit dle PDF
+    rvp:
+      - kod: "I-9-2-01"        # ověřit dle PDF
+        vystup: "(doplnit přesné znění očekávaného výstupu z RVP)"
     zdroj:
       - "RVP_revidované_2024-03-28.pdf, s. XX"
     tagy: [postup, dekompozice, když-tak]
@@ -129,7 +131,9 @@ concepts:
     kriteria:
       - uroven: analyza
         text: "V blokovém prostředí nahradí opakované kroky cyklem se správným počtem opakování."
-    rvp: ["I-9-2-02"]          # ověřit dle PDF
+    rvp:
+      - kod: "I-9-2-02"        # ověřit dle PDF
+        vystup: "(doplnit přesné znění očekávaného výstupu z RVP)"
     zdroj: []
     tagy: [řízení-toku, opakování]
     prerekvizity: [algoritmizace-algoritmus]

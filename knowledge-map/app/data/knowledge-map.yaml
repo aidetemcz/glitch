@@ -1,0 +1,231 @@
+# Mapa znalostí — data (ukázka)
+# Zdroj pravdy pro graf. Schéma: ../../structure.md
+# Obsah je zatím SKELETON k naplnění z RVP a zdrojů (main-sources).
+
+areas:
+  - id: algoritmizace
+    nazev: Algoritmizace a programování
+    popis: Postupy krok za krokem, řízení toku, dekompozice, tvorba a ladění programů.
+    barva: "#ffff00"
+
+  - id: data-modelovani
+    nazev: Data, informace a modelování
+    popis: Kódování, struktura a interpretace dat; modely a jejich zjednodušení.
+    barva: "#6490ff"
+
+concepts:
+  # --- Algoritmizace ---
+  - id: algoritmizace-algoritmus
+    nazev: Algoritmus
+    oblast: algoritmizace
+    vrstva: core
+    popis: "Přesný postup, jak z počátečního stavu krok za krokem dojít k cíli."
+    cile:
+      - uroven: vybaveni
+        text: "Žák pozná a pojmenuje algoritmus v běžné situaci (návod, recept)."
+        orientacne_rocnik: 6
+      - uroven: vyuziti-znalosti
+        text: "Žák navrhne vlastní algoritmus pro nový problém a odladí ho."
+        orientacne_rocnik: 8
+    kriteria:
+      - uroven: vybaveni
+        text: "Z několika textů vybere ty, které jsou algoritmem, a zdůvodní proč."
+      - uroven: vyuziti-znalosti
+        text: "Sestaví funkční postup o 4–6 krocích a opraví záměrně vloženou chybu."
+    rvp:
+      - kod: "I-9-2-01"
+        vystup: "(doplnit přesné znění očekávaného výstupu z RVP)"
+    zdroj:
+      - "RVP_revidované_2024-03-28.pdf, s. XX"
+    tagy: [postup, dekompozice, když-tak]
+    prerekvizity: []
+    souvisi: [algoritmizace-podminka]
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: algoritmizace-podminka
+    nazev: Podmínka (když–tak)
+    oblast: algoritmizace
+    vrstva: core
+    popis: "Rozhodnutí ve výpočtu: podle platnosti podmínky se provede jedna, nebo druhá větev."
+    cile:
+      - uroven: porozumeni
+        text: "Žák vysvětlí, kdy se která větev podmínky provede, na příkladu ze života."
+        orientacne_rocnik: 6
+    kriteria:
+      - uroven: porozumeni
+        text: "K zadané situaci sestaví podmínku ve tvaru když–tak–jinak."
+    rvp: []
+    zdroj: []
+    tagy: [řízení-toku, když-tak]
+    prerekvizity: []
+    souvisi: []
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: algoritmizace-cyklus
+    nazev: Cyklus (opakování)
+    oblast: algoritmizace
+    vrstva: navazujici
+    popis: "Opakování kroků, dokud platí podmínka — místo psaní téhož pořád dokola."
+    cile:
+      - uroven: porozumeni
+        text: "Žák vysvětlí, proč se opakování hodí, a uvede příklad ze života."
+        orientacne_rocnik: 6
+      - uroven: analyza
+        text: "Žák v hotovém programu najde opakování a nahradí ho cyklem."
+        orientacne_rocnik: 7
+    kriteria:
+      - uroven: analyza
+        text: "V blokovém prostředí nahradí opakované kroky cyklem se správným počtem opakování."
+    rvp: []
+    zdroj: []
+    tagy: [řízení-toku, opakování]
+    prerekvizity: [algoritmizace-algoritmus]
+    souvisi: [algoritmizace-podminka]
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: algoritmizace-dekompozice
+    nazev: Dekompozice
+    oblast: algoritmizace
+    vrstva: navazujici
+    popis: "Rozložení velkého problému na menší, samostatně řešitelné části."
+    cile:
+      - uroven: analyza
+        text: "Žák rozdělí složitější úlohu na menší kroky a popíše jejich pořadí."
+        orientacne_rocnik: 7
+    kriteria:
+      - uroven: analyza
+        text: "Zadaný problém rozloží na alespoň tři smysluplné podúlohy."
+    rvp: []
+    zdroj: []
+    tagy: [postup, dekompozice]
+    prerekvizity: [algoritmizace-algoritmus]
+    souvisi: []
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: algoritmizace-program
+    nazev: Program
+    oblast: algoritmizace
+    vrstva: navazujici
+    popis: "Zápis algoritmu v jazyce, kterému rozumí počítač."
+    cile:
+      - uroven: vyuziti-znalosti
+        text: "Žák sestaví jednoduchý program s posloupností, podmínkou a cyklem."
+        orientacne_rocnik: 8
+    kriteria:
+      - uroven: vyuziti-znalosti
+        text: "Program řeší zadanou úlohu a žák umí popsat, co která část dělá."
+    rvp: []
+    zdroj: []
+    tagy: [řízení-toku, opakování, když-tak]
+    prerekvizity: [algoritmizace-cyklus, algoritmizace-podminka]
+    souvisi: [algoritmizace-ladeni]
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: algoritmizace-ladeni
+    nazev: Ladění (debugging)
+    oblast: algoritmizace
+    vrstva: navazujici
+    popis: "Hledání a oprava chyb v programu — proč nedělá to, co má."
+    cile:
+      - uroven: analyza
+        text: "Žák najde v nefunkčním programu chybu a opraví ji."
+        orientacne_rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: "U zadaného programu s chybou popíše příčinu a navrhne opravu."
+    rvp: []
+    zdroj: []
+    tagy: [ladění]
+    prerekvizity: [algoritmizace-program]
+    souvisi: []
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: algoritmizace-emergence
+    nazev: Emergence
+    oblast: algoritmizace
+    vrstva: navazujici
+    popis: "Složité chování celku vzniklé z jednoduchých pravidel jeho částí."
+    cile:
+      - uroven: porozumeni
+        text: "Žák na příkladu vysvětlí, jak z jednoduchých pravidel vznikne složité chování."
+        orientacne_rocnik: 8
+      - uroven: analyza
+        text: "Žák rozliší, co je naprogramované (pravidla) a co vzniká samo (vzory)."
+        orientacne_rocnik: 9
+    kriteria:
+      - uroven: analyza
+        text: "U Hry života rozliší pravidla od emergentních útvarů a pojmenuje jev."
+    rvp: []
+    zdroj: []
+    tagy: [emergence, opakování, když-tak]
+    prerekvizity: [algoritmizace-cyklus, algoritmizace-podminka]
+    souvisi: [data-modelovani-model]
+    pokryti_glitchem: [algoritmus-hra-zivota]
+    stav: draft
+
+  # --- Data, informace a modelování ---
+  - id: data-modelovani-data-informace
+    nazev: Data a informace
+    oblast: data-modelovani
+    vrstva: core
+    popis: "Rozdíl mezi daty (zaznamenané hodnoty) a informací (jejich význam pro nás)."
+    cile:
+      - uroven: porozumeni
+        text: "Žák rozliší data a informaci na konkrétním příkladu."
+        orientacne_rocnik: 6
+    kriteria:
+      - uroven: porozumeni
+        text: "K zadanému datovému záznamu popíše, jakou informaci z něj lze získat."
+    rvp: []
+    zdroj: []
+    tagy: [data]
+    prerekvizity: []
+    souvisi: []
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: data-modelovani-kodovani
+    nazev: Kódování
+    oblast: data-modelovani
+    vrstva: navazujici
+    popis: "Zápis informace pomocí smluvených znaků (např. čísla, barvy, bity)."
+    cile:
+      - uroven: vyuziti-znalosti
+        text: "Žák zakóduje a dekóduje jednoduchou zprávu podle daného pravidla."
+        orientacne_rocnik: 7
+    kriteria:
+      - uroven: vyuziti-znalosti
+        text: "Podle zadaného klíče správně zakóduje i dekóduje krátkou zprávu."
+    rvp: []
+    zdroj: []
+    tagy: [data, kódování]
+    prerekvizity: [data-modelovani-data-informace]
+    souvisi: []
+    pokryti_glitchem: []
+    stav: draft
+
+  - id: data-modelovani-model
+    nazev: Model
+    oblast: data-modelovani
+    vrstva: core
+    popis: "Zjednodušený obraz skutečnosti, který zachovává jen to podstatné pro daný účel."
+    cile:
+      - uroven: analyza
+        text: "Žák vysvětlí, co model zjednodušuje a co zachovává, a proč."
+        orientacne_rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: "K zadanému modelu určí, co vynechává, a posoudí, zda je to pro účel v pořádku."
+    rvp: []
+    zdroj: []
+    tagy: [model]
+    prerekvizity: [data-modelovani-data-informace]
+    souvisi: [algoritmizace-emergence]
+    pokryti_glitchem: []
+    stav: draft
