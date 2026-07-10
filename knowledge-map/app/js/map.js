@@ -246,10 +246,16 @@
     applySearch();
   }
 
-  /* Zvýraznění sousedství (proti „chuchvalci"): ztlum vše kromě uzlu a jeho vazeb */
+  /* Zvýraznění sousedství (proti „chuchvalci"): ztlum jen koncepty a hrany
+     kromě uzlu a jeho vazeb. Clustery (rodiče) NEztlumovat — jejich průhlednost
+     by se kaskádou propsala do bublin uvnitř (a zešedly by i zvýrazněné). */
   function focusNb(node) {
     const nb = node.closedNeighborhood();
-    cy.batch(() => { cy.elements().addClass("nbfade"); nb.removeClass("nbfade"); });
+    cy.batch(() => {
+      cy.nodes("[type='concept']").addClass("nbfade");
+      cy.edges().addClass("nbfade");
+      nb.removeClass("nbfade");
+    });
   }
   function clearNb() { if (cy) cy.batch(() => cy.elements().removeClass("nbfade")); }
   function applySearch() {
