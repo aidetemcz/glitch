@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0c">
+  <title>Glitch</title>
+  <meta name="description" content="Glitch — vzdělávací síť, kde se děti učí tvořit s AI.">
+  <link rel="icon" type="image/svg+xml" href="glitch-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0c; --yellow: #ffff00; --white: #ffffff; --grey: #747474;
+      --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --tracking: -0.04em;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: var(--black); color: var(--white); font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh; display: grid; place-items: center;
+      padding: 32px; text-align: center; overflow: hidden;
+    }
+    /* jemné pixelové dekorace v pozadí */
+    .deco { position: fixed; color: rgba(255,255,0,0.10); pointer-events: none; user-select: none; font-weight: 700; }
+    .d1 { top: 12%; left: 14%; font-size: 22px; }
+    .d2 { top: 24%; right: 16%; font-size: 16px; color: rgba(255,255,255,0.06); }
+    .d3 { bottom: 20%; left: 22%; font-size: 18px; color: rgba(255,255,255,0.06); }
+    .d4 { bottom: 14%; right: 20%; font-size: 22px; }
+
+    .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 30px; max-width: 560px; }
+    .logo { width: 168px; height: auto; filter: invert(1); }
+    @media (max-width: 480px) { .logo { width: 132px; } }
+
+    .lead {
+      font-size: clamp(18px, 4.5vw, 24px); font-weight: 500; line-height: 1.4;
+      letter-spacing: var(--tracking); max-width: 22ch;
+    }
+    .lead b { font-weight: 700; }
+    .accent { color: var(--yellow); }
+
+    .badge {
+      display: inline-block; background: var(--yellow); color: var(--black);
+      font-weight: 600; font-size: 14px; letter-spacing: var(--tracking);
+      padding: 9px 16px; border-radius: 8px;
+    }
+
+    footer {
+      position: fixed; bottom: 22px; left: 0; right: 0;
+      color: var(--grey); font-size: 13px; letter-spacing: var(--tracking);
+    }
+    footer a { color: var(--grey); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+  </style>
+</head>
+<body>
+  <span class="deco d1">+</span>
+  <span class="deco d2">+</span>
+  <span class="deco d3">+</span>
+  <span class="deco d4">+</span>
+
+  <main class="wrap">
+    <img class="logo" src="glitch-logo.svg" alt="Glitch">
+    <p class="lead">Vzdělávací síť, kde se děti <b class="accent">učí tvořit s AI</b>.</p>
+    <span class="badge">Brzy spouštíme</span>
+  </main>
+
+  <footer>
+    <a href="https://tiny.school">tiny.school</a> · glitch.tiny.school
+  </footer>
+</body>
+</html>
