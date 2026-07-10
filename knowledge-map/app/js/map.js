@@ -48,6 +48,7 @@
   const setStatus = (t) => { statusEl.textContent = t; statusEl.classList.toggle("hidden", !t); };
 
   let DATA = null, cy = null, viewMode = "tema", conceptById = {}, pinned = null;
+  let revSouvisi = {}, revPrereq = {};   // reverzní rejstříky (hrany jsou v datech jen jednou)
 
   /* ---------- Načtení dat ---------- */
   fetch("data/knowledge-map.yaml?v=6")
@@ -105,6 +106,11 @@
   function init(data) {
     DATA = data; window.__data = data;
     data.concepts.forEach((c) => conceptById[c.id] = c);
+    // reverzní rejstříky: souvisí je symetrické, prerekvizita má i opačný směr
+    data.concepts.forEach((c) => {
+      (c.souvisi || []).forEach((s) => (revSouvisi[s] = revSouvisi[s] || []).push(c.id));
+      (c.prerekvizity || []).forEach((p) => (revPrereq[p] = revPrereq[p] || []).push(c.id));
+    });
 
     cy = cytoscape({
       container: document.getElementById("cy"),
@@ -333,6 +339,9 @@
     const tags = (c.tagy || []).length ? c.tagy.map((t) => `<span class="d-tag">${esc(t)}</span>`).join("") : '<span class="d-empty">—</span>';
     const links = (arr) => (arr && arr.length) ? arr.map(link).join("") : '<span class="d-empty">—</span>';
     const zdroj = (c.zdroj || []).length ? c.zdroj.map((z) => `<div class="d-rvp">${esc(z)}</div>`).join("") : '<span class="d-empty">—</span>';
+    // souvisí obousměrně (symetrická hrana uložená jen jednou); prerekvizity oběma směry
+    const souvisiAll = [...new Set([...(c.souvisi || []), ...(revSouvisi[c.id] || [])])];
+    const jePrereqPro = revPrereq[c.id] || [];
     return `
       <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>
       <h2 class="d-title">${esc(c.nazev)}</h2>
@@ -346,7 +355,8 @@
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
       <div class="d-section"><h3>Prerekvizity</h3><div class="d-links">${links(c.prerekvizity)}</div></div>
-      <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(c.souvisi)}</div></div>
+      <div class="d-section"><h3>Je prerekvizitou pro</h3><div class="d-links">${links(jePrereqPro)}</div></div>
+      <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(souvisiAll)}</div></div>
       <div class="d-section"><h3>Tagy</h3><div class="d-tags">${tags}</div></div>
       <div class="d-section"><h3>Zdroj</h3>${zdroj}</div>`;
   }
