@@ -51,18 +51,32 @@ Zdroj pravdy: **`app/data/knowledge-map.yaml`**. Dva typy záznamů — `areas` 
 | `id` | slug | `{oblast}-{nazev}` |
 | `nazev` | text | název konceptu (titulek bubliny) |
 | `oblast` | id oblasti | zařazení |
-| `uroven` | `core` \| `navazujici` | pozice v hierarchii |
+| `vrstva` | `core` \| `navazujici` | pozice v hierarchii |
 | `popis` | text | co koncept je |
-| `cile` | mapa ročník→text | vzdělávací cíl pro 6.–9. ročník (jen relevantní ročníky) |
-| `kriteria` | mapa ročník→text | kritéria hodnocení pro tytéž ročníky |
+| `cile` | seznam | vzdělávací cíle gradované podle úrovně: `{ uroven, text, orientacne_rocnik? }` |
+| `kriteria` | seznam | kritéria hodnocení, stejná gradace: `{ uroven, text, orientacne_rocnik? }` |
 | `rvp` | seznam | napojení na RVP (očekávané výstupy / kódy) |
-| `tagy` | seznam | podobné koncepty / průřezová témata (filtrování) |
+| `zdroj` | seznam | grounding: odkaz na `main-sources` + strana (dohledatelnost) |
+| `tagy` | seznam | průřezová témata / podobnost (filtrování) |
 | `prerekvizity` | seznam id | koncepty, které musí předcházet |
 | `souvisi` | seznam id | příbuzné koncepty (křížové vazby) |
 | `pokryti_glitchem` | seznam id | Glitche, které koncept učí (propojení s obsahem) |
 | `stav` | `draft` \| `hotovo` | stav zpracování |
 
 > ⚠️ **YAML:** text s čárkou nebo dvojtečkou dávej do uvozovek.
+
+### Taxonomická gradace (Marzano-Kendall)
+
+Cíle i kritéria se **gradují primárně podle kognitivní úrovně**, ne podle ročníku — RVP je obecné a každá škola učí jinak a jindy, takže `orientacne_rocnik` je jen nezávazné vodítko. Osa zvládnutí konceptu (Nová taxonomie vzdělávacích cílů):
+
+| `uroven` (slug) | Úroveň | Co žák dělá |
+|---|---|---|
+| `vybaveni` | Vybavení | pozná, pojmenuje, vybaví si |
+| `porozumeni` | Porozumění | vlastními slovy vysvětlí, uvede příklad |
+| `analyza` | Analýza | rozliší, porovná, najde vztahy a chyby |
+| `vyuziti-znalosti` | Využití znalostí | použije na nový problém, navrhne, vytvoří |
+
+> Vyšší úrovně Nové taxonomie (metakognice, sebe-systém) jsou průřezové dispozice — negradují se u jednotlivého konceptu, řešíme je jinde (chování Tinybota, wellbeing). Přesné znění škály sladit se zdroji `Gradace na základě Nové taxonomie.pdf` a `Marzano Kendall — Nová taxonomie…pdf`.
 
 ## Ukázka dat (skeleton — obsah k doplnění z RVP a zdrojů)
 
@@ -77,13 +91,23 @@ concepts:
   - id: algoritmizace-algoritmus
     nazev: Algoritmus
     oblast: algoritmizace
-    uroven: core
+    vrstva: core
     popis: "Přesný postup, jak z počátečního stavu krok za krokem dojít k cíli."
     cile:
-      "6": "Žák popíše jednoduchý postup jako sled kroků a najde v něm chybu."
+      - uroven: vybaveni
+        text: "Žák pozná a pojmenuje algoritmus v běžné situaci (návod, recept)."
+        orientacne_rocnik: 6
+      - uroven: vyuziti-znalosti
+        text: "Žák navrhne vlastní algoritmus pro nový problém a odladí ho."
+        orientacne_rocnik: 8
     kriteria:
-      "6": "Sestaví funkční postup o 4–6 krocích a opraví záměrně vloženou chybu."
+      - uroven: vybaveni
+        text: "Z několika textů vybere ty, které jsou algoritmem, a zdůvodní proč."
+      - uroven: vyuziti-znalosti
+        text: "Sestaví funkční postup o 4–6 krocích a opraví záměrně vloženou chybu."
     rvp: ["I-9-2-01"]          # ověřit dle PDF
+    zdroj:
+      - "RVP_revidované_2024-03-28.pdf, s. XX"
     tagy: [postup, dekompozice, když-tak]
     prerekvizity: []
     souvisi: [algoritmizace-cyklus]
@@ -93,13 +117,20 @@ concepts:
   - id: algoritmizace-cyklus
     nazev: Cyklus (opakování)
     oblast: algoritmizace
-    uroven: navazujici
+    vrstva: navazujici
     popis: "Opakování kroků, dokud platí podmínka — místo psaní téhož pořád dokola."
     cile:
-      "6": "Žák použije opakování k zápisu činnosti, která se má provést vícekrát."
+      - uroven: porozumeni
+        text: "Žák vysvětlí, proč se opakování hodí, a uvede příklad ze života."
+        orientacne_rocnik: 6
+      - uroven: analyza
+        text: "Žák v hotovém programu najde opakování a nahradí ho cyklem."
+        orientacne_rocnik: 7
     kriteria:
-      "6": "V blokovém prostředí nahradí opakované kroky cyklem se správným počtem opakování."
+      - uroven: analyza
+        text: "V blokovém prostředí nahradí opakované kroky cyklem se správným počtem opakování."
     rvp: ["I-9-2-02"]          # ověřit dle PDF
+    zdroj: []
     tagy: [řízení-toku, opakování]
     prerekvizity: [algoritmizace-algoritmus]
     souvisi: [algoritmizace-podminka]
