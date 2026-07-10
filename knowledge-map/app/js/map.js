@@ -135,7 +135,7 @@
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
         { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
         { selector: ".dim", style: { "opacity": 0.08 } },
-        { selector: ".nbfade", style: { "opacity": 0.07 } },
+        { selector: ".nbfade", style: { "opacity": 0.12 } },
         { selector: ".filtered", style: { "display": "none" } }
       ]
     });
@@ -303,6 +303,7 @@
     } else {
       detailBody.innerHTML = conceptHtml(node.data("_c"));
       pinned = node; focusNb(node);
+      cy.animate({ fit: { eles: node.closedNeighborhood(), padding: 80 }, duration: 350 });
     }
     detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
     detail.classList.remove("hidden");
