@@ -169,9 +169,9 @@
 
     /* interakce grafu */
     cy.on("tap", "node", (evt) => openDetail(evt.target));
-    cy.on("tap", (evt) => { if (evt.target === cy) closeDetail(); });
-    cy.on("mouseover", "node[type='concept']", (e) => focusNb(e.target));
-    cy.on("mouseout", "node[type='concept']", () => { if (pinned) focusNb(pinned); else clearNb(); });
+    cy.on("tap", (evt) => {
+      if (evt.target === cy) { closeDetail(); cy.animate({ fit: { eles: cy.nodes(), padding: 40 }, duration: 300 }); }
+    });
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeDetail();
     });
