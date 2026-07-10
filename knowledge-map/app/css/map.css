@@ -33,8 +33,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 #search:focus { border-color: var(--c-yellow); }
 .chips { display: flex; flex-wrap: wrap; gap: 7px; }
 .chip {
-  border: 1px solid var(--c-line); border-radius: 20px; padding: 6px 12px;
-  font-size: 13px; color: var(--c-grey-15); transition: all .12s ease; line-height: 1;
+  border: 1px solid var(--c-line); border-radius: 16px; padding: 7px 13px;
+  font-size: 13px; color: var(--c-grey-15); transition: all .12s ease;
+  line-height: 1.25; text-align: left;
 }
 .chip[aria-pressed="true"] { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .chip[aria-pressed="false"] { opacity: .6; }
