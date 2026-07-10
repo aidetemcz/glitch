@@ -11,7 +11,7 @@ areas:
   - id: data-modelovani
     nazev: Data, informace a modelování
     popis: Kódování, struktura a interpretace dat; modely a jejich zjednodušení.
-    barva: "#6490ff"
+    barva: "#ffffff"
 
 concepts:
   # --- Algoritmizace ---

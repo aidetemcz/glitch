@@ -16,6 +16,26 @@
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+  /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem */
+  function fitFont(label, size) {
+    const usableW = size * 0.78, usableH = size * 0.78;
+    const words = String(label).split(/\s+/);
+    const longest = words.reduce((m, w) => Math.max(m, w.length), 0);
+    for (let f = 11; f >= 6; f -= 0.5) {
+      const charW = f * 0.56, lineH = f * 1.4;
+      if (longest * charW > usableW) continue;          // nejdelší slovo se musí vejít na šířku
+      const maxChars = Math.max(3, Math.floor(usableW / charW));
+      let lines = 1, cur = 0;
+      for (const w of words) {
+        if (cur === 0) cur = w.length;
+        else if (cur + 1 + w.length <= maxChars) cur += 1 + w.length;
+        else { lines++; cur = w.length; }
+      }
+      if (lines * lineH <= usableH) return f;
+    }
+    return 6;
+  }
+
   function textOn(hex) {
     const h = hex.replace("#", "");
     const r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
@@ -72,7 +92,8 @@
       nodes.push({ data: {
         id: c.id, type: "concept", parent: ids.has(c.oblast) ? c.oblast : undefined,
         label: c.nazev, vrstva: c.vrstva, stav: c.stav || "draft", oblast: c.oblast,
-        tagy: c.tagy || [], size: sz, textw: Math.round(sz * 0.84), _c: c
+        tagy: c.tagy || [], size: sz, textw: Math.round(sz * 0.78),
+        fontsize: fitFont(c.nazev, sz), _c: c
       }});
     });
 
@@ -92,8 +113,8 @@
         { selector: "node[type='concept']", style: {
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
-          "text-valign": "center", "text-halign": "center",
-          "font-size": "9px", "font-weight": "600", "border-width": 1.5
+          "text-valign": "center", "text-halign": "center", "text-line-height": 1.4,
+          "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
         { selector: "node[vrstva='core']", style: {
           "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
