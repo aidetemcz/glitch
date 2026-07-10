@@ -38,29 +38,13 @@
     const conceptById = {}; concepts.forEach((c) => conceptById[c.id] = c);
     const ids = new Set([...areas.map((a) => a.id), ...concepts.map((c) => c.id)]);
 
-    /* Uzly */
-    const nodes = [];
-    areas.forEach((a) => nodes.push({ data: {
-      id: a.id, type: "area", label: a.nazev, popis: a.popis || "",
-      color: a.barva, textcolor: textOn(a.barva || "#888888")
-    }}));
-    concepts.forEach((c) => {
-      const color = areaColor[c.oblast] || "#888888";
-      nodes.push({ data: {
-        id: c.id, type: "concept", label: c.nazev, color,
-        vrstva: c.vrstva, stav: c.stav || "draft", oblast: c.oblast,
-        tagy: c.tagy || [], _c: c
-      }});
-    });
-
-    /* Hrany */
+    /* Hrany (prerekvizity + souvisí; oblasti drží koncepty jako compound rodič) */
     const edges = []; const seen = new Set();
     const addEdge = (id, s, t, etype) => {
       if (!ids.has(s) || !ids.has(t) || s === t) return;
       edges.push({ data: { id, source: s, target: t, etype } });
     };
     concepts.forEach((c) => {
-      if (c.vrstva === "core") addEdge("m-" + c.id, c.oblast, c.id, "membership");
       (c.prerekvizity || []).forEach((p) => addEdge("p-" + p + "-" + c.id, p, c.id, "prereq"));
       (c.souvisi || []).forEach((s) => {
         const key = [c.id, s].sort().join("~");
@@ -69,6 +53,26 @@
       });
     });
 
+    /* Stupeň uzlu (počet vazeb) → velikost bubliny (organická variabilita) */
+    const deg = {};
+    edges.forEach((e) => { deg[e.data.source] = (deg[e.data.source] || 0) + 1; deg[e.data.target] = (deg[e.data.target] || 0) + 1; });
+    const sizeFor = (c) => {
+      let s = 30 + (deg[c.id] || 0) * 8;
+      if (c.vrstva === "core") s = Math.max(s, 52);
+      return Math.min(s, 74);
+    };
+
+    /* Uzly: oblasti = compound rodič (obrys clusteru), koncepty = bílé bubliny */
+    const nodes = [];
+    areas.forEach((a) => nodes.push({ data: {
+      id: a.id, type: "area", label: a.nazev, popis: a.popis || "", color: a.barva || "#ffffff"
+    }}));
+    concepts.forEach((c) => nodes.push({ data: {
+      id: c.id, type: "concept", parent: ids.has(c.oblast) ? c.oblast : undefined,
+      label: c.nazev, vrstva: c.vrstva, stav: c.stav || "draft", oblast: c.oblast,
+      tagy: c.tagy || [], size: sizeFor(c), _c: c
+    }}));
+
     const cy = cytoscape({
       container: document.getElementById("cy"),
       elements: { nodes, edges },
@@ -76,47 +80,43 @@
       minZoom: 0.25, maxZoom: 2.5,
       style: [
         { selector: "node[type='area']", style: {
-          "shape": "ellipse", "background-color": "data(color)",
-          "width": "label", "height": "label", "padding": "26px",
-          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "150px",
-          "text-valign": "center", "text-halign": "center",
-          "color": "data(textcolor)", "font-size": "15px", "font-weight": "600",
-          "border-width": 3, "border-color": "rgba(0,0,0,0.25)"
+          "background-opacity": 0, "border-width": 0,
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "170px",
+          "text-valign": "top", "text-halign": "center", "text-margin-y": -14,
+          "color": "rgba(255,255,255,0.85)", "font-size": "13px", "font-weight": "600",
+          "text-transform": "uppercase", "padding": "30px"
         }},
         { selector: "node[type='concept']", style: {
-          "shape": "ellipse", "background-color": "data(color)",
-          "width": 42, "height": 42,
-          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "96px",
-          "text-valign": "bottom", "text-halign": "center", "text-margin-y": 5,
-          "color": "#ffffff", "font-size": "11px", "font-weight": "500"
+          "shape": "ellipse", "background-color": "#ffffff",
+          "width": "data(size)", "height": "data(size)",
+          "border-width": 1.5, "border-color": "#0a0a0c",
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "92px",
+          "text-valign": "bottom", "text-halign": "center", "text-margin-y": 6,
+          "color": "rgba(255,255,255,0.6)", "font-size": "10px", "font-weight": "500"
         }},
-        { selector: "node[vrstva='core']", style: {
-          "width": 58, "height": 58, "border-width": 2, "border-color": "#ffffff"
-        }},
-        { selector: "edge[etype='membership']", style: {
-          "line-color": "rgba(208,208,208,0.30)", "width": 2, "curve-style": "bezier"
-        }},
+        { selector: "node[vrstva='core']", style: { "border-width": 2.5 } },
         { selector: "edge[etype='prereq']", style: {
-          "line-color": "rgba(208,208,208,0.6)", "width": 2, "curve-style": "bezier",
-          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(208,208,208,0.6)",
-          "arrow-scale": 1.1
+          "line-color": "rgba(255,255,255,0.5)", "width": 1.4, "line-style": "dashed", "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.7)", "arrow-scale": 1
         }},
         { selector: "edge[etype='related']", style: {
-          "line-color": "rgba(208,208,208,0.45)", "width": 1.5, "line-style": "dashed", "curve-style": "bezier"
+          "line-color": "rgba(255,255,255,0.3)", "width": 1, "line-style": "dotted", "curve-style": "bezier"
         }},
-        { selector: ".hl", style: { "border-width": 3, "border-color": "#ffff00" } },
-        { selector: ".dim", style: { "opacity": 0.12 } },
-        { selector: ".filtered", style: { "display": "none" } },
-        { selector: "node:selected", style: { "border-width": 3, "border-color": "#ffff00" } }
+        { selector: "node.labeled", style: { "color": "#ffffff", "font-size": "12px", "z-index": 30 } },
+        { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
+        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: ".dim", style: { "opacity": 0.1 } },
+        { selector: ".filtered", style: { "display": "none" } }
       ],
       layout: {
-        name: "cose", animate: true, animationDuration: 600, padding: 60,
-        nodeRepulsion: 9000, idealEdgeLength: 95, edgeElasticity: 120,
-        nestingFactor: 1.1, gravity: 0.3, componentSpacing: 120
+        name: "cose", animate: true, animationDuration: 650, padding: 40,
+        nodeRepulsion: 4200, idealEdgeLength: 58, edgeElasticity: 90,
+        nestingFactor: 1.2, gravity: 0.75, componentSpacing: 60, nodeOverlap: 8, randomize: true
       }
     });
 
     window.__cy = cy;
+    initHulls(cy);
     setStatus(concepts.length + " konceptů · " + areas.length + " oblasti");
 
     /* ---------- Filtry (chip UI) ---------- */
@@ -147,15 +147,15 @@
     function applyFilters() {
       const ob = pressed("oblast"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy");
       cy.batch(() => {
-        cy.nodes().forEach((n) => {
-          let vis;
-          if (n.data("type") === "area") vis = ob.has(n.id());
-          else {
-            const c = n.data("_c");
-            vis = ob.has(c.oblast) && vr.has(c.vrstva) && st.has(n.data("stav")) &&
-              (tg.size === 0 || (c.tagy || []).some((t) => tg.has(t)));
-          }
+        cy.nodes("[type='concept']").forEach((n) => {
+          const c = n.data("_c");
+          const vis = ob.has(c.oblast) && vr.has(c.vrstva) && st.has(n.data("stav")) &&
+            (tg.size === 0 || (c.tagy || []).some((t) => tg.has(t)));
           n.toggleClass("filtered", !vis);
+        });
+        cy.nodes("[type='area']").forEach((a) => {
+          const empty = a.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0;
+          a.toggleClass("filtered", !ob.has(a.id()) || empty);
         });
         cy.edges().forEach((e) =>
           e.toggleClass("filtered", e.source().hasClass("filtered") || e.target().hasClass("filtered")));
@@ -188,6 +188,8 @@
 
     cy.on("tap", "node", (evt) => openDetail(evt.target));
     cy.on("tap", (evt) => { if (evt.target === cy) closeDetail(); });
+    cy.on("mouseover", "node[type='concept']", (e) => e.target.addClass("labeled"));
+    cy.on("mouseout", "node[type='concept']", (e) => { if (!e.target.selected()) e.target.removeClass("labeled"); });
 
     function closeDetail() { detail.classList.add("hidden"); cy.$(":selected").unselect(); }
 
@@ -208,12 +210,12 @@
       if (node.data("type") === "area") {
         const cores = concepts.filter((c) => c.oblast === node.id() && c.vrstva === "core");
         detailBody.innerHTML =
-          `<span class="d-badge" style="background:${esc(node.data("color"))};color:${esc(node.data("textcolor"))}">Oblast</span>
+          `<span class="d-badge" style="background:${esc(node.data("color"))};color:${esc(textOn(node.data("color") || "#ffffff"))}">Oblast</span>
            <h2 class="d-title">${esc(node.data("label"))}</h2>
            <p class="d-desc">${esc(node.data("popis"))}</p>
            <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
       } else {
-        detailBody.innerHTML = conceptHtml(node.data("_c"), node.data("color"), areaColor);
+        detailBody.innerHTML = conceptHtml(node.data("_c"));
       }
       detailBody.querySelectorAll("[data-focus]").forEach((b) =>
         b.addEventListener("click", () => focusNode(b.dataset.focus)));
@@ -229,7 +231,8 @@
       }).join("");
     }
 
-    function conceptHtml(c, color) {
+    function conceptHtml(c) {
+      const color = areaColor[c.oblast] || "#ffffff";
       const area = (areas.find((a) => a.id === c.oblast) || {}).nazev || c.oblast;
       const rvp = (c.rvp || []).length
         ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(r.vystup)}</div>`).join("")
@@ -268,6 +271,64 @@
     const mq = window.matchMedia("(max-width: 720px)");
     const syncBurger = () => { burger.style.display = mq.matches ? "block" : "none"; };
     mq.addEventListener("change", syncBurger); syncBurger();
+  }
+
+  /* ---------- Organické obrysy clusterů (canvas overlay) ---------- */
+  function convexHull(points) {
+    const pts = points.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (pts.length < 3) return pts;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const p of pts) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
+    const upper = [];
+    for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
+    lower.pop(); upper.pop(); return lower.concat(upper);
+  }
+
+  function strokeSmooth(ctx, pts) {
+    const n = pts.length; if (n < 3) return;
+    const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    ctx.beginPath();
+    const m0 = mid(pts[n - 1], pts[0]); ctx.moveTo(m0[0], m0[1]);
+    for (let i = 0; i < n; i++) { const cur = pts[i], nxt = pts[(i + 1) % n], m = mid(cur, nxt); ctx.quadraticCurveTo(cur[0], cur[1], m[0], m[1]); }
+    ctx.closePath(); ctx.stroke();
+  }
+
+  function initHulls(cy) {
+    const cyDiv = document.getElementById("cy");
+    const canvas = document.createElement("canvas");
+    canvas.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:0";
+    cyDiv.insertBefore(canvas, cyDiv.firstChild);
+    const ctx = canvas.getContext("2d");
+
+    function resize() {
+      const r = cyDiv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+      canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+      canvas.style.width = r.width + "px"; canvas.style.height = r.height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, w, h); ctx.restore();
+      ctx.save();
+      ctx.setLineDash([6, 7]); ctx.lineWidth = 1.4; ctx.strokeStyle = "rgba(255,255,255,0.38)";
+      cy.nodes("[type='area']").forEach((area) => {
+        if (area.hasClass("filtered")) return;
+        const kids = area.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
+        if (kids.length === 0) return;
+        const pts = [];
+        kids.forEach((n) => {
+          const p = n.renderedPosition(), r = n.renderedWidth() / 2 + 18;
+          for (let a = 0; a < 12; a++) { const ang = a / 12 * 2 * Math.PI; pts.push([p.x + Math.cos(ang) * r, p.y + Math.sin(ang) * r]); }
+        });
+        strokeSmooth(ctx, convexHull(pts));
+      });
+      ctx.restore();
+    }
+    resize();
+    window.addEventListener("resize", () => { resize(); draw(); });
+    cy.on("render", draw);
+    window.__drawHulls = draw;
   }
 
   /* ---------- Pomocné ---------- */

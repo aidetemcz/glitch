@@ -41,14 +41,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .legend { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--c-line); }
 .legend-row { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--c-grey-15); }
-.legend-line { width: 22px; height: 0; border-top: 2px solid var(--c-grey-15); }
+.legend-line { width: 22px; height: 0; border-top: 1.5px solid var(--c-grey-15); }
 .legend-line.dashed { border-top-style: dashed; }
-.legend-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--c-yellow); }
-.legend-dot.core { box-shadow: 0 0 0 2px var(--c-white); }
+.legend-line.dotted { border-top-style: dotted; }
+.legend-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--c-white); border: 1px solid #000; }
+.legend-outline { width: 15px; height: 15px; border-radius: 50%; border: 1.4px dashed rgba(255,255,255,0.5); }
 
 /* Graf */
-#cy { width: 100%; height: 100dvh; background:
-  radial-gradient(120% 100% at 50% 0%, #222 0%, var(--c-dark) 60%, #141414 100%); }
+#cy { width: 100%; height: 100dvh; background: #0a0a0c; }
 
 /* Detail panel */
 #detail {
