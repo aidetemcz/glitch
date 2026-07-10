@@ -291,13 +291,183 @@ for tema, lst in C.items():
         }
         concepts.append(rec)
 
+# ================= OBOHACENÍ PROPOJENÍ (v0.2) =================
+# Cíl: témata nemají být ostrovy. Přidáváme (a) mezitématické prerekvizity
+# (scaffolding "nauč se X, než začneš Y") a (b) širší "souvisí" síť napříč
+# tématy, včetně realizace AI průřezové vrstvy jako hran.
+byid = {c['id']: c for c in concepts}
+edge_errors = []
+def rid(spec):
+    i = cid(spec[0], spec[1])
+    if i not in byid:
+        edge_errors.append('NEEXISTUJE: ' + str(spec) + ' -> ' + i)
+    return i
+
+# (dítě, rodič) — rodič PŘEDCHÁZÍ dítě (přidá se do dite.prerekvizity)
+EXTRA_PREREQ = [
+ # prohloubení uvnitř témat + napojení dosud izolovaných uzlů
+ (('informaticke-mysleni','Algoritmus'), ('informaticke-mysleni','Rozpoznávání vzorů')),
+ (('programovani','Ladění a testování'), ('programovani','Cykly v kódu')),
+ (('data-databaze','Dotazování (SQL)'), ('data-databaze','Strukturovaná vs. nestrukturovaná data')),
+ (('kyberbezpecnost','Bezpečné chování na sítích'), ('kyberbezpecnost','Hesla a 2FA')),
+ # programování staví na informatickém myšlení a základech
+ (('programovani','Cykly v kódu'), ('informaticke-mysleni','Řízení toku')),
+ (('programovani','Podmínky v kódu'), ('informaticke-mysleni','Logika a booleovské výrazy')),
+ (('programovani','Funkce a procedury'), ('informaticke-mysleni','Dekompozice')),
+ (('programovani','Blokové vs. textové programování'), ('informaticke-mysleni','Algoritmus')),
+ (('programovani','Knihovny a volání API v kódu'), ('digitalni-zaklady','API')),
+ # data staví na základech
+ (('data-databaze','Datová gramotnost'), ('digitalni-zaklady','Data a informace')),
+ (('data-databaze','Strukturovaná vs. nestrukturovaná data'), ('digitalni-zaklady','Reprezentace dat')),
+ # AI staví na datech
+ (('umela-inteligence','AI se učí z dat'), ('data-databaze','Datová gramotnost')),
+ (('umela-inteligence','Strojové učení prakticky'), ('data-databaze','Datový cyklus')),
+ # weby staví na programování a základech
+ (('tvorba-webu','Jak funguje web'), ('digitalni-zaklady','Internet a síť')),
+ (('tvorba-webu','Doména a hosting'), ('digitalni-zaklady','Cloud a server')),
+ (('tvorba-webu','Interaktivita (JavaScript, DOM)'), ('programovani','Události')),
+ (('tvorba-webu','Frameworky'), ('programovani','Funkce a procedury')),
+ # aplikace staví na programování, webu a AI
+ (('tvorba-aplikaci','Logika aplikace'), ('programovani','Podmínky v kódu')),
+ (('tvorba-aplikaci','Vibecoding'), ('umela-inteligence','Prompt a promptová gramotnost')),
+ (('tvorba-aplikaci','Vibecoding'), ('programovani','Čtení a hodnocení AI kódu')),
+ (('tvorba-aplikaci','Práce s API a backendem'), ('digitalni-zaklady','API')),
+ (('tvorba-aplikaci','Databáze a autentizace'), ('data-databaze','Tabulky a relační model')),
+ (('tvorba-aplikaci','Životní cyklus vývoje'), ('programovani','Verzování kódu')),
+ # tvorba obsahu staví na AI
+ (('tvorba-obsahu','Prompt pro média'), ('umela-inteligence','Prompt a promptová gramotnost')),
+ (('tvorba-obsahu','Generativní obraz'), ('umela-inteligence','Jak funguje generativní model')),
+ (('tvorba-obsahu','Generativní video'), ('umela-inteligence','Deepfakes a syntetická média')),
+ # hry staví na myšlení a programování
+ (('herni-vyvoj','Herní smyčka, scéna a objekty'), ('informaticke-mysleni','Řízení toku')),
+ (('herni-vyvoj','Vstup hráče, stavy a skóre'), ('programovani','Události')),
+ (('herni-vyvoj','Skutečné enginy'), ('programovani','Základy objektů (OOP)')),
+ (('herni-vyvoj','AI asistenti a kód'), ('programovani','Čtení a hodnocení AI kódu')),
+ # fyzický computing staví na programování a AI
+ (('fyzicky-computing','micro:bit'), ('programovani','Blokové vs. textové programování')),
+ (('fyzicky-computing','Události a řízení výstupu'), ('programovani','Události')),
+ (('fyzicky-computing','TinyML / edge AI'), ('umela-inteligence','Strojové učení prakticky')),
+ (('fyzicky-computing','IoT'), ('digitalni-zaklady','Cloud a server')),
+ # bezpečnost a občanství staví na základech a AI
+ (('kyberbezpecnost','Šifrování a HTTPS'), ('digitalni-zaklady','Adresy a protokoly')),
+ (('kyberbezpecnost','AI podvody'), ('umela-inteligence','Deepfakes a syntetická média')),
+ (('digitalni-obcanstvi','Jak fungují algoritmy sítí'), ('umela-inteligence','Doporučovací systémy')),
+ (('digitalni-obcanstvi','Jádro AI gramotnosti'), ('umela-inteligence','Jak funguje generativní model')),
+ (('digitalni-obcanstvi','Rozpoznání AI obsahu'), ('umela-inteligence','Deepfakes a syntetická média')),
+]
+
+# (A, B) — laterální "souvisí" (napříč tématy)
+EXTRA_SOUVISI = [
+ # AI průřezová vrstva (nástroj + reflexe)
+ (('tvorba-aplikaci','AI nástroje pro tvorbu'), ('umela-inteligence','Prompt a promptová gramotnost')),
+ (('tvorba-aplikaci','AI nástroje pro tvorbu'), ('programovani','Čtení a hodnocení AI kódu')),
+ (('tvorba-aplikaci','Iluze kompetence'), ('umela-inteligence','Kdy AI (ne)použít a disclosure')),
+ (('tvorba-webu','AI-asistovaná tvorba webu'), ('umela-inteligence','Ověřování výstupů')),
+ (('herni-vyvoj','AI generování assetů'), ('tvorba-obsahu','Generativní obraz')),
+ (('herni-vyvoj','AI asistenti a kód'), ('umela-inteligence','Ověřování výstupů')),
+ (('umela-inteligence','Foundation modely, LLM a RAG'), ('tvorba-aplikaci','AI nástroje pro tvorbu')),
+ # data <-> AI
+ (('data-databaze','Statistická gramotnost'), ('umela-inteligence','Bias a férovost')),
+ (('data-databaze','Čištění reálných dat'), ('umela-inteligence','AI se učí z dat')),
+ (('umela-inteligence','Typy AI úloh'), ('informaticke-mysleni','Modelování a simulace')),
+ (('umela-inteligence','Doporučovací systémy'), ('data-databaze','Vektorové databáze a embeddingy')),
+ (('digitalni-zaklady','Reprezentace dat'), ('umela-inteligence','AI se učí z dat')),
+ # bezpečnost / etika / soukromí (překrývající se koncepty)
+ (('kyberbezpecnost','Soukromí a digitální stopa'), ('digitalni-obcanstvi','Digitální stopa a soukromí')),
+ (('kyberbezpecnost','AI podvody'), ('digitalni-obcanstvi','Rozpoznání AI obsahu')),
+ (('kyberbezpecnost','Sextortion a citlivý obsah'), ('tvorba-obsahu','Provenience a vodoznaky')),
+ (('kyberbezpecnost','Ověřování přes druhý kanál'), ('umela-inteligence','Ověřování výstupů')),
+ (('kyberbezpecnost','Phishing a sociální inženýrství'), ('digitalni-obcanstvi','Kritické myšlení online')),
+ (('umela-inteligence','Soukromí při práci s AI'), ('digitalni-obcanstvi','Právo a etika')),
+ (('umela-inteligence','Hlubší etika AI'), ('digitalni-obcanstvi','Právo a etika')),
+ (('umela-inteligence','Bias a férovost'), ('digitalni-obcanstvi','Dezinformace a manipulace')),
+ (('tvorba-obsahu','Provenience a vodoznaky'), ('digitalni-obcanstvi','Rozpoznání AI obsahu')),
+ (('tvorba-obsahu','Etika, autorství a označování'), ('digitalni-obcanstvi','Etika AI ve škole')),
+ (('tvorba-obsahu','Generativní hudba a hlas'), ('kyberbezpecnost','AI podvody')),
+ # ekonomika pozornosti / wellbeing
+ (('digitalni-obcanstvi','Obchodní modely platforem'), ('digitalni-obcanstvi','Digitální wellbeing')),
+ (('digitalni-obcanstvi','Digitální wellbeing'), ('umela-inteligence','Doporučovací systémy')),
+ (('umela-inteligence','AI a společnost'), ('digitalni-obcanstvi','Dezinformace a manipulace')),
+ (('herni-vyvoj','Herní design'), ('digitalni-obcanstvi','Digitální wellbeing')),
+ # web / aplikace / cloud / design
+ (('tvorba-webu','Nasazení webu'), ('digitalni-zaklady','Cloud a server')),
+ (('tvorba-webu','Doména a hosting'), ('digitalni-zaklady','Adresy a protokoly')),
+ (('tvorba-webu','UX/UI a design webu'), ('tvorba-obsahu','Vizuální jazyk')),
+ (('tvorba-webu','Nasazení webu'), ('tvorba-aplikaci','Publikace do app storů')),
+ (('tvorba-webu','Přístupnost a SEO'), ('digitalni-obcanstvi','Aktivní digitální občanství')),
+ (('tvorba-aplikaci','Databáze a autentizace'), ('kyberbezpecnost','Hesla a 2FA')),
+ (('data-databaze','Účel informačních systémů'), ('tvorba-aplikaci','Databáze a autentizace')),
+ (('programovani','Verzování kódu'), ('herni-vyvoj','Publikace hry')),
+ # informatické myšlení jako průřez
+ (('informaticke-mysleni','Rozpoznávání vzorů'), ('umela-inteligence','AI se učí z dat')),
+ (('informaticke-mysleni','Abstrakce'), ('digitalni-zaklady','Vrstvy abstrakce')),
+ (('informaticke-mysleni','Dekompozice'), ('programovani','Funkce a procedury')),
+ (('informaticke-mysleni','Efektivita řešení'), ('programovani','Ladění a testování')),
+ (('informaticke-mysleni','Základní algoritmy'), ('programovani','Seznamy a kolekce')),
+ # data <-> mediální gramotnost
+ (('data-databaze','Datová gramotnost'), ('digitalni-obcanstvi','Kritické myšlení online')),
+ (('data-databaze','Statistická gramotnost'), ('digitalni-obcanstvi','Kritické myšlení online')),
+ # robotika / IoT
+ (('fyzicky-computing','Senzory a aktuátory'), ('umela-inteligence','Pět velkých idejí AI')),
+ (('fyzicky-computing','Komunikace mezi zařízeními'), ('digitalni-zaklady','Internet a síť')),
+ (('fyzicky-computing','IoT'), ('digitalni-zaklady','Kde jsou data fyzicky')),
+ # ostatní
+ (('digitalni-zaklady','Data a informace'), ('digitalni-obcanstvi','Digitální stopa a soukromí')),
+]
+
+for child, parent in EXTRA_PREREQ:
+    ci, pi = rid(child), rid(parent)
+    if ci in byid and pi in byid and ci != pi and pi not in byid[ci]['prerekvizity']:
+        byid[ci]['prerekvizity'].append(pi)
+
+for a, b in EXTRA_SOUVISI:
+    ai_, bi_ = rid(a), rid(b)
+    if ai_ in byid and bi_ in byid and ai_ != bi_ and bi_ not in byid[ai_]['souvisi']:
+        byid[ai_]['souvisi'].append(bi_)
+
+# --- dedup: souvisí nesmí duplikovat prerekvizitu (ani opačně) a nesmí být symetricky dvakrát ---
+prereq_pairs = set()
+for c in concepts:
+    for p in c['prerekvizity']:
+        prereq_pairs.add(frozenset((c['id'], p)))
+seen_s = set()
+for c in concepts:
+    keep = []
+    for s in c['souvisi']:
+        key = frozenset((c['id'], s))
+        if key in prereq_pairs or key in seen_s or s == c['id']:
+            continue
+        seen_s.add(key); keep.append(s)
+    c['souvisi'] = keep
+
+# --- kontrola: cyklus v prerekvizitách (má být DAG) ---
+graph = {c['id']: list(c['prerekvizity']) for c in concepts}
+WHITE, GRAY, BLACK = 0, 1, 2
+color = {n: WHITE for n in graph}
+cycles = []
+def dfs(n, stack):
+    color[n] = GRAY
+    for m in graph.get(n, []):
+        if color[m] == GRAY:
+            cycles.append(stack + [m])
+        elif color[m] == WHITE:
+            dfs(m, stack + [m])
+    color[n] = BLACK
+for n in graph:
+    if color[n] == WHITE:
+        dfs(n, [n])
+if edge_errors:
+    print('CHYBY HRAN:', edge_errors)
+if cycles:
+    print('POZOR, cykly v prerekvizitách:', cycles[:5])
+
 areas = [{'id': i, 'nazev': n, 'kod': k, 'popis': p, 'barva': b} for (i, n, k, p, b) in RVP_OBLASTI]
 temata = [{'id': i, 'nazev': n, 'vrstva_mapy': v, 'popis': p, 'barva': b, 'navazuje_na': nn}
           for (i, n, v, p, b, nn) in TEMATA]
 
 data = {
     'meta': {
-        'verze': '0.1-draft',
+        'verze': '0.2-draft',
         'popis': 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.',
         'paleta': ['#ffff00', '#ffffff', '#000000'],
         'uroven': '2. stupeň ZŠ s přesahem výš',

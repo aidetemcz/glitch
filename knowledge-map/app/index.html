@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=12">
+  <link rel="stylesheet" href="css/map.css?v=13">
 </head>
 <body>
   <div id="app">
@@ -53,6 +53,14 @@
       </div>
 
       <div class="control-block">
+        <div class="control-label">Vazby</div>
+        <div id="filter-edge" class="chips">
+          <button class="chip" data-filter="edge" data-val="prereq" aria-pressed="true">Prerekvizity</button>
+          <button class="chip" data-filter="edge" data-val="related" aria-pressed="true">Souvisí</button>
+        </div>
+      </div>
+
+      <div class="control-block">
         <div class="control-label">Tagy</div>
         <div id="filter-tagy" class="chips"></div>
       </div>
@@ -84,6 +92,6 @@
 
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
-  <script src="js/map.js?v=12"></script>
+  <script src="js/map.js?v=13"></script>
 </body>
 </html>

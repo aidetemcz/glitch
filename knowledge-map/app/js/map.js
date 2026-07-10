@@ -47,7 +47,7 @@
   const statusEl = document.getElementById("status");
   const setStatus = (t) => { statusEl.textContent = t; statusEl.classList.toggle("hidden", !t); };
 
-  let DATA = null, cy = null, viewMode = "tema", conceptById = {};
+  let DATA = null, cy = null, viewMode = "tema", conceptById = {}, pinned = null;
 
   /* ---------- Načtení dat ---------- */
   fetch("data/knowledge-map.yaml?v=6")
@@ -135,6 +135,7 @@
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
         { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
         { selector: ".dim", style: { "opacity": 0.08 } },
+        { selector: ".nbfade", style: { "opacity": 0.07 } },
         { selector: ".filtered", style: { "display": "none" } }
       ]
     });
@@ -169,6 +170,8 @@
     /* interakce grafu */
     cy.on("tap", "node", (evt) => openDetail(evt.target));
     cy.on("tap", (evt) => { if (evt.target === cy) closeDetail(); });
+    cy.on("mouseover", "node[type='concept']", (e) => focusNb(e.target));
+    cy.on("mouseout", "node[type='concept']", () => { if (pinned) focusNb(pinned); else clearNb(); });
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeDetail();
     });
@@ -225,7 +228,7 @@
     return s;
   }
   function applyFilters() {
-    const gr = pressed("group"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy");
+    const gr = pressed("group"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy"), eg = pressed("edge");
     cy.batch(() => {
       cy.nodes("[type='concept']").forEach((n) => {
         const c = n.data("_c");
@@ -237,10 +240,18 @@
         const empty = g.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0;
         g.toggleClass("filtered", empty || !gr.has(g.data("gid")));
       });
-      cy.edges().forEach((e) => e.toggleClass("filtered", e.source().hasClass("filtered") || e.target().hasClass("filtered")));
+      cy.edges().forEach((e) => e.toggleClass("filtered",
+        e.source().hasClass("filtered") || e.target().hasClass("filtered") || !eg.has(e.data("etype"))));
     });
     applySearch();
   }
+
+  /* Zvýraznění sousedství (proti „chuchvalci"): ztlum vše kromě uzlu a jeho vazeb */
+  function focusNb(node) {
+    const nb = node.closedNeighborhood();
+    cy.batch(() => { cy.elements().addClass("nbfade"); nb.removeClass("nbfade"); });
+  }
+  function clearNb() { if (cy) cy.batch(() => cy.elements().removeClass("nbfade")); }
   function applySearch() {
     const q = document.getElementById("search").value.trim().toLowerCase();
     cy.batch(() => {
@@ -263,7 +274,7 @@
   const detail = document.getElementById("detail");
   const detailBody = document.getElementById("detail-body");
   document.getElementById("detail-close").addEventListener("click", closeDetail);
-  function closeDetail() { detail.classList.add("hidden"); if (cy) cy.$(":selected").unselect(); }
+  function closeDetail() { detail.classList.add("hidden"); pinned = null; clearNb(); if (cy) cy.$(":selected").unselect(); }
 
   function focusNode(id) {
     const n = cy.getElementById(id);
@@ -288,8 +299,10 @@
          <p class="d-desc">${esc(node.data("popis"))}</p>
          <div class="d-section"><h3>Konceptů: ${all.length}</h3></div>
          <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
+      pinned = null; clearNb();
     } else {
       detailBody.innerHTML = conceptHtml(node.data("_c"));
+      pinned = node; focusNb(node);
     }
     detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
     detail.classList.remove("hidden");

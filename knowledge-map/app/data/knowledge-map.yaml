@@ -1,7 +1,7 @@
 # Mapa znalostí Glitch — vygenerováno build_map.py
 # RVP znění je doslovné z RVP_revidované_2024-03-28.pdf (nevymýšlet).
 meta:
-  verze: 0.1-draft
+  verze: 0.2-draft
   popis: 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.'
   paleta:
   - '#ffff00'
@@ -151,7 +151,7 @@ concepts:
   kriteria: []
   prerekvizity: []
   souvisi:
-  - data-databaze-datova-gramotnost
+  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
   tagy:
   - data
   zdroj:
@@ -227,7 +227,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-data-a-informace
-  souvisi: []
+  souvisi:
+  - umela-inteligence-ai-se-uci-z-dat
   tagy:
   - data
   - kodovani
@@ -336,7 +337,8 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi: []
+  souvisi:
+  - digitalni-zaklady-vrstvy-abstrakce
   tagy:
   - abstrakce
   - mysleni
@@ -353,7 +355,8 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi: []
+  souvisi:
+  - umela-inteligence-ai-se-uci-z-dat
   tagy:
   - vzory
   - mysleni
@@ -375,6 +378,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-dekompozice
+  - informaticke-mysleni-rozpoznavani-vzoru
   souvisi: []
   tagy:
   - algoritmus
@@ -473,7 +477,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-algoritmus
-  souvisi: []
+  souvisi:
+  - programovani-ladeni-a-testovani
   tagy:
   - efektivita
   - algoritmus
@@ -491,7 +496,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-algoritmus
-  souvisi: []
+  souvisi:
+  - programovani-seznamy-a-kolekce
   tagy:
   - algoritmus
   zdroj: []
@@ -550,6 +556,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-promenne-a-datove-typy
+  - informaticke-mysleni-logika-a-booleovske-vyrazy
   souvisi:
   - informaticke-mysleni-rizeni-toku
   tagy:
@@ -572,8 +579,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-promenne-a-datove-typy
-  souvisi:
   - informaticke-mysleni-rizeni-toku
+  souvisi: []
   tagy:
   - opakovani
   - rizeni-toku
@@ -592,6 +599,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-promenne-a-datove-typy
+  - informaticke-mysleni-dekompozice
   souvisi: []
   tagy:
   - funkce
@@ -612,6 +620,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-podminky-v-kodu
+  - programovani-cykly-v-kodu
   souvisi:
   - informaticke-mysleni-hodnoceni-a-analyza-chyb
   tagy:
@@ -633,6 +642,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-cykly-v-kodu
+  - informaticke-mysleni-algoritmus
   souvisi: []
   tagy:
   - programovani
@@ -687,8 +697,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-funkce-a-procedury
-  souvisi:
   - digitalni-zaklady-api
+  souvisi: []
   tagy:
   - api
   - knihovny
@@ -706,7 +716,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-blokove-vs-textove-programovani
-  souvisi: []
+  souvisi:
+  - herni-vyvoj-publikace-hry
   tagy:
   - verzovani
   - spoluprace
@@ -782,8 +793,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-co-je-a-co-neni-ai
-  souvisi:
   - data-databaze-datova-gramotnost
+  souvisi: []
   tagy:
   - ai
   - data
@@ -820,7 +831,7 @@ concepts:
   prerekvizity:
   - umela-inteligence-ai-se-uci-z-dat
   souvisi:
-  - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+  - data-databaze-vektorove-databaze-a-embeddingy
   tagy:
   - ai
   - data
@@ -911,7 +922,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-ai-se-uci-z-dat
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-dezinformace-a-manipulace
   tagy:
   - ai
   - etika
@@ -930,6 +942,7 @@ concepts:
   prerekvizity: []
   souvisi:
   - kyberbezpecnost-soukromi-a-digitalni-stopa
+  - digitalni-obcanstvi-pravo-a-etika
   tagy:
   - ai
   - soukromi
@@ -966,8 +979,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-ai-se-uci-z-dat
-  souvisi:
-  - fyzicky-computing-tinyml-edge-ai
+  - data-databaze-datovy-cyklus
+  souvisi: []
   tagy:
   - ai
   - ml
@@ -986,7 +999,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-strojove-uceni-prakticky
-  souvisi: []
+  souvisi:
+  - informaticke-mysleni-modelovani-a-simulace
   tagy:
   - ai
   - ml
@@ -1006,6 +1020,7 @@ concepts:
   - umela-inteligence-jak-funguje-generativni-model
   souvisi:
   - data-databaze-vektorove-databaze-a-embeddingy
+  - tvorba-aplikaci-ai-nastroje-pro-tvorbu
   tagy:
   - ai
   zdroj: []
@@ -1022,7 +1037,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-bias-a-ferovost
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-pravo-a-etika
   tagy:
   - ai
   - etika
@@ -1040,8 +1056,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-jak-funguje-generativni-model
-  souvisi:
-  - kyberbezpecnost-ai-podvody
+  souvisi: []
   tagy:
   - ai
   - deepfake
@@ -1060,7 +1075,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-hlubsi-etika-ai
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-dezinformace-a-manipulace
   tagy:
   - ai
   - etika
@@ -1079,8 +1095,10 @@ concepts:
     vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
   cile: []
   kriteria: []
-  prerekvizity: []
-  souvisi: []
+  prerekvizity:
+  - digitalni-zaklady-data-a-informace
+  souvisi:
+  - digitalni-obcanstvi-kriticke-mysleni-online
   tagy:
   - data
   zdroj:
@@ -1120,6 +1138,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-datova-gramotnost
+  - digitalni-zaklady-reprezentace-dat
   souvisi: []
   tagy:
   - data
@@ -1186,6 +1205,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-tabulky-a-relacni-model
+  - data-databaze-strukturovana-vs-nestrukturovana-data
   souvisi: []
   tagy:
   - databaze
@@ -1209,6 +1229,7 @@ concepts:
   - data-databaze-tabulky-a-relacni-model
   souvisi:
   - digitalni-obcanstvi-obchodni-modely-platforem
+  - tvorba-aplikaci-databaze-a-autentizace
   tagy:
   - data
   - databaze
@@ -1229,7 +1250,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-vizualizace-a-volba-grafu
-  souvisi: []
+  souvisi:
+  - umela-inteligence-bias-a-ferovost
+  - digitalni-obcanstvi-kriticke-mysleni-online
   tagy:
   - data
   - hodnoceni
@@ -1250,7 +1273,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-datovy-cyklus
-  souvisi: []
+  souvisi:
+  - umela-inteligence-ai-se-uci-z-dat
   tagy:
   - data
   zdroj:
@@ -1286,8 +1310,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-nosql-a-dokumentove-databaze
-  souvisi:
-  - umela-inteligence-foundation-modely-llm-a-rag
+  souvisi: []
   tagy:
   - databaze
   - ai
@@ -1342,9 +1365,9 @@ concepts:
   rvp: []
   cile: []
   kriteria: []
-  prerekvizity: []
-  souvisi:
+  prerekvizity:
   - digitalni-zaklady-internet-a-sit
+  souvisi: []
   tagy:
   - web
   - sit
@@ -1399,8 +1422,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-jak-funguje-web
-  souvisi:
   - digitalni-zaklady-cloud-a-server
+  souvisi:
+  - digitalni-zaklady-adresy-a-protokoly
   tagy:
   - web
   - cloud
@@ -1418,8 +1442,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-html
-  souvisi:
   - programovani-udalosti
+  souvisi: []
   tagy:
   - web
   - javascript
@@ -1439,6 +1463,7 @@ concepts:
   - tvorba-webu-css
   souvisi:
   - tvorba-aplikaci-vibecoding
+  - umela-inteligence-overovani-vystupu
   tagy:
   - web
   - ai
@@ -1457,6 +1482,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-interaktivita-javascript-dom
+  - programovani-funkce-a-procedury
   souvisi: []
   tagy:
   - web
@@ -1475,7 +1501,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-domena-a-hosting
-  souvisi: []
+  souvisi:
+  - digitalni-zaklady-cloud-a-server
+  - tvorba-aplikaci-publikace-do-app-storu
   tagy:
   - web
   - cloud
@@ -1493,7 +1521,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-html
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-aktivni-digitalni-obcanstvi
   tagy:
   - web
   - design
@@ -1511,7 +1540,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-css
-  souvisi: []
+  souvisi:
+  - tvorba-obsahu-vizualni-jazyk
   tagy:
   - web
   - design
@@ -1563,8 +1593,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-aplikaci-co-je-aplikace
-  souvisi:
   - programovani-podminky-v-kodu
+  souvisi: []
   tagy:
   - aplikace
   - rizeni-toku
@@ -1582,8 +1612,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-aplikaci-logika-aplikace
-  souvisi:
+  - umela-inteligence-prompt-a-promptova-gramotnost
   - programovani-cteni-a-hodnoceni-ai-kodu
+  souvisi: []
   tagy:
   - aplikace
   - ai
@@ -1602,7 +1633,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-aplikaci-vibecoding
-  souvisi: []
+  souvisi:
+  - umela-inteligence-prompt-a-promptova-gramotnost
+  - programovani-cteni-a-hodnoceni-ai-kodu
   tagy:
   - aplikace
   - ai
@@ -1620,8 +1653,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-aplikaci-logika-aplikace
-  souvisi:
   - digitalni-zaklady-api
+  souvisi: []
   tagy:
   - aplikace
   - api
@@ -1639,8 +1672,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-aplikaci-prace-s-api-a-backendem
-  souvisi:
   - data-databaze-tabulky-a-relacni-model
+  souvisi:
+  - kyberbezpecnost-hesla-a-2fa
   tagy:
   - aplikace
   - databaze
@@ -1659,8 +1693,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-aplikaci-logika-aplikace
-  souvisi:
   - programovani-verzovani-kodu
+  souvisi: []
   tagy:
   - aplikace
   - verzovani
@@ -1697,6 +1731,7 @@ concepts:
   - tvorba-aplikaci-vibecoding
   souvisi:
   - programovani-ladeni-a-testovani
+  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
   tagy:
   - aplikace
   - ai
@@ -1732,8 +1767,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-obsahu-vizualni-jazyk
-  souvisi:
   - umela-inteligence-prompt-a-promptova-gramotnost
+  souvisi: []
   tagy:
   - obsah
   - ai
@@ -1752,6 +1787,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-obsahu-prompt-pro-media
+  - umela-inteligence-jak-funguje-generativni-model
   souvisi: []
   tagy:
   - obsah
@@ -1772,6 +1808,7 @@ concepts:
   - tvorba-obsahu-generativni-obraz
   souvisi:
   - umela-inteligence-hlubsi-etika-ai
+  - digitalni-obcanstvi-etika-ai-ve-skole
   tagy:
   - obsah
   - etika
@@ -1790,8 +1827,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-obsahu-generativni-obraz
-  souvisi:
   - umela-inteligence-deepfakes-a-synteticka-media
+  souvisi: []
   tagy:
   - obsah
   - ai
@@ -1810,7 +1847,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-obsahu-prompt-pro-media
-  souvisi: []
+  souvisi:
+  - kyberbezpecnost-ai-podvody
   tagy:
   - obsah
   - ai
@@ -1863,7 +1901,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-obsahu-etika-autorstvi-a-oznacovani
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-rozpoznani-ai-obsahu
   tagy:
   - obsah
   - bezpeci
@@ -1898,7 +1937,8 @@ concepts:
   rvp: []
   cile: []
   kriteria: []
-  prerekvizity: []
+  prerekvizity:
+  - informaticke-mysleni-rizeni-toku
   souvisi: []
   tagy:
   - hry
@@ -1917,8 +1957,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - herni-vyvoj-herni-smycka-scena-a-objekty
-  souvisi:
   - programovani-udalosti
+  souvisi: []
   tagy:
   - hry
   - udalosti
@@ -1953,7 +1993,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - herni-vyvoj-vstup-hrace-stavy-a-skore
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-digitalni-wellbeing
   tagy:
   - hry
   - design
@@ -2009,6 +2050,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - herni-vyvoj-lehke-enginy
+  - programovani-zaklady-objektu-oop
   souvisi: []
   tagy:
   - hry
@@ -2027,7 +2069,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - herni-vyvoj-herni-design
-  souvisi: []
+  souvisi:
+  - tvorba-obsahu-generativni-obraz
   tagy:
   - hry
   - ai
@@ -2045,8 +2088,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - herni-vyvoj-skutecne-enginy
-  souvisi:
   - programovani-cteni-a-hodnoceni-ai-kodu
+  souvisi:
+  - umela-inteligence-overovani-vystupu
   tagy:
   - hry
   - ai
@@ -2100,7 +2144,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
-  souvisi: []
+  souvisi:
+  - umela-inteligence-pet-velkych-ideji-ai
   tagy:
   - robotika
   - senzory
@@ -2120,8 +2165,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - fyzicky-computing-senzory-a-aktuatory
-  souvisi:
   - programovani-blokove-vs-textove-programovani
+  souvisi: []
   tagy:
   - robotika
   - programovani
@@ -2140,6 +2185,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - fyzicky-computing-micro-bit
+  - programovani-udalosti
   souvisi: []
   tagy:
   - robotika
@@ -2193,8 +2239,10 @@ concepts:
   kriteria: []
   prerekvizity:
   - fyzicky-computing-senzory-a-aktuatory
+  - digitalni-zaklady-cloud-a-server
   souvisi:
   - data-databaze-vizualizace-a-volba-grafu
+  - digitalni-zaklady-kde-jsou-data-fyzicky
   tagy:
   - robotika
   - sit
@@ -2215,8 +2263,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - fyzicky-computing-micro-bit
-  souvisi:
   - umela-inteligence-strojove-uceni-prakticky
+  souvisi: []
   tagy:
   - robotika
   - ai
@@ -2236,7 +2284,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - fyzicky-computing-micro-bit
-  souvisi: []
+  souvisi:
+  - digitalni-zaklady-internet-a-sit
   tagy:
   - robotika
   - sit
@@ -2274,7 +2323,8 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-kriticke-mysleni-online
   tagy:
   - bezpeci
   zdroj:
@@ -2293,7 +2343,8 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
   tagy:
   - bezpeci
   - soukromi
@@ -2314,6 +2365,7 @@ concepts:
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-soukromi-a-digitalni-stopa
+  - kyberbezpecnost-hesla-a-2fa
   souvisi: []
   tagy:
   - bezpeci
@@ -2352,8 +2404,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-zakladni-hygiena
-  souvisi:
   - digitalni-zaklady-adresy-a-protokoly
+  souvisi: []
   tagy:
   - bezpeci
   - sit
@@ -2391,8 +2443,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
-  souvisi:
   - umela-inteligence-deepfakes-a-synteticka-media
+  souvisi:
+  - digitalni-obcanstvi-rozpoznani-ai-obsahu
   tagy:
   - bezpeci
   - deepfake
@@ -2411,7 +2464,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-ai-podvody
-  souvisi: []
+  souvisi:
+  - tvorba-obsahu-provenience-a-vodoznaky
   tagy:
   - bezpeci
   - soukromi
@@ -2431,6 +2485,7 @@ concepts:
   - kyberbezpecnost-ai-podvody
   souvisi:
   - digitalni-obcanstvi-dezinformace-a-manipulace
+  - umela-inteligence-overovani-vystupu
   tagy:
   - bezpeci
   - ai-prurez
@@ -2481,9 +2536,9 @@ concepts:
   rvp: []
   cile: []
   kriteria: []
-  prerekvizity: []
-  souvisi:
+  prerekvizity:
   - umela-inteligence-doporucovaci-systemy
+  souvisi: []
   tagy:
   - media
   - ai
@@ -2517,8 +2572,7 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi:
-  - kyberbezpecnost-soukromi-a-digitalni-stopa
+  souvisi: []
   tagy:
   - media
   - soukromi
@@ -2535,7 +2589,8 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi: []
+  souvisi:
+  - umela-inteligence-doporucovaci-systemy
   tagy:
   - media
   - wellbeing
@@ -2553,8 +2608,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-obcanstvi-kriticke-mysleni-online
-  souvisi:
   - umela-inteligence-jak-funguje-generativni-model
+  souvisi: []
   tagy:
   - media
   - ai
@@ -2572,8 +2627,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-obcanstvi-jadro-ai-gramotnosti
-  souvisi:
   - umela-inteligence-deepfakes-a-synteticka-media
+  souvisi: []
   tagy:
   - media
   - ai
@@ -2631,7 +2686,8 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-obcanstvi-jak-funguji-algoritmy-siti
-  souvisi: []
+  souvisi:
+  - digitalni-obcanstvi-digitalni-wellbeing
   tagy:
   - media
   zdroj: []

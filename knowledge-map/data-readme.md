@@ -60,5 +60,20 @@ Průřezové značky napříč tématy, hodí se pro filtr i pro „AI průřezo
 - Všechny `prerekvizity`/`souvisi` odkazují na existující `id` (ověřeno, žádné visící odkazy).
 - Pokrytí RVP: všech **12** očekávaných výstupů oboru Informatika pro 2. stupeň je namapováno na koncepty.
 
+## Propojení (hrany) — verze 0.2
+
+Propojení bylo v 0.2 zhuštěno. Dva typy hran:
+- `prerekvizity` (směrové, „nauč se A, než začneš B") — **nově i napříč tématy** (35 mezitématických), takže témata nejsou izolované ostrovy: programování staví na informatickém myšlení, weby/aplikace na programování, AI na datech atd.
+- `souvisi` (laterální příbuznost, převážně napříč tématy) — včetně realizace **AI průřezové vrstvy** jako hran (koncepty s AI nástrojem odkazují na jádro AI: `Ověřování výstupů`, `Prompt`, `Bias`…) a překrývajících se konceptů bezpečí/etiky/soukromí.
+
+Stav: 210 hran, průměrný stupeň uzlu ~3,1, žádný izolovaný uzel. Prerekvizity tvoří acyklický graf (DAG, ověřeno). `souvisi` nikdy neduplikuje `prerekvizitu`.
+
+**Doporučení k UI (důležité kvůli čitelnosti):** při vyšší hustotě hran je klíčové, aby graf nebyl „chuchvalec". Přidej prosím:
+1. **Zvýraznění sousedství** při najetí/kliknutí na uzel (zbytek grafu ztlum) — nejúčinnější nástroj proti přehlcení.
+2. **Filtr typu hrany** (jen prerekvizity / jen souvisí / obojí).
+3. Volitelně zvýraznění hran vedoucích na jádro AI (tag `ai-prurez`) jako „AI průřezovou vrstvu".
+
+Tím zůstane mapa čitelná i při dalším zhušťování.
+
 ## Regenerace
 Data vznikají z `build_map.py` (přiložen). Když bude potřeba hromadná úprava (přidat koncept, přemapovat RVP), uprav `build_map.py` a spusť `python3 build_map.py` — přepíše `knowledge-map.yaml` a vypíše kontrolu (počty, pokrytí RVP, visící odkazy).
