@@ -57,21 +57,24 @@
     const deg = {};
     edges.forEach((e) => { deg[e.data.source] = (deg[e.data.source] || 0) + 1; deg[e.data.target] = (deg[e.data.target] || 0) + 1; });
     const sizeFor = (c) => {
-      let s = 30 + (deg[c.id] || 0) * 8;
-      if (c.vrstva === "core") s = Math.max(s, 52);
-      return Math.min(s, 74);
+      let s = 40 + (deg[c.id] || 0) * 8;
+      s = Math.max(s, c.vrstva === "core" ? 66 : 50);
+      return Math.min(s, 92);
     };
 
-    /* Uzly: oblasti = compound rodič (obrys clusteru), koncepty = bílé bubliny */
+    /* Uzly: oblasti = compound rodič (obrys clusteru), koncepty = bubliny s textem uvnitř */
     const nodes = [];
     areas.forEach((a) => nodes.push({ data: {
       id: a.id, type: "area", label: a.nazev, popis: a.popis || "", color: a.barva || "#ffffff"
     }}));
-    concepts.forEach((c) => nodes.push({ data: {
-      id: c.id, type: "concept", parent: ids.has(c.oblast) ? c.oblast : undefined,
-      label: c.nazev, vrstva: c.vrstva, stav: c.stav || "draft", oblast: c.oblast,
-      tagy: c.tagy || [], size: sizeFor(c), _c: c
-    }}));
+    concepts.forEach((c) => {
+      const sz = sizeFor(c);
+      nodes.push({ data: {
+        id: c.id, type: "concept", parent: ids.has(c.oblast) ? c.oblast : undefined,
+        label: c.nazev, vrstva: c.vrstva, stav: c.stav || "draft", oblast: c.oblast,
+        tagy: c.tagy || [], size: sz, textw: Math.round(sz * 0.84), _c: c
+      }});
+    });
 
     const cy = cytoscape({
       container: document.getElementById("cy"),
@@ -87,14 +90,18 @@
           "text-transform": "uppercase", "padding": "30px"
         }},
         { selector: "node[type='concept']", style: {
-          "shape": "ellipse", "background-color": "#ffffff",
-          "width": "data(size)", "height": "data(size)",
-          "border-width": 1.5, "border-color": "#0a0a0c",
-          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "92px",
-          "text-valign": "bottom", "text-halign": "center", "text-margin-y": 6,
-          "color": "rgba(255,255,255,0.6)", "font-size": "10px", "font-weight": "500"
+          "shape": "ellipse", "width": "data(size)", "height": "data(size)",
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
+          "text-valign": "center", "text-halign": "center",
+          "font-size": "9px", "font-weight": "600", "border-width": 1.5
         }},
-        { selector: "node[vrstva='core']", style: { "border-width": 2.5 } },
+        { selector: "node[vrstva='core']", style: {
+          "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
+        }},
+        { selector: "node[vrstva='navazujici']", style: {
+          "background-color": "#0a0a0c", "color": "#ffffff",
+          "border-color": "#ffffff", "border-width": 1.8
+        }},
         { selector: "edge[etype='prereq']", style: {
           "line-color": "rgba(255,255,255,0.5)", "width": 1.4, "line-style": "dashed", "curve-style": "bezier",
           "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.7)", "arrow-scale": 1
@@ -102,7 +109,6 @@
         { selector: "edge[etype='related']", style: {
           "line-color": "rgba(255,255,255,0.3)", "width": 1, "line-style": "dotted", "curve-style": "bezier"
         }},
-        { selector: "node.labeled", style: { "color": "#ffffff", "font-size": "12px", "z-index": 30 } },
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
         { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
         { selector: ".dim", style: { "opacity": 0.1 } },
@@ -188,8 +194,6 @@
 
     cy.on("tap", "node", (evt) => openDetail(evt.target));
     cy.on("tap", (evt) => { if (evt.target === cy) closeDetail(); });
-    cy.on("mouseover", "node[type='concept']", (e) => e.target.addClass("labeled"));
-    cy.on("mouseout", "node[type='concept']", (e) => { if (!e.target.selected()) e.target.removeClass("labeled"); });
 
     function closeDetail() { detail.classList.add("hidden"); cy.$(":selected").unselect(); }
 

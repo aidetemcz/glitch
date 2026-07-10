@@ -44,7 +44,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .legend-line { width: 22px; height: 0; border-top: 1.5px solid var(--c-grey-15); }
 .legend-line.dashed { border-top-style: dashed; }
 .legend-line.dotted { border-top-style: dotted; }
-.legend-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--c-white); border: 1px solid #000; }
+.legend-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--c-white); }
+.legend-dot.ring { background: #0a0a0c; border: 1.6px solid var(--c-white); }
 .legend-outline { width: 15px; height: 15px; border-radius: 50%; border: 1.4px dashed rgba(255,255,255,0.5); }
 
 /* Graf */
