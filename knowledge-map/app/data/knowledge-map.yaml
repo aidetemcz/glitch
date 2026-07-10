@@ -1,231 +1,2657 @@
-# Mapa znalostí — data (ukázka)
-# Zdroj pravdy pro graf. Schéma: ../../structure.md
-# Obsah je zatím SKELETON k naplnění z RVP a zdrojů (main-sources).
-
+# Mapa znalostí Glitch — vygenerováno build_map.py
+# RVP znění je doslovné z RVP_revidované_2024-03-28.pdf (nevymýšlet).
+meta:
+  verze: 0.1-draft
+  popis: 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.'
+  paleta:
+  - '#ffff00'
+  - '#ffffff'
+  - '#000000'
+  uroven: 2. stupeň ZŠ s přesahem výš
 areas:
-  - id: algoritmizace
-    nazev: Algoritmizace a programování
-    popis: Postupy krok za krokem, řízení toku, dekompozice, tvorba a ladění programů.
-    barva: "#ffff00"
-
-  - id: data-modelovani
-    nazev: Data, informace a modelování
-    popis: Kódování, struktura a interpretace dat; modely a jejich zjednodušení.
-    barva: "#ffffff"
-
+- id: data-modelovani
+  nazev: Data, informace a modelování
+  kod: INF-INF-001
+  popis: Práce s daty a informacemi, jejich kódování, modelování situací a základy strojového učení.
+  barva: '#ffff00'
+- id: algoritmizace
+  nazev: Algoritmizace a programování
+  kod: INF-INF-002
+  popis: Rozklad problému, návrh a čtení algoritmů a tvorba programů.
+  barva: '#ffffff'
+- id: informacni-systemy
+  nazev: Informační systémy
+  kod: INF-INF-003
+  popis: Účel a užitečnost informačních systémů, evidence a automatické zpracování dat.
+  barva: '#ffff00'
+- id: digitalni-technologie
+  nazev: Digitální technologie
+  kod: INF-INF-004
+  popis: Hardware, software, sítě a bezpečné zacházení se zařízeními a daty.
+  barva: '#ffffff'
+temata:
+- id: digitalni-zaklady
+  nazev: Digitální základy
+  vrstva_mapy: 0
+  popis: Jak funguje digitální svět — počítač, internet, cloud a kde „žijí" data a služby.
+  barva: '#ffffff'
+  navazuje_na: []
+- id: informaticke-mysleni
+  nazev: Informatické myšlení a algoritmizace
+  vrstva_mapy: 0
+  popis: Univerzální způsob, jak rozložit problém a popsat řešení krok za krokem — nezávisle na jazyce.
+  barva: '#ffff00'
+  navazuje_na: []
+- id: programovani
+  nazev: Programování
+  vrstva_mapy: 1
+  popis: Převod algoritmu do kódu — od bloků k textovému jazyku; v éře AI důraz na porozumění a ladění.
+  barva: '#ffffff'
+  navazuje_na:
+  - informaticke-mysleni
+  - digitalni-zaklady
+- id: umela-inteligence
+  nazev: Umělá inteligence
+  vrstva_mapy: 2
+  popis: Co AI je a není, jak se učí z dat, jak s ní pracovat a jak ji kriticky a eticky používat.
+  barva: '#ffff00'
+  navazuje_na:
+  - digitalni-zaklady
+  - data-databaze
+- id: data-databaze
+  nazev: Data, databáze a datová gramotnost
+  vrstva_mapy: 1
+  popis: Jak se data sbírají, strukturují, dotazují a kriticky čtou — a jak z nich čerpá AI.
+  barva: '#ffff00'
+  navazuje_na:
+  - digitalni-zaklady
+- id: tvorba-webu
+  nazev: Tvorba webů
+  vrstva_mapy: 1
+  popis: Postav a publikuj vlastní web — od struktury a vzhledu po nasazení online.
+  barva: '#ffffff'
+  navazuje_na:
+  - programovani
+- id: tvorba-aplikaci
+  nazev: Tvorba aplikací a vibecoding
+  vrstva_mapy: 1
+  popis: Od nápadu k funkční appce — s no-code nástroji i s AI jako programovacím parťákem.
+  barva: '#ffffff'
+  navazuje_na:
+  - programovani
+  - tvorba-webu
+  - umela-inteligence
+- id: tvorba-obsahu
+  nazev: Tvorba digitálního obsahu s AI
+  vrstva_mapy: 1
+  popis: Grafika, video, hudba a hlas s generativními nástroji — a etika a autorství, co k tomu patří.
+  barva: '#ffff00'
+  navazuje_na:
+  - umela-inteligence
+- id: herni-vyvoj
+  nazev: Herní vývoj
+  vrstva_mapy: 1
+  popis: Navrhni a postav vlastní hru — od bloků po engine, dnes i s AI generováním assetů.
+  barva: '#ffffff'
+  navazuje_na:
+  - informaticke-mysleni
+  - programovani
+- id: fyzicky-computing
+  nazev: Fyzický computing, robotika a IoT
+  vrstva_mapy: 1
+  popis: Kód, který hýbe fyzickým světem — a AI, kterou si sám natrénuješ na zařízení.
+  barva: '#ffffff'
+  navazuje_na:
+  - informaticke-mysleni
+  - programovani
+- id: kyberbezpecnost
+  nazev: Kyberbezpečnost a digitální bezpečí
+  vrstva_mapy: 3
+  popis: Jak chránit sebe, svá data a zařízení — ve světě, kde i podvody umí AI.
+  barva: '#ffff00'
+  navazuje_na:
+  - digitalni-zaklady
+- id: digitalni-obcanstvi
+  nazev: Digitální občanství, média a wellbeing
+  vrstva_mapy: 3
+  popis: Rozumět tomu, jak fungují sítě a algoritmy, kriticky číst obsah a mít zdravý vztah k technologiím.
+  barva: '#ffff00'
+  navazuje_na: []
 concepts:
-  # --- Algoritmizace ---
-  - id: algoritmizace-algoritmus
-    nazev: Algoritmus
-    oblast: algoritmizace
-    vrstva: core
-    popis: "Přesný postup, jak z počátečního stavu krok za krokem dojít k cíli."
-    cile:
-      - uroven: vybaveni
-        text: "Žák pozná a pojmenuje algoritmus v běžné situaci (návod, recept)."
-        orientacne_rocnik: 6
-      - uroven: vyuziti-znalosti
-        text: "Žák navrhne vlastní algoritmus pro nový problém a odladí ho."
-        orientacne_rocnik: 8
-    kriteria:
-      - uroven: vybaveni
-        text: "Z několika textů vybere ty, které jsou algoritmem, a zdůvodní proč."
-      - uroven: vyuziti-znalosti
-        text: "Sestaví funkční postup o 4–6 krocích a opraví záměrně vloženou chybu."
-    rvp:
-      - kod: "I-9-2-01"
-        vystup: "(doplnit přesné znění očekávaného výstupu z RVP)"
-    zdroj:
-      - "RVP_revidované_2024-03-28.pdf, s. XX"
-    tagy: [postup, dekompozice, když-tak]
-    prerekvizity: []
-    souvisi: [algoritmizace-podminka]
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: algoritmizace-podminka
-    nazev: Podmínka (když–tak)
-    oblast: algoritmizace
-    vrstva: core
-    popis: "Rozhodnutí ve výpočtu: podle platnosti podmínky se provede jedna, nebo druhá větev."
-    cile:
-      - uroven: porozumeni
-        text: "Žák vysvětlí, kdy se která větev podmínky provede, na příkladu ze života."
-        orientacne_rocnik: 6
-    kriteria:
-      - uroven: porozumeni
-        text: "K zadané situaci sestaví podmínku ve tvaru když–tak–jinak."
-    rvp: []
-    zdroj: []
-    tagy: [řízení-toku, když-tak]
-    prerekvizity: []
-    souvisi: []
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: algoritmizace-cyklus
-    nazev: Cyklus (opakování)
-    oblast: algoritmizace
-    vrstva: navazujici
-    popis: "Opakování kroků, dokud platí podmínka — místo psaní téhož pořád dokola."
-    cile:
-      - uroven: porozumeni
-        text: "Žák vysvětlí, proč se opakování hodí, a uvede příklad ze života."
-        orientacne_rocnik: 6
-      - uroven: analyza
-        text: "Žák v hotovém programu najde opakování a nahradí ho cyklem."
-        orientacne_rocnik: 7
-    kriteria:
-      - uroven: analyza
-        text: "V blokovém prostředí nahradí opakované kroky cyklem se správným počtem opakování."
-    rvp: []
-    zdroj: []
-    tagy: [řízení-toku, opakování]
-    prerekvizity: [algoritmizace-algoritmus]
-    souvisi: [algoritmizace-podminka]
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: algoritmizace-dekompozice
-    nazev: Dekompozice
-    oblast: algoritmizace
-    vrstva: navazujici
-    popis: "Rozložení velkého problému na menší, samostatně řešitelné části."
-    cile:
-      - uroven: analyza
-        text: "Žák rozdělí složitější úlohu na menší kroky a popíše jejich pořadí."
-        orientacne_rocnik: 7
-    kriteria:
-      - uroven: analyza
-        text: "Zadaný problém rozloží na alespoň tři smysluplné podúlohy."
-    rvp: []
-    zdroj: []
-    tagy: [postup, dekompozice]
-    prerekvizity: [algoritmizace-algoritmus]
-    souvisi: []
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: algoritmizace-program
-    nazev: Program
-    oblast: algoritmizace
-    vrstva: navazujici
-    popis: "Zápis algoritmu v jazyce, kterému rozumí počítač."
-    cile:
-      - uroven: vyuziti-znalosti
-        text: "Žák sestaví jednoduchý program s posloupností, podmínkou a cyklem."
-        orientacne_rocnik: 8
-    kriteria:
-      - uroven: vyuziti-znalosti
-        text: "Program řeší zadanou úlohu a žák umí popsat, co která část dělá."
-    rvp: []
-    zdroj: []
-    tagy: [řízení-toku, opakování, když-tak]
-    prerekvizity: [algoritmizace-cyklus, algoritmizace-podminka]
-    souvisi: [algoritmizace-ladeni]
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: algoritmizace-ladeni
-    nazev: Ladění (debugging)
-    oblast: algoritmizace
-    vrstva: navazujici
-    popis: "Hledání a oprava chyb v programu — proč nedělá to, co má."
-    cile:
-      - uroven: analyza
-        text: "Žák najde v nefunkčním programu chybu a opraví ji."
-        orientacne_rocnik: 8
-    kriteria:
-      - uroven: analyza
-        text: "U zadaného programu s chybou popíše příčinu a navrhne opravu."
-    rvp: []
-    zdroj: []
-    tagy: [ladění]
-    prerekvizity: [algoritmizace-program]
-    souvisi: []
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: algoritmizace-emergence
-    nazev: Emergence
-    oblast: algoritmizace
-    vrstva: navazujici
-    popis: "Složité chování celku vzniklé z jednoduchých pravidel jeho částí."
-    cile:
-      - uroven: porozumeni
-        text: "Žák na příkladu vysvětlí, jak z jednoduchých pravidel vznikne složité chování."
-        orientacne_rocnik: 8
-      - uroven: analyza
-        text: "Žák rozliší, co je naprogramované (pravidla) a co vzniká samo (vzory)."
-        orientacne_rocnik: 9
-    kriteria:
-      - uroven: analyza
-        text: "U Hry života rozliší pravidla od emergentních útvarů a pojmenuje jev."
-    rvp: []
-    zdroj: []
-    tagy: [emergence, opakování, když-tak]
-    prerekvizity: [algoritmizace-cyklus, algoritmizace-podminka]
-    souvisi: [data-modelovani-model]
-    pokryti_glitchem: [algoritmus-hra-zivota]
-    stav: draft
-
-  # --- Data, informace a modelování ---
-  - id: data-modelovani-data-informace
-    nazev: Data a informace
-    oblast: data-modelovani
-    vrstva: core
-    popis: "Rozdíl mezi daty (zaznamenané hodnoty) a informací (jejich význam pro nás)."
-    cile:
-      - uroven: porozumeni
-        text: "Žák rozliší data a informaci na konkrétním příkladu."
-        orientacne_rocnik: 6
-    kriteria:
-      - uroven: porozumeni
-        text: "K zadanému datovému záznamu popíše, jakou informaci z něj lze získat."
-    rvp: []
-    zdroj: []
-    tagy: [data]
-    prerekvizity: []
-    souvisi: []
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: data-modelovani-kodovani
-    nazev: Kódování
-    oblast: data-modelovani
-    vrstva: navazujici
-    popis: "Zápis informace pomocí smluvených znaků (např. čísla, barvy, bity)."
-    cile:
-      - uroven: vyuziti-znalosti
-        text: "Žák zakóduje a dekóduje jednoduchou zprávu podle daného pravidla."
-        orientacne_rocnik: 7
-    kriteria:
-      - uroven: vyuziti-znalosti
-        text: "Podle zadaného klíče správně zakóduje i dekóduje krátkou zprávu."
-    rvp: []
-    zdroj: []
-    tagy: [data, kódování]
-    prerekvizity: [data-modelovani-data-informace]
-    souvisi: []
-    pokryti_glitchem: []
-    stav: draft
-
-  - id: data-modelovani-model
-    nazev: Model
-    oblast: data-modelovani
-    vrstva: core
-    popis: "Zjednodušený obraz skutečnosti, který zachovává jen to podstatné pro daný účel."
-    cile:
-      - uroven: analyza
-        text: "Žák vysvětlí, co model zjednodušuje a co zachovává, a proč."
-        orientacne_rocnik: 8
-    kriteria:
-      - uroven: analyza
-        text: "K zadanému modelu určí, co vynechává, a posoudí, zda je to pro účel v pořádku."
-    rvp: []
-    zdroj: []
-    tagy: [model]
-    prerekvizity: [data-modelovani-data-informace]
-    souvisi: [algoritmizace-emergence]
-    pokryti_glitchem: []
-    stav: draft
+- id: digitalni-zaklady-hardware-a-software
+  nazev: Hardware a software
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: 'Co je počítač: vstup–zpracování–výstup; rozdíl mezi fyzickým zařízením a programem.'
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - hardware
+  - software
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-data-a-informace
+  nazev: Data a informace
+  tema: digitalni-zaklady
+  oblast: data-modelovani
+  vrstva: core
+  popis: Rozdíl mezi zaznamenanou hodnotou (data) a jejím významem pro nás (informace).
+  rvp:
+  - kod: INF-INF-001-ZV9-001
+    vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi:
+  - data-databaze-datova-gramotnost
+  tagy:
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-internet-a-sit
+  nazev: Internet a síť
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: 'Jak spolu zařízení komunikují: klient–server, prohlížeč, přenos dat po síti.'
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - sit
+  - internet
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-cloud-a-server
+  nazev: Cloud a server
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: 'Demystifikace cloudu: cizí počítač v datovém centru, ke kterému přistupuji přes internet.'
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-internet-a-sit
+  souvisi: []
+  tagy:
+  - cloud
+  - sit
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-api
+  nazev: API
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Rozhraní, přes které spolu programy mluví — dnes i způsob, jak se volá AI.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-cloud-a-server
+  souvisi: []
+  tagy:
+  - api
+  - sit
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-reprezentace-dat
+  nazev: Reprezentace dat
+  tema: digitalni-zaklady
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: Jak počítač ukládá čísla, text a obraz jako bity; kódování dat pro uložení a přenos.
+  rvp:
+  - kod: INF-INF-001-ZV9-002
+    vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-data-a-informace
+  souvisi: []
+  tagy:
+  - data
+  - kodovani
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-adresy-a-protokoly
+  nazev: Adresy a protokoly
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: HTTP/HTTPS, URL, doména, IP a DNS — jak se na internetu adresuje a komunikuje.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-internet-a-sit
+  souvisi: []
+  tagy:
+  - sit
+  - internet
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-vrstvy-abstrakce
+  nazev: Vrstvy abstrakce
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Od hardwaru přes operační systém k aplikaci — proč nemusíme rozumět všemu naráz.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-hardware-a-software
+  souvisi: []
+  tagy:
+  - abstrakce
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-operacni-system-a-soubory
+  nazev: Operační systém a soubory
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: K čemu je operační systém a jak se organizují soubory a složky.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-hardware-a-software
+  souvisi: []
+  tagy:
+  - software
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-zaklady-kde-jsou-data-fyzicky
+  nazev: Kde jsou data fyzicky
+  tema: digitalni-zaklady
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Kde data reálně leží, latence a škálování — a proč na tom záleží kvůli soukromí a GDPR.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-zaklady-cloud-a-server
+  souvisi:
+  - kyberbezpecnost-soukromi-a-digitalni-stopa
+  tagy:
+  - cloud
+  - soukromi
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-dekompozice
+  nazev: Dekompozice
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: core
+  popis: Rozklad problému na menší, samostatně řešitelné části.
+  rvp:
+  - kod: INF-INF-002-ZV9-006
+    vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - dekompozice
+  - mysleni
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-abstrakce
+  nazev: Abstrakce
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: core
+  popis: Odfiltrování nepodstatných detailů a zaměření na to podstatné.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - abstrakce
+  - mysleni
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-rozpoznavani-vzoru
+  nazev: Rozpoznávání vzorů
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: core
+  popis: Hledání opakování a pravidelností, které řešení zjednoduší.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - vzory
+  - mysleni
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-algoritmus
+  nazev: Algoritmus
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: core
+  popis: Uspořádaná posloupnost kroků vedoucí k vyřešení problému.
+  rvp:
+  - kod: INF-INF-002-ZV9-005
+    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+  - kod: INF-INF-002-ZV9-006
+    vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-dekompozice
+  souvisi: []
+  tagy:
+  - algoritmus
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-rizeni-toku
+  nazev: Řízení toku
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: core
+  popis: Sekvence, větvení (podmínka „když–tak") a opakování (cyklus) jako stavební kameny postupu.
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-algoritmus
+  souvisi: []
+  tagy:
+  - rizeni-toku
+  - opakovani
+  - kdyz-tak
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-pseudokod-a-vyvojove-diagramy
+  nazev: Pseudokód a vývojové diagramy
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Zápis postupu srozumitelný člověku, ještě před programováním.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-algoritmus
+  souvisi: []
+  tagy:
+  - postup
+  - algoritmus
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-logika-a-booleovske-vyrazy
+  nazev: Logika a booleovské výrazy
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Pravda/nepravda a spojky AND, OR, NOT jako základ rozhodování.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-rizeni-toku
+  souvisi: []
+  tagy:
+  - logika
+  - rizeni-toku
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-modelovani-a-simulace
+  nazev: Modelování a simulace
+  tema: informaticke-mysleni
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: Zjednodušený model situace (i graf či schéma) pro pochopení a predikci.
+  rvp:
+  - kod: INF-INF-001-ZV9-003
+    vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-abstrakce
+  souvisi:
+  - data-databaze-vizualizace-a-volba-grafu
+  tagy:
+  - model
+  - simulace
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-efektivita-reseni
+  nazev: Efektivita řešení
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Že různá řešení stojí různě — počet kroků, čas, paměť.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-algoritmus
+  souvisi: []
+  tagy:
+  - efektivita
+  - algoritmus
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-zakladni-algoritmy
+  nazev: Základní algoritmy
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Hledání a řazení jako klasické, opakovaně použitelné postupy.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-algoritmus
+  souvisi: []
+  tagy:
+  - algoritmus
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: informaticke-mysleni-hodnoceni-a-analyza-chyb
+  nazev: Hodnocení a analýza chyb
+  tema: informaticke-mysleni
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Posouzení řešení a hledání, proč selhalo (ladění myšlení).
+  rvp:
+  - kod: INF-INF-002-ZV9-005
+    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - informaticke-mysleni-algoritmus
+  souvisi: []
+  tagy:
+  - ladeni
+  - hodnoceni
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-promenne-a-datove-typy
+  nazev: Proměnné a datové typy
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: core
+  popis: Pojmenovaná „krabička" na hodnotu; čísla, text, pravda/nepravda.
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - promenne
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-podminky-v-kodu
+  nazev: Podmínky v kódu
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: core
+  popis: Větvení programu (if/else) podle toho, zda platí podmínka.
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-promenne-a-datove-typy
+  souvisi:
+  - informaticke-mysleni-rizeni-toku
+  tagy:
+  - kdyz-tak
+  - rizeni-toku
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-cykly-v-kodu
+  nazev: Cykly v kódu
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: core
+  popis: Opakování kroků (for, while), místo psaní téhož pořád dokola.
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-promenne-a-datove-typy
+  souvisi:
+  - informaticke-mysleni-rizeni-toku
+  tagy:
+  - opakovani
+  - rizeni-toku
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-funkce-a-procedury
+  nazev: Funkce a procedury
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: core
+  popis: Pojmenovaný, znovupoužitelný kus kódu s parametry a návratovou hodnotou.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-promenne-a-datove-typy
+  souvisi: []
+  tagy:
+  - funkce
+  - dekompozice
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-ladeni-a-testovani
+  nazev: Ladění a testování
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: core
+  popis: Hledání a oprava chyb; ověření, že program dělá, co má.
+  rvp:
+  - kod: INF-INF-002-ZV9-005
+    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-podminky-v-kodu
+  souvisi:
+  - informaticke-mysleni-hodnoceni-a-analyza-chyb
+  tagy:
+  - ladeni
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-blokove-vs-textove-programovani
+  nazev: Blokové vs. textové programování
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Přechod od skládání bloků (Scratch) k psaní textového kódu (Python).
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-cykly-v-kodu
+  souvisi: []
+  tagy:
+  - programovani
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-seznamy-a-kolekce
+  nazev: Seznamy a kolekce
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Ukládání více hodnot najednou a práce s nimi.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-promenne-a-datove-typy
+  souvisi: []
+  tagy:
+  - data
+  - programovani
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-udalosti
+  nazev: Události
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Reakce programu na akce (klik, stisk) — event-driven přístup.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-podminky-v-kodu
+  souvisi: []
+  tagy:
+  - udalosti
+  - rizeni-toku
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-knihovny-a-volani-api-v-kodu
+  nazev: Knihovny a volání API v kódu
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Použití hotového cizího kódu a služeb (včetně AI) přes API.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-funkce-a-procedury
+  souvisi:
+  - digitalni-zaklady-api
+  tagy:
+  - api
+  - knihovny
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-verzovani-kodu
+  nazev: Verzování kódu
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Git a GitHub — sledování změn a spolupráce na kódu.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-blokove-vs-textove-programovani
+  souvisi: []
+  tagy:
+  - verzovani
+  - spoluprace
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-cteni-a-hodnoceni-ai-kodu
+  nazev: Čtení a hodnocení AI kódu
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Porozumět cizímu i AI vygenerovanému kódu, posoudit ho a upravit.
+  rvp:
+  - kod: INF-INF-002-ZV9-005
+    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-ladeni-a-testovani
+  souvisi:
+  - umela-inteligence-overovani-vystupu
+  tagy:
+  - ai-prurez
+  - ladeni
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: programovani-zaklady-objektu-oop
+  nazev: Základy objektů (OOP)
+  tema: programovani
+  oblast: algoritmizace
+  vrstva: navazujici
+  popis: Objekty jako spojení dat a chování — úvod do objektového myšlení.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - programovani-funkce-a-procedury
+  souvisi: []
+  tagy:
+  - programovani
+  - abstrakce
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-co-je-a-co-neni-ai
+  nazev: Co je a co není AI
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Úzká vs. obecná AI; AI jako nástroj, ne bytost.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-ai-se-uci-z-dat
+  nazev: AI se učí z dat
+  tema: umela-inteligence
+  oblast: data-modelovani
+  vrstva: core
+  popis: Kvalita a zaujatost trénovacích dat určuje výstup modelu.
+  rvp:
+  - kod: INF-INF-001-ZV9-004
+    vystup: natrénuje model strojového učení
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-co-je-a-co-neni-ai
+  souvisi:
+  - data-databaze-datova-gramotnost
+  tagy:
+  - ai
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-jak-funguje-generativni-model
+  nazev: Jak funguje generativní model
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Predikuje pravděpodobné pokračování — proto umí i „halucinovat".
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-ai-se-uci-z-dat
+  souvisi: []
+  tagy:
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-doporucovaci-systemy
+  nazev: Doporučovací systémy
+  tema: umela-inteligence
+  oblast: data-modelovani
+  vrstva: core
+  popis: Proč vidím právě tenhle obsah a jak mě systém profiluje.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-ai-se-uci-z-dat
+  souvisi:
+  - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+  tagy:
+  - ai
+  - data
+  - soukromi
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-prompt-a-promptova-gramotnost
+  nazev: Prompt a promptová gramotnost
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Jak napsat, iterovat a dát kontext, aby AI odvedla, co chci.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-jak-funguje-generativni-model
+  souvisi: []
+  tagy:
+  - ai
+  - prompt
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-overovani-vystupu
+  nazev: Ověřování výstupů
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Rozpoznat halucinaci a ověřit výstup AI z druhého zdroje.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-jak-funguje-generativni-model
+  souvisi: []
+  tagy:
+  - ai
+  - ai-prurez
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-vlastni-agency
+  nazev: Vlastní agency
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Já rozhoduji, AI jen radí — člověk zůstává v řízení.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - ai
+  - postoj
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+  nazev: Kdy AI (ne)použít a disclosure
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Rozlišit, kdy AI pomáhá učení a kdy ho obchází; přiznat její použití.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-vlastni-agency
+  souvisi: []
+  tagy:
+  - ai
+  - postoj
+  - etika
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-bias-a-ferovost
+  nazev: Bias a férovost
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Odkud se v AI bere zaujatost a jak se projevuje.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-ai-se-uci-z-dat
+  souvisi: []
+  tagy:
+  - ai
+  - etika
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-soukromi-pri-praci-s-ai
+  nazev: Soukromí při práci s AI
+  tema: umela-inteligence
+  oblast: null
+  vrstva: core
+  popis: Co do promptu nevkládat a jak se má s daty zachází.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi:
+  - kyberbezpecnost-soukromi-a-digitalni-stopa
+  tagy:
+  - ai
+  - soukromi
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-pet-velkych-ideji-ai
+  nazev: Pět velkých idejí AI
+  tema: umela-inteligence
+  oblast: null
+  vrstva: navazujici
+  popis: Vnímání, reprezentace a usuzování, učení, přirozená interakce, společenský dopad.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-co-je-a-co-neni-ai
+  souvisi: []
+  tagy:
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-strojove-uceni-prakticky
+  nazev: Strojové učení prakticky
+  tema: umela-inteligence
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: Natrénuj si vlastní model (Teachable Machine, micro:bit CreateAI) — sběr dat, trénink, test.
+  rvp:
+  - kod: INF-INF-001-ZV9-004
+    vystup: natrénuje model strojového učení
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-ai-se-uci-z-dat
+  souvisi:
+  - fyzicky-computing-tinyml-edge-ai
+  tagy:
+  - ai
+  - ml
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-typy-ai-uloh
+  nazev: Typy AI úloh
+  tema: umela-inteligence
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: Klasifikace, predikce a generování jako různé druhy úloh.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-strojove-uceni-prakticky
+  souvisi: []
+  tagy:
+  - ai
+  - ml
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-foundation-modely-llm-a-rag
+  nazev: Foundation modely, LLM a RAG
+  tema: umela-inteligence
+  oblast: null
+  vrstva: navazujici
+  popis: 'Koncepčně: velké modely, jazykové modely a vyhledávání ve vlastních datech.'
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-jak-funguje-generativni-model
+  souvisi:
+  - data-databaze-vektorove-databaze-a-embeddingy
+  tagy:
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-hlubsi-etika-ai
+  nazev: Hlubší etika AI
+  tema: umela-inteligence
+  oblast: null
+  vrstva: navazujici
+  popis: Proporcionalita, nediskriminace, transparentnost a environmentální stopa.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-bias-a-ferovost
+  souvisi: []
+  tagy:
+  - ai
+  - etika
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-deepfakes-a-synteticka-media
+  nazev: Deepfakes a syntetická média
+  tema: umela-inteligence
+  oblast: null
+  vrstva: navazujici
+  popis: Rozpoznání a provenience (SynthID, C2PA); dopady na důvěru.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-jak-funguje-generativni-model
+  souvisi:
+  - kyberbezpecnost-ai-podvody
+  tagy:
+  - ai
+  - deepfake
+  - bezpeci
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: umela-inteligence-ai-a-spolecnost
+  nazev: AI a společnost
+  tema: umela-inteligence
+  oblast: null
+  vrstva: navazujici
+  popis: Dopady na práci a dezinformace; spoluutváření AI („Shape AI").
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - umela-inteligence-hlubsi-etika-ai
+  souvisi: []
+  tagy:
+  - ai
+  - etika
+  - postoj
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-datova-gramotnost
+  nazev: Datová gramotnost
+  tema: data-databaze
+  oblast: data-modelovani
+  vrstva: core
+  popis: Číst, interpretovat a kriticky posoudit data — předstupeň AI gramotnosti.
+  rvp:
+  - kod: INF-INF-001-ZV9-001
+    vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-datovy-cyklus
+  nazev: Datový cyklus
+  tema: data-databaze
+  oblast: data-modelovani
+  vrstva: core
+  popis: Sběr → čištění → analýza → vizualizace → interpretace jako ucelený příběh.
+  rvp:
+  - kod: INF-INF-001-ZV9-001
+    vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-datova-gramotnost
+  souvisi: []
+  tagy:
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-strukturovana-vs-nestrukturovana-data
+  nazev: Strukturovaná vs. nestrukturovaná data
+  tema: data-databaze
+  oblast: data-modelovani
+  vrstva: core
+  popis: Rozdíl mezi tabulkou a volným textem/obrazem.
+  rvp:
+  - kod: INF-INF-001-ZV9-002
+    vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-datova-gramotnost
+  souvisi: []
+  tagy:
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-tabulky-a-relacni-model
+  nazev: Tabulky a relační model
+  tema: data-databaze
+  oblast: informacni-systemy
+  vrstva: core
+  popis: Řádky, sloupce, klíče a vztahy; evidence dat v informačním systému.
+  rvp:
+  - kod: INF-INF-003-ZV9-009
+    vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-strukturovana-vs-nestrukturovana-data
+  souvisi: []
+  tagy:
+  - data
+  - databaze
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-vizualizace-a-volba-grafu
+  nazev: Vizualizace a volba grafu
+  tema: data-databaze
+  oblast: data-modelovani
+  vrstva: core
+  popis: Kdy který graf, čtení os a měřítek; modelování dat grafem či schématem.
+  rvp:
+  - kod: INF-INF-001-ZV9-003
+    vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
+  - kod: INF-INF-003-ZV9-010
+    vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-datovy-cyklus
+  souvisi: []
+  tagy:
+  - data
+  - vizualizace
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-dotazovani-sql
+  nazev: Dotazování (SQL)
+  tema: data-databaze
+  oblast: informacni-systemy
+  vrstva: navazujici
+  popis: Základní dotazy nad daty (SELECT, WHERE, JOIN) a pravidla pro práci se záznamy.
+  rvp:
+  - kod: INF-INF-003-ZV9-009
+    vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
+  - kod: INF-INF-003-ZV9-010
+    vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-tabulky-a-relacni-model
+  souvisi: []
+  tagy:
+  - databaze
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-ucel-informacnich-systemu
+  nazev: Účel informačních systémů
+  tema: data-databaze
+  oblast: informacni-systemy
+  vrstva: navazujici
+  popis: Posoudit účel a užitečnost systémů, které používám.
+  rvp:
+  - kod: INF-INF-003-ZV9-008
+    vystup: posoudí účel a užitečnost informačních systémů, které používá
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-tabulky-a-relacni-model
+  souvisi:
+  - digitalni-obcanstvi-obchodni-modely-platforem
+  tagy:
+  - data
+  - databaze
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-statisticka-gramotnost
+  nazev: Statistická gramotnost
+  tema: data-databaze
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: Korelace vs. kauzalita, reprezentativnost a zavádějící grafy.
+  rvp:
+  - kod: INF-INF-001-ZV9-001
+    vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-vizualizace-a-volba-grafu
+  souvisi: []
+  tagy:
+  - data
+  - hodnoceni
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-cisteni-realnych-dat
+  nazev: Čištění reálných dat
+  tema: data-databaze
+  oblast: informacni-systemy
+  vrstva: navazujici
+  popis: Chybějící hodnoty, duplicity a nekonzistence — nejdůležitější a nejnudnější část.
+  rvp:
+  - kod: INF-INF-003-ZV9-010
+    vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-datovy-cyklus
+  souvisi: []
+  tagy:
+  - data
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-nosql-a-dokumentove-databaze
+  nazev: NoSQL a dokumentové databáze
+  tema: data-databaze
+  oblast: informacni-systemy
+  vrstva: navazujici
+  popis: Jiný způsob ukládání dat než tabulky.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-tabulky-a-relacni-model
+  souvisi: []
+  tagy:
+  - databaze
+  - data
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-vektorove-databaze-a-embeddingy
+  nazev: Vektorové databáze a embeddingy
+  tema: data-databaze
+  oblast: null
+  vrstva: navazujici
+  popis: Ukládání významu jako čísel a vyhledávání podle podobnosti — páteř RAG a chatbotů.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-nosql-a-dokumentove-databaze
+  souvisi:
+  - umela-inteligence-foundation-modely-llm-a-rag
+  tagy:
+  - databaze
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-programova-analyza-dat
+  nazev: Programová analýza dat
+  tema: data-databaze
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: Zpracování dat kódem (Python + pandas) místo klikání.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-datovy-cyklus
+  souvisi:
+  - programovani-seznamy-a-kolekce
+  tagy:
+  - data
+  - programovani
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: data-databaze-konverzacni-analytika-ai-nad-daty
+  nazev: Konverzační analytika (AI nad daty)
+  tema: data-databaze
+  oblast: null
+  vrstva: navazujici
+  popis: Ptám se dat přirozeným jazykem (text-to-SQL); nutnost ověřit výsledek.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - data-databaze-dotazovani-sql
+  souvisi:
+  - umela-inteligence-overovani-vystupu
+  tagy:
+  - data
+  - ai
+  - ai-prurez
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-jak-funguje-web
+  nazev: Jak funguje web
+  tema: tvorba-webu
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Klient–server, prohlížeč a HTTP — co se děje, když otevřu stránku.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi:
+  - digitalni-zaklady-internet-a-sit
+  tagy:
+  - web
+  - sit
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-html
+  nazev: HTML
+  tema: tvorba-webu
+  oblast: null
+  vrstva: core
+  popis: Struktura stránky a sémantické značky.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-jak-funguje-web
+  souvisi: []
+  tagy:
+  - web
+  - html
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-css
+  nazev: CSS
+  tema: tvorba-webu
+  oblast: null
+  vrstva: core
+  popis: Vzhled a layout stránky (Flexbox/Grid, responzivita).
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-html
+  souvisi: []
+  tagy:
+  - web
+  - css
+  - design
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-domena-a-hosting
+  nazev: Doména a hosting
+  tema: tvorba-webu
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Jak dostat web z počítače online, aby ho viděl kdokoli.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-jak-funguje-web
+  souvisi:
+  - digitalni-zaklady-cloud-a-server
+  tagy:
+  - web
+  - cloud
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-interaktivita-javascript-dom
+  nazev: Interaktivita (JavaScript, DOM)
+  tema: tvorba-webu
+  oblast: null
+  vrstva: core
+  popis: Oživení stránky — reakce na akce uživatele.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-html
+  souvisi:
+  - programovani-udalosti
+  tagy:
+  - web
+  - javascript
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-ai-asistovana-tvorba-webu
+  nazev: AI-asistovaná tvorba webu
+  tema: tvorba-webu
+  oblast: null
+  vrstva: navazujici
+  popis: v0, Lovable, Bolt, Claude Artifacts — z popisu vznikne web; hodnota v úpravách a hodnocení.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-css
+  souvisi:
+  - tvorba-aplikaci-vibecoding
+  tagy:
+  - web
+  - ai
+  - ai-prurez
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-frameworky
+  nazev: Frameworky
+  tema: tvorba-webu
+  oblast: null
+  vrstva: navazujici
+  popis: React ap. a CSS frameworky (Tailwind) pro větší projekty.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-interaktivita-javascript-dom
+  souvisi: []
+  tagy:
+  - web
+  - programovani
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-nasazeni-webu
+  nazev: Nasazení webu
+  tema: tvorba-webu
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Publikace přes Vercel, Netlify nebo GitHub Pages.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-domena-a-hosting
+  souvisi: []
+  tagy:
+  - web
+  - cloud
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-pristupnost-a-seo
+  nazev: Přístupnost a SEO
+  tema: tvorba-webu
+  oblast: null
+  vrstva: navazujici
+  popis: Web dostupný všem a nalezitelný ve vyhledávačích.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-html
+  souvisi: []
+  tagy:
+  - web
+  - design
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-webu-ux-ui-a-design-webu
+  nazev: UX/UI a design webu
+  tema: tvorba-webu
+  oblast: null
+  vrstva: navazujici
+  popis: Návrh použitelného a srozumitelného rozhraní.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-webu-css
+  souvisi: []
+  tagy:
+  - web
+  - design
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-co-je-aplikace
+  nazev: Co je aplikace
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: core
+  popis: Mobilní/webová/desktopová appka; rozdíl frontend vs. backend.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - aplikace
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-no-code-low-code
+  nazev: No-code / low-code
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: core
+  popis: Tvorba aplikace bez psaní kódu jako vstupní brána.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-co-je-aplikace
+  souvisi: []
+  tagy:
+  - aplikace
+  - no-code
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-logika-aplikace
+  nazev: Logika aplikace
+  tema: tvorba-aplikaci
+  oblast: algoritmizace
+  vrstva: core
+  popis: Stavy, vstupy a akce — jak se appka chová.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-co-je-aplikace
+  souvisi:
+  - programovani-podminky-v-kodu
+  tagy:
+  - aplikace
+  - rizeni-toku
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-vibecoding
+  nazev: Vibecoding
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: core
+  popis: Popíšu záměr přirozeným jazykem, AI generuje kód; já řídím a hodnotím.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-logika-aplikace
+  souvisi:
+  - programovani-cteni-a-hodnoceni-ai-kodu
+  tagy:
+  - aplikace
+  - ai
+  - ai-prurez
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-ai-nastroje-pro-tvorbu
+  nazev: AI nástroje pro tvorbu
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: core
+  popis: Copilot, Cursor, Claude Code, Replit, Lovable jako programovací parťáci.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-vibecoding
+  souvisi: []
+  tagy:
+  - aplikace
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-prace-s-api-a-backendem
+  nazev: Práce s API a backendem
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: navazujici
+  popis: Propojení appky se službami a serverovou logikou.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-logika-aplikace
+  souvisi:
+  - digitalni-zaklady-api
+  tagy:
+  - aplikace
+  - api
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-databaze-a-autentizace
+  nazev: Databáze a autentizace
+  tema: tvorba-aplikaci
+  oblast: informacni-systemy
+  vrstva: navazujici
+  popis: Ukládání dat aplikace a přihlašování uživatelů.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-prace-s-api-a-backendem
+  souvisi:
+  - data-databaze-tabulky-a-relacni-model
+  tagy:
+  - aplikace
+  - databaze
+  - bezpeci
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-zivotni-cyklus-vyvoje
+  nazev: Životní cyklus vývoje
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: navazujici
+  popis: Verzování, testování a nasazení jako součást vývoje.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-logika-aplikace
+  souvisi:
+  - programovani-verzovani-kodu
+  tagy:
+  - aplikace
+  - verzovani
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-publikace-do-app-storu
+  nazev: Publikace do app storů
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: navazujici
+  popis: Jak se appka dostane k uživatelům.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-databaze-a-autentizace
+  souvisi: []
+  tagy:
+  - aplikace
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-aplikaci-iluze-kompetence
+  nazev: Iluze kompetence
+  tema: tvorba-aplikaci
+  oblast: null
+  vrstva: navazujici
+  popis: Proč rozumět základům — AI kód funguje, dokud se nerozbije.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-aplikaci-vibecoding
+  souvisi:
+  - programovani-ladeni-a-testovani
+  tagy:
+  - aplikace
+  - ai
+  - postoj
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-vizualni-jazyk
+  nazev: Vizuální jazyk
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: core
+  popis: Kompozice, barva, kontrast, typografie a formáty — základ, který AI nenahradí.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - obsah
+  - design
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-prompt-pro-media
+  nazev: Prompt pro média
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: core
+  popis: Jak popsat obraz, video nebo hudbu, aby vznikl zamýšlený výstup.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-vizualni-jazyk
+  souvisi:
+  - umela-inteligence-prompt-a-promptova-gramotnost
+  tagy:
+  - obsah
+  - ai
+  - prompt
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-generativni-obraz
+  nazev: Generativní obraz
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: core
+  popis: Tvorba obrázků z popisu (Midjourney, Nano Banana, DALL·E, Firefly).
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-prompt-pro-media
+  souvisi: []
+  tagy:
+  - obsah
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-etika-autorstvi-a-oznacovani
+  nazev: Etika, autorství a označování
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: core
+  popis: Čí data model trénoval, komu patří výstup a jak označit AI obsah.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-generativni-obraz
+  souvisi:
+  - umela-inteligence-hlubsi-etika-ai
+  tagy:
+  - obsah
+  - etika
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-generativni-video
+  nazev: Generativní video
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: navazujici
+  popis: Video z textu/obrázku (Sora, Veo, Runway) a jeho rizika.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-generativni-obraz
+  souvisi:
+  - umela-inteligence-deepfakes-a-synteticka-media
+  tagy:
+  - obsah
+  - ai
+  - deepfake
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-generativni-hudba-a-hlas
+  nazev: Generativní hudba a hlas
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: navazujici
+  popis: Skladba a hlas z promptu (Suno, ElevenLabs); klonování hlasu a jeho rizika.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-prompt-pro-media
+  souvisi: []
+  tagy:
+  - obsah
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-strih-a-postprodukce-s-ai
+  nazev: Střih a postprodukce s AI
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: navazujici
+  popis: Titulky, čištění zvuku a úprava videa přepisem (CapCut, Descript).
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-vizualni-jazyk
+  souvisi: []
+  tagy:
+  - obsah
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-konzistence-a-kontrola
+  nazev: Konzistence a kontrola
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: navazujici
+  popis: Udržení postavy/stylu, in/out-painting, editace přirozeným jazykem.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-generativni-obraz
+  souvisi: []
+  tagy:
+  - obsah
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-provenience-a-vodoznaky
+  nazev: Provenience a vodoznaky
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: navazujici
+  popis: SynthID a C2PA Content Credentials — jak se ověřuje původ obsahu.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-etika-autorstvi-a-oznacovani
+  souvisi: []
+  tagy:
+  - obsah
+  - bezpeci
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: tvorba-obsahu-vicemodalni-workflow
+  nazev: Vícemodální workflow
+  tema: tvorba-obsahu
+  oblast: null
+  vrstva: navazujici
+  popis: Kombinace obraz → video → hudba → hlas v jednom projektu.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - tvorba-obsahu-konzistence-a-kontrola
+  souvisi: []
+  tagy:
+  - obsah
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-herni-smycka-scena-a-objekty
+  nazev: Herní smyčka, scéna a objekty
+  tema: herni-vyvoj
+  oblast: algoritmizace
+  vrstva: core
+  popis: 'Základní stavba hry: smyčka, scéna a sprity.'
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - hry
+  - rizeni-toku
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-vstup-hrace-stavy-a-skore
+  nazev: Vstup hráče, stavy a skóre
+  tema: herni-vyvoj
+  oblast: algoritmizace
+  vrstva: core
+  popis: Reakce na ovládání a udržování stavu hry.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-herni-smycka-scena-a-objekty
+  souvisi:
+  - programovani-udalosti
+  tagy:
+  - hry
+  - udalosti
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-kolize-a-jednoducha-fyzika
+  nazev: Kolize a jednoduchá fyzika
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: core
+  popis: Detekce dotyku objektů a základní pohyb.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-herni-smycka-scena-a-objekty
+  souvisi: []
+  tagy:
+  - hry
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-herni-design
+  nazev: Herní design
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: core
+  popis: Pravidla, obtížnost a zpětná vazba hráči.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-vstup-hrace-stavy-a-skore
+  souvisi: []
+  tagy:
+  - hry
+  - design
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-scratch-jako-vstup
+  nazev: Scratch jako vstup
+  tema: herni-vyvoj
+  oblast: algoritmizace
+  vrstva: core
+  popis: Blokové prostředí pro první hru bez syntaxe.
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi:
+  - programovani-blokove-vs-textove-programovani
+  tagy:
+  - hry
+  - programovani
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-lehke-enginy
+  nazev: Lehké enginy
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: navazujici
+  popis: GDevelop a Roblox Studio (Luau) — most ke skutečné hře.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-herni-design
+  souvisi: []
+  tagy:
+  - hry
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-skutecne-enginy
+  nazev: Skutečné enginy
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: navazujici
+  popis: Godot (GDScript) a Unity (C#) s textovým kódem.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-lehke-enginy
+  souvisi: []
+  tagy:
+  - hry
+  - programovani
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-ai-generovani-assetu
+  nazev: AI generování assetů
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: navazujici
+  popis: Text-to-3D a textury (Roblox Cube, Meshy) — místo hodin modelování.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-herni-design
+  souvisi: []
+  tagy:
+  - hry
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-ai-asistenti-a-kod
+  nazev: AI asistenti a kód
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: navazujici
+  popis: Roblox Assistant, Unity Muse — generování a úprava kódu hry.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-skutecne-enginy
+  souvisi:
+  - programovani-cteni-a-hodnoceni-ai-kodu
+  tagy:
+  - hry
+  - ai
+  - ai-prurez
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: herni-vyvoj-publikace-hry
+  nazev: Publikace hry
+  tema: herni-vyvoj
+  oblast: null
+  vrstva: navazujici
+  popis: Sdílení hry (např. itch.io) — „zahraj si moji hru".
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - herni-vyvoj-herni-design
+  souvisi: []
+  tagy:
+  - hry
+  - spoluprace
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
+  nazev: Vstup–zpracování–výstup na zařízení
+  tema: fyzicky-computing
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Jak fyzické zařízení čte vstup, zpracuje ho a řídí výstup.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - robotika
+  - hardware
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-senzory-a-aktuatory
+  nazev: Senzory a aktuátory
+  tema: fyzicky-computing
+  oblast: null
+  vrstva: core
+  popis: Zařízení „vnímá" prostředí a „koná" v něm.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
+  souvisi: []
+  tagy:
+  - robotika
+  - senzory
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-micro-bit
+  nazev: micro:bit
+  tema: fyzicky-computing
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: 'Vstupní platforma: MakeCode a MicroPython, senzory na desce.'
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-senzory-a-aktuatory
+  souvisi:
+  - programovani-blokove-vs-textove-programovani
+  tagy:
+  - robotika
+  - programovani
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-udalosti-a-rizeni-vystupu
+  nazev: Události a řízení výstupu
+  tema: fyzicky-computing
+  oblast: algoritmizace
+  vrstva: core
+  popis: Reakce na stisk/zatřesení a ovládání LED, pinů, motorů.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-micro-bit
+  souvisi: []
+  tagy:
+  - robotika
+  - udalosti
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-arduino-a-raspberry-pi
+  nazev: Arduino a Raspberry Pi
+  tema: fyzicky-computing
+  oblast: null
+  vrstva: navazujici
+  popis: Krok k reálné elektronice a plnému počítači.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-micro-bit
+  souvisi: []
+  tagy:
+  - robotika
+  - hardware
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-roboti-a-vozitka
+  nazev: Roboti a vozítka
+  tema: fyzicky-computing
+  oblast: null
+  vrstva: navazujici
+  popis: micro:bit + Maqueen, Lego Spike — pohyblivá robotika.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-udalosti-a-rizeni-vystupu
+  souvisi: []
+  tagy:
+  - robotika
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-iot
+  nazev: IoT
+  tema: fyzicky-computing
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Senzory → cloud → dashboard; chytrá domácnost a měření prostředí.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-senzory-a-aktuatory
+  souvisi:
+  - data-databaze-vizualizace-a-volba-grafu
+  tagy:
+  - robotika
+  - sit
+  - cloud
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-tinyml-edge-ai
+  nazev: TinyML / edge AI
+  tema: fyzicky-computing
+  oblast: data-modelovani
+  vrstva: navazujici
+  popis: micro:bit CreateAI — natrénuj klasifikační model přímo na zařízení.
+  rvp:
+  - kod: INF-INF-001-ZV9-004
+    vystup: natrénuje model strojového učení
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-micro-bit
+  souvisi:
+  - umela-inteligence-strojove-uceni-prakticky
+  tagy:
+  - robotika
+  - ai
+  - ml
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: fyzicky-computing-komunikace-mezi-zarizenimi
+  nazev: Komunikace mezi zařízeními
+  tema: fyzicky-computing
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Rádio a Bluetooth — zařízení si posílají data.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - fyzicky-computing-micro-bit
+  souvisi: []
+  tagy:
+  - robotika
+  - sit
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-hesla-a-2fa
+  nazev: Hesla a 2FA
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Silná unikátní hesla, správci hesel a dvoufaktorové ověření.
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - bezpeci
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-phishing-a-socialni-inzenyrstvi
+  nazev: Phishing a sociální inženýrství
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Jak podvodníci lákají údaje a jak to poznat.
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - bezpeci
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-soukromi-a-digitalni-stopa
+  nazev: Soukromí a digitální stopa
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Co po mně na internetu zůstává a jak to omezit.
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - bezpeci
+  - soukromi
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-bezpecne-chovani-na-sitich
+  nazev: Bezpečné chování na sítích
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Rozumné sdílení a nastavení soukromí v aplikacích.
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-soukromi-a-digitalni-stopa
+  souvisi: []
+  tagy:
+  - bezpeci
+  - soukromi
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-zakladni-hygiena
+  nazev: Základní hygiena
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: core
+  popis: Aktualizace, ověřené zdroje aplikací a zálohy; zabezpečení zařízení podle rizik.
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - bezpeci
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-sifrovani-a-https
+  nazev: Šifrování a HTTPS
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Co znamená zabezpečené spojení a end-to-end šifrování.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-zakladni-hygiena
+  souvisi:
+  - digitalni-zaklady-adresy-a-protokoly
+  tagy:
+  - bezpeci
+  - sit
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-typy-utoku
+  nazev: Typy útoků
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Malware, ransomware a jak se šíří.
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-zakladni-hygiena
+  souvisi: []
+  tagy:
+  - bezpeci
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-ai-podvody
+  nazev: AI podvody
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Deepfakes, klonování hlasu a dokonalý AI phishing — staré rady už neplatí.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
+  souvisi:
+  - umela-inteligence-deepfakes-a-synteticka-media
+  tagy:
+  - bezpeci
+  - deepfake
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-sextortion-a-citlivy-obsah
+  nazev: Sextortion a citlivý obsah
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: AI-upravené intimní fotky a vydírání — mimořádně citlivé riziko pro nezletilé.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-ai-podvody
+  souvisi: []
+  tagy:
+  - bezpeci
+  - soukromi
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-overovani-pres-druhy-kanal
+  nazev: Ověřování přes druhý kanál
+  tema: kyberbezpecnost
+  oblast: null
+  vrstva: navazujici
+  popis: Zdravá skepse a prebunking — ověřit, i když to vypadá dokonale.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-ai-podvody
+  souvisi:
+  - digitalni-obcanstvi-dezinformace-a-manipulace
+  tagy:
+  - bezpeci
+  - ai-prurez
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: kyberbezpecnost-sitova-bezpecnost-a-ctf
+  nazev: Síťová bezpečnost a CTF
+  tema: kyberbezpecnost
+  oblast: digitalni-technologie
+  vrstva: navazujici
+  popis: Etické hackování a soutěže jako pokročilá motivace.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - kyberbezpecnost-typy-utoku
+  souvisi: []
+  tagy:
+  - bezpeci
+  - sit
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-kriticke-mysleni-online
+  nazev: Kritické myšlení online
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: core
+  popis: Ověřování informací a zdrojů, než jim uvěřím nebo je sdílím.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - media
+  - hodnoceni
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-jak-funguji-algoritmy-siti
+  nazev: Jak fungují algoritmy sítí
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: core
+  popis: Filter bubble a ekonomika pozornosti — proč vidím právě tohle.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi:
+  - umela-inteligence-doporucovaci-systemy
+  tagy:
+  - media
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-dezinformace-a-manipulace
+  nazev: Dezinformace a manipulace
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: core
+  popis: Rozpoznání manipulativního a nepravdivého obsahu.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-kriticke-mysleni-online
+  souvisi: []
+  tagy:
+  - media
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-digitalni-stopa-a-soukromi
+  nazev: Digitální stopa a soukromí
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: core
+  popis: Jaká data o sobě zanechávám a komu slouží.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi:
+  - kyberbezpecnost-soukromi-a-digitalni-stopa
+  tagy:
+  - media
+  - soukromi
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-digitalni-wellbeing
+  nazev: Digitální wellbeing
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: core
+  popis: Zdravý vztah k obrazovkám a rozpoznání závislostního designu.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity: []
+  souvisi: []
+  tagy:
+  - media
+  - wellbeing
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-jadro-ai-gramotnosti
+  nazev: Jádro AI gramotnosti
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: navazujici
+  popis: Jak fungují LLM, proč halucinují a co je bias — jako občanská dovednost.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-kriticke-mysleni-online
+  souvisi:
+  - umela-inteligence-jak-funguje-generativni-model
+  tagy:
+  - media
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-rozpoznani-ai-obsahu
+  nazev: Rozpoznání AI obsahu
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: navazujici
+  popis: Poznat generovaná a syntetická média.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-jadro-ai-gramotnosti
+  souvisi:
+  - umela-inteligence-deepfakes-a-synteticka-media
+  tagy:
+  - media
+  - ai
+  - deepfake
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-etika-ai-ve-skole
+  nazev: Etika AI ve škole
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: navazujici
+  popis: Kde je hranice mezi pomocí a podváděním.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-jadro-ai-gramotnosti
+  souvisi:
+  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+  tagy:
+  - media
+  - etika
+  - ai
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-pravo-a-etika
+  nazev: Právo a etika
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: navazujici
+  popis: Autorská práva a GDPR pro nezletilé.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+  souvisi: []
+  tagy:
+  - media
+  - etika
+  - soukromi
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-obchodni-modely-platforem
+  nazev: Obchodní modely platforem
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: navazujici
+  popis: Jak se platí pozorností a daty.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+  souvisi: []
+  tagy:
+  - media
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft
+- id: digitalni-obcanstvi-aktivni-digitalni-obcanstvi
+  nazev: Aktivní digitální občanství
+  tema: digitalni-obcanstvi
+  oblast: null
+  vrstva: navazujici
+  popis: Tvorba hodnotného obsahu, ne jen konzumace.
+  rvp: []
+  cile: []
+  kriteria: []
+  prerekvizity:
+  - digitalni-obcanstvi-kriticke-mysleni-online
+  souvisi: []
+  tagy:
+  - media
+  - wellbeing
+  zdroj: []
+  pokryti_glitchem: []
+  stav: draft

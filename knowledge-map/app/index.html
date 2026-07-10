@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=5">
+  <link rel="stylesheet" href="css/map.css?v=9">
 </head>
 <body>
   <div id="app">
@@ -21,12 +21,19 @@
       </header>
 
       <div class="control-block">
+        <div class="viewtoggle" id="viewtoggle">
+          <button class="vt-btn active" data-view="tema">Témata</button>
+          <button class="vt-btn" data-view="oblast">RVP oblasti</button>
+        </div>
+      </div>
+
+      <div class="control-block">
         <input type="search" id="search" placeholder="Hledej koncept…" autocomplete="off">
       </div>
 
       <div class="control-block">
-        <div class="control-label">Oblast</div>
-        <div id="filter-oblast" class="chips"></div>
+        <div class="control-label" id="group-label">Téma</div>
+        <div id="filter-group" class="chips"></div>
       </div>
 
       <div class="control-block">
@@ -57,7 +64,7 @@
       <div class="legend">
         <div class="legend-row"><span class="legend-line dashed"></span> prerekvizita</div>
         <div class="legend-row"><span class="legend-line dotted"></span> souvisí</div>
-        <div class="legend-row"><span class="legend-outline"></span> oblast (cluster)</div>
+        <div class="legend-row"><span class="legend-outline"></span> cluster (téma / oblast)</div>
         <div class="legend-row"><span class="legend-dot"></span> core koncept</div>
         <div class="legend-row"><span class="legend-dot ring"></span> navazující</div>
       </div>
@@ -77,6 +84,6 @@
 
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
-  <script src="js/map.js?v=5"></script>
+  <script src="js/map.js?v=9"></script>
 </body>
 </html>
