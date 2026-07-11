@@ -34,7 +34,7 @@ Klíčová je **dvojí příslušnost** — každý koncept má:
 
 Další pole:
 - `id`, `nazev`, `vrstva` (`core` / `navazujici`), `popis`
-- `rvp` → seznam `{ kod, vystup }`. **`vystup` je DOSLOVNÉ znění očekávaného výstupu z RVP** (opsané z `RVP_revidované_2024-03-28.pdf`, s. 54–55). Neupravovat. Prázdné, když koncept nemá odpovídající výstup v RVP.
+- `rvp` → seznam `{ kod, vystup }` (ideálně 1, max 2 na koncept). **`vystup` je DOSLOVNÉ znění očekávaného výstupu z RVP** (opsané z `RVP_revidované_2024-03-28.pdf`, s. 54–55). Neupravovat. Prázdné, když koncept nemá odpovídající výstup v RVP (56 ze 134 konceptů výstup má; zbytek je mimo RVP a nechává se prázdný — nevymýšlí se). Pozn.: `rvp` je „nejlépe sedící výstup", může výjimečně být z jiného okruhu než `oblast` (koncept přemosťující dva okruhy — např. micro:bit je hardware, ale plní programovací výstup).
 - `prerekvizity` → seznam `id` konceptů (hrana „prerekvizita", čárkovaná — stejné jako dosud)
 - `souvisi` → seznam `id` konceptů (hrana „souvisí", i napříč tématy/oblastmi)
 - `tagy` → průřezová témata / filtr (viz níže)
@@ -55,9 +55,13 @@ Hrany (`prerekvizity`, `souvisi`) a stav/vrstva/tagy fungují ve všech třech r
 ### Detailní panel konceptu — přidat KDI
 Vedle sekce **RVP — očekávaný výstup** (z `concept.rvp`) přidej sekci **Digitální kompetence**: pokud má koncept `kompetence` != null, dohledej ji v top-level `kompetence[]` podle id a zobraz `nazev`, `kod` a `vystup`. Když je `null`, sekci vynech (nebo „—").
 
-## Tagy (na filtr)
-Průřezové značky napříč tématy, hodí se pro filtr i pro „AI průřezovou vrstvu". Používané hodnoty mj.:
-`ai`, `ai-prurez` (místa, kde se AI vplétá do jiného tématu jako reflexní krok), `etika`, `postoj`, `soukromi`, `bezpeci`, `deepfake`, `data`, `databaze`, `sit`, `cloud`, `api`, `rizeni-toku`, `opakovani`, `kdyz-tak`, `algoritmus`, `dekompozice`, `abstrakce`, `programovani`, `web`, `aplikace`, `hry`, `robotika`, `media`, `wellbeing`, `design`, `ladeni`, `verzovani`, `spoluprace`.
+## Tagy — dvě průřezové facetové vrstvy (v0.9)
+Tagy jsou **ortogonální** k tématu, okruhu RVP i kompetenci — schválně **nekopírují témata** (každý tag sahá napříč tématy). Kanonický seznam je v top-level `tagy[]` (`{tag, pocet}`); každý koncept má 1–5 tagů. Dvě rodiny:
+
+- **(A) Optiky / průřezová velká témata a hodnoty** (10) — „proč to je důležité", to, co se dá protáhnout celým kurikulem: `soukromí`, `bezpečí a rizika`, `etika a odpovědnost`, `férovost a předpojatost`, `lidský dohled a agency`, `důvěra a ověřování`, `dopad na společnost`, `pozornost a wellbeing`, `udržitelnost`, `moc a peníze`. Řídké a vysoce signální — označují „reflexivní momenty".
+- **(B) Povaha konceptu** (2) — „co je to za typ znalosti": `teoretický základ` a `praktická dovednost`. Pokrývají všechny koncepty (dělení znalosti/dovednosti; postoje nese vrstva A).
+
+**Tag ≠ hrana.** Tag je *příslušnost do kategorie* (vlastnost jednoho konceptu), ne vztah mezi dvojicí — pro UI badge/filtr, ne čára. Užitečné UI: **filtr optikou** („ukaž vše, kde jde o soukromí / bias / dopad na společnost") vytáhne věci, které tři osy rozhazují jinam; a **spolu-výskyt tagů** jako kompaktní přehled překryvů.
 
 ## Zásady, které jsem držel (ať víš, na čem stavíš)
 - **RVP znění nevymýšlené** — opsané doslovně z PDF; kde v RVP výstup není, `rvp: []`.
@@ -66,25 +70,19 @@ Průřezové značky napříč tématy, hodí se pro filtr i pro „AI průřezo
 - Všechny `prerekvizity`/`souvisi` odkazují na existující `id` (ověřeno, žádné visící odkazy).
 - Pokrytí RVP: všech **12** očekávaných výstupů oboru Informatika pro 2. stupeň je namapováno na koncepty.
 
-## Propojení (hrany) — verze 0.3
+## Propojení (hrany) — verze 0.8
 
-Dva typy hran:
-- `prerekvizity` (směrové, „nauč se A, než začneš B") — i napříč tématy (35 mezitématických), takže témata nejsou izolované ostrovy: programování staví na informatickém myšlení, weby/aplikace na programování, AI na datech atd. Tvoří acyklický graf (DAG, ověřeno).
-- `souvisi` (laterální příbuznost, převážně napříč tématy) — v 0.3 výrazně zhuštěno tak, aby vytáhlo **průřezová témata** na povrch.
+Tři vrstvy vztahu, každá v jiném „rozlišení" (od nejsilnějšího k nejvolnějšímu):
+1. **`prerekvizity`** (směrové, „nauč se A, než začneš B") — pořadí učení, DAG. I napříč tématy (35 mezitématických). 148 hran.
+2. **`souvisi`** (neorientované) — **jen těsné, ručně kurátorské** párové mosty, hlavně **napříč tématy/tagy** (např. „Doporučovací systémy" ↔ „Digitální wellbeing"). Nemá kreslit „to samé", co už říká tag — má ukazovat **nečekané mosty mezi vzdálenými částmi mapy**. 62 hran.
+3. **`tagy`** — široká kategorie/příslušnost, bez čar (viz výše).
 
-**Jak `souvisi` v 0.3 vzniká (systematicky přes tag-vlákna):**
-- Koncepty sdílející stejné průřezové **vlákno (tag)** se propojí napříč tématy: malá/střední vlákna (`soukromi`, `etika`, `deepfake`, `sit`, `cloud`, `rizeni-toku`, `design`, `udalosti`, `ml`, `postoj`…) jako plný klastr; velká vlákna (`data`, `bezpeci`, `programovani`) přes hub-and-spoke na kotvu, aby nevznikl chuchvalec.
-- **AI průřezová vrstva:** každý koncept s tagem `ai-prurez` odkazuje na jádro AI (`Ověřování výstupů`, `Kdy AI (ne)použít a disclosure`, `Bias a férovost`).
-- Tag `ai` (39 konceptů) se záměrně **neklastruje celý** — AI se protahuje jen přes `ai-prurez`, jinak by vzniklo ~560 hran.
+**Změna v 0.8:** dřívější husté generování `souvisi` z tag-vláken (v0.3, 190 hran) bylo **odebráno** — dělalo z hran totéž co tagy (chuchvalec, žádný nový signál). Šíře se přesunula do TAGŮ, `souvisi` se vrátilo k těsnému kurátorskému jádru. `souvisi` je i nadále neorientované a nikdy neduplikuje `prerekvizitu`.
 
-Stav 0.3: **338 hran** (souvisí 190, prerekvizita 148), průměrný stupeň uzlu ~5,0, žádný izolovaný uzel, nejvíc propojené uzly ~14 hran (přirozené huby: Reprezentace dat, Bias a férovost, Doporučovací systémy…). `souvisi` nikdy neduplikuje `prerekvizitu` ani není symetricky dvakrát.
-
-**Doporučení k UI (důležité kvůli čitelnosti):** při vyšší hustotě hran je klíčové, aby graf nebyl „chuchvalec". Přidej prosím:
-1. **Zvýraznění sousedství** při najetí/kliknutí na uzel (zbytek grafu ztlum) — nejúčinnější nástroj proti přehlcení.
-2. **Filtr typu hrany** (jen prerekvizity / jen souvisí / obojí).
-3. Volitelně zvýraznění hran vedoucích na jádro AI (tag `ai-prurez`) jako „AI průřezovou vrstvu".
-
-Tím zůstane mapa čitelná i při dalším zhušťování.
+**Doporučení k UI:**
+1. **Zvýraznění sousedství** při najetí/kliknutí (zbytek ztlum).
+2. **Filtr typu hrany** (prerekvizity / souvisí).
+3. **„Bridge finder"** — zvýrazni `souvisi` hrany spojující různá témata/tagy: to jsou mezioborové „aha" spoje (ideální náměty na Glitche na pomezí).
 
 ## Rozklikávací oblasti a témata (v0.5)
 

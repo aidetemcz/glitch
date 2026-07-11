@@ -446,6 +446,210 @@ KDI_MAP = {
  ('fyzicky-computing', 'Komunikace mezi zařízeními'): 'kdi-vin',
 }
 
+# ---- Přiřazení očekávaných výstupů RVP ke konceptům (v0.10) ----
+# Autoritativní zdroj pro pole `rvp`. Jen 12 výstupů 2. stupně; ke konceptu ideálně
+# jeden, max dva, a JEN tam, kde to sedí na znění i okruh (oblast). Co v RVP není
+# (moderní témata, myšlenkové abstrakce, teorie AI), zůstává prázdné — NEVYMÝŠLET.
+RVP_MAP = {
+ # Data, informace a modelování (v001–v004)
+ ('digitalni-zaklady', 'Data a informace'): ['v001'],
+ ('digitalni-zaklady', 'Reprezentace dat'): ['v002'],
+ ('data-databaze', 'Datová gramotnost'): ['v001'],
+ ('data-databaze', 'Datový cyklus'): ['v001'],
+ ('data-databaze', 'Strukturovaná vs. nestrukturovaná data'): ['v002'],
+ ('data-databaze', 'Vizualizace a volba grafu'): ['v003'],
+ ('data-databaze', 'Statistická gramotnost'): ['v001'],
+ ('data-databaze', 'Programová analýza dat'): ['v001'],
+ ('data-databaze', 'Analýza dat pomocí AI'): ['v001'],
+ ('informaticke-mysleni', 'Modelování a simulace'): ['v003'],
+ ('umela-inteligence', 'AI se učí z dat'): ['v004'],
+ ('umela-inteligence', 'Strojové učení prakticky'): ['v004'],
+ ('fyzicky-computing', 'AI přímo na zařízení (TinyML)'): ['v004'],
+ # Algoritmizace a programování (v005–v007)
+ ('informaticke-mysleni', 'Dekompozice'): ['v006'],
+ ('informaticke-mysleni', 'Algoritmus'): ['v006'],
+ ('informaticke-mysleni', 'Řízení toku'): ['v007'],
+ ('informaticke-mysleni', 'Pseudokód a vývojové diagramy'): ['v005'],
+ ('informaticke-mysleni', 'Základní algoritmy'): ['v005'],
+ ('informaticke-mysleni', 'Hodnocení a analýza chyb'): ['v005'],
+ ('programovani', 'Proměnné a datové typy'): ['v007'],
+ ('programovani', 'Podmínky v kódu'): ['v007'],
+ ('programovani', 'Cykly v kódu'): ['v007'],
+ ('programovani', 'Funkce a procedury'): ['v006'],
+ ('programovani', 'Ladění a testování'): ['v005'],
+ ('programovani', 'Blokové vs. textové programování'): ['v007'],
+ ('programovani', 'Čtení a hodnocení AI kódu'): ['v005'],
+ ('herni-vyvoj', 'Herní smyčka, scéna a objekty'): ['v007'],
+ ('herni-vyvoj', 'Vstup hráče, stavy a skóre'): ['v007'],
+ ('herni-vyvoj', 'Scratch jako vstup'): ['v007'],
+ ('fyzicky-computing', 'micro:bit'): ['v007'],
+ ('fyzicky-computing', 'Události a řízení výstupu'): ['v007'],
+ # Informační systémy (v008–v010)
+ ('data-databaze', 'Tabulky a relační model'): ['v009'],
+ ('data-databaze', 'Dotazování (SQL)'): ['v010'],
+ ('data-databaze', 'Účel informačních systémů'): ['v008'],
+ ('data-databaze', 'Čištění reálných dat'): ['v010'],
+ ('tvorba-aplikaci', 'Databáze a autentizace'): ['v009', 'v012'],
+ # Digitální technologie (v011–v012)
+ ('digitalni-zaklady', 'Hardware a software'): ['v011'],
+ ('digitalni-zaklady', 'Internet a síť'): ['v011'],
+ ('digitalni-zaklady', 'Adresy a protokoly'): ['v011'],
+ ('digitalni-zaklady', 'Operační systém a soubory'): ['v011'],
+ ('digitalni-zaklady', 'Kde jsou data fyzicky'): ['v012'],
+ ('fyzicky-computing', 'Arduino a Raspberry Pi'): ['v011'],
+ ('fyzicky-computing', 'Roboti a vozítka'): ['v011'],
+ ('fyzicky-computing', 'IoT'): ['v011'],
+ ('fyzicky-computing', 'Komunikace mezi zařízeními'): ['v011'],
+ ('kyberbezpecnost', 'Hesla a 2FA'): ['v012'],
+ ('kyberbezpecnost', 'Phishing a sociální inženýrství'): ['v012'],
+ ('kyberbezpecnost', 'Soukromí a digitální stopa'): ['v012'],
+ ('kyberbezpecnost', 'Bezpečné chování na sítích'): ['v012'],
+ ('kyberbezpecnost', 'Základní hygiena'): ['v012'],
+ ('kyberbezpecnost', 'Šifrování a HTTPS'): ['v012'],
+ ('kyberbezpecnost', 'Typy útoků'): ['v012'],
+ ('kyberbezpecnost', 'AI podvody'): ['v012'],
+ ('kyberbezpecnost', 'Sextortion a citlivý obsah'): ['v012'],
+ ('kyberbezpecnost', 'Ověřování přes druhý kanál'): ['v012'],
+ ('kyberbezpecnost', 'Síťová bezpečnost a CTF'): ['v012'],
+}
+
+# ---- Tagy: dvě průřezové facetové vrstvy (v0.9) ----
+# Tagy jsou ORTOGONÁLNÍ k tématu, okruhu RVP i kompetenci. Dvě rodiny:
+#  (A) OPTIKY / velká průřezová témata a hodnoty — „proč to je důležité" (10);
+#  (B) POVAHA konceptu — „co je to za typ znalosti": teoretický základ vs. praktická
+#      dovednost (postoje pokrývají optiky). Odpovídá dělení znalosti/dovednosti/postoje.
+# Záměrně NEkopírují témata: každá optika sahá do mnoha témat najednou.
+
+# (B) povaha — výchozí dle tématu + výjimky; None = řeší optiky (postojové koncepty)
+NATURE_DEFAULT = {
+ 'informaticke-mysleni': 'teoretický základ',
+ 'digitalni-zaklady': 'teoretický základ',
+ 'programovani': 'teoretický základ',
+ 'data-databaze': 'praktická dovednost',
+ 'tvorba-webu': 'praktická dovednost',
+ 'tvorba-aplikaci': 'praktická dovednost',
+ 'tvorba-obsahu': 'praktická dovednost',
+ 'herni-vyvoj': 'praktická dovednost',
+ 'fyzicky-computing': 'praktická dovednost',
+ 'kyberbezpecnost': 'praktická dovednost',
+ 'umela-inteligence': None,
+ 'digitalni-obcanstvi': None,
+}
+NATURE_OVERRIDE = {
+ ('programovani', 'Ladění a testování'): 'praktická dovednost',
+ ('programovani', 'Verzování kódu'): 'praktická dovednost',
+ ('programovani', 'Knihovny a volání API v kódu'): 'praktická dovednost',
+ ('programovani', 'Čtení a hodnocení AI kódu'): 'praktická dovednost',
+ ('programovani', 'Blokové vs. textové programování'): 'praktická dovednost',
+ ('data-databaze', 'Datová gramotnost'): 'teoretický základ',
+ ('data-databaze', 'Datový cyklus'): 'teoretický základ',
+ ('data-databaze', 'Strukturovaná vs. nestrukturovaná data'): 'teoretický základ',
+ ('data-databaze', 'Tabulky a relační model'): 'teoretický základ',
+ ('data-databaze', 'Statistická gramotnost'): 'teoretický základ',
+ ('data-databaze', 'Účel informačních systémů'): 'teoretický základ',
+ ('tvorba-webu', 'Jak funguje web'): 'teoretický základ',
+ ('tvorba-aplikaci', 'Co je aplikace'): 'teoretický základ',
+ ('tvorba-obsahu', 'Vizuální jazyk'): 'teoretický základ',
+ ('herni-vyvoj', 'Herní smyčka, scéna a objekty'): 'teoretický základ',
+ ('herni-vyvoj', 'Vstup hráče, stavy a skóre'): 'teoretický základ',
+ ('herni-vyvoj', 'Kolize a jednoduchá fyzika'): 'teoretický základ',
+ ('herni-vyvoj', 'Herní design'): 'teoretický základ',
+ ('fyzicky-computing', 'Vstup–zpracování–výstup na zařízení'): 'teoretický základ',
+ ('fyzicky-computing', 'Senzory a aktuátory'): 'teoretický základ',
+ ('kyberbezpecnost', 'Šifrování a HTTPS'): 'teoretický základ',
+ ('kyberbezpecnost', 'Typy útoků'): 'teoretický základ',
+ ('umela-inteligence', 'Co je a co není AI'): 'teoretický základ',
+ ('umela-inteligence', 'Jak funguje generativní model'): 'teoretický základ',
+ ('umela-inteligence', 'Pět velkých idejí AI'): 'teoretický základ',
+ ('umela-inteligence', 'Jak fungují chatboti (LLM, RAG)'): 'teoretický základ',
+ ('umela-inteligence', 'AI se učí z dat'): 'teoretický základ',
+ ('umela-inteligence', 'Typy AI úloh'): 'teoretický základ',
+ ('umela-inteligence', 'Doporučovací systémy'): 'teoretický základ',
+ ('umela-inteligence', 'Prompt a promptová gramotnost'): 'praktická dovednost',
+ ('umela-inteligence', 'Ověřování výstupů'): 'praktická dovednost',
+ ('umela-inteligence', 'Strojové učení prakticky'): 'praktická dovednost',
+ ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'): 'teoretický základ',
+ ('digitalni-obcanstvi', 'Rozumět AI (halucinace, bias)'): 'teoretický základ',
+ ('digitalni-obcanstvi', 'Kritické myšlení online'): 'praktická dovednost',
+ ('digitalni-obcanstvi', 'Dezinformace a manipulace'): 'praktická dovednost',
+ ('digitalni-obcanstvi', 'Rozpoznání AI obsahu'): 'praktická dovednost',
+ ('digitalni-obcanstvi', 'Aktivní digitální občanství'): 'praktická dovednost',
+}
+# (A) optiky / průřezová velká témata a hodnoty
+LENS = {
+ 'soukromí': [
+  ('digitalni-zaklady', 'Kde jsou data fyzicky'),
+  ('umela-inteligence', 'Soukromí při práci s AI'), ('umela-inteligence', 'Doporučovací systémy'),
+  ('kyberbezpecnost', 'Soukromí a digitální stopa'), ('kyberbezpecnost', 'Bezpečné chování na sítích'), ('kyberbezpecnost', 'Sextortion a citlivý obsah'),
+  ('tvorba-aplikaci', 'Databáze a autentizace'),
+  ('digitalni-obcanstvi', 'Digitální stopa a soukromí'), ('digitalni-obcanstvi', 'Právo a etika'), ('digitalni-obcanstvi', 'Obchodní modely platforem'),
+ ],
+ 'bezpečí a rizika': [
+  ('kyberbezpecnost', 'Hesla a 2FA'), ('kyberbezpecnost', 'Phishing a sociální inženýrství'), ('kyberbezpecnost', 'Bezpečné chování na sítích'), ('kyberbezpecnost', 'Základní hygiena'), ('kyberbezpecnost', 'Šifrování a HTTPS'), ('kyberbezpecnost', 'Typy útoků'), ('kyberbezpecnost', 'AI podvody'), ('kyberbezpecnost', 'Sextortion a citlivý obsah'), ('kyberbezpecnost', 'Ověřování přes druhý kanál'), ('kyberbezpecnost', 'Síťová bezpečnost a CTF'),
+  ('umela-inteligence', 'Deepfakes a syntetická média'), ('umela-inteligence', 'Soukromí při práci s AI'),
+  ('digitalni-zaklady', 'Kde jsou data fyzicky'),
+  ('tvorba-obsahu', 'Původ obsahu a vodoznaky'),
+  ('tvorba-aplikaci', 'Databáze a autentizace'), ('tvorba-aplikaci', 'Iluze, že to umím'),
+ ],
+ 'etika a odpovědnost': [
+  ('umela-inteligence', 'Kdy AI (ne)použít a disclosure'), ('umela-inteligence', 'Hlubší etika AI'),
+  ('tvorba-obsahu', 'Etika, autorství a označování'),
+  ('tvorba-aplikaci', 'Iluze, že to umím'),
+  ('digitalni-obcanstvi', 'Etika AI ve škole'), ('digitalni-obcanstvi', 'Právo a etika'), ('digitalni-obcanstvi', 'Aktivní digitální občanství'),
+  ('kyberbezpecnost', 'Síťová bezpečnost a CTF'),
+ ],
+ 'férovost a předpojatost': [
+  ('umela-inteligence', 'Bias a férovost'), ('umela-inteligence', 'AI se učí z dat'),
+  ('data-databaze', 'Statistická gramotnost'), ('data-databaze', 'Čištění reálných dat'),
+  ('digitalni-obcanstvi', 'Dezinformace a manipulace'), ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'),
+ ],
+ 'lidský dohled a agency': [
+  ('umela-inteligence', 'Vlastní agency'), ('umela-inteligence', 'Kdy AI (ne)použít a disclosure'), ('umela-inteligence', 'Ověřování výstupů'),
+  ('tvorba-aplikaci', 'Iluze, že to umím'), ('tvorba-aplikaci', 'Vibecoding'),
+  ('programovani', 'Čtení a hodnocení AI kódu'),
+  ('digitalni-obcanstvi', 'Rozumět AI (halucinace, bias)'),
+ ],
+ 'důvěra a ověřování': [
+  ('umela-inteligence', 'Ověřování výstupů'), ('umela-inteligence', 'Jak funguje generativní model'), ('umela-inteligence', 'Deepfakes a syntetická média'),
+  ('data-databaze', 'Datová gramotnost'), ('data-databaze', 'Statistická gramotnost'), ('data-databaze', 'Analýza dat pomocí AI'), ('data-databaze', 'Vizualizace a volba grafu'),
+  ('kyberbezpecnost', 'Phishing a sociální inženýrství'), ('kyberbezpecnost', 'Ověřování přes druhý kanál'), ('kyberbezpecnost', 'AI podvody'),
+  ('tvorba-obsahu', 'Původ obsahu a vodoznaky'),
+  ('digitalni-obcanstvi', 'Kritické myšlení online'), ('digitalni-obcanstvi', 'Dezinformace a manipulace'), ('digitalni-obcanstvi', 'Rozpoznání AI obsahu'), ('digitalni-obcanstvi', 'Rozumět AI (halucinace, bias)'),
+  ('programovani', 'Čtení a hodnocení AI kódu'),
+  ('informaticke-mysleni', 'Hodnocení a analýza chyb'),
+ ],
+ 'dopad na společnost': [
+  ('umela-inteligence', 'AI a společnost'), ('umela-inteligence', 'Doporučovací systémy'),
+  ('data-databaze', 'Účel informačních systémů'),
+  ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'), ('digitalni-obcanstvi', 'Obchodní modely platforem'), ('digitalni-obcanstvi', 'Aktivní digitální občanství'), ('digitalni-obcanstvi', 'Právo a etika'), ('digitalni-obcanstvi', 'Dezinformace a manipulace'),
+ ],
+ 'pozornost a wellbeing': [
+  ('digitalni-obcanstvi', 'Digitální wellbeing'), ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'), ('digitalni-obcanstvi', 'Obchodní modely platforem'),
+  ('umela-inteligence', 'Doporučovací systémy'), ('umela-inteligence', 'Kdy AI (ne)použít a disclosure'), ('umela-inteligence', 'Vlastní agency'),
+  ('kyberbezpecnost', 'Sextortion a citlivý obsah'),
+ ],
+ 'udržitelnost': [
+  ('umela-inteligence', 'Hlubší etika AI'), ('umela-inteligence', 'AI se učí z dat'),
+  ('digitalni-zaklady', 'Kde jsou data fyzicky'), ('digitalni-zaklady', 'Cloud a server'),
+ ],
+ 'moc a peníze': [
+  ('digitalni-obcanstvi', 'Obchodní modely platforem'), ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'),
+  ('umela-inteligence', 'AI a společnost'), ('umela-inteligence', 'Doporučovací systémy'),
+  ('tvorba-obsahu', 'Etika, autorství a označování'), ('tvorba-obsahu', 'Generativní hudba a hlas'),
+ ],
+}
+LENS_KEY = {}
+for _tag, _members in LENS.items():
+    for _m in _members:
+        LENS_KEY.setdefault(_m, set()).add(_tag)
+
+def tags_for(tema, nazev):
+    tags = set(LENS_KEY.get((tema, nazev), set()))
+    nat = NATURE_OVERRIDE.get((tema, nazev), NATURE_DEFAULT.get(tema))
+    if nat:
+        tags.add(nat)
+    return sorted(tags)
+
 # ---- Sestavení ----
 def cid(tema, nazev):
     return slug(tema) + '-' + slug(nazev)
@@ -458,13 +662,15 @@ for tema, lst in C.items():
 
 concepts = []
 problems = []
-for _k in list(OBLAST_DOPLNENI) + list(KDI_MAP):
+_tagkeys = [m for members in LENS.values() for m in members] + list(NATURE_OVERRIDE)
+for _k in list(OBLAST_DOPLNENI) + list(KDI_MAP) + list(RVP_MAP) + _tagkeys:
     if cid(*_k) not in index:
         problems.append('MAP klíč neexistuje: ' + str(_k))
 for tema, lst in C.items():
     for (nazev, vrstva, popis, rvp_obl, rvpkeys, tagy, prereq, souvisi) in lst:
         cidv = cid(tema, nazev)
         rvp_obl = OBLAST_DOPLNENI.get((tema, nazev), rvp_obl)  # doplňkové zařazení do okruhu
+        rvpkeys = RVP_MAP.get((tema, nazev), [])  # autoritativní přiřazení výstupů RVP (v0.10)
         rvp_list = []
         for k in rvpkeys:
             kod, vyst = RVP[k]
@@ -492,7 +698,7 @@ for tema, lst in C.items():
             'kriteria': [],         # doplní se v detailní fázi
             'prerekvizity': prereq_ids,
             'souvisi': souvisi_ids,
-            'tagy': tagy,
+            'tagy': tags_for(tema, nazev),
             'zdroj': ([ZDROJ_RVP] if rvp_list else []),
             'pokryti_glitchem': [],
             'stav': 'draft',
@@ -633,55 +839,9 @@ for a, b in EXTRA_SOUVISI:
     if ai_ in byid and bi_ in byid and ai_ != bi_ and bi_ not in byid[ai_]['souvisi']:
         byid[ai_]['souvisi'].append(bi_)
 
-# ============ TAG-VLÁKNA: hromadné "souvisí" napříč tématy (v0.3) ============
-# Průřezová témata realizujeme jako hrany: koncepty sdílející stejné vlákno (tag)
-# se propojí NAPŘÍČ tématy. Malá/střední vlákna = plný klastr; velká vlákna =
-# hub-and-spoke na kotvu (jinak by vznikl chuchvalec). Tag `ai` (39 konceptů)
-# se neklastruje celý — AI se protahuje přes vrstvu `ai-prurez` na jádro AI.
-from itertools import combinations as _comb
-_tagmem = {}
-for c in concepts:
-    for t in c['tagy']:
-        _tagmem.setdefault(t, []).append(c)
-
-def add_souvisi(aid, bid):
-    if aid == bid or aid not in byid or bid not in byid:
-        return
-    if bid in byid[aid]['souvisi'] or aid in byid[bid]['souvisi']:
-        return
-    byid[aid]['souvisi'].append(bid)
-
-# malá a střední vlákna → plný klastr (jen mezitématické dvojice)
-FULL_CLIQUE_TAGS = ['soukromi', 'etika', 'deepfake', 'sit', 'cloud', 'api', 'design',
- 'abstrakce', 'hodnoceni', 'udalosti', 'postoj', 'ml', 'hardware', 'ladeni',
- 'rizeni-toku', 'databaze', 'verzovani', 'spoluprace', 'prompt', 'dekompozice',
- 'opakovani', 'kdyz-tak']
-for tag in FULL_CLIQUE_TAGS:
-    for a, b in _comb(_tagmem.get(tag, []), 2):
-        if a['tema'] != b['tema']:
-            add_souvisi(a['id'], b['id'])
-
-# velká vlákna → hub-and-spoke na kotvu (mezitématicky)
-HUB_TAGS = {
- 'data': [('data-databaze', 'Datová gramotnost'), ('digitalni-zaklady', 'Reprezentace dat')],
- 'bezpeci': [('kyberbezpecnost', 'Základní hygiena')],
- 'programovani': [('programovani', 'Blokové vs. textové programování')],
-}
-for tag, anchors in HUB_TAGS.items():
-    for c in _tagmem.get(tag, []):
-        for at, an in anchors:
-            anc = cid(at, an)
-            if anc in byid and c['tema'] != byid[anc]['tema']:
-                add_souvisi(c['id'], anc)
-
-# AI průřezová vrstva: každý `ai-prurez` koncept → kotvy jádra AI
-AI_ANCHORS = [cid('umela-inteligence', 'Ověřování výstupů'),
-              cid('umela-inteligence', 'Kdy AI (ne)použít a disclosure'),
-              cid('umela-inteligence', 'Bias a férovost')]
-for c in concepts:
-    if 'ai-prurez' in c['tagy']:
-        for anc in AI_ANCHORS:
-            add_souvisi(c['id'], anc)
+# Pozn.: dřívější hromadné generování „souvisí" z tag-vláken (v0.3) je odebráno (v0.8).
+# Široké asociace teď nesou TAGY; hrany „souvisí" zůstávají jen těsné a ručně kurátorské
+# (inline u konceptů + EXTRA_SOUVISI) — v souladu s vrstvením „hrany = pár, tagy = šíře".
 
 # --- dedup: souvisí nesmí duplikovat prerekvizitu (ani opačně) a nesmí být symetricky dvakrát ---
 prereq_pairs = set()
@@ -721,12 +881,15 @@ if cycles:
 
 areas = [{'id': i, 'nazev': n, 'kod': k, 'popis': p, 'barva': b} for (i, n, k, p, b) in RVP_OBLASTI]
 kompetence_list = [{'id': i, 'nazev': n, 'kod': k, 'vystup': v, 'barva': b} for (i, n, k, v, b) in KOMPETENCE]
+from collections import Counter as _Counter
+_tagcount = _Counter(t for c in concepts for t in c['tagy'])
+tagy_list = [{'tag': t, 'pocet': n} for t, n in _tagcount.most_common()]
 temata = [{'id': i, 'nazev': n, 'vrstva_mapy': v, 'popis': p, 'barva': b, 'navazuje_na': nn}
           for (i, n, v, p, b, nn) in TEMATA]
 
 data = {
     'meta': {
-        'verze': '0.7-draft',
+        'verze': '0.10-draft',
         'popis': 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.',
         'paleta': ['#ffff00', '#ffffff', '#000000'],
         'uroven': '2. stupeň ZŠ s přesahem výš',
@@ -735,6 +898,7 @@ data = {
     'areas': areas,
     'temata': temata,
     'kompetence': kompetence_list,
+    'tagy': tagy_list,
     'concepts': concepts,
 }
 

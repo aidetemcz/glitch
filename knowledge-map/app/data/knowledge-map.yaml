@@ -1,7 +1,7 @@
 # Mapa znalostí Glitch — vygenerováno build_map.py
 # RVP znění je doslovné z RVP_revidované_2024-03-28.pdf (nevymýšlet).
 meta:
-  verze: 0.7-draft
+  verze: 0.10-draft
   popis: 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.'
   paleta:
   - '#ffff00'
@@ -174,6 +174,31 @@ kompetence:
   kod: KDI-VIN-000-ZV9-001
   vystup: Využívá digitální technologie, aby sobě či ostatním usnadnil či zjednodušil pracovní postupy a zkvalitnil výsledky práce.
   barva: '#ffff00'
+tagy:
+- tag: praktická dovednost
+  pocet: 68
+- tag: teoretický základ
+  pocet: 54
+- tag: důvěra a ověřování
+  pocet: 17
+- tag: bezpečí a rizika
+  pocet: 16
+- tag: soukromí
+  pocet: 10
+- tag: dopad na společnost
+  pocet: 8
+- tag: etika a odpovědnost
+  pocet: 8
+- tag: lidský dohled a agency
+  pocet: 7
+- tag: pozornost a wellbeing
+  pocet: 7
+- tag: férovost a předpojatost
+  pocet: 6
+- tag: moc a peníze
+  pocet: 6
+- tag: udržitelnost
+  pocet: 4
 concepts:
 - id: digitalni-zaklady-hardware-a-software
   nazev: Hardware a software
@@ -188,12 +213,9 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi:
-  - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
-  - fyzicky-computing-arduino-a-raspberry-pi
+  souvisi: []
   tagy:
-  - hardware
-  - software
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -214,7 +236,7 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-digitalni-stopa-a-soukromi
   tagy:
-  - data
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -232,13 +254,9 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi:
-  - fyzicky-computing-iot
-  - kyberbezpecnost-sifrovani-a-https
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
+  souvisi: []
   tagy:
-  - sit
-  - internet
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -255,14 +273,10 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-internet-a-sit
-  souvisi:
-  - tvorba-webu-jak-funguje-web
-  - fyzicky-computing-komunikace-mezi-zarizenimi
-  - kyberbezpecnost-sifrovani-a-https
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
+  souvisi: []
   tagy:
-  - cloud
-  - sit
+  - teoretický základ
+  - udržitelnost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -278,15 +292,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-cloud-a-server
-  souvisi:
-  - tvorba-webu-jak-funguje-web
-  - fyzicky-computing-iot
-  - fyzicky-computing-komunikace-mezi-zarizenimi
-  - kyberbezpecnost-sifrovani-a-https
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
+  souvisi: []
   tagy:
-  - api
-  - sit
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -306,10 +314,8 @@ concepts:
   - digitalni-zaklady-data-a-informace
   souvisi:
   - umela-inteligence-ai-se-uci-z-dat
-  - data-databaze-datova-gramotnost
   tagy:
-  - data
-  - kodovani
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -321,20 +327,18 @@ concepts:
   kompetence: null
   vrstva: navazujici
   popis: 'Aby se zařízení na internetu našla a rozuměla si, používají adresy a dohodnutá pravidla komunikace: doména (seznam.cz) se přes DNS přeloží na číselnou IP adresu a data putují podle protokolu HTTP(S). Je to jako poštovní adresa plus společný jazyk dopisu.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
   cile: []
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-internet-a-sit
-  souvisi:
-  - tvorba-webu-jak-funguje-web
-  - fyzicky-computing-iot
-  - fyzicky-computing-komunikace-mezi-zarizenimi
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
+  souvisi: []
   tagy:
-  - sit
-  - internet
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: digitalni-zaklady-vrstvy-pocitace
@@ -349,10 +353,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-hardware-a-software
-  souvisi:
-  - programovani-zaklady-objektu-oop
+  souvisi: []
   tagy:
-  - abstrakce
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -363,15 +366,18 @@ concepts:
   kompetence: null
   vrstva: navazujici
   popis: Operační systém (Windows, Android, iOS) je program, který řídí celé zařízení a dává ostatním aplikacím přístup k hardwaru. Stará se i o soubory a složky — o to, kam se ukládají tvoje fotky a dokumenty a jak je zase najdeš.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
   cile: []
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-hardware-a-software
   souvisi: []
   tagy:
-  - software
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: digitalni-zaklady-kde-jsou-data-fyzicky
@@ -381,25 +387,22 @@ concepts:
   kompetence: kdi-bzk
   vrstva: navazujici
   popis: Data z aplikací neleží „někde v internetu", ale na konkrétních serverech na konkrétním místě na světě. Kde přesně jsou, ovlivňuje rychlost (latenci) i to, jaké zákony na ně platí — třeba jestli je chrání evropské GDPR.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-cloud-a-server
   souvisi:
   - kyberbezpecnost-soukromi-a-digitalni-stopa
-  - umela-inteligence-doporucovaci-systemy
-  - umela-inteligence-soukromi-pri-praci-s-ai
-  - kyberbezpecnost-bezpecne-chovani-na-sitich
-  - kyberbezpecnost-sextortion-a-citlivy-obsah
-  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
-  - digitalni-obcanstvi-pravo-a-etika
-  - tvorba-webu-domena-a-hosting
-  - tvorba-webu-nasazeni-webu
   tagy:
-  - cloud
-  - soukromi
-  zdroj: []
+  - bezpečí a rizika
+  - soukromí
+  - teoretický základ
+  - udržitelnost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: informaticke-mysleni-dekompozice
@@ -417,8 +420,7 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - dekompozice
-  - mysleni
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -436,10 +438,8 @@ concepts:
   prerekvizity: []
   souvisi:
   - digitalni-zaklady-vrstvy-pocitace
-  - programovani-zaklady-objektu-oop
   tagy:
-  - abstrakce
-  - mysleni
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -457,8 +457,7 @@ concepts:
   souvisi:
   - umela-inteligence-ai-se-uci-z-dat
   tagy:
-  - vzory
-  - mysleni
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -470,8 +469,6 @@ concepts:
   vrstva: core
   popis: 'Přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku.'
   rvp:
-  - kod: INF-INF-002-ZV9-005
-    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
   - kod: INF-INF-002-ZV9-006
     vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
   cile: []
@@ -481,7 +478,7 @@ concepts:
   - informaticke-mysleni-rozpoznavani-vzoru
   souvisi: []
   tagy:
-  - algoritmus
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -500,13 +497,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-algoritmus
-  souvisi:
-  - programovani-udalosti
-  - tvorba-aplikaci-logika-aplikace
+  souvisi: []
   tagy:
-  - rizeni-toku
-  - opakovani
-  - kdyz-tak
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -518,16 +511,18 @@ concepts:
   kompetence: null
   vrstva: navazujici
   popis: Způsoby, jak zapsat postup srozumitelně pro člověka ještě předtím, než ho napíšeš v konkrétním programovacím jazyce. Pseudokód je „kód napůl česky", vývojový diagram totéž nakreslené jako schéma se šipkami.
-  rvp: []
+  rvp:
+  - kod: INF-INF-002-ZV9-005
+    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
   cile: []
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-algoritmus
   souvisi: []
   tagy:
-  - postup
-  - algoritmus
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: informaticke-mysleni-logika-a-booleovske-vyrazy
@@ -542,14 +537,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-rizeni-toku
-  souvisi:
-  - programovani-cykly-v-kodu
-  - programovani-udalosti
-  - tvorba-aplikaci-logika-aplikace
-  - herni-vyvoj-herni-smycka-scena-a-objekty
+  souvisi: []
   tagy:
-  - logika
-  - rizeni-toku
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -570,8 +560,7 @@ concepts:
   souvisi:
   - data-databaze-vizualizace-a-volba-grafu
   tagy:
-  - model
-  - simulace
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -591,8 +580,7 @@ concepts:
   souvisi:
   - programovani-ladeni-a-testovani
   tagy:
-  - efektivita
-  - algoritmus
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -603,7 +591,9 @@ concepts:
   kompetence: null
   vrstva: navazujici
   popis: Osvědčené postupy, které se používají pořád dokola, hlavně hledání (najdi prvek v seznamu) a řazení (seřaď podle velikosti). Jsou to takové „klasické recepty" informatiky, které stojí za to znát.
-  rvp: []
+  rvp:
+  - kod: INF-INF-002-ZV9-005
+    vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
   cile: []
   kriteria: []
   prerekvizity:
@@ -611,8 +601,9 @@ concepts:
   souvisi:
   - programovani-seznamy-a-kolekce
   tagy:
-  - algoritmus
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: informaticke-mysleni-hodnoceni-a-analyza-chyb
@@ -629,13 +620,10 @@ concepts:
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-algoritmus
-  souvisi:
-  - data-databaze-statisticka-gramotnost
-  - digitalni-obcanstvi-kriticke-mysleni-online
-  - programovani-cteni-a-hodnoceni-ai-kodu
+  souvisi: []
   tagy:
-  - ladeni
-  - hodnoceni
+  - důvěra a ověřování
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -655,7 +643,7 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - promenne
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -677,10 +665,8 @@ concepts:
   - informaticke-mysleni-logika-a-booleovske-vyrazy
   souvisi:
   - informaticke-mysleni-rizeni-toku
-  - herni-vyvoj-herni-smycka-scena-a-objekty
   tagy:
-  - kdyz-tak
-  - rizeni-toku
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -700,12 +686,9 @@ concepts:
   prerekvizity:
   - programovani-promenne-a-datove-typy
   - informaticke-mysleni-rizeni-toku
-  souvisi:
-  - tvorba-aplikaci-logika-aplikace
-  - herni-vyvoj-herni-smycka-scena-a-objekty
+  souvisi: []
   tagy:
-  - opakovani
-  - rizeni-toku
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -717,7 +700,9 @@ concepts:
   kompetence: null
   vrstva: core
   popis: Pojmenovaný, znovupoužitelný kousek kódu, který napíšeš jednou a pak už jen „zavoláš", kdykoli ho potřebuješ. Můžeš mu předat vstupy (parametry) a dostat zpět výsledek — tím se kód zkrátí a zpřehlední.
-  rvp: []
+  rvp:
+  - kod: INF-INF-002-ZV9-006
+    vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
   cile: []
   kriteria: []
   prerekvizity:
@@ -725,9 +710,9 @@ concepts:
   - informaticke-mysleni-dekompozice
   souvisi: []
   tagy:
-  - funkce
-  - dekompozice
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: programovani-ladeni-a-testovani
@@ -748,7 +733,7 @@ concepts:
   souvisi:
   - informaticke-mysleni-hodnoceni-a-analyza-chyb
   tagy:
-  - ladeni
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -770,7 +755,7 @@ concepts:
   - informaticke-mysleni-algoritmus
   souvisi: []
   tagy:
-  - programovani
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -787,12 +772,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-promenne-a-datove-typy
-  souvisi:
-  - data-databaze-datova-gramotnost
-  - digitalni-zaklady-reprezentace-dat
+  souvisi: []
   tagy:
-  - data
-  - programovani
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -808,12 +790,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - programovani-podminky-v-kodu
-  souvisi:
-  - tvorba-aplikaci-logika-aplikace
-  - herni-vyvoj-herni-smycka-scena-a-objekty
+  souvisi: []
   tagy:
-  - udalosti
-  - rizeni-toku
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -830,11 +809,9 @@ concepts:
   prerekvizity:
   - programovani-funkce-a-procedury
   - digitalni-zaklady-api
-  souvisi:
-  - tvorba-aplikaci-prace-s-api-a-backendem
+  souvisi: []
   tagy:
-  - api
-  - knihovny
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -853,8 +830,7 @@ concepts:
   souvisi:
   - herni-vyvoj-publikace-hry
   tagy:
-  - verzovani
-  - spoluprace
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -874,11 +850,10 @@ concepts:
   - programovani-ladeni-a-testovani
   souvisi:
   - umela-inteligence-overovani-vystupu
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
   tagy:
-  - ai-prurez
-  - ladeni
+  - důvěra a ověřování
+  - lidský dohled a agency
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -897,8 +872,7 @@ concepts:
   - programovani-funkce-a-procedury
   souvisi: []
   tagy:
-  - programovani
-  - abstrakce
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -915,7 +889,7 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - ai
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -936,8 +910,9 @@ concepts:
   - data-databaze-datova-gramotnost
   souvisi: []
   tagy:
-  - ai
-  - data
+  - férovost a předpojatost
+  - teoretický základ
+  - udržitelnost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -956,7 +931,8 @@ concepts:
   - umela-inteligence-ai-se-uci-z-dat
   souvisi: []
   tagy:
-  - ai
+  - důvěra a ověřování
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -974,17 +950,12 @@ concepts:
   - umela-inteligence-ai-se-uci-z-dat
   souvisi:
   - data-databaze-vektorove-databaze
-  - kyberbezpecnost-soukromi-a-digitalni-stopa
-  - kyberbezpecnost-bezpecne-chovani-na-sitich
-  - kyberbezpecnost-sextortion-a-citlivy-obsah
-  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
-  - digitalni-obcanstvi-pravo-a-etika
-  - data-databaze-datova-gramotnost
-  - digitalni-zaklady-reprezentace-dat
   tagy:
-  - ai
-  - data
-  - soukromi
+  - dopad na společnost
+  - moc a peníze
+  - pozornost a wellbeing
+  - soukromí
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1002,8 +973,7 @@ concepts:
   - umela-inteligence-jak-funguje-generativni-model
   souvisi: []
   tagy:
-  - ai
-  - prompt
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1019,12 +989,11 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-jak-funguje-generativni-model
-  souvisi:
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
+  souvisi: []
   tagy:
-  - ai
-  - ai-prurez
+  - důvěra a ověřování
+  - lidský dohled a agency
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1039,11 +1008,10 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi:
-  - tvorba-aplikaci-iluze-ze-to-umim
+  souvisi: []
   tagy:
-  - ai
-  - postoj
+  - lidský dohled a agency
+  - pozornost a wellbeing
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1059,13 +1027,11 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-vlastni-agency
-  souvisi:
-  - tvorba-obsahu-etika-autorstvi-a-oznacovani
-  - digitalni-obcanstvi-pravo-a-etika
+  souvisi: []
   tagy:
-  - ai
-  - postoj
-  - etika
+  - etika a odpovědnost
+  - lidský dohled a agency
+  - pozornost a wellbeing
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1083,12 +1049,8 @@ concepts:
   - umela-inteligence-ai-se-uci-z-dat
   souvisi:
   - digitalni-obcanstvi-dezinformace-a-manipulace
-  - tvorba-obsahu-etika-autorstvi-a-oznacovani
-  - digitalni-obcanstvi-etika-ai-ve-skole
-  - digitalni-obcanstvi-pravo-a-etika
   tagy:
-  - ai
-  - etika
+  - férovost a předpojatost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1106,12 +1068,9 @@ concepts:
   souvisi:
   - kyberbezpecnost-soukromi-a-digitalni-stopa
   - digitalni-obcanstvi-pravo-a-etika
-  - kyberbezpecnost-bezpecne-chovani-na-sitich
-  - kyberbezpecnost-sextortion-a-citlivy-obsah
-  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
   tagy:
-  - ai
-  - soukromi
+  - bezpečí a rizika
+  - soukromí
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1129,7 +1088,7 @@ concepts:
   - umela-inteligence-co-je-a-co-neni-ai
   souvisi: []
   tagy:
-  - ai
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1150,8 +1109,7 @@ concepts:
   - data-databaze-datovy-cyklus
   souvisi: []
   tagy:
-  - ai
-  - ml
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1170,10 +1128,8 @@ concepts:
   - umela-inteligence-strojove-uceni-prakticky
   souvisi:
   - informaticke-mysleni-modelovani-a-simulace
-  - fyzicky-computing-ai-primo-na-zarizeni-tinyml
   tagy:
-  - ai
-  - ml
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1193,7 +1149,7 @@ concepts:
   - data-databaze-vektorove-databaze
   - tvorba-aplikaci-ai-nastroje-pro-tvorbu
   tagy:
-  - ai
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1211,10 +1167,9 @@ concepts:
   - umela-inteligence-bias-a-ferovost
   souvisi:
   - digitalni-obcanstvi-pravo-a-etika
-  - digitalni-obcanstvi-etika-ai-ve-skole
   tagy:
-  - ai
-  - etika
+  - etika a odpovědnost
+  - udržitelnost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1230,12 +1185,10 @@ concepts:
   kriteria: []
   prerekvizity:
   - umela-inteligence-jak-funguje-generativni-model
-  souvisi:
-  - kyberbezpecnost-zakladni-hygiena
+  souvisi: []
   tagy:
-  - ai
-  - deepfake
-  - bezpeci
+  - bezpečí a rizika
+  - důvěra a ověřování
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1253,14 +1206,9 @@ concepts:
   - umela-inteligence-hlubsi-etika-ai
   souvisi:
   - digitalni-obcanstvi-dezinformace-a-manipulace
-  - tvorba-obsahu-etika-autorstvi-a-oznacovani
-  - digitalni-obcanstvi-etika-ai-ve-skole
-  - digitalni-obcanstvi-pravo-a-etika
-  - tvorba-aplikaci-iluze-ze-to-umim
   tagy:
-  - ai
-  - etika
-  - postoj
+  - dopad na společnost
+  - moc a peníze
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1281,7 +1229,8 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-kriticke-mysleni-online
   tagy:
-  - data
+  - důvěra a ověřování
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1300,10 +1249,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-datova-gramotnost
-  souvisi:
-  - digitalni-zaklady-reprezentace-dat
+  souvisi: []
   tagy:
-  - data
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1325,7 +1273,7 @@ concepts:
   - digitalni-zaklady-reprezentace-dat
   souvisi: []
   tagy:
-  - data
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1344,11 +1292,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-strukturovana-vs-nestrukturovana-data
-  souvisi:
-  - digitalni-zaklady-reprezentace-dat
+  souvisi: []
   tagy:
-  - data
-  - databaze
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1363,17 +1309,14 @@ concepts:
   rvp:
   - kod: INF-INF-001-ZV9-003
     vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
-  - kod: INF-INF-003-ZV9-010
-    vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
   cile: []
   kriteria: []
   prerekvizity:
   - data-databaze-datovy-cyklus
-  souvisi:
-  - digitalni-zaklady-reprezentace-dat
+  souvisi: []
   tagy:
-  - data
-  - vizualizace
+  - důvěra a ověřování
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1386,8 +1329,6 @@ concepts:
   vrstva: navazujici
   popis: SQL je jazyk, kterým se databáze ptáš na to, co potřebuješ („vyber všechny žáky z 8.A"). Základní příkazy (SELECT, WHERE, JOIN) umí data filtrovat, propojovat a vybírat z tabulek.
   rvp:
-  - kod: INF-INF-003-ZV9-009
-    vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
   - kod: INF-INF-003-ZV9-010
     vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
   cile: []
@@ -1395,12 +1336,9 @@ concepts:
   prerekvizity:
   - data-databaze-tabulky-a-relacni-model
   - data-databaze-strukturovana-vs-nestrukturovana-data
-  souvisi:
-  - tvorba-aplikaci-databaze-a-autentizace
-  - digitalni-zaklady-reprezentace-dat
+  souvisi: []
   tagy:
-  - databaze
-  - data
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1422,10 +1360,9 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-obchodni-modely-platforem
   - tvorba-aplikaci-databaze-a-autentizace
-  - digitalni-zaklady-reprezentace-dat
   tagy:
-  - data
-  - databaze
+  - dopad na společnost
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1447,10 +1384,10 @@ concepts:
   souvisi:
   - umela-inteligence-bias-a-ferovost
   - digitalni-obcanstvi-kriticke-mysleni-online
-  - digitalni-zaklady-reprezentace-dat
   tagy:
-  - data
-  - hodnoceni
+  - důvěra a ověřování
+  - férovost a předpojatost
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1471,9 +1408,9 @@ concepts:
   - data-databaze-datovy-cyklus
   souvisi:
   - umela-inteligence-ai-se-uci-z-dat
-  - digitalni-zaklady-reprezentace-dat
   tagy:
-  - data
+  - férovost a předpojatost
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -1490,12 +1427,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-tabulky-a-relacni-model
-  souvisi:
-  - tvorba-aplikaci-databaze-a-autentizace
-  - digitalni-zaklady-reprezentace-dat
+  souvisi: []
   tagy:
-  - databaze
-  - data
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1511,11 +1445,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - data-databaze-nosql-a-dokumentove-databaze
-  souvisi:
-  - tvorba-aplikaci-databaze-a-autentizace
+  souvisi: []
   tagy:
-  - databaze
-  - ai
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1526,19 +1458,19 @@ concepts:
   kompetence: kdi-vin
   vrstva: navazujici
   popis: 'Když je dat moc na ruční klikání, zpracují se kódem (typicky Python + knihovna pandas). Výhoda: je to rychlé, opakovatelné a doložitelné — kdokoli spustí stejný postup a dostane stejný výsledek.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-001-ZV9-001
+    vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
   cile: []
   kriteria: []
   prerekvizity:
   - data-databaze-datovy-cyklus
   souvisi:
   - programovani-seznamy-a-kolekce
-  - digitalni-zaklady-reprezentace-dat
-  - programovani-blokove-vs-textove-programovani
   tagy:
-  - data
-  - programovani
-  zdroj: []
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: data-databaze-analyza-dat-pomoci-ai
@@ -1548,21 +1480,20 @@ concepts:
   kompetence: kdi-dat
   vrstva: navazujici
   popis: Dnes stačí data nahrát a zeptat se běžnou řečí („ukaž trend prodejů po měsících") — AI vygeneruje graf i vysvětlení. O to důležitější je umět posoudit, jestli je výsledek správný, protože AI si i tady umí čísla vymýšlet.
-  rvp: []
+  rvp:
+  - kod: INF-INF-001-ZV9-001
+    vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
   cile: []
   kriteria: []
   prerekvizity:
   - data-databaze-dotazovani-sql
   souvisi:
   - umela-inteligence-overovani-vystupu
-  - digitalni-zaklady-reprezentace-dat
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
   tagy:
-  - data
-  - ai
-  - ai-prurez
-  zdroj: []
+  - důvěra a ověřování
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: tvorba-webu-jak-funguje-web
@@ -1577,14 +1508,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - digitalni-zaklady-internet-a-sit
-  souvisi:
-  - fyzicky-computing-iot
-  - fyzicky-computing-komunikace-mezi-zarizenimi
-  - kyberbezpecnost-sifrovani-a-https
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
+  souvisi: []
   tagy:
-  - web
-  - sit
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1602,8 +1528,7 @@ concepts:
   - tvorba-webu-jak-funguje-web
   souvisi: []
   tagy:
-  - web
-  - html
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1619,13 +1544,9 @@ concepts:
   kriteria: []
   prerekvizity:
   - tvorba-webu-html
-  souvisi:
-  - tvorba-obsahu-vizualni-jazyk
-  - herni-vyvoj-herni-design
+  souvisi: []
   tagy:
-  - web
-  - css
-  - design
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1644,10 +1565,8 @@ concepts:
   - digitalni-zaklady-cloud-a-server
   souvisi:
   - digitalni-zaklady-adresy-a-protokoly
-  - fyzicky-computing-iot
   tagy:
-  - web
-  - cloud
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1666,8 +1585,7 @@ concepts:
   - programovani-udalosti
   souvisi: []
   tagy:
-  - web
-  - javascript
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1686,12 +1604,8 @@ concepts:
   souvisi:
   - tvorba-aplikaci-vibecoding
   - umela-inteligence-overovani-vystupu
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
   tagy:
-  - web
-  - ai
-  - ai-prurez
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1708,11 +1622,9 @@ concepts:
   prerekvizity:
   - tvorba-webu-interaktivita-javascript
   - programovani-funkce-a-procedury
-  souvisi:
-  - programovani-blokove-vs-textove-programovani
+  souvisi: []
   tagy:
-  - web
-  - programovani
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1731,10 +1643,8 @@ concepts:
   souvisi:
   - digitalni-zaklady-cloud-a-server
   - tvorba-aplikaci-publikace-do-app-storu
-  - fyzicky-computing-iot
   tagy:
-  - web
-  - cloud
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1752,11 +1662,8 @@ concepts:
   - tvorba-webu-html
   souvisi:
   - digitalni-obcanstvi-aktivni-digitalni-obcanstvi
-  - tvorba-obsahu-vizualni-jazyk
-  - herni-vyvoj-herni-design
   tagy:
-  - web
-  - design
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1774,10 +1681,8 @@ concepts:
   - tvorba-webu-css
   souvisi:
   - tvorba-obsahu-vizualni-jazyk
-  - herni-vyvoj-herni-design
   tagy:
-  - web
-  - design
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1794,7 +1699,7 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - aplikace
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1812,8 +1717,7 @@ concepts:
   - tvorba-aplikaci-co-je-aplikace
   souvisi: []
   tagy:
-  - aplikace
-  - no-code
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1830,11 +1734,9 @@ concepts:
   prerekvizity:
   - tvorba-aplikaci-co-je-aplikace
   - programovani-podminky-v-kodu
-  souvisi:
-  - herni-vyvoj-herni-smycka-scena-a-objekty
+  souvisi: []
   tagy:
-  - aplikace
-  - rizeni-toku
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1852,14 +1754,10 @@ concepts:
   - tvorba-aplikaci-logika-aplikace
   - umela-inteligence-prompt-a-promptova-gramotnost
   - programovani-cteni-a-hodnoceni-ai-kodu
-  souvisi:
-  - umela-inteligence-overovani-vystupu
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
+  souvisi: []
   tagy:
-  - aplikace
-  - ai
-  - ai-prurez
+  - lidský dohled a agency
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1879,8 +1777,7 @@ concepts:
   - umela-inteligence-prompt-a-promptova-gramotnost
   - programovani-cteni-a-hodnoceni-ai-kodu
   tagy:
-  - aplikace
-  - ai
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1899,8 +1796,7 @@ concepts:
   - digitalni-zaklady-api
   souvisi: []
   tagy:
-  - aplikace
-  - api
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1911,7 +1807,11 @@ concepts:
   kompetence: kdi-vin
   vrstva: navazujici
   popis: 'Appky si pamatují data (databáze) a musí poznat, kdo je kdo (autentizace — přihlašování). S tím přichází i odpovědnost: chránit hesla a osobní údaje uživatelů.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-003-ZV9-009
+    vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
@@ -1919,12 +1819,12 @@ concepts:
   - data-databaze-tabulky-a-relacni-model
   souvisi:
   - kyberbezpecnost-hesla-a-2fa
-  - kyberbezpecnost-zakladni-hygiena
   tagy:
-  - aplikace
-  - databaze
-  - bezpeci
-  zdroj: []
+  - bezpečí a rizika
+  - praktická dovednost
+  - soukromí
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: tvorba-aplikaci-zivotni-cyklus-vyvoje
@@ -1942,8 +1842,7 @@ concepts:
   - programovani-verzovani-kodu
   souvisi: []
   tagy:
-  - aplikace
-  - verzovani
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1961,7 +1860,7 @@ concepts:
   - tvorba-aplikaci-databaze-a-autentizace
   souvisi: []
   tagy:
-  - aplikace
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1981,9 +1880,10 @@ concepts:
   - programovani-ladeni-a-testovani
   - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
   tagy:
-  - aplikace
-  - ai
-  - postoj
+  - bezpečí a rizika
+  - etika a odpovědnost
+  - lidský dohled a agency
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -1998,11 +1898,9 @@ concepts:
   cile: []
   kriteria: []
   prerekvizity: []
-  souvisi:
-  - herni-vyvoj-herni-design
+  souvisi: []
   tagy:
-  - obsah
-  - design
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2021,9 +1919,7 @@ concepts:
   - umela-inteligence-prompt-a-promptova-gramotnost
   souvisi: []
   tagy:
-  - obsah
-  - ai
-  - prompt
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2042,8 +1938,7 @@ concepts:
   - umela-inteligence-jak-funguje-generativni-model
   souvisi: []
   tagy:
-  - obsah
-  - ai
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2062,11 +1957,10 @@ concepts:
   souvisi:
   - umela-inteligence-hlubsi-etika-ai
   - digitalni-obcanstvi-etika-ai-ve-skole
-  - digitalni-obcanstvi-pravo-a-etika
   tagy:
-  - obsah
-  - etika
-  - ai
+  - etika a odpovědnost
+  - moc a peníze
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2083,13 +1977,9 @@ concepts:
   prerekvizity:
   - tvorba-obsahu-generativni-obraz
   - umela-inteligence-deepfakes-a-synteticka-media
-  souvisi:
-  - kyberbezpecnost-ai-podvody
-  - digitalni-obcanstvi-rozpoznani-ai-obsahu
+  souvisi: []
   tagy:
-  - obsah
-  - ai
-  - deepfake
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2108,8 +1998,8 @@ concepts:
   souvisi:
   - kyberbezpecnost-ai-podvody
   tagy:
-  - obsah
-  - ai
+  - moc a peníze
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2127,7 +2017,7 @@ concepts:
   - tvorba-obsahu-vizualni-jazyk
   souvisi: []
   tagy:
-  - obsah
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2145,8 +2035,7 @@ concepts:
   - tvorba-obsahu-generativni-obraz
   souvisi: []
   tagy:
-  - obsah
-  - ai
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2164,11 +2053,10 @@ concepts:
   - tvorba-obsahu-etika-autorstvi-a-oznacovani
   souvisi:
   - digitalni-obcanstvi-rozpoznani-ai-obsahu
-  - kyberbezpecnost-zakladni-hygiena
   tagy:
-  - obsah
-  - bezpeci
-  - ai
+  - bezpečí a rizika
+  - důvěra a ověřování
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2186,8 +2074,7 @@ concepts:
   - tvorba-obsahu-kontrola-nad-vysledkem
   souvisi: []
   tagy:
-  - obsah
-  - ai
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2198,16 +2085,18 @@ concepts:
   kompetence: kdi-tdo
   vrstva: core
   popis: 'Každá hra běží v neustále se opakující smyčce: načti vstup → přepočítej svět → vykresli obraz, a to mnohokrát za vteřinu. V ní žijí objekty (sprity) rozmístěné ve scéně — postavy, překážky, sběratelné předměty.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
   cile: []
   kriteria: []
   prerekvizity:
   - informaticke-mysleni-rizeni-toku
   souvisi: []
   tagy:
-  - hry
-  - rizeni-toku
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: herni-vyvoj-vstup-hrace-stavy-a-skore
@@ -2217,18 +2106,19 @@ concepts:
   kompetence: kdi-tdo
   vrstva: core
   popis: Hra reaguje na ovládání (klávesy, dotyk) a přitom si pamatuje svůj stav — kolik má hráč životů, jaké je skóre, jestli běží nebo skončila. Tenhle „paměťový" základ dělá ze scény skutečnou hru.
-  rvp: []
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
   cile: []
   kriteria: []
   prerekvizity:
   - herni-vyvoj-herni-smycka-scena-a-objekty
   - programovani-udalosti
-  souvisi:
-  - fyzicky-computing-udalosti-a-rizeni-vystupu
+  souvisi: []
   tagy:
-  - hry
-  - udalosti
-  zdroj: []
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: herni-vyvoj-kolize-a-jednoducha-fyzika
@@ -2245,7 +2135,7 @@ concepts:
   - herni-vyvoj-herni-smycka-scena-a-objekty
   souvisi: []
   tagy:
-  - hry
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2264,8 +2154,7 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-digitalni-wellbeing
   tagy:
-  - hry
-  - design
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2285,8 +2174,7 @@ concepts:
   souvisi:
   - programovani-blokove-vs-textove-programovani
   tagy:
-  - hry
-  - programovani
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2305,7 +2193,7 @@ concepts:
   - herni-vyvoj-herni-design
   souvisi: []
   tagy:
-  - hry
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2322,11 +2210,9 @@ concepts:
   prerekvizity:
   - herni-vyvoj-lehke-enginy
   - programovani-zaklady-objektu-oop
-  souvisi:
-  - programovani-blokove-vs-textove-programovani
+  souvisi: []
   tagy:
-  - hry
-  - programovani
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2345,8 +2231,7 @@ concepts:
   souvisi:
   - tvorba-obsahu-generativni-obraz
   tagy:
-  - hry
-  - ai
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2365,12 +2250,8 @@ concepts:
   - programovani-cteni-a-hodnoceni-ai-kodu
   souvisi:
   - umela-inteligence-overovani-vystupu
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
   tagy:
-  - hry
-  - ai
-  - ai-prurez
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2388,8 +2269,7 @@ concepts:
   - herni-vyvoj-herni-design
   souvisi: []
   tagy:
-  - hry
-  - spoluprace
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2406,8 +2286,7 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - robotika
-  - hardware
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2426,8 +2305,7 @@ concepts:
   souvisi:
   - umela-inteligence-pet-velkych-ideji-ai
   tagy:
-  - robotika
-  - senzory
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2448,8 +2326,7 @@ concepts:
   - programovani-blokove-vs-textove-programovani
   souvisi: []
   tagy:
-  - robotika
-  - programovani
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2461,7 +2338,9 @@ concepts:
   kompetence: kdi-vin
   vrstva: core
   popis: Zařízení reaguje na podněty — stisk tlačítka, zatřesení, změnu světla — a podle nich ovládá výstupy (LED matici, piny, motory). Je to událostmi řízené programování, ale s hmatatelným výsledkem.
-  rvp: []
+  rvp:
+  - kod: INF-INF-002-ZV9-007
+    vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
   cile: []
   kriteria: []
   prerekvizity:
@@ -2469,9 +2348,9 @@ concepts:
   - programovani-udalosti
   souvisi: []
   tagy:
-  - robotika
-  - udalosti
-  zdroj: []
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: fyzicky-computing-arduino-a-raspberry-pi
@@ -2481,16 +2360,18 @@ concepts:
   kompetence: kdi-vin
   vrstva: navazujici
   popis: 'Krok dál za micro:bit: Arduino tě přiblíží skutečné elektronice (nepájivé pole, víc senzorů), Raspberry Pi je plnohodnotný malý počítač s Linuxem pro náročnější projekty.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
   cile: []
   kriteria: []
   prerekvizity:
   - fyzicky-computing-micro-bit
   souvisi: []
   tagy:
-  - robotika
-  - hardware
-  zdroj: []
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: fyzicky-computing-roboti-a-vozitka
@@ -2500,15 +2381,18 @@ concepts:
   kompetence: kdi-vin
   vrstva: navazujici
   popis: Když se k desce přidá podvozek a motory (micro:bit + Maqueen, Lego Spike), vznikne pohyblivý robot. Sleduje čáru, vyhýbá se překážkám — a spojuje programování s pohybem v reálném světě.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
   cile: []
   kriteria: []
   prerekvizity:
   - fyzicky-computing-udalosti-a-rizeni-vystupu
   souvisi: []
   tagy:
-  - robotika
-  zdroj: []
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: fyzicky-computing-iot
@@ -2518,7 +2402,9 @@ concepts:
   kompetence: kdi-vin
   vrstva: navazujici
   popis: 'Internet věcí (IoT): senzory posílají naměřená data po síti do cloudu, kde se zobrazí na přehledu (dashboardu). Tak funguje chytrá domácnost i měření prostředí — spojení hardwaru, sítě a dat dohromady.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
   cile: []
   kriteria: []
   prerekvizity:
@@ -2527,13 +2413,10 @@ concepts:
   souvisi:
   - data-databaze-vizualizace-a-volba-grafu
   - digitalni-zaklady-kde-jsou-data-fyzicky
-  - kyberbezpecnost-sifrovani-a-https
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
   tagy:
-  - robotika
-  - sit
-  - cloud
-  zdroj: []
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: fyzicky-computing-ai-primo-na-zarizeni-tinyml
@@ -2553,9 +2436,7 @@ concepts:
   - umela-inteligence-strojove-uceni-prakticky
   souvisi: []
   tagy:
-  - robotika
-  - ai
-  - ml
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2567,19 +2448,19 @@ concepts:
   kompetence: kdi-vin
   vrstva: navazujici
   popis: Zařízení si mohou posílat data bezdrátově — přes rádio nebo Bluetooth. Díky tomu spolu můžou „mluvit" (dva micro:bity, ovladač a robot) a tvořit propojené projekty.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-011
+    vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
   cile: []
   kriteria: []
   prerekvizity:
   - fyzicky-computing-micro-bit
   souvisi:
   - digitalni-zaklady-internet-a-sit
-  - kyberbezpecnost-sifrovani-a-https
-  - kyberbezpecnost-sitova-bezpecnost-a-ctf
   tagy:
-  - robotika
-  - sit
-  zdroj: []
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: kyberbezpecnost-hesla-a-2fa
@@ -2597,7 +2478,8 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - bezpeci
+  - bezpečí a rizika
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2618,7 +2500,9 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-kriticke-mysleni-online
   tagy:
-  - bezpeci
+  - bezpečí a rizika
+  - důvěra a ověřování
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2638,10 +2522,9 @@ concepts:
   prerekvizity: []
   souvisi:
   - digitalni-obcanstvi-digitalni-stopa-a-soukromi
-  - digitalni-obcanstvi-pravo-a-etika
   tagy:
-  - bezpeci
-  - soukromi
+  - praktická dovednost
+  - soukromí
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2661,12 +2544,11 @@ concepts:
   prerekvizity:
   - kyberbezpecnost-soukromi-a-digitalni-stopa
   - kyberbezpecnost-hesla-a-2fa
-  souvisi:
-  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
-  - digitalni-obcanstvi-pravo-a-etika
+  souvisi: []
   tagy:
-  - bezpeci
-  - soukromi
+  - bezpečí a rizika
+  - praktická dovednost
+  - soukromí
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2686,7 +2568,8 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - bezpeci
+  - bezpečí a rizika
+  - praktická dovednost
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2698,7 +2581,9 @@ concepts:
   kompetence: kdi-bzk
   vrstva: navazujici
   popis: Šifrování promění data v nečitelnou změť pro každého, kdo nemá klíč. Zámeček a „https" v adrese znamená, že spojení k webu je šifrované; end-to-end šifrování (třeba v messengerech) zajistí, že zprávu přečte jen příjemce.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
@@ -2706,9 +2591,10 @@ concepts:
   - digitalni-zaklady-adresy-a-protokoly
   souvisi: []
   tagy:
-  - bezpeci
-  - sit
-  zdroj: []
+  - bezpečí a rizika
+  - teoretický základ
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: kyberbezpecnost-typy-utoku
@@ -2727,7 +2613,8 @@ concepts:
   - kyberbezpecnost-zakladni-hygiena
   souvisi: []
   tagy:
-  - bezpeci
+  - bezpečí a rizika
+  - teoretický základ
   zdroj:
   - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
@@ -2739,7 +2626,9 @@ concepts:
   kompetence: kdi-bzk
   vrstva: navazujici
   popis: 'AI posunula podvody na novou úroveň: deepfake video, naklonovaný hlas známého člověka nebo dokonalý phishing bez chyb. Stará rada „poznáš to podle špatné češtiny" už neplatí — nová obrana je ověřit si to jinou cestou.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
@@ -2748,10 +2637,11 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-rozpoznani-ai-obsahu
   tagy:
-  - bezpeci
-  - deepfake
-  - ai
-  zdroj: []
+  - bezpečí a rizika
+  - důvěra a ověřování
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: kyberbezpecnost-sextortion-a-citlivy-obsah
@@ -2761,19 +2651,22 @@ concepts:
   kompetence: kdi-bzk
   vrstva: navazujici
   popis: Vydírání intimními fotkami — dnes i falešnými, vytvořenými AI. Mimořádně citlivé a aktuální riziko pro nezletilé; klíčové je vědět, že v tom oběť není sama a komu se svěřit, ne mlčet ze studu.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-ai-podvody
   souvisi:
   - tvorba-obsahu-puvod-obsahu-a-vodoznaky
-  - digitalni-obcanstvi-digitalni-stopa-a-soukromi
-  - digitalni-obcanstvi-pravo-a-etika
   tagy:
-  - bezpeci
-  - soukromi
-  zdroj: []
+  - bezpečí a rizika
+  - pozornost a wellbeing
+  - praktická dovednost
+  - soukromí
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: kyberbezpecnost-overovani-pres-druhy-kanal
@@ -2783,7 +2676,9 @@ concepts:
   kompetence: kdi-bzk
   vrstva: navazujici
   popis: Když ti „kamarád" píše o peníze nebo „banka" chce heslo, ověř si to jinou cestou — zavolej, zeptej se napřímo. Zdravá skepse a zvyk ověřovat (prebunking) je nejlepší obrana proti podvodům, které vypadají dokonale.
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
@@ -2791,12 +2686,12 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-dezinformace-a-manipulace
   - umela-inteligence-overovani-vystupu
-  - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
-  - umela-inteligence-bias-a-ferovost
   tagy:
-  - bezpeci
-  - ai-prurez
-  zdroj: []
+  - bezpečí a rizika
+  - důvěra a ověřování
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: kyberbezpecnost-sitova-bezpecnost-a-ctf
@@ -2806,16 +2701,20 @@ concepts:
   kompetence: kdi-bzk
   vrstva: navazujici
   popis: 'Pro zvídavé: jak se chrání sítě a jak přemýšlí útočník. Soutěže typu CTF (Capture the Flag) učí etické hackování hravou formou — bezpečnost zevnitř, na cvičných úlohách.'
-  rvp: []
+  rvp:
+  - kod: INF-INF-004-ZV9-012
+    vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
   cile: []
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-typy-utoku
   souvisi: []
   tagy:
-  - bezpeci
-  - sit
-  zdroj: []
+  - bezpečí a rizika
+  - etika a odpovědnost
+  - praktická dovednost
+  zdroj:
+  - RVP_revidované_2024-03-28.pdf, s. 54–55
   pokryti_glitchem: []
   stav: draft
 - id: digitalni-obcanstvi-kriticke-mysleni-online
@@ -2831,8 +2730,8 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - media
-  - hodnoceni
+  - důvěra a ověřování
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2850,8 +2749,11 @@ concepts:
   - umela-inteligence-doporucovaci-systemy
   souvisi: []
   tagy:
-  - media
-  - ai
+  - dopad na společnost
+  - férovost a předpojatost
+  - moc a peníze
+  - pozornost a wellbeing
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2869,7 +2771,10 @@ concepts:
   - digitalni-obcanstvi-kriticke-mysleni-online
   souvisi: []
   tagy:
-  - media
+  - dopad na společnost
+  - důvěra a ověřování
+  - férovost a předpojatost
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2886,8 +2791,7 @@ concepts:
   prerekvizity: []
   souvisi: []
   tagy:
-  - media
-  - soukromi
+  - soukromí
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2905,8 +2809,7 @@ concepts:
   souvisi:
   - umela-inteligence-doporucovaci-systemy
   tagy:
-  - media
-  - wellbeing
+  - pozornost a wellbeing
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2925,8 +2828,9 @@ concepts:
   - umela-inteligence-jak-funguje-generativni-model
   souvisi: []
   tagy:
-  - media
-  - ai
+  - důvěra a ověřování
+  - lidský dohled a agency
+  - teoretický základ
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2945,9 +2849,8 @@ concepts:
   - umela-inteligence-deepfakes-a-synteticka-media
   souvisi: []
   tagy:
-  - media
-  - ai
-  - deepfake
+  - důvěra a ověřování
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2966,9 +2869,7 @@ concepts:
   souvisi:
   - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
   tagy:
-  - media
-  - etika
-  - ai
+  - etika a odpovědnost
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -2986,9 +2887,9 @@ concepts:
   - digitalni-obcanstvi-digitalni-stopa-a-soukromi
   souvisi: []
   tagy:
-  - media
-  - etika
-  - soukromi
+  - dopad na společnost
+  - etika a odpovědnost
+  - soukromí
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -3007,7 +2908,10 @@ concepts:
   souvisi:
   - digitalni-obcanstvi-digitalni-wellbeing
   tagy:
-  - media
+  - dopad na společnost
+  - moc a peníze
+  - pozornost a wellbeing
+  - soukromí
   zdroj: []
   pokryti_glitchem: []
   stav: draft
@@ -3025,8 +2929,9 @@ concepts:
   - digitalni-obcanstvi-kriticke-mysleni-online
   souvisi: []
   tagy:
-  - media
-  - wellbeing
+  - dopad na společnost
+  - etika a odpovědnost
+  - praktická dovednost
   zdroj: []
   pokryti_glitchem: []
   stav: draft

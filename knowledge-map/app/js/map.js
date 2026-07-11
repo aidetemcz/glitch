@@ -90,7 +90,7 @@
   let revSouvisi = {}, revPrereq = {};   // reverzní indexy (obousměrné čtení hran v panelu)
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/knowledge-map.yaml?v=07")
+  fetch("data/knowledge-map.yaml?v=10")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
@@ -201,9 +201,20 @@
     window.__cy = cy;
     initHulls(cy);
 
-    /* tagy (filtr, jednou) */
-    const allTags = [...new Set(data.concepts.flatMap((c) => c.tagy || []))].sort((a, b) => a.localeCompare(b, "cs"));
-    buildChips("filter-tagy", allTags.map((t) => ({ val: t, label: t })), "tagy", false);
+    /* tagy = dvě ortogonální facetové rodiny (viz data-readme):
+       „povaha konceptu" (teoretický základ / praktická dovednost) a „optiky"
+       (soukromí, etika, dopad na společnost…). Kanonické pořadí bereme z
+       top-level `tagy[]`; zbytek = optiky. */
+    const POVAHA = new Set(["teoretický základ", "praktická dovednost"]);
+    const canon = (data.tagy || []).map((t) => t.tag);
+    const used = new Set(data.concepts.flatMap((c) => c.tagy || []));
+    // fallback: kdyby data neměla top-level tagy[], vezmi tagy z konceptů
+    const all = canon.length ? canon.filter((t) => used.has(t))
+      : [...used].sort((a, b) => a.localeCompare(b, "cs"));
+    const optiky = all.filter((t) => !POVAHA.has(t));
+    const povaha = all.filter((t) => POVAHA.has(t));
+    buildChips("filter-tagy-optika", optiky.map((t) => ({ val: t, label: t })), "tagy", false);
+    buildChips("filter-tagy-povaha", povaha.map((t) => ({ val: t, label: t })), "tagy", false);
 
     /* delegované klikání na chipy */
     document.getElementById("controls").addEventListener("click", (e) => {
