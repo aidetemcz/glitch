@@ -27,3 +27,6 @@ Koncepty spojují dva druhy vazeb. **Prerekvizita** (šipka) říká, co se hod�
 Mapa je rozvržená do **vrstev** od základů a myšlení (0) přes tvorbu a programování (1) a AI (2) po bezpečí a občanství (3). **Tagy** slouží jako filtr napříč tématy: hodnotové filtry jako etika, bezpečí, soukromí nebo digitální wellbeing a povaha konceptu (teoretický základ, nebo praktická dovednost).
 
 Kliknutím na kterýkoli uzel otevřete jeho detail — popis, výukové cíle a kritéria hodnocení a případně výstup RVP a digitální kompetenci.
+
+Mapu vytváří a vylepšuje organizace AI dětem.
+Poslední aktualizace: 11/07/26
