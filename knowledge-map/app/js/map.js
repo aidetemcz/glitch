@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Mapa znalostí — interaktivní graf (Cytoscape.js)
+   Mapa informatických konceptů — interaktivní graf (Cytoscape.js)
    Dvojí seskupení konceptů: podle témat (default) nebo podle okruhů RVP.
    Data: data/knowledge-map.yaml · schéma: ../structure.md
    ========================================================================== */
@@ -234,6 +234,9 @@
     });
     document.getElementById("search").addEventListener("input", applySearch);
 
+    /* „O mapě" — info panel */
+    document.getElementById("about-btn").addEventListener("click", openAbout);
+
     /* přepínač zobrazení */
     document.querySelectorAll(".vt-btn").forEach((b) => b.addEventListener("click", () => {
       if (b.dataset.view === viewMode) return;
@@ -362,6 +365,34 @@
   const detailBody = document.getElementById("detail-body");
   document.getElementById("detail-close").addEventListener("click", closeDetail);
   function closeDetail() { detail.classList.add("hidden"); pinned = null; clearNb(); if (cy) cy.$(":selected").unselect(); }
+
+  /* „O mapě" — text z data/o-mape.md vykreslený do pravého panelu */
+  let aboutCache = null;
+  const mdInline = (t) => typo(t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"));
+  function renderAbout(md) {
+    let html = '<span class="d-badge" style="background:#ffff00;color:#000000">O mapě</span>';
+    let para = [], inSec = false;
+    const flush = () => { if (para.length) { html += `<p class="d-desc" style="margin-bottom:12px">${mdInline(para.join(" "))}</p>`; para = []; } };
+    md.split(/\r?\n/).forEach((raw) => {
+      const line = raw.trim();
+      if (!line) { flush(); return; }
+      if (line.startsWith("## ")) { flush(); if (inSec) html += "</div>"; html += `<div class="d-section"><h3>${esc(line.slice(3))}</h3>`; inSec = true; }
+      else if (line.startsWith("# ")) { flush(); html += `<h2 class="d-title">${esc(line.slice(2))}</h2>`; }
+      else para.push(line);
+    });
+    flush(); if (inSec) html += "</div>";
+    return html;
+  }
+  function openAbout() {
+    if (cy) cy.$(":selected").unselect();
+    pinned = null; clearNb();
+    const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
+    if (aboutCache) { show(aboutCache); return; }
+    fetch("data/o-mape.md?v=1")
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
+      .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
+  }
 
   function focusNode(id) {
     const n = cy.getElementById(id);

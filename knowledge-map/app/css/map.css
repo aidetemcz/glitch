@@ -17,8 +17,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--c-panel); border-right: 1px solid var(--c-line);
   padding: 22px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
 }
-.controls-head h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.04em; }
+.controls-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.controls-head h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; }
 .subtitle { color: var(--c-grey-50); font-size: 14px; margin-top: 3px; }
+.info-btn { flex: 0 0 auto; width: 26px; height: 26px; margin-top: 2px; border-radius: 50%;
+  border: 1.5px solid var(--c-yellow); color: var(--c-yellow); font-family: Georgia, "Times New Roman", serif;
+  font-style: italic; font-size: 16px; font-weight: 700; line-height: 1;
+  display: flex; align-items: center; justify-content: center; transition: all .12s ease; }
+.info-btn:hover { background: var(--c-yellow); color: var(--c-black); }
 .control-block { display: flex; flex-direction: column; gap: 9px; }
 
 /* Přepínač zobrazení */
