@@ -94,7 +94,7 @@
       return Math.min(s, 84);
     };
 
-    const labelcolor = mode === "tema" ? "#ffffff" : "#ffff00";  // témata bíle, RVP oblasti a kompetence žlutě
+    const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
     const nodes = [];
     groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: g.nazev, labelcolor, popis: g.popis } }));
     DATA.concepts.forEach((c) => {
@@ -130,12 +130,12 @@
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "180px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -12,
           "color": "data(labelcolor)", "font-size": "13px", "font-weight": "600",
-          "text-transform": "uppercase", "padding": "26px"
+          "text-transform": "uppercase", "line-height": 1.4, "padding": "26px"
         }},
         { selector: "node[type='concept']", style: {
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
-          "text-valign": "center", "text-halign": "center", "text-line-height": LINEH,
+          "text-valign": "center", "text-halign": "center", "line-height": LINEH,
           "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
         { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
@@ -320,8 +320,7 @@
   function openDetail(node) {
     cy.$(":selected").unselect(); node.select();
     if (node.data("type") === "group") {
-      const bg = viewMode === "tema" ? "#ffffff" : "#ffff00";
-      detailBody.innerHTML = groupHtml(node.data("gid"), bg, node.data("label"));
+      detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
       pinned = null; clearNb();
     } else {
       detailBody.innerHTML = conceptHtml(node.data("_c"));
