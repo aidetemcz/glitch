@@ -93,6 +93,27 @@
   let DATA = null, cy = null, viewMode = "tema", conceptById = {}, pinned = null;
   let revSouvisi = {}, revPrereq = {};   // reverzní indexy (obousměrné čtení hran v panelu)
 
+  /* ---------- Admin editor (bez backendu) ----------
+     Přihlášení je jen klientská závora (skrývá editační UI), ne bezpečnost:
+     stránka je statická, neexistuje zápis na server, takže i kdyby někdo
+     závoru obešel, může upravit jen svou vlastní lokální kopii — na
+     nasazená data to nemá vliv. Uložení = localStorage (přežije refresh v
+     tomto prohlížeči) + export YAML k commitu do repa. */
+  const ADMIN_USER = "aidetem";
+  const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
+  const EDITS_KEY = "km-edits-v1";
+  const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav"];
+  const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
+    ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
+  let authed = sessionStorage.getItem("km-auth") === "1";
+  let editing = false;
+  const loadEdits = () => { try { return JSON.parse(localStorage.getItem(EDITS_KEY) || "{}"); } catch (_) { return {}; } };
+  const saveEdits = (o) => { try { localStorage.setItem(EDITS_KEY, JSON.stringify(o)); } catch (_) {} };
+  async function sha256hex(s) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+    return [...new Uint8Array(buf)].map((x) => x.toString(16).padStart(2, "0")).join("");
+  }
+
   /* ---------- Načtení dat ---------- */
   fetch("data/knowledge-map.yaml?v=12")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
@@ -160,6 +181,9 @@
   function init(data) {
     DATA = data; window.__data = data;
     data.concepts.forEach((c) => conceptById[c.id] = c);
+    /* lokální úpravy z editoru (localStorage) přetáhnout přes načtená data */
+    const overlay = loadEdits();
+    data.concepts.forEach((c) => { if (overlay[c.id]) Object.assign(c, overlay[c.id]); });
     /* reverzní indexy hran (panel čte souvisí i „je prerekvizitou pro" obousměrně) */
     revSouvisi = {}; revPrereq = {};
     data.concepts.forEach((c) => {
@@ -237,6 +261,9 @@
     /* „O mapě" — info panel */
     document.getElementById("about-btn").addEventListener("click", openAbout);
 
+    /* delegované akce v pravém panelu (admin/editor) */
+    detailBody.addEventListener("click", onPanelAction);
+
     /* přepínač zobrazení */
     document.querySelectorAll(".vt-btn").forEach((b) => b.addEventListener("click", () => {
       if (b.dataset.view === viewMode) return;
@@ -248,6 +275,7 @@
     cy.on("tap", "node", (evt) => openDetail(evt.target));
     cy.on("tap", (evt) => {
       if (evt.target !== cy) return;               // klik do prázdna
+      if (editing) return;                          // rozdělaná úprava se klikem do plochy neztratí
       const pt = evt.position; let best = null, bestD = Infinity;
       cy.nodes("[type='group']").forEach((g) => {
         if (g.hasClass("filtered")) return;
@@ -384,14 +412,165 @@
     return html;
   }
   function openAbout() {
+    editing = false;
     if (cy) cy.$(":selected").unselect();
     pinned = null; clearNb();
-    const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
+    const show = (h) => { detailBody.innerHTML = h + adminBlock(); detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
     fetch("data/o-mape.md?v=1")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
+  }
+
+  /* ---------- Admin / editor ---------- */
+  function adminBlock() {
+    if (!authed) {
+      return `<div class="d-section km-admin"><button class="d-link" data-act="login">🔒 Admin — přihlásit se</button></div>`;
+    }
+    const n = Object.keys(loadEdits()).length;
+    return `<div class="d-section km-admin">
+      <h3>Admin</h3>
+      <p class="d-desc" style="margin-bottom:10px">Jsi přihlášen. Klikni na koncept v mapě a uprav ho. Uložení se zapíše do tohoto prohlížeče${n ? ` — <strong>lokálně upraveno: ${n}</strong>` : ""}.</p>
+      <div class="d-links">
+        <button class="km-primary" data-act="export">⬇ Stáhnout data (YAML)</button>
+        <button class="d-link" data-act="logout">Odhlásit</button>
+      </div>
+      <p class="d-empty" style="margin-top:10px">Změny jsou zatím jen v tvém prohlížeči. Aby se objevily online pro všechny, stáhni YAML a pošli mi ho (nebo commitni do repa).</p>
+    </div>`;
+  }
+
+  function onPanelAction(e) {
+    const b = e.target.closest("[data-act]");
+    if (!b) return;
+    const act = b.dataset.act, id = b.dataset.id;
+    if (act === "login") openLogin();
+    else if (act === "logout") { authed = false; sessionStorage.removeItem("km-auth"); openAbout(); }
+    else if (act === "export") exportYAML();
+    else if (act === "edit") openEditor(id);
+    else if (act === "edit-cancel") openDetail(cy.getElementById(id));
+    else if (act === "edit-save") saveEditor(id);
+    else if (act === "add-cile") document.getElementById("ed-cile").insertAdjacentHTML("beforeend", cileRow({}));
+    else if (act === "add-krit") document.getElementById("ed-kriteria").insertAdjacentHTML("beforeend", kritRow({}));
+    else if (act === "del-row") { const r = b.closest(".ed-row"); if (r) r.remove(); }
+  }
+
+  /* přihlašovací modál (vytvoří se jednou) */
+  function ensureLoginModal() {
+    if (document.getElementById("km-login")) return;
+    const d = document.createElement("div");
+    d.id = "km-login"; d.className = "km-modal hidden";
+    d.innerHTML = `<div class="km-card">
+      <h3>Přihlášení — admin</h3>
+      <label>Login</label><input id="km-user" autocomplete="username" spellcheck="false">
+      <label>Heslo</label><input id="km-pass" type="password" autocomplete="current-password">
+      <div class="km-err" id="km-err"></div>
+      <div class="km-actions">
+        <button class="reset-btn" id="km-cancel">Zrušit</button>
+        <button class="km-primary" id="km-submit">Přihlásit</button>
+      </div>
+    </div>`;
+    document.body.appendChild(d);
+    d.addEventListener("mousedown", (e) => { if (e.target === d) closeLogin(); });
+    d.querySelector("#km-cancel").addEventListener("click", closeLogin);
+    d.querySelector("#km-submit").addEventListener("click", submitLogin);
+    d.querySelector("#km-pass").addEventListener("keydown", (e) => { if (e.key === "Enter") submitLogin(); });
+  }
+  function openLogin() {
+    ensureLoginModal();
+    const m = document.getElementById("km-login");
+    m.classList.remove("hidden");
+    document.getElementById("km-err").textContent = "";
+    document.getElementById("km-user").value = "";
+    document.getElementById("km-pass").value = "";
+    document.getElementById("km-user").focus();
+  }
+  function closeLogin() { const m = document.getElementById("km-login"); if (m) m.classList.add("hidden"); }
+  async function submitLogin() {
+    const u = document.getElementById("km-user").value.trim();
+    const p = document.getElementById("km-pass").value;
+    if (u === ADMIN_USER && (await sha256hex(p)) === ADMIN_HASH) {
+      authed = true; sessionStorage.setItem("km-auth", "1");
+      closeLogin(); openAbout();
+    } else {
+      document.getElementById("km-err").textContent = "Špatný login nebo heslo.";
+    }
+  }
+
+  /* editační formulář */
+  const levelSelect = (sel) => `<select class="ed-lvl">${
+    BLOOM.map(([v, l]) => `<option value="${v}"${v === sel ? " selected" : ""}>${l}</option>`).join("")}</select>`;
+  const cileRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<input class="ed-roc" type="number" min="1" max="9" placeholder="roč." value="${it.rocnik != null ? esc(it.rocnik) : ""}"><button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text cíle">${esc(it.text || "")}</textarea></div>`;
+  const kritRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text kritéria">${esc(it.text || "")}</textarea></div>`;
+
+  function openEditor(id) {
+    const c = conceptById[id];
+    if (!c) return;
+    editing = true; pinned = null; clearNb();
+    detailBody.innerHTML = `
+      <span class="d-badge" style="background:#ffff00;color:#000000">Úprava konceptu</span>
+      <div class="ed-field"><label>Název</label><input id="ed-nazev" value="${esc(c.nazev)}"></div>
+      <div class="ed-field"><label>Popis</label><textarea id="ed-popis" rows="4">${esc(c.popis || "")}</textarea></div>
+      <div class="ed-field"><label>Vrstva</label><select id="ed-vrstva">
+        <option value="core"${c.vrstva === "core" ? " selected" : ""}>Core koncept</option>
+        <option value="navazujici"${c.vrstva === "navazujici" ? " selected" : ""}>Navazující</option>
+      </select></div>
+      <div class="ed-field"><label>Vzdělávací cíle</label><div id="ed-cile">${(c.cile || []).map(cileRow).join("")}</div>
+        <button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
+      <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria">${(c.kriteria || []).map(kritRow).join("")}</div>
+        <button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>
+      <label class="ed-check"><input type="checkbox" id="ed-hotovo" checked> Označit jako <strong>hotovo</strong></label>
+      <div class="ed-actions">
+        <button class="reset-btn" data-act="edit-cancel" data-id="${esc(id)}">Zrušit</button>
+        <button class="km-primary" data-act="edit-save" data-id="${esc(id)}">Uložit</button>
+      </div>`;
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
+  function saveEditor(id) {
+    const c = conceptById[id];
+    if (!c) return;
+    c.nazev = (document.getElementById("ed-nazev").value.trim()) || c.nazev;
+    c.popis = document.getElementById("ed-popis").value.trim();
+    c.vrstva = document.getElementById("ed-vrstva").value;
+    c.cile = [...document.querySelectorAll("#ed-cile .ed-row")].map((r) => {
+      const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
+      const roc = r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
+      return o;
+    }).filter((o) => o.text);
+    c.kriteria = [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) =>
+      ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    if (document.getElementById("ed-hotovo").checked) c.stav = "hotovo";
+
+    /* zapsat do localStorage overlaye */
+    const ov = loadEdits();
+    ov[id] = {}; EDITABLE.forEach((k) => ov[id][k] = c[k]);
+    saveEdits(ov);
+
+    /* aktualizovat uzel v grafu bez plného překreslení */
+    const n = cy.getElementById(id);
+    if (n && n.nonempty()) {
+      const sz = n.data("size"), fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
+      n.data({
+        label: wrapLabel(c.nazev, '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif', textw * 0.95, false),
+        fontsize: fs, textw: textw, vrstva: c.vrstva, stav: c.stav, _c: c
+      });
+    }
+    editing = false;
+    applyFilters();
+    openDetail(n);
+  }
+
+  function exportYAML() {
+    try {
+      const yaml = jsyaml.dump(DATA, { lineWidth: 1000, noRefs: true, sortKeys: false });
+      const blob = new Blob([yaml], { type: "text/yaml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "knowledge-map.yaml";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (e) { alert("Export selhal: " + e.message); }
   }
 
   function focusNode(id) {
@@ -406,6 +585,7 @@
   }
 
   function openDetail(node) {
+    editing = false;
     cy.$(":selected").unselect(); node.select();
     if (node.data("type") === "group") {
       detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
@@ -490,6 +670,7 @@
         <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
+      ${authed ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
       <p class="d-desc">${esc(typo(c.popis))}</p>
       <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
