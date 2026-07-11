@@ -19,6 +19,12 @@
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+  /* Česká typografie: jednoznakové předložky/spojky (k s v z o u a i) sváže
+     pevnou mezerou s dalším slovem, aby nezůstaly na konci řádku. */
+  const NBSP = String.fromCharCode(160);
+  const bindOne = (t) => t.replace(/(^|[\s(\u201e"'\u201a\u2018\u00ab\u2013\u2014])([aAiIkKoOsSuUvVzZ]) /g, "$1$2" + NBSP);
+  const typo = (s) => bindOne(bindOne(String(s == null ? "" : s)));
+
   function textOn(hex) {
     const h = String(hex || "#ffffff").replace("#", "");
     const r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
@@ -96,12 +102,12 @@
 
     const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
     const nodes = [];
-    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: g.nazev, labelcolor, popis: g.popis } }));
+    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: typo(g.nazev), labelcolor, popis: g.popis } }));
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
       nodes.push({ data: {
         id: c.id, type: "concept", parent: "grp-" + groupOf(c, mode),
-        label: c.nazev, vrstva: c.vrstva, stav: c.stav || "draft", tagy: c.tagy || [],
+        label: typo(c.nazev), vrstva: c.vrstva, stav: c.stav || "draft", tagy: c.tagy || [],
         size: sz, textw: Math.round(sz * 0.72), fontsize: fitFont(c.nazev, sz), _c: c
       }});
     });
@@ -336,14 +342,14 @@
     return list.map((g) => {
       const lvl = LEVELS[g.uroven] || g.uroven || "";
       const roc = g.orientacne_rocnik ? `<span class="rocnik">~ ${esc(g.orientacne_rocnik)}. ročník</span>` : "";
-      return `<div class="d-goal"><div class="lvl">${esc(lvl)}${roc}</div><p>${esc(g.text)}</p></div>`;
+      return `<div class="d-goal"><div class="lvl">${esc(lvl)}${roc}</div><p>${esc(typo(g.text))}</p></div>`;
     }).join("");
   }
 
   const paras = (txt, fallback) => {
     const t = String(txt || "").trim();
     if (!t) return fallback ? `<p class="d-desc">${esc(fallback)}</p>` : '<span class="d-empty">—</span>';
-    return t.split(/\n\n+/).filter(Boolean).map((p) => `<p class="d-desc" style="margin-top:0;margin-bottom:10px">${esc(p)}</p>`).join("");
+    return t.split(/\n\n+/).filter(Boolean).map((p) => `<p class="d-desc" style="margin-top:0;margin-bottom:10px">${esc(typo(p))}</p>`).join("");
   };
 
   function groupHtml(gid, bg, label) {
@@ -358,7 +364,7 @@
     } else if (viewMode === "kompetence") {
       src = (DATA.kompetence || []).find((k) => k.id === gid) || {};
       if (src.kod) meta = `<div class="d-meta"><span class="d-pill">${esc(src.kod)}</span></div>`;
-      if (src.vystup) extra = `<div class="d-section"><h3>Očekávaný výstup KDI</h3><div class="d-rvp">${esc(src.vystup)}</div></div>`;
+      if (src.vystup) extra = `<div class="d-section"><h3>Očekávaný výstup KDI</h3><div class="d-rvp">${esc(typo(src.vystup))}</div></div>`;
       if (gid === NOKDI) fallback = "Ryzí informatická teorie — myšlení, primitiva programování, vnitřek infrastruktury, teorie AI.";
       else if (!src.popis) fallback = (DATA.meta && DATA.meta.kompetence_popis) || "";
     } else {
@@ -381,10 +387,10 @@
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
-      ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(r.vystup)}</div>`).join("")
+      ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(typo(r.vystup))}</div>`).join("")
       : '<span class="d-empty">—</span>';
     const kdi = komp
-      ? `<div class="d-rvp"><span class="kod">${esc(komp.kod)}</span><strong>${esc(komp.nazev)}</strong><br>${esc(komp.vystup)}</div>`
+      ? `<div class="d-rvp"><span class="kod">${esc(komp.kod)}</span><strong>${esc(komp.nazev)}</strong><br>${esc(typo(komp.vystup))}</div>`
       : '<span class="d-empty">—</span>';
     const tags = (c.tagy || []).length ? c.tagy.map((t) => `<span class="d-tag">${esc(t)}</span>`).join("") : '<span class="d-empty">—</span>';
     const links = (arr) => (arr && arr.length) ? [...new Set(arr)].map(link).join("") : '<span class="d-empty">—</span>';
@@ -401,7 +407,7 @@
         <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
-      <p class="d-desc">${esc(c.popis)}</p>
+      <p class="d-desc">${esc(typo(c.popis))}</p>
       <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
