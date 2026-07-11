@@ -420,7 +420,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h + adminBlock(); detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/o-mape.md?v=2")
+    fetch("data/o-mape.md?v=3")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
