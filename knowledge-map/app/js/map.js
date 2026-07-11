@@ -436,6 +436,7 @@
         <button class="km-primary" data-act="export">⬇ Stáhnout data (YAML)</button>
         <button class="d-link" data-act="logout">Odhlásit</button>
       </div>
+      ${n ? `<div class="d-links" style="margin-top:8px"><button class="d-link km-danger" data-act="discard">Zahodit lokální úpravy (${n})</button></div>` : ""}
       <p class="d-empty" style="margin-top:10px">Změny jsou zatím jen v tvém prohlížeči. Aby se objevily online pro všechny, stáhni YAML a pošli mi ho (nebo commitni do repa).</p>
     </div>`;
   }
@@ -447,6 +448,7 @@
     if (act === "login") openLogin();
     else if (act === "logout") { authed = false; sessionStorage.removeItem("km-auth"); openAbout(); }
     else if (act === "export") exportYAML();
+    else if (act === "discard") discardEdits();
     else if (act === "edit") openEditor(id);
     else if (act === "edit-cancel") openDetail(cy.getElementById(id));
     else if (act === "edit-save") saveEditor(id);
@@ -571,6 +573,15 @@
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (e) { alert("Export selhal: " + e.message); }
+  }
+
+  /* zahodit lokální (localStorage) úpravy a načíst čistá data ze serveru */
+  function discardEdits() {
+    const n = Object.keys(loadEdits()).length;
+    if (!n) return;
+    if (!confirm(`Zahodit ${n} lokálních úprav a načíst původní data ze serveru? Neexportované změny se ztratí.`)) return;
+    try { localStorage.removeItem(EDITS_KEY); } catch (_) {}
+    location.reload();
   }
 
   function focusNode(id) {

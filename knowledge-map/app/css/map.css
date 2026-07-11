@@ -105,6 +105,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: 9px 14px; border-radius: 8px; transition: filter .12s ease; }
 .km-primary:hover { filter: brightness(1.08); }
 .km-editbtn { display: inline-block; margin: 4px 0 14px; }
+.km-danger { color: #ff8a8a; border-color: rgba(255,138,138,0.4); }
+.km-danger:hover { border-color: #ff8a8a; background: rgba(255,138,138,0.08); }
 .km-admin { border-top: 1px solid var(--c-line); padding-top: 16px; }
 
 .km-modal { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.62);
