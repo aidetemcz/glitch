@@ -35,7 +35,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .chip {
   border: 1px solid var(--c-line); border-radius: 16px; padding: 7px 13px;
   font-size: 13px; color: var(--c-grey-15); transition: all .12s ease;
-  line-height: 1.25; text-align: left;
+  line-height: 1.4; text-align: left;
 }
 .chip[aria-pressed="true"] { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .chip[aria-pressed="false"] { opacity: .6; }
@@ -73,14 +73,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .d-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 .d-pill { font-size: 12px; padding: 4px 9px; border-radius: 20px; border: 1px solid var(--c-line); color: var(--c-grey-15); }
 .d-pill.core { border-color: var(--c-white); color: var(--c-white); }
-.d-desc { font-size: 15px; line-height: 1.45; color: var(--c-grey-15); }
+.d-desc { font-size: 15px; line-height: 1.65; color: var(--c-grey-15); }
 .d-section { margin-top: 22px; }
 .d-section h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-grey-50); margin-bottom: 10px; }
 .d-goal { border-left: 2px solid var(--c-yellow); padding: 2px 0 2px 12px; margin-bottom: 12px; }
 .d-goal .lvl { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-yellow); }
 .d-goal .lvl .rocnik { color: var(--c-grey-50); font-weight: 400; margin-left: 6px; }
-.d-goal p { font-size: 14px; line-height: 1.4; margin-top: 3px; }
-.d-rvp { font-size: 14px; line-height: 1.4; margin-bottom: 8px; }
+.d-goal p { font-size: 14px; line-height: 1.6; margin-top: 3px; }
+.d-rvp { font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
 .d-rvp .kod { display: inline-block; font-weight: 600; background: var(--c-dark); border: 1px solid var(--c-line); border-radius: 5px; padding: 1px 7px; margin-right: 6px; }
 .d-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .d-tag { font-size: 12px; padding: 4px 9px; border-radius: 20px; background: var(--c-dark); border: 1px solid var(--c-line); color: var(--c-grey-15); }

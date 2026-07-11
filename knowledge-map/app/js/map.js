@@ -14,7 +14,7 @@
   const VRSTVA_MAPY = { 0: "Základy a myšlení", 1: "Tvorba a programování", 2: "Umělá inteligence", 3: "Bezpečí a občanství" };
   const NORVP = "__norvp__";
   const NOKDI = "__nokdi__";
-  const LINEH = 1.5;   // řádkování textu v bublinách (CSS i výpočet fit)
+  const LINEH = 1.6;   // řádkování textu v bublinách (CSS i výpočet fit)
 
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -151,6 +151,7 @@
         { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
         { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
         { selector: ".filtered", style: { "display": "none" } }
       ]
