@@ -399,14 +399,17 @@
   const mdInline = (t) => typo(t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"));
   function renderAbout(md) {
     let html = '<span class="d-badge" style="background:#ffff00;color:#000000">O mapě</span>';
-    let para = [], inSec = false;
-    const flush = () => { if (para.length) { html += `<p class="d-desc" style="margin-bottom:12px">${mdInline(para.join(" "))}</p>`; para = []; } };
+    let para = [], list = [], inSec = false;
+    const flushPara = () => { if (para.length) { html += `<p class="d-desc" style="margin-bottom:12px">${mdInline(para.join(" "))}</p>`; para = []; } };
+    const flushList = () => { if (list.length) { html += `<ul class="d-list">${list.map((li) => `<li>${mdInline(li)}</li>`).join("")}</ul>`; list = []; } };
+    const flush = () => { flushPara(); flushList(); };
     md.split(/\r?\n/).forEach((raw) => {
       const line = raw.trim();
       if (!line) { flush(); return; }
       if (line.startsWith("## ")) { flush(); if (inSec) html += "</div>"; html += `<div class="d-section"><h3>${esc(line.slice(3))}</h3>`; inSec = true; }
       else if (line.startsWith("# ")) { flush(); html += `<h2 class="d-title">${esc(line.slice(2))}</h2>`; }
-      else para.push(line);
+      else if (line.startsWith("- ")) { flushPara(); list.push(line.slice(2)); }
+      else { flushList(); para.push(line); }
     });
     flush(); if (inSec) html += "</div>";
     return html;
@@ -417,7 +420,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h + adminBlock(); detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/o-mape.md?v=1")
+    fetch("data/o-mape.md?v=2")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));

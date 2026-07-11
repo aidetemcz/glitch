@@ -80,6 +80,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .d-pill { font-size: 12px; padding: 4px 9px; border-radius: 20px; border: 1px solid var(--c-line); color: var(--c-grey-15); }
 .d-pill.core { border-color: var(--c-white); color: var(--c-white); }
 .d-desc { font-size: 15px; line-height: 1.65; color: var(--c-grey-15); }
+.d-list { margin: 2px 0 12px; padding-left: 20px; }
+.d-list li { font-size: 15px; line-height: 1.6; color: var(--c-grey-15); margin-bottom: 6px; }
+.d-list li::marker { color: var(--c-yellow); }
 .d-section { margin-top: 22px; }
 .d-section h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-grey-50); margin-bottom: 10px; }
 .d-goal { border-left: 2px solid var(--c-yellow); padding: 2px 0 2px 12px; margin-bottom: 12px; }
