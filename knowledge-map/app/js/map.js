@@ -147,10 +147,11 @@
         { selector: "edge[etype='related']", style: {
           "line-color": "rgba(255,255,255,0.22)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
         }},
+        { selector: "edge.nbedge", style: { "line-color": "#ffff00", "width": 2.4, "target-arrow-color": "#ffff00", "opacity": 1, "z-index": 50 } },
+        { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
         { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
         { selector: ".dim", style: { "opacity": 0.08 } },
-        { selector: ".nbfade", style: { "opacity": 0.12 } },
         { selector: ".filtered", style: { "display": "none" } }
       ]
     });
@@ -196,8 +197,6 @@
       if (best && bestD < 90 / cy.zoom()) openDetail(best);   // klik poblíž názvu → detail clusteru
       else closeDetail();
     });
-    cy.on("mouseover", "node[type='concept']", (e) => focusNb(e.target));
-    cy.on("mouseout", "node[type='concept']", () => { if (pinned) focusNb(pinned); else clearNb(); });
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeDetail();
     });
@@ -275,9 +274,13 @@
   /* Zvýraznění sousedství (proti „chuchvalci"): ztlum vše kromě uzlu a jeho vazeb */
   function focusNb(node) {
     const nb = node.closedNeighborhood();
-    cy.batch(() => { cy.elements().addClass("nbfade"); nb.removeClass("nbfade"); });
+    cy.batch(() => {
+      cy.elements().removeClass("nbedge nbon");
+      node.connectedEdges().addClass("nbedge");   // vazby zežloutnou
+      nb.nodes().addClass("nbon");                // sousedé dostanou žlutý prstenec
+    });
   }
-  function clearNb() { if (cy) cy.batch(() => cy.elements().removeClass("nbfade")); }
+  function clearNb() { if (cy) cy.batch(() => cy.elements().removeClass("nbedge nbon")); }
   function applySearch() {
     const q = document.getElementById("search").value.trim().toLowerCase();
     cy.batch(() => {
