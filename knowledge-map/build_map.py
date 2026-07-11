@@ -29,44 +29,79 @@ RVP = {
 ZDROJ_RVP = 'RVP_revidované_2024-03-28.pdf, s. 54–55'
 
 # ---- RVP oblasti (tematické okruhy oboru Informatika) ----
+# Popisy okruhů – doslovné znění dodané zadavatelem (charakteristika okruhu + 1. a 2. stupeň).
+POPIS_DATA = (
+ "S daty pracují počítače i my, když přemýšlíme. Informace zpřesňují naše představy o světě a tím nám pomáhají správně se rozhodovat. Řadu podrobností přitom pomíjíme a pracujeme jen s tím, co je pro danou situaci důležité. Vznikají tak zjednodušující reprezentace, modely. Abychom je mohli ukládat a spolehlivě a levně přenášet a kopírovat, kódujeme je do posloupností znaků – písmen, nul a jedniček atp.\n\n"
+ "V informatice se žák učí nejen využívat hotové modely, ale také vytvářet nové. Postupuje při tom cílevědomě, sleduje záměr vyřešit daný problém, hledá rovnováhu mezi rozsahem a složitostí modelu a jednoduchostí jeho použití. Hodnotí spolehlivost získávaných informací a míru jistoty, s jakou se podle nich může rozhodovat. Nalézání efektivních reprezentací složitých skutečností je předpokladem úspěšné komunikace, učení i řešení problémů.\n\n"
+ "Na 1. stupni si žák začíná všímat dat kolem sebe a reflektuje, jak mu mohou být užitečná. Tvoří první schematické modely situací a využívá je k získání informací.\n\n"
+ "Na 2. stupni už se žák seznamuje s pokročilejším kódováním a modely, které sám tvoří, včetně grafů a trénování modelů strojového učení. Zvyká si na to, že informace jsou správné jen s určitou pravděpodobností."
+)
+POPIS_ALGO = (
+ "Žák se prováděním postupů učí získávat výsledky konkrétních úloh. V informatice pak zaměřuje pozornost na postupy jako takové. Zjišťuje, jak se postupy vedoucí ke stejným výsledkům mohou mezi sebou lišit, tvoří a popisuje postupy vlastní. Všímá si toho, že některé jsou spolehlivější než jiné a co tu spolehlivost určuje. Jejich kvalitní formulace může vyřešit celou skupinu podobných problémů.\n\n"
+ "Postupy žák zapisuje i jako programy, čímž se učí pracovat s omezenou sadou instrukcí a doslovnou interpretací svých výstupů. Kromě toho získává povědomí o základech fungování běžně používaných aplikací. Cílevědomé plánování pracovních postupů je příležitost k rozvoji strukturovaného přístupu k řešení problémů. Jejich jednoznačný a úsporný popis vyžaduje komunikační dovednosti. Automatizovatelnost postupů je předpokladem uplatnitelnosti v práci a podnikání.\n\n"
+ "Na 1. stupni žák zkoumá souvislosti vstupů, podmínek, postupů a výstupů, navrhuje jednoduché posloupnosti kroků a zažívá, jak může programováním určovat chování stroje.\n\n"
+ "Na 2. stupni se žák setkává se složitějšími problémy, do programování přibývají další řídicí struktury. Všímá si výhod a důsledků automatizace svých postupů."
+)
+POPIS_IS = (
+ "Řadu potřeb společnosti pomáhají plnit informační systémy. Lidé je nevyhnutelně využívají, vypořádávají se s jejich nedostatky, mají požadavky na jejich chování. Většina lidí také nějaké evidence sama tvoří, v osobním i pracovním životě (seznam k balení na výlet, evidence zakázek k vyřízení). Výhodu v tom mají ti, kteří mají na základě praktické zkušenosti představu o tom, jak takové systémy vnitřně fungují, jak se vyvíjejí, co mohou pomoci řešit a co už nikoli. Iterativní vývoj a testování řešení se zaměřením na potřeby klienta je znakem užitečných podniků. Uživatelské rozhraní informačních systémů je komunikačním kanálem. Důsledky fungování řady systémů ovlivňují celou občanskou společnost.\n\n"
+ "Na 1. stupni žák začíná informační systémy zkoumat. Kromě práce s uživatelským rozhraním se učí orientovat i přímo v tabulkách a podobných strukturách.\n\n"
+ "Na 2. stupni žák svůj průzkum prohlubuje a kromě významu pro uživatele precizněji popisuje, co přesně systémy dělají. Pro řešení konkrétních problémů tvoří také vlastní evidence dat."
+)
+POPIS_DT = (
+ "Digitální technologie poskytují konkrétní příklady principů, které žák zkoumá v ostatních okruzích. Dohromady se tak žák učí rozumět tomu, jak technologie a svět kolem něj fungují a jaké to má praktické důsledky. Je to jedním z předpokladů pro to, aby je mohl bezpečně a efektivně využívat v běžném životě. Porozumění principům fungování technologií mimo jiné umožňuje hodnotit, jak ovlivňují společnost a jak jejich provoz dopadá na životní prostředí. Rozšiřuje možnosti žáků využívat je k rutinní i tvořivé práci.\n\n"
+ "Na 1. stupni se žák zaměřuje na základní porozumění funkcím digitálních technologií, jejich vhodné využití pro řešení problémů a na pravidla bezpečného používání aplikací a sítí.\n\n"
+ "Na 2. stupni se výuka prohlubuje o další technické znalosti a dovednosti, které umožní poučeně vybírat hardware, software a propojení do sítě a řešit pokročilejší problémy. Kromě bezpečnosti se žák v bohatých souvislostech věnuje také inovacím."
+)
 RVP_OBLASTI = [
- ('data-modelovani', 'Data, informace a modelování', 'INF-INF-001',
-  'Práce s daty a informacemi, jejich kódování, modelování situací a základy strojového učení.', '#ffff00'),
- ('algoritmizace', 'Algoritmizace a programování', 'INF-INF-002',
-  'Rozklad problému, návrh a čtení algoritmů a tvorba programů.', '#ffffff'),
- ('informacni-systemy', 'Informační systémy', 'INF-INF-003',
-  'Účel a užitečnost informačních systémů, evidence a automatické zpracování dat.', '#ffff00'),
- ('digitalni-technologie', 'Digitální technologie', 'INF-INF-004',
-  'Hardware, software, sítě a bezpečné zacházení se zařízeními a daty.', '#ffffff'),
+ ('data-modelovani', 'Data, informace a modelování', 'INF-INF-001', POPIS_DATA, '#ffff00'),
+ ('algoritmizace', 'Algoritmizace a programování', 'INF-INF-002', POPIS_ALGO, '#ffffff'),
+ ('informacni-systemy', 'Informační systémy', 'INF-INF-003', POPIS_IS, '#ffff00'),
+ ('digitalni-technologie', 'Digitální technologie', 'INF-INF-004', POPIS_DT, '#ffffff'),
+]
+
+# ---- Klíčová kompetence digitální (KDI) – TŘETÍ, průřezová logika členění ----
+# Nezávislá osa vedle témat a okruhů RVP. Znění výstupů doslovné dle zadání.
+KDI_POPIS = "Klíčová kompetence digitální představuje soubor znalostí, dovedností a postojů, které umožňují žákům účelně, bezpečně a efektivně využívat digitální technologie při práci, při učení, ve volném čase i při zapojování do společnosti a občanského života, aktivně a respektujícím způsobem se podílet na utváření digitálního světa a nacházet rovnováhu mezi světem digitálním a fyzickým."
+KOMPETENCE = [
+ ('kdi-dat', 'Digitální informace a data', 'KDI-DAT-000-ZV9-001',
+  'Data získaná na základě vlastních kritérií a formulovaných dotazů z různých digitálních zdrojů posuzuje z hlediska souladu s již známými poznatky i nároku na spolehlivost zdroje.', '#ffff00'),
+ ('kdi-zap', 'Zapojení do společnosti prostřednictvím digitálních technologií', 'KDI-ZAP-000-ZV9-001',
+  'Účelně a uvážlivě sdílí data a informace v digitálním prostředí s cílem osobního růstu, podpory školní či zájmové komunity nebo za účelem týmové práce na školních projektech.', '#ffffff'),
+ ('kdi-tdo', 'Tvorba digitálního obsahu', 'KDI-TDO-000-ZV9-001',
+  'Generuje digitální obsah v různých formátech s cílem umocnit výstupy vlastní tvořivé činnosti.', '#ffff00'),
+ ('kdi-bzk', 'Bezpečnost v digitálním prostředí', 'KDI-BZK-000-ZV9-001',
+  'Předchází situacím ohrožujícím bezpečnost zařízení a dat nebo jeho tělesné či duševní zdraví.', '#ffffff'),
+ ('kdi-vin', 'Digitální vývoj a inovace', 'KDI-VIN-000-ZV9-001',
+  'Využívá digitální technologie, aby sobě či ostatním usnadnil či zjednodušil pracovní postupy a zkvalitnil výsledky práce.', '#ffff00'),
 ]
 
 # ---- Témata (vlastní obsahová struktura Glitch) ----
 # (id, nazev, vrstva_mapy, popis, barva, navazuje_na[theme ids])
 TEMATA = [
  ('digitalni-zaklady', 'Digitální základy', 0,
-  'Jak funguje digitální svět — počítač, internet, cloud a kde „žijí" data a služby.', '#ffffff', []),
+  'Digitální základy jsou vstupní vrstva celé mapy — vysvětlují, jak vlastně funguje svět, ve kterém se všechno ostatní odehrává. Žák tu získá mentální model počítače (hardware a software), internetu a sítí (klient–server), cloudu a serverů i toho, jak spolu programy mluví přes API a jak se data kódují, aby šla uložit a přenášet. Nejde o to stát se technikem, ale o demystifikaci: když víš, že „cloud" je jen cizí počítač a že appka volá službu přes API, přestává být digitální svět kouzelná černá skříňka. Na těchto základech pak stojí Tvorba webů, Tvorba aplikací, Data i Umělá inteligence — proto je téma v mapě úplně na začátku.', '#ffffff', []),
  ('informaticke-mysleni', 'Informatické myšlení a algoritmizace', 0,
-  'Univerzální způsob, jak rozložit problém a popsat řešení krok za krokem — nezávisle na jazyce.', '#ffff00', []),
+  'Tohle téma učí univerzální způsob přemýšlení, který je jádrem celé informatiky a nezávisí na žádném programovacím jazyce. Žák se učí rozložit velký problém na menší části (dekompozice), odfiltrovat nepodstatné detaily (abstrakce), všímat si opakujících se vzorů a popsat řešení jako jednoznačný postup krok za krokem (algoritmus) složený ze sekvence, větvení a opakování. Tyhle dovednosti se v mapě vracejí prakticky všude — v programování, práci s daty, robotice i při přemýšlení o AI — proto stojí hned vedle Digitálních základů jako druhý pilíř, na kterém teprve začíná skutečná tvorba.', '#ffff00', []),
  ('programovani', 'Programování', 1,
-  'Převod algoritmu do kódu — od bloků k textovému jazyku; v éře AI důraz na porozumění a ladění.', '#ffffff', ['informaticke-mysleni', 'digitalni-zaklady']),
+  'Programování je krok od myšlenky ke kódu, který počítač skutečně vykoná. Žák tu poznává stavební kameny každého programu — proměnné, podmínky, cykly a funkce — a hlavně dovednost ladit, tedy hledat a opravovat chyby. Postupuje od blokového prostředí (Scratch) k textovému jazyku (Python) a učí se pracovat s verzováním i s cizím, dnes často AI vygenerovaným kódem; v éře AI se totiž těžiště přesouvá od „napiš každý řádek ručně" k „rozuměj, uprav a odlaď". Programování navazuje na Informatické myšlení a je branou k tvůrčím tématům mapy — webům, aplikacím, hrám i robotice.', '#ffffff', ['informaticke-mysleni', 'digitalni-zaklady']),
  ('umela-inteligence', 'Umělá inteligence', 2,
-  'Co AI je a není, jak se učí z dat, jak s ní pracovat a jak ji kriticky a eticky používat.', '#ffff00', ['digitalni-zaklady', 'data-databaze']),
+  'Umělá inteligence je v mapě samostatné téma, protože prostupuje celou dnešní informatikou — a zároveň se jako průřezová vrstva vrací u mnoha dalších témat. Žák se tu učí, co AI je a co není, jak se učí z dat a proč generativní modely umí „halucinovat", jak s AI účelně pracovat (prompty, ověřování výstupů) a jak ji používat kriticky a eticky (bias, soukromí, kdy AI raději nepoužít). Řídící myšlenkou je „ověřuj, ale využívej" a vědomí, že rozhoduje pořád člověk, ne nástroj. Téma staví na Digitálních základech a úzce se prolíná s Daty, protože kvalita dat určuje, co z AI vypadne.', '#ffff00', ['digitalni-zaklady', 'data-databaze']),
  ('data-databaze', 'Data, databáze a datová gramotnost', 1,
-  'Jak se data sbírají, strukturují, dotazují a kriticky čtou — a jak z nich čerpá AI.', '#ffff00', ['digitalni-zaklady']),
+  'Data jsou surovinou informací i palivem umělé inteligence, a tohle téma učí s nimi zacházet — od kritického čtení až po technické uložení. Žák pochopí datový cyklus (sběr → čištění → analýza → vizualizace → interpretace), naučí se volit správný graf, evidovat data v tabulkách a databázích a klást jim otázky (SQL). Velký důraz je na datové gramotnosti: poznat zavádějící graf, rozdíl mezi korelací a kauzalitou i to, odkud data pocházejí a co v nich chybí. Právě datová gramotnost je předstupněm gramotnosti v AI, takže tohle téma tvoří s Umělou inteligencí provázané jádro celé mapy.', '#ffff00', ['digitalni-zaklady']),
  ('tvorba-webu', 'Tvorba webů', 1,
-  'Postav a publikuj vlastní web — od struktury a vzhledu po nasazení online.', '#ffffff', ['programovani']),
+  'Tvorba webů je jedno z nejvděčnějších témat, protože vede k hmatatelnému, sdílitelnému výsledku — vlastní stránce na internetu. Žák pozná, jak web funguje (klient–server), i tři základní vrstvy stránky: strukturu (HTML), vzhled (CSS) a interaktivitu (JavaScript), a naučí se web publikovat přes doménu a hosting. V éře AI k tomu přibývá dovednost pracovat s nástroji, které web vytvoří z popisu — a umět jejich výstup přečíst, upravit a posoudit. Téma staví na Programování a přirozeně vede k Tvorbě aplikací.', '#ffffff', ['programovani']),
  ('tvorba-aplikaci', 'Tvorba aplikací a vibecoding', 1,
-  'Od nápadu k funkční appce — s no-code nástroji i s AI jako programovacím parťákem.', '#ffffff', ['programovani', 'tvorba-webu', 'umela-inteligence']),
+  'Tvorba aplikací ukazuje, jak z nápadu vznikne funkční appka — a je to možná nejsilnější motivační téma éry AI. Žák pochopí rozdíl mezi tím, co vidí (frontend) a co běží na pozadí (backend), vyzkouší no-code nástroje i „vibecoding", kdy popíše záměr přirozenou řečí a AI napíše kód. Klíčové poselství tématu je, že AI je programovací parťák, ne náhrada porozumění: bez znalosti základů snadno vznikne „iluze, že to umím", dokud se něco nerozbije. Téma spojuje Programování, Tvorbu webů a Umělou inteligenci dohromady.', '#ffffff', ['programovani', 'tvorba-webu', 'umela-inteligence']),
  ('tvorba-obsahu', 'Tvorba digitálního obsahu s AI', 1,
-  'Grafika, video, hudba a hlas s generativními nástroji — a etika a autorství, co k tomu patří.', '#ffff00', ['umela-inteligence']),
+  'Tohle téma je o tvorbě obrazu, videa, hudby a hlasu s generativními nástroji — o oblasti, kterou AI proměnila nejdramatičtěji. Žák se učí „mluvit" s nástroji přes prompt, ale i to, že vkus a základ vizuálního jazyka (kompozice, barva, typografie) AI nenahradí — pořád musíš umět posoudit, jestli je výsledek dobrý. Neoddělitelnou součástí je etika a autorství: na čích dílech se model učil, komu patří výstup a jak poctivě označit AI obsah, plus obezřetnost kvůli deepfakes. Téma staví na Umělé inteligenci a s ohledem na bezpečí nezletilých se dotýká i Kyberbezpečnosti.', '#ffff00', ['umela-inteligence']),
  ('herni-vyvoj', 'Herní vývoj', 1,
-  'Navrhni a postav vlastní hru — od bloků po engine, dnes i s AI generováním assetů.', '#ffffff', ['informaticke-mysleni', 'programovani']),
+  'Herní vývoj je vnitřně motivující téma — žák tvoří to, co sám hraje, a výsledek jde hned sdílet. Od blokového Scratche se posouvá k lehkým i skutečným enginům (Godot, Unity) a poznává základní stavbu hry: herní smyčku, objekty, kolize, stavy a hlavně herní design (pravidla, obtížnost, zpětná vazba, „flow"). AI dnes umí generovat grafiku i kód, takže se těžiště přesouvá od ruční výroby k návrhu a kurátorství. Téma staví na Informatickém myšlení a Programování a je skvělým „hřištěm", kde se tyhle dovednosti spojí do konkrétního výtvoru.', '#ffffff', ['informaticke-mysleni', 'programovani']),
  ('fyzicky-computing', 'Fyzický computing, robotika a IoT', 1,
-  'Kód, který hýbe fyzickým světem — a AI, kterou si sám natrénuješ na zařízení.', '#ffffff', ['informaticke-mysleni', 'programovani']),
+  'Fyzický computing je programování, které hýbe skutečným světem — kód tu má okamžitý hmatatelný efekt. Na destičce micro:bit se žák naučí číst senzory a ovládat výstupy (LED, motory), postoupí k robotům, Arduinu a Raspberry Pi a k internetu věcí (IoT), kde zařízení posílají data do cloudu. Zvlášť cenné je, že si tu AI osahá fyzicky: v micro:bit CreateAI si sám natrénuje model přímo na zařízení (TinyML). Téma staví na Programování a propojuje ho s Daty i Umělou inteligencí; jeho přirozeným omezením je hardware, takže doma se leccos nahradí simulátory.', '#ffffff', ['informaticke-mysleni', 'programovani']),
  ('kyberbezpecnost', 'Kyberbezpečnost a digitální bezpečí', 3,
-  'Jak chránit sebe, svá data a zařízení — ve světě, kde i podvody umí AI.', '#ffff00', ['digitalni-zaklady']),
+  'Kyberbezpečnost učí, jak chránit sebe, svá data a zařízení — a v mapě má zvláštní váhu, protože bezpečí nezletilých je priorita. Žák si osvojí základní hygienu (silná hesla, 2FA, poznat phishing, chránit soukromí) a pochopí i to, jak AI posunula podvody na novou úroveň: deepfake, klonování hlasu a dokonalý phishing bez chyb, takže stará rada „poznáš to podle chyb v textu" už neplatí. Novou obranou je ověřovat informace jinou cestou a zdravá skepse. Téma se úzce prolíná s Digitálním občanstvím a s Umělou inteligencí.', '#ffff00', ['digitalni-zaklady']),
  ('digitalni-obcanstvi', 'Digitální občanství, média a wellbeing', 3,
-  'Rozumět tomu, jak fungují sítě a algoritmy, kriticky číst obsah a mít zdravý vztah k technologiím.', '#ffff00', []),
+  'Tohle téma je „severní směr" celého Glitche: učí rozumět tomu, jak fungují sítě a algoritmy, kriticky číst obsah a udržet si zdravý vztah k technologiím. Žák pozná, jak doporučovací algoritmy tvarují, co vidí (bublina, ekonomika pozornosti), jak rozpoznat dezinformace a manipulaci, jakou hodnotu mají jeho data a jak nepodlehnout návykovému designu. Patří sem i občanské minimum o AI (proč modely halucinují a mají bias) a etika jejího používání ve škole. Cílem není technologie zavrhnout, ale používat je vědomě a tak, aby sloužily člověku — což je hodnota, na které stojí celá mapa.', '#ffff00', []),
 ]
 
 # ---- Koncepty ----
@@ -74,174 +109,342 @@ TEMATA = [
 C = {}  # tema -> list
 
 C['digitalni-zaklady'] = [
- ('Hardware a software', 'core', 'Co je počítač: vstup–zpracování–výstup; rozdíl mezi fyzickým zařízením a programem.', 'digitalni-technologie', ['v011'], ['hardware','software'], [], []),
- ('Data a informace', 'core', 'Rozdíl mezi zaznamenanou hodnotou (data) a jejím významem pro nás (informace).', 'data-modelovani', ['v001'], ['data'], [], [('data-databaze','Datová gramotnost')]),
- ('Internet a síť', 'core', 'Jak spolu zařízení komunikují: klient–server, prohlížeč, přenos dat po síti.', 'digitalni-technologie', ['v011'], ['sit','internet'], [], []),
- ('Cloud a server', 'core', 'Demystifikace cloudu: cizí počítač v datovém centru, ke kterému přistupuji přes internet.', 'digitalni-technologie', [], ['cloud','sit'], [('digitalni-zaklady','Internet a síť')], []),
- ('API', 'core', 'Rozhraní, přes které spolu programy mluví — dnes i způsob, jak se volá AI.', 'digitalni-technologie', [], ['api','sit'], [('digitalni-zaklady','Cloud a server')], []),
- ('Reprezentace dat', 'navazujici', 'Jak počítač ukládá čísla, text a obraz jako bity; kódování dat pro uložení a přenos.', 'data-modelovani', ['v002'], ['data','kodovani'], [('digitalni-zaklady','Data a informace')], []),
- ('Adresy a protokoly', 'navazujici', 'HTTP/HTTPS, URL, doména, IP a DNS — jak se na internetu adresuje a komunikuje.', 'digitalni-technologie', [], ['sit','internet'], [('digitalni-zaklady','Internet a síť')], []),
- ('Vrstvy abstrakce', 'navazujici', 'Od hardwaru přes operační systém k aplikaci — proč nemusíme rozumět všemu naráz.', 'digitalni-technologie', [], ['abstrakce'], [('digitalni-zaklady','Hardware a software')], []),
- ('Operační systém a soubory', 'navazujici', 'K čemu je operační systém a jak se organizují soubory a složky.', 'digitalni-technologie', [], ['software'], [('digitalni-zaklady','Hardware a software')], []),
- ('Kde jsou data fyzicky', 'navazujici', 'Kde data reálně leží, latence a škálování — a proč na tom záleží kvůli soukromí a GDPR.', 'digitalni-technologie', [], ['cloud','soukromi'], [('digitalni-zaklady','Cloud a server')], [('kyberbezpecnost','Soukromí a digitální stopa')]),
+ ('Hardware a software', 'core', 'Hardware jsou fyzické součástky, na které si můžeš sáhnout (procesor, paměť, displej); software jsou programy, které v nich běží. Každý počítač i telefon přitom pracuje ve smyčce vstup → zpracování → výstup: dostane data, něco s nimi udělá a vrátí výsledek.', 'digitalni-technologie', ['v011'], ['hardware','software'], [], []),
+ ('Data a informace', 'core', 'Data jsou holé zaznamenané hodnoty (třeba číslo 21 nebo řada naměřených teplot), informace je jejich význam pro konkrétní situaci („dnes je tepleji než včera"). Stejná data můžou nést různé informace podle toho, na co se ptáš — a umět tyhle dvě věci rozlišit je základ veškeré práce s daty i s AI.', 'data-modelovani', ['v001'], ['data'], [], [('data-databaze','Datová gramotnost')]),
+ ('Internet a síť', 'core', 'Internet je obrovská síť propojených počítačů, které si navzájem posílají data. Když otevřeš stránku, tvůj prohlížeč (klient) pošle požadavek počítači, kde stránka „bydlí" (server), a ten mu obsah pošle zpátky — tomuhle vztahu se říká klient–server.', 'digitalni-technologie', ['v011'], ['sit','internet'], [], []),
+ ('Cloud a server', 'core', '„Cloud" zní tajemně, ale je to jen cizí výkonný počítač (server) v datovém centru, ke kterému se připojuješ přes internet. Když si ukládáš fotky „do cloudu" nebo píšeš ChatGPT, ve skutečnosti pracuje někde daleko něčí server, ne tvůj telefon.', 'digitalni-technologie', [], ['cloud','sit'], [('digitalni-zaklady','Internet a síť')], []),
+ ('API', 'core', 'API je domluvené rozhraní, přes které spolu dva programy „mluví" — něco jako jídelní lístek: řekneš, co chceš, a dostaneš to, aniž bys musel vědět, jak se to v kuchyni připravuje. Přes API získávají appky data z jiných služeb (počasí, mapy) a stejně tak se volá i AI.', 'digitalni-technologie', [], ['api','sit'], [('digitalni-zaklady','Cloud a server')], []),
+ ('Reprezentace dat', 'navazujici', 'Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.', 'data-modelovani', ['v002'], ['data','kodovani'], [('digitalni-zaklady','Data a informace')], []),
+ ('Adresy a protokoly', 'navazujici', 'Aby se zařízení na internetu našla a rozuměla si, používají adresy a dohodnutá pravidla komunikace: doména (seznam.cz) se přes DNS přeloží na číselnou IP adresu a data putují podle protokolu HTTP(S). Je to jako poštovní adresa plus společný jazyk dopisu.', 'digitalni-technologie', [], ['sit','internet'], [('digitalni-zaklady','Internet a síť')], []),
+ ('Vrstvy počítače', 'navazujici', 'Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.', 'digitalni-technologie', [], ['abstrakce'], [('digitalni-zaklady','Hardware a software')], []),
+ ('Operační systém a soubory', 'navazujici', 'Operační systém (Windows, Android, iOS) je program, který řídí celé zařízení a dává ostatním aplikacím přístup k hardwaru. Stará se i o soubory a složky — o to, kam se ukládají tvoje fotky a dokumenty a jak je zase najdeš.', 'digitalni-technologie', [], ['software'], [('digitalni-zaklady','Hardware a software')], []),
+ ('Kde jsou data fyzicky', 'navazujici', 'Data z aplikací neleží „někde v internetu", ale na konkrétních serverech na konkrétním místě na světě. Kde přesně jsou, ovlivňuje rychlost (latenci) i to, jaké zákony na ně platí — třeba jestli je chrání evropské GDPR.', 'digitalni-technologie', [], ['cloud','soukromi'], [('digitalni-zaklady','Cloud a server')], [('kyberbezpecnost','Soukromí a digitální stopa')]),
 ]
 
 C['informaticke-mysleni'] = [
- ('Dekompozice', 'core', 'Rozklad problému na menší, samostatně řešitelné části.', 'algoritmizace', ['v006'], ['dekompozice','mysleni'], [], []),
- ('Abstrakce', 'core', 'Odfiltrování nepodstatných detailů a zaměření na to podstatné.', 'algoritmizace', [], ['abstrakce','mysleni'], [], []),
- ('Rozpoznávání vzorů', 'core', 'Hledání opakování a pravidelností, které řešení zjednoduší.', 'algoritmizace', [], ['vzory','mysleni'], [], []),
- ('Algoritmus', 'core', 'Uspořádaná posloupnost kroků vedoucí k vyřešení problému.', 'algoritmizace', ['v005','v006'], ['algoritmus'], [('informaticke-mysleni','Dekompozice')], []),
- ('Řízení toku', 'core', 'Sekvence, větvení (podmínka „když–tak") a opakování (cyklus) jako stavební kameny postupu.', 'algoritmizace', ['v007'], ['rizeni-toku','opakovani','kdyz-tak'], [('informaticke-mysleni','Algoritmus')], []),
- ('Pseudokód a vývojové diagramy', 'navazujici', 'Zápis postupu srozumitelný člověku, ještě před programováním.', 'algoritmizace', [], ['postup','algoritmus'], [('informaticke-mysleni','Algoritmus')], []),
- ('Logika a booleovské výrazy', 'navazujici', 'Pravda/nepravda a spojky AND, OR, NOT jako základ rozhodování.', 'algoritmizace', [], ['logika','rizeni-toku'], [('informaticke-mysleni','Řízení toku')], []),
- ('Modelování a simulace', 'navazujici', 'Zjednodušený model situace (i graf či schéma) pro pochopení a predikci.', 'data-modelovani', ['v003'], ['model','simulace'], [('informaticke-mysleni','Abstrakce')], [('data-databaze','Vizualizace a volba grafu')]),
- ('Efektivita řešení', 'navazujici', 'Že různá řešení stojí různě — počet kroků, čas, paměť.', 'algoritmizace', [], ['efektivita','algoritmus'], [('informaticke-mysleni','Algoritmus')], []),
- ('Základní algoritmy', 'navazujici', 'Hledání a řazení jako klasické, opakovaně použitelné postupy.', 'algoritmizace', [], ['algoritmus'], [('informaticke-mysleni','Algoritmus')], []),
- ('Hodnocení a analýza chyb', 'navazujici', 'Posouzení řešení a hledání, proč selhalo (ladění myšlení).', 'algoritmizace', ['v005'], ['ladeni','hodnoceni'], [('informaticke-mysleni','Algoritmus')], []),
+ ('Dekompozice', 'core', 'Rozložení velkého, nepřehledného úkolu na menší kousky, které se dají řešit po jednom. Když plánuješ školní výlet, taky ho rozdělíš na dopravu, ubytování a program — v informatice se to samé dělá s problémy i s programy.', 'algoritmizace', ['v006'], ['dekompozice','mysleni'], [], []),
+ ('Abstrakce', 'core', 'Schopnost odfiltrovat nepodstatné detaily a soustředit se jen na to, co je pro řešení důležité. Mapa metra je skvělá abstrakce: neukazuje skutečné vzdálenosti ani ulice, jen to, jak na sebe stanice navazují — přesně to, co potřebuješ.', 'algoritmizace', [], ['abstrakce','mysleni'], [], []),
+ ('Rozpoznávání vzorů', 'core', 'Všímání si opakování a pravidelností, které řešení zjednoduší. Když zjistíš, že se v úloze pořád vrací stejný krok, můžeš ho vyřešit jednou a použít znovu — místo abys vymýšlel pokaždé znovu od začátku.', 'algoritmizace', [], ['vzory','mysleni'], [], []),
+ ('Algoritmus', 'core', 'Přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku.', 'algoritmizace', ['v005','v006'], ['algoritmus'], [('informaticke-mysleni','Dekompozice')], []),
+ ('Řízení toku', 'core', 'Tři způsoby, jak řídit pořadí kroků: sekvence (dělej popořadě), větvení („když platí tohle, udělej tamto") a opakování (dělej dokola, dokud něco platí). Z těchhle tří stavebních kamenů se dá poskládat každý program.', 'algoritmizace', ['v007'], ['rizeni-toku','opakovani','kdyz-tak'], [('informaticke-mysleni','Algoritmus')], []),
+ ('Pseudokód a vývojové diagramy', 'navazujici', 'Způsoby, jak zapsat postup srozumitelně pro člověka ještě předtím, než ho napíšeš v konkrétním programovacím jazyce. Pseudokód je „kód napůl česky", vývojový diagram totéž nakreslené jako schéma se šipkami.', 'algoritmizace', [], ['postup','algoritmus'], [('informaticke-mysleni','Algoritmus')], []),
+ ('Logika a booleovské výrazy', 'navazujici', 'Rozhodování v programech stojí na výrocích, které jsou buď pravda, nebo nepravda („má hráč míň než nula životů?"). Ty se spojují spojkami A ZÁROVEŇ (AND), NEBO (OR) a NE (NOT) do složitějších podmínek.', 'algoritmizace', [], ['logika','rizeni-toku'], [('informaticke-mysleni','Řízení toku')], []),
+ ('Modelování a simulace', 'navazujici', 'Model je zjednodušený obraz skutečnosti — třeba graf, schéma nebo tabulka — který zachytí to podstatné a zbytek vynechá. Na modelu jde situaci pochopit nebo „přehrát" dopředu (simulovat), aniž bys ji musel zkoušet naostro.', 'data-modelovani', ['v003'], ['model','simulace'], [('informaticke-mysleni','Abstrakce')], [('data-databaze','Vizualizace a volba grafu')]),
+ ('Efektivita řešení', 'navazujici', 'Stejný problém jde vyřešit mnoha způsoby, ale ne všechny stojí stejně — liší se počtem kroků, časem nebo pamětí. Rozpoznat, které řešení je „levnější", začne být důležité, jakmile přibude dat nebo uživatelů.', 'algoritmizace', [], ['efektivita','algoritmus'], [('informaticke-mysleni','Algoritmus')], []),
+ ('Základní algoritmy', 'navazujici', 'Osvědčené postupy, které se používají pořád dokola, hlavně hledání (najdi prvek v seznamu) a řazení (seřaď podle velikosti). Jsou to takové „klasické recepty" informatiky, které stojí za to znát.', 'algoritmizace', [], ['algoritmus'], [('informaticke-mysleni','Algoritmus')], []),
+ ('Hodnocení a analýza chyb', 'navazujici', 'Umět se na hotové řešení podívat kriticky: funguje? kde se láme? proč dělá zrovna tohle? Hledání příčiny chyby (ne jen jejího příznaku) je dovednost, kterou využiješ v programování i kdekoli jinde.', 'algoritmizace', ['v005'], ['ladeni','hodnoceni'], [('informaticke-mysleni','Algoritmus')], []),
 ]
 
 C['programovani'] = [
- ('Proměnné a datové typy', 'core', 'Pojmenovaná „krabička" na hodnotu; čísla, text, pravda/nepravda.', 'algoritmizace', ['v007'], ['promenne'], [], []),
- ('Podmínky v kódu', 'core', 'Větvení programu (if/else) podle toho, zda platí podmínka.', 'algoritmizace', ['v007'], ['kdyz-tak','rizeni-toku'], [('programovani','Proměnné a datové typy')], [('informaticke-mysleni','Řízení toku')]),
- ('Cykly v kódu', 'core', 'Opakování kroků (for, while), místo psaní téhož pořád dokola.', 'algoritmizace', ['v007'], ['opakovani','rizeni-toku'], [('programovani','Proměnné a datové typy')], [('informaticke-mysleni','Řízení toku')]),
- ('Funkce a procedury', 'core', 'Pojmenovaný, znovupoužitelný kus kódu s parametry a návratovou hodnotou.', 'algoritmizace', [], ['funkce','dekompozice'], [('programovani','Proměnné a datové typy')], []),
- ('Ladění a testování', 'core', 'Hledání a oprava chyb; ověření, že program dělá, co má.', 'algoritmizace', ['v005'], ['ladeni'], [('programovani','Podmínky v kódu')], [('informaticke-mysleni','Hodnocení a analýza chyb')]),
- ('Blokové vs. textové programování', 'navazujici', 'Přechod od skládání bloků (Scratch) k psaní textového kódu (Python).', 'algoritmizace', ['v007'], ['programovani'], [('programovani','Cykly v kódu')], []),
- ('Seznamy a kolekce', 'navazujici', 'Ukládání více hodnot najednou a práce s nimi.', 'algoritmizace', [], ['data','programovani'], [('programovani','Proměnné a datové typy')], []),
- ('Události', 'navazujici', 'Reakce programu na akce (klik, stisk) — event-driven přístup.', 'algoritmizace', [], ['udalosti','rizeni-toku'], [('programovani','Podmínky v kódu')], []),
- ('Knihovny a volání API v kódu', 'navazujici', 'Použití hotového cizího kódu a služeb (včetně AI) přes API.', 'algoritmizace', [], ['api','knihovny'], [('programovani','Funkce a procedury')], [('digitalni-zaklady','API')]),
- ('Verzování kódu', 'navazujici', 'Git a GitHub — sledování změn a spolupráce na kódu.', 'algoritmizace', [], ['verzovani','spoluprace'], [('programovani','Blokové vs. textové programování')], []),
- ('Čtení a hodnocení AI kódu', 'navazujici', 'Porozumět cizímu i AI vygenerovanému kódu, posoudit ho a upravit.', 'algoritmizace', ['v005'], ['ai-prurez','ladeni'], [('programovani','Ladění a testování')], [('umela-inteligence','Ověřování výstupů')]),
- ('Základy objektů (OOP)', 'navazujici', 'Objekty jako spojení dat a chování — úvod do objektového myšlení.', 'algoritmizace', [], ['programovani','abstrakce'], [('programovani','Funkce a procedury')], []),
+ ('Proměnné a datové typy', 'core', 'Proměnná je pojmenovaná „krabička", do které si program ukládá hodnotu, aby s ní mohl dál pracovat (třeba skore = 0). Typ určuje, co je uvnitř — číslo, text, nebo pravda/nepravda — a co se s tím dá dělat.', 'algoritmizace', ['v007'], ['promenne'], [], []),
+ ('Podmínky v kódu', 'core', 'Zápis větvení: „když platí podmínka, udělej tohle, jinak tamto" (if/else). Díky němu se program rozhoduje sám — třeba zobrazí „výhra", jen když skóre překročí cíl.', 'algoritmizace', ['v007'], ['kdyz-tak','rizeni-toku'], [('programovani','Proměnné a datové typy')], [('informaticke-mysleni','Řízení toku')]),
+ ('Cykly v kódu', 'core', 'Způsob, jak nechat počítač opakovat kroky, místo abys je psal pořád dokola. Cyklus for opakuje danou-krát, cyklus while opakuje, dokud něco platí — třeba dokud hráč neprohraje.', 'algoritmizace', ['v007'], ['opakovani','rizeni-toku'], [('programovani','Proměnné a datové typy')], [('informaticke-mysleni','Řízení toku')]),
+ ('Funkce a procedury', 'core', 'Pojmenovaný, znovupoužitelný kousek kódu, který napíšeš jednou a pak už jen „zavoláš", kdykoli ho potřebuješ. Můžeš mu předat vstupy (parametry) a dostat zpět výsledek — tím se kód zkrátí a zpřehlední.', 'algoritmizace', [], ['funkce','dekompozice'], [('programovani','Proměnné a datové typy')], []),
+ ('Ladění a testování', 'core', 'Ladění (debugging) je hledání a oprava chyb; testování je ověřování, že program dělá to, co má, i v neobvyklých případech. Chyby k programování patří — dovednost je umět je systematicky najít, ne se jim vyhnout.', 'algoritmizace', ['v005'], ['ladeni'], [('programovani','Podmínky v kódu')], [('informaticke-mysleni','Hodnocení a analýza chyb')]),
+ ('Blokové vs. textové programování', 'navazujici', 'Na začátku se programuje skládáním barevných bloků (Scratch), kde nejde udělat překlep. Postupně se přechází k psaní textového kódu (třeba v Pythonu), který je mocnější, ale vyžaduje přesnost.', 'algoritmizace', ['v007'], ['programovani'], [('programovani','Cykly v kódu')], []),
+ ('Seznamy a kolekce', 'navazujici', 'Když nestačí jedna proměnná, uloží se víc hodnot najednou do seznamu (třeba jména všech hráčů). S kolekcí pak jde pracovat hromadně — projít ji, seřadit, něco v ní najít.', 'algoritmizace', [], ['data','programovani'], [('programovani','Proměnné a datové typy')], []),
+ ('Události', 'navazujici', 'Programy často nečekají v jednom sledu, ale reagují na to, co udělá uživatel — klik, stisk klávesy, dotyk. Takovému stylu „když se stane tohle, spusť tamto" se říká událostmi řízené programování.', 'algoritmizace', [], ['udalosti','rizeni-toku'], [('programovani','Podmínky v kódu')], []),
+ ('Knihovny a volání API v kódu', 'navazujici', 'Nemusíš psát všechno od nuly — knihovna je hotový cizí kód, který zavoláš a použiješ (třeba na práci s datem nebo grafy). Přes API se stejně tak volají i vzdálené služby, včetně AI modelů.', 'algoritmizace', [], ['api','knihovny'], [('programovani','Funkce a procedury')], [('digitalni-zaklady','API')]),
+ ('Verzování kódu', 'navazujici', 'Git a GitHub ukládají historii změn kódu, takže se vždycky můžeš vrátit k funkční verzi a víc lidí může pracovat na jednom projektu, aniž by si přepsali práci. Je to jako „zpět" a sdílená složka pro programátory dohromady.', 'algoritmizace', [], ['verzovani','spoluprace'], [('programovani','Blokové vs. textové programování')], []),
+ ('Čtení a hodnocení AI kódu', 'navazujici', 'Dnes velkou část kódu napíše AI — o to důležitější je umět cizí kód přečíst, pochopit, co dělá, a posoudit, jestli je správný a bezpečný. Bez toho jen slepě věříš něčemu, čemu nerozumíš.', 'algoritmizace', ['v005'], ['ai-prurez','ladeni'], [('programovani','Ladění a testování')], [('umela-inteligence','Ověřování výstupů')]),
+ ('Základy objektů (OOP)', 'navazujici', 'Objekt spojuje data a to, co s nimi jde dělat, do jednoho celku (třeba „hráč" má životy i umí skočit). Objektové myšlení pomáhá zorganizovat větší programy tak, aby se v nich dalo vyznat.', 'algoritmizace', [], ['programovani','abstrakce'], [('programovani','Funkce a procedury')], []),
 ]
 
 C['umela-inteligence'] = [
- ('Co je a co není AI', 'core', 'Úzká vs. obecná AI; AI jako nástroj, ne bytost.', None, [], ['ai'], [], []),
- ('AI se učí z dat', 'core', 'Kvalita a zaujatost trénovacích dat určuje výstup modelu.', 'data-modelovani', ['v004'], ['ai','data'], [('umela-inteligence','Co je a co není AI')], [('data-databaze','Datová gramotnost')]),
- ('Jak funguje generativní model', 'core', 'Predikuje pravděpodobné pokračování — proto umí i „halucinovat".', None, [], ['ai'], [('umela-inteligence','AI se učí z dat')], []),
- ('Doporučovací systémy', 'core', 'Proč vidím právě tenhle obsah a jak mě systém profiluje.', 'data-modelovani', [], ['ai','data','soukromi'], [('umela-inteligence','AI se učí z dat')], [('digitalni-obcanstvi','Jak fungují algoritmy sítí')]),
- ('Prompt a promptová gramotnost', 'core', 'Jak napsat, iterovat a dát kontext, aby AI odvedla, co chci.', None, [], ['ai','prompt'], [('umela-inteligence','Jak funguje generativní model')], []),
- ('Ověřování výstupů', 'core', 'Rozpoznat halucinaci a ověřit výstup AI z druhého zdroje.', None, [], ['ai','ai-prurez'], [('umela-inteligence','Jak funguje generativní model')], []),
- ('Vlastní agency', 'core', 'Já rozhoduji, AI jen radí — člověk zůstává v řízení.', None, [], ['ai','postoj'], [], []),
- ('Kdy AI (ne)použít a disclosure', 'core', 'Rozlišit, kdy AI pomáhá učení a kdy ho obchází; přiznat její použití.', None, [], ['ai','postoj','etika'], [('umela-inteligence','Vlastní agency')], []),
- ('Bias a férovost', 'core', 'Odkud se v AI bere zaujatost a jak se projevuje.', None, [], ['ai','etika'], [('umela-inteligence','AI se učí z dat')], []),
- ('Soukromí při práci s AI', 'core', 'Co do promptu nevkládat a jak se má s daty zachází.', None, [], ['ai','soukromi'], [], [('kyberbezpecnost','Soukromí a digitální stopa')]),
- ('Pět velkých idejí AI', 'navazujici', 'Vnímání, reprezentace a usuzování, učení, přirozená interakce, společenský dopad.', None, [], ['ai'], [('umela-inteligence','Co je a co není AI')], []),
- ('Strojové učení prakticky', 'navazujici', 'Natrénuj si vlastní model (Teachable Machine, micro:bit CreateAI) — sběr dat, trénink, test.', 'data-modelovani', ['v004'], ['ai','ml'], [('umela-inteligence','AI se učí z dat')], [('fyzicky-computing','TinyML / edge AI')]),
- ('Typy AI úloh', 'navazujici', 'Klasifikace, predikce a generování jako různé druhy úloh.', 'data-modelovani', [], ['ai','ml'], [('umela-inteligence','Strojové učení prakticky')], []),
- ('Foundation modely, LLM a RAG', 'navazujici', 'Koncepčně: velké modely, jazykové modely a vyhledávání ve vlastních datech.', None, [], ['ai'], [('umela-inteligence','Jak funguje generativní model')], [('data-databaze','Vektorové databáze a embeddingy')]),
- ('Hlubší etika AI', 'navazujici', 'Proporcionalita, nediskriminace, transparentnost a environmentální stopa.', None, [], ['ai','etika'], [('umela-inteligence','Bias a férovost')], []),
- ('Deepfakes a syntetická média', 'navazujici', 'Rozpoznání a provenience (SynthID, C2PA); dopady na důvěru.', None, [], ['ai','deepfake','bezpeci'], [('umela-inteligence','Jak funguje generativní model')], [('kyberbezpecnost','AI podvody')]),
- ('AI a společnost', 'navazujici', 'Dopady na práci a dezinformace; spoluutváření AI („Shape AI").', None, [], ['ai','etika','postoj'], [('umela-inteligence','Hlubší etika AI')], []),
+ ('Co je a co není AI', 'core', 'AI je software, který zvládá úlohy, jež dřív vyžadovaly člověka — rozpoznat obličej, přeložit větu, poradit. Dnešní AI je „úzká": umí skvěle jednu věc, ale nemá vědomí ani porozumění jako člověk; je to velmi šikovný nástroj, ne bytost.', None, [], ['ai'], [], []),
+ ('AI se učí z dat', 'core', 'Většina dnešní AI se nenaprogramuje pravidly, ale „natrénuje" na obrovském množství příkladů, ze kterých si sama odvodí vzorce. Proto platí „co do ní vložíš, to z ní vypadne": když jsou trénovací data zkreslená nebo chybná, bude takový i výsledek.', 'data-modelovani', ['v004'], ['ai','data'], [('umela-inteligence','Co je a co není AI')], [('data-databaze','Datová gramotnost')]),
+ ('Jak funguje generativní model', 'core', 'Modely jako ChatGPT nevytahují odpovědi z databáze — slovo po slovu předpovídají, co nejpravděpodobněji následuje. Umí proto znít sebejistě i tehdy, když si fakta „vymyslí" (halucinace), protože nesledují pravdu, ale pravděpodobnost.', None, [], ['ai'], [('umela-inteligence','AI se učí z dat')], []),
+ ('Doporučovací systémy', 'core', 'Feed na TikToku, YouTube i na Glitchi řídí algoritmus, který ti podle tvého chování vybírá, co uvidíš dál. Pochopit, že tě systém profiluje a proč ti ukazuje zrovna tohle, je první krok k tomu ho ovládat, a ne být ovládán jím.', 'data-modelovani', [], ['ai','data','soukromi'], [('umela-inteligence','AI se učí z dat')], [('digitalni-obcanstvi','Jak fungují algoritmy sítí')]),
+ ('Prompt a promptová gramotnost', 'core', 'Prompt je zadání, kterým AI úkoluješ. Není to kouzelné zaklínadlo, ale spíš dialog: čím jasněji popíšeš cíl, kontext a formát a čím víc zadání upřesňuješ, tím lepší výsledek dostaneš.', None, [], ['ai','prompt'], [('umela-inteligence','Jak funguje generativní model')], []),
+ ('Ověřování výstupů', 'core', 'AI se plete sebejistě, takže její výstup je návrh, ne pravda. Poznat možnou halucinaci a ověřit tvrzení z druhého, důvěryhodného zdroje je základní dovednost každého, kdo AI používá.', None, [], ['ai','ai-prurez'], [('umela-inteligence','Jak funguje generativní model')], []),
+ ('Vlastní agency', 'core', 'I když ti AI radí, rozhoduješ pořád ty. „Agency" znamená vědomí, že jsi to ty, kdo drží řízení a nese odpovědnost — AI je nástroj, který ti pomáhá, ne autorita, které se podřizuješ.', None, [], ['ai','postoj'], [], []),
+ ('Kdy AI (ne)použít a disclosure', 'core', 'U každého úkolu se vyplatí zvážit, jestli ti AI pomůže se něco naučit, nebo tě o učení připraví (napíše za tebe úkol, který tě měl něco naučit). K poctivé práci patří i přiznat, kde jsi AI použil.', None, [], ['ai','postoj','etika'], [('umela-inteligence','Vlastní agency')], []),
+ ('Bias a férovost', 'core', 'AI přebírá zkreslení (bias) z dat, na kterých se učila — může tak třeba nadržovat jedné skupině lidí. Vědět, odkud se bias bere a jak se projevuje, je nutné, aby AI nerozhodovala nespravedlivě.', None, [], ['ai','etika'], [('umela-inteligence','AI se učí z dat')], []),
+ ('Soukromí při práci s AI', 'core', 'Co napíšeš do promptu, se může ukládat nebo použít k dalšímu trénování. Proto do AI nepatří hesla ani osobní či cizí citlivé údaje — vždycky mysli na to, komu vlastně data předáváš.', None, [], ['ai','soukromi'], [], [('kyberbezpecnost','Soukromí a digitální stopa')]),
+ ('Pět velkých idejí AI', 'navazujici', 'Přehledný rámec, který shrnuje, co AI umí, do pěti oblastí: vnímání (senzory), reprezentace a usuzování, učení z dat, přirozená interakce s lidmi a společenský dopad. Dává dohromady mapu celého tématu.', None, [], ['ai'], [('umela-inteligence','Co je a co není AI')], []),
+ ('Strojové učení prakticky', 'navazujici', 'AI nejlíp pochopíš, když si sám natrénuješ malý model — třeba v Teachable Machine nebo micro:bit CreateAI ho naučíš rozpoznat gesto či obrázek. Projdeš celý postup: nasbírat data, natrénovat, otestovat a vylepšit.', 'data-modelovani', ['v004'], ['ai','ml'], [('umela-inteligence','AI se učí z dat')], [('fyzicky-computing','AI přímo na zařízení (TinyML)')]),
+ ('Typy AI úloh', 'navazujici', 'AI úlohy se dělí na pár základních druhů: klasifikace (zařaď do kategorie — spam/ne-spam), predikce (odhadni číslo — třeba cenu) a generování (vytvoř nový obsah — text, obraz). Poznat druh úlohy pomáhá vybrat správný nástroj.', 'data-modelovani', [], ['ai','ml'], [('umela-inteligence','Strojové učení prakticky')], []),
+ ('Jak fungují chatboti (LLM, RAG)', 'navazujici', 'Dnešní chatboti stojí na velkých jazykových modelech (LLM) natrénovaných na obrovském množství textu. Aby uměli odpovídat i z konkrétních dokumentů (třeba školních), používají RAG: nejdřív si v datech vyhledají, co se k tématu hodí, a teprve pak odpoví.', None, [], ['ai'], [('umela-inteligence','Jak funguje generativní model')], [('data-databaze','Vektorové databáze')]),
+ ('Hlubší etika AI', 'navazujici', 'Za používáním AI stojí etické otázky: neškodit, být spravedlivý ke všem skupinám, být průhledný v tom, jak AI rozhoduje, a myslet i na její energetickou náročnost. Etika není dodatek — patří už do návrhu.', None, [], ['ai','etika'], [('umela-inteligence','Bias a férovost')], []),
+ ('Deepfakes a syntetická média', 'navazujici', 'AI umí vyrobit falešné, ale realisticky vypadající video, foto nebo hlas. Vědět, že „vidět neznamená věřit", a znát způsoby ověření původu (vodoznaky jako SynthID, C2PA) je dnes nutná obrana proti podvodům a dezinformacím.', None, [], ['ai','deepfake','bezpeci'], [('umela-inteligence','Jak funguje generativní model')], [('kyberbezpecnost','AI podvody')]),
+ ('AI a společnost', 'navazujici', 'AI mění práci, vzdělávání i to, jak vzniká a šíří se informace — přináší příležitosti i rizika (dezinformace, závislost). Být aktivní znamená nejen se přizpůsobit, ale i spolurozhodovat, jak se AI má a nemá používat.', None, [], ['ai','etika','postoj'], [('umela-inteligence','Hlubší etika AI')], []),
 ]
 
 C['data-databaze'] = [
- ('Datová gramotnost', 'core', 'Číst, interpretovat a kriticky posoudit data — předstupeň AI gramotnosti.', 'data-modelovani', ['v001'], ['data'], [], []),
- ('Datový cyklus', 'core', 'Sběr → čištění → analýza → vizualizace → interpretace jako ucelený příběh.', 'data-modelovani', ['v001'], ['data'], [('data-databaze','Datová gramotnost')], []),
- ('Strukturovaná vs. nestrukturovaná data', 'core', 'Rozdíl mezi tabulkou a volným textem/obrazem.', 'data-modelovani', ['v002'], ['data'], [('data-databaze','Datová gramotnost')], []),
- ('Tabulky a relační model', 'core', 'Řádky, sloupce, klíče a vztahy; evidence dat v informačním systému.', 'informacni-systemy', ['v009'], ['data','databaze'], [('data-databaze','Strukturovaná vs. nestrukturovaná data')], []),
- ('Vizualizace a volba grafu', 'core', 'Kdy který graf, čtení os a měřítek; modelování dat grafem či schématem.', 'data-modelovani', ['v003','v010'], ['data','vizualizace'], [('data-databaze','Datový cyklus')], []),
- ('Dotazování (SQL)', 'navazujici', 'Základní dotazy nad daty (SELECT, WHERE, JOIN) a pravidla pro práci se záznamy.', 'informacni-systemy', ['v009','v010'], ['databaze','data'], [('data-databaze','Tabulky a relační model')], []),
- ('Účel informačních systémů', 'navazujici', 'Posoudit účel a užitečnost systémů, které používám.', 'informacni-systemy', ['v008'], ['data','databaze'], [('data-databaze','Tabulky a relační model')], [('digitalni-obcanstvi','Obchodní modely platforem')]),
- ('Statistická gramotnost', 'navazujici', 'Korelace vs. kauzalita, reprezentativnost a zavádějící grafy.', 'data-modelovani', ['v001'], ['data','hodnoceni'], [('data-databaze','Vizualizace a volba grafu')], []),
- ('Čištění reálných dat', 'navazujici', 'Chybějící hodnoty, duplicity a nekonzistence — nejdůležitější a nejnudnější část.', 'informacni-systemy', ['v010'], ['data'], [('data-databaze','Datový cyklus')], []),
- ('NoSQL a dokumentové databáze', 'navazujici', 'Jiný způsob ukládání dat než tabulky.', 'informacni-systemy', [], ['databaze','data'], [('data-databaze','Tabulky a relační model')], []),
- ('Vektorové databáze a embeddingy', 'navazujici', 'Ukládání významu jako čísel a vyhledávání podle podobnosti — páteř RAG a chatbotů.', None, [], ['databaze','ai'], [('data-databaze','NoSQL a dokumentové databáze')], [('umela-inteligence','Foundation modely, LLM a RAG')]),
- ('Programová analýza dat', 'navazujici', 'Zpracování dat kódem (Python + pandas) místo klikání.', 'data-modelovani', [], ['data','programovani'], [('data-databaze','Datový cyklus')], [('programovani','Seznamy a kolekce')]),
- ('Konverzační analytika (AI nad daty)', 'navazujici', 'Ptám se dat přirozeným jazykem (text-to-SQL); nutnost ověřit výsledek.', None, [], ['data','ai','ai-prurez'], [('data-databaze','Dotazování (SQL)')], [('umela-inteligence','Ověřování výstupů')]),
+ ('Datová gramotnost', 'core', 'Schopnost data přečíst, správně pochopit a kriticky posoudit — ne s nimi jen technicky pracovat. Ptáš se: odkud data jsou, kdo je sebral, co v nich chybí a jestli závěr opravdu plyne z čísel. Je to i předstupeň porozumění AI.', 'data-modelovani', ['v001'], ['data'], [], []),
+ ('Datový cyklus', 'core', 'Práce s daty je příběh o pěti krocích: sběr → čištění → analýza → vizualizace → interpretace. Když některý přeskočíš (třeba čištění), zkreslíš i výsledek na konci.', 'data-modelovani', ['v001'], ['data'], [('data-databaze','Datová gramotnost')], []),
+ ('Strukturovaná vs. nestrukturovaná data', 'core', 'Strukturovaná data mají jasný řád (tabulka s řádky a sloupci), nestrukturovaná ho nemají (volný text, fotky, videa). Každý druh se ukládá i zpracovává jinak — a nestrukturovaných dat je dnes většina.', 'data-modelovani', ['v002'], ['data'], [('data-databaze','Datová gramotnost')], []),
+ ('Tabulky a relační model', 'core', 'Nejběžnější způsob, jak evidovat data: tabulky s řádky (záznamy) a sloupci (vlastnosti), propojené přes klíče. Tak fungují školní systémy, e-shopy i většina aplikací „na pozadí".', 'informacni-systemy', ['v009'], ['data','databaze'], [('data-databaze','Strukturovaná vs. nestrukturovaná data')], []),
+ ('Vizualizace a volba grafu', 'core', 'Dobrý graf udělá z čísel srozumitelný příběh — ale jen když zvolíš správný typ (spojnicový na vývoj v čase, sloupcový na porovnání) a čteš osy a měřítka. Špatně zvolený nebo zmanipulovaný graf umí naopak klamat.', 'data-modelovani', ['v003','v010'], ['data','vizualizace'], [('data-databaze','Datový cyklus')], []),
+ ('Dotazování (SQL)', 'navazujici', 'SQL je jazyk, kterým se databáze ptáš na to, co potřebuješ („vyber všechny žáky z 8.A"). Základní příkazy (SELECT, WHERE, JOIN) umí data filtrovat, propojovat a vybírat z tabulek.', 'informacni-systemy', ['v009','v010'], ['databaze','data'], [('data-databaze','Tabulky a relační model')], []),
+ ('Účel informačních systémů', 'navazujici', 'Informační systém je software, který eviduje a zpracovává data pro nějakou potřebu — školní matrika, rezervace, e-shop. Umět posoudit, k čemu systém slouží a jestli je opravdu užitečný, patří k digitální gramotnosti.', 'informacni-systemy', ['v008'], ['data','databaze'], [('data-databaze','Tabulky a relační model')], [('digitalni-obcanstvi','Obchodní modely platforem')]),
+ ('Statistická gramotnost', 'navazujici', 'Aby tě čísla nezmátla: korelace (dvě věci jdou spolu) neznamená kauzalitu (jedna způsobuje druhou), malý nebo nereprezentativní vzorek klame a graf jde snadno „natáhnout" k požadovanému závěru. Klíčová občanská dovednost.', 'data-modelovani', ['v001'], ['data','hodnoceni'], [('data-databaze','Vizualizace a volba grafu')], []),
+ ('Čištění reálných dat', 'navazujici', 'Skutečná data jsou „špinavá" — chybí hodnoty, opakují se, jsou v různých formátech. Jejich úklid zabere většinu práce a je nudný, ale bez něj vyjde ze sebelepší analýzy nesmysl.', 'informacni-systemy', ['v010'], ['data'], [('data-databaze','Datový cyklus')], []),
+ ('NoSQL a dokumentové databáze', 'navazujici', 'Ne všechno se hodí do tabulek — NoSQL databáze ukládají data volněji (třeba jako dokumenty), což se hodí pro obsah, který nemá pevný tvar. Jiný nástroj na jiný druh dat.', 'informacni-systemy', [], ['databaze','data'], [('data-databaze','Tabulky a relační model')], []),
+ ('Vektorové databáze', 'navazujici', 'Text nebo obrázek se dá převést na řadu čísel (embedding), která zachycuje jeho význam. Vektorová databáze pak umí hledat podle podobnosti významu, ne podle přesné shody slov — díky tomu chatbot najde odpověď ve vlastních dokumentech (RAG).', None, [], ['databaze','ai'], [('data-databaze','NoSQL a dokumentové databáze')], [('umela-inteligence','Jak fungují chatboti (LLM, RAG)')]),
+ ('Programová analýza dat', 'navazujici', 'Když je dat moc na ruční klikání, zpracují se kódem (typicky Python + knihovna pandas). Výhoda: je to rychlé, opakovatelné a doložitelné — kdokoli spustí stejný postup a dostane stejný výsledek.', 'data-modelovani', [], ['data','programovani'], [('data-databaze','Datový cyklus')], [('programovani','Seznamy a kolekce')]),
+ ('Analýza dat pomocí AI', 'navazujici', 'Dnes stačí data nahrát a zeptat se běžnou řečí („ukaž trend prodejů po měsících") — AI vygeneruje graf i vysvětlení. O to důležitější je umět posoudit, jestli je výsledek správný, protože AI si i tady umí čísla vymýšlet.', None, [], ['data','ai','ai-prurez'], [('data-databaze','Dotazování (SQL)')], [('umela-inteligence','Ověřování výstupů')]),
 ]
 
 C['tvorba-webu'] = [
- ('Jak funguje web', 'core', 'Klient–server, prohlížeč a HTTP — co se děje, když otevřu stránku.', 'digitalni-technologie', [], ['web','sit'], [], [('digitalni-zaklady','Internet a síť')]),
- ('HTML', 'core', 'Struktura stránky a sémantické značky.', None, [], ['web','html'], [('tvorba-webu','Jak funguje web')], []),
- ('CSS', 'core', 'Vzhled a layout stránky (Flexbox/Grid, responzivita).', None, [], ['web','css','design'], [('tvorba-webu','HTML')], []),
- ('Doména a hosting', 'core', 'Jak dostat web z počítače online, aby ho viděl kdokoli.', 'digitalni-technologie', [], ['web','cloud'], [('tvorba-webu','Jak funguje web')], [('digitalni-zaklady','Cloud a server')]),
- ('Interaktivita (JavaScript, DOM)', 'core', 'Oživení stránky — reakce na akce uživatele.', None, [], ['web','javascript'], [('tvorba-webu','HTML')], [('programovani','Události')]),
- ('AI-asistovaná tvorba webu', 'navazujici', 'v0, Lovable, Bolt, Claude Artifacts — z popisu vznikne web; hodnota v úpravách a hodnocení.', None, [], ['web','ai','ai-prurez'], [('tvorba-webu','CSS')], [('tvorba-aplikaci','Vibecoding')]),
- ('Frameworky', 'navazujici', 'React ap. a CSS frameworky (Tailwind) pro větší projekty.', None, [], ['web','programovani'], [('tvorba-webu','Interaktivita (JavaScript, DOM)')], []),
- ('Nasazení webu', 'navazujici', 'Publikace přes Vercel, Netlify nebo GitHub Pages.', 'digitalni-technologie', [], ['web','cloud'], [('tvorba-webu','Doména a hosting')], []),
- ('Přístupnost a SEO', 'navazujici', 'Web dostupný všem a nalezitelný ve vyhledávačích.', None, [], ['web','design'], [('tvorba-webu','HTML')], []),
- ('UX/UI a design webu', 'navazujici', 'Návrh použitelného a srozumitelného rozhraní.', None, [], ['web','design'], [('tvorba-webu','CSS')], []),
+ ('Jak funguje web', 'core', 'Když napíšeš adresu, prohlížeč (klient) požádá server, kde stránka „bydlí", a ten mu pošle její obsah přes protokol HTTP. Web je tahle nekonečná výměna požadavek–odpověď mezi prohlížeči a servery.', 'digitalni-technologie', [], ['web','sit'], [], [('digitalni-zaklady','Internet a síť')]),
+ ('HTML', 'core', 'HTML je kostra stránky — určuje, co je nadpis, odstavec, obrázek nebo odkaz. Nejde o vzhled, ale o význam a strukturu obsahu (sémantiku), na kterou se pak „navěsí" všechno ostatní.', None, [], ['web','html'], [('tvorba-webu','Jak funguje web')], []),
+ ('CSS', 'core', 'CSS dává stránce vzhled: barvy, písmo, rozvržení. Moderní nástroje (Flexbox, Grid) umí uspořádat prvky tak, aby se stránka hezky přizpůsobila mobilu i velké obrazovce (responzivita).', None, [], ['web','css','design'], [('tvorba-webu','HTML')], []),
+ ('Doména a hosting', 'core', 'Aby tvůj web viděl kdokoli, potřebuje „bydlet" na serveru (hosting) a mít adresu, kterou si lidi zapamatují (doménu, třeba mujweb.cz). Dnes to jde i zdarma za pár minut — „publikuj svůj web" je reálný cíl i pro začátečníka.', 'digitalni-technologie', [], ['web','cloud'], [('tvorba-webu','Jak funguje web')], [('digitalni-zaklady','Cloud a server')]),
+ ('Interaktivita (JavaScript)', 'core', 'JavaScript stránku oživí — reaguje na kliknutí, mění obsah, počítá. Dělá to tak, že za běhu upravuje strukturu stránky (té se říká DOM), takže se web chová jako aplikace, ne jen jako statický plakát.', None, [], ['web','javascript'], [('tvorba-webu','HTML')], [('programovani','Události')]),
+ ('AI-asistovaná tvorba webu', 'navazujici', 'Nástroje jako v0, Lovable nebo Claude Artifacts vytvoří funkční stránku z pouhého popisu za pár vteřin. Těžiště se tím posouvá od „napiš každou značku ručně" k „rozuměj tomu, co vzniklo, uprav to a posuď kvalitu".', None, [], ['web','ai','ai-prurez'], [('tvorba-webu','CSS')], [('tvorba-aplikaci','Vibecoding')]),
+ ('Frameworky', 'navazujici', 'U větších webů se nepíše všechno od nuly — frameworky (React a spol.) a knihovny stylů (Tailwind) dávají hotové stavební bloky a řád. Zrychlují práci, ale předpokládají, že rozumíš základům pod nimi.', None, [], ['web','programovani'], [('tvorba-webu','Interaktivita (JavaScript)')], []),
+ ('Nasazení webu', 'navazujici', 'Nasazení (deployment) je krok, kdy se web z tvého počítače dostane na internet. Služby jako Vercel, Netlify nebo GitHub Pages to zvládnou pár kliknutími nebo automaticky po každém uložení kódu.', 'digitalni-technologie', [], ['web','cloud'], [('tvorba-webu','Doména a hosting')], []),
+ ('Přístupnost a SEO', 'navazujici', 'Přístupnost (a11y) znamená udělat web použitelný i pro lidi s hendikepem (čtečky obrazovky, ovládání klávesnicí); SEO je péče o to, aby web našly vyhledávače. Obojí rozhoduje, kolik lidí se k obsahu vůbec dostane.', None, [], ['web','design'], [('tvorba-webu','HTML')], []),
+ ('UX/UI a design webu', 'navazujici', 'UI je to, jak web vypadá, UX to, jak se používá. Dobrý návrh vede uživatele přirozeně k cíli — je srozumitelný, přehledný a nenutí přemýšlet, kam kliknout.', None, [], ['web','design'], [('tvorba-webu','CSS')], []),
 ]
 
 C['tvorba-aplikaci'] = [
- ('Co je aplikace', 'core', 'Mobilní/webová/desktopová appka; rozdíl frontend vs. backend.', None, [], ['aplikace'], [], []),
- ('No-code / low-code', 'core', 'Tvorba aplikace bez psaní kódu jako vstupní brána.', None, [], ['aplikace','no-code'], [('tvorba-aplikaci','Co je aplikace')], []),
- ('Logika aplikace', 'core', 'Stavy, vstupy a akce — jak se appka chová.', 'algoritmizace', [], ['aplikace','rizeni-toku'], [('tvorba-aplikaci','Co je aplikace')], [('programovani','Podmínky v kódu')]),
- ('Vibecoding', 'core', 'Popíšu záměr přirozeným jazykem, AI generuje kód; já řídím a hodnotím.', None, [], ['aplikace','ai','ai-prurez'], [('tvorba-aplikaci','Logika aplikace')], [('programovani','Čtení a hodnocení AI kódu')]),
- ('AI nástroje pro tvorbu', 'core', 'Copilot, Cursor, Claude Code, Replit, Lovable jako programovací parťáci.', None, [], ['aplikace','ai'], [('tvorba-aplikaci','Vibecoding')], []),
- ('Práce s API a backendem', 'navazujici', 'Propojení appky se službami a serverovou logikou.', None, [], ['aplikace','api'], [('tvorba-aplikaci','Logika aplikace')], [('digitalni-zaklady','API')]),
- ('Databáze a autentizace', 'navazujici', 'Ukládání dat aplikace a přihlašování uživatelů.', 'informacni-systemy', [], ['aplikace','databaze','bezpeci'], [('tvorba-aplikaci','Práce s API a backendem')], [('data-databaze','Tabulky a relační model')]),
- ('Životní cyklus vývoje', 'navazujici', 'Verzování, testování a nasazení jako součást vývoje.', None, [], ['aplikace','verzovani'], [('tvorba-aplikaci','Logika aplikace')], [('programovani','Verzování kódu')]),
- ('Publikace do app storů', 'navazujici', 'Jak se appka dostane k uživatelům.', None, [], ['aplikace'], [('tvorba-aplikaci','Databáze a autentizace')], []),
- ('Iluze kompetence', 'navazujici', 'Proč rozumět základům — AI kód funguje, dokud se nerozbije.', None, [], ['aplikace','ai','postoj'], [('tvorba-aplikaci','Vibecoding')], [('programovani','Ladění a testování')]),
+ ('Co je aplikace', 'core', 'Aplikace je program pro konkrétní účel — může běžet v telefonu, v prohlížeči nebo na počítači. Skládá se z části, kterou vidíš a ovládáš (frontend), a z části, která pracuje na pozadí s daty (backend).', None, [], ['aplikace'], [], []),
+ ('No-code / low-code', 'core', 'Platformy, na kterých appku poskládáš vizuálně bez psaní kódu (nebo skoro). Jsou skvělou vstupní branou — rychle vytvoříš něco funkčního a pochopíš logiku, než se pustíš do skutečného programování.', None, [], ['aplikace','no-code'], [('tvorba-aplikaci','Co je aplikace')], []),
+ ('Logika aplikace', 'core', 'Srdce každé appky: co se stane, když uživatel něco udělá. Řídí ji stavy (v jakém je appka režimu), vstupy (co uživatel zadá) a akce (co se má provést) — dohromady určují, jak se aplikace chová.', 'algoritmizace', [], ['aplikace','rizeni-toku'], [('tvorba-aplikaci','Co je aplikace')], [('programovani','Podmínky v kódu')]),
+ ('Vibecoding', 'core', 'Nový styl tvorby: popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš, než píšeš řádek po řádku. Umožní postavit reálnou věc rychle — ale bez porozumění základům snadno uvízneš, jakmile se něco rozbije.', None, [], ['aplikace','ai','ai-prurez'], [('tvorba-aplikaci','Logika aplikace')], [('programovani','Čtení a hodnocení AI kódu')]),
+ ('AI nástroje pro tvorbu', 'core', 'Copilot, Cursor, Claude Code, Replit nebo Lovable jsou „programovací parťáci", kteří napovídají, píší i opravují kód. Nejsou náhradou porozumění — jsou to nástroje, které tě zrychlí, když víš, co chceš.', None, [], ['aplikace','ai'], [('tvorba-aplikaci','Vibecoding')], []),
+ ('Práce s API a backendem', 'navazujici', 'Aby appka uměla víc než jen zobrazovat, propojí se přes API s dalšími službami a se serverovou částí, která pracuje s daty. Právě tady se z „hračky" stává skutečná aplikace.', None, [], ['aplikace','api'], [('tvorba-aplikaci','Logika aplikace')], [('digitalni-zaklady','API')]),
+ ('Databáze a autentizace', 'navazujici', 'Appky si pamatují data (databáze) a musí poznat, kdo je kdo (autentizace — přihlašování). S tím přichází i odpovědnost: chránit hesla a osobní údaje uživatelů.', 'informacni-systemy', [], ['aplikace','databaze','bezpeci'], [('tvorba-aplikaci','Práce s API a backendem')], [('data-databaze','Tabulky a relační model')]),
+ ('Životní cyklus vývoje', 'navazujici', 'Aplikace nevznikne jedním skokem — má cyklus: navrhnout, naprogramovat, otestovat, nasadit a vylepšovat. Patří k němu verzování, testování i sbírání zpětné vazby od uživatelů.', None, [], ['aplikace','verzovani'], [('tvorba-aplikaci','Logika aplikace')], [('programovani','Verzování kódu')]),
+ ('Publikace do app storů', 'navazujici', 'Aby se hotová appka dostala k lidem, projde publikací — na webu je to nasazení, u mobilů obchody (App Store, Google Play) s jejich pravidly a schvalováním.', None, [], ['aplikace'], [('tvorba-aplikaci','Databáze a autentizace')], []),
+ ('Iluze, že to umím', 'navazujici', 'Když za tebe appku „poskládá" AI, snadno vznikne pocit, že to umíš — dokud se něco nerozbije a ty nevíš proč. Proto se vyplatí rozumět základům: ne abys všechno psal ručně, ale abys uměl poznat a opravit, když to selže.', None, [], ['aplikace','ai','postoj'], [('tvorba-aplikaci','Vibecoding')], [('programovani','Ladění a testování')]),
 ]
 
 C['tvorba-obsahu'] = [
- ('Vizuální jazyk', 'core', 'Kompozice, barva, kontrast, typografie a formáty — základ, který AI nenahradí.', None, [], ['obsah','design'], [], []),
- ('Prompt pro média', 'core', 'Jak popsat obraz, video nebo hudbu, aby vznikl zamýšlený výstup.', None, [], ['obsah','ai','prompt'], [('tvorba-obsahu','Vizuální jazyk')], [('umela-inteligence','Prompt a promptová gramotnost')]),
- ('Generativní obraz', 'core', 'Tvorba obrázků z popisu (Midjourney, Nano Banana, DALL·E, Firefly).', None, [], ['obsah','ai'], [('tvorba-obsahu','Prompt pro média')], []),
- ('Etika, autorství a označování', 'core', 'Čí data model trénoval, komu patří výstup a jak označit AI obsah.', None, [], ['obsah','etika','ai'], [('tvorba-obsahu','Generativní obraz')], [('umela-inteligence','Hlubší etika AI')]),
- ('Generativní video', 'navazujici', 'Video z textu/obrázku (Sora, Veo, Runway) a jeho rizika.', None, [], ['obsah','ai','deepfake'], [('tvorba-obsahu','Generativní obraz')], [('umela-inteligence','Deepfakes a syntetická média')]),
- ('Generativní hudba a hlas', 'navazujici', 'Skladba a hlas z promptu (Suno, ElevenLabs); klonování hlasu a jeho rizika.', None, [], ['obsah','ai'], [('tvorba-obsahu','Prompt pro média')], []),
- ('Střih a postprodukce s AI', 'navazujici', 'Titulky, čištění zvuku a úprava videa přepisem (CapCut, Descript).', None, [], ['obsah'], [('tvorba-obsahu','Vizuální jazyk')], []),
- ('Konzistence a kontrola', 'navazujici', 'Udržení postavy/stylu, in/out-painting, editace přirozeným jazykem.', None, [], ['obsah','ai'], [('tvorba-obsahu','Generativní obraz')], []),
- ('Provenience a vodoznaky', 'navazujici', 'SynthID a C2PA Content Credentials — jak se ověřuje původ obsahu.', None, [], ['obsah','bezpeci','ai'], [('tvorba-obsahu','Etika, autorství a označování')], []),
- ('Vícemodální workflow', 'navazujici', 'Kombinace obraz → video → hudba → hlas v jednom projektu.', None, [], ['obsah','ai'], [('tvorba-obsahu','Konzistence a kontrola')], []),
+ ('Vizuální jazyk', 'core', 'Základní „gramatika" obrazu: kompozice, barva, kontrast, typografie a formáty. AI ti obrázek vygeneruje, ale rozhodnout, jestli je dobrý a proč, musíš ty — a k tomu potřebuješ vkus a tenhle základ.', None, [], ['obsah','design'], [], []),
+ ('Prompt pro média', 'core', 'Kvalita generovaného obrazu, videa nebo hudby stojí a padá s tím, jak dobře je popíšeš — styl, náladu, světlo, tempo, žánr. Je to dovednost sama o sobě: naučit se „mluvit" s nástrojem tak, aby vytvořil, co máš v hlavě.', None, [], ['obsah','ai','prompt'], [('tvorba-obsahu','Vizuální jazyk')], [('umela-inteligence','Prompt a promptová gramotnost')]),
+ ('Generativní obraz', 'core', 'Nástroje jako Midjourney, Nano Banana nebo DALL·E vytvoří obrázek z textového popisu za pár vteřin. Otevírá to tvorbu i lidem, kteří neumí kreslit — s tím ale přichází i otázky autorství a etiky.', None, [], ['obsah','ai'], [('tvorba-obsahu','Prompt pro média')], []),
+ ('Etika, autorství a označování', 'core', 'U generovaného obsahu je potřeba řešit: na čích dílech se model učil, komu patří výsledek a jak dát najevo, že je obsah vytvořený AI. Poctivé označení AI obsahu se stává standardem i zákonnou povinností.', None, [], ['obsah','etika','ai'], [('tvorba-obsahu','Generativní obraz')], [('umela-inteligence','Hlubší etika AI')]),
+ ('Generativní video', 'navazujici', 'AI dnes vytvoří realistické video z textu nebo obrázku (Sora, Veo, Runway) i se zvukem. Je to mocný tvůrčí nástroj — a zároveň zdroj rizik, protože stejná technologie umí i přesvědčivé dezinformace a deepfakes.', None, [], ['obsah','ai','deepfake'], [('tvorba-obsahu','Generativní obraz')], [('umela-inteligence','Deepfakes a syntetická média')]),
+ ('Generativní hudba a hlas', 'navazujici', 'Nástroje jako Suno nebo ElevenLabs složí celou písničku nebo napodobí hlas z krátké ukázky. Vedle tvůrčích možností to přináší i vážná rizika — zneužití cizího hlasu a otázky autorských práv.', None, [], ['obsah','ai'], [('tvorba-obsahu','Prompt pro média')], []),
+ ('Střih a postprodukce s AI', 'navazujici', 'AI dnes zvládne velkou část dokončovacích prací: automatické titulky, čištění zvuku, výběr nejlepších záběrů nebo úpravu videa přepisem textu (CapCut, Descript). Zrychluje to nejotravnější části tvorby.', None, [], ['obsah'], [('tvorba-obsahu','Vizuální jazyk')], []),
+ ('Kontrola nad výsledkem', 'navazujici', 'Vygenerovat jeden hezký obrázek je snadné; těžší je udržet stejnou postavu nebo styl napříč více obrázky a mít nad výsledkem skutečnou kontrolu. K tomu slouží referenční obrázky, dokreslování (in/out-painting) a úpravy přirozeným jazykem.', None, [], ['obsah','ai'], [('tvorba-obsahu','Generativní obraz')], []),
+ ('Původ obsahu a vodoznaky', 'navazujici', 'Jak poznat, jestli je obsah pravý, nebo vytvořený AI? Pomáhají vodoznaky (SynthID) a metadata o původu souboru (C2PA). Důležité je vědět, že žádný jediný test není stoprocentní — ověřování původu je vrstevnaté.', None, [], ['obsah','bezpeci','ai'], [('tvorba-obsahu','Etika, autorství a označování')], []),
+ ('Propojení nástrojů (obraz, video, zvuk)', 'navazujici', 'Velké projekty vznikají spojením několika nástrojů: z obrázku uděláš video, k němu složíš hudbu a přidáš hlas. Umět nástroje řetězit dohromady je dnes samostatná tvůrčí dovednost.', None, [], ['obsah','ai'], [('tvorba-obsahu','Kontrola nad výsledkem')], []),
 ]
 
 C['herni-vyvoj'] = [
- ('Herní smyčka, scéna a objekty', 'core', 'Základní stavba hry: smyčka, scéna a sprity.', 'algoritmizace', [], ['hry','rizeni-toku'], [], []),
- ('Vstup hráče, stavy a skóre', 'core', 'Reakce na ovládání a udržování stavu hry.', 'algoritmizace', [], ['hry','udalosti'], [('herni-vyvoj','Herní smyčka, scéna a objekty')], [('programovani','Události')]),
- ('Kolize a jednoduchá fyzika', 'core', 'Detekce dotyku objektů a základní pohyb.', None, [], ['hry'], [('herni-vyvoj','Herní smyčka, scéna a objekty')], []),
- ('Herní design', 'core', 'Pravidla, obtížnost a zpětná vazba hráči.', None, [], ['hry','design'], [('herni-vyvoj','Vstup hráče, stavy a skóre')], []),
- ('Scratch jako vstup', 'core', 'Blokové prostředí pro první hru bez syntaxe.', 'algoritmizace', ['v007'], ['hry','programovani'], [], [('programovani','Blokové vs. textové programování')]),
- ('Lehké enginy', 'navazujici', 'GDevelop a Roblox Studio (Luau) — most ke skutečné hře.', None, [], ['hry'], [('herni-vyvoj','Herní design')], []),
- ('Skutečné enginy', 'navazujici', 'Godot (GDScript) a Unity (C#) s textovým kódem.', None, [], ['hry','programovani'], [('herni-vyvoj','Lehké enginy')], []),
- ('AI generování assetů', 'navazujici', 'Text-to-3D a textury (Roblox Cube, Meshy) — místo hodin modelování.', None, [], ['hry','ai'], [('herni-vyvoj','Herní design')], []),
- ('AI asistenti a kód', 'navazujici', 'Roblox Assistant, Unity Muse — generování a úprava kódu hry.', None, [], ['hry','ai','ai-prurez'], [('herni-vyvoj','Skutečné enginy')], [('programovani','Čtení a hodnocení AI kódu')]),
- ('Publikace hry', 'navazujici', 'Sdílení hry (např. itch.io) — „zahraj si moji hru".', None, [], ['hry','spoluprace'], [('herni-vyvoj','Herní design')], []),
+ ('Herní smyčka, scéna a objekty', 'core', 'Každá hra běží v neustále se opakující smyčce: načti vstup → přepočítej svět → vykresli obraz, a to mnohokrát za vteřinu. V ní žijí objekty (sprity) rozmístěné ve scéně — postavy, překážky, sběratelné předměty.', 'algoritmizace', [], ['hry','rizeni-toku'], [], []),
+ ('Vstup hráče, stavy a skóre', 'core', 'Hra reaguje na ovládání (klávesy, dotyk) a přitom si pamatuje svůj stav — kolik má hráč životů, jaké je skóre, jestli běží nebo skončila. Tenhle „paměťový" základ dělá ze scény skutečnou hru.', 'algoritmizace', [], ['hry','udalosti'], [('herni-vyvoj','Herní smyčka, scéna a objekty')], [('programovani','Události')]),
+ ('Kolize a jednoduchá fyzika', 'core', 'Aby hra fungovala, musí poznat, když se dva objekty dotknou (kolize) — třeba hráč sebere minci nebo narazí do zdi. K tomu patří i základní pohyb: rychlost, gravitace, odraz.', None, [], ['hry'], [('herni-vyvoj','Herní smyčka, scéna a objekty')], []),
+ ('Herní design', 'core', 'Návrh toho, co dělá hru zábavnou: pravidla, obtížnost a zpětná vazba hráči. Dobrý design drží hráče v „proudu" (flow) — ani nuda z přílišné lehkosti, ani frustrace z přetížení.', None, [], ['hry','design'], [('herni-vyvoj','Vstup hráče, stavy a skóre')], []),
+ ('Scratch jako vstup', 'core', 'Blokové prostředí, kde první hru poskládáš z barevných bloků bez rizika překlepů. Skvěle na něm pochopíš smyčky, události, podmínky i proměnné, než přejdeš k textovému kódu.', 'algoritmizace', ['v007'], ['hry','programovani'], [], [('programovani','Blokové vs. textové programování')]),
+ ('Lehké enginy', 'navazujici', 'Mezikrok mezi Scratchem a plnými nástroji: GDevelop (bez kódu, přes logiku událostí) nebo Roblox Studio dají skutečnou hru, kterou jde sdílet. Nižší práh, ale vážnější výsledek.', None, [], ['hry'], [('herni-vyvoj','Herní design')], []),
+ ('Skutečné enginy', 'navazujici', 'Profesionální nástroje s textovým kódem: Godot (jazyk GDScript, blízký Pythonu, zdarma a odlehčený) nebo Unity (C#, silné na mobilech). Umí víc, ale mají strmější křivku učení.', None, [], ['hry','programovani'], [('herni-vyvoj','Lehké enginy')], []),
+ ('AI generování assetů', 'navazujici', 'AI dnes vytvoří herní grafiku a 3D objekty z popisu (Roblox Cube, Meshy) — místo hodin modelování napíšeš, co chceš. Snižuje to bariéru, ale těžiště se přesouvá k designu a kurátorství.', None, [], ['hry','ai'], [('herni-vyvoj','Herní design')], []),
+ ('AI asistenti a kód', 'navazujici', 'Vestavění pomocníci (Roblox Assistant, Unity Muse) i externí AI umí napsat a upravit kód hry. Práce se mění z „napiš každý řádek" na „popiš záměr a pochop či oprav, co AI vytvořila".', None, [], ['hry','ai','ai-prurez'], [('herni-vyvoj','Skutečné enginy')], [('programovani','Čtení a hodnocení AI kódu')]),
+ ('Publikace hry', 'navazujici', 'Hotovou hru sdílíš s ostatními — třeba na itch.io nebo přímo v Robloxu. „Zahraj si moji hru" je silná motivace a zároveň zážitek spoluautorství a zpětné vazby od hráčů.', None, [], ['hry','spoluprace'], [('herni-vyvoj','Herní design')], []),
 ]
 
 C['fyzicky-computing'] = [
- ('Vstup–zpracování–výstup na zařízení', 'core', 'Jak fyzické zařízení čte vstup, zpracuje ho a řídí výstup.', 'digitalni-technologie', [], ['robotika','hardware'], [], []),
- ('Senzory a aktuátory', 'core', 'Zařízení „vnímá" prostředí a „koná" v něm.', None, [], ['robotika','senzory'], [('fyzicky-computing','Vstup–zpracování–výstup na zařízení')], []),
- ('micro:bit', 'core', 'Vstupní platforma: MakeCode a MicroPython, senzory na desce.', 'digitalni-technologie', ['v007'], ['robotika','programovani'], [('fyzicky-computing','Senzory a aktuátory')], [('programovani','Blokové vs. textové programování')]),
- ('Události a řízení výstupu', 'core', 'Reakce na stisk/zatřesení a ovládání LED, pinů, motorů.', 'algoritmizace', [], ['robotika','udalosti'], [('fyzicky-computing','micro:bit')], []),
- ('Arduino a Raspberry Pi', 'navazujici', 'Krok k reálné elektronice a plnému počítači.', None, [], ['robotika','hardware'], [('fyzicky-computing','micro:bit')], []),
- ('Roboti a vozítka', 'navazujici', 'micro:bit + Maqueen, Lego Spike — pohyblivá robotika.', None, [], ['robotika'], [('fyzicky-computing','Události a řízení výstupu')], []),
- ('IoT', 'navazujici', 'Senzory → cloud → dashboard; chytrá domácnost a měření prostředí.', 'digitalni-technologie', [], ['robotika','sit','cloud'], [('fyzicky-computing','Senzory a aktuátory')], [('data-databaze','Vizualizace a volba grafu')]),
- ('TinyML / edge AI', 'navazujici', 'micro:bit CreateAI — natrénuj klasifikační model přímo na zařízení.', 'data-modelovani', ['v004'], ['robotika','ai','ml'], [('fyzicky-computing','micro:bit')], [('umela-inteligence','Strojové učení prakticky')]),
- ('Komunikace mezi zařízeními', 'navazujici', 'Rádio a Bluetooth — zařízení si posílají data.', 'digitalni-technologie', [], ['robotika','sit'], [('fyzicky-computing','micro:bit')], []),
+ ('Vstup–zpracování–výstup na zařízení', 'core', 'Fyzické zařízení pracuje ve stejné smyčce jako počítač, ale „hmatatelně": senzorem něco změří (vstup), program to vyhodnotí (zpracování) a ovládne třeba LED nebo motor (výstup). Kód tu má okamžitý fyzický efekt.', 'digitalni-technologie', [], ['robotika','hardware'], [], []),
+ ('Senzory a aktuátory', 'core', 'Senzory jsou „smysly" zařízení — měří teplo, světlo, pohyb, zvuk. Aktuátory jsou jeho „svaly" — rozsvítí, zapípají, roztočí motor. Dohromady umožňují zařízení vnímat prostředí a jednat v něm.', None, [], ['robotika','senzory'], [('fyzicky-computing','Vstup–zpracování–výstup na zařízení')], []),
+ ('micro:bit', 'core', 'Malá školní destička se senzory přímo na desce, ideální pro první kroky ve fyzickém computingu. Programuje se blokově (MakeCode) i textově (MicroPython), takže roste s tebou od úplných začátků.', 'digitalni-technologie', ['v007'], ['robotika','programovani'], [('fyzicky-computing','Senzory a aktuátory')], [('programovani','Blokové vs. textové programování')]),
+ ('Události a řízení výstupu', 'core', 'Zařízení reaguje na podněty — stisk tlačítka, zatřesení, změnu světla — a podle nich ovládá výstupy (LED matici, piny, motory). Je to událostmi řízené programování, ale s hmatatelným výsledkem.', 'algoritmizace', [], ['robotika','udalosti'], [('fyzicky-computing','micro:bit')], []),
+ ('Arduino a Raspberry Pi', 'navazujici', 'Krok dál za micro:bit: Arduino tě přiblíží skutečné elektronice (nepájivé pole, víc senzorů), Raspberry Pi je plnohodnotný malý počítač s Linuxem pro náročnější projekty.', None, [], ['robotika','hardware'], [('fyzicky-computing','micro:bit')], []),
+ ('Roboti a vozítka', 'navazujici', 'Když se k desce přidá podvozek a motory (micro:bit + Maqueen, Lego Spike), vznikne pohyblivý robot. Sleduje čáru, vyhýbá se překážkám — a spojuje programování s pohybem v reálném světě.', None, [], ['robotika'], [('fyzicky-computing','Události a řízení výstupu')], []),
+ ('IoT', 'navazujici', 'Internet věcí (IoT): senzory posílají naměřená data po síti do cloudu, kde se zobrazí na přehledu (dashboardu). Tak funguje chytrá domácnost i měření prostředí — spojení hardwaru, sítě a dat dohromady.', 'digitalni-technologie', [], ['robotika','sit','cloud'], [('fyzicky-computing','Senzory a aktuátory')], [('data-databaze','Vizualizace a volba grafu')]),
+ ('AI přímo na zařízení (TinyML)', 'navazujici', 'Strojové učení, které běží přímo na malém zařízení bez cloudu. V nástroji micro:bit CreateAI si sám nasbíráš data (třeba pohyby), natrénuješ model a nahraješ ho do desky — celý postup AI si osaháš fyzicky v ruce.', 'data-modelovani', ['v004'], ['robotika','ai','ml'], [('fyzicky-computing','micro:bit')], [('umela-inteligence','Strojové učení prakticky')]),
+ ('Komunikace mezi zařízeními', 'navazujici', 'Zařízení si mohou posílat data bezdrátově — přes rádio nebo Bluetooth. Díky tomu spolu můžou „mluvit" (dva micro:bity, ovladač a robot) a tvořit propojené projekty.', 'digitalni-technologie', [], ['robotika','sit'], [('fyzicky-computing','micro:bit')], []),
 ]
 
 C['kyberbezpecnost'] = [
- ('Hesla a 2FA', 'core', 'Silná unikátní hesla, správci hesel a dvoufaktorové ověření.', 'digitalni-technologie', ['v012'], ['bezpeci'], [], []),
- ('Phishing a sociální inženýrství', 'core', 'Jak podvodníci lákají údaje a jak to poznat.', 'digitalni-technologie', ['v012'], ['bezpeci'], [], []),
- ('Soukromí a digitální stopa', 'core', 'Co po mně na internetu zůstává a jak to omezit.', 'digitalni-technologie', ['v012'], ['bezpeci','soukromi'], [], []),
- ('Bezpečné chování na sítích', 'core', 'Rozumné sdílení a nastavení soukromí v aplikacích.', 'digitalni-technologie', ['v012'], ['bezpeci','soukromi'], [('kyberbezpecnost','Soukromí a digitální stopa')], []),
- ('Základní hygiena', 'core', 'Aktualizace, ověřené zdroje aplikací a zálohy; zabezpečení zařízení podle rizik.', 'digitalni-technologie', ['v012'], ['bezpeci'], [], []),
- ('Šifrování a HTTPS', 'navazujici', 'Co znamená zabezpečené spojení a end-to-end šifrování.', 'digitalni-technologie', [], ['bezpeci','sit'], [('kyberbezpecnost','Základní hygiena')], [('digitalni-zaklady','Adresy a protokoly')]),
- ('Typy útoků', 'navazujici', 'Malware, ransomware a jak se šíří.', 'digitalni-technologie', ['v012'], ['bezpeci'], [('kyberbezpecnost','Základní hygiena')], []),
- ('AI podvody', 'navazujici', 'Deepfakes, klonování hlasu a dokonalý AI phishing — staré rady už neplatí.', 'digitalni-technologie', [], ['bezpeci','deepfake','ai'], [('kyberbezpecnost','Phishing a sociální inženýrství')], [('umela-inteligence','Deepfakes a syntetická média')]),
- ('Sextortion a citlivý obsah', 'navazujici', 'AI-upravené intimní fotky a vydírání — mimořádně citlivé riziko pro nezletilé.', 'digitalni-technologie', [], ['bezpeci','soukromi'], [('kyberbezpecnost','AI podvody')], []),
- ('Ověřování přes druhý kanál', 'navazujici', 'Zdravá skepse a prebunking — ověřit, i když to vypadá dokonale.', None, [], ['bezpeci','ai-prurez'], [('kyberbezpecnost','AI podvody')], [('digitalni-obcanstvi','Dezinformace a manipulace')]),
- ('Síťová bezpečnost a CTF', 'navazujici', 'Etické hackování a soutěže jako pokročilá motivace.', 'digitalni-technologie', [], ['bezpeci','sit'], [('kyberbezpecnost','Typy útoků')], []),
+ ('Hesla a 2FA', 'core', 'Silné a hlavně unikátní heslo ke každé službě je základ; zapamatuje ho za tebe správce hesel. Dvoufaktorové ověření (2FA) přidá druhý zámek (kód z aplikace), takže samotné uhádnuté heslo už útočníkovi nestačí.', 'digitalni-technologie', ['v012'], ['bezpeci'], [], []),
+ ('Phishing a sociální inženýrství', 'core', 'Nejčastější útok necílí na počítač, ale na člověka: podvodná zpráva tě má přimět kliknout nebo vyzradit heslo. Poznat naléhavý tón, falešný odkaz nebo „výhru" je důležitější než jakýkoli antivir.', 'digitalni-technologie', ['v012'], ['bezpeci'], [], []),
+ ('Soukromí a digitální stopa', 'core', 'Vším, co online děláš, za sebou necháváš stopu — příspěvky, lajky, polohu. Vědět, co po tobě zůstává a jak to omezit (nastavení soukromí, míň sdílet), je základ ochrany sebe sama.', 'digitalni-technologie', ['v012'], ['bezpeci','soukromi'], [], []),
+ ('Bezpečné chování na sítích', 'core', 'Praktická pravidla každodenního bezpečí: rozmyslet, co sdílím a s kým, nastavit soukromí v aplikacích, nepřidávat neznámé. Většina problémů začíná chováním, ne technikou.', 'digitalni-technologie', ['v012'], ['bezpeci','soukromi'], [('kyberbezpecnost','Soukromí a digitální stopa')], []),
+ ('Základní hygiena', 'core', 'Návyky, které tě ochrání před většinou hrozeb: aktualizovat systém i appky, instalovat jen z ověřených zdrojů, zálohovat a zabezpečit zařízení podle toho, co ti reálně hrozí.', 'digitalni-technologie', ['v012'], ['bezpeci'], [], []),
+ ('Šifrování a HTTPS', 'navazujici', 'Šifrování promění data v nečitelnou změť pro každého, kdo nemá klíč. Zámeček a „https" v adrese znamená, že spojení k webu je šifrované; end-to-end šifrování (třeba v messengerech) zajistí, že zprávu přečte jen příjemce.', 'digitalni-technologie', [], ['bezpeci','sit'], [('kyberbezpecnost','Základní hygiena')], [('digitalni-zaklady','Adresy a protokoly')]),
+ ('Typy útoků', 'navazujici', 'Přehled hrozeb, se kterými se lze setkat: malware (škodlivý program), ransomware (zašifruje data a žádá výkupné) a další. Vědět, jak se šíří, pomáhá se jim vyhnout.', 'digitalni-technologie', ['v012'], ['bezpeci'], [('kyberbezpecnost','Základní hygiena')], []),
+ ('AI podvody', 'navazujici', 'AI posunula podvody na novou úroveň: deepfake video, naklonovaný hlas známého člověka nebo dokonalý phishing bez chyb. Stará rada „poznáš to podle špatné češtiny" už neplatí — nová obrana je ověřit si to jinou cestou.', 'digitalni-technologie', [], ['bezpeci','deepfake','ai'], [('kyberbezpecnost','Phishing a sociální inženýrství')], [('umela-inteligence','Deepfakes a syntetická média')]),
+ ('Sextortion a citlivý obsah', 'navazujici', 'Vydírání intimními fotkami — dnes i falešnými, vytvořenými AI. Mimořádně citlivé a aktuální riziko pro nezletilé; klíčové je vědět, že v tom oběť není sama a komu se svěřit, ne mlčet ze studu.', 'digitalni-technologie', [], ['bezpeci','soukromi'], [('kyberbezpecnost','AI podvody')], []),
+ ('Ověřování přes druhý kanál', 'navazujici', 'Když ti „kamarád" píše o peníze nebo „banka" chce heslo, ověř si to jinou cestou — zavolej, zeptej se napřímo. Zdravá skepse a zvyk ověřovat (prebunking) je nejlepší obrana proti podvodům, které vypadají dokonale.', None, [], ['bezpeci','ai-prurez'], [('kyberbezpecnost','AI podvody')], [('digitalni-obcanstvi','Dezinformace a manipulace')]),
+ ('Síťová bezpečnost a CTF', 'navazujici', 'Pro zvídavé: jak se chrání sítě a jak přemýšlí útočník. Soutěže typu CTF (Capture the Flag) učí etické hackování hravou formou — bezpečnost zevnitř, na cvičných úlohách.', 'digitalni-technologie', [], ['bezpeci','sit'], [('kyberbezpecnost','Typy útoků')], []),
 ]
 
 C['digitalni-obcanstvi'] = [
- ('Kritické myšlení online', 'core', 'Ověřování informací a zdrojů, než jim uvěřím nebo je sdílím.', None, [], ['media','hodnoceni'], [], []),
- ('Jak fungují algoritmy sítí', 'core', 'Filter bubble a ekonomika pozornosti — proč vidím právě tohle.', None, [], ['media','ai'], [], [('umela-inteligence','Doporučovací systémy')]),
- ('Dezinformace a manipulace', 'core', 'Rozpoznání manipulativního a nepravdivého obsahu.', None, [], ['media'], [('digitalni-obcanstvi','Kritické myšlení online')], []),
- ('Digitální stopa a soukromí', 'core', 'Jaká data o sobě zanechávám a komu slouží.', None, [], ['media','soukromi'], [], [('kyberbezpecnost','Soukromí a digitální stopa')]),
- ('Digitální wellbeing', 'core', 'Zdravý vztah k obrazovkám a rozpoznání závislostního designu.', None, [], ['media','wellbeing'], [], []),
- ('Jádro AI gramotnosti', 'navazujici', 'Jak fungují LLM, proč halucinují a co je bias — jako občanská dovednost.', None, [], ['media','ai'], [('digitalni-obcanstvi','Kritické myšlení online')], [('umela-inteligence','Jak funguje generativní model')]),
- ('Rozpoznání AI obsahu', 'navazujici', 'Poznat generovaná a syntetická média.', None, [], ['media','ai','deepfake'], [('digitalni-obcanstvi','Jádro AI gramotnosti')], [('umela-inteligence','Deepfakes a syntetická média')]),
- ('Etika AI ve škole', 'navazujici', 'Kde je hranice mezi pomocí a podváděním.', None, [], ['media','etika','ai'], [('digitalni-obcanstvi','Jádro AI gramotnosti')], [('umela-inteligence','Kdy AI (ne)použít a disclosure')]),
- ('Právo a etika', 'navazujici', 'Autorská práva a GDPR pro nezletilé.', None, [], ['media','etika','soukromi'], [('digitalni-obcanstvi','Digitální stopa a soukromí')], []),
- ('Obchodní modely platforem', 'navazujici', 'Jak se platí pozorností a daty.', None, [], ['media'], [('digitalni-obcanstvi','Jak fungují algoritmy sítí')], []),
- ('Aktivní digitální občanství', 'navazujici', 'Tvorba hodnotného obsahu, ne jen konzumace.', None, [], ['media','wellbeing'], [('digitalni-obcanstvi','Kritické myšlení online')], []),
+ ('Kritické myšlení online', 'core', 'Zvyk se u informace zastavit dřív, než jí uvěřím nebo ji pošlu dál: kdo to tvrdí, odkud to ví, co tím sleduje. Základní dovednost, bez které se v záplavě obsahu neobejdeš.', None, [], ['media','hodnoceni'], [], []),
+ ('Jak fungují algoritmy sítí', 'core', 'Co vidíš na sociálních sítích, ti vybírá algoritmus, který chce udržet tvou pozornost co nejdéle. Vzniká tak „bublina" (vidíš jen podobné názory) a ekonomika pozornosti — a pochopit to je předpoklad, aby ses v tom uměl chovat.', None, [], ['media','ai'], [], [('umela-inteligence','Doporučovací systémy')]),
+ ('Dezinformace a manipulace', 'core', 'Rozpoznat obsah, který má klamat nebo tebou manipulovat — falešné zprávy, vytržené citace, hrátky s emocemi. Nejde jen o „fakt/nefakt", ale i o to, jak s tebou obsah pracuje.', None, [], ['media'], [('digitalni-obcanstvi','Kritické myšlení online')], []),
+ ('Digitální stopa a soukromí', 'core', 'Jaká data o sobě necháváš a komu vlastně slouží. Uvědomit si hodnotu svých dat je první krok k tomu s nimi zacházet vědomě, ne je rozdávat zadarmo výměnou za „bezplatné" služby.', None, [], ['media','soukromi'], [], [('kyberbezpecnost','Soukromí a digitální stopa')]),
+ ('Digitální wellbeing', 'core', 'Zdravý vztah k technologiím: rozpoznat, kdy tě appky táhnou k nekonečnému scrollování (závislostní design), a umět si nastavit hranice. Cílem není technologie zavrhnout, ale používat je tak, aby sloužily tobě.', None, [], ['media','wellbeing'], [], []),
+ ('Rozumět AI (halucinace, bias)', 'navazujici', 'Občanské minimum o AI: že jazykové modely předpovídají slova (a proto halucinují), že se učí z dat (a proto mají bias) a že jejich výstup je potřeba ověřovat. Netýká se jen programátorů — týká se každého, kdo AI potkává.', None, [], ['media','ai'], [('digitalni-obcanstvi','Kritické myšlení online')], [('umela-inteligence','Jak funguje generativní model')]),
+ ('Rozpoznání AI obsahu', 'navazujici', 'Umět odhadnout, jestli je text, obraz nebo video vytvořené AI — a vědět, že spolehlivý univerzální detektor neexistuje. Proto se víc než na „test" spoléhej na kontext a ověření zdroje.', None, [], ['media','ai','deepfake'], [('digitalni-obcanstvi','Rozumět AI (halucinace, bias)')], [('umela-inteligence','Deepfakes a syntetická média')]),
+ ('Etika AI ve škole', 'navazujici', 'Kde je hranice mezi tím, když ti AI pomůže se učit, a když za tebe úkol prostě udělá (a připraví tě o učení). Patří sem i poctivost — přiznat, kde jsi AI použil.', None, [], ['media','etika','ai'], [('digitalni-obcanstvi','Rozumět AI (halucinace, bias)')], [('umela-inteligence','Kdy AI (ne)použít a disclosure')]),
+ ('Právo a etika', 'navazujici', 'Základní pravidla digitálního světa: autorská práva (čí je co) a ochrana osobních údajů (GDPR), zvlášť u nezletilých. Vědět, co smím sdílet a co se sebou nechat dělat, je součást bezpečí.', None, [], ['media','etika','soukromi'], [('digitalni-obcanstvi','Digitální stopa a soukromí')], []),
+ ('Obchodní modely platforem', 'navazujici', 'Když je služba „bezplatná", obvykle platíš pozorností a daty. Pochopit, jak platformy vydělávají, vysvětlí spoustu jejich chování — proč tě chtějí udržet a proč vidíš reklamy zrovna na tohle.', None, [], ['media'], [('digitalni-obcanstvi','Jak fungují algoritmy sítí')], []),
+ ('Aktivní digitální občanství', 'navazujici', 'Být online nejen konzument, ale i tvůrce hodnotného obsahu a slušný účastník diskuse. Digitální svět spoluutváříš — tím, co sdílíš, jak se chováš a čemu dáváš prostor.', None, [], ['media','wellbeing'], [('digitalni-obcanstvi','Kritické myšlení online')], []),
 ]
+
+# ---- Doplňkové zařazení do oblastí RVP (v0.6) ----
+# Cíl: co nejvíc konceptů přiřadit k jednomu ze 4 okruhů, aby si pedagog mohl odškrtnout
+# pokrytí. Zařazeno jen tam, kde to sedí na charakteristiku okruhu (texty RVP). Pozn.: oblast
+# = tematická příslušnost k okruhu; nemusí mít konkrétní očekávaný výstup (pole `rvp`).
+# Co zůstává null = OPRAVDU průřezové: postoje, etika, mediální gramotnost, wellbeing,
+# digitální občanství, základy vizuálního designu — tedy klíčové kompetence / průřezová
+# témata RVP, ne obsah jednoho okruhu.
+OBLAST_DOPLNENI = {
+ # Umělá inteligence → data-modelovani (jak modely fungují, spolehlivost/pravděpodobnost, ML); prompt = užití nástroje
+ ('umela-inteligence', 'Co je a co není AI'): 'data-modelovani',
+ ('umela-inteligence', 'Jak funguje generativní model'): 'data-modelovani',
+ ('umela-inteligence', 'Ověřování výstupů'): 'data-modelovani',
+ ('umela-inteligence', 'Bias a férovost'): 'data-modelovani',
+ ('umela-inteligence', 'Pět velkých idejí AI'): 'data-modelovani',
+ ('umela-inteligence', 'Jak fungují chatboti (LLM, RAG)'): 'data-modelovani',
+ ('umela-inteligence', 'Prompt a promptová gramotnost'): 'digitalni-technologie',
+ # Data
+ ('data-databaze', 'Vektorové databáze'): 'data-modelovani',
+ ('data-databaze', 'Analýza dat pomocí AI'): 'data-modelovani',
+ # Tvorba webů → DT (tvorba/užití nástrojů), JS = algoritmizace, rozhraní = informační systémy
+ ('tvorba-webu', 'HTML'): 'digitalni-technologie',
+ ('tvorba-webu', 'CSS'): 'digitalni-technologie',
+ ('tvorba-webu', 'Interaktivita (JavaScript)'): 'algoritmizace',
+ ('tvorba-webu', 'AI-asistovaná tvorba webu'): 'digitalni-technologie',
+ ('tvorba-webu', 'Frameworky'): 'digitalni-technologie',
+ ('tvorba-webu', 'Přístupnost a SEO'): 'digitalni-technologie',
+ ('tvorba-webu', 'UX/UI a design webu'): 'informacni-systemy',
+ # Tvorba aplikací → vývoj řešení pro potřeby uživatele = informační systémy; kód = algoritmizace; nástroje = DT
+ ('tvorba-aplikaci', 'Co je aplikace'): 'digitalni-technologie',
+ ('tvorba-aplikaci', 'No-code / low-code'): 'informacni-systemy',
+ ('tvorba-aplikaci', 'Vibecoding'): 'algoritmizace',
+ ('tvorba-aplikaci', 'AI nástroje pro tvorbu'): 'digitalni-technologie',
+ ('tvorba-aplikaci', 'Práce s API a backendem'): 'informacni-systemy',
+ ('tvorba-aplikaci', 'Životní cyklus vývoje'): 'informacni-systemy',
+ ('tvorba-aplikaci', 'Publikace do app storů'): 'digitalni-technologie',
+ # Tvorba obsahu → DT (tvořivé užití digitálních nástrojů)
+ ('tvorba-obsahu', 'Prompt pro média'): 'digitalni-technologie',
+ ('tvorba-obsahu', 'Generativní obraz'): 'digitalni-technologie',
+ ('tvorba-obsahu', 'Generativní video'): 'digitalni-technologie',
+ ('tvorba-obsahu', 'Generativní hudba a hlas'): 'digitalni-technologie',
+ ('tvorba-obsahu', 'Střih a postprodukce s AI'): 'digitalni-technologie',
+ ('tvorba-obsahu', 'Kontrola nad výsledkem'): 'digitalni-technologie',
+ ('tvorba-obsahu', 'Propojení nástrojů (obraz, video, zvuk)'): 'digitalni-technologie',
+ # Herní vývoj → programová logika = algoritmizace; enginy/nástroje/publikace = DT
+ ('herni-vyvoj', 'Kolize a jednoduchá fyzika'): 'algoritmizace',
+ ('herni-vyvoj', 'Lehké enginy'): 'digitalni-technologie',
+ ('herni-vyvoj', 'Skutečné enginy'): 'digitalni-technologie',
+ ('herni-vyvoj', 'AI generování assetů'): 'digitalni-technologie',
+ ('herni-vyvoj', 'AI asistenti a kód'): 'digitalni-technologie',
+ ('herni-vyvoj', 'Publikace hry'): 'digitalni-technologie',
+ # Fyzický computing → DT (hardware, zařízení)
+ ('fyzicky-computing', 'Senzory a aktuátory'): 'digitalni-technologie',
+ ('fyzicky-computing', 'Arduino a Raspberry Pi'): 'digitalni-technologie',
+ ('fyzicky-computing', 'Roboti a vozítka'): 'digitalni-technologie',
+ # Kyberbezpečnost → DT (bezpečné používání)
+ ('kyberbezpecnost', 'Ověřování přes druhý kanál'): 'digitalni-technologie',
+ # Digitální občanství → jen ty o fungování techniky/AI (zbytek zůstává průřezový)
+ ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'): 'digitalni-technologie',
+ ('digitalni-obcanstvi', 'Rozumět AI (halucinace, bias)'): 'data-modelovani',
+}
+
+# ---- Přiřazení konceptů ke klíčové kompetenci digitální (KDI) ----
+# Nezávisle na okruhu RVP. Přiřazeno tam, kde koncept ztělesňuje danou kompetenci
+# (užívání/tvorba/sdílení/hodnocení informací/bezpečí). Ryzí informatická teorie
+# (myšlení, primitiva programování, vnitřek infrastruktury, teorie AI) zůstává None.
+KDI_MAP = {
+ # DAT — hodnocení informací, dat a spolehlivosti zdrojů
+ ('digitalni-zaklady', 'Data a informace'): 'kdi-dat',
+ ('digitalni-zaklady', 'Reprezentace dat'): 'kdi-dat',
+ ('data-databaze', 'Datová gramotnost'): 'kdi-dat',
+ ('data-databaze', 'Datový cyklus'): 'kdi-dat',
+ ('data-databaze', 'Strukturovaná vs. nestrukturovaná data'): 'kdi-dat',
+ ('data-databaze', 'Vizualizace a volba grafu'): 'kdi-dat',
+ ('data-databaze', 'Statistická gramotnost'): 'kdi-dat',
+ ('data-databaze', 'Čištění reálných dat'): 'kdi-dat',
+ ('data-databaze', 'Analýza dat pomocí AI'): 'kdi-dat',
+ ('umela-inteligence', 'Ověřování výstupů'): 'kdi-dat',
+ ('umela-inteligence', 'Bias a férovost'): 'kdi-dat',
+ ('tvorba-obsahu', 'Původ obsahu a vodoznaky'): 'kdi-dat',
+ ('digitalni-obcanstvi', 'Kritické myšlení online'): 'kdi-dat',
+ ('digitalni-obcanstvi', 'Dezinformace a manipulace'): 'kdi-dat',
+ ('digitalni-obcanstvi', 'Rozpoznání AI obsahu'): 'kdi-dat',
+ ('digitalni-obcanstvi', 'Rozumět AI (halucinace, bias)'): 'kdi-dat',
+ ('digitalni-obcanstvi', 'Jak fungují algoritmy sítí'): 'kdi-dat',
+ # ZAP — sdílení, spolupráce, komunita, publikace
+ ('programovani', 'Verzování kódu'): 'kdi-zap',
+ ('tvorba-webu', 'Nasazení webu'): 'kdi-zap',
+ ('tvorba-aplikaci', 'Publikace do app storů'): 'kdi-zap',
+ ('herni-vyvoj', 'Publikace hry'): 'kdi-zap',
+ ('digitalni-obcanstvi', 'Aktivní digitální občanství'): 'kdi-zap',
+ # TDO — tvorba digitálního obsahu
+ ('tvorba-obsahu', 'Vizuální jazyk'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Prompt pro média'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Generativní obraz'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Generativní video'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Generativní hudba a hlas'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Střih a postprodukce s AI'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Kontrola nad výsledkem'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Propojení nástrojů (obraz, video, zvuk)'): 'kdi-tdo',
+ ('tvorba-obsahu', 'Etika, autorství a označování'): 'kdi-tdo',
+ ('tvorba-webu', 'HTML'): 'kdi-tdo',
+ ('tvorba-webu', 'CSS'): 'kdi-tdo',
+ ('tvorba-webu', 'Interaktivita (JavaScript)'): 'kdi-tdo',
+ ('tvorba-webu', 'AI-asistovaná tvorba webu'): 'kdi-tdo',
+ ('tvorba-webu', 'Frameworky'): 'kdi-tdo',
+ ('tvorba-webu', 'Přístupnost a SEO'): 'kdi-tdo',
+ ('tvorba-webu', 'UX/UI a design webu'): 'kdi-tdo',
+ ('herni-vyvoj', 'Herní smyčka, scéna a objekty'): 'kdi-tdo',
+ ('herni-vyvoj', 'Vstup hráče, stavy a skóre'): 'kdi-tdo',
+ ('herni-vyvoj', 'Kolize a jednoduchá fyzika'): 'kdi-tdo',
+ ('herni-vyvoj', 'Herní design'): 'kdi-tdo',
+ ('herni-vyvoj', 'Scratch jako vstup'): 'kdi-tdo',
+ ('herni-vyvoj', 'Lehké enginy'): 'kdi-tdo',
+ ('herni-vyvoj', 'Skutečné enginy'): 'kdi-tdo',
+ ('herni-vyvoj', 'AI generování assetů'): 'kdi-tdo',
+ ('herni-vyvoj', 'AI asistenti a kód'): 'kdi-tdo',
+ # BZK — bezpečnost, soukromí, wellbeing, zdraví
+ ('kyberbezpecnost', 'Hesla a 2FA'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Phishing a sociální inženýrství'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Soukromí a digitální stopa'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Bezpečné chování na sítích'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Základní hygiena'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Šifrování a HTTPS'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Typy útoků'): 'kdi-bzk',
+ ('kyberbezpecnost', 'AI podvody'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Sextortion a citlivý obsah'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Ověřování přes druhý kanál'): 'kdi-bzk',
+ ('kyberbezpecnost', 'Síťová bezpečnost a CTF'): 'kdi-bzk',
+ ('digitalni-zaklady', 'Kde jsou data fyzicky'): 'kdi-bzk',
+ ('umela-inteligence', 'Soukromí při práci s AI'): 'kdi-bzk',
+ ('umela-inteligence', 'Deepfakes a syntetická média'): 'kdi-bzk',
+ ('umela-inteligence', 'Vlastní agency'): 'kdi-bzk',
+ ('umela-inteligence', 'Kdy AI (ne)použít a disclosure'): 'kdi-bzk',
+ ('digitalni-obcanstvi', 'Digitální wellbeing'): 'kdi-bzk',
+ ('digitalni-obcanstvi', 'Digitální stopa a soukromí'): 'kdi-bzk',
+ ('digitalni-obcanstvi', 'Právo a etika'): 'kdi-bzk',
+ # VIN — využití technologií, automatizace, inovace
+ ('tvorba-aplikaci', 'Co je aplikace'): 'kdi-vin',
+ ('tvorba-aplikaci', 'No-code / low-code'): 'kdi-vin',
+ ('tvorba-aplikaci', 'Logika aplikace'): 'kdi-vin',
+ ('tvorba-aplikaci', 'Vibecoding'): 'kdi-vin',
+ ('tvorba-aplikaci', 'AI nástroje pro tvorbu'): 'kdi-vin',
+ ('tvorba-aplikaci', 'Práce s API a backendem'): 'kdi-vin',
+ ('tvorba-aplikaci', 'Databáze a autentizace'): 'kdi-vin',
+ ('tvorba-aplikaci', 'Životní cyklus vývoje'): 'kdi-vin',
+ ('tvorba-aplikaci', 'Iluze, že to umím'): 'kdi-vin',
+ ('data-databaze', 'Tabulky a relační model'): 'kdi-vin',
+ ('data-databaze', 'Dotazování (SQL)'): 'kdi-vin',
+ ('data-databaze', 'Účel informačních systémů'): 'kdi-vin',
+ ('data-databaze', 'NoSQL a dokumentové databáze'): 'kdi-vin',
+ ('data-databaze', 'Vektorové databáze'): 'kdi-vin',
+ ('data-databaze', 'Programová analýza dat'): 'kdi-vin',
+ ('umela-inteligence', 'Prompt a promptová gramotnost'): 'kdi-vin',
+ ('umela-inteligence', 'Strojové učení prakticky'): 'kdi-vin',
+ ('umela-inteligence', 'Typy AI úloh'): 'kdi-vin',
+ ('programovani', 'Knihovny a volání API v kódu'): 'kdi-vin',
+ ('programovani', 'Čtení a hodnocení AI kódu'): 'kdi-vin',
+ ('fyzicky-computing', 'Vstup–zpracování–výstup na zařízení'): 'kdi-vin',
+ ('fyzicky-computing', 'Senzory a aktuátory'): 'kdi-vin',
+ ('fyzicky-computing', 'micro:bit'): 'kdi-vin',
+ ('fyzicky-computing', 'Události a řízení výstupu'): 'kdi-vin',
+ ('fyzicky-computing', 'Arduino a Raspberry Pi'): 'kdi-vin',
+ ('fyzicky-computing', 'Roboti a vozítka'): 'kdi-vin',
+ ('fyzicky-computing', 'IoT'): 'kdi-vin',
+ ('fyzicky-computing', 'AI přímo na zařízení (TinyML)'): 'kdi-vin',
+ ('fyzicky-computing', 'Komunikace mezi zařízeními'): 'kdi-vin',
+}
 
 # ---- Sestavení ----
 def cid(tema, nazev):
@@ -255,9 +458,13 @@ for tema, lst in C.items():
 
 concepts = []
 problems = []
+for _k in list(OBLAST_DOPLNENI) + list(KDI_MAP):
+    if cid(*_k) not in index:
+        problems.append('MAP klíč neexistuje: ' + str(_k))
 for tema, lst in C.items():
     for (nazev, vrstva, popis, rvp_obl, rvpkeys, tagy, prereq, souvisi) in lst:
         cidv = cid(tema, nazev)
+        rvp_obl = OBLAST_DOPLNENI.get((tema, nazev), rvp_obl)  # doplňkové zařazení do okruhu
         rvp_list = []
         for k in rvpkeys:
             kod, vyst = RVP[k]
@@ -276,7 +483,8 @@ for tema, lst in C.items():
             'id': cidv,
             'nazev': nazev,
             'tema': tema,           # seskupení podle obsahových témat (nové)
-            'oblast': rvp_obl,      # seskupení podle oblastí RVP (null = nad rámec RVP)
+            'oblast': rvp_obl,      # seskupení podle oblastí RVP (null = průřezové)
+            'kompetence': KDI_MAP.get((tema, nazev)),  # seskupení podle klíčové kompetence digitální (null = nezařazeno)
             'vrstva': vrstva,
             'popis': popis,
             'rvp': rvp_list,
@@ -325,7 +533,7 @@ EXTRA_PREREQ = [
  # weby staví na programování a základech
  (('tvorba-webu','Jak funguje web'), ('digitalni-zaklady','Internet a síť')),
  (('tvorba-webu','Doména a hosting'), ('digitalni-zaklady','Cloud a server')),
- (('tvorba-webu','Interaktivita (JavaScript, DOM)'), ('programovani','Události')),
+ (('tvorba-webu','Interaktivita (JavaScript)'), ('programovani','Události')),
  (('tvorba-webu','Frameworky'), ('programovani','Funkce a procedury')),
  # aplikace staví na programování, webu a AI
  (('tvorba-aplikaci','Logika aplikace'), ('programovani','Podmínky v kódu')),
@@ -346,13 +554,13 @@ EXTRA_PREREQ = [
  # fyzický computing staví na programování a AI
  (('fyzicky-computing','micro:bit'), ('programovani','Blokové vs. textové programování')),
  (('fyzicky-computing','Události a řízení výstupu'), ('programovani','Události')),
- (('fyzicky-computing','TinyML / edge AI'), ('umela-inteligence','Strojové učení prakticky')),
+ (('fyzicky-computing','AI přímo na zařízení (TinyML)'), ('umela-inteligence','Strojové učení prakticky')),
  (('fyzicky-computing','IoT'), ('digitalni-zaklady','Cloud a server')),
  # bezpečnost a občanství staví na základech a AI
  (('kyberbezpecnost','Šifrování a HTTPS'), ('digitalni-zaklady','Adresy a protokoly')),
  (('kyberbezpecnost','AI podvody'), ('umela-inteligence','Deepfakes a syntetická média')),
  (('digitalni-obcanstvi','Jak fungují algoritmy sítí'), ('umela-inteligence','Doporučovací systémy')),
- (('digitalni-obcanstvi','Jádro AI gramotnosti'), ('umela-inteligence','Jak funguje generativní model')),
+ (('digitalni-obcanstvi','Rozumět AI (halucinace, bias)'), ('umela-inteligence','Jak funguje generativní model')),
  (('digitalni-obcanstvi','Rozpoznání AI obsahu'), ('umela-inteligence','Deepfakes a syntetická média')),
 ]
 
@@ -361,27 +569,27 @@ EXTRA_SOUVISI = [
  # AI průřezová vrstva (nástroj + reflexe)
  (('tvorba-aplikaci','AI nástroje pro tvorbu'), ('umela-inteligence','Prompt a promptová gramotnost')),
  (('tvorba-aplikaci','AI nástroje pro tvorbu'), ('programovani','Čtení a hodnocení AI kódu')),
- (('tvorba-aplikaci','Iluze kompetence'), ('umela-inteligence','Kdy AI (ne)použít a disclosure')),
+ (('tvorba-aplikaci','Iluze, že to umím'), ('umela-inteligence','Kdy AI (ne)použít a disclosure')),
  (('tvorba-webu','AI-asistovaná tvorba webu'), ('umela-inteligence','Ověřování výstupů')),
  (('herni-vyvoj','AI generování assetů'), ('tvorba-obsahu','Generativní obraz')),
  (('herni-vyvoj','AI asistenti a kód'), ('umela-inteligence','Ověřování výstupů')),
- (('umela-inteligence','Foundation modely, LLM a RAG'), ('tvorba-aplikaci','AI nástroje pro tvorbu')),
+ (('umela-inteligence','Jak fungují chatboti (LLM, RAG)'), ('tvorba-aplikaci','AI nástroje pro tvorbu')),
  # data <-> AI
  (('data-databaze','Statistická gramotnost'), ('umela-inteligence','Bias a férovost')),
  (('data-databaze','Čištění reálných dat'), ('umela-inteligence','AI se učí z dat')),
  (('umela-inteligence','Typy AI úloh'), ('informaticke-mysleni','Modelování a simulace')),
- (('umela-inteligence','Doporučovací systémy'), ('data-databaze','Vektorové databáze a embeddingy')),
+ (('umela-inteligence','Doporučovací systémy'), ('data-databaze','Vektorové databáze')),
  (('digitalni-zaklady','Reprezentace dat'), ('umela-inteligence','AI se učí z dat')),
  # bezpečnost / etika / soukromí (překrývající se koncepty)
  (('kyberbezpecnost','Soukromí a digitální stopa'), ('digitalni-obcanstvi','Digitální stopa a soukromí')),
  (('kyberbezpecnost','AI podvody'), ('digitalni-obcanstvi','Rozpoznání AI obsahu')),
- (('kyberbezpecnost','Sextortion a citlivý obsah'), ('tvorba-obsahu','Provenience a vodoznaky')),
+ (('kyberbezpecnost','Sextortion a citlivý obsah'), ('tvorba-obsahu','Původ obsahu a vodoznaky')),
  (('kyberbezpecnost','Ověřování přes druhý kanál'), ('umela-inteligence','Ověřování výstupů')),
  (('kyberbezpecnost','Phishing a sociální inženýrství'), ('digitalni-obcanstvi','Kritické myšlení online')),
  (('umela-inteligence','Soukromí při práci s AI'), ('digitalni-obcanstvi','Právo a etika')),
  (('umela-inteligence','Hlubší etika AI'), ('digitalni-obcanstvi','Právo a etika')),
  (('umela-inteligence','Bias a férovost'), ('digitalni-obcanstvi','Dezinformace a manipulace')),
- (('tvorba-obsahu','Provenience a vodoznaky'), ('digitalni-obcanstvi','Rozpoznání AI obsahu')),
+ (('tvorba-obsahu','Původ obsahu a vodoznaky'), ('digitalni-obcanstvi','Rozpoznání AI obsahu')),
  (('tvorba-obsahu','Etika, autorství a označování'), ('digitalni-obcanstvi','Etika AI ve škole')),
  (('tvorba-obsahu','Generativní hudba a hlas'), ('kyberbezpecnost','AI podvody')),
  # ekonomika pozornosti / wellbeing
@@ -400,7 +608,7 @@ EXTRA_SOUVISI = [
  (('programovani','Verzování kódu'), ('herni-vyvoj','Publikace hry')),
  # informatické myšlení jako průřez
  (('informaticke-mysleni','Rozpoznávání vzorů'), ('umela-inteligence','AI se učí z dat')),
- (('informaticke-mysleni','Abstrakce'), ('digitalni-zaklady','Vrstvy abstrakce')),
+ (('informaticke-mysleni','Abstrakce'), ('digitalni-zaklady','Vrstvy počítače')),
  (('informaticke-mysleni','Dekompozice'), ('programovani','Funkce a procedury')),
  (('informaticke-mysleni','Efektivita řešení'), ('programovani','Ladění a testování')),
  (('informaticke-mysleni','Základní algoritmy'), ('programovani','Seznamy a kolekce')),
@@ -512,18 +720,21 @@ if cycles:
     print('POZOR, cykly v prerekvizitách:', cycles[:5])
 
 areas = [{'id': i, 'nazev': n, 'kod': k, 'popis': p, 'barva': b} for (i, n, k, p, b) in RVP_OBLASTI]
+kompetence_list = [{'id': i, 'nazev': n, 'kod': k, 'vystup': v, 'barva': b} for (i, n, k, v, b) in KOMPETENCE]
 temata = [{'id': i, 'nazev': n, 'vrstva_mapy': v, 'popis': p, 'barva': b, 'navazuje_na': nn}
           for (i, n, v, p, b, nn) in TEMATA]
 
 data = {
     'meta': {
-        'verze': '0.3-draft',
+        'verze': '0.7-draft',
         'popis': 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.',
         'paleta': ['#ffff00', '#ffffff', '#000000'],
         'uroven': '2. stupeň ZŠ s přesahem výš',
+        'kompetence_popis': KDI_POPIS,
     },
     'areas': areas,
     'temata': temata,
+    'kompetence': kompetence_list,
     'concepts': concepts,
 }
 
@@ -541,6 +752,7 @@ covered = set(r['kod'] for c in concepts for r in c['rvp'])
 print('KONCEPTŮ celkem:', len(concepts))
 print('podle tématu:', dict(per_tema))
 print('podle rvp_oblast:', dict(per_obl))
+print('podle kompetence (KDI):', dict(Counter(c['kompetence'] for c in concepts)))
 print('konceptů s RVP výstupem:', with_rvp)
 print('pokryté RVP kódy:', len(covered), '/ 12')
 missing = [RVP[k][0] for k in RVP if RVP[k][0] not in covered]

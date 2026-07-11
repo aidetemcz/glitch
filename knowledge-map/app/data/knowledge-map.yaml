@@ -1,51 +1,82 @@
 # Mapa znalostí Glitch — vygenerováno build_map.py
 # RVP znění je doslovné z RVP_revidované_2024-03-28.pdf (nevymýšlet).
 meta:
-  verze: 0.3-draft
+  verze: 0.7-draft
   popis: 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.'
   paleta:
   - '#ffff00'
   - '#ffffff'
   - '#000000'
   uroven: 2. stupeň ZŠ s přesahem výš
+  kompetence_popis: Klíčová kompetence digitální představuje soubor znalostí, dovedností a postojů, které umožňují žákům účelně, bezpečně a efektivně využívat digitální technologie při práci, při učení, ve volném čase i při zapojování do společnosti a občanského života, aktivně a respektujícím způsobem se podílet na utváření digitálního světa a nacházet rovnováhu mezi světem digitálním a fyzickým.
 areas:
 - id: data-modelovani
   nazev: Data, informace a modelování
   kod: INF-INF-001
-  popis: Práce s daty a informacemi, jejich kódování, modelování situací a základy strojového učení.
+  popis: 'S daty pracují počítače i my, když přemýšlíme. Informace zpřesňují naše představy o světě a tím nám pomáhají správně se rozhodovat. Řadu podrobností přitom pomíjíme a pracujeme jen s tím, co je pro danou situaci důležité. Vznikají tak zjednodušující reprezentace, modely. Abychom je mohli ukládat a spolehlivě a levně přenášet a kopírovat, kódujeme je do posloupností znaků – písmen, nul a jedniček atp.
+
+
+    V informatice se žák učí nejen využívat hotové modely, ale také vytvářet nové. Postupuje při tom cílevědomě, sleduje záměr vyřešit daný problém, hledá rovnováhu mezi rozsahem a složitostí modelu a jednoduchostí jeho použití. Hodnotí spolehlivost získávaných informací a míru jistoty, s jakou se podle nich může rozhodovat. Nalézání efektivních reprezentací složitých skutečností je předpokladem úspěšné komunikace, učení i řešení problémů.
+
+
+    Na 1. stupni si žák začíná všímat dat kolem sebe a reflektuje, jak mu mohou být užitečná. Tvoří první schematické modely situací a využívá je k získání informací.
+
+
+    Na 2. stupni už se žák seznamuje s pokročilejším kódováním a modely, které sám tvoří, včetně grafů a trénování modelů strojového učení. Zvyká si na to, že informace jsou správné jen s určitou pravděpodobností.'
   barva: '#ffff00'
 - id: algoritmizace
   nazev: Algoritmizace a programování
   kod: INF-INF-002
-  popis: Rozklad problému, návrh a čtení algoritmů a tvorba programů.
+  popis: 'Žák se prováděním postupů učí získávat výsledky konkrétních úloh. V informatice pak zaměřuje pozornost na postupy jako takové. Zjišťuje, jak se postupy vedoucí ke stejným výsledkům mohou mezi sebou lišit, tvoří a popisuje postupy vlastní. Všímá si toho, že některé jsou spolehlivější než jiné a co tu spolehlivost určuje. Jejich kvalitní formulace může vyřešit celou skupinu podobných problémů.
+
+
+    Postupy žák zapisuje i jako programy, čímž se učí pracovat s omezenou sadou instrukcí a doslovnou interpretací svých výstupů. Kromě toho získává povědomí o základech fungování běžně používaných aplikací. Cílevědomé plánování pracovních postupů je příležitost k rozvoji strukturovaného přístupu k řešení problémů. Jejich jednoznačný a úsporný popis vyžaduje komunikační dovednosti. Automatizovatelnost postupů je předpokladem uplatnitelnosti v práci a podnikání.
+
+
+    Na 1. stupni žák zkoumá souvislosti vstupů, podmínek, postupů a výstupů, navrhuje jednoduché posloupnosti kroků a zažívá, jak může programováním určovat chování stroje.
+
+
+    Na 2. stupni se žák setkává se složitějšími problémy, do programování přibývají další řídicí struktury. Všímá si výhod a důsledků automatizace svých postupů.'
   barva: '#ffffff'
 - id: informacni-systemy
   nazev: Informační systémy
   kod: INF-INF-003
-  popis: Účel a užitečnost informačních systémů, evidence a automatické zpracování dat.
+  popis: 'Řadu potřeb společnosti pomáhají plnit informační systémy. Lidé je nevyhnutelně využívají, vypořádávají se s jejich nedostatky, mají požadavky na jejich chování. Většina lidí také nějaké evidence sama tvoří, v osobním i pracovním životě (seznam k balení na výlet, evidence zakázek k vyřízení). Výhodu v tom mají ti, kteří mají na základě praktické zkušenosti představu o tom, jak takové systémy vnitřně fungují, jak se vyvíjejí, co mohou pomoci řešit a co už nikoli. Iterativní vývoj a testování řešení se zaměřením na potřeby klienta je znakem užitečných podniků. Uživatelské rozhraní informačních systémů je komunikačním kanálem. Důsledky fungování řady systémů ovlivňují celou občanskou společnost.
+
+
+    Na 1. stupni žák začíná informační systémy zkoumat. Kromě práce s uživatelským rozhraním se učí orientovat i přímo v tabulkách a podobných strukturách.
+
+
+    Na 2. stupni žák svůj průzkum prohlubuje a kromě významu pro uživatele precizněji popisuje, co přesně systémy dělají. Pro řešení konkrétních problémů tvoří také vlastní evidence dat.'
   barva: '#ffff00'
 - id: digitalni-technologie
   nazev: Digitální technologie
   kod: INF-INF-004
-  popis: Hardware, software, sítě a bezpečné zacházení se zařízeními a daty.
+  popis: 'Digitální technologie poskytují konkrétní příklady principů, které žák zkoumá v ostatních okruzích. Dohromady se tak žák učí rozumět tomu, jak technologie a svět kolem něj fungují a jaké to má praktické důsledky. Je to jedním z předpokladů pro to, aby je mohl bezpečně a efektivně využívat v běžném životě. Porozumění principům fungování technologií mimo jiné umožňuje hodnotit, jak ovlivňují společnost a jak jejich provoz dopadá na životní prostředí. Rozšiřuje možnosti žáků využívat je k rutinní i tvořivé práci.
+
+
+    Na 1. stupni se žák zaměřuje na základní porozumění funkcím digitálních technologií, jejich vhodné využití pro řešení problémů a na pravidla bezpečného používání aplikací a sítí.
+
+
+    Na 2. stupni se výuka prohlubuje o další technické znalosti a dovednosti, které umožní poučeně vybírat hardware, software a propojení do sítě a řešit pokročilejší problémy. Kromě bezpečnosti se žák v bohatých souvislostech věnuje také inovacím.'
   barva: '#ffffff'
 temata:
 - id: digitalni-zaklady
   nazev: Digitální základy
   vrstva_mapy: 0
-  popis: Jak funguje digitální svět — počítač, internet, cloud a kde „žijí" data a služby.
+  popis: 'Digitální základy jsou vstupní vrstva celé mapy — vysvětlují, jak vlastně funguje svět, ve kterém se všechno ostatní odehrává. Žák tu získá mentální model počítače (hardware a software), internetu a sítí (klient–server), cloudu a serverů i toho, jak spolu programy mluví přes API a jak se data kódují, aby šla uložit a přenášet. Nejde o to stát se technikem, ale o demystifikaci: když víš, že „cloud" je jen cizí počítač a že appka volá službu přes API, přestává být digitální svět kouzelná černá skříňka. Na těchto základech pak stojí Tvorba webů, Tvorba aplikací, Data i Umělá inteligence — proto je téma v mapě úplně na začátku.'
   barva: '#ffffff'
   navazuje_na: []
 - id: informaticke-mysleni
   nazev: Informatické myšlení a algoritmizace
   vrstva_mapy: 0
-  popis: Univerzální způsob, jak rozložit problém a popsat řešení krok za krokem — nezávisle na jazyce.
+  popis: Tohle téma učí univerzální způsob přemýšlení, který je jádrem celé informatiky a nezávisí na žádném programovacím jazyce. Žák se učí rozložit velký problém na menší části (dekompozice), odfiltrovat nepodstatné detaily (abstrakce), všímat si opakujících se vzorů a popsat řešení jako jednoznačný postup krok za krokem (algoritmus) složený ze sekvence, větvení a opakování. Tyhle dovednosti se v mapě vracejí prakticky všude — v programování, práci s daty, robotice i při přemýšlení o AI — proto stojí hned vedle Digitálních základů jako druhý pilíř, na kterém teprve začíná skutečná tvorba.
   barva: '#ffff00'
   navazuje_na: []
 - id: programovani
   nazev: Programování
   vrstva_mapy: 1
-  popis: Převod algoritmu do kódu — od bloků k textovému jazyku; v éře AI důraz na porozumění a ladění.
+  popis: Programování je krok od myšlenky ke kódu, který počítač skutečně vykoná. Žák tu poznává stavební kameny každého programu — proměnné, podmínky, cykly a funkce — a hlavně dovednost ladit, tedy hledat a opravovat chyby. Postupuje od blokového prostředí (Scratch) k textovému jazyku (Python) a učí se pracovat s verzováním i s cizím, dnes často AI vygenerovaným kódem; v éře AI se totiž těžiště přesouvá od „napiš každý řádek ručně" k „rozuměj, uprav a odlaď". Programování navazuje na Informatické myšlení a je branou k tvůrčím tématům mapy — webům, aplikacím, hrám i robotice.
   barva: '#ffffff'
   navazuje_na:
   - informaticke-mysleni
@@ -53,7 +84,7 @@ temata:
 - id: umela-inteligence
   nazev: Umělá inteligence
   vrstva_mapy: 2
-  popis: Co AI je a není, jak se učí z dat, jak s ní pracovat a jak ji kriticky a eticky používat.
+  popis: Umělá inteligence je v mapě samostatné téma, protože prostupuje celou dnešní informatikou — a zároveň se jako průřezová vrstva vrací u mnoha dalších témat. Žák se tu učí, co AI je a co není, jak se učí z dat a proč generativní modely umí „halucinovat", jak s AI účelně pracovat (prompty, ověřování výstupů) a jak ji používat kriticky a eticky (bias, soukromí, kdy AI raději nepoužít). Řídící myšlenkou je „ověřuj, ale využívej" a vědomí, že rozhoduje pořád člověk, ne nástroj. Téma staví na Digitálních základech a úzce se prolíná s Daty, protože kvalita dat určuje, co z AI vypadne.
   barva: '#ffff00'
   navazuje_na:
   - digitalni-zaklady
@@ -61,21 +92,21 @@ temata:
 - id: data-databaze
   nazev: Data, databáze a datová gramotnost
   vrstva_mapy: 1
-  popis: Jak se data sbírají, strukturují, dotazují a kriticky čtou — a jak z nich čerpá AI.
+  popis: 'Data jsou surovinou informací i palivem umělé inteligence, a tohle téma učí s nimi zacházet — od kritického čtení až po technické uložení. Žák pochopí datový cyklus (sběr → čištění → analýza → vizualizace → interpretace), naučí se volit správný graf, evidovat data v tabulkách a databázích a klást jim otázky (SQL). Velký důraz je na datové gramotnosti: poznat zavádějící graf, rozdíl mezi korelací a kauzalitou i to, odkud data pocházejí a co v nich chybí. Právě datová gramotnost je předstupněm gramotnosti v AI, takže tohle téma tvoří s Umělou inteligencí provázané jádro celé mapy.'
   barva: '#ffff00'
   navazuje_na:
   - digitalni-zaklady
 - id: tvorba-webu
   nazev: Tvorba webů
   vrstva_mapy: 1
-  popis: Postav a publikuj vlastní web — od struktury a vzhledu po nasazení online.
+  popis: 'Tvorba webů je jedno z nejvděčnějších témat, protože vede k hmatatelnému, sdílitelnému výsledku — vlastní stránce na internetu. Žák pozná, jak web funguje (klient–server), i tři základní vrstvy stránky: strukturu (HTML), vzhled (CSS) a interaktivitu (JavaScript), a naučí se web publikovat přes doménu a hosting. V éře AI k tomu přibývá dovednost pracovat s nástroji, které web vytvoří z popisu — a umět jejich výstup přečíst, upravit a posoudit. Téma staví na Programování a přirozeně vede k Tvorbě aplikací.'
   barva: '#ffffff'
   navazuje_na:
   - programovani
 - id: tvorba-aplikaci
   nazev: Tvorba aplikací a vibecoding
   vrstva_mapy: 1
-  popis: Od nápadu k funkční appce — s no-code nástroji i s AI jako programovacím parťákem.
+  popis: 'Tvorba aplikací ukazuje, jak z nápadu vznikne funkční appka — a je to možná nejsilnější motivační téma éry AI. Žák pochopí rozdíl mezi tím, co vidí (frontend) a co běží na pozadí (backend), vyzkouší no-code nástroje i „vibecoding", kdy popíše záměr přirozenou řečí a AI napíše kód. Klíčové poselství tématu je, že AI je programovací parťák, ne náhrada porozumění: bez znalosti základů snadno vznikne „iluze, že to umím", dokud se něco nerozbije. Téma spojuje Programování, Tvorbu webů a Umělou inteligenci dohromady.'
   barva: '#ffffff'
   navazuje_na:
   - programovani
@@ -84,14 +115,14 @@ temata:
 - id: tvorba-obsahu
   nazev: Tvorba digitálního obsahu s AI
   vrstva_mapy: 1
-  popis: Grafika, video, hudba a hlas s generativními nástroji — a etika a autorství, co k tomu patří.
+  popis: 'Tohle téma je o tvorbě obrazu, videa, hudby a hlasu s generativními nástroji — o oblasti, kterou AI proměnila nejdramatičtěji. Žák se učí „mluvit" s nástroji přes prompt, ale i to, že vkus a základ vizuálního jazyka (kompozice, barva, typografie) AI nenahradí — pořád musíš umět posoudit, jestli je výsledek dobrý. Neoddělitelnou součástí je etika a autorství: na čích dílech se model učil, komu patří výstup a jak poctivě označit AI obsah, plus obezřetnost kvůli deepfakes. Téma staví na Umělé inteligenci a s ohledem na bezpečí nezletilých se dotýká i Kyberbezpečnosti.'
   barva: '#ffff00'
   navazuje_na:
   - umela-inteligence
 - id: herni-vyvoj
   nazev: Herní vývoj
   vrstva_mapy: 1
-  popis: Navrhni a postav vlastní hru — od bloků po engine, dnes i s AI generováním assetů.
+  popis: 'Herní vývoj je vnitřně motivující téma — žák tvoří to, co sám hraje, a výsledek jde hned sdílet. Od blokového Scratche se posouvá k lehkým i skutečným enginům (Godot, Unity) a poznává základní stavbu hry: herní smyčku, objekty, kolize, stavy a hlavně herní design (pravidla, obtížnost, zpětná vazba, „flow"). AI dnes umí generovat grafiku i kód, takže se těžiště přesouvá od ruční výroby k návrhu a kurátorství. Téma staví na Informatickém myšlení a Programování a je skvělým „hřištěm", kde se tyhle dovednosti spojí do konkrétního výtvoru.'
   barva: '#ffffff'
   navazuje_na:
   - informaticke-mysleni
@@ -99,7 +130,7 @@ temata:
 - id: fyzicky-computing
   nazev: Fyzický computing, robotika a IoT
   vrstva_mapy: 1
-  popis: Kód, který hýbe fyzickým světem — a AI, kterou si sám natrénuješ na zařízení.
+  popis: 'Fyzický computing je programování, které hýbe skutečným světem — kód tu má okamžitý hmatatelný efekt. Na destičce micro:bit se žák naučí číst senzory a ovládat výstupy (LED, motory), postoupí k robotům, Arduinu a Raspberry Pi a k internetu věcí (IoT), kde zařízení posílají data do cloudu. Zvlášť cenné je, že si tu AI osahá fyzicky: v micro:bit CreateAI si sám natrénuje model přímo na zařízení (TinyML). Téma staví na Programování a propojuje ho s Daty i Umělou inteligencí; jeho přirozeným omezením je hardware, takže doma se leccos nahradí simulátory.'
   barva: '#ffffff'
   navazuje_na:
   - informaticke-mysleni
@@ -107,23 +138,50 @@ temata:
 - id: kyberbezpecnost
   nazev: Kyberbezpečnost a digitální bezpečí
   vrstva_mapy: 3
-  popis: Jak chránit sebe, svá data a zařízení — ve světě, kde i podvody umí AI.
+  popis: 'Kyberbezpečnost učí, jak chránit sebe, svá data a zařízení — a v mapě má zvláštní váhu, protože bezpečí nezletilých je priorita. Žák si osvojí základní hygienu (silná hesla, 2FA, poznat phishing, chránit soukromí) a pochopí i to, jak AI posunula podvody na novou úroveň: deepfake, klonování hlasu a dokonalý phishing bez chyb, takže stará rada „poznáš to podle chyb v textu" už neplatí. Novou obranou je ověřovat informace jinou cestou a zdravá skepse. Téma se úzce prolíná s Digitálním občanstvím a s Umělou inteligencí.'
   barva: '#ffff00'
   navazuje_na:
   - digitalni-zaklady
 - id: digitalni-obcanstvi
   nazev: Digitální občanství, média a wellbeing
   vrstva_mapy: 3
-  popis: Rozumět tomu, jak fungují sítě a algoritmy, kriticky číst obsah a mít zdravý vztah k technologiím.
+  popis: 'Tohle téma je „severní směr" celého Glitche: učí rozumět tomu, jak fungují sítě a algoritmy, kriticky číst obsah a udržet si zdravý vztah k technologiím. Žák pozná, jak doporučovací algoritmy tvarují, co vidí (bublina, ekonomika pozornosti), jak rozpoznat dezinformace a manipulaci, jakou hodnotu mají jeho data a jak nepodlehnout návykovému designu. Patří sem i občanské minimum o AI (proč modely halucinují a mají bias) a etika jejího používání ve škole. Cílem není technologie zavrhnout, ale používat je vědomě a tak, aby sloužily člověku — což je hodnota, na které stojí celá mapa.'
   barva: '#ffff00'
   navazuje_na: []
+kompetence:
+- id: kdi-dat
+  nazev: Digitální informace a data
+  kod: KDI-DAT-000-ZV9-001
+  vystup: Data získaná na základě vlastních kritérií a formulovaných dotazů z různých digitálních zdrojů posuzuje z hlediska souladu s již známými poznatky i nároku na spolehlivost zdroje.
+  barva: '#ffff00'
+- id: kdi-zap
+  nazev: Zapojení do společnosti prostřednictvím digitálních technologií
+  kod: KDI-ZAP-000-ZV9-001
+  vystup: Účelně a uvážlivě sdílí data a informace v digitálním prostředí s cílem osobního růstu, podpory školní či zájmové komunity nebo za účelem týmové práce na školních projektech.
+  barva: '#ffffff'
+- id: kdi-tdo
+  nazev: Tvorba digitálního obsahu
+  kod: KDI-TDO-000-ZV9-001
+  vystup: Generuje digitální obsah v různých formátech s cílem umocnit výstupy vlastní tvořivé činnosti.
+  barva: '#ffff00'
+- id: kdi-bzk
+  nazev: Bezpečnost v digitálním prostředí
+  kod: KDI-BZK-000-ZV9-001
+  vystup: Předchází situacím ohrožujícím bezpečnost zařízení a dat nebo jeho tělesné či duševní zdraví.
+  barva: '#ffffff'
+- id: kdi-vin
+  nazev: Digitální vývoj a inovace
+  kod: KDI-VIN-000-ZV9-001
+  vystup: Využívá digitální technologie, aby sobě či ostatním usnadnil či zjednodušil pracovní postupy a zkvalitnil výsledky práce.
+  barva: '#ffff00'
 concepts:
 - id: digitalni-zaklady-hardware-a-software
   nazev: Hardware a software
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: core
-  popis: 'Co je počítač: vstup–zpracování–výstup; rozdíl mezi fyzickým zařízením a programem.'
+  popis: 'Hardware jsou fyzické součástky, na které si můžeš sáhnout (procesor, paměť, displej); software jsou programy, které v nich běží. Každý počítač i telefon přitom pracuje ve smyčce vstup → zpracování → výstup: dostane data, něco s nimi udělá a vrátí výsledek.'
   rvp:
   - kod: INF-INF-004-ZV9-011
     vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
@@ -144,8 +202,9 @@ concepts:
   nazev: Data a informace
   tema: digitalni-zaklady
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Rozdíl mezi zaznamenanou hodnotou (data) a jejím významem pro nás (informace).
+  popis: Data jsou holé zaznamenané hodnoty (třeba číslo 21 nebo řada naměřených teplot), informace je jejich význam pro konkrétní situaci („dnes je tepleji než včera"). Stejná data můžou nést různé informace podle toho, na co se ptáš — a umět tyhle dvě věci rozlišit je základ veškeré práce s daty i s AI.
   rvp:
   - kod: INF-INF-001-ZV9-001
     vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
@@ -164,8 +223,9 @@ concepts:
   nazev: Internet a síť
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: core
-  popis: 'Jak spolu zařízení komunikují: klient–server, prohlížeč, přenos dat po síti.'
+  popis: Internet je obrovská síť propojených počítačů, které si navzájem posílají data. Když otevřeš stránku, tvůj prohlížeč (klient) pošle požadavek počítači, kde stránka „bydlí" (server), a ten mu obsah pošle zpátky — tomuhle vztahu se říká klient–server.
   rvp:
   - kod: INF-INF-004-ZV9-011
     vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
@@ -187,8 +247,9 @@ concepts:
   nazev: Cloud a server
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: core
-  popis: 'Demystifikace cloudu: cizí počítač v datovém centru, ke kterému přistupuji přes internet.'
+  popis: „Cloud" zní tajemně, ale je to jen cizí výkonný počítač (server) v datovém centru, ke kterému se připojuješ přes internet. Když si ukládáš fotky „do cloudu" nebo píšeš ChatGPT, ve skutečnosti pracuje někde daleko něčí server, ne tvůj telefon.
   rvp: []
   cile: []
   kriteria: []
@@ -209,8 +270,9 @@ concepts:
   nazev: API
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: core
-  popis: Rozhraní, přes které spolu programy mluví — dnes i způsob, jak se volá AI.
+  popis: 'API je domluvené rozhraní, přes které spolu dva programy „mluví" — něco jako jídelní lístek: řekneš, co chceš, a dostaneš to, aniž bys musel vědět, jak se to v kuchyni připravuje. Přes API získávají appky data z jiných služeb (počasí, mapy) a stejně tak se volá i AI.'
   rvp: []
   cile: []
   kriteria: []
@@ -232,8 +294,9 @@ concepts:
   nazev: Reprezentace dat
   tema: digitalni-zaklady
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: Jak počítač ukládá čísla, text a obraz jako bity; kódování dat pro uložení a přenos.
+  popis: Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.
   rvp:
   - kod: INF-INF-001-ZV9-002
     vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
@@ -255,8 +318,9 @@ concepts:
   nazev: Adresy a protokoly
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: navazujici
-  popis: HTTP/HTTPS, URL, doména, IP a DNS — jak se na internetu adresuje a komunikuje.
+  popis: 'Aby se zařízení na internetu našla a rozuměla si, používají adresy a dohodnutá pravidla komunikace: doména (seznam.cz) se přes DNS přeloží na číselnou IP adresu a data putují podle protokolu HTTP(S). Je to jako poštovní adresa plus společný jazyk dopisu.'
   rvp: []
   cile: []
   kriteria: []
@@ -273,12 +337,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: digitalni-zaklady-vrstvy-abstrakce
-  nazev: Vrstvy abstrakce
+- id: digitalni-zaklady-vrstvy-pocitace
+  nazev: Vrstvy počítače
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: navazujici
-  popis: Od hardwaru přes operační systém k aplikaci — proč nemusíme rozumět všemu naráz.
+  popis: 'Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.'
   rvp: []
   cile: []
   kriteria: []
@@ -295,8 +360,9 @@ concepts:
   nazev: Operační systém a soubory
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: navazujici
-  popis: K čemu je operační systém a jak se organizují soubory a složky.
+  popis: Operační systém (Windows, Android, iOS) je program, který řídí celé zařízení a dává ostatním aplikacím přístup k hardwaru. Stará se i o soubory a složky — o to, kam se ukládají tvoje fotky a dokumenty a jak je zase najdeš.
   rvp: []
   cile: []
   kriteria: []
@@ -312,8 +378,9 @@ concepts:
   nazev: Kde jsou data fyzicky
   tema: digitalni-zaklady
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Kde data reálně leží, latence a škálování — a proč na tom záleží kvůli soukromí a GDPR.
+  popis: Data z aplikací neleží „někde v internetu", ale na konkrétních serverech na konkrétním místě na světě. Kde přesně jsou, ovlivňuje rychlost (latenci) i to, jaké zákony na ně platí — třeba jestli je chrání evropské GDPR.
   rvp: []
   cile: []
   kriteria: []
@@ -339,8 +406,9 @@ concepts:
   nazev: Dekompozice
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Rozklad problému na menší, samostatně řešitelné části.
+  popis: Rozložení velkého, nepřehledného úkolu na menší kousky, které se dají řešit po jednom. Když plánuješ školní výlet, taky ho rozdělíš na dopravu, ubytování a program — v informatice se to samé dělá s problémy i s programy.
   rvp:
   - kod: INF-INF-002-ZV9-006
     vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
@@ -359,14 +427,15 @@ concepts:
   nazev: Abstrakce
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Odfiltrování nepodstatných detailů a zaměření na to podstatné.
+  popis: 'Schopnost odfiltrovat nepodstatné detaily a soustředit se jen na to, co je pro řešení důležité. Mapa metra je skvělá abstrakce: neukazuje skutečné vzdálenosti ani ulice, jen to, jak na sebe stanice navazují — přesně to, co potřebuješ.'
   rvp: []
   cile: []
   kriteria: []
   prerekvizity: []
   souvisi:
-  - digitalni-zaklady-vrstvy-abstrakce
+  - digitalni-zaklady-vrstvy-pocitace
   - programovani-zaklady-objektu-oop
   tagy:
   - abstrakce
@@ -378,8 +447,9 @@ concepts:
   nazev: Rozpoznávání vzorů
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Hledání opakování a pravidelností, které řešení zjednoduší.
+  popis: Všímání si opakování a pravidelností, které řešení zjednoduší. Když zjistíš, že se v úloze pořád vrací stejný krok, můžeš ho vyřešit jednou a použít znovu — místo abys vymýšlel pokaždé znovu od začátku.
   rvp: []
   cile: []
   kriteria: []
@@ -396,8 +466,9 @@ concepts:
   nazev: Algoritmus
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Uspořádaná posloupnost kroků vedoucí k vyřešení problému.
+  popis: 'Přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku.'
   rvp:
   - kod: INF-INF-002-ZV9-005
     vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
@@ -419,8 +490,9 @@ concepts:
   nazev: Řízení toku
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Sekvence, větvení (podmínka „když–tak") a opakování (cyklus) jako stavební kameny postupu.
+  popis: 'Tři způsoby, jak řídit pořadí kroků: sekvence (dělej popořadě), větvení („když platí tohle, udělej tamto") a opakování (dělej dokola, dokud něco platí). Z těchhle tří stavebních kamenů se dá poskládat každý program.'
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -443,8 +515,9 @@ concepts:
   nazev: Pseudokód a vývojové diagramy
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Zápis postupu srozumitelný člověku, ještě před programováním.
+  popis: Způsoby, jak zapsat postup srozumitelně pro člověka ještě předtím, než ho napíšeš v konkrétním programovacím jazyce. Pseudokód je „kód napůl česky", vývojový diagram totéž nakreslené jako schéma se šipkami.
   rvp: []
   cile: []
   kriteria: []
@@ -461,8 +534,9 @@ concepts:
   nazev: Logika a booleovské výrazy
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Pravda/nepravda a spojky AND, OR, NOT jako základ rozhodování.
+  popis: Rozhodování v programech stojí na výrocích, které jsou buď pravda, nebo nepravda („má hráč míň než nula životů?"). Ty se spojují spojkami A ZÁROVEŇ (AND), NEBO (OR) a NE (NOT) do složitějších podmínek.
   rvp: []
   cile: []
   kriteria: []
@@ -483,8 +557,9 @@ concepts:
   nazev: Modelování a simulace
   tema: informaticke-mysleni
   oblast: data-modelovani
+  kompetence: null
   vrstva: navazujici
-  popis: Zjednodušený model situace (i graf či schéma) pro pochopení a predikci.
+  popis: Model je zjednodušený obraz skutečnosti — třeba graf, schéma nebo tabulka — který zachytí to podstatné a zbytek vynechá. Na modelu jde situaci pochopit nebo „přehrát" dopředu (simulovat), aniž bys ji musel zkoušet naostro.
   rvp:
   - kod: INF-INF-001-ZV9-003
     vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
@@ -505,8 +580,9 @@ concepts:
   nazev: Efektivita řešení
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Že různá řešení stojí různě — počet kroků, čas, paměť.
+  popis: Stejný problém jde vyřešit mnoha způsoby, ale ne všechny stojí stejně — liší se počtem kroků, časem nebo pamětí. Rozpoznat, které řešení je „levnější", začne být důležité, jakmile přibude dat nebo uživatelů.
   rvp: []
   cile: []
   kriteria: []
@@ -524,8 +600,9 @@ concepts:
   nazev: Základní algoritmy
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Hledání a řazení jako klasické, opakovaně použitelné postupy.
+  popis: Osvědčené postupy, které se používají pořád dokola, hlavně hledání (najdi prvek v seznamu) a řazení (seřaď podle velikosti). Jsou to takové „klasické recepty" informatiky, které stojí za to znát.
   rvp: []
   cile: []
   kriteria: []
@@ -542,8 +619,9 @@ concepts:
   nazev: Hodnocení a analýza chyb
   tema: informaticke-mysleni
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Posouzení řešení a hledání, proč selhalo (ladění myšlení).
+  popis: 'Umět se na hotové řešení podívat kriticky: funguje? kde se láme? proč dělá zrovna tohle? Hledání příčiny chyby (ne jen jejího příznaku) je dovednost, kterou využiješ v programování i kdekoli jinde.'
   rvp:
   - kod: INF-INF-002-ZV9-005
     vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
@@ -566,8 +644,9 @@ concepts:
   nazev: Proměnné a datové typy
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Pojmenovaná „krabička" na hodnotu; čísla, text, pravda/nepravda.
+  popis: Proměnná je pojmenovaná „krabička", do které si program ukládá hodnotu, aby s ní mohl dál pracovat (třeba skore = 0). Typ určuje, co je uvnitř — číslo, text, nebo pravda/nepravda — a co se s tím dá dělat.
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -585,8 +664,9 @@ concepts:
   nazev: Podmínky v kódu
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Větvení programu (if/else) podle toho, zda platí podmínka.
+  popis: 'Zápis větvení: „když platí podmínka, udělej tohle, jinak tamto" (if/else). Díky němu se program rozhoduje sám — třeba zobrazí „výhra", jen když skóre překročí cíl.'
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -609,8 +689,9 @@ concepts:
   nazev: Cykly v kódu
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Opakování kroků (for, while), místo psaní téhož pořád dokola.
+  popis: Způsob, jak nechat počítač opakovat kroky, místo abys je psal pořád dokola. Cyklus for opakuje danou-krát, cyklus while opakuje, dokud něco platí — třeba dokud hráč neprohraje.
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -633,8 +714,9 @@ concepts:
   nazev: Funkce a procedury
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Pojmenovaný, znovupoužitelný kus kódu s parametry a návratovou hodnotou.
+  popis: Pojmenovaný, znovupoužitelný kousek kódu, který napíšeš jednou a pak už jen „zavoláš", kdykoli ho potřebuješ. Můžeš mu předat vstupy (parametry) a dostat zpět výsledek — tím se kód zkrátí a zpřehlední.
   rvp: []
   cile: []
   kriteria: []
@@ -652,8 +734,9 @@ concepts:
   nazev: Ladění a testování
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: core
-  popis: Hledání a oprava chyb; ověření, že program dělá, co má.
+  popis: Ladění (debugging) je hledání a oprava chyb; testování je ověřování, že program dělá to, co má, i v neobvyklých případech. Chyby k programování patří — dovednost je umět je systematicky najít, ne se jim vyhnout.
   rvp:
   - kod: INF-INF-002-ZV9-005
     vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
@@ -674,8 +757,9 @@ concepts:
   nazev: Blokové vs. textové programování
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Přechod od skládání bloků (Scratch) k psaní textového kódu (Python).
+  popis: Na začátku se programuje skládáním barevných bloků (Scratch), kde nejde udělat překlep. Postupně se přechází k psaní textového kódu (třeba v Pythonu), který je mocnější, ale vyžaduje přesnost.
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -695,8 +779,9 @@ concepts:
   nazev: Seznamy a kolekce
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Ukládání více hodnot najednou a práce s nimi.
+  popis: Když nestačí jedna proměnná, uloží se víc hodnot najednou do seznamu (třeba jména všech hráčů). S kolekcí pak jde pracovat hromadně — projít ji, seřadit, něco v ní najít.
   rvp: []
   cile: []
   kriteria: []
@@ -715,8 +800,9 @@ concepts:
   nazev: Události
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Reakce programu na akce (klik, stisk) — event-driven přístup.
+  popis: Programy často nečekají v jednom sledu, ale reagují na to, co udělá uživatel — klik, stisk klávesy, dotyk. Takovému stylu „když se stane tohle, spusť tamto" se říká událostmi řízené programování.
   rvp: []
   cile: []
   kriteria: []
@@ -735,8 +821,9 @@ concepts:
   nazev: Knihovny a volání API v kódu
   tema: programovani
   oblast: algoritmizace
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Použití hotového cizího kódu a služeb (včetně AI) přes API.
+  popis: Nemusíš psát všechno od nuly — knihovna je hotový cizí kód, který zavoláš a použiješ (třeba na práci s datem nebo grafy). Přes API se stejně tak volají i vzdálené služby, včetně AI modelů.
   rvp: []
   cile: []
   kriteria: []
@@ -755,8 +842,9 @@ concepts:
   nazev: Verzování kódu
   tema: programovani
   oblast: algoritmizace
+  kompetence: kdi-zap
   vrstva: navazujici
-  popis: Git a GitHub — sledování změn a spolupráce na kódu.
+  popis: Git a GitHub ukládají historii změn kódu, takže se vždycky můžeš vrátit k funkční verzi a víc lidí může pracovat na jednom projektu, aniž by si přepsali práci. Je to jako „zpět" a sdílená složka pro programátory dohromady.
   rvp: []
   cile: []
   kriteria: []
@@ -774,8 +862,9 @@ concepts:
   nazev: Čtení a hodnocení AI kódu
   tema: programovani
   oblast: algoritmizace
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Porozumět cizímu i AI vygenerovanému kódu, posoudit ho a upravit.
+  popis: Dnes velkou část kódu napíše AI — o to důležitější je umět cizí kód přečíst, pochopit, co dělá, a posoudit, jestli je správný a bezpečný. Bez toho jen slepě věříš něčemu, čemu nerozumíš.
   rvp:
   - kod: INF-INF-002-ZV9-005
     vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
@@ -798,8 +887,9 @@ concepts:
   nazev: Základy objektů (OOP)
   tema: programovani
   oblast: algoritmizace
+  kompetence: null
   vrstva: navazujici
-  popis: Objekty jako spojení dat a chování — úvod do objektového myšlení.
+  popis: Objekt spojuje data a to, co s nimi jde dělat, do jednoho celku (třeba „hráč" má životy i umí skočit). Objektové myšlení pomáhá zorganizovat větší programy tak, aby se v nich dalo vyznat.
   rvp: []
   cile: []
   kriteria: []
@@ -815,9 +905,10 @@ concepts:
 - id: umela-inteligence-co-je-a-co-neni-ai
   nazev: Co je a co není AI
   tema: umela-inteligence
-  oblast: null
+  oblast: data-modelovani
+  kompetence: null
   vrstva: core
-  popis: Úzká vs. obecná AI; AI jako nástroj, ne bytost.
+  popis: 'AI je software, který zvládá úlohy, jež dřív vyžadovaly člověka — rozpoznat obličej, přeložit větu, poradit. Dnešní AI je „úzká": umí skvěle jednu věc, ale nemá vědomí ani porozumění jako člověk; je to velmi šikovný nástroj, ne bytost.'
   rvp: []
   cile: []
   kriteria: []
@@ -832,8 +923,9 @@ concepts:
   nazev: AI se učí z dat
   tema: umela-inteligence
   oblast: data-modelovani
+  kompetence: null
   vrstva: core
-  popis: Kvalita a zaujatost trénovacích dat určuje výstup modelu.
+  popis: 'Většina dnešní AI se nenaprogramuje pravidly, ale „natrénuje" na obrovském množství příkladů, ze kterých si sama odvodí vzorce. Proto platí „co do ní vložíš, to z ní vypadne": když jsou trénovací data zkreslená nebo chybná, bude takový i výsledek.'
   rvp:
   - kod: INF-INF-001-ZV9-004
     vystup: natrénuje model strojového učení
@@ -853,9 +945,10 @@ concepts:
 - id: umela-inteligence-jak-funguje-generativni-model
   nazev: Jak funguje generativní model
   tema: umela-inteligence
-  oblast: null
+  oblast: data-modelovani
+  kompetence: null
   vrstva: core
-  popis: Predikuje pravděpodobné pokračování — proto umí i „halucinovat".
+  popis: Modely jako ChatGPT nevytahují odpovědi z databáze — slovo po slovu předpovídají, co nejpravděpodobněji následuje. Umí proto znít sebejistě i tehdy, když si fakta „vymyslí" (halucinace), protože nesledují pravdu, ale pravděpodobnost.
   rvp: []
   cile: []
   kriteria: []
@@ -871,15 +964,16 @@ concepts:
   nazev: Doporučovací systémy
   tema: umela-inteligence
   oblast: data-modelovani
+  kompetence: null
   vrstva: core
-  popis: Proč vidím právě tenhle obsah a jak mě systém profiluje.
+  popis: Feed na TikToku, YouTube i na Glitchi řídí algoritmus, který ti podle tvého chování vybírá, co uvidíš dál. Pochopit, že tě systém profiluje a proč ti ukazuje zrovna tohle, je první krok k tomu ho ovládat, a ne být ovládán jím.
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
   - umela-inteligence-ai-se-uci-z-dat
   souvisi:
-  - data-databaze-vektorove-databaze-a-embeddingy
+  - data-databaze-vektorove-databaze
   - kyberbezpecnost-soukromi-a-digitalni-stopa
   - kyberbezpecnost-bezpecne-chovani-na-sitich
   - kyberbezpecnost-sextortion-a-citlivy-obsah
@@ -897,9 +991,10 @@ concepts:
 - id: umela-inteligence-prompt-a-promptova-gramotnost
   nazev: Prompt a promptová gramotnost
   tema: umela-inteligence
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: core
-  popis: Jak napsat, iterovat a dát kontext, aby AI odvedla, co chci.
+  popis: 'Prompt je zadání, kterým AI úkoluješ. Není to kouzelné zaklínadlo, ale spíš dialog: čím jasněji popíšeš cíl, kontext a formát a čím víc zadání upřesňuješ, tím lepší výsledek dostaneš.'
   rvp: []
   cile: []
   kriteria: []
@@ -915,9 +1010,10 @@ concepts:
 - id: umela-inteligence-overovani-vystupu
   nazev: Ověřování výstupů
   tema: umela-inteligence
-  oblast: null
+  oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Rozpoznat halucinaci a ověřit výstup AI z druhého zdroje.
+  popis: AI se plete sebejistě, takže její výstup je návrh, ne pravda. Poznat možnou halucinaci a ověřit tvrzení z druhého, důvěryhodného zdroje je základní dovednost každého, kdo AI používá.
   rvp: []
   cile: []
   kriteria: []
@@ -936,14 +1032,15 @@ concepts:
   nazev: Vlastní agency
   tema: umela-inteligence
   oblast: null
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Já rozhoduji, AI jen radí — člověk zůstává v řízení.
+  popis: I když ti AI radí, rozhoduješ pořád ty. „Agency" znamená vědomí, že jsi to ty, kdo drží řízení a nese odpovědnost — AI je nástroj, který ti pomáhá, ne autorita, které se podřizuješ.
   rvp: []
   cile: []
   kriteria: []
   prerekvizity: []
   souvisi:
-  - tvorba-aplikaci-iluze-kompetence
+  - tvorba-aplikaci-iluze-ze-to-umim
   tagy:
   - ai
   - postoj
@@ -954,8 +1051,9 @@ concepts:
   nazev: Kdy AI (ne)použít a disclosure
   tema: umela-inteligence
   oblast: null
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Rozlišit, kdy AI pomáhá učení a kdy ho obchází; přiznat její použití.
+  popis: U každého úkolu se vyplatí zvážit, jestli ti AI pomůže se něco naučit, nebo tě o učení připraví (napíše za tebe úkol, který tě měl něco naučit). K poctivé práci patří i přiznat, kde jsi AI použil.
   rvp: []
   cile: []
   kriteria: []
@@ -974,9 +1072,10 @@ concepts:
 - id: umela-inteligence-bias-a-ferovost
   nazev: Bias a férovost
   tema: umela-inteligence
-  oblast: null
+  oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Odkud se v AI bere zaujatost a jak se projevuje.
+  popis: AI přebírá zkreslení (bias) z dat, na kterých se učila — může tak třeba nadržovat jedné skupině lidí. Vědět, odkud se bias bere a jak se projevuje, je nutné, aby AI nerozhodovala nespravedlivě.
   rvp: []
   cile: []
   kriteria: []
@@ -997,8 +1096,9 @@ concepts:
   nazev: Soukromí při práci s AI
   tema: umela-inteligence
   oblast: null
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Co do promptu nevkládat a jak se má s daty zachází.
+  popis: Co napíšeš do promptu, se může ukládat nebo použít k dalšímu trénování. Proto do AI nepatří hesla ani osobní či cizí citlivé údaje — vždycky mysli na to, komu vlastně data předáváš.
   rvp: []
   cile: []
   kriteria: []
@@ -1018,9 +1118,10 @@ concepts:
 - id: umela-inteligence-pet-velkych-ideji-ai
   nazev: Pět velkých idejí AI
   tema: umela-inteligence
-  oblast: null
+  oblast: data-modelovani
+  kompetence: null
   vrstva: navazujici
-  popis: Vnímání, reprezentace a usuzování, učení, přirozená interakce, společenský dopad.
+  popis: 'Přehledný rámec, který shrnuje, co AI umí, do pěti oblastí: vnímání (senzory), reprezentace a usuzování, učení z dat, přirozená interakce s lidmi a společenský dopad. Dává dohromady mapu celého tématu.'
   rvp: []
   cile: []
   kriteria: []
@@ -1036,8 +1137,9 @@ concepts:
   nazev: Strojové učení prakticky
   tema: umela-inteligence
   oblast: data-modelovani
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Natrénuj si vlastní model (Teachable Machine, micro:bit CreateAI) — sběr dat, trénink, test.
+  popis: 'AI nejlíp pochopíš, když si sám natrénuješ malý model — třeba v Teachable Machine nebo micro:bit CreateAI ho naučíš rozpoznat gesto či obrázek. Projdeš celý postup: nasbírat data, natrénovat, otestovat a vylepšit.'
   rvp:
   - kod: INF-INF-001-ZV9-004
     vystup: natrénuje model strojového učení
@@ -1058,8 +1160,9 @@ concepts:
   nazev: Typy AI úloh
   tema: umela-inteligence
   oblast: data-modelovani
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Klasifikace, predikce a generování jako různé druhy úloh.
+  popis: 'AI úlohy se dělí na pár základních druhů: klasifikace (zařaď do kategorie — spam/ne-spam), predikce (odhadni číslo — třeba cenu) a generování (vytvoř nový obsah — text, obraz). Poznat druh úlohy pomáhá vybrat správný nástroj.'
   rvp: []
   cile: []
   kriteria: []
@@ -1067,26 +1170,27 @@ concepts:
   - umela-inteligence-strojove-uceni-prakticky
   souvisi:
   - informaticke-mysleni-modelovani-a-simulace
-  - fyzicky-computing-tinyml-edge-ai
+  - fyzicky-computing-ai-primo-na-zarizeni-tinyml
   tagy:
   - ai
   - ml
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: umela-inteligence-foundation-modely-llm-a-rag
-  nazev: Foundation modely, LLM a RAG
+- id: umela-inteligence-jak-funguji-chatboti-llm-rag
+  nazev: Jak fungují chatboti (LLM, RAG)
   tema: umela-inteligence
-  oblast: null
+  oblast: data-modelovani
+  kompetence: null
   vrstva: navazujici
-  popis: 'Koncepčně: velké modely, jazykové modely a vyhledávání ve vlastních datech.'
+  popis: 'Dnešní chatboti stojí na velkých jazykových modelech (LLM) natrénovaných na obrovském množství textu. Aby uměli odpovídat i z konkrétních dokumentů (třeba školních), používají RAG: nejdřív si v datech vyhledají, co se k tématu hodí, a teprve pak odpoví.'
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
   - umela-inteligence-jak-funguje-generativni-model
   souvisi:
-  - data-databaze-vektorove-databaze-a-embeddingy
+  - data-databaze-vektorove-databaze
   - tvorba-aplikaci-ai-nastroje-pro-tvorbu
   tagy:
   - ai
@@ -1097,8 +1201,9 @@ concepts:
   nazev: Hlubší etika AI
   tema: umela-inteligence
   oblast: null
+  kompetence: null
   vrstva: navazujici
-  popis: Proporcionalita, nediskriminace, transparentnost a environmentální stopa.
+  popis: 'Za používáním AI stojí etické otázky: neškodit, být spravedlivý ke všem skupinám, být průhledný v tom, jak AI rozhoduje, a myslet i na její energetickou náročnost. Etika není dodatek — patří už do návrhu.'
   rvp: []
   cile: []
   kriteria: []
@@ -1117,8 +1222,9 @@ concepts:
   nazev: Deepfakes a syntetická média
   tema: umela-inteligence
   oblast: null
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Rozpoznání a provenience (SynthID, C2PA); dopady na důvěru.
+  popis: AI umí vyrobit falešné, ale realisticky vypadající video, foto nebo hlas. Vědět, že „vidět neznamená věřit", a znát způsoby ověření původu (vodoznaky jako SynthID, C2PA) je dnes nutná obrana proti podvodům a dezinformacím.
   rvp: []
   cile: []
   kriteria: []
@@ -1137,8 +1243,9 @@ concepts:
   nazev: AI a společnost
   tema: umela-inteligence
   oblast: null
+  kompetence: null
   vrstva: navazujici
-  popis: Dopady na práci a dezinformace; spoluutváření AI („Shape AI").
+  popis: AI mění práci, vzdělávání i to, jak vzniká a šíří se informace — přináší příležitosti i rizika (dezinformace, závislost). Být aktivní znamená nejen se přizpůsobit, ale i spolurozhodovat, jak se AI má a nemá používat.
   rvp: []
   cile: []
   kriteria: []
@@ -1149,7 +1256,7 @@ concepts:
   - tvorba-obsahu-etika-autorstvi-a-oznacovani
   - digitalni-obcanstvi-etika-ai-ve-skole
   - digitalni-obcanstvi-pravo-a-etika
-  - tvorba-aplikaci-iluze-kompetence
+  - tvorba-aplikaci-iluze-ze-to-umim
   tagy:
   - ai
   - etika
@@ -1161,8 +1268,9 @@ concepts:
   nazev: Datová gramotnost
   tema: data-databaze
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Číst, interpretovat a kriticky posoudit data — předstupeň AI gramotnosti.
+  popis: 'Schopnost data přečíst, správně pochopit a kriticky posoudit — ne s nimi jen technicky pracovat. Ptáš se: odkud data jsou, kdo je sebral, co v nich chybí a jestli závěr opravdu plyne z čísel. Je to i předstupeň porozumění AI.'
   rvp:
   - kod: INF-INF-001-ZV9-001
     vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
@@ -1182,8 +1290,9 @@ concepts:
   nazev: Datový cyklus
   tema: data-databaze
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Sběr → čištění → analýza → vizualizace → interpretace jako ucelený příběh.
+  popis: 'Práce s daty je příběh o pěti krocích: sběr → čištění → analýza → vizualizace → interpretace. Když některý přeskočíš (třeba čištění), zkreslíš i výsledek na konci.'
   rvp:
   - kod: INF-INF-001-ZV9-001
     vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
@@ -1203,8 +1312,9 @@ concepts:
   nazev: Strukturovaná vs. nestrukturovaná data
   tema: data-databaze
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Rozdíl mezi tabulkou a volným textem/obrazem.
+  popis: Strukturovaná data mají jasný řád (tabulka s řádky a sloupci), nestrukturovaná ho nemají (volný text, fotky, videa). Každý druh se ukládá i zpracovává jinak — a nestrukturovaných dat je dnes většina.
   rvp:
   - kod: INF-INF-001-ZV9-002
     vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
@@ -1224,8 +1334,9 @@ concepts:
   nazev: Tabulky a relační model
   tema: data-databaze
   oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: core
-  popis: Řádky, sloupce, klíče a vztahy; evidence dat v informačním systému.
+  popis: 'Nejběžnější způsob, jak evidovat data: tabulky s řádky (záznamy) a sloupci (vlastnosti), propojené přes klíče. Tak fungují školní systémy, e-shopy i většina aplikací „na pozadí".'
   rvp:
   - kod: INF-INF-003-ZV9-009
     vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
@@ -1246,8 +1357,9 @@ concepts:
   nazev: Vizualizace a volba grafu
   tema: data-databaze
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: core
-  popis: Kdy který graf, čtení os a měřítek; modelování dat grafem či schématem.
+  popis: Dobrý graf udělá z čísel srozumitelný příběh — ale jen když zvolíš správný typ (spojnicový na vývoj v čase, sloupcový na porovnání) a čteš osy a měřítka. Špatně zvolený nebo zmanipulovaný graf umí naopak klamat.
   rvp:
   - kod: INF-INF-001-ZV9-003
     vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
@@ -1270,8 +1382,9 @@ concepts:
   nazev: Dotazování (SQL)
   tema: data-databaze
   oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Základní dotazy nad daty (SELECT, WHERE, JOIN) a pravidla pro práci se záznamy.
+  popis: SQL je jazyk, kterým se databáze ptáš na to, co potřebuješ („vyber všechny žáky z 8.A"). Základní příkazy (SELECT, WHERE, JOIN) umí data filtrovat, propojovat a vybírat z tabulek.
   rvp:
   - kod: INF-INF-003-ZV9-009
     vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
@@ -1296,8 +1409,9 @@ concepts:
   nazev: Účel informačních systémů
   tema: data-databaze
   oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Posoudit účel a užitečnost systémů, které používám.
+  popis: Informační systém je software, který eviduje a zpracovává data pro nějakou potřebu — školní matrika, rezervace, e-shop. Umět posoudit, k čemu systém slouží a jestli je opravdu užitečný, patří k digitální gramotnosti.
   rvp:
   - kod: INF-INF-003-ZV9-008
     vystup: posoudí účel a užitečnost informačních systémů, které používá
@@ -1320,8 +1434,9 @@ concepts:
   nazev: Statistická gramotnost
   tema: data-databaze
   oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: Korelace vs. kauzalita, reprezentativnost a zavádějící grafy.
+  popis: 'Aby tě čísla nezmátla: korelace (dvě věci jdou spolu) neznamená kauzalitu (jedna způsobuje druhou), malý nebo nereprezentativní vzorek klame a graf jde snadno „natáhnout" k požadovanému závěru. Klíčová občanská dovednost.'
   rvp:
   - kod: INF-INF-001-ZV9-001
     vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
@@ -1344,8 +1459,9 @@ concepts:
   nazev: Čištění reálných dat
   tema: data-databaze
   oblast: informacni-systemy
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: Chybějící hodnoty, duplicity a nekonzistence — nejdůležitější a nejnudnější část.
+  popis: Skutečná data jsou „špinavá" — chybí hodnoty, opakují se, jsou v různých formátech. Jejich úklid zabere většinu práce a je nudný, ale bez něj vyjde ze sebelepší analýzy nesmysl.
   rvp:
   - kod: INF-INF-003-ZV9-010
     vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
@@ -1366,8 +1482,9 @@ concepts:
   nazev: NoSQL a dokumentové databáze
   tema: data-databaze
   oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Jiný způsob ukládání dat než tabulky.
+  popis: Ne všechno se hodí do tabulek — NoSQL databáze ukládají data volněji (třeba jako dokumenty), což se hodí pro obsah, který nemá pevný tvar. Jiný nástroj na jiný druh dat.
   rvp: []
   cile: []
   kriteria: []
@@ -1382,12 +1499,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: data-databaze-vektorove-databaze-a-embeddingy
-  nazev: Vektorové databáze a embeddingy
+- id: data-databaze-vektorove-databaze
+  nazev: Vektorové databáze
   tema: data-databaze
-  oblast: null
+  oblast: data-modelovani
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Ukládání významu jako čísel a vyhledávání podle podobnosti — páteř RAG a chatbotů.
+  popis: Text nebo obrázek se dá převést na řadu čísel (embedding), která zachycuje jeho význam. Vektorová databáze pak umí hledat podle podobnosti významu, ne podle přesné shody slov — díky tomu chatbot najde odpověď ve vlastních dokumentech (RAG).
   rvp: []
   cile: []
   kriteria: []
@@ -1405,8 +1523,9 @@ concepts:
   nazev: Programová analýza dat
   tema: data-databaze
   oblast: data-modelovani
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Zpracování dat kódem (Python + pandas) místo klikání.
+  popis: 'Když je dat moc na ruční klikání, zpracují se kódem (typicky Python + knihovna pandas). Výhoda: je to rychlé, opakovatelné a doložitelné — kdokoli spustí stejný postup a dostane stejný výsledek.'
   rvp: []
   cile: []
   kriteria: []
@@ -1422,12 +1541,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: data-databaze-konverzacni-analytika-ai-nad-daty
-  nazev: Konverzační analytika (AI nad daty)
+- id: data-databaze-analyza-dat-pomoci-ai
+  nazev: Analýza dat pomocí AI
   tema: data-databaze
-  oblast: null
+  oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: Ptám se dat přirozeným jazykem (text-to-SQL); nutnost ověřit výsledek.
+  popis: Dnes stačí data nahrát a zeptat se běžnou řečí („ukaž trend prodejů po měsících") — AI vygeneruje graf i vysvětlení. O to důležitější je umět posoudit, jestli je výsledek správný, protože AI si i tady umí čísla vymýšlet.
   rvp: []
   cile: []
   kriteria: []
@@ -1449,8 +1569,9 @@ concepts:
   nazev: Jak funguje web
   tema: tvorba-webu
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: core
-  popis: Klient–server, prohlížeč a HTTP — co se děje, když otevřu stránku.
+  popis: Když napíšeš adresu, prohlížeč (klient) požádá server, kde stránka „bydlí", a ten mu pošle její obsah přes protokol HTTP. Web je tahle nekonečná výměna požadavek–odpověď mezi prohlížeči a servery.
   rvp: []
   cile: []
   kriteria: []
@@ -1470,9 +1591,10 @@ concepts:
 - id: tvorba-webu-html
   nazev: HTML
   tema: tvorba-webu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Struktura stránky a sémantické značky.
+  popis: HTML je kostra stránky — určuje, co je nadpis, odstavec, obrázek nebo odkaz. Nejde o vzhled, ale o význam a strukturu obsahu (sémantiku), na kterou se pak „navěsí" všechno ostatní.
   rvp: []
   cile: []
   kriteria: []
@@ -1488,9 +1610,10 @@ concepts:
 - id: tvorba-webu-css
   nazev: CSS
   tema: tvorba-webu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Vzhled a layout stránky (Flexbox/Grid, responzivita).
+  popis: 'CSS dává stránce vzhled: barvy, písmo, rozvržení. Moderní nástroje (Flexbox, Grid) umí uspořádat prvky tak, aby se stránka hezky přizpůsobila mobilu i velké obrazovce (responzivita).'
   rvp: []
   cile: []
   kriteria: []
@@ -1510,8 +1633,9 @@ concepts:
   nazev: Doména a hosting
   tema: tvorba-webu
   oblast: digitalni-technologie
+  kompetence: null
   vrstva: core
-  popis: Jak dostat web z počítače online, aby ho viděl kdokoli.
+  popis: Aby tvůj web viděl kdokoli, potřebuje „bydlet" na serveru (hosting) a mít adresu, kterou si lidi zapamatují (doménu, třeba mujweb.cz). Dnes to jde i zdarma za pár minut — „publikuj svůj web" je reálný cíl i pro začátečníka.
   rvp: []
   cile: []
   kriteria: []
@@ -1527,12 +1651,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: tvorba-webu-interaktivita-javascript-dom
-  nazev: Interaktivita (JavaScript, DOM)
+- id: tvorba-webu-interaktivita-javascript
+  nazev: Interaktivita (JavaScript)
   tema: tvorba-webu
-  oblast: null
+  oblast: algoritmizace
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Oživení stránky — reakce na akce uživatele.
+  popis: JavaScript stránku oživí — reaguje na kliknutí, mění obsah, počítá. Dělá to tak, že za běhu upravuje strukturu stránky (té se říká DOM), takže se web chová jako aplikace, ne jen jako statický plakát.
   rvp: []
   cile: []
   kriteria: []
@@ -1549,9 +1674,10 @@ concepts:
 - id: tvorba-webu-ai-asistovana-tvorba-webu
   nazev: AI-asistovaná tvorba webu
   tema: tvorba-webu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: v0, Lovable, Bolt, Claude Artifacts — z popisu vznikne web; hodnota v úpravách a hodnocení.
+  popis: Nástroje jako v0, Lovable nebo Claude Artifacts vytvoří funkční stránku z pouhého popisu za pár vteřin. Těžiště se tím posouvá od „napiš každou značku ručně" k „rozuměj tomu, co vzniklo, uprav to a posuď kvalitu".
   rvp: []
   cile: []
   kriteria: []
@@ -1572,14 +1698,15 @@ concepts:
 - id: tvorba-webu-frameworky
   nazev: Frameworky
   tema: tvorba-webu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: React ap. a CSS frameworky (Tailwind) pro větší projekty.
+  popis: U větších webů se nepíše všechno od nuly — frameworky (React a spol.) a knihovny stylů (Tailwind) dávají hotové stavební bloky a řád. Zrychlují práci, ale předpokládají, že rozumíš základům pod nimi.
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
-  - tvorba-webu-interaktivita-javascript-dom
+  - tvorba-webu-interaktivita-javascript
   - programovani-funkce-a-procedury
   souvisi:
   - programovani-blokove-vs-textove-programovani
@@ -1593,8 +1720,9 @@ concepts:
   nazev: Nasazení webu
   tema: tvorba-webu
   oblast: digitalni-technologie
+  kompetence: kdi-zap
   vrstva: navazujici
-  popis: Publikace přes Vercel, Netlify nebo GitHub Pages.
+  popis: Nasazení (deployment) je krok, kdy se web z tvého počítače dostane na internet. Služby jako Vercel, Netlify nebo GitHub Pages to zvládnou pár kliknutími nebo automaticky po každém uložení kódu.
   rvp: []
   cile: []
   kriteria: []
@@ -1613,9 +1741,10 @@ concepts:
 - id: tvorba-webu-pristupnost-a-seo
   nazev: Přístupnost a SEO
   tema: tvorba-webu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Web dostupný všem a nalezitelný ve vyhledávačích.
+  popis: Přístupnost (a11y) znamená udělat web použitelný i pro lidi s hendikepem (čtečky obrazovky, ovládání klávesnicí); SEO je péče o to, aby web našly vyhledávače. Obojí rozhoduje, kolik lidí se k obsahu vůbec dostane.
   rvp: []
   cile: []
   kriteria: []
@@ -1634,9 +1763,10 @@ concepts:
 - id: tvorba-webu-ux-ui-a-design-webu
   nazev: UX/UI a design webu
   tema: tvorba-webu
-  oblast: null
+  oblast: informacni-systemy
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Návrh použitelného a srozumitelného rozhraní.
+  popis: UI je to, jak web vypadá, UX to, jak se používá. Dobrý návrh vede uživatele přirozeně k cíli — je srozumitelný, přehledný a nenutí přemýšlet, kam kliknout.
   rvp: []
   cile: []
   kriteria: []
@@ -1654,9 +1784,10 @@ concepts:
 - id: tvorba-aplikaci-co-je-aplikace
   nazev: Co je aplikace
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: core
-  popis: Mobilní/webová/desktopová appka; rozdíl frontend vs. backend.
+  popis: Aplikace je program pro konkrétní účel — může běžet v telefonu, v prohlížeči nebo na počítači. Skládá se z části, kterou vidíš a ovládáš (frontend), a z části, která pracuje na pozadí s daty (backend).
   rvp: []
   cile: []
   kriteria: []
@@ -1670,9 +1801,10 @@ concepts:
 - id: tvorba-aplikaci-no-code-low-code
   nazev: No-code / low-code
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: core
-  popis: Tvorba aplikace bez psaní kódu jako vstupní brána.
+  popis: Platformy, na kterých appku poskládáš vizuálně bez psaní kódu (nebo skoro). Jsou skvělou vstupní branou — rychle vytvoříš něco funkčního a pochopíš logiku, než se pustíš do skutečného programování.
   rvp: []
   cile: []
   kriteria: []
@@ -1689,8 +1821,9 @@ concepts:
   nazev: Logika aplikace
   tema: tvorba-aplikaci
   oblast: algoritmizace
+  kompetence: kdi-vin
   vrstva: core
-  popis: Stavy, vstupy a akce — jak se appka chová.
+  popis: 'Srdce každé appky: co se stane, když uživatel něco udělá. Řídí ji stavy (v jakém je appka režimu), vstupy (co uživatel zadá) a akce (co se má provést) — dohromady určují, jak se aplikace chová.'
   rvp: []
   cile: []
   kriteria: []
@@ -1708,9 +1841,10 @@ concepts:
 - id: tvorba-aplikaci-vibecoding
   nazev: Vibecoding
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: algoritmizace
+  kompetence: kdi-vin
   vrstva: core
-  popis: Popíšu záměr přirozeným jazykem, AI generuje kód; já řídím a hodnotím.
+  popis: 'Nový styl tvorby: popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš, než píšeš řádek po řádku. Umožní postavit reálnou věc rychle — ale bez porozumění základům snadno uvízneš, jakmile se něco rozbije.'
   rvp: []
   cile: []
   kriteria: []
@@ -1732,9 +1866,10 @@ concepts:
 - id: tvorba-aplikaci-ai-nastroje-pro-tvorbu
   nazev: AI nástroje pro tvorbu
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: core
-  popis: Copilot, Cursor, Claude Code, Replit, Lovable jako programovací parťáci.
+  popis: Copilot, Cursor, Claude Code, Replit nebo Lovable jsou „programovací parťáci", kteří napovídají, píší i opravují kód. Nejsou náhradou porozumění — jsou to nástroje, které tě zrychlí, když víš, co chceš.
   rvp: []
   cile: []
   kriteria: []
@@ -1752,9 +1887,10 @@ concepts:
 - id: tvorba-aplikaci-prace-s-api-a-backendem
   nazev: Práce s API a backendem
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Propojení appky se službami a serverovou logikou.
+  popis: Aby appka uměla víc než jen zobrazovat, propojí se přes API s dalšími službami a se serverovou částí, která pracuje s daty. Právě tady se z „hračky" stává skutečná aplikace.
   rvp: []
   cile: []
   kriteria: []
@@ -1772,8 +1908,9 @@ concepts:
   nazev: Databáze a autentizace
   tema: tvorba-aplikaci
   oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Ukládání dat aplikace a přihlašování uživatelů.
+  popis: 'Appky si pamatují data (databáze) a musí poznat, kdo je kdo (autentizace — přihlašování). S tím přichází i odpovědnost: chránit hesla a osobní údaje uživatelů.'
   rvp: []
   cile: []
   kriteria: []
@@ -1793,9 +1930,10 @@ concepts:
 - id: tvorba-aplikaci-zivotni-cyklus-vyvoje
   nazev: Životní cyklus vývoje
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: informacni-systemy
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Verzování, testování a nasazení jako součást vývoje.
+  popis: 'Aplikace nevznikne jedním skokem — má cyklus: navrhnout, naprogramovat, otestovat, nasadit a vylepšovat. Patří k němu verzování, testování i sbírání zpětné vazby od uživatelů.'
   rvp: []
   cile: []
   kriteria: []
@@ -1812,9 +1950,10 @@ concepts:
 - id: tvorba-aplikaci-publikace-do-app-storu
   nazev: Publikace do app storů
   tema: tvorba-aplikaci
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-zap
   vrstva: navazujici
-  popis: Jak se appka dostane k uživatelům.
+  popis: Aby se hotová appka dostala k lidem, projde publikací — na webu je to nasazení, u mobilů obchody (App Store, Google Play) s jejich pravidly a schvalováním.
   rvp: []
   cile: []
   kriteria: []
@@ -1826,12 +1965,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: tvorba-aplikaci-iluze-kompetence
-  nazev: Iluze kompetence
+- id: tvorba-aplikaci-iluze-ze-to-umim
+  nazev: Iluze, že to umím
   tema: tvorba-aplikaci
   oblast: null
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Proč rozumět základům — AI kód funguje, dokud se nerozbije.
+  popis: 'Když za tebe appku „poskládá" AI, snadno vznikne pocit, že to umíš — dokud se něco nerozbije a ty nevíš proč. Proto se vyplatí rozumět základům: ne abys všechno psal ručně, ale abys uměl poznat a opravit, když to selže.'
   rvp: []
   cile: []
   kriteria: []
@@ -1851,8 +1991,9 @@ concepts:
   nazev: Vizuální jazyk
   tema: tvorba-obsahu
   oblast: null
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Kompozice, barva, kontrast, typografie a formáty — základ, který AI nenahradí.
+  popis: 'Základní „gramatika" obrazu: kompozice, barva, kontrast, typografie a formáty. AI ti obrázek vygeneruje, ale rozhodnout, jestli je dobrý a proč, musíš ty — a k tomu potřebuješ vkus a tenhle základ.'
   rvp: []
   cile: []
   kriteria: []
@@ -1868,9 +2009,10 @@ concepts:
 - id: tvorba-obsahu-prompt-pro-media
   nazev: Prompt pro média
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Jak popsat obraz, video nebo hudbu, aby vznikl zamýšlený výstup.
+  popis: 'Kvalita generovaného obrazu, videa nebo hudby stojí a padá s tím, jak dobře je popíšeš — styl, náladu, světlo, tempo, žánr. Je to dovednost sama o sobě: naučit se „mluvit" s nástrojem tak, aby vytvořil, co máš v hlavě.'
   rvp: []
   cile: []
   kriteria: []
@@ -1888,9 +2030,10 @@ concepts:
 - id: tvorba-obsahu-generativni-obraz
   nazev: Generativní obraz
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Tvorba obrázků z popisu (Midjourney, Nano Banana, DALL·E, Firefly).
+  popis: Nástroje jako Midjourney, Nano Banana nebo DALL·E vytvoří obrázek z textového popisu za pár vteřin. Otevírá to tvorbu i lidem, kteří neumí kreslit — s tím ale přichází i otázky autorství a etiky.
   rvp: []
   cile: []
   kriteria: []
@@ -1908,8 +2051,9 @@ concepts:
   nazev: Etika, autorství a označování
   tema: tvorba-obsahu
   oblast: null
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Čí data model trénoval, komu patří výstup a jak označit AI obsah.
+  popis: 'U generovaného obsahu je potřeba řešit: na čích dílech se model učil, komu patří výsledek a jak dát najevo, že je obsah vytvořený AI. Poctivé označení AI obsahu se stává standardem i zákonnou povinností.'
   rvp: []
   cile: []
   kriteria: []
@@ -1929,9 +2073,10 @@ concepts:
 - id: tvorba-obsahu-generativni-video
   nazev: Generativní video
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Video z textu/obrázku (Sora, Veo, Runway) a jeho rizika.
+  popis: AI dnes vytvoří realistické video z textu nebo obrázku (Sora, Veo, Runway) i se zvukem. Je to mocný tvůrčí nástroj — a zároveň zdroj rizik, protože stejná technologie umí i přesvědčivé dezinformace a deepfakes.
   rvp: []
   cile: []
   kriteria: []
@@ -1951,9 +2096,10 @@ concepts:
 - id: tvorba-obsahu-generativni-hudba-a-hlas
   nazev: Generativní hudba a hlas
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Skladba a hlas z promptu (Suno, ElevenLabs); klonování hlasu a jeho rizika.
+  popis: Nástroje jako Suno nebo ElevenLabs složí celou písničku nebo napodobí hlas z krátké ukázky. Vedle tvůrčích možností to přináší i vážná rizika — zneužití cizího hlasu a otázky autorských práv.
   rvp: []
   cile: []
   kriteria: []
@@ -1970,9 +2116,10 @@ concepts:
 - id: tvorba-obsahu-strih-a-postprodukce-s-ai
   nazev: Střih a postprodukce s AI
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Titulky, čištění zvuku a úprava videa přepisem (CapCut, Descript).
+  popis: 'AI dnes zvládne velkou část dokončovacích prací: automatické titulky, čištění zvuku, výběr nejlepších záběrů nebo úpravu videa přepisem textu (CapCut, Descript). Zrychluje to nejotravnější části tvorby.'
   rvp: []
   cile: []
   kriteria: []
@@ -1984,12 +2131,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: tvorba-obsahu-konzistence-a-kontrola
-  nazev: Konzistence a kontrola
+- id: tvorba-obsahu-kontrola-nad-vysledkem
+  nazev: Kontrola nad výsledkem
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Udržení postavy/stylu, in/out-painting, editace přirozeným jazykem.
+  popis: Vygenerovat jeden hezký obrázek je snadné; těžší je udržet stejnou postavu nebo styl napříč více obrázky a mít nad výsledkem skutečnou kontrolu. K tomu slouží referenční obrázky, dokreslování (in/out-painting) a úpravy přirozeným jazykem.
   rvp: []
   cile: []
   kriteria: []
@@ -2002,12 +2150,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: tvorba-obsahu-provenience-a-vodoznaky
-  nazev: Provenience a vodoznaky
+- id: tvorba-obsahu-puvod-obsahu-a-vodoznaky
+  nazev: Původ obsahu a vodoznaky
   tema: tvorba-obsahu
   oblast: null
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: SynthID a C2PA Content Credentials — jak se ověřuje původ obsahu.
+  popis: Jak poznat, jestli je obsah pravý, nebo vytvořený AI? Pomáhají vodoznaky (SynthID) a metadata o původu souboru (C2PA). Důležité je vědět, že žádný jediný test není stoprocentní — ověřování původu je vrstevnaté.
   rvp: []
   cile: []
   kriteria: []
@@ -2023,17 +2172,18 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: tvorba-obsahu-vicemodalni-workflow
-  nazev: Vícemodální workflow
+- id: tvorba-obsahu-propojeni-nastroju-obraz-video-zvuk
+  nazev: Propojení nástrojů (obraz, video, zvuk)
   tema: tvorba-obsahu
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Kombinace obraz → video → hudba → hlas v jednom projektu.
+  popis: 'Velké projekty vznikají spojením několika nástrojů: z obrázku uděláš video, k němu složíš hudbu a přidáš hlas. Umět nástroje řetězit dohromady je dnes samostatná tvůrčí dovednost.'
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
-  - tvorba-obsahu-konzistence-a-kontrola
+  - tvorba-obsahu-kontrola-nad-vysledkem
   souvisi: []
   tagy:
   - obsah
@@ -2045,8 +2195,9 @@ concepts:
   nazev: Herní smyčka, scéna a objekty
   tema: herni-vyvoj
   oblast: algoritmizace
+  kompetence: kdi-tdo
   vrstva: core
-  popis: 'Základní stavba hry: smyčka, scéna a sprity.'
+  popis: 'Každá hra běží v neustále se opakující smyčce: načti vstup → přepočítej svět → vykresli obraz, a to mnohokrát za vteřinu. V ní žijí objekty (sprity) rozmístěné ve scéně — postavy, překážky, sběratelné předměty.'
   rvp: []
   cile: []
   kriteria: []
@@ -2063,8 +2214,9 @@ concepts:
   nazev: Vstup hráče, stavy a skóre
   tema: herni-vyvoj
   oblast: algoritmizace
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Reakce na ovládání a udržování stavu hry.
+  popis: Hra reaguje na ovládání (klávesy, dotyk) a přitom si pamatuje svůj stav — kolik má hráč životů, jaké je skóre, jestli běží nebo skončila. Tenhle „paměťový" základ dělá ze scény skutečnou hru.
   rvp: []
   cile: []
   kriteria: []
@@ -2082,9 +2234,10 @@ concepts:
 - id: herni-vyvoj-kolize-a-jednoducha-fyzika
   nazev: Kolize a jednoduchá fyzika
   tema: herni-vyvoj
-  oblast: null
+  oblast: algoritmizace
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Detekce dotyku objektů a základní pohyb.
+  popis: 'Aby hra fungovala, musí poznat, když se dva objekty dotknou (kolize) — třeba hráč sebere minci nebo narazí do zdi. K tomu patří i základní pohyb: rychlost, gravitace, odraz.'
   rvp: []
   cile: []
   kriteria: []
@@ -2100,8 +2253,9 @@ concepts:
   nazev: Herní design
   tema: herni-vyvoj
   oblast: null
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Pravidla, obtížnost a zpětná vazba hráči.
+  popis: 'Návrh toho, co dělá hru zábavnou: pravidla, obtížnost a zpětná vazba hráči. Dobrý design drží hráče v „proudu" (flow) — ani nuda z přílišné lehkosti, ani frustrace z přetížení.'
   rvp: []
   cile: []
   kriteria: []
@@ -2119,8 +2273,9 @@ concepts:
   nazev: Scratch jako vstup
   tema: herni-vyvoj
   oblast: algoritmizace
+  kompetence: kdi-tdo
   vrstva: core
-  popis: Blokové prostředí pro první hru bez syntaxe.
+  popis: Blokové prostředí, kde první hru poskládáš z barevných bloků bez rizika překlepů. Skvěle na něm pochopíš smyčky, události, podmínky i proměnné, než přejdeš k textovému kódu.
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -2139,9 +2294,10 @@ concepts:
 - id: herni-vyvoj-lehke-enginy
   nazev: Lehké enginy
   tema: herni-vyvoj
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: GDevelop a Roblox Studio (Luau) — most ke skutečné hře.
+  popis: 'Mezikrok mezi Scratchem a plnými nástroji: GDevelop (bez kódu, přes logiku událostí) nebo Roblox Studio dají skutečnou hru, kterou jde sdílet. Nižší práh, ale vážnější výsledek.'
   rvp: []
   cile: []
   kriteria: []
@@ -2156,9 +2312,10 @@ concepts:
 - id: herni-vyvoj-skutecne-enginy
   nazev: Skutečné enginy
   tema: herni-vyvoj
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Godot (GDScript) a Unity (C#) s textovým kódem.
+  popis: 'Profesionální nástroje s textovým kódem: Godot (jazyk GDScript, blízký Pythonu, zdarma a odlehčený) nebo Unity (C#, silné na mobilech). Umí víc, ale mají strmější křivku učení.'
   rvp: []
   cile: []
   kriteria: []
@@ -2176,9 +2333,10 @@ concepts:
 - id: herni-vyvoj-ai-generovani-assetu
   nazev: AI generování assetů
   tema: herni-vyvoj
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Text-to-3D a textury (Roblox Cube, Meshy) — místo hodin modelování.
+  popis: AI dnes vytvoří herní grafiku a 3D objekty z popisu (Roblox Cube, Meshy) — místo hodin modelování napíšeš, co chceš. Snižuje to bariéru, ale těžiště se přesouvá k designu a kurátorství.
   rvp: []
   cile: []
   kriteria: []
@@ -2195,9 +2353,10 @@ concepts:
 - id: herni-vyvoj-ai-asistenti-a-kod
   nazev: AI asistenti a kód
   tema: herni-vyvoj
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-tdo
   vrstva: navazujici
-  popis: Roblox Assistant, Unity Muse — generování a úprava kódu hry.
+  popis: Vestavění pomocníci (Roblox Assistant, Unity Muse) i externí AI umí napsat a upravit kód hry. Práce se mění z „napiš každý řádek" na „popiš záměr a pochop či oprav, co AI vytvořila".
   rvp: []
   cile: []
   kriteria: []
@@ -2218,9 +2377,10 @@ concepts:
 - id: herni-vyvoj-publikace-hry
   nazev: Publikace hry
   tema: herni-vyvoj
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-zap
   vrstva: navazujici
-  popis: Sdílení hry (např. itch.io) — „zahraj si moji hru".
+  popis: Hotovou hru sdílíš s ostatními — třeba na itch.io nebo přímo v Robloxu. „Zahraj si moji hru" je silná motivace a zároveň zážitek spoluautorství a zpětné vazby od hráčů.
   rvp: []
   cile: []
   kriteria: []
@@ -2237,8 +2397,9 @@ concepts:
   nazev: Vstup–zpracování–výstup na zařízení
   tema: fyzicky-computing
   oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: core
-  popis: Jak fyzické zařízení čte vstup, zpracuje ho a řídí výstup.
+  popis: 'Fyzické zařízení pracuje ve stejné smyčce jako počítač, ale „hmatatelně": senzorem něco změří (vstup), program to vyhodnotí (zpracování) a ovládne třeba LED nebo motor (výstup). Kód tu má okamžitý fyzický efekt.'
   rvp: []
   cile: []
   kriteria: []
@@ -2253,9 +2414,10 @@ concepts:
 - id: fyzicky-computing-senzory-a-aktuatory
   nazev: Senzory a aktuátory
   tema: fyzicky-computing
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: core
-  popis: Zařízení „vnímá" prostředí a „koná" v něm.
+  popis: Senzory jsou „smysly" zařízení — měří teplo, světlo, pohyb, zvuk. Aktuátory jsou jeho „svaly" — rozsvítí, zapípají, roztočí motor. Dohromady umožňují zařízení vnímat prostředí a jednat v něm.
   rvp: []
   cile: []
   kriteria: []
@@ -2273,8 +2435,9 @@ concepts:
   nazev: micro:bit
   tema: fyzicky-computing
   oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: core
-  popis: 'Vstupní platforma: MakeCode a MicroPython, senzory na desce.'
+  popis: Malá školní destička se senzory přímo na desce, ideální pro první kroky ve fyzickém computingu. Programuje se blokově (MakeCode) i textově (MicroPython), takže roste s tebou od úplných začátků.
   rvp:
   - kod: INF-INF-002-ZV9-007
     vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
@@ -2295,8 +2458,9 @@ concepts:
   nazev: Události a řízení výstupu
   tema: fyzicky-computing
   oblast: algoritmizace
+  kompetence: kdi-vin
   vrstva: core
-  popis: Reakce na stisk/zatřesení a ovládání LED, pinů, motorů.
+  popis: Zařízení reaguje na podněty — stisk tlačítka, zatřesení, změnu světla — a podle nich ovládá výstupy (LED matici, piny, motory). Je to událostmi řízené programování, ale s hmatatelným výsledkem.
   rvp: []
   cile: []
   kriteria: []
@@ -2313,9 +2477,10 @@ concepts:
 - id: fyzicky-computing-arduino-a-raspberry-pi
   nazev: Arduino a Raspberry Pi
   tema: fyzicky-computing
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Krok k reálné elektronice a plnému počítači.
+  popis: 'Krok dál za micro:bit: Arduino tě přiblíží skutečné elektronice (nepájivé pole, víc senzorů), Raspberry Pi je plnohodnotný malý počítač s Linuxem pro náročnější projekty.'
   rvp: []
   cile: []
   kriteria: []
@@ -2331,9 +2496,10 @@ concepts:
 - id: fyzicky-computing-roboti-a-vozitka
   nazev: Roboti a vozítka
   tema: fyzicky-computing
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: micro:bit + Maqueen, Lego Spike — pohyblivá robotika.
+  popis: Když se k desce přidá podvozek a motory (micro:bit + Maqueen, Lego Spike), vznikne pohyblivý robot. Sleduje čáru, vyhýbá se překážkám — a spojuje programování s pohybem v reálném světě.
   rvp: []
   cile: []
   kriteria: []
@@ -2349,8 +2515,9 @@ concepts:
   nazev: IoT
   tema: fyzicky-computing
   oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Senzory → cloud → dashboard; chytrá domácnost a měření prostředí.
+  popis: 'Internet věcí (IoT): senzory posílají naměřená data po síti do cloudu, kde se zobrazí na přehledu (dashboardu). Tak funguje chytrá domácnost i měření prostředí — spojení hardwaru, sítě a dat dohromady.'
   rvp: []
   cile: []
   kriteria: []
@@ -2369,12 +2536,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: fyzicky-computing-tinyml-edge-ai
-  nazev: TinyML / edge AI
+- id: fyzicky-computing-ai-primo-na-zarizeni-tinyml
+  nazev: AI přímo na zařízení (TinyML)
   tema: fyzicky-computing
   oblast: data-modelovani
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: micro:bit CreateAI — natrénuj klasifikační model přímo na zařízení.
+  popis: Strojové učení, které běží přímo na malém zařízení bez cloudu. V nástroji micro:bit CreateAI si sám nasbíráš data (třeba pohyby), natrénuješ model a nahraješ ho do desky — celý postup AI si osaháš fyzicky v ruce.
   rvp:
   - kod: INF-INF-001-ZV9-004
     vystup: natrénuje model strojového učení
@@ -2396,8 +2564,9 @@ concepts:
   nazev: Komunikace mezi zařízeními
   tema: fyzicky-computing
   oblast: digitalni-technologie
+  kompetence: kdi-vin
   vrstva: navazujici
-  popis: Rádio a Bluetooth — zařízení si posílají data.
+  popis: Zařízení si mohou posílat data bezdrátově — přes rádio nebo Bluetooth. Díky tomu spolu můžou „mluvit" (dva micro:bity, ovladač a robot) a tvořit propojené projekty.
   rvp: []
   cile: []
   kriteria: []
@@ -2417,8 +2586,9 @@ concepts:
   nazev: Hesla a 2FA
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Silná unikátní hesla, správci hesel a dvoufaktorové ověření.
+  popis: Silné a hlavně unikátní heslo ke každé službě je základ; zapamatuje ho za tebe správce hesel. Dvoufaktorové ověření (2FA) přidá druhý zámek (kód z aplikace), takže samotné uhádnuté heslo už útočníkovi nestačí.
   rvp:
   - kod: INF-INF-004-ZV9-012
     vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
@@ -2436,8 +2606,9 @@ concepts:
   nazev: Phishing a sociální inženýrství
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Jak podvodníci lákají údaje a jak to poznat.
+  popis: 'Nejčastější útok necílí na počítač, ale na člověka: podvodná zpráva tě má přimět kliknout nebo vyzradit heslo. Poznat naléhavý tón, falešný odkaz nebo „výhru" je důležitější než jakýkoli antivir.'
   rvp:
   - kod: INF-INF-004-ZV9-012
     vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
@@ -2456,8 +2627,9 @@ concepts:
   nazev: Soukromí a digitální stopa
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Co po mně na internetu zůstává a jak to omezit.
+  popis: Vším, co online děláš, za sebou necháváš stopu — příspěvky, lajky, polohu. Vědět, co po tobě zůstává a jak to omezit (nastavení soukromí, míň sdílet), je základ ochrany sebe sama.
   rvp:
   - kod: INF-INF-004-ZV9-012
     vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
@@ -2478,8 +2650,9 @@ concepts:
   nazev: Bezpečné chování na sítích
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Rozumné sdílení a nastavení soukromí v aplikacích.
+  popis: 'Praktická pravidla každodenního bezpečí: rozmyslet, co sdílím a s kým, nastavit soukromí v aplikacích, nepřidávat neznámé. Většina problémů začíná chováním, ne technikou.'
   rvp:
   - kod: INF-INF-004-ZV9-012
     vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
@@ -2502,8 +2675,9 @@ concepts:
   nazev: Základní hygiena
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Aktualizace, ověřené zdroje aplikací a zálohy; zabezpečení zařízení podle rizik.
+  popis: 'Návyky, které tě ochrání před většinou hrozeb: aktualizovat systém i appky, instalovat jen z ověřených zdrojů, zálohovat a zabezpečit zařízení podle toho, co ti reálně hrozí.'
   rvp:
   - kod: INF-INF-004-ZV9-012
     vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
@@ -2521,8 +2695,9 @@ concepts:
   nazev: Šifrování a HTTPS
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Co znamená zabezpečené spojení a end-to-end šifrování.
+  popis: Šifrování promění data v nečitelnou změť pro každého, kdo nemá klíč. Zámeček a „https" v adrese znamená, že spojení k webu je šifrované; end-to-end šifrování (třeba v messengerech) zajistí, že zprávu přečte jen příjemce.
   rvp: []
   cile: []
   kriteria: []
@@ -2540,8 +2715,9 @@ concepts:
   nazev: Typy útoků
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Malware, ransomware a jak se šíří.
+  popis: 'Přehled hrozeb, se kterými se lze setkat: malware (škodlivý program), ransomware (zašifruje data a žádá výkupné) a další. Vědět, jak se šíří, pomáhá se jim vyhnout.'
   rvp:
   - kod: INF-INF-004-ZV9-012
     vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
@@ -2560,8 +2736,9 @@ concepts:
   nazev: AI podvody
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Deepfakes, klonování hlasu a dokonalý AI phishing — staré rady už neplatí.
+  popis: 'AI posunula podvody na novou úroveň: deepfake video, naklonovaný hlas známého člověka nebo dokonalý phishing bez chyb. Stará rada „poznáš to podle špatné češtiny" už neplatí — nová obrana je ověřit si to jinou cestou.'
   rvp: []
   cile: []
   kriteria: []
@@ -2581,15 +2758,16 @@ concepts:
   nazev: Sextortion a citlivý obsah
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: AI-upravené intimní fotky a vydírání — mimořádně citlivé riziko pro nezletilé.
+  popis: Vydírání intimními fotkami — dnes i falešnými, vytvořenými AI. Mimořádně citlivé a aktuální riziko pro nezletilé; klíčové je vědět, že v tom oběť není sama a komu se svěřit, ne mlčet ze studu.
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
   - kyberbezpecnost-ai-podvody
   souvisi:
-  - tvorba-obsahu-provenience-a-vodoznaky
+  - tvorba-obsahu-puvod-obsahu-a-vodoznaky
   - digitalni-obcanstvi-digitalni-stopa-a-soukromi
   - digitalni-obcanstvi-pravo-a-etika
   tagy:
@@ -2601,9 +2779,10 @@ concepts:
 - id: kyberbezpecnost-overovani-pres-druhy-kanal
   nazev: Ověřování přes druhý kanál
   tema: kyberbezpecnost
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Zdravá skepse a prebunking — ověřit, i když to vypadá dokonale.
+  popis: Když ti „kamarád" píše o peníze nebo „banka" chce heslo, ověř si to jinou cestou — zavolej, zeptej se napřímo. Zdravá skepse a zvyk ověřovat (prebunking) je nejlepší obrana proti podvodům, které vypadají dokonale.
   rvp: []
   cile: []
   kriteria: []
@@ -2624,8 +2803,9 @@ concepts:
   nazev: Síťová bezpečnost a CTF
   tema: kyberbezpecnost
   oblast: digitalni-technologie
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Etické hackování a soutěže jako pokročilá motivace.
+  popis: 'Pro zvídavé: jak se chrání sítě a jak přemýšlí útočník. Soutěže typu CTF (Capture the Flag) učí etické hackování hravou formou — bezpečnost zevnitř, na cvičných úlohách.'
   rvp: []
   cile: []
   kriteria: []
@@ -2642,8 +2822,9 @@ concepts:
   nazev: Kritické myšlení online
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-dat
   vrstva: core
-  popis: Ověřování informací a zdrojů, než jim uvěřím nebo je sdílím.
+  popis: 'Zvyk se u informace zastavit dřív, než jí uvěřím nebo ji pošlu dál: kdo to tvrdí, odkud to ví, co tím sleduje. Základní dovednost, bez které se v záplavě obsahu neobejdeš.'
   rvp: []
   cile: []
   kriteria: []
@@ -2658,9 +2839,10 @@ concepts:
 - id: digitalni-obcanstvi-jak-funguji-algoritmy-siti
   nazev: Jak fungují algoritmy sítí
   tema: digitalni-obcanstvi
-  oblast: null
+  oblast: digitalni-technologie
+  kompetence: kdi-dat
   vrstva: core
-  popis: Filter bubble a ekonomika pozornosti — proč vidím právě tohle.
+  popis: Co vidíš na sociálních sítích, ti vybírá algoritmus, který chce udržet tvou pozornost co nejdéle. Vzniká tak „bublina" (vidíš jen podobné názory) a ekonomika pozornosti — a pochopit to je předpoklad, aby ses v tom uměl chovat.
   rvp: []
   cile: []
   kriteria: []
@@ -2677,8 +2859,9 @@ concepts:
   nazev: Dezinformace a manipulace
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-dat
   vrstva: core
-  popis: Rozpoznání manipulativního a nepravdivého obsahu.
+  popis: Rozpoznat obsah, který má klamat nebo tebou manipulovat — falešné zprávy, vytržené citace, hrátky s emocemi. Nejde jen o „fakt/nefakt", ale i o to, jak s tebou obsah pracuje.
   rvp: []
   cile: []
   kriteria: []
@@ -2694,8 +2877,9 @@ concepts:
   nazev: Digitální stopa a soukromí
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Jaká data o sobě zanechávám a komu slouží.
+  popis: Jaká data o sobě necháváš a komu vlastně slouží. Uvědomit si hodnotu svých dat je první krok k tomu s nimi zacházet vědomě, ne je rozdávat zadarmo výměnou za „bezplatné" služby.
   rvp: []
   cile: []
   kriteria: []
@@ -2711,8 +2895,9 @@ concepts:
   nazev: Digitální wellbeing
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-bzk
   vrstva: core
-  popis: Zdravý vztah k obrazovkám a rozpoznání závislostního designu.
+  popis: 'Zdravý vztah k technologiím: rozpoznat, kdy tě appky táhnou k nekonečnému scrollování (závislostní design), a umět si nastavit hranice. Cílem není technologie zavrhnout, ale používat je tak, aby sloužily tobě.'
   rvp: []
   cile: []
   kriteria: []
@@ -2725,12 +2910,13 @@ concepts:
   zdroj: []
   pokryti_glitchem: []
   stav: draft
-- id: digitalni-obcanstvi-jadro-ai-gramotnosti
-  nazev: Jádro AI gramotnosti
+- id: digitalni-obcanstvi-rozumet-ai-halucinace-bias
+  nazev: Rozumět AI (halucinace, bias)
   tema: digitalni-obcanstvi
-  oblast: null
+  oblast: data-modelovani
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: Jak fungují LLM, proč halucinují a co je bias — jako občanská dovednost.
+  popis: 'Občanské minimum o AI: že jazykové modely předpovídají slova (a proto halucinují), že se učí z dat (a proto mají bias) a že jejich výstup je potřeba ověřovat. Netýká se jen programátorů — týká se každého, kdo AI potkává.'
   rvp: []
   cile: []
   kriteria: []
@@ -2748,13 +2934,14 @@ concepts:
   nazev: Rozpoznání AI obsahu
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-dat
   vrstva: navazujici
-  popis: Poznat generovaná a syntetická média.
+  popis: Umět odhadnout, jestli je text, obraz nebo video vytvořené AI — a vědět, že spolehlivý univerzální detektor neexistuje. Proto se víc než na „test" spoléhej na kontext a ověření zdroje.
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
-  - digitalni-obcanstvi-jadro-ai-gramotnosti
+  - digitalni-obcanstvi-rozumet-ai-halucinace-bias
   - umela-inteligence-deepfakes-a-synteticka-media
   souvisi: []
   tagy:
@@ -2768,13 +2955,14 @@ concepts:
   nazev: Etika AI ve škole
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: null
   vrstva: navazujici
-  popis: Kde je hranice mezi pomocí a podváděním.
+  popis: Kde je hranice mezi tím, když ti AI pomůže se učit, a když za tebe úkol prostě udělá (a připraví tě o učení). Patří sem i poctivost — přiznat, kde jsi AI použil.
   rvp: []
   cile: []
   kriteria: []
   prerekvizity:
-  - digitalni-obcanstvi-jadro-ai-gramotnosti
+  - digitalni-obcanstvi-rozumet-ai-halucinace-bias
   souvisi:
   - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
   tagy:
@@ -2788,8 +2976,9 @@ concepts:
   nazev: Právo a etika
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-bzk
   vrstva: navazujici
-  popis: Autorská práva a GDPR pro nezletilé.
+  popis: 'Základní pravidla digitálního světa: autorská práva (čí je co) a ochrana osobních údajů (GDPR), zvlášť u nezletilých. Vědět, co smím sdílet a co se sebou nechat dělat, je součást bezpečí.'
   rvp: []
   cile: []
   kriteria: []
@@ -2807,8 +2996,9 @@ concepts:
   nazev: Obchodní modely platforem
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: null
   vrstva: navazujici
-  popis: Jak se platí pozorností a daty.
+  popis: Když je služba „bezplatná", obvykle platíš pozorností a daty. Pochopit, jak platformy vydělávají, vysvětlí spoustu jejich chování — proč tě chtějí udržet a proč vidíš reklamy zrovna na tohle.
   rvp: []
   cile: []
   kriteria: []
@@ -2825,8 +3015,9 @@ concepts:
   nazev: Aktivní digitální občanství
   tema: digitalni-obcanstvi
   oblast: null
+  kompetence: kdi-zap
   vrstva: navazujici
-  popis: Tvorba hodnotného obsahu, ne jen konzumace.
+  popis: Být online nejen konzument, ale i tvůrce hodnotného obsahu a slušný účastník diskuse. Digitální svět spoluutváříš — tím, co sdílíš, jak se chováš a čemu dáváš prostor.
   rvp: []
   cile: []
   kriteria: []

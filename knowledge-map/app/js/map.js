@@ -11,7 +11,9 @@
     "analyza": "Analýza", "vyuziti-znalosti": "Využití znalostí"
   };
   const VRSTVA = { core: "Core koncept", navazujici: "Navazující" };
+  const VRSTVA_MAPY = { 0: "Základy a myšlení", 1: "Tvorba a programování", 2: "Umělá inteligence", 3: "Bezpečí a občanství" };
   const NORVP = "__norvp__";
+  const NOKDI = "__nokdi__";
   const LINEH = 1.5;   // řádkování textu v bublinách (CSS i výpočet fit)
 
   const esc = (s) => String(s == null ? "" : s)
@@ -48,10 +50,10 @@
   const setStatus = (t) => { statusEl.textContent = t; statusEl.classList.toggle("hidden", !t); };
 
   let DATA = null, cy = null, viewMode = "tema", conceptById = {}, pinned = null;
-  let revSouvisi = {}, revPrereq = {};   // reverzní rejstříky (hrany jsou v datech jen jednou)
+  let revSouvisi = {}, revPrereq = {};   // reverzní indexy (obousměrné čtení hran v panelu)
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/knowledge-map.yaml?v=6")
+  fetch("data/knowledge-map.yaml?v=07")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
@@ -59,11 +61,17 @@
   /* ---------- Seskupení ---------- */
   function groupDefs(mode) {
     if (mode === "tema") return DATA.temata.map((t) => ({ id: t.id, nazev: t.nazev, barva: t.barva, popis: t.popis }));
+    if (mode === "kompetence") {
+      const k = (DATA.kompetence || []).map((x) => ({ id: x.id, nazev: x.nazev, barva: x.barva }));
+      k.push({ id: NOKDI, nazev: "Nezařazeno (informatická teorie)", barva: "#ffffff" });
+      return k;
+    }
     const a = DATA.areas.map((x) => ({ id: x.id, nazev: x.nazev, barva: x.barva, popis: x.popis, kod: x.kod }));
-    a.push({ id: NORVP, nazev: "Nad rámec RVP / průřezové", barva: "#ffffff", popis: "Koncepty bez odpovídajícího očekávaného výstupu v RVP." });
+    a.push({ id: NORVP, nazev: "Průřezové (digitální kompetence a postoje)", barva: "#ffffff", popis: "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky." });
     return a;
   }
-  const groupOf = (c, mode) => mode === "tema" ? c.tema : (c.oblast || NORVP);
+  const groupOf = (c, mode) => mode === "tema" ? c.tema : mode === "kompetence" ? (c.kompetence || NOKDI) : (c.oblast || NORVP);
+  const GROUP_LABEL = { tema: "Téma", oblast: "Oblast RVP", kompetence: "Digitální kompetence" };
 
   function buildElements(mode) {
     const groups = groupDefs(mode);
@@ -86,7 +94,7 @@
       return Math.min(s, 84);
     };
 
-    const labelcolor = mode === "oblast" ? "#ffff00" : "#ffffff";  // témata bíle, RVP oblasti žlutě
+    const labelcolor = mode === "tema" ? "#ffffff" : "#ffff00";  // témata bíle, RVP oblasti a kompetence žlutě
     const nodes = [];
     groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: g.nazev, labelcolor, popis: g.popis } }));
     DATA.concepts.forEach((c) => {
@@ -106,7 +114,8 @@
   function init(data) {
     DATA = data; window.__data = data;
     data.concepts.forEach((c) => conceptById[c.id] = c);
-    // reverzní rejstříky: souvisí je symetrické, prerekvizita má i opačný směr
+    /* reverzní indexy hran (panel čte souvisí i „je prerekvizitou pro" obousměrně) */
+    revSouvisi = {}; revPrereq = {};
     data.concepts.forEach((c) => {
       (c.souvisi || []).forEach((s) => (revSouvisi[s] = revSouvisi[s] || []).push(c.id));
       (c.prerekvizity || []).forEach((p) => (revPrereq[p] = revPrereq[p] || []).push(c.id));
@@ -176,8 +185,19 @@
     /* interakce grafu */
     cy.on("tap", "node", (evt) => openDetail(evt.target));
     cy.on("tap", (evt) => {
-      if (evt.target === cy) { closeDetail(); cy.animate({ fit: { eles: cy.nodes(), padding: 40 }, duration: 300 }); }
+      if (evt.target !== cy) return;               // klik do prázdna
+      const pt = evt.position; let best = null, bestD = Infinity;
+      cy.nodes("[type='group']").forEach((g) => {
+        if (g.hasClass("filtered")) return;
+        const bb = g.boundingBox({ includeLabels: false });
+        const d = Math.hypot(pt.x - (bb.x1 + bb.x2) / 2, pt.y - bb.y1);   // vzdálenost od názvu clusteru (nahoře)
+        if (d < bestD) { bestD = d; best = g; }
+      });
+      if (best && bestD < 90 / cy.zoom()) openDetail(best);   // klik poblíž názvu → detail clusteru
+      else closeDetail();
     });
+    cy.on("mouseover", "node[type='concept']", (e) => focusNb(e.target));
+    cy.on("mouseout", "node[type='concept']", () => { if (pinned) focusNb(pinned); else clearNb(); });
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeDetail();
     });
@@ -193,7 +213,7 @@
     cy.elements().remove();
     cy.add(buildElements(mode));
     buildGroupFilter(mode);
-    document.getElementById("group-label").textContent = mode === "tema" ? "Téma" : "Oblast RVP";
+    document.getElementById("group-label").textContent = GROUP_LABEL[mode] || "Skupina";
     clusterLayout();
     cy.fit(cy.nodes(), 40);
     if (window.__drawHulls) window.__drawHulls();
@@ -252,16 +272,10 @@
     applySearch();
   }
 
-  /* Zvýraznění sousedství (proti „chuchvalci"): ztlum jen koncepty a hrany
-     kromě uzlu a jeho vazeb. Clustery (rodiče) NEztlumovat — jejich průhlednost
-     by se kaskádou propsala do bublin uvnitř (a zešedly by i zvýrazněné). */
+  /* Zvýraznění sousedství (proti „chuchvalci"): ztlum vše kromě uzlu a jeho vazeb */
   function focusNb(node) {
     const nb = node.closedNeighborhood();
-    cy.batch(() => {
-      cy.nodes("[type='concept']").addClass("nbfade");
-      cy.edges().addClass("nbfade");
-      nb.removeClass("nbfade");
-    });
+    cy.batch(() => { cy.elements().addClass("nbfade"); nb.removeClass("nbfade"); });
   }
   function clearNb() { if (cy) cy.batch(() => cy.elements().removeClass("nbfade")); }
   function applySearch() {
@@ -302,15 +316,8 @@
   function openDetail(node) {
     cy.$(":selected").unselect(); node.select();
     if (node.data("type") === "group") {
-      const gid = node.data("gid"), bg = viewMode === "tema" ? "#ffffff" : "#ffff00";
-      const cores = DATA.concepts.filter((c) => groupOf(c, viewMode) === gid && c.vrstva === "core");
-      const all = DATA.concepts.filter((c) => groupOf(c, viewMode) === gid);
-      detailBody.innerHTML =
-        `<span class="d-badge" style="background:${bg};color:#000000">${viewMode === "tema" ? "Téma" : "Oblast RVP"}</span>
-         <h2 class="d-title">${esc(node.data("label"))}</h2>
-         <p class="d-desc">${esc(node.data("popis"))}</p>
-         <div class="d-section"><h3>Konceptů: ${all.length}</h3></div>
-         <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
+      const bg = viewMode === "tema" ? "#ffffff" : "#ffff00";
+      detailBody.innerHTML = groupHtml(node.data("gid"), bg, node.data("label"));
       pinned = null; clearNb();
     } else {
       detailBody.innerHTML = conceptHtml(node.data("_c"));
@@ -330,17 +337,57 @@
     }).join("");
   }
 
+  const paras = (txt, fallback) => {
+    const t = String(txt || "").trim();
+    if (!t) return fallback ? `<p class="d-desc">${esc(fallback)}</p>` : '<span class="d-empty">—</span>';
+    return t.split(/\n\n+/).filter(Boolean).map((p) => `<p class="d-desc" style="margin-top:0;margin-bottom:10px">${esc(p)}</p>`).join("");
+  };
+
+  function groupHtml(gid, bg, label) {
+    const cores = DATA.concepts.filter((c) => groupOf(c, viewMode) === gid && c.vrstva === "core");
+    const count = DATA.concepts.filter((c) => groupOf(c, viewMode) === gid).length;
+    let src = {}, meta = "", extra = "", fallback = "";
+    if (viewMode === "tema") {
+      src = DATA.temata.find((t) => t.id === gid) || {};
+      if (src.vrstva_mapy != null) meta = `<div class="d-meta"><span class="d-pill">${esc(VRSTVA_MAPY[src.vrstva_mapy] || ("vrstva " + src.vrstva_mapy))}</span></div>`;
+      const nav = (src.navazuje_na || []).map((id) => { const t = DATA.temata.find((x) => x.id === id); return `<span class="d-tag">${esc(t ? t.nazev : id)}</span>`; }).join("");
+      if (nav) extra = `<div class="d-section"><h3>Navazuje na</h3><div class="d-tags">${nav}</div></div>`;
+    } else if (viewMode === "kompetence") {
+      src = (DATA.kompetence || []).find((k) => k.id === gid) || {};
+      if (src.kod) meta = `<div class="d-meta"><span class="d-pill">${esc(src.kod)}</span></div>`;
+      if (src.vystup) extra = `<div class="d-section"><h3>Očekávaný výstup KDI</h3><div class="d-rvp">${esc(src.vystup)}</div></div>`;
+      if (gid === NOKDI) fallback = "Ryzí informatická teorie — myšlení, primitiva programování, vnitřek infrastruktury, teorie AI.";
+      else if (!src.popis) fallback = (DATA.meta && DATA.meta.kompetence_popis) || "";
+    } else {
+      src = DATA.areas.find((a) => a.id === gid) || {};
+      if (src.kod) meta = `<div class="d-meta"><span class="d-pill">${esc(src.kod)}</span></div>`;
+      if (gid === NORVP) fallback = "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky.";
+    }
+    return `
+      <span class="d-badge" style="background:${bg};color:#000000">${esc(GROUP_LABEL[viewMode])}</span>
+      <h2 class="d-title">${esc(src.nazev || label || gid)}</h2>
+      ${meta}
+      ${paras(src.popis, fallback)}
+      ${extra}
+      <div class="d-section"><h3>Konceptů: ${count}</h3></div>
+      <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
+  }
+
   function conceptHtml(c) {
     const tema = (DATA.temata.find((t) => t.id === c.tema) || {});
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
+    const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
       ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(r.vystup)}</div>`).join("")
       : '<span class="d-empty">—</span>';
+    const kdi = komp
+      ? `<div class="d-rvp"><span class="kod">${esc(komp.kod)}</span><strong>${esc(komp.nazev)}</strong><br>${esc(komp.vystup)}</div>`
+      : '<span class="d-empty">—</span>';
     const tags = (c.tagy || []).length ? c.tagy.map((t) => `<span class="d-tag">${esc(t)}</span>`).join("") : '<span class="d-empty">—</span>';
-    const links = (arr) => (arr && arr.length) ? arr.map(link).join("") : '<span class="d-empty">—</span>';
+    const links = (arr) => (arr && arr.length) ? [...new Set(arr)].map(link).join("") : '<span class="d-empty">—</span>';
     const zdroj = (c.zdroj || []).length ? c.zdroj.map((z) => `<div class="d-rvp">${esc(z)}</div>`).join("") : '<span class="d-empty">—</span>';
-    // souvisí obousměrně (symetrická hrana uložená jen jednou); prerekvizity oběma směry
-    const souvisiAll = [...new Set([...(c.souvisi || []), ...(revSouvisi[c.id] || [])])];
+    // obousměrné hrany
+    const souvisiIds = [...new Set([...(c.souvisi || []), ...(revSouvisi[c.id] || [])])];
     const jePrereqPro = revPrereq[c.id] || [];
     return `
       <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>
@@ -348,15 +395,17 @@
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
         <span class="d-pill">${esc(c.stav || "draft")}</span>
-        <span class="d-pill">${oblast ? esc(oblast.nazev) : "nad rámec RVP"}</span>
+        <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
+        ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
       <p class="d-desc">${esc(c.popis)}</p>
       <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
+      <div class="d-section"><h3>Digitální kompetence</h3>${kdi}</div>
       <div class="d-section"><h3>Prerekvizity</h3><div class="d-links">${links(c.prerekvizity)}</div></div>
       <div class="d-section"><h3>Je prerekvizitou pro</h3><div class="d-links">${links(jePrereqPro)}</div></div>
-      <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(souvisiAll)}</div></div>
+      <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(souvisiIds)}</div></div>
       <div class="d-section"><h3>Tagy</h3><div class="d-tags">${tags}</div></div>
       <div class="d-section"><h3>Zdroj</h3>${zdroj}</div>`;
   }

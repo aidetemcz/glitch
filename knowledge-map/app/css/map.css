@@ -22,8 +22,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .control-block { display: flex; flex-direction: column; gap: 9px; }
 
 /* Přepínač zobrazení */
-.viewtoggle { display: flex; gap: 4px; background: var(--c-dark); border: 1px solid var(--c-line); border-radius: 10px; padding: 4px; }
-.vt-btn { flex: 1; padding: 9px 8px; border-radius: 7px; font-size: 14px; font-weight: 500; color: var(--c-grey-15); transition: all .12s ease; }
+.viewtoggle { display: flex; flex-direction: column; gap: 4px; background: var(--c-dark); border: 1px solid var(--c-line); border-radius: 10px; padding: 4px; }
+.vt-btn { width: 100%; text-align: left; padding: 9px 12px; border-radius: 7px; font-size: 14px; font-weight: 500; color: var(--c-grey-15); transition: all .12s ease; }
 .vt-btn.active { background: var(--c-yellow); color: var(--c-black); font-weight: 600; }
 .control-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-grey-50); }
 #search {

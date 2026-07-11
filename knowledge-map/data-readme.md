@@ -23,10 +23,14 @@ Id: `data-modelovani`, `algoritmizace`, `informacni-systemy`, `digitalni-technol
 Pole: `id`, `nazev`, `vrstva_mapy` (0–3, viz níže), `popis`, `barva`, `navazuje_na` (seznam id témat = prerekvizita na úrovni témat, pro rozvržení/šipky mezi clustery témat).
 `vrstva_mapy`: **0** = základy a myšlení, **1** = tvorba a programování, **2** = AI, **3** = bezpečí a občanství. Použij ji na vertikální/koncentrické rozvržení clusterů.
 
+### `kompetence[]` — klíčová kompetence digitální / KDI (5)
+Třetí, nezávislá osa členění. Pole: `id` (`kdi-dat`, `kdi-zap`, `kdi-tdo`, `kdi-bzk`, `kdi-vin`), `nazev`, `kod` (např. `KDI-DAT-000-ZV9-001`), `vystup` (doslovné znění očekávaného výstupu KDI), `barva`. Celková charakteristika kompetence je v `meta.kompetence_popis`.
+
 ### `concepts[]` — koncepty (uzly)
 Klíčová je **dvojí příslušnost** — každý koncept má:
 - `tema` → id z `temata` (vždy vyplněno)
-- `oblast` → id z `areas`, **nebo `null`** (koncept je „nad rámec RVP / průřezový")
+- `oblast` → id z `areas`, **nebo `null`**. `null` = **průřezový** koncept, který nepatří do jednoho okruhu Informatiky, ale je to klíčová kompetence / průřezové téma RVP (postoje, etika, mediální gramotnost, wellbeing, digitální občanství, základy vizuálního designu). Pozn.: `oblast` vyjadřuje tematickou příslušnost k okruhu — koncept ji může mít i bez konkrétního očekávaného výstupu (`rvp` může být prázdné).
+- `kompetence` → id z `kompetence` (klíčová kompetence digitální / KDI), **nebo `null`** (nezařazeno — ryzí informatická teorie: myšlení, primitiva programování, vnitřek infrastruktury, teorie AI). Je to **třetí, nezávislá osa** členění vedle `tema` a `oblast`.
 
 Další pole:
 - `id`, `nazev`, `vrstva` (`core` / `navazujici`), `popis`
@@ -38,16 +42,18 @@ Další pole:
 - `cile`, `kriteria`, `pokryti_glitchem` → **záměrně prázdné** (`[]`). Doplní se v další, detailní fázi. Parser je ber jako volitelné.
 - `stav` → zatím vždy `draft`.
 
-## Dvojí zobrazení — o co jde (hlavní úkol)
+## Trojí zobrazení — o co jde (hlavní úkol)
 
-Mapa má jít přepnout mezi dvěma logikami seskupení stejných uzlů:
+Mapa má jít přepnout mezi **třemi** logikami seskupení týchž uzlů (přepínač vedle sebe):
 
 1. **Podle témat** (doporučený default) — clustery = `temata` (12). Barva/label uzlu podle `tema`. Rozvržení podle `vrstva_mapy` a `temata[].navazuje_na`.
-2. **Podle oblastí RVP** — clustery = `areas` (4). Uzly seskup podle `concepts[].oblast`. Koncepty s `oblast: null` dej do zvláštního koše **„Nad rámec RVP / průřezové"** (nebo je v RVP režimu skryj — dle tvého uvážení; doporučuji košík, ať je vidět přesah).
+2. **Podle oblastí RVP** — clustery = `areas` (4). Uzly seskup podle `concepts[].oblast`. Koncepty s `oblast: null` dej do koše **„Průřezové (digitální kompetence a postoje)"** — jsou to klíčové kompetence / průřezová témata RVP, ne obsah jednoho okruhu.
+3. **Podle klíčové kompetence digitální (KDI)** — clustery = `kompetence` (5). Uzly seskup podle `concepts[].kompetence`. Koncepty s `kompetence: null` dej do koše **„Nezařazeno (informatická teorie)"** (nebo je v tomto režimu ztlum/skryj). KDI je nezávislá osa: koncept může mít okruh RVP i kompetenci současně (např. „AI podvody" → oblast `digitalni-technologie`, kompetence `kdi-bzk`).
 
-Hrany (`prerekvizity`, `souvisi`) a stav/vrstva/tagy fungují v obou režimech stejně. Přepínač zobrazení = jen jiné seskupení a obarvení týchž uzlů.
+Hrany (`prerekvizity`, `souvisi`) a stav/vrstva/tagy fungují ve všech třech režimech stejně. Přepínač zobrazení = jen jiné seskupení a obarvení týchž uzlů.
 
-> Poznámka: uživatelka si dvojí zobrazení vyžádá zvlášť — data už jsou na obě logiky připravená (každý koncept nese `tema` i `oblast`), takže stačí přidat přepínač a druhé seskupení. Stávající RVP-oblastní pohled zůstává funkční (pole `oblast` + `areas` odpovídají původnímu schématu).
+### Detailní panel konceptu — přidat KDI
+Vedle sekce **RVP — očekávaný výstup** (z `concept.rvp`) přidej sekci **Digitální kompetence**: pokud má koncept `kompetence` != null, dohledej ji v top-level `kompetence[]` podle id a zobraz `nazev`, `kod` a `vystup`. Když je `null`, sekci vynech (nebo „—").
 
 ## Tagy (na filtr)
 Průřezové značky napříč tématy, hodí se pro filtr i pro „AI průřezovou vrstvu". Používané hodnoty mj.:
@@ -79,6 +85,26 @@ Stav 0.3: **338 hran** (souvisí 190, prerekvizita 148), průměrný stupeň uzl
 3. Volitelně zvýraznění hran vedoucích na jádro AI (tag `ai-prurez`) jako „AI průřezovou vrstvu".
 
 Tím zůstane mapa čitelná i při dalším zhušťování.
+
+## Rozklikávací oblasti a témata (v0.5)
+
+Kromě konceptů mají teď **bohatý `popis` i oblasti RVP a témata** — udělej prosím jejich názvy (nadpisy/clustery i položky v levém filtru) klikatelné a otevři jim detailní panel:
+- **Téma** (`temata[]`): panel s `nazev`, `popis`, případně `navazuje_na` (na jaká témata navazuje) a `vrstva_mapy`.
+- **Oblast RVP** (`areas[]`): panel s `nazev`, `kod` (např. `INF-INF-001`) a `popis`.
+
+Popisy oblastí RVP jsou **víceodstavcové** — odstavce jsou oddělené prázdným řádkem (`\n\n`). Při vykreslení je prosím rozděl na odstavce (split podle `\n\n`), ať se nezobrazí jako jeden slepený blok. Popisy témat jsou jednoodstavcové.
+
+## Směrovost hran a detailní panel (DŮLEŽITÉ)
+
+Každá hrana je v datech uložena **jen jednou** — u jednoho z konceptů (efektivní, bez duplicit). Graf to tak i vykresluje: bere hrany z obou konců, takže je kreslí správně obousměrně. **Detailní panel konceptu ale musí číst hrany taky obousměrně**, jinak ukáže neúplný seznam (to je přesně chyba, kdy „Herní design" má na grafu 9 hran, ale v panelu jen 2).
+
+Panel má proto pro vybraný koncept `X` sestavovat:
+
+- **SOUVISÍ** (symetrické, undirected): sjednocení `X.souvisi` ∪ `{ C : X ∈ C.souvisi }`. Tedy i koncepty, které mají `X` ve svém `souvisi`.
+- **PREREKVIZITY** (co musí předcházet): `X.prerekvizity` — jako dosud.
+- Doporučeně přidat i reverzní sekci **„Je prerekvizitou pro"**: `{ C : X ∈ C.prerekvizity }` — aby bylo transparentní, proč na grafu vede z `X` víc šipek, než má `X` vlastních prerekvizit.
+
+Graf: `souvisi` ber jako **neorientované** hrany a **deduplikuj** je (dvojici A–B kresli jednou, i kdyby ji náhodou nesly oba konce). `prerekvizity` jsou orientované (šipka rodič → dítě).
 
 ## Regenerace
 Data vznikají z `build_map.py` (přiložen). Když bude potřeba hromadná úprava (přidat koncept, přemapovat RVP), uprav `build_map.py` a spusť `python3 build_map.py` — přepíše `knowledge-map.yaml` a vypíše kontrolu (počty, pokrytí RVP, visící odkazy).
