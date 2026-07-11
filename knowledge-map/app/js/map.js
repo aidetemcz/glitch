@@ -25,6 +25,37 @@
   const bindOne = (t) => t.replace(/(^|[\s(\u201e"'\u201a\u2018\u00ab\u2013\u2014])([aAiIkKoOsSuUvVzZ]) /g, "$1$2" + NBSP);
   const typo = (s) => bindOne(bindOne(String(s == null ? "" : s)));
 
+  /* Zalomení popisků v grafu (bubliny, nadpisy clusterů).
+     Cytoscape láme řádky regexem, kam JS `\s` počítá i pevnou mezeru — proto
+     pevná mezera sama o sobě zalomení nezabrání. Řešení: předzalomíme popisek
+     sami do řádků, které se vejdou do text-max-width, a jednoznakové předložky
+     přilepíme k dalšímu slovu. Cytoscape honoruje `\n` a řádek, který se už
+     vejde, znovu neláme → jednoznakovky nezůstanou na konci řádku. */
+  const SINGLE = /^[aikosuvzAIKOSUVZ]$/;
+  const _mctx = document.createElement("canvas").getContext("2d");
+  const measureW = (txt, font) => { _mctx.font = font; return _mctx.measureText(txt).width; };
+  function unitize(text) {
+    const words = String(text == null ? "" : text).trim().split(/\s+/).filter(Boolean);
+    const units = [];
+    for (let i = 0; i < words.length; i++) {
+      if (SINGLE.test(words[i]) && i + 1 < words.length) { units.push(words[i] + NBSP + words[i + 1]); i++; }
+      else units.push(words[i]);
+    }
+    return units;
+  }
+  function wrapLabel(text, font, maxW, upper) {
+    const units = unitize(text);
+    const meas = (s) => measureW(upper ? s.toUpperCase() : s, font);
+    const lines = []; let cur = "";
+    for (const u of units) {
+      const cand = cur ? cur + " " + u : u;
+      if (cur && meas(cand) > maxW) { lines.push(cur); cur = u; }
+      else cur = cand;
+    }
+    if (cur) lines.push(cur);
+    return lines.join("\n");
+  }
+
   function textOn(hex) {
     const h = String(hex || "#ffffff").replace("#", "");
     const r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
@@ -101,14 +132,19 @@
     };
 
     const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
+    const GRP_FONT = '600 13px "Inter", "Segoe UI", sans-serif';
     const nodes = [];
-    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, label: typo(g.nazev), labelcolor, popis: g.popis } }));
+    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id,
+      label: wrapLabel(g.nazev, GRP_FONT, 180 * 0.95, true), labelcolor, popis: g.popis } }));
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
+      const fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
+      const font = '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif';
       nodes.push({ data: {
         id: c.id, type: "concept", parent: "grp-" + groupOf(c, mode),
-        label: typo(c.nazev), vrstva: c.vrstva, stav: c.stav || "draft", tagy: c.tagy || [],
-        size: sz, textw: Math.round(sz * 0.72), fontsize: fitFont(c.nazev, sz), _c: c
+        label: wrapLabel(c.nazev, font, textw * 0.95, false), vrstva: c.vrstva,
+        stav: c.stav || "draft", tagy: c.tagy || [],
+        size: sz, textw: textw, fontsize: fs, _c: c
       }});
     });
     return [...nodes, ...edges];
@@ -250,7 +286,7 @@
 
   function buildGroupFilter(mode) {
     const groups = groupDefs(mode);
-    buildChips("filter-group", groups.map((g) => ({ val: g.id, label: g.nazev })), "group", true);
+    buildChips("filter-group", groups.map((g) => ({ val: g.id, label: typo(g.nazev) })), "group", true);
   }
 
   /* ---------- Filtry ---------- */
@@ -320,7 +356,7 @@
   }
   function link(id) {
     const c = conceptById[id];
-    return `<button class="d-link" data-focus="${esc(id)}">${esc(c ? c.nazev : id)}</button>`;
+    return `<button class="d-link" data-focus="${esc(id)}">${esc(typo(c ? c.nazev : id))}</button>`;
   }
 
   function openDetail(node) {
