@@ -1,6 +1,6 @@
 # O Mapě informatických konceptů
 
-Mapa informatických konceptů je obsahová páteř Glitche — kurátorský přehled toho, co tvoří moderní informatické vzdělávání se silným důrazem na umělou inteligenci. Není to osnova ani seznam učiva. Je to síť, která ukazuje nejen jednotlivé koncepty, ale hlavně to, jak spolu souvisejí a v jakém pořadí na sebe navazují. Tenhle text je úvod pro každého v týmu, kdo s mapou začíná pracovat.
+Mapa informatických konceptů je obsahová páteř Glitche — kurátorský přehled toho, co tvoří moderní informatické vzdělávání se silným důrazem na umělou inteligenci. Není to osnova ani seznam učiva. Je to síť, která ukazuje nejen jednotlivé koncepty, ale hlavně to, jak spolu souvisejí a v jakém pořadí na sebe navazují. Tenhle text je úvod pro každého, kdo s mapou začíná pracovat.
 
 Záměrně mluvíme o konceptech, ne o znalostech. Mapa nezahrnuje jen to, co má žák vědět, ale i to, co má umět (sestavit prompt, ověřit výstup AI) a jak se má rozhodovat (kdy AI nepoužít, jak nakládat se soukromím). Postoje a dovednosti sem patří stejně jako teoretické znalosti.
 
@@ -8,15 +8,13 @@ Záměrně mluvíme o konceptech, ne o znalostech. Mapa nezahrnuje jen to, co m�
 
 Mapa je společný rámec pro plánování obsahu. Na jednom místě je vidět, co všechno do oboru patří, co na co navazuje a kudy vede cesta od základů k pokročilejším tématům. Odhaluje i mosty, které v lineární osnově zaniknou — že cyklus v kódu je totéž co herní smyčka, že logické výrazy se vracejí v databázových dotazech nebo že doporučovací algoritmus, bias a digitální wellbeing jsou tři pohledy na jednu věc. Právě tyhle „aha" spoje jsou skvělé náměty na Glitche na pomezí témat.
 
-Slouží dvěma směrům najednou: jako podklad pro nás (co tvořit a v jakém pořadí) a jako průvodce cesty pro žáka v Glitchi. U každého konceptu proto najdeš popis, konkrétní výukové cíle a kritéria, podle nichž se pozná, že ho žák skutečně zvládl, a tam, kde to dává smysl, i navázaný výstup RVP a digitální kompetenci.
+Slouží dvěma směrům najednou: jako podklad pro nás (co tvořit a v jakém pořadí) a jako průvodce cesty pro žáka v Glitchi. U každého konceptu proto najdeš popis a příklady konkrétních výukových cílů a kritérií, podle nichž se pozná, že žák učivo zvládl. Tam, kde to dává smysl, je také koncept navázaný na RVP a digitální kompetenci.
 
 ## Jak je postavená
 
-Rešerše stojí na mezinárodních kurikulech (CSTA K-12, britské NCCE / Teach Computing, australské Digital Technologies, code.org, Bebras) a na nejnovějších AI rámcích (UNESCO AI Competency Framework 2024, AI4K12 „Five Big Ideas", EU DigComp 2.2, OECD/EK AILit 2025). Formálně ji kotví revidované RVP pro informatiku (2024) — jeho čtyři okruhy a dvanáct očekávaných výstupů pro 2. stupeň, jejichž znění opisujeme doslovně a nic k němu nedomýšlíme — a rámec klíčové kompetence digitální.
+Rešerše stojí na mezinárodních kurikulech (CSTA K-12, britské NCCE / Teach Computing, australské Digital Technologies, code.org, Bebras) a na nejnovějších AI rámcích (UNESCO AI Competency Framework 2024, AI4K12 „Five Big Ideas", EU DigComp 2.2, OECD/EK AILit 2025). Formálně ji kotví revidované RVP pro informatiku (2024) — jeho čtyři okruhy a dvanáct OVU pro 2. stupeň, jejichž znění opisujeme doslovně a nic k němu nedomýšlíme — a rámec klíčové kompetence digitální.
 
 Cílová skupina je 2. stupeň ZŠ jako kotva, s přesahem výš (pokročilá témata a SŠ). Mapa je bohatší a aktuálnější než samotné RVP: klade velký důraz na umělou inteligenci, na tvorbu webů, aplikací, obsahu a her a na bezpečí a odpovědné digitální občanství. Koncepty, které jdou nad rámec RVP, jsou označené jako průřezové.
-
-Dvě vědomá rozhodnutí, kde jsme se odchýlili od doslovného zadání: **cloud** nemá vlastní téma — pro teenagera je příliš abstraktní na samostatnou větev, takže funguje líp jako jádrový koncept Digitálních základů a jako opakovaná vysvětlivka uvnitř tvorby („kde běží kód, co je API, kde jsou moje data"). A **informatické myšlení i AI gramotnost** vedeme nejen jako témata, ale i jako průřezové vrstvy, protože protkávají prakticky všechno ostatní.
 
 ## Struktura: 12 témat ve 4 vrstvách
 
@@ -60,12 +58,11 @@ Koncepty spojují dva druhy vazeb. **Prerekvizita** (šipka) říká, co se hod�
 
 - **Prohlížej a přepínej pohledy**, ať vidíš stejný obsah očima témat, RVP i digitálních kompetencí.
 - **Hledej mosty** — vazby „souvisí" napříč tématy jsou nejlepší náměty na mezioborové Glitche („aha" spoje).
-- **Uprav obsah přímo v mapě**: přes „i" → Admin se přihlaš, klikni na koncept a doplň popis, cíle a kritéria. Uložení překlopí stav z Draft na Hotovo. Změny se ukládají lokálně v prohlížeči; export YAML pošli k nasazení, ať je uvidí celý tým.
 - **Naplňuj po vlnách** (kvůli studenému startu): nejdřív páteř — Digitální základy, Informatické myšlení, Programování, Umělá inteligence, Data, plus Kyberbezpečnost a Digitální občanství jako bezpečnostní rámec. Pak tvořivá vlna — Weby, Aplikace / vibecoding, Obsah s AI, Hry, Robotika: atraktivní „postav a sdílej" témata, která stojí na páteři.
 
 ## Řídící princip
 
 Napříč rámci (UNESCO, OECD) platí: začínat u člověka a etiky, ne u techniky, a vždy párovat „nástroj" s „kritikou" — jinak vychováme zdatné, ale nekritické uživatele. Proto u každého tématu, kde se AI použije jako nástroj, přidáváme krátký reflexní mikro-krok („Ověř výstup. Kde se tu může skrývat chyba nebo bias? Přiznal bys, že jsi použil AI?"). A ještě jedna výhoda: samotný feed a doporučování Glitche jsou živý příklad AI systému, na kterém se dá učit.
 
-Mapu vytváří a vylepšuje organizace AI dětem.
+Mapu vytváří a vylepšuje tým organizace AI dětem.
 Poslední aktualizace: 11/07/26
