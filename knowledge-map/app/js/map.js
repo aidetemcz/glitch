@@ -7,8 +7,12 @@
   "use strict";
 
   const LEVELS = {
-    "vybaveni": "Vybavení", "porozumeni": "Porozumění",
-    "analyza": "Analýza", "vyuziti-znalosti": "Využití znalostí"
+    // Bloomova revidovaná taxonomie (data v0.12)
+    "zapamatovani": "Zapamatování", "porozumeni": "Porozumění",
+    "aplikace": "Aplikace", "analyza": "Analýza",
+    "hodnoceni": "Hodnocení", "tvorba": "Tvorba",
+    // Marzano-Kendall (starší data — zpětná kompatibilita)
+    "vybaveni": "Vybavení", "vyuziti-znalosti": "Využití znalostí"
   };
   const VRSTVA = { core: "Core koncept", navazujici: "Navazující" };
   const VRSTVA_MAPY = { 0: "Základy a myšlení", 1: "Tvorba a programování", 2: "Umělá inteligence", 3: "Bezpečí a občanství" };
@@ -90,7 +94,7 @@
   let revSouvisi = {}, revPrereq = {};   // reverzní indexy (obousměrné čtení hran v panelu)
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/knowledge-map.yaml?v=10")
+  fetch("data/knowledge-map.yaml?v=12")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
@@ -388,7 +392,8 @@
     if (!list || !list.length) return '<span class="d-empty">doplní se v detailní fázi</span>';
     return list.map((g) => {
       const lvl = LEVELS[g.uroven] || g.uroven || "";
-      const roc = g.orientacne_rocnik ? `<span class="rocnik">~ ${esc(g.orientacne_rocnik)}. ročník</span>` : "";
+      const rocnik = g.rocnik != null ? g.rocnik : g.orientacne_rocnik;
+      const roc = rocnik ? `<span class="rocnik">~ ${esc(rocnik)}. ročník</span>` : "";
       return `<div class="d-goal"><div class="lvl">${esc(lvl)}${roc}</div><p>${esc(typo(g.text))}</p></div>`;
     }).join("");
   }

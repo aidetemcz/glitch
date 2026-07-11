@@ -2,7 +2,13 @@
 """Generátor knowledge-map.yaml pro appku Mapa znalostí Glitch.
 Sestavuje RVP oblasti, témata a koncepty (dvojí seskupení: tema + rvp_oblast).
 RVP znění je doslovně opsané z RVP_revidované_2024-03-28.pdf, s. 54-55."""
-import re, unicodedata, yaml
+import re, unicodedata, yaml, json
+
+# ---- Výukové cíle a kritéria hodnocení (Bloomova taxonomie, v0.11) ----
+# Klíč = přesný název konceptu. Zdroj: cile_kriteria_merged.json (7 skupin).
+with open('cile_kriteria_merged.json', encoding='utf-8') as _f:
+    CILE_KRITERIA = json.load(_f)
+_CK_USED = set()
 
 def slug(s):
     s = s.lower()
@@ -694,8 +700,8 @@ for tema, lst in C.items():
             'vrstva': vrstva,
             'popis': popis,
             'rvp': rvp_list,
-            'cile': [],             # doplní se v detailní fázi
-            'kriteria': [],         # doplní se v detailní fázi
+            'cile': (CILE_KRITERIA.get(nazev) or {}).get('cile', []),        # výukové cíle (Bloom)
+            'kriteria': (CILE_KRITERIA.get(nazev) or {}).get('kriteria', []), # kritéria hodnocení
             'prerekvizity': prereq_ids,
             'souvisi': souvisi_ids,
             'tagy': tags_for(tema, nazev),
@@ -703,7 +709,21 @@ for tema, lst in C.items():
             'pokryti_glitchem': [],
             'stav': 'draft',
         }
+        if nazev in CILE_KRITERIA:
+            _CK_USED.add(nazev)
+        else:
+            problems.append('CÍLE chybí pro koncept: ' + nazev)
         concepts.append(rec)
+
+# klíče v cile_kriteria_merged.json, které neodpovídají žádnému konceptu
+for _k in set(CILE_KRITERIA) - _CK_USED:
+    problems.append('CÍLE nepřiřazený klíč (není koncept): ' + _k)
+# ověření Bloom úrovní
+_BLOOM = {"zapamatovani","porozumeni","aplikace","analyza","hodnoceni","tvorba"}
+for _c in concepts:
+    for _item in _c['cile'] + _c['kriteria']:
+        if _item.get('uroven') not in _BLOOM:
+            problems.append('CÍLE špatná úroveň u ' + _c['nazev'] + ': ' + str(_item.get('uroven')))
 
 # ================= OBOHACENÍ PROPOJENÍ (v0.2) =================
 # Cíl: témata nemají být ostrovy. Přidáváme (a) mezitématické prerekvizity
@@ -827,6 +847,126 @@ EXTRA_SOUVISI = [
  (('fyzicky-computing','IoT'), ('digitalni-zaklady','Kde jsou data fyzicky')),
  # ostatní
  (('digitalni-zaklady','Data a informace'), ('digitalni-obcanstvi','Digitální stopa a soukromí')),
+
+ # ===== v0.12: prohloubení „souvisí" — mezitématické mosty, konec izolovaných uzlů =====
+ # Princip: souvisí = tentýž pojem v jiném kontextu / dva koncepty, které se navzájem osvětlují.
+ # (Není to prerekvizita = pořadí, ani tag = široká kategorie. Prereq-kolize build odfiltruje.)
+
+ # základy: HW/SW, API, OS, sítě, reprezentace jako opakující se motivy
+ (('digitalni-zaklady','Hardware a software'), ('fyzicky-computing','Vstup–zpracování–výstup na zařízení')),
+ (('digitalni-zaklady','Hardware a software'), ('tvorba-aplikaci','Co je aplikace')),
+ (('digitalni-zaklady','Hardware a software'), ('fyzicky-computing','Arduino a Raspberry Pi')),
+ (('digitalni-zaklady','API'), ('tvorba-webu','Jak funguje web')),
+ (('digitalni-zaklady','API'), ('data-databaze','Účel informačních systémů')),
+ (('digitalni-zaklady','Operační systém a soubory'), ('digitalni-zaklady','Kde jsou data fyzicky')),
+ (('digitalni-zaklady','Operační systém a soubory'), ('digitalni-zaklady','Reprezentace dat')),
+ (('digitalni-zaklady','Reprezentace dat'), ('programovani','Proměnné a datové typy')),
+ (('digitalni-zaklady','Reprezentace dat'), ('data-databaze','Strukturovaná vs. nestrukturovaná data')),
+ (('tvorba-webu','Jak funguje web'), ('digitalni-zaklady','Adresy a protokoly')),
+
+ # informatické myšlení: algoritmus a schémata jako průřezový pojem (i ve společnosti)
+ (('informaticke-mysleni','Algoritmus'), ('digitalni-obcanstvi','Jak fungují algoritmy sítí')),
+ (('informaticke-mysleni','Pseudokód a vývojové diagramy'), ('programovani','Blokové vs. textové programování')),
+ (('informaticke-mysleni','Pseudokód a vývojové diagramy'), ('informaticke-mysleni','Modelování a simulace')),
+ (('informaticke-mysleni','Logika a booleovské výrazy'), ('data-databaze','Dotazování (SQL)')),
+ (('informaticke-mysleni','Logika a booleovské výrazy'), ('herni-vyvoj','Kolize a jednoduchá fyzika')),
+ (('informaticke-mysleni','Modelování a simulace'), ('herni-vyvoj','Kolize a jednoduchá fyzika')),
+ (('informaticke-mysleni','Dekompozice'), ('tvorba-aplikaci','Logika aplikace')),
+ (('informaticke-mysleni','Rozpoznávání vzorů'), ('umela-inteligence','Strojové učení prakticky')),
+ (('informaticke-mysleni','Efektivita řešení'), ('informaticke-mysleni','Základní algoritmy')),
+ (('informaticke-mysleni','Hodnocení a analýza chyb'), ('umela-inteligence','Ověřování výstupů')),
+
+ # programování: smyčky, události, objekty, kolekce jako opakující se motivy
+ (('programovani','Cykly v kódu'), ('herni-vyvoj','Herní smyčka, scéna a objekty')),
+ (('programovani','Cykly v kódu'), ('informaticke-mysleni','Základní algoritmy')),
+ (('programovani','Proměnné a datové typy'), ('herni-vyvoj','Vstup hráče, stavy a skóre')),
+ (('programovani','Události'), ('fyzicky-computing','Senzory a aktuátory')),
+ (('programovani','Události'), ('herni-vyvoj','Kolize a jednoduchá fyzika')),
+ (('programovani','Knihovny a volání API v kódu'), ('tvorba-aplikaci','Práce s API a backendem')),
+ (('programovani','Knihovny a volání API v kódu'), ('tvorba-webu','Frameworky')),
+ (('programovani','Základy objektů (OOP)'), ('herni-vyvoj','Herní smyčka, scéna a objekty')),
+ (('programovani','Seznamy a kolekce'), ('data-databaze','Tabulky a relační model')),
+ (('programovani','Funkce a procedury'), ('informaticke-mysleni','Základní algoritmy')),
+
+ # AI: pojmy provázané napříč tvorbou, daty a občanstvím
+ (('umela-inteligence','Co je a co není AI'), ('digitalni-obcanstvi','Rozumět AI (halucinace, bias)')),
+ (('umela-inteligence','Co je a co není AI'), ('umela-inteligence','AI a společnost')),
+ (('umela-inteligence','Jak funguje generativní model'), ('tvorba-obsahu','Prompt pro média')),
+ (('umela-inteligence','Jak funguje generativní model'), ('umela-inteligence','Typy AI úloh')),
+ (('umela-inteligence','Vlastní agency'), ('tvorba-aplikaci','Iluze, že to umím')),
+ (('umela-inteligence','Vlastní agency'), ('programovani','Čtení a hodnocení AI kódu')),
+ (('umela-inteligence','Vlastní agency'), ('digitalni-obcanstvi','Digitální wellbeing')),
+ (('umela-inteligence','Strojové učení prakticky'), ('data-databaze','Čištění reálných dat')),
+ (('umela-inteligence','Deepfakes a syntetická média'), ('tvorba-obsahu','Původ obsahu a vodoznaky')),
+ (('umela-inteligence','Deepfakes a syntetická média'), ('digitalni-obcanstvi','Dezinformace a manipulace')),
+ (('umela-inteligence','Ověřování výstupů'), ('digitalni-obcanstvi','Kritické myšlení online')),
+ (('umela-inteligence','Typy AI úloh'), ('fyzicky-computing','AI přímo na zařízení (TinyML)')),
+
+ # data: cyklus, struktura, dotazy a AI-analýza provázané
+ (('data-databaze','Datový cyklus'), ('data-databaze','Strukturovaná vs. nestrukturovaná data')),
+ (('data-databaze','Datový cyklus'), ('data-databaze','Analýza dat pomocí AI')),
+ (('data-databaze','Strukturovaná vs. nestrukturovaná data'), ('data-databaze','NoSQL a dokumentové databáze')),
+ (('data-databaze','Dotazování (SQL)'), ('data-databaze','Programová analýza dat')),
+ (('data-databaze','NoSQL a dokumentové databáze'), ('umela-inteligence','Jak fungují chatboti (LLM, RAG)')),
+ (('data-databaze','Analýza dat pomocí AI'), ('data-databaze','Vizualizace a volba grafu')),
+
+ # web/aplikace: HTML/CSS/JS a vazby na tvorbu obsahu a hry
+ (('tvorba-webu','HTML'), ('tvorba-obsahu','Vizuální jazyk')),
+ (('tvorba-webu','CSS'), ('tvorba-obsahu','Vizuální jazyk')),
+ (('tvorba-webu','CSS'), ('tvorba-webu','Přístupnost a SEO')),
+ (('tvorba-webu','Interaktivita (JavaScript)'), ('tvorba-aplikaci','Logika aplikace')),
+ (('tvorba-webu','Interaktivita (JavaScript)'), ('herni-vyvoj','Vstup hráče, stavy a skóre')),
+ (('tvorba-webu','Frameworky'), ('tvorba-aplikaci','No-code / low-code')),
+ (('tvorba-aplikaci','Co je aplikace'), ('tvorba-webu','Jak funguje web')),
+ (('tvorba-aplikaci','Co je aplikace'), ('data-databaze','Účel informačních systémů')),
+ (('tvorba-aplikaci','No-code / low-code'), ('tvorba-aplikaci','Vibecoding')),
+ (('tvorba-aplikaci','Práce s API a backendem'), ('digitalni-zaklady','Cloud a server')),
+ (('tvorba-aplikaci','Životní cyklus vývoje'), ('programovani','Ladění a testování')),
+ (('tvorba-aplikaci','Životní cyklus vývoje'), ('tvorba-aplikaci','Publikace do app storů')),
+
+ # tvorba obsahu: řetězení médií a kontrola nad výsledkem
+ (('tvorba-obsahu','Prompt pro média'), ('tvorba-obsahu','Kontrola nad výsledkem')),
+ (('tvorba-obsahu','Generativní video'), ('tvorba-obsahu','Střih a postprodukce s AI')),
+ (('tvorba-obsahu','Generativní video'), ('tvorba-obsahu','Propojení nástrojů (obraz, video, zvuk)')),
+ (('tvorba-obsahu','Střih a postprodukce s AI'), ('tvorba-obsahu','Propojení nástrojů (obraz, video, zvuk)')),
+ (('tvorba-obsahu','Kontrola nad výsledkem'), ('tvorba-aplikaci','Iluze, že to umím')),
+ (('tvorba-obsahu','Kontrola nad výsledkem'), ('umela-inteligence','Ověřování výstupů')),
+ (('tvorba-obsahu','Propojení nástrojů (obraz, video, zvuk)'), ('tvorba-aplikaci','Práce s API a backendem')),
+
+ # herní vývoj: enginy a vstupní nástroje
+ (('herni-vyvoj','Lehké enginy'), ('herni-vyvoj','Scratch jako vstup')),
+ (('herni-vyvoj','Lehké enginy'), ('programovani','Blokové vs. textové programování')),
+ (('herni-vyvoj','Skutečné enginy'), ('tvorba-webu','Frameworky')),
+
+ # fyzický computing: zařízení, roboti, IoT, TinyML
+ (('fyzicky-computing','Vstup–zpracování–výstup na zařízení'), ('fyzicky-computing','Roboti a vozítka')),
+ (('fyzicky-computing','micro:bit'), ('herni-vyvoj','Scratch jako vstup')),
+ (('fyzicky-computing','micro:bit'), ('programovani','Blokové vs. textové programování')),
+ (('fyzicky-computing','Události a řízení výstupu'), ('fyzicky-computing','Senzory a aktuátory')),
+ (('fyzicky-computing','Události a řízení výstupu'), ('tvorba-webu','Interaktivita (JavaScript)')),
+ (('fyzicky-computing','Arduino a Raspberry Pi'), ('fyzicky-computing','Roboti a vozítka')),
+ (('fyzicky-computing','Arduino a Raspberry Pi'), ('fyzicky-computing','IoT')),
+ (('fyzicky-computing','Roboti a vozítka'), ('fyzicky-computing','Senzory a aktuátory')),
+ (('fyzicky-computing','AI přímo na zařízení (TinyML)'), ('fyzicky-computing','Senzory a aktuátory')),
+ (('fyzicky-computing','AI přímo na zařízení (TinyML)'), ('fyzicky-computing','IoT')),
+
+ # kyberbezpečnost: hygiena, útoky, šifrování jako propojená síť
+ (('kyberbezpecnost','Základní hygiena'), ('kyberbezpecnost','Hesla a 2FA')),
+ (('kyberbezpecnost','Bezpečné chování na sítích'), ('kyberbezpecnost','Phishing a sociální inženýrství')),
+ (('kyberbezpecnost','Bezpečné chování na sítích'), ('kyberbezpecnost','Základní hygiena')),
+ (('kyberbezpecnost','Typy útoků'), ('kyberbezpecnost','Phishing a sociální inženýrství')),
+ (('kyberbezpecnost','Typy útoků'), ('kyberbezpecnost','Bezpečné chování na sítích')),
+ (('kyberbezpecnost','Šifrování a HTTPS'), ('tvorba-webu','Jak funguje web')),
+ (('kyberbezpecnost','Šifrování a HTTPS'), ('kyberbezpecnost','Hesla a 2FA')),
+ (('kyberbezpecnost','Síťová bezpečnost a CTF'), ('kyberbezpecnost','Šifrování a HTTPS')),
+ (('kyberbezpecnost','Síťová bezpečnost a CTF'), ('digitalni-zaklady','Internet a síť')),
+ (('kyberbezpecnost','Síťová bezpečnost a CTF'), ('digitalni-zaklady','Adresy a protokoly')),
+
+ # digitální občanství: algoritmy a porozumění AI napříč
+ (('digitalni-obcanstvi','Jak fungují algoritmy sítí'), ('digitalni-obcanstvi','Digitální wellbeing')),
+ (('digitalni-obcanstvi','Jak fungují algoritmy sítí'), ('umela-inteligence','Bias a férovost')),
+ (('digitalni-obcanstvi','Rozumět AI (halucinace, bias)'), ('umela-inteligence','Bias a férovost')),
+ (('digitalni-obcanstvi','Rozumět AI (halucinace, bias)'), ('umela-inteligence','Ověřování výstupů')),
 ]
 
 for child, parent in EXTRA_PREREQ:
@@ -889,7 +1029,7 @@ temata = [{'id': i, 'nazev': n, 'vrstva_mapy': v, 'popis': p, 'barva': b, 'navaz
 
 data = {
     'meta': {
-        'verze': '0.10-draft',
+        'verze': '0.12-draft',
         'popis': 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.',
         'paleta': ['#ffff00', '#ffffff', '#000000'],
         'uroven': '2. stupeň ZŠ s přesahem výš',
