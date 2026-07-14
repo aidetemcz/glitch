@@ -106,15 +106,12 @@
 
     welcome(c) {
       return `
-        <span class="pixel-deco" style="top:11%;right:16%;width:15px;height:15px">${ICON.spark}</span>
-        ${deco("", "top:52%;left:22%;width:13px;height:13px")}
-        ${deco("", "top:59%;left:55%;width:13px;height:13px")}
-        <div class="welcome-logo-wrap"><img class="welcome-logo" src="${LOGO}" alt="Glitch"></div>
-        <div class="card-body welcome-body">
-          <h1 class="card-title g-h1">Vítej v Glitchi!</h1>
-          <p class="card-lead g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
-        </div>
-        ${chevron()}${bottombar()}`;
+        <span class="pixel-deco" style="top:12%;right:16%;width:16px;height:16px">${ICON.spark}</span>
+        ${deco("", "top:53%;left:19%;width:13px;height:13px")}
+        ${deco("", "top:59%;left:53%;width:10px;height:10px")}
+        <span class="pixel-deco" style="top:69%;left:34%;width:15px;height:15px">${ICON.spark}</span>
+        <img class="welcome-logo" src="${LOGO}" alt="Glitch">
+        <img class="welcome-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">`;
     },
 
     mood_selector(c) {
@@ -285,7 +282,7 @@
   const feed = document.getElementById("glitch-feed");
 
   const BG = {
-    welcome: "white", mood_selector: "white", daily_summary: "white",
+    welcome: "yellow", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black",
     quick_challenge: "red", spot_the_mistake: "purple", fun_fact: "teal",
     quest_intro: "image"
@@ -335,6 +332,8 @@
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el);
+    // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
+    if (c.type === "welcome") el.addEventListener("click", () => nextFrom(el));
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)
     el.querySelectorAll("[data-timer]").forEach((b) =>
       b.addEventListener("click", () => b.classList.toggle("is-on")));

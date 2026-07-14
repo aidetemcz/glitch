@@ -90,6 +90,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* Barevné varianty */
 .card--white  { --bg: var(--c-white);  --fg: var(--c-black); }
+.card--yellow { --bg: var(--c-yellow); --fg: var(--c-black); }
 .card--dark   { --bg: var(--c-dark);   --fg: var(--c-white); }
 .card--black  { --bg: var(--c-black);  --fg: var(--c-white); }
 .card--red    { --bg: var(--c-red);    --fg: var(--c-white); }
@@ -190,15 +191,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Welcome
    ========================================================================== */
-.welcome-body { justify-content: flex-end; }
-.welcome-logo-wrap {
-  position: absolute;
-  top: 15%; left: 0; right: 0;
-  display: grid; place-items: center;
+/* Úvodní splash (žlutá) — logo Glitch (invertované na černé) + Tiny dole */
+.card[data-type="welcome"] { cursor: pointer; }
+.welcome-logo {
+  position: absolute; top: 33%; left: 50%; transform: translate(-50%, -50%);
+  width: min(60vw, 200px); height: auto;
 }
-.welcome-logo { width: 150px; height: auto; }
-.welcome-body .card-title { margin-bottom: 0; }
-.welcome-body .card-lead  { max-width: 32ch; }
+.welcome-tiny {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 46px);
+  width: 92px; height: auto;
+}
 
 /* Pixelové dekorace „+" na světlých kartách */
 .pixel-deco { position: absolute; z-index: 1; pointer-events: none; opacity: .92; }
