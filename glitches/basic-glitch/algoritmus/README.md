@@ -9,6 +9,6 @@ Kapitola / Quest pokrývající základy algoritmického myšlení.
 
 | Pořadí | id | Název | Stav |
 |---|---|---|---|
-| 5 | `algoritmus-hra-zivota` | Hra života | plánováno (obsah viz [`glitch-card-general.md`](../../glitch-card-general.md)) |
+| 5 | `algoritmus-hra-zivota` | Hra života | plánováno (obsah viz [`karta-basic-glitch.md`](../../../docs/karta-basic-glitch.md)) |
 
 > Předchozí úlohy dle šablony: `algoritmus-podminky` (když–tak), `algoritmus-cykly` (opakuj). Doplní se jako samostatné soubory.

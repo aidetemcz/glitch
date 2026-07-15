@@ -1,4 +1,6 @@
-# **Karta Glitche**
+# Karta — Basic Glitch
+
+_Šablona sekcí Glitche (kontrakt / podání / úrovně / kontext pro bota / bezpečnost) na příkladu „Hra života". Dřív Google Docs, teď zdroj pravdy tady. Poslední převod: 2026-07-15._
 
 **Jak číst tenhle soubor.** Karta je šablona i příklad v jednom: struktura sekcí je obecná pro každý Glitch, obsah je naplněný konkrétním Glitchem „Hra života" z kapitoly Algoritmus. Sekce 1 (kontrakt) vlastní redakce a mění se jen redakčním zásahem; sekce 2 je kanonické podání (jednou jich může být víc); sekce 3–6 jsou provozní metadata. Uživateli se zobrazují pouze sekce 2 a zadání ze sekce 3 — všechno ostatní slouží systému, chatbotovi a redakci.
 

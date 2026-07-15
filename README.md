@@ -28,13 +28,13 @@ Z jednoho repozitáře se nasazují **tři samostatné statické aplikace** (ka�
 - **Glitchboardy** (plánováno): portfolio + pracovna inspirovaná Are.na, kam si dítě **forkne** Glitche a staví na nich vlastní práci.
 - **Tinybot** (plánováno): chatbot, který vede dítě scaffoldingem (doptává se, aby na věc přišlo samo), čerpá z ověřených faktů.
 
-Kanonický popis fungování a obsahový model: **`glitches/typy-obsahu.md`** a **`glitches/glitch-card-general.md`**.
+Kanonický popis fungování a obsahový model najdeš v **[`docs/`](./docs/)** — hlavně [`docs/popis-fungovani-glitche.md`](./docs/popis-fungovani-glitche.md), [`docs/typy-obsahu.md`](./docs/typy-obsahu.md) a [`docs/karta-basic-glitch.md`](./docs/karta-basic-glitch.md).
 
 ---
 
 ## Typy obsahu (7)
 
-Každý typ = složka v `glitches/`. Detail: **`glitches/typy-obsahu.md`**.
+Každý typ = složka v `glitches/`. Detail: **[`docs/typy-obsahu.md`](./docs/typy-obsahu.md)**.
 
 | # | Typ | Rozklik | Chatbot | Fork |
 |---|---|:---:|:---:|:---:|
@@ -88,7 +88,8 @@ js/feed.js            – feed engine + renderery karet
 js/auth.js            – přihlášení (UI nad Supabase)
 js/supabase.js        – Supabase klient + auth + ukládání pokroku
 assets/               – logo, UI ikony, videa, 3D vizualizace, design tokeny
-glitches/             – obsah: typy-obsahu.md + složka na každý typ (MD karty)
+glitches/             – obsah: složka na každý typ Glitche + jeho MD karty
+docs/                 – kanonická dokumentace (zdroj pravdy, dřív Google Docs)
 
 knowledge-map/        – Mapa informatických konceptů
   app/                – appka (index.html, js/map.js, css/map.css, data/*.yaml)

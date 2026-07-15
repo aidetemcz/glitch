@@ -1,6 +1,6 @@
 # Obsah Glitche — struktura
 
-Každý **Glitch = jeden Markdown soubor**. Soubory jsou roztříděné do složek podle **typu obsahu**. Struktura sekcí uvnitr souboru vychází ze šablony [`glitch-card-general.md`](./glitch-card-general.md).
+Každý **Glitch = jeden Markdown soubor**. Soubory jsou roztříděné do složek podle **typu obsahu**. Struktura sekcí uvnitr souboru vychází ze šablony [`karta-basic-glitch.md`](../docs/karta-basic-glitch.md).
 
 ## Typy obsahu (složky)
 
@@ -29,6 +29,6 @@ Každá karta má v identifikaci `stav důvěry`: `core → edited → community
 
 ## Referenční dokumenty
 
-- [`glitch-card-general.md`](./glitch-card-general.md) — obecná šablona sekcí Glitche (kontrakt, kanonické podání, úrovně, kontext pro Tinybota, metadata, bezpečnost).
+- [`karta-basic-glitch.md`](../docs/karta-basic-glitch.md) — obecná šablona sekcí Glitche (kontrakt, kanonické podání, úrovně, kontext pro Tinybota, metadata, bezpečnost).
 - [`glith-content-type.md`](./glith-content-type.md) — vizuální a interakční typy karet ve feedu.
 - [`../assets/glitch-design-tokens.md`](../assets/glitch-design-tokens.md) — barvy a typografie.

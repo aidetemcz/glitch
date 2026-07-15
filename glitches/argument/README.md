@@ -39,7 +39,7 @@ Bot je **neutrální průvodce**, ne oponent s vlastní agendou. Vede dítě k l
 
 ## Struktura souboru
 
-Sekce vychází z obecné karty (`glitch-card-general.md`), přizpůsobené argumentaci. Soubory: `{tema}-{nazev}.md`, např. `soukromi-nemam-co-skryvat.md`.
+Sekce vychází z obecné karty ([`karta-basic-glitch.md`](../../docs/karta-basic-glitch.md)), přizpůsobené argumentaci. Soubory: `{tema}-{nazev}.md`, např. `soukromi-nemam-co-skryvat.md`.
 
 ### 0 Identifikace
 `id`, `nazev`, `typ: argument`, `tema`, `verze`, `stav důvěry` (`core → edited → community → generated`), `jazyk`, `autor kontraktu`.

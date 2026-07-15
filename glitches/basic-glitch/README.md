@@ -12,7 +12,7 @@ Výukové Glitche — jádro vzdělávacího obsahu (Algoritmus, Vibe Coding, �
 
 Každý Glitch = jeden MD soubor: **YAML frontmatter** (strojová data pro appku a editor) + **tělo v Markdownu** (text pro dítě, redakci a Tinybota, s pevnými nadpisy).
 
-📄 **Vzor:** [`algoritmus/algoritmus-hra-zivota.md`](./algoritmus/algoritmus-hra-zivota.md) · plná šablona sekcí: [`../glitch-card-general.md`](../glitch-card-general.md)
+📄 **Vzor:** [`algoritmus/algoritmus-hra-zivota.md`](./algoritmus/algoritmus-hra-zivota.md) · plná šablona sekcí: [`../../docs/karta-basic-glitch.md`](../../docs/karta-basic-glitch.md)
 
 ### Frontmatter (YAML)
 
