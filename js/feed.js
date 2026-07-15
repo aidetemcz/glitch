@@ -68,7 +68,7 @@
 
     { type: "attention_game", category: "Hra na pozornost",
       title: "Kolik zvládneš označit děr v časovém limitu?",
-      viz: "assets/3Dvizualizations/sphere-holes.html" },
+      viz: "assets/3Dvizualizations/sphere-holes.html?v=2" },
 
     { type: "algorithm_demo", category: "Algoritmus", chapterNo: 5,
       title: "Hra života",
@@ -105,7 +105,6 @@
     ? `<div class="badges"><span class="badge trust">${esc(c.trust || "Core")}</span><span class="badge cat">${esc(c.category)}</span></div>`
     : "";
   const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
-  const mascot  = () => `<button class="nav-mascot" data-nav="next" aria-label="Pokračovat"><img src="assets/ui/scroll-down.svg" alt="" width="56" height="56"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
 
@@ -138,8 +137,7 @@
       return `${badges(c)}
         <h1 class="fx-block g-h1 text-center" style="top:14.4%">${esc(c.title)}</h1>
         <p class="fx-block g-p text-center" style="top:21.5%">${esc(c.body)}</p>
-        <div class="mood-wrap">${moodDiagram()}</div>
-        ${mascot()}`;
+        <div class="mood-wrap">${moodDiagram()}</div>`;
     },
 
     breathing(c) {
@@ -155,8 +153,7 @@
           <div class="breath-circle" data-breath="circle">${c.cycles}</div>
           <p class="breath-hint g-p-s">Pohodlně se usaď a stiskni tlačítko začít.</p>
           <button class="breath-cta" data-breath="start">Začít</button>
-        </div>
-        ${mascot()}`;
+        </div>`;
     },
 
     quest_intro(c) {
@@ -195,9 +192,14 @@
 
     attention_game(c) {
       return `${badges(c)}
-        <h3 class="fx-block g-h3" style="top:28.9%">${esc(c.title)}</h3>
-        <div class="algo-viz fx-media" style="top:34.5%">${vizFrame(c.viz)}</div>
-        ${mascot()}`;
+        <div class="atten-top fx-block" style="top:14.5%">
+          <button class="timer-toggle atten-timer" data-atten-timer aria-label="Spustit časovač"><span class="atten-num" data-atten-num></span></button>
+          <p class="timer-note atten-note g-p-s" data-atten-note>Až budeš připravený*á, zapni si časovač. Stačí kliknout na kolečko.</p>
+        </div>
+        <h3 class="fx-block g-h3" style="top:27%">${esc(c.title)}</h3>
+        <p class="fx-block g-p atten-help" style="top:37%">Tažením otáčíš kouli. Díry označíš ťuknutím. Ale pozor: označit lze jen díry, které jsou vpředu.</p>
+        <p class="fx-block g-p atten-count" style="top:47%">Označených děr: <span data-atten-count>0/0</span></p>
+        <div class="atten-viz"><iframe class="viz-frame atten-frame" src="${c.viz}" loading="lazy" title="Koule s dírami"></iframe></div>`;
     },
 
     algorithm_demo(c) {
@@ -373,11 +375,65 @@
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el);
     if (c.type === "argument") initArgument(el);
+    if (c.type === "attention_game") initAttention(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") el.addEventListener("click", () => nextFrom(el));
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)
     el.querySelectorAll("[data-timer]").forEach((b) =>
       b.addEventListener("click", () => b.classList.toggle("is-on")));
+  }
+
+  /* ---- Hra na pozornost (časovač + skóre z iframu) ---- */
+  function initAttention(el) {
+    const DURATION = 30;               // délka časového limitu (s)
+    const btn    = el.querySelector("[data-atten-timer]");
+    const numEl  = el.querySelector("[data-atten-num]");
+    const noteEl = el.querySelector("[data-atten-note]");
+    const countEl= el.querySelector("[data-atten-count]");
+    const iframe = el.querySelector(".atten-frame");
+    let running = false, timerId = null, remain = 0;
+
+    // návod se ukáže jen do prvního použití
+    try { if (localStorage.getItem("glitch_attn_used") && noteEl) noteEl.classList.add("is-hidden"); } catch (_) {}
+
+    const post = (type) => {
+      try { iframe && iframe.contentWindow && iframe.contentWindow.postMessage({ ns: "attention", type }, "*"); } catch (_) {}
+    };
+
+    // po načtení iframu si vyžádáme aktuální skóre (celkový počet děr)
+    if (iframe) iframe.addEventListener("load", () => post("sync"));
+
+    // příjem skóre z koule
+    window.addEventListener("message", (ev) => {
+      if (iframe && ev.source !== iframe.contentWindow) return;
+      const d = ev.data || {};
+      if (d.ns !== "attention" || d.type !== "score") return;
+      if (countEl) countEl.textContent = d.hit + "/" + d.total;
+    });
+
+    const stop = () => {
+      clearInterval(timerId); timerId = null; running = false;
+      post("lock");
+      btn.classList.remove("is-running");
+      if (numEl) numEl.textContent = "";
+    };
+    const tick = () => {
+      remain--;
+      if (numEl) numEl.textContent = remain;
+      if (remain <= 0) stop();
+    };
+    const start = () => {
+      if (running) return;
+      running = true;
+      try { localStorage.setItem("glitch_attn_used", "1"); } catch (_) {}
+      if (noteEl) noteEl.classList.add("is-hidden");
+      btn.classList.add("is-running");
+      post("reset"); post("unlock");
+      remain = DURATION;
+      if (numEl) numEl.textContent = remain;
+      timerId = setInterval(tick, 1000);
+    };
+    if (btn) btn.addEventListener("click", start);
   }
 
   /* ---- Dechové cvičení ---- */
