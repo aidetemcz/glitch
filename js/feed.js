@@ -44,7 +44,7 @@
       body: "Vibe Coding je programování v přirozeném jazyce. Zjisti, jak vznikl a jak to celé funguje.",
       video: "assets/videos/vibe-coding_01.mp4" },
 
-    { type: "quick_challenge", category: "Rychlá výzva",
+    { type: "quick_challenge", category: "Rychlá výzva", trust: "Generováno",
       question: "310×15=",
       sub: "Zvládneš spočítat do časového limitu?",
       cols: 2,
@@ -101,7 +101,9 @@
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-  const badge = (c) => c.category ? `<div class="badge">${esc(c.category)}</div>` : "";
+  const badges = (c) => c.category
+    ? `<div class="badges"><span class="badge trust">${esc(c.trust || "Core")}</span><span class="badge cat">${esc(c.category)}</span></div>`
+    : "";
   const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
   const mascot  = () => `<button class="nav-mascot" data-nav="next" aria-label="Pokračovat"><img src="assets/ui/scroll-down.svg" alt="" width="56" height="56"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
@@ -133,7 +135,7 @@
     },
 
     mood_selector(c) {
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body breath-body">
           <h1 class="card-title g-h1 text-center">${esc(c.title)}</h1>
           <p class="card-lead g-p text-center" style="max-width:32ch">${esc(c.body)}</p>
@@ -143,7 +145,7 @@
     },
 
     breathing(c) {
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body breath-body">
           <h1 class="card-title g-h1 text-center">${esc(c.title)}</h1>
           <p class="card-lead g-p text-center" style="max-width:30ch">${esc(c.body)}</p>
@@ -163,7 +165,7 @@
       const bg = c.video
         ? `<video class="quest-video" autoplay muted loop playsinline preload="auto"><source src="${c.video}" type="video/mp4"></video><div class="quest-scrim"></div>`
         : `<div class="quest-bg"></div>`;
-      return `${bg}${badge(c)}
+      return `${bg}${badges(c)}
         <div class="card-body quest-body">
           ${chapter(c.chapterNo)}
           <h1 class="card-title g-h1">${esc(c.title)}</h1>
@@ -177,7 +179,7 @@
       const fig = c.figure === "triangles" ? triangleFigure() : "";
       const opts = c.answers.map((a, i) =>
         `<button class="quiz-opt" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body">
           ${timerRow()}
           ${fig}
@@ -191,7 +193,7 @@
     },
 
     attention_game(c) {
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body">
           ${timerRow()}
           <h1 class="card-title g-h1" style="margin-top:8px">${esc(c.title)}</h1>
@@ -201,7 +203,7 @@
     },
 
     algorithm_demo(c) {
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body algo-body">
           <div class="algo-viz">${vizFrame(c.viz)}</div>
           <div class="algo-text">
@@ -214,7 +216,7 @@
     },
 
     fun_fact(c) {
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body funfact-body">
           <div class="funfact-tile"><div class="asset-missing">ilustrace<br>(doplnit)</div></div>
           <h3 class="card-title g-h3" style="font-weight:700">${esc(c.title)}</h3>
@@ -224,7 +226,7 @@
     },
 
     spot_the_mistake(c) {
-      return `${badge(c)}
+      return `${badges(c)}
         <div class="card-body mistake-body">
           <div class="mistake-photo"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
           <h3 class="mistake-claim g-h3">${esc(c.claim)}</h3>
@@ -234,27 +236,19 @@
     },
 
     argument(c) {
-      return `
-        <div class="arg-badges">
-          <span class="arg-badge trust">${esc(c.trust || "Core")}</span>
-          <span class="arg-badge cat">${esc(c.category)}</span>
-        </div>
-        <div class="card-body arg-body">
-          <div class="arg-head">
-            <h1 class="arg-claim">${esc(c.claim)}</h1>
-            <p class="arg-sub">${esc(c.sub)}</p>
-          </div>
-          <div class="arg-actions">
-            <button class="arg-opt" data-arg="agree">Souhlasím</button>
-            <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>
-          </div>
+      return `${badges(c)}
+        <h2 class="arg-claim">${esc(c.claim)}</h2>
+        <p class="arg-sub">${esc(c.sub)}</p>
+        <div class="arg-actions">
+          <button class="arg-opt" data-arg="agree">Souhlasím</button>
+          <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>
         </div>`;
     },
 
     daily_summary(c) {
       const rows = c.stats.map((s) =>
         `<div class="summary-row"><span>${esc(s.label)}</span><span class="summary-row-val">${esc(s.value)}</span></div>`).join("");
-      return `${badge(c)}
+      return `${badges(c)}
         <span class="pixel-deco" style="top:8%;left:26%;width:15px;height:15px">${ICON.spark}</span>
         ${deco("", "top:27%;left:14%;width:13px;height:13px")}
         ${deco("", "top:32%;left:64%;width:13px;height:13px")}

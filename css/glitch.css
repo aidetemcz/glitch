@@ -21,7 +21,7 @@
   --c-pink:       #ff6ea9;   /* dlaždice u Fun fact */
 
   /* Layout */
-  --card-pad:     28px;
+  --card-pad:     40px;
   --bottombar-h:  48px;
   --feed-max:     480px;
   --nav-h:        56px;
@@ -53,6 +53,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Typografické styly (tokeny)
    ========================================================================== */
 .g-h1        { font-size: 40px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
+.g-h2        { font-size: 30px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
 .g-chapter-no{ font-size: 30px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
 .g-h3        { font-size: 25px; font-weight: 600; line-height: 1.08; letter-spacing: var(--tracking); }
 .g-category  { font-size: 16px; font-weight: 600; line-height: 1;    letter-spacing: var(--tracking); }
@@ -117,21 +118,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ========================================================================== */
 
 /* Badge kategorie (vpravo nahoře) */
+/* Badge: dva (trust + kategorie) vpravo nahoře — dle Figmy */
+.badges { position: absolute; top: 26px; right: 25px; z-index: 5; display: flex; gap: 9px; }
 .badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 5;
-  background: var(--c-yellow);
-  color: var(--c-black);
-  padding: 8px 13px 7px;
-  border-radius: 7px;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0;
-  white-space: nowrap;
+  display: flex; align-items: center; height: 26px; padding: 0 10px;
+  border-radius: 5px; font-size: 16px; font-weight: 600; line-height: 1;
+  letter-spacing: var(--tracking); white-space: nowrap;
 }
+.badge.trust { background: var(--c-white); color: var(--c-grey-50, #747474); }
+.badge.cat   { background: var(--c-yellow); color: #1a1a1a; }
 
 /* Číslo kapitoly (pill) */
 .chapter-no {
@@ -394,19 +389,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mistake-claim { margin-top: 4px; font-weight: 700; }
 .mistake-context { margin-top: 16px; color: rgba(255,255,255,0.78); max-width: 34ch; }
 
-/* Argumentuj (růžová karta: tvrzení + Souhlasím / Nesouhlasím) */
-.arg-badges { position: absolute; top: 18px; right: 18px; z-index: 5; display: flex; gap: 8px; }
-.arg-badge { padding: 8px 13px 7px; border-radius: 7px; font-size: 15px; font-weight: 600; line-height: 1; white-space: nowrap; }
-.arg-badge.trust { background: #ededed; color: var(--c-black); }
-.arg-badge.cat { background: var(--c-yellow); color: var(--c-black); }
-.arg-body { justify-content: flex-start; }
-.arg-head { margin-top: 20%; }
-.arg-claim { font-size: 33px; font-weight: 700; line-height: 1.12; letter-spacing: var(--tracking); }
-.arg-sub { margin-top: 18px; color: rgba(0,0,0,0.5); font-size: 15px; line-height: 1.33; letter-spacing: var(--tracking); max-width: 30ch; }
-.arg-actions { margin-top: auto; margin-bottom: 34px; display: flex; gap: 12px; }
+/* Argumentuj (růžová karta) — pozice dle Figmy (rám 402×818) */
+.arg-body { justify-content: flex-start; padding: 0; }        /* prvky pozicované přesně */
+.arg-claim { position: absolute; left: 40px; right: 33px; top: 216px;
+  font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: var(--tracking); }
+.arg-sub { position: absolute; left: 40px; right: 40px; top: 350px;
+  font-size: 16px; font-weight: 400; line-height: 22px; letter-spacing: var(--tracking); color: var(--c-black); }
+.arg-actions { position: absolute; left: 40px; top: 643px; display: flex; gap: 27px; }
 .arg-opt {
-  border: 1.5px solid rgba(0,0,0,0.55); border-radius: 11px; background: transparent;
-  color: var(--c-black); padding: 14px 22px; font-size: 17px; font-weight: 500;
+  width: 134px; height: 47px; border: 1px solid var(--c-black); border-radius: 5px;
+  background: transparent; color: #1a1a1a; font-size: 16px; font-weight: 400;
   letter-spacing: var(--tracking); transition: all .12s ease;
 }
 .arg-opt.is-sel { background: var(--c-black); color: var(--c-white); border-color: var(--c-black); }
