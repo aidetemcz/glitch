@@ -96,7 +96,6 @@
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   const badge = (c) => c.category ? `<div class="badge">${esc(c.category)}</div>` : "";
-  const bottombar = () => `<div class="card-bottombar"></div>`;
   const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
   const mascot  = () => `<button class="nav-mascot" data-nav="next" aria-label="Pokračovat"><img src="assets/ui/scroll-down.svg" alt="" width="56" height="56"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
@@ -121,7 +120,7 @@
           <p class="card-lead g-p text-center" style="max-width:32ch">${esc(c.body)}</p>
           ${moodDiagram()}
         </div>
-        ${mascot()}${bottombar()}`;
+        ${mascot()}`;
     },
 
     breathing(c) {
@@ -138,7 +137,7 @@
           <p class="breath-hint g-p-s">Pohodlně se usaď a stiskni tlačítko začít.</p>
           <button class="breath-cta" data-breath="start">Začít</button>
         </div>
-        ${mascot()}${bottombar()}`;
+        ${mascot()}`;
     },
 
     quest_intro(c) {
@@ -151,7 +150,7 @@
           <h1 class="card-title g-h1">${esc(c.title)}</h1>
           <p class="card-lead g-p">${esc(c.body)}</p>
         </div>
-        ${chevron()}${bottombar()}`;
+        ${chevron()}`;
     },
 
     quick_challenge(c) {
@@ -169,7 +168,7 @@
           </div>
           <div class="quiz-options cols-${c.cols || 2}">${opts}</div>
         </div>
-        ${bottombar()}`;
+        `;
     },
 
     attention_game(c) {
@@ -179,7 +178,7 @@
           <h1 class="card-title g-h1" style="margin-top:8px">${esc(c.title)}</h1>
           <div class="algo-viz" style="flex:1;margin-top:18px">${vizFrame(c.viz)}</div>
         </div>
-        ${mascot()}${bottombar()}`;
+        ${mascot()}`;
     },
 
     algorithm_demo(c) {
@@ -192,7 +191,7 @@
             <p class="card-lead g-p">${esc(c.body)}</p>
           </div>
         </div>
-        ${chevron()}${bottombar()}`;
+        ${chevron()}`;
     },
 
     fun_fact(c) {
@@ -202,7 +201,7 @@
           <h3 class="card-title g-h3" style="font-weight:700">${esc(c.title)}</h3>
           <p class="card-lead g-p-s">${esc(c.body)}</p>
         </div>
-        ${chevron()}${bottombar()}`;
+        ${chevron()}`;
     },
 
     spot_the_mistake(c) {
@@ -212,7 +211,7 @@
           <h3 class="mistake-claim g-h3">${esc(c.claim)}</h3>
           <p class="mistake-context g-p-s">${esc(c.context)}</p>
         </div>
-        ${chevron()}${bottombar()}`;
+        ${chevron()}`;
     },
 
     daily_summary(c) {
@@ -233,7 +232,7 @@
           <button class="summary-link">Zobrazit dlouhodobé statistiky</button>
           <p class="summary-outro g-p">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
         </div>
-        ${chevron()}${bottombar()}`;
+        ${chevron()}`;
     }
   };
 

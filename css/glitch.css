@@ -150,16 +150,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   letter-spacing: var(--tracking);
 }
 
-/* Spodní lišta + linka */
-.card-bottombar {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: var(--bottombar-h);
-  background: var(--c-dark);
-  border-top: 1px solid rgba(208,208,208,0.22);
-  z-index: 4;
-}
-
 /* Navigační „další Glitch" (žlutý zaoblený obdélník) */
 .nav-chevron {
   position: absolute;
