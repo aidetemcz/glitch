@@ -40,7 +40,7 @@
     { type: "quest_intro", category: "Vibe Coding", chapterNo: 1,
       title: "Vibe Coding",
       body: "Vibe Coding je programování v přirozeném jazyce. Zjisti, jak vznikl a jak to celé funguje.",
-      video: "assets/videos/vibecoding_video_01.mp4" },
+      video: "assets/videos/vibe-coding_01.mp4" },
 
     { type: "quick_challenge", category: "Rychlá výzva",
       question: "310×15=",
