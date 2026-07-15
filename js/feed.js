@@ -28,6 +28,8 @@
   const CARDS = [
     { type: "welcome" },
 
+    { type: "intro" },
+
     { type: "mood_selector", category: "Wellbeing",
       title: "Jak se teď cítíš?",
       body: "Umísti potažením černou tečku na správné místo v diagramu. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
@@ -111,6 +113,19 @@
         <span class="pixel-deco" style="top:69%;left:34%;width:15px;height:15px">${ICON.spark}</span>
         <img class="welcome-logo" src="${LOGO}" alt="Glitch">
         <img class="welcome-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">`;
+    },
+
+    intro(c) {
+      return `
+        <span class="pixel-deco" style="top:12%;right:16%;width:15px;height:15px">${ICON.spark}</span>
+        ${deco("", "top:52%;left:22%;width:13px;height:13px")}
+        ${deco("", "top:59%;left:55%;width:13px;height:13px")}
+        <img class="intro-logo" src="${LOGO}" alt="Glitch">
+        <div class="card-body intro-body">
+          <h1 class="card-title g-h1">Vítej v Glitchi!</h1>
+          <p class="card-lead g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
+        </div>
+        ${chevron()}`;
     },
 
     mood_selector(c) {
@@ -281,7 +296,7 @@
   const feed = document.getElementById("glitch-feed");
 
   const BG = {
-    welcome: "yellow", mood_selector: "white", daily_summary: "white",
+    welcome: "yellow", intro: "white", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black",
     quick_challenge: "red", spot_the_mistake: "purple", fun_fact: "teal",
     quest_intro: "image"
