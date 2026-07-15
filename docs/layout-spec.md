@@ -17,14 +17,22 @@ Vpravo nahoře, zarovnané doprava.
 - **Kategorie** (Argumentuj, Wellbeing…): pozadí **žluté `#ffff00`**, text **`#1a1a1a`**, styl `glitch_category`.
 - Karty *About Glitch* a *Welcome* badge nemají.
 
-## Typo styly (Figma)
+## Typo styly (Figma — zdroj pravdy)
 
-| styl | font | velikost | řádkování | tracking | použití |
+Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z výšek textových boxů přes konektor). Font **Inter**, řezy Regular 400 / Semi Bold 600. **Řádkování je `normal` (≈ 1.2× velikosti)** u všech stylů — jediná výjimka je `glitch_p` s pevnými **22 px**. Tracking je vždy **−4 %** (v CSS `-0.04em`), kromě `caps` (0).
+
+| styl | řez | velikost | řádkování | tracking | použití |
 |---|---|---|---|---|---|
-| `glitch_H1` | Inter 600 | 40 | 1.0 | -0.04em | krátké titulky (Vítej, Jak se cítíš, Vibe Coding) |
-| `glitch_H2` | Inter 600 | 30 | 1.0 | -0.04em | delší tvrzení/titulky (Argumentuj, Najdi chybu, Fun fact) |
-| `glitch_category` | Inter 600 | 16 | 1.0 | -0.04em | badge |
-| `glitch_p` | Inter 400 | 16 | 22 px | -0.04em | běžný text / podtext |
+| `glitch_H1` | 600 | 40 | normal | −0.04em (−1.6 px) | krátké titulky (Vítej, Jak se cítíš, Vibe Coding, Hra života, „310×15=") |
+| `glitch_H2` | 600 | 30 | normal | −0.04em (−1.2 px) | velký text / delší tvrzení — **jen Argumentuj** |
+| `glitch_H3` | 600 | 25 | normal | −0.04em (−1 px) | sekční nadpisy (Najdi chybu, Fun fact, Shrnutí, Hra na pozornost, otázka u trojúhelníků) |
+| `glitch_chapter-no` | 600 | 30 | normal | −0.04em (−1.2 px) | číslo kapitoly / velké číslo |
+| `glitch_category` | 600 | 16 | normal | −0.04em (−0.64 px) | badge |
+| `glitch_p` | 400 | 16 | **22 px** | −0.04em (−0.64 px) | běžný text / podtext |
+| `glitch_p-s` | 400 | 15 | normal | −0.04em (−0.6 px) | malý / sekundární text |
+| `glitch_caps` | 400 | 15 | normal | 0 | popisky os / verzálky |
+
+> Pozn.: „delší tvrzení" ≠ automaticky H2. Ve Figmě je H2 (30 px) použité **jen** u Argumentuj; ostatní tvrzení a titulky (Najdi chybu, Fun fact, Shrnutí, Hra na pozornost) jsou H3 (25 px). „310×15=" je krátké → H1 (40 px), ale delší otázky (trojúhelníky) jsou H3.
 
 ## Spodní menu
 

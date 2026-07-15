@@ -178,7 +178,7 @@
       if (c.figure === "triangles") {
         return `${badges(c)}
           <div class="fx-center" style="top:37.4%">${triangleFigure()}</div>
-          <div class="fx-block g-h2" style="top:61.1%">${esc(c.question)}</div>
+          <div class="fx-block g-h3" style="top:61.1%">${esc(c.question)}</div>
           <div class="quiz-options cols-3 fx-options" style="top:84.2%">${opts}</div>`;
       }
       return `${badges(c)}
@@ -195,7 +195,7 @@
 
     attention_game(c) {
       return `${badges(c)}
-        <h2 class="fx-block g-h2" style="top:28.9%">${esc(c.title)}</h2>
+        <h3 class="fx-block g-h3" style="top:28.9%">${esc(c.title)}</h3>
         <div class="algo-viz fx-media" style="top:34.5%">${vizFrame(c.viz)}</div>
         ${mascot()}`;
     },
@@ -215,7 +215,7 @@
       return `${badges(c)}
         <div class="funfact-tile fx-media" style="top:11.6%"><div class="asset-missing">ilustrace<br>(doplnit)</div></div>
         <div class="fx-block" style="top:53.3%">
-          <h2 class="fx-title g-h2">${esc(c.title)}</h2>
+          <h3 class="fx-title g-h3">${esc(c.title)}</h3>
           <p class="fx-text g-p-s">${esc(c.body)}</p>
         </div>
         ${chevron()}`;
@@ -225,7 +225,7 @@
       return `${badges(c)}
         <div class="mistake-photo fx-media" style="top:11.6%"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
         <div class="fx-block" style="top:64.3%">
-          <h2 class="fx-title mistake-claim g-h2">${esc(c.claim)}</h2>
+          <h3 class="fx-title mistake-claim g-h3">${esc(c.claim)}</h3>
           <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
         </div>
         ${chevron()}`;
@@ -253,7 +253,7 @@
             <img src="${LOGO}" alt="" style="width:150px;height:auto">
           </div>
         </div>
-        <h2 class="fx-block g-h2" style="top:44.4%">Tvé shrnutí pro dnešek</h2>
+        <h3 class="fx-block g-h3" style="top:44.4%">Tvé shrnutí pro dnešek</h3>
         <div class="summary-stats fx-block" style="top:50.7%">${rows}</div>
         <button class="summary-link fx-block" style="top:66.5%">Zobrazit dlouhodobé statistiky</button>
         <p class="summary-outro fx-block g-p" style="top:76.3%">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
