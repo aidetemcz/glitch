@@ -9,13 +9,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="assets/glitch-logo.svg">
-  <link rel="stylesheet" href="css/glitch.css?v=5">
+  <link rel="stylesheet" href="css/glitch.css?v=6">
 </head>
 <body>
   <main id="glitch-feed" aria-label="Glitch feed"></main>
+
+  <nav id="glitch-nav" aria-label="Hlavní menu">
+    <button class="nav-item is-active" data-tab="feed" aria-label="Feed"><img src="assets/ui/glitchfeed-icon.svg" alt=""></button>
+    <button class="nav-item" data-tab="boardy" aria-label="Boardy"><img src="assets/ui/quests-boards-icon.svg" alt=""></button>
+    <button class="nav-item nav-plus" data-tab="create" aria-label="Vytvořit Glitch"><span class="plus-circle"><img src="assets/ui/plus-icon.svg" alt=""></span></button>
+    <button class="nav-item" data-tab="hledat" aria-label="Hledat"><img src="assets/ui/search-icon.svg" alt=""></button>
+    <button class="nav-item nav-profile" id="nav-profile" data-tab="profile" aria-label="Profil"></button>
+  </nav>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="js/supabase.js?v=1"></script>
-  <script src="js/auth.js?v=1"></script>
-  <script src="js/feed.js?v=4"></script>
+  <script src="js/auth.js?v=2"></script>
+  <script src="js/feed.js?v=5"></script>
 </body>
 </html>

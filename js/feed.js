@@ -325,6 +325,29 @@
     return Math.round(feed.scrollTop / feed.clientHeight);
   }
 
+  /* ---- Spodní menu ---- */
+  const navEl = document.getElementById("glitch-nav");
+  if (navEl) {
+    navEl.addEventListener("click", (e) => {
+      const item = e.target.closest(".nav-item");
+      if (!item) return;
+      const tab = item.dataset.tab;
+      if (tab === "profile") return;                 // přihlášení řeší auth.js
+      if (tab === "feed") { scrollToIndex(0); setActiveTab(item); return; }
+      toast("Připravujeme 🚧");                        // boardy / tvořit / hledat zatím nejsou
+    });
+  }
+  function setActiveTab(item) {
+    document.querySelectorAll("#glitch-nav .nav-item").forEach((n) => n.classList.toggle("is-active", n === item));
+  }
+  let _toastTimer = null;
+  function toast(msg) {
+    let el = document.getElementById("glitch-toast");
+    if (!el) { el = document.createElement("div"); el.id = "glitch-toast"; el.className = "glitch-toast"; document.body.appendChild(el); }
+    el.textContent = msg; el.classList.add("show");
+    clearTimeout(_toastTimer); _toastTimer = setTimeout(() => el.classList.remove("show"), 1600);
+  }
+
   /* ==========================================================================
      Interakce jednotlivých karet
      ========================================================================== */
