@@ -97,6 +97,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .card--dark   { --bg: var(--c-dark);   --fg: var(--c-white); }
 .card--black  { --bg: var(--c-black);  --fg: var(--c-white); }
 .card--red    { --bg: var(--c-red);    --fg: var(--c-white); }
+.card--pink   { --bg: var(--c-red-15); --fg: var(--c-black); }
 .card--blue   { --bg: var(--c-blue);   --fg: var(--c-white); }
 .card--purple { --bg: var(--c-purple); --fg: var(--c-white); }
 .card--teal   { --bg: var(--c-teal);   --fg: var(--c-white); }
@@ -392,6 +393,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mistake-body { justify-content: flex-start; }
 .mistake-claim { margin-top: 4px; font-weight: 700; }
 .mistake-context { margin-top: 16px; color: rgba(255,255,255,0.78); max-width: 34ch; }
+
+/* Argumentuj (růžová karta: tvrzení + Souhlasím / Nesouhlasím) */
+.arg-badges { position: absolute; top: 18px; right: 18px; z-index: 5; display: flex; gap: 8px; }
+.arg-badge { padding: 8px 13px 7px; border-radius: 7px; font-size: 15px; font-weight: 600; line-height: 1; white-space: nowrap; }
+.arg-badge.trust { background: #ededed; color: var(--c-black); }
+.arg-badge.cat { background: var(--c-yellow); color: var(--c-black); }
+.arg-body { justify-content: flex-start; }
+.arg-head { margin-top: 20%; }
+.arg-claim { font-size: 33px; font-weight: 700; line-height: 1.12; letter-spacing: var(--tracking); }
+.arg-sub { margin-top: 18px; color: rgba(0,0,0,0.5); font-size: 15px; line-height: 1.33; letter-spacing: var(--tracking); max-width: 30ch; }
+.arg-actions { margin-top: auto; margin-bottom: 34px; display: flex; gap: 12px; }
+.arg-opt {
+  border: 1.5px solid rgba(0,0,0,0.55); border-radius: 11px; background: transparent;
+  color: var(--c-black); padding: 14px 22px; font-size: 17px; font-weight: 500;
+  letter-spacing: var(--tracking); transition: all .12s ease;
+}
+.arg-opt.is-sel { background: var(--c-black); color: var(--c-white); border-color: var(--c-black); }
 
 /* Algoritmus */
 .algo-body { justify-content: space-between; }

@@ -83,6 +83,10 @@
       claim: "Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott!",
       context: "Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců." },
 
+    { type: "argument", category: "Argumentuj", trust: "Core",
+      claim: "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
+      sub: "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
+
     { type: "daily_summary", category: "Shrnutí",
       stats: [
         { label: "Vyřešených Glitchů", value: 2 },
@@ -229,6 +233,24 @@
         ${chevron()}`;
     },
 
+    argument(c) {
+      return `
+        <div class="arg-badges">
+          <span class="arg-badge trust">${esc(c.trust || "Core")}</span>
+          <span class="arg-badge cat">${esc(c.category)}</span>
+        </div>
+        <div class="card-body arg-body">
+          <div class="arg-head">
+            <h1 class="arg-claim">${esc(c.claim)}</h1>
+            <p class="arg-sub">${esc(c.sub)}</p>
+          </div>
+          <div class="arg-actions">
+            <button class="arg-opt" data-arg="agree">Souhlasím</button>
+            <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>
+          </div>
+        </div>`;
+    },
+
     daily_summary(c) {
       const rows = c.stats.map((s) =>
         `<div class="summary-row"><span>${esc(s.label)}</span><span class="summary-row-val">${esc(s.value)}</span></div>`).join("");
@@ -296,7 +318,7 @@
   const feed = document.getElementById("glitch-feed");
 
   const BG = {
-    welcome: "yellow", intro: "white", mood_selector: "white", daily_summary: "white",
+    welcome: "yellow", intro: "white", argument: "pink", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black",
     quick_challenge: "red", spot_the_mistake: "purple", fun_fact: "teal",
     quest_intro: "image"
@@ -369,6 +391,7 @@
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el);
+    if (c.type === "argument") initArgument(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") el.addEventListener("click", () => nextFrom(el));
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)
@@ -452,6 +475,16 @@
         else o.classList.add("is-wrong");
       });
       setTimeout(() => nextFrom(el), correct ? 850 : 1400);
+    }));
+  }
+
+  /* ---- Argumentuj ---- */
+  function initArgument(el) {
+    const opts = el.querySelectorAll(".arg-opt");
+    opts.forEach((btn) => btn.addEventListener("click", () => {
+      opts.forEach((b) => b.classList.toggle("is-sel", b === btn));
+      // TODO: otevřít chat s Tinybotem (zatím není hotový)
+      toast("Chat s Tinybotem — připravujeme 🚧");
     }));
   }
 
