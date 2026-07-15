@@ -9,16 +9,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="assets/glitch-logo.svg">
-  <link rel="stylesheet" href="css/glitch.css?v=7">
+  <link rel="stylesheet" href="css/glitch.css?v=8">
 </head>
 <body>
   <main id="glitch-feed" aria-label="Glitch feed"></main>
 
   <nav id="glitch-nav" aria-label="Hlavní menu">
-    <button class="nav-item is-active" data-tab="feed" aria-label="Feed"><img src="assets/ui/glitchfeed-icon.svg" alt=""></button>
-    <button class="nav-item" data-tab="boardy" aria-label="Boardy"><img src="assets/ui/quests-boards-icon.svg" alt=""></button>
-    <button class="nav-item nav-plus" data-tab="create" aria-label="Vytvořit Glitch"><span class="plus-circle"><img src="assets/ui/plus-icon.svg" alt=""></span></button>
-    <button class="nav-item" data-tab="hledat" aria-label="Hledat"><img src="assets/ui/search-icon.svg" alt=""></button>
+    <button class="nav-item is-active" data-tab="feed" aria-label="Feed"><span class="nav-ico" style="-webkit-mask-image:url('assets/ui/glitchfeed-icon.svg');mask-image:url('assets/ui/glitchfeed-icon.svg')"></span></button>
+    <button class="nav-item" data-tab="boardy" aria-label="Boardy"><span class="nav-ico" style="-webkit-mask-image:url('assets/ui/quests-boards-icon.svg');mask-image:url('assets/ui/quests-boards-icon.svg')"></span></button>
+    <button class="nav-item nav-plus" data-tab="create" aria-label="Vytvořit Glitch">
+      <svg class="plus-svg" viewBox="0 0 29 29" aria-hidden="true"><circle cx="14.25" cy="14.25" r="13" fill="#ffff00"/><path d="M14.25 20.25L14.25 9.25M8.755 14.745H19.755" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="nav-item" data-tab="hledat" aria-label="Hledat"><span class="nav-ico" style="-webkit-mask-image:url('assets/ui/search-icon.svg');mask-image:url('assets/ui/search-icon.svg')"></span></button>
     <button class="nav-item nav-profile" id="nav-profile" data-tab="profile" aria-label="Profil"></button>
   </nav>
 
