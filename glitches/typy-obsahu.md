@@ -18,7 +18,7 @@ Samostatný přehled typů obsahu pro tvorbu Glitchů. Kompletní dokument — d
 
 ## Typy obsahu
 
-Obsah se dělí do 6 typů (= složky v `glitches/`). Legenda: **Rozklik** = karta se dá otevřít do hloubky · **Chatbot** = navazuje konverzace s Tinybotem.
+Obsah se dělí do 7 typů (= složky v `glitches/`). Legenda: **Rozklik** = karta se dá otevřít do hloubky · **Chatbot** = navazuje konverzace s Tinybotem.
 
 | # | Typ | Složka | Rozklik | Chatbot | Stav schématu |
 |---|---|---|:---:|:---:|---|
@@ -28,6 +28,7 @@ Obsah se dělí do 6 typů (= složky v `glitches/`). Legenda: **Rozklik** = kar
 | 4 | Fun fact | `funfact/` | ✅ | ✅ | ⬜ k dopracování |
 | 5 | Najdi chybu | `najdi-chybu/` | ✅ | ✅ | ⬜ k dopracování |
 | 6 | Historická osobnost | `historicka-osobnost/` | ✅ | ✅ | ⬜ k dopracování |
+| 7 | Argumentuj | `argument/` | ✅ | ✅ | ✅ hotovo |
 
 > **Systémové karty** (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace, nemají složku.
 
@@ -110,6 +111,20 @@ Obsah se dělí do 6 typů (= složky v `glitches/`). Legenda: **Rozklik** = kar
 2. **Rozklik → chat s personou** — dítě si povídá s AI, která vystupuje jako daná osobnost.
 
 *(Schéma souboru: k dopracování — identifikace, karta, persona/kontext pro chatbota (kdo osobnost byla, tón, co ví/neví, hranice), bezpečnost.)*
+
+---
+
+### 7. Argumentuj
+
+**Rozklikávací** Glitch pro **argumentaci a kritické myšlení** — portace Tinybota „Argumentuj" z tiny.school. Neučí „správný názor", ale **dobře argumentovat**. Bez forku.
+
+**Tok interakce:**
+1. **Karta ve feedu** — názorové tvrzení (tučně) + tlačítka **Souhlasím / Nesouhlasím**.
+2. **Volba postoje** dá botovi úvodní info o postoji dítěte.
+3. **Rozklik → chat** — Tinybot vede krátkými větami: proč → příklad → protiargument druhé strany → shrnutí postoje.
+4. **Uložení** — signály o kvalitě argumentace jdou do profilu a do Tiny jako důkaz o učení (ne samotný názor).
+
+Kompletní schéma: **`argument/README.md`**.
 
 ---
 
