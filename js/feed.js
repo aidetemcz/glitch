@@ -127,28 +127,26 @@
         ${deco("", "top:52%;left:22%;width:13px;height:13px")}
         ${deco("", "top:59%;left:55%;width:13px;height:13px")}
         <img class="intro-logo" src="${LOGO}" alt="Glitch">
-        <div class="card-body intro-body">
-          <h1 class="card-title g-h1">Vítej v Glitchi!</h1>
-          <p class="card-lead g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
+        <div class="fx-block" style="top:71.6%">
+          <h1 class="fx-title g-h1">Vítej v Glitchi!</h1>
+          <p class="fx-text g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
         </div>
         ${chevron()}`;
     },
 
     mood_selector(c) {
       return `${badges(c)}
-        <div class="card-body breath-body">
-          <h1 class="card-title g-h1 text-center">${esc(c.title)}</h1>
-          <p class="card-lead g-p text-center" style="max-width:32ch">${esc(c.body)}</p>
-          ${moodDiagram()}
-        </div>
+        <h1 class="fx-block g-h1 text-center" style="top:14.4%">${esc(c.title)}</h1>
+        <p class="fx-block g-p text-center" style="top:21.5%">${esc(c.body)}</p>
+        <div class="mood-wrap">${moodDiagram()}</div>
         ${mascot()}`;
     },
 
     breathing(c) {
       return `${badges(c)}
-        <div class="card-body breath-body">
-          <h1 class="card-title g-h1 text-center">${esc(c.title)}</h1>
-          <p class="card-lead g-p text-center" style="max-width:30ch">${esc(c.body)}</p>
+        <h1 class="fx-block g-h1 text-center" style="top:16.3%">${esc(c.title)}</h1>
+        <p class="fx-block g-p text-center" style="top:23.3%">${esc(c.body)}</p>
+        <div class="breath-controls">
           <div class="breath-counter">
             <button class="breath-step" data-breath="dec" aria-label="Méně">−</button>
             <div class="breath-value" data-breath="value">0/${c.cycles}</div>
@@ -166,71 +164,69 @@
         ? `<video class="quest-video" autoplay muted loop playsinline preload="auto"><source src="${c.video}" type="video/mp4"></video><div class="quest-scrim"></div>`
         : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
-        <div class="card-body quest-body">
+        <div class="fx-block quest-text" style="top:65%">
           ${chapter(c.chapterNo)}
-          <h1 class="card-title g-h1">${esc(c.title)}</h1>
-          <p class="card-lead g-p">${esc(c.body)}</p>
+          <h1 class="fx-title g-h1">${esc(c.title)}</h1>
+          <p class="fx-text g-p">${esc(c.body)}</p>
         </div>
         ${chevron()}`;
     },
 
     quick_challenge(c) {
-      const q = c.questionStyle === "h3" ? "g-h3" : "g-h1";
-      const fig = c.figure === "triangles" ? triangleFigure() : "";
       const opts = c.answers.map((a, i) =>
         `<button class="quiz-opt" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
+      if (c.figure === "triangles") {
+        return `${badges(c)}
+          <div class="fx-center" style="top:37.4%">${triangleFigure()}</div>
+          <div class="fx-block g-h2" style="top:61.1%">${esc(c.question)}</div>
+          <div class="quiz-options cols-3 fx-options" style="top:84.2%">${opts}</div>`;
+      }
       return `${badges(c)}
-        <div class="card-body">
-          ${timerRow()}
-          ${fig}
-          <div class="quiz-prompt">
-            <div class="${q}">${esc(c.question)}</div>
-            ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
-          </div>
-          <div class="quiz-options cols-${c.cols || 2}">${opts}</div>
+        <div class="timer-row fx-block" style="top:15.5%">
+          <button class="timer-toggle" data-timer aria-label="Zapnout časovač"></button>
+          <p class="timer-note g-p-s">Pokud chceš, můžeš si zapnout časovač. Stačí kliknout na kolečko.</p>
         </div>
-        `;
+        <div class="fx-block" style="top:51%">
+          <div class="g-h1">${esc(c.question)}</div>
+          ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
+        </div>
+        <div class="quiz-options cols-2 fx-options" style="top:70.5%">${opts}</div>`;
     },
 
     attention_game(c) {
       return `${badges(c)}
-        <div class="card-body">
-          ${timerRow()}
-          <h1 class="card-title g-h1" style="margin-top:8px">${esc(c.title)}</h1>
-          <div class="algo-viz" style="flex:1;margin-top:18px">${vizFrame(c.viz)}</div>
-        </div>
+        <h2 class="fx-block g-h2" style="top:28.9%">${esc(c.title)}</h2>
+        <div class="algo-viz fx-media" style="top:34.5%">${vizFrame(c.viz)}</div>
         ${mascot()}`;
     },
 
     algorithm_demo(c) {
       return `${badges(c)}
-        <div class="card-body algo-body">
-          <div class="algo-viz">${vizFrame(c.viz)}</div>
-          <div class="algo-text">
-            ${chapter(c.chapterNo)}
-            <h1 class="card-title g-h1">${esc(c.title)}</h1>
-            <p class="card-lead g-p">${esc(c.body)}</p>
-          </div>
+        <div class="algo-viz fx-media" style="top:11.7%">${vizFrame(c.viz)}</div>
+        <div class="fx-block algo-text" style="top:65%">
+          ${chapter(c.chapterNo)}
+          <h1 class="fx-title g-h1">${esc(c.title)}</h1>
+          <p class="fx-text g-p">${esc(c.body)}</p>
         </div>
         ${chevron()}`;
     },
 
     fun_fact(c) {
       return `${badges(c)}
-        <div class="card-body funfact-body">
-          <div class="funfact-tile"><div class="asset-missing">ilustrace<br>(doplnit)</div></div>
-          <h3 class="card-title g-h3" style="font-weight:700">${esc(c.title)}</h3>
-          <p class="card-lead g-p-s">${esc(c.body)}</p>
+        <div class="funfact-tile fx-media" style="top:11.6%"><div class="asset-missing">ilustrace<br>(doplnit)</div></div>
+        <div class="fx-block" style="top:53.3%">
+          <h2 class="fx-title g-h2">${esc(c.title)}</h2>
+          <p class="fx-text g-p-s">${esc(c.body)}</p>
         </div>
         ${chevron()}`;
     },
 
     spot_the_mistake(c) {
       return `${badges(c)}
-        <div class="card-body mistake-body">
-          <div class="mistake-photo"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
-          <h3 class="mistake-claim g-h3">${esc(c.claim)}</h3>
-          <p class="mistake-context g-p-s">${esc(c.context)}</p>
+        <div class="mistake-photo fx-media" style="top:11.6%"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
+        <div class="fx-block" style="top:64.3%">
+          <h2 class="fx-title mistake-claim g-h2">${esc(c.claim)}</h2>
+          <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
         </div>
         ${chevron()}`;
     },
@@ -257,12 +253,10 @@
             <img src="${LOGO}" alt="" style="width:150px;height:auto">
           </div>
         </div>
-        <div class="card-body summary-body">
-          <h3 class="summary-title g-h3" style="font-weight:700">Tvé shrnutí pro dnešek</h3>
-          <div class="summary-stats">${rows}</div>
-          <button class="summary-link">Zobrazit dlouhodobé statistiky</button>
-          <p class="summary-outro g-p">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
-        </div>
+        <h2 class="fx-block g-h2" style="top:44.4%">Tvé shrnutí pro dnešek</h2>
+        <div class="summary-stats fx-block" style="top:50.7%">${rows}</div>
+        <button class="summary-link fx-block" style="top:66.5%">Zobrazit dlouhodobé statistiky</button>
+        <p class="summary-outro fx-block g-p" style="top:76.3%">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
         ${chevron()}`;
     }
   };
@@ -271,13 +265,6 @@
   function vizFrame(src) {
     return `<iframe class="viz-frame" src="${src}" loading="lazy" title="Vizualizace"
               style="width:100%;height:100%;aspect-ratio:1/1"></iframe>`;
-  }
-
-  function timerRow() {
-    return `<div class="timer-row">
-      <button class="timer-toggle" data-timer aria-label="Zapnout časovač"></button>
-      <p class="timer-note g-p-s">Pokud chceš, můžeš si zapnout časovač. Stačí kliknout na kolečko.</p>
-    </div>`;
   }
 
   function triangleFigure() {
