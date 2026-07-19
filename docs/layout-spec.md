@@ -83,3 +83,14 @@ Design je laděný na **referenční šířku 402 px**. Na užších displejích
 
 > Pravidlo pro nové prvky: nikdy nepiš pevné `px` u velikostí — vždy `calc(N * var(--u))`,
 > kde `N` je hodnota z Figmy (v referenčních 402 px). Okraj 40 px a `%`-pozice nech pevné.
+
+## Patička karty (nápověda + akční tlačítko dole)
+
+Obecné pravidlo pro **interaktivní Glitche s pokynem a CTA** (dechové cvičení a
+další podobné typy): pokyn („Pohodlně se usaď…") a tlačítko („Začít") **nepatří
+doprostřed k obsahu, ale dolů** — do patičky ukotvené u spodní hrany karty.
+
+- Třída **`.card-footer`**: `position:absolute; left:40; right:40; bottom: calc(40*var(--u));`
+  `display:flex; flex-direction:column; align-items:center; gap: calc(16*var(--u));`
+- Interaktivní prvek (kolečko, diagram) drží nad patičkou (jeho kontejner má
+  `bottom` s rezervou, aby se nepřekrýval s patičkou).

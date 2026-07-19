@@ -255,7 +255,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Dechové cvičení — nadpis y=133, text y=191, ovládání pod tím
    ========================================================================== */
 .breath-controls {
-  position: absolute; left: 40px; right: 40px; top: 31%; bottom: 92px;
+  position: absolute; left: 40px; right: 40px; top: 30%; bottom: calc(158 * var(--u));
   display: flex; flex-direction: column; align-items: center;
 }
 .breath-counter { display: flex; align-items: center; gap: calc(16 * var(--u)); }
@@ -272,25 +272,38 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: grid; place-items: center;
   font-size: calc(15 * var(--u)); letter-spacing: var(--tracking);
 }
+/* pevný vnější prstenec; vnitřní kolečko se v něm nafukuje/splaskává (dle návrhu) */
+.breath-ring {
+  margin: auto 0;
+  width: calc(215 * var(--u)); height: calc(215 * var(--u)); border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: grid; place-items: center;
+}
 .breath-circle {
-  margin: calc(46 * var(--u)) auto 0;
-  width: calc(178 * var(--u)); height: calc(178 * var(--u)); border-radius: 50%;
+  width: calc(150 * var(--u)); height: calc(150 * var(--u)); border-radius: 50%;
   background: #faf9f5;                                   /* krémový střed (dle návrhu) */
   color: var(--c-black);
   display: grid; place-items: center;
-  /* jemný vnější prstenec kolem kolečka */
-  box-shadow: 0 0 0 calc(34 * var(--u)) rgba(255,255,255,0.05);
-  font-size: calc(34 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
-  transition: transform 4s ease-in-out, background .4s ease;
+  font-size: calc(30 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  transition: transform 3.5s ease-in-out;               /* nádech/výdech 3,5 s, ease-in-out */
   will-change: transform;
 }
-.breath-hint { margin-top: auto; margin-bottom: calc(14 * var(--u)); opacity: .9; text-align: center; }
+.breath-hint { opacity: .9; text-align: center; }
 .breath-cta {
-  align-self: center;
   background: transparent; color: var(--c-white);
   border: 1.5px solid rgba(255,255,255,0.45);
   padding: calc(15 * var(--u)) calc(40 * var(--u)); border-radius: calc(9 * var(--u));
   font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+}
+
+/* ==========================================================================
+   Obecné pravidlo: patička karty (nápověda + akční tlačítko dole)
+   Pro interaktivní Glitche s pokynem + CTA (dech a další podobné typy).
+   ========================================================================== */
+.card-footer {
+  position: absolute; left: 40px; right: 40px; bottom: calc(40 * var(--u));
+  display: flex; flex-direction: column; align-items: center; gap: calc(16 * var(--u));
+  z-index: 2;
 }
 
 /* ==========================================================================

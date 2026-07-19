@@ -32,7 +32,7 @@
 
     { type: "mood_selector", category: "Wellbeing",
       title: "Jak se teď cítíš?",
-      body: "Potažením zvol svůj vibe." },
+      body: "Potažením zvol svůj vibe. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
 
     { type: "breathing", category: "Wellbeing",
       title: "Dechové cvičení",
@@ -150,7 +150,9 @@
             <div class="breath-value" data-breath="value">0/${c.cycles}</div>
             <button class="breath-step" data-breath="inc" aria-label="Více">+</button>
           </div>
-          <div class="breath-circle" data-breath="circle">${c.cycles}</div>
+          <div class="breath-ring"><div class="breath-circle" data-breath="circle">${c.cycles}</div></div>
+        </div>
+        <div class="card-footer">
           <p class="breath-hint g-p-s">Pohodlně se usaď a stiskni tlačítko začít.</p>
           <button class="breath-cta" data-breath="start">Začít</button>
         </div>`;
@@ -457,18 +459,18 @@
       if (running) return;
       running = true;
       const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+      // dvoufázový dech (bez zádrže), 3,5 s na fázi — dle návrhu Claude Design
       for (let n = 1; n <= target; n++) {
         valueEl.textContent = n + "/" + target;
         circleEl.textContent = "Nádech";
-        circleEl.style.transform = "scale(1.34)";
-        await wait(4000);
-        circleEl.textContent = "Zadrž";
-        await wait(1500);
+        circleEl.style.transform = "scale(1.3)";
+        await wait(3500);
         circleEl.textContent = "Výdech";
-        circleEl.style.transform = "scale(1)";
-        await wait(4000);
+        circleEl.style.transform = "scale(0.8)";
+        await wait(3500);
       }
       circleEl.textContent = "Hotovo";
+      circleEl.style.transform = "scale(1)";
       running = false;
     });
   }
