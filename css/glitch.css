@@ -60,6 +60,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .g-h2        { font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-chapter-no{ font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-h3        { font-size: calc(25 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h4        { font-size: calc(18 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); } /* odhad — potvrdit z Figmy */
 .g-category  { font-size: calc(16 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-p         { font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); }
 .g-p-s       { font-size: calc(15 * var(--u)); font-weight: 400; line-height: normal; letter-spacing: var(--tracking); }
@@ -351,21 +352,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Rychlá výzva (kvíz)
    ========================================================================== */
 .quiz-sub { margin-top: 14px; color: rgba(255,255,255,0.85); }
-.quiz-options { display: grid; gap: 14px; }
-.quiz-options.cols-2 { grid-template-columns: 1fr 1fr; }
-.quiz-options.cols-1 { grid-template-columns: 1fr; }
-.quiz-options.cols-3 { grid-template-columns: repeat(3, 1fr); }
+/* kompaktní buttony pevné šířky, zarovnané vlevo (dle Figmy), ne roztažené */
+.quiz-options { display: grid; gap: calc(15 * var(--u)); justify-content: start; }
+.quiz-options.cols-1 { grid-template-columns: calc(143 * var(--u)); }
+.quiz-options.cols-2 { grid-template-columns: repeat(2, calc(111 * var(--u))); }
+.quiz-options.cols-3 { grid-template-columns: repeat(3, calc(57 * var(--u))); }
 .quiz-opt {
   border: 1.5px solid rgba(255,255,255,0.85);
-  border-radius: calc(11 * var(--u));
+  border-radius: calc(8 * var(--u));
   background: transparent;
   color: var(--c-white);
-  padding: calc(15 * var(--u)) calc(14 * var(--u)); min-height: calc(55 * var(--u));
-  display: grid; place-items: center;
-  font-size: calc(22 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
-  text-align: center;
+  height: calc(55 * var(--u)); padding: 0 calc(15 * var(--u));
+  display: flex; align-items: center; justify-content: flex-start;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
+/* úzké buttony (3 sloupce, krátká čísla) na střed */
+.quiz-options.cols-3 .quiz-opt { justify-content: center; padding: 0; }
 .quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .quiz-opt.is-wrong   { opacity: .4; }
 .quiz-figure svg { display: block; }

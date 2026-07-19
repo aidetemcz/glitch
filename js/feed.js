@@ -173,7 +173,7 @@
 
     quick_challenge(c) {
       const opts = c.answers.map((a, i) =>
-        `<button class="quiz-opt" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
+        `<button class="quiz-opt g-h4" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
       if (c.figure === "triangles") {
         return `${badges(c)}
           <div class="fx-center" style="top:37.4%">${triangleFigure()}</div>
@@ -504,7 +504,7 @@
       state = "done";
       if (rafId) cancelAnimationFrame(rafId); rafId = null;
       circleEl.style.transform = "scale(1)";
-      circleEl.textContent = "✓";
+      circleEl.textContent = "";
       if (hintEl) hintEl.textContent = "Hotovo, skvělá práce!";
       btnEl.textContent = "Začít";
     }
