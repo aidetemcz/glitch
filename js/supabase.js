@@ -126,6 +126,37 @@ async function sbResetProgress() {
   await sb.from('progress').delete().eq('user_id', sbCurrentUser.id);
 }
 
+// ── MOOD ─────────────────────────────────────
+// Uloží náladu (focus/energy 0–100). Vždy lokálně; při přihlášení i do DB.
+// Primárně do dedikované tabulky `mood_entries`, sekundárně do `activity_log`.
+async function sbSaveMood(focus, energy) {
+  const entry = { focus, energy, ts: Date.now() };
+  try {
+    localStorage.setItem('tg_mood_last', JSON.stringify(entry));
+    const hist = JSON.parse(localStorage.getItem('tg_mood_history') || '[]');
+    hist.push(entry);
+    localStorage.setItem('tg_mood_history', JSON.stringify(hist.slice(-200)));
+  } catch (_) {}
+
+  if (!sb || !sbCurrentUser) return { ok: false, reason: 'auth' };
+
+  let dbOk = false;
+  // 1) dedikovaná tabulka mood_entries (pokud existuje)
+  try {
+    const { error } = await sb.from('mood_entries').insert({
+      user_id: sbCurrentUser.id, focus, energy
+    });
+    if (!error) dbOk = true;
+  } catch (_) {}
+  // 2) obecný activity_log (funguje, pokud tabulka existuje; jinak tiše degraduje)
+  try {
+    await sbTrackEvent('mood', { focus, energy });
+    if (_activityLogAvailable) dbOk = true;
+  } catch (_) {}
+
+  return { ok: dbOk, reason: dbOk ? null : 'db' };
+}
+
 // ── SYNC ─────────────────────────────────────
 
 async function sbSyncLocalToSupabase(userId) {

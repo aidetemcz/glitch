@@ -137,7 +137,10 @@
       return `${badges(c)}
         <h1 class="fx-block g-h1 text-center" style="top:14.4%">${esc(c.title)}</h1>
         <p class="fx-block g-p text-center" style="top:21.5%">${esc(c.body)}</p>
-        <div class="mood-wrap">${moodDiagram()}</div>`;
+        <div class="mood-wrap">${moodDiagram()}</div>
+        <div class="card-footer">
+          <button class="mood-cta g-h4" data-mood-confirm>Potvrdit</button>
+        </div>`;
     },
 
     breathing(c) {
@@ -602,6 +605,26 @@
     window.addEventListener("pointerup", () => { dragging = false; });
     // tap kamkoli do diagramu → puntík tam doklouže
     svg.addEventListener("pointerdown", (e) => { dragging = true; setTarget(e); });
+
+    // výchozí hodnota (střed), aby šlo potvrdit i bez tažení
+    if (!window.__glitchMood) {
+      window.__glitchMood = {
+        focus:  Math.round(((cx - BOUND.x0) / (BOUND.x1 - BOUND.x0)) * 100),
+        energy: Math.round(((BOUND.y0 - cy) / (BOUND.y0 - BOUND.y1)) * 100)
+      };
+    }
+
+    // Potvrdit → ulož náladu (lokálně vždy; do DB při přihlášení)
+    const confirmBtn = el.querySelector("[data-mood-confirm]");
+    if (confirmBtn) confirmBtn.addEventListener("click", async () => {
+      if (confirmBtn.disabled) return;
+      const m = window.__glitchMood || { focus: 50, energy: 50 };
+      confirmBtn.disabled = true;
+      let res = { ok: false, reason: "auth" };
+      try { if (typeof sbSaveMood === "function") res = await sbSaveMood(m.focus, m.energy); } catch (_) {}
+      confirmBtn.textContent = "Uloženo ✓";
+      toast(res.ok ? "Nálada uložena" : "Uloženo. Přihlas se, ať se ukládá i do účtu.");
+    });
   }
 
   /* ---- Rychlá výzva (kvíz) ---- */
