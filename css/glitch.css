@@ -255,7 +255,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Dechové cvičení — nadpis y=133, text y=191, ovládání pod tím
    ========================================================================== */
 .breath-controls {
-  position: absolute; left: 40px; right: 40px; top: 30%; bottom: calc(158 * var(--u));
+  position: absolute; left: 40px; right: 40px; top: 37%; bottom: calc(158 * var(--u));
   display: flex; flex-direction: column; align-items: center;
 }
 .breath-counter { display: flex; align-items: center; gap: calc(16 * var(--u)); }
@@ -284,9 +284,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: #faf9f5;                                   /* krémový střed (dle návrhu) */
   color: var(--c-black);
   display: grid; place-items: center;
-  font-size: calc(30 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
-  transition: transform 3.5s ease-in-out;               /* nádech/výdech 3,5 s, ease-in-out */
-  will-change: transform;
+  font-size: calc(34 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  will-change: transform;                                /* scale řídí JS po snímcích (kvůli pauze) */
 }
 .breath-hint { opacity: .9; text-align: center; }
 .breath-cta {

@@ -153,7 +153,7 @@
           <div class="breath-ring"><div class="breath-circle" data-breath="circle">${c.cycles}</div></div>
         </div>
         <div class="card-footer">
-          <p class="breath-hint g-p-s">Pohodlně se usaď a stiskni tlačítko začít.</p>
+          <p class="breath-hint g-p-s" data-breath="hint">Pohodlně se usaď a stiskni tlačítko začít.</p>
           <button class="breath-cta" data-breath="start">Začít</button>
         </div>`;
     },
@@ -444,34 +444,89 @@
     if (btn) btn.addEventListener("click", toggle);
   }
 
-  /* ---- Dechové cvičení ---- */
+  /* ---- Dechové cvičení (stavový automat: běh / pauza) ---- */
   function initBreathing(el, c) {
+    const PHASE = 4000;                       // 4 s nádech, 4 s výdech (bez zádrže)
     let target = c.cycles;
-    let running = false;
     const valueEl  = el.querySelector("[data-breath='value']");
     const circleEl = el.querySelector("[data-breath='circle']");
-    const draw = () => { valueEl.textContent = "0/" + target; if (!running) circleEl.textContent = target; };
+    const hintEl   = el.querySelector("[data-breath='hint']");
+    const btnEl    = el.querySelector("[data-breath='start']");
+    const IDLE_HINT = hintEl ? hintEl.textContent : "";
 
-    el.querySelector("[data-breath='dec']").addEventListener("click", () => { if (!running && target > 1) { target--; draw(); } });
-    el.querySelector("[data-breath='inc']").addEventListener("click", () => { if (!running && target < 12) { target++; draw(); } });
+    let state = "idle";                       // idle | running | paused | done
+    let cycle = 0, phase = "in", phaseStart = 0, elapsedAtPause = 0, rafId = null;
 
-    el.querySelector("[data-breath='start']").addEventListener("click", async () => {
-      if (running) return;
-      running = true;
-      const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-      // dvoufázový dech (bez zádrže), 3,5 s na fázi — dle návrhu Claude Design
-      for (let n = 1; n <= target; n++) {
-        valueEl.textContent = n + "/" + target;
-        circleEl.textContent = "Nádech";
-        circleEl.style.transform = "scale(1.3)";
-        await wait(3500);
-        circleEl.textContent = "Výdech";
-        circleEl.style.transform = "scale(0.8)";
-        await wait(3500);
+    const easeInOut = (p) => 0.5 * (1 - Math.cos(Math.PI * p));
+    const setCounter = () => { valueEl.textContent = (state === "idle" ? 0 : Math.min(cycle, target)) + "/" + target; };
+
+    // odpočet + nafouknutí uvnitř kolečka, průvodní text (Nádech/Výdech) v patičce
+    const render = (elapsed) => {
+      const p = Math.min(elapsed / PHASE, 1);
+      const e = easeInOut(p);
+      const scale = phase === "in" ? (0.8 + 0.5 * e) : (1.3 - 0.5 * e);
+      circleEl.style.transform = "scale(" + scale.toFixed(3) + ")";
+      circleEl.textContent = Math.max(1, Math.ceil((PHASE - elapsed) / 1000));
+      if (hintEl) hintEl.textContent = phase === "in" ? "Nádech" : "Výdech";
+    };
+    const startPhase = (ph) => { phase = ph; phaseStart = performance.now(); };
+
+    const loop = (now) => {
+      if (state !== "running") return;
+      let elapsed = now - phaseStart;
+      if (elapsed >= PHASE) {
+        if (phase === "in") { startPhase("out"); elapsed = 0; }
+        else {
+          if (cycle >= target) { finish(); return; }
+          cycle++; setCounter(); startPhase("in"); elapsed = 0;
+        }
       }
-      circleEl.textContent = "Hotovo";
+      render(elapsed);
+      rafId = requestAnimationFrame(loop);
+    };
+
+    function begin() {
+      state = "running"; cycle = 1; setCounter();
+      startPhase("in"); btnEl.textContent = "Pozastavit";
+      rafId = requestAnimationFrame(loop);
+    }
+    function pause() {
+      state = "paused";
+      if (rafId) cancelAnimationFrame(rafId); rafId = null;
+      elapsedAtPause = performance.now() - phaseStart;   // zamrzni fázi
+      btnEl.textContent = "Pokračovat";
+    }
+    function resume() {
+      state = "running";
+      phaseStart = performance.now() - elapsedAtPause;    // pokračuj od zamrzlého času
+      btnEl.textContent = "Pozastavit";
+      rafId = requestAnimationFrame(loop);
+    }
+    function finish() {
+      state = "done";
+      if (rafId) cancelAnimationFrame(rafId); rafId = null;
       circleEl.style.transform = "scale(1)";
-      running = false;
+      circleEl.textContent = "✓";
+      if (hintEl) hintEl.textContent = "Hotovo, skvělá práce!";
+      btnEl.textContent = "Začít";
+    }
+    function toIdle() {
+      state = "idle"; cycle = 0;
+      circleEl.style.transform = ""; circleEl.textContent = target;
+      if (hintEl) hintEl.textContent = IDLE_HINT;
+      btnEl.textContent = "Začít"; setCounter();
+    }
+
+    el.querySelector("[data-breath='dec']").addEventListener("click", () => {
+      if ((state === "idle" || state === "done") && target > 1) { target--; toIdle(); }
+    });
+    el.querySelector("[data-breath='inc']").addEventListener("click", () => {
+      if ((state === "idle" || state === "done") && target < 12) { target++; toIdle(); }
+    });
+    btnEl.addEventListener("click", () => {
+      if (state === "running") pause();
+      else if (state === "paused") resume();
+      else { if (state === "done") toIdle(); begin(); }
     });
   }
 
