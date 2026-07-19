@@ -32,7 +32,7 @@
 
     { type: "mood_selector", category: "Wellbeing",
       title: "Jak se teď cítíš?",
-      body: "Umísti potažením černou tečku na správné místo v diagramu. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
+      body: "Potažením zvol svůj vibe." },
 
     { type: "breathing", category: "Wellbeing",
       title: "Dechové cvičení",
@@ -291,6 +291,8 @@
       <text class="mood-axis-label" x="286" y="322">100</text>
       <text class="mood-axis-label" x="132" y="338">SOUSTŘEDĚNÍ</text>
       <text class="mood-axis-label" x="30" y="180" transform="rotate(-90 30 180)">ENERGIE</text>
+      <circle class="mood-trail" data-mood-trail cx="185" cy="165" r="22" fill="#000" opacity="0.12"/>
+      <circle class="mood-trail" data-mood-trail cx="185" cy="165" r="22" fill="#000" opacity="0.22"/>
       <circle class="mood-dot" data-mood-dot cx="185" cy="165" r="22" fill="#000"/>
     </svg>`;
   }
@@ -471,35 +473,55 @@
     });
   }
 
-  /* ---- Mood selector (tažení tečky) ---- */
+  /* ---- Mood selector (tažení tečky — tlumené sledování + trail) ---- */
   function initMood(el) {
     const svg = el.querySelector("[data-mood]");
     const dot = el.querySelector("[data-mood-dot]");
+    // trail body (v pořadí od nejvzdálenějšího/nejsvětlejšího) kopírují dráhu se zpožděním
+    const trails = Array.prototype.slice.call(el.querySelectorAll("[data-mood-trail]"));
     const BOUND = { x0: 44, x1: 318, y0: 300, y1: 34 };
     let dragging = false;
+    let cx = 185, cy = 165, tx = 185, ty = 165;        // aktuální (vykreslená) vs. cílová pozice
+    const tr = trails.map(() => ({ x: 185, y: 165 }));
 
     const toSvg = (evt) => {
       const pt = svg.createSVGPoint();
       pt.x = evt.clientX; pt.y = evt.clientY;
       return pt.matrixTransform(svg.getScreenCTM().inverse());
     };
-    const move = (evt) => {
-      if (!dragging) return;
+    const setTarget = (evt) => {
       const p = toSvg(evt);
-      const x = Math.max(BOUND.x0, Math.min(BOUND.x1, p.x));
-      const y = Math.max(BOUND.y1, Math.min(BOUND.y0, p.y));
-      dot.setAttribute("cx", x);
-      dot.setAttribute("cy", y);
+      tx = Math.max(BOUND.x0, Math.min(BOUND.x1, p.x));
+      ty = Math.max(BOUND.y1, Math.min(BOUND.y0, p.y));
       window.__glitchMood = {
-        focus:  Math.round(((x - BOUND.x0) / (BOUND.x1 - BOUND.x0)) * 100),
-        energy: Math.round(((BOUND.y0 - y) / (BOUND.y0 - BOUND.y1)) * 100)
+        focus:  Math.round(((tx - BOUND.x0) / (BOUND.x1 - BOUND.x0)) * 100),
+        energy: Math.round(((BOUND.y0 - ty) / (BOUND.y0 - BOUND.y1)) * 100)
       };
     };
-    dot.addEventListener("pointerdown", (e) => { dragging = true; dot.setPointerCapture(e.pointerId); });
-    svg.addEventListener("pointermove", move);
+
+    // plynulé tlumené sledování cíle + trail (puntík „doklouže")
+    function tick() {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      dot.setAttribute("cx", cx.toFixed(1));
+      dot.setAttribute("cy", cy.toFixed(1));
+      let px = cx, py = cy;
+      for (let i = 0; i < tr.length; i++) {
+        tr[i].x += (px - tr[i].x) * 0.32;
+        tr[i].y += (py - tr[i].y) * 0.32;
+        trails[i].setAttribute("cx", tr[i].x.toFixed(1));
+        trails[i].setAttribute("cy", tr[i].y.toFixed(1));
+        px = tr[i].x; py = tr[i].y;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    dot.addEventListener("pointerdown", (e) => { dragging = true; try { dot.setPointerCapture(e.pointerId); } catch (_) {} });
+    svg.addEventListener("pointermove", (e) => { if (dragging) setTarget(e); });
     window.addEventListener("pointerup", () => { dragging = false; });
-    // umožni i tap kamkoli do diagramu
-    svg.addEventListener("pointerdown", (e) => { dragging = true; move(e); });
+    // tap kamkoli do diagramu → puntík tam doklouže
+    svg.addEventListener("pointerdown", (e) => { dragging = true; setTarget(e); });
   }
 
   /* ---- Rychlá výzva (kvíz) ---- */

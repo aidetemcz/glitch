@@ -246,7 +246,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Mood selector (2D diagram) — nadpis y=118, text y=176, diagram střed ~452
    ========================================================================== */
 .mood-wrap { position: absolute; left: 40px; right: 40px; top: 40%; bottom: 48px; }
-.mood-diagram { width: 100%; height: 100%; touch-action: none; }
+.mood-diagram { width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
 .mood-dot { cursor: grab; }
 .mood-dot:active { cursor: grabbing; }
 .mood-axis-label { font-size: calc(15 * var(--u)); font-weight: 400; letter-spacing: 0; fill: var(--c-black); }
@@ -273,11 +273,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: calc(15 * var(--u)); letter-spacing: var(--tracking);
 }
 .breath-circle {
-  margin: calc(28 * var(--u)) auto 0;
+  margin: calc(46 * var(--u)) auto 0;
   width: calc(178 * var(--u)); height: calc(178 * var(--u)); border-radius: 50%;
-  background: var(--c-grey-15);
+  background: #faf9f5;                                   /* krémový střed (dle návrhu) */
   color: var(--c-black);
   display: grid; place-items: center;
+  /* jemný vnější prstenec kolem kolečka */
+  box-shadow: 0 0 0 calc(34 * var(--u)) rgba(255,255,255,0.05);
   font-size: calc(34 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
   transition: transform 4s ease-in-out, background .4s ease;
   will-change: transform;
@@ -285,7 +287,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .breath-hint { margin-top: auto; margin-bottom: calc(14 * var(--u)); opacity: .9; text-align: center; }
 .breath-cta {
   align-self: center;
-  background: var(--c-white); color: var(--c-black);
+  background: transparent; color: var(--c-white);
+  border: 1.5px solid rgba(255,255,255,0.45);
   padding: calc(15 * var(--u)) calc(40 * var(--u)); border-radius: calc(9 * var(--u));
   font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
 }
