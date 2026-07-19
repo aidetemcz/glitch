@@ -68,12 +68,12 @@
 
     { type: "attention_game", category: "Hra na pozornost",
       title: "Kolik zvládneš označit děr v časovém limitu?",
-      viz: "assets/3Dvizualizations/sphere-holes.html?v=4" },
+      viz: "assets/3Dvizualizations/sphere-holes.html?v=5" },
 
     { type: "algorithm_demo", category: "Algoritmus", chapterNo: 5,
       title: "Hra života",
       body: "Hra života je ukázka algoritmu s pár jednoduchými pravidly. Ta určují, které buňky přežijí, které zaniknou a kde vznikne nová. Dokážeš pravidla popsat?",
-      viz: "assets/3Dvizualizations/game-of-life.html?v=2" },
+      viz: "assets/3Dvizualizations/game-of-life.html?v=3" },
 
     { type: "fun_fact", category: "Fun fact",
       title: "První počítačový bug byla můra.",
@@ -126,7 +126,7 @@
         ${deco("", "top:52%;left:22%;width:13px;height:13px")}
         ${deco("", "top:59%;left:55%;width:13px;height:13px")}
         <img class="intro-logo" src="${LOGO}" alt="Glitch">
-        <div class="fx-block" style="top:71.6%">
+        <div class="fx-block reserve-chevron" style="top:71.6%">
           <h1 class="fx-title g-h1">Vítej v Glitchi!</h1>
           <p class="fx-text g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
         </div>
@@ -161,7 +161,7 @@
         ? `<video class="quest-video" autoplay muted loop playsinline preload="auto"><source src="${c.video}" type="video/mp4"></video><div class="quest-scrim"></div>`
         : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
-        <div class="fx-block quest-text" style="top:65%">
+        <div class="fx-block quest-text reserve-chevron" style="top:65%">
           ${chapter(c.chapterNo)}
           <h1 class="fx-title g-h1">${esc(c.title)}</h1>
           <p class="fx-text g-p">${esc(c.body)}</p>
@@ -205,7 +205,7 @@
     algorithm_demo(c) {
       return `${badges(c)}
         <div class="algo-viz fx-media" style="top:11.7%">${vizFrame(c.viz)}</div>
-        <div class="fx-block algo-text" style="top:65%">
+        <div class="fx-block algo-text reserve-chevron" style="top:65%">
           ${chapter(c.chapterNo)}
           <h1 class="fx-title g-h1">${esc(c.title)}</h1>
           <p class="fx-text g-p">${esc(c.body)}</p>
@@ -258,7 +258,7 @@
         <h3 class="fx-block g-h3" style="top:44.4%">Tvé shrnutí pro dnešek</h3>
         <div class="summary-stats fx-block" style="top:50.7%">${rows}</div>
         <button class="summary-link fx-block" style="top:66.5%">Zobrazit dlouhodobé statistiky</button>
-        <p class="summary-outro fx-block g-p" style="top:76.3%">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
+        <p class="summary-outro fx-block g-p reserve-chevron" style="top:76.3%">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
         ${chevron()}`;
     }
   };

@@ -62,3 +62,24 @@ Referenční pozice hlavních prvků (px od horního okraje karty). Slouží pro
 - **Rychlá výzva:** dotaz `y=417`, podtext `y=477`, tlačítka od `y=577` (2 sloupce 111×55). Kolečko časovače `y=127`.
 
 > Postup: nejdřív systémové tokeny (okraj 40, badge, typo, menu), pak karta po kartě dorovnat Y-pozice podle tabulky výše.
+
+## Responzivita (zmenšování na užších displejích)
+
+Design je laděný na **referenční šířku 402 px**. Na užších displejích se prvky
+**plynule zmenšují**, nad 402 už nerostou (aby nevypadaly nafouklé).
+
+- Škálovací jednotka v CSS: `--u: min(1px, 100vw / 402)`.
+  - Na 402 px a víc → `--u = 1px` (referenční velikosti).
+  - Na 360 px → `--u ≈ 0.896px` (vše ~90 %). Např. H1 40 → 35.8 px.
+- **Velikosti se násobí** touto jednotkou: `font-size: calc(40 * var(--u))`.
+  Platí pro: typografii (`g-h1…g-caps`), badge, číslo kapitoly, šipku (chevron),
+  tlačítka kvízu/Argumentuj, dechové kolečko, časovač, řádky shrnutí.
+- **Svislé pozice** zůstávají v `%` (drží napříč výškami) a **vodorovný okraj 40 px**
+  je pevný (kotví „červenou čáru", ke které se zarovnává text i vložené HTML).
+- **Text u karet se šipkou** má třídu `reserve-chevron` (`right: calc(78 * var(--u))`),
+  aby nezajížděl pod šipku vpravo dole.
+- **Vložené HTML (hry/vizualizace)** vyplní svůj rám a při změně velikosti se
+  přepočítají přes `ResizeObserver` (viz `glitches/hra-na-pozornost/README.md`).
+
+> Pravidlo pro nové prvky: nikdy nepiš pevné `px` u velikostí — vždy `calc(N * var(--u))`,
+> kde `N` je hodnota z Figmy (v referenčních 402 px). Okraj 40 px a `%`-pozice nech pevné.

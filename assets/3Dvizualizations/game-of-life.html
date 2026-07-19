@@ -158,6 +158,8 @@
     draw();
   }
 
+  // re-fit při každé změně velikosti rámu (i při prvním reálném rozložení)
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(container); }
   window.addEventListener('resize', setup);
   setup();
   requestAnimationFrame(loop);

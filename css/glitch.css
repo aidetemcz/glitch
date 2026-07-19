@@ -29,6 +29,10 @@
   /* Typografie */
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --tracking: -0.04em;
+
+  /* Responzivní jednotka — 1px na referenční šířce 402, dolů se zmenšuje.
+     Násob referenční hodnoty: calc(40 * var(--u)). Nad 402 se dál nezvětšuje. */
+  --u: min(1px, 100vw / 402);
 }
 
 /* ---------- Reset ---------- */
@@ -52,14 +56,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Typografické styly (tokeny)
    ========================================================================== */
-.g-h1        { font-size: 40px; font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.g-h2        { font-size: 30px; font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.g-chapter-no{ font-size: 30px; font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.g-h3        { font-size: 25px; font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.g-category  { font-size: 16px; font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.g-p         { font-size: 16px; font-weight: 400; line-height: 22px;   letter-spacing: var(--tracking); }
-.g-p-s       { font-size: 15px; font-weight: 400; line-height: normal; letter-spacing: var(--tracking); }
-.g-caps      { font-size: 15px; font-weight: 400; line-height: normal; letter-spacing: 0; }
+.g-h1        { font-size: calc(40 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h2        { font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-chapter-no{ font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h3        { font-size: calc(25 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-category  { font-size: calc(16 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-p         { font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); }
+.g-p-s       { font-size: calc(15 * var(--u)); font-weight: 400; line-height: normal; letter-spacing: var(--tracking); }
+.g-caps      { font-size: calc(15 * var(--u)); font-weight: 400; line-height: normal; letter-spacing: 0; }
 
 /* ==========================================================================
    Feed (vertikální swipe, 1 karta = celá obrazovka)
@@ -119,10 +123,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* Badge kategorie (vpravo nahoře) */
 /* Badge: dva (trust + kategorie) vpravo nahoře — dle Figmy */
-.badges { position: absolute; top: 26px; right: 25px; z-index: 5; display: flex; gap: 9px; }
+.badges { position: absolute; top: calc(26 * var(--u)); right: calc(25 * var(--u)); z-index: 5; display: flex; gap: calc(9 * var(--u)); }
 .badge {
-  display: flex; align-items: center; height: 26px; padding: 0 10px;
-  border-radius: 5px; font-size: 16px; font-weight: 600; line-height: 1;
+  display: flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(10 * var(--u));
+  border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
   letter-spacing: var(--tracking); white-space: nowrap;
 }
 .badge.trust { background: var(--c-white); color: var(--c-grey-50, #747474); }
@@ -134,13 +138,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   align-self: flex-start;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  height: 40px;
-  padding: 0 10px;
+  min-width: calc(40 * var(--u));
+  height: calc(40 * var(--u));
+  padding: 0 calc(10 * var(--u));
   background: var(--c-grey-15);
   color: var(--c-black);
-  border-radius: 8px;
-  font-size: 30px;
+  border-radius: calc(8 * var(--u));
+  font-size: calc(30 * var(--u));
   font-weight: 600;
   line-height: 1;
   letter-spacing: var(--tracking);
@@ -149,14 +153,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Navigační „další Glitch" (žlutý zaoblený obdélník) */
 .nav-chevron {
   position: absolute;
-  right: 22px;
-  bottom: 24px;
+  right: calc(22 * var(--u));
+  bottom: calc(24 * var(--u));
   display: grid; place-items: center;
   z-index: 5;
   transition: transform .12s ease;
 }
 .nav-chevron:active { transform: scale(0.92); }
-.nav-chevron img { display: block; width: 40px; height: auto; }
+.nav-chevron img { display: block; width: calc(40 * var(--u)); height: auto; }
+/* text u karet se šipkou nesmí zajíždět pod šipku (vpravo dole) */
+.fx-block.reserve-chevron { right: calc(78 * var(--u)); }
 
 /* Maskot / scroll-down (žlutý kruh — interaktivní karty) */
 .nav-mascot {
@@ -184,7 +190,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .fx-block   { position: absolute; left: 40px; right: 40px; margin: 0; z-index: 2; }
 .fx-block.text-center { text-align: center; }
 .fx-title   { margin: 0; }
-.fx-text    { margin-top: 12px; }
+.fx-text    { margin-top: calc(12 * var(--u)); }
 .fx-media   { position: absolute; left: 40px; right: 40px; z-index: 1; }
 .fx-center  { position: absolute; left: 0; right: 0; display: flex; justify-content: center; z-index: 1; }
 .fx-options { position: absolute; left: 40px; right: 40px; z-index: 2; }
@@ -224,15 +230,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .summary-stats { }
 .summary-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 0;
+  padding: calc(12 * var(--u)) 0;
   border-bottom: 1px solid var(--c-grey-15);
-  font-size: 16px; letter-spacing: var(--tracking);
+  font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
 }
 .summary-row:first-child { border-top: 1px solid var(--c-grey-15); }
 .summary-row-val { font-weight: 400; }
 .summary-link {
   color: var(--c-grey-50);
-  font-size: 15px; letter-spacing: var(--tracking); text-align: left;
+  font-size: calc(15 * var(--u)); letter-spacing: var(--tracking); text-align: left;
 }
 .summary-outro { color: var(--c-black); }
 
@@ -252,45 +258,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: absolute; left: 40px; right: 40px; top: 31%; bottom: 92px;
   display: flex; flex-direction: column; align-items: center;
 }
-.breath-counter { display: flex; align-items: center; gap: 16px; }
+.breath-counter { display: flex; align-items: center; gap: calc(16 * var(--u)); }
 .breath-step {
-  width: 40px; height: 40px; border-radius: 50%;
+  width: calc(40 * var(--u)); height: calc(40 * var(--u)); border-radius: 50%;
   border: 1.5px solid rgba(208,208,208,0.5);
   display: grid; place-items: center;
-  color: var(--c-grey-15); font-size: 20px; line-height: 1;
+  color: var(--c-grey-15); font-size: calc(20 * var(--u)); line-height: 1;
 }
 .breath-value {
-  min-width: 54px; height: 40px; padding: 0 8px;
+  min-width: calc(54 * var(--u)); height: calc(40 * var(--u)); padding: 0 calc(8 * var(--u));
   border-radius: 22px;
   border: 1.5px solid rgba(208,208,208,0.5);
   display: grid; place-items: center;
-  font-size: 15px; letter-spacing: var(--tracking);
+  font-size: calc(15 * var(--u)); letter-spacing: var(--tracking);
 }
 .breath-circle {
-  margin: 28px auto 0;
-  width: 178px; height: 178px; border-radius: 50%;
+  margin: calc(28 * var(--u)) auto 0;
+  width: calc(178 * var(--u)); height: calc(178 * var(--u)); border-radius: 50%;
   background: var(--c-grey-15);
   color: var(--c-black);
   display: grid; place-items: center;
-  font-size: 34px; font-weight: 600; letter-spacing: var(--tracking);
+  font-size: calc(34 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
   transition: transform 4s ease-in-out, background .4s ease;
   will-change: transform;
 }
-.breath-hint { margin-top: auto; margin-bottom: 14px; opacity: .9; text-align: center; }
+.breath-hint { margin-top: auto; margin-bottom: calc(14 * var(--u)); opacity: .9; text-align: center; }
 .breath-cta {
   align-self: center;
   background: var(--c-white); color: var(--c-black);
-  padding: 15px 40px; border-radius: 9px;
-  font-size: 16px; font-weight: 600; letter-spacing: var(--tracking);
+  padding: calc(15 * var(--u)) calc(40 * var(--u)); border-radius: calc(9 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
 }
 
 /* ==========================================================================
    Opt-in časovač (kolečko, y≈127)
    ========================================================================== */
-.timer-row { display: flex; align-items: center; gap: 18px; }
+.timer-row { display: flex; align-items: center; gap: calc(18 * var(--u)); }
 .timer-toggle {
   flex: none;
-  width: 62px; height: 62px; border-radius: 50%;
+  width: calc(62 * var(--u)); height: calc(62 * var(--u)); border-radius: 50%;
   background: var(--c-white);
   position: relative;
 }
@@ -300,7 +306,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Hra na pozornost (časovač + koule)
    ========================================================================== */
-.atten-top   { display: flex; align-items: center; gap: 18px; }
+.atten-top   { display: flex; align-items: center; gap: calc(18 * var(--u)); }
 .atten-note  { color: rgba(255,255,255,0.72); }
 .atten-note.is-hidden { visibility: hidden; }
 .atten-help, .atten-count { color: var(--c-white); }
@@ -333,12 +339,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .quiz-options.cols-3 { grid-template-columns: repeat(3, 1fr); }
 .quiz-opt {
   border: 1.5px solid rgba(255,255,255,0.85);
-  border-radius: 11px;
+  border-radius: calc(11 * var(--u));
   background: transparent;
   color: var(--c-white);
-  padding: 15px 14px; min-height: 55px;
+  padding: calc(15 * var(--u)) calc(14 * var(--u)); min-height: calc(55 * var(--u));
   display: grid; place-items: center;
-  font-size: 22px; font-weight: 600; letter-spacing: var(--tracking);
+  font-size: calc(22 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
   text-align: center;
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
@@ -375,7 +381,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 35%, rgba(0,0,0,0.65) 100%);
 }
 .quest-text { color: #fff; }
-.quest-text .chapter-no { margin-bottom: 16px; }
+.quest-text .chapter-no { margin-bottom: calc(16 * var(--u)); }
 
 /* Fun fact — obrázek y=95 (320×293), nadpis y=436, text y=516 */
 .funfact-tile {
@@ -396,20 +402,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mistake-context { color: rgba(255,255,255,0.85); }
 
 /* Argumentuj (růžová karta) — pozice dle Figmy */
-.arg-claim { position: absolute; left: 40px; right: 33px; top: 26.4%;
-  font-size: 30px; font-weight: 600; line-height: normal; letter-spacing: var(--tracking); z-index: 2; }
+.arg-claim { position: absolute; left: 40px; right: calc(33 * var(--u)); top: 26.4%;
+  font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); z-index: 2; }
 .arg-sub { position: absolute; left: 40px; right: 40px; top: 42.8%;
-  font-size: 16px; font-weight: 400; line-height: 22px; letter-spacing: var(--tracking); color: var(--c-black); z-index: 2; }
-.arg-actions { position: absolute; left: 40px; top: 78.6%; display: flex; gap: 27px; z-index: 2; }
+  font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); color: var(--c-black); z-index: 2; }
+.arg-actions { position: absolute; left: 40px; top: 78.6%; display: flex; gap: calc(27 * var(--u)); z-index: 2; }
 .arg-opt {
-  width: 134px; height: 47px; border: 1px solid var(--c-black); border-radius: 5px;
-  background: transparent; color: #1a1a1a; font-size: 16px; font-weight: 400;
+  width: calc(134 * var(--u)); height: calc(47 * var(--u)); border: 1px solid var(--c-black); border-radius: calc(5 * var(--u));
+  background: transparent; color: #1a1a1a; font-size: calc(16 * var(--u)); font-weight: 400;
   letter-spacing: var(--tracking); transition: all .12s ease;
 }
 .arg-opt.is-sel { background: var(--c-black); color: var(--c-white); border-color: var(--c-black); }
 
 /* Algoritmus — 3D y=96 (321×322), kapitola y=532, nadpis y=585, text y=647 */
-.algo-text .chapter-no { margin-bottom: 14px; }
+.algo-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
 
 /* Placeholder pro chybějící média */
 .asset-missing {
