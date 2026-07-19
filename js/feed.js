@@ -68,7 +68,7 @@
 
     { type: "attention_game", category: "Hra na pozornost",
       title: "Kolik zvládneš označit děr v časovém limitu?",
-      viz: "assets/3Dvizualizations/sphere-holes.html?v=3" },
+      viz: "assets/3Dvizualizations/sphere-holes.html?v=4" },
 
     { type: "algorithm_demo", category: "Algoritmus", chapterNo: 5,
       title: "Hra života",

@@ -32,7 +32,7 @@ nepřetéká okraje**.
 **Obsah hry (řeší vkládané HTML):**
 4. `html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; }` — **žádné posuvníky**, žádné vlastní okraje/rámečky/max-width.
 5. Plátno/scéna = **100 % rámu** (`width:100%; height:100%`), nikdy větší. Reaguje na skutečnou velikost rámu (`resize` / `ResizeObserver`) a obsah **vycentruje**.
-6. U 3D (three.js): kameru nastav tak, aby se objekt do čtverce vešel **s malým odsazením** (nedotýká se okrajů). Perspektivní FOV je svislý — objekt škáluj podle kratší strany.
+6. **Obsah vyplní celý rám a je zarovnaný s okrajem textu (40 px).** Nesmí uvnitř „plavat" s vlastním odsazením — vizuál má sahat až k hraně sloupce (viz Game of Life: mřížka jde k okraji). U 3D (three.js) tomu odpovídá vzdálenost kamery — objekt nastav tak, aby jeho silueta **vyplnila rám** (u čtverce se dotkla všech stran). Perspektivní FOV je svislý — objekt škáluj podle kratší strany.
 7. Pozadí transparentní nebo shodné s kartou.
 8. Ovládání dotykem: `touch-action: none`; rozliš **tažení vs. ťuknutí** (práh ~6 px).
 
