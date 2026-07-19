@@ -202,18 +202,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .card[data-type="welcome"] { cursor: pointer; }
 .welcome-logo {
   position: absolute; top: 33%; left: 50%; transform: translate(-50%, -50%);
-  width: min(60vw, 200px); height: auto;
+  width: calc(133 * var(--u)); height: auto;   /* o třetinu menší než dřív (200) + responzivní */
 }
 .welcome-tiny {
   position: absolute; left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 46px);
-  width: 92px; height: auto;
+  width: calc(82 * var(--u)); height: auto;     /* jen o malinko menší (92) + responzivní */
 }
 
 /* Úvodní karta „Vítej v Glitchi" — logo nahoře (y≈159), text dole (y≈586) */
 .intro-logo {
   position: absolute; top: 19.4%; left: 50%; transform: translateX(-50%);
-  width: 150px; height: auto;
+  width: calc(150 * var(--u)); height: auto;
 }
 
 /* Pixelové dekorace „+" na světlých kartách */
