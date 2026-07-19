@@ -245,11 +245,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Mood selector (2D diagram) — nadpis y=118, text y=176, diagram střed ~452
    ========================================================================== */
-.mood-wrap { position: absolute; left: 40px; right: 40px; top: 27%; bottom: 96px; }
+.mood-wrap { position: absolute; left: 40px; right: 40px; top: 40%; bottom: 48px; }
 .mood-diagram { width: 100%; height: 100%; touch-action: none; }
 .mood-dot { cursor: grab; }
 .mood-dot:active { cursor: grabbing; }
-.mood-axis-label { font-size: 15px; font-weight: 400; letter-spacing: 0; fill: var(--c-black); }
+.mood-axis-label { font-size: calc(15 * var(--u)); font-weight: 400; letter-spacing: 0; fill: var(--c-black); }
 
 /* ==========================================================================
    Dechové cvičení — nadpis y=133, text y=191, ovládání pod tím
