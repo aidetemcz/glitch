@@ -250,11 +250,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mood-dot { cursor: grab; }
 .mood-dot:active { cursor: grabbing; }
 .mood-axis-label { font-size: calc(15 * var(--u)); font-weight: 400; letter-spacing: 0; fill: var(--c-black); }
-/* glitch duch za puntíkem: azurová + purpurová kopie (multiply = barvy na světlém pozadí),
-   šedé jádro přes ně; v klidu splynou pod puntíkem → čisté */
-.mood-ghost { pointer-events: none; }
-.mood-ghost-c, .mood-ghost-m { mix-blend-mode: multiply; opacity: .6; }
-.mood-ghost-k { opacity: .28; }
+/* comet tail za puntíkem: řetěz azurových + purpurových kopií, k dálce se rozkládají
+   (RGB) a mizí; v klidu splynou pod puntíkem → čisté (pozice/opacita řídí JS) */
+.mood-ghost { pointer-events: none; mix-blend-mode: multiply; }
 
 /* ==========================================================================
    Dechové cvičení — nadpis y=133, text y=191, ovládání pod tím

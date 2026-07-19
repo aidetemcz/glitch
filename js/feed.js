@@ -293,9 +293,6 @@
       <text class="mood-axis-label" x="286" y="322">100</text>
       <text class="mood-axis-label" x="132" y="338">SOUSTŘEDĚNÍ</text>
       <text class="mood-axis-label" x="30" y="180" transform="rotate(-90 30 180)">ENERGIE</text>
-      <circle class="mood-ghost mood-ghost-c" data-mood-ghost="c" cx="185" cy="165" r="22" fill="#21E0F0"/>
-      <circle class="mood-ghost mood-ghost-m" data-mood-ghost="m" cx="185" cy="165" r="22" fill="#FF2E9A"/>
-      <circle class="mood-ghost mood-ghost-k" data-mood-ghost="k" cx="185" cy="165" r="22" fill="#000"/>
       <circle class="mood-dot" data-mood-dot cx="185" cy="165" r="22" fill="#000"/>
     </svg>`;
   }
@@ -531,17 +528,33 @@
     });
   }
 
-  /* ---- Mood selector (tažení tečky — glitch efekt s RGB rozkladem) ---- */
+  /* ---- Mood selector (tažení tečky — comet tail s RGB rozkladem) ---- */
   function initMood(el) {
+    const SVGNS = "http://www.w3.org/2000/svg";
     const svg = el.querySelector("[data-mood]");
     const dot = el.querySelector("[data-mood-dot]");
-    const gC = el.querySelector('[data-mood-ghost="c"]');   // azurová kopie
-    const gM = el.querySelector('[data-mood-ghost="m"]');   // purpurová kopie
-    const gK = el.querySelector('[data-mood-ghost="k"]');   // šedé jádro ducha
     const BOUND = { x0: 44, x1: 318, y0: 300, y1: 34 };
+    const N = 9, R = 22, CHAIN = 0.42;      // délka a těsnost ohonu
     let dragging = false;
     let cx = 185, cy = 165, tx = 185, ty = 165;   // puntík: aktuální vs. cílová pozice
-    let ghX = 185, ghY = 165;                      // duch (trail) zaostává za puntíkem
+
+    // ohon = řetěz uzlů; každý má azurovou + purpurovou kopii, k dálce se rozkládají a mizí
+    const nodes = [];
+    for (let i = 0; i < N; i++) {
+      const t = i / (N - 1);                 // 0 = u puntíku, 1 = konec ohonu
+      const mk = (color) => {
+        const c = document.createElementNS(SVGNS, "circle");
+        c.setAttribute("class", "mood-ghost");
+        c.setAttribute("r", (R * (1 - 0.45 * t)).toFixed(1));
+        c.setAttribute("fill", color);
+        c.setAttribute("cx", 185); c.setAttribute("cy", 165);
+        c.style.mixBlendMode = "multiply";
+        return c;
+      };
+      const cyan = mk("#21E0F0"), mag = mk("#FF2E9A");
+      svg.insertBefore(cyan, dot); svg.insertBefore(mag, dot);
+      nodes.push({ x: 185, y: 165, t, cyan, mag });
+    }
 
     const toSvg = (evt) => {
       const pt = svg.createSVGPoint();
@@ -558,24 +571,28 @@
       };
     };
 
-    // puntík lehce tlumeně sleduje cíl; duch zaostává → RGB rozklad podle rychlosti
+    // puntík sleduje cíl; ohon (řetěz) se drží za ním po dráze a k dálce se rozkládá + mizí
     function tick() {
-      cx += (tx - cx) * 0.32;
-      cy += (ty - cy) * 0.32;
+      cx += (tx - cx) * 0.45;
+      cy += (ty - cy) * 0.45;
       dot.setAttribute("cx", cx.toFixed(1));
       dot.setAttribute("cy", cy.toFixed(1));
 
-      ghX += (cx - ghX) * 0.16;
-      ghY += (cy - ghY) * 0.16;
-      // rychlost = jak moc duch zaostává; víc rychlosti = větší rozklad + drobný jitter
-      const vx = cx - ghX, vy = cy - ghY;
-      const speed = Math.hypot(vx, vy);
-      const split = Math.min(8, speed * 0.55);
-      const jit = split > 1 ? (Math.random() - 0.5) * split * 0.35 : 0;
-
-      gK.setAttribute("cx", ghX.toFixed(1)); gK.setAttribute("cy", ghY.toFixed(1));
-      gC.setAttribute("cx", (ghX - split).toFixed(1)); gC.setAttribute("cy", (ghY + jit).toFixed(1));
-      gM.setAttribute("cx", (ghX + split).toFixed(1)); gM.setAttribute("cy", (ghY - jit).toFixed(1));
+      let px = cx, py = cy;
+      for (const n of nodes) {                 // každý uzel sleduje předchozí → ohon po dráze
+        n.x += (px - n.x) * CHAIN;
+        n.y += (py - n.y) * CHAIN;
+        px = n.x; py = n.y;
+      }
+      const last = nodes[N - 1];
+      const stretch = Math.hypot(cx - last.x, cy - last.y);   // jak je ohon roztažený (rychlost)
+      for (const n of nodes) {
+        const split = Math.min(9, stretch * 0.5) * n.t;       // dál = větší rozklad
+        const jit = split > 1 ? (Math.random() - 0.5) * split * 0.3 : 0;
+        const op = (0.55 * Math.pow(1 - n.t, 1.3)).toFixed(3); // dál = průhlednější (mizí)
+        n.cyan.setAttribute("cx", (n.x - split).toFixed(1)); n.cyan.setAttribute("cy", (n.y + jit).toFixed(1)); n.cyan.setAttribute("opacity", op);
+        n.mag.setAttribute("cx", (n.x + split).toFixed(1)); n.mag.setAttribute("cy", (n.y - jit).toFixed(1)); n.mag.setAttribute("opacity", op);
+      }
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
