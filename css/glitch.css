@@ -253,8 +253,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* glitch duch za puntíkem: azurová + purpurová kopie (multiply = barvy na světlém pozadí),
    šedé jádro přes ně; v klidu splynou pod puntíkem → čisté */
 .mood-ghost { pointer-events: none; }
-.mood-ghost-c, .mood-ghost-m { mix-blend-mode: multiply; opacity: .85; }
-.mood-ghost-k { opacity: .30; }
+.mood-ghost-c, .mood-ghost-m { mix-blend-mode: multiply; opacity: .6; }
+.mood-ghost-k { opacity: .28; }
 
 /* ==========================================================================
    Dechové cvičení — nadpis y=133, text y=191, ovládání pod tím

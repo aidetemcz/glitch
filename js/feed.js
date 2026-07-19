@@ -570,8 +570,8 @@
       // rychlost = jak moc duch zaostává; víc rychlosti = větší rozklad + drobný jitter
       const vx = cx - ghX, vy = cy - ghY;
       const speed = Math.hypot(vx, vy);
-      const split = Math.min(11, speed * 0.7);
-      const jit = split > 1 ? (Math.random() - 0.5) * split * 0.4 : 0;
+      const split = Math.min(8, speed * 0.55);
+      const jit = split > 1 ? (Math.random() - 0.5) * split * 0.35 : 0;
 
       gK.setAttribute("cx", ghX.toFixed(1)); gK.setAttribute("cy", ghY.toFixed(1));
       gC.setAttribute("cx", (ghX - split).toFixed(1)); gC.setAttribute("cy", (ghY + jit).toFixed(1));
