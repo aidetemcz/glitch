@@ -619,11 +619,21 @@
     if (confirmBtn) confirmBtn.addEventListener("click", async () => {
       if (confirmBtn.disabled) return;
       const m = window.__glitchMood || { focus: 50, energy: 50 };
-      confirmBtn.disabled = true;
       let res = { ok: false, reason: "auth" };
       try { if (typeof sbSaveMood === "function") res = await sbSaveMood(m.focus, m.energy); } catch (_) {}
-      confirmBtn.textContent = "Uloženo ✓";
-      toast(res.ok ? "Nálada uložena" : "Uloženo. Přihlas se, ať se ukládá i do účtu.");
+      if (res.ok) {                                  // uloženo i do účtu
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Uloženo ✓";
+        toast("Nálada uložena");
+      } else if (res.reason === "auth") {            // nepřihlášen → nabídni přihlášení
+        toast("Přihlas se, ať se nálada uloží do účtu.");
+        const p = document.getElementById("nav-profile");
+        if (p) p.click();                            // otevře přihlašovací panel (auth.js)
+      } else {                                       // přihlášen, ale DB nedostupná
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Uloženo ✓";
+        toast("Uloženo");
+      }
     });
   }
 
