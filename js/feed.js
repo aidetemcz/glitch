@@ -293,8 +293,9 @@
       <text class="mood-axis-label" x="286" y="322">100</text>
       <text class="mood-axis-label" x="132" y="338">SOUSTŘEDĚNÍ</text>
       <text class="mood-axis-label" x="30" y="180" transform="rotate(-90 30 180)">ENERGIE</text>
-      <circle class="mood-trail" data-mood-trail cx="185" cy="165" r="22" fill="#000" opacity="0.12"/>
-      <circle class="mood-trail" data-mood-trail cx="185" cy="165" r="22" fill="#000" opacity="0.22"/>
+      <circle class="mood-ghost mood-ghost-c" data-mood-ghost="c" cx="185" cy="165" r="22" fill="#21E0F0"/>
+      <circle class="mood-ghost mood-ghost-m" data-mood-ghost="m" cx="185" cy="165" r="22" fill="#FF2E9A"/>
+      <circle class="mood-ghost mood-ghost-k" data-mood-ghost="k" cx="185" cy="165" r="22" fill="#000"/>
       <circle class="mood-dot" data-mood-dot cx="185" cy="165" r="22" fill="#000"/>
     </svg>`;
   }
@@ -530,16 +531,17 @@
     });
   }
 
-  /* ---- Mood selector (tažení tečky — tlumené sledování + trail) ---- */
+  /* ---- Mood selector (tažení tečky — glitch efekt s RGB rozkladem) ---- */
   function initMood(el) {
     const svg = el.querySelector("[data-mood]");
     const dot = el.querySelector("[data-mood-dot]");
-    // trail body (v pořadí od nejvzdálenějšího/nejsvětlejšího) kopírují dráhu se zpožděním
-    const trails = Array.prototype.slice.call(el.querySelectorAll("[data-mood-trail]"));
+    const gC = el.querySelector('[data-mood-ghost="c"]');   // azurová kopie
+    const gM = el.querySelector('[data-mood-ghost="m"]');   // purpurová kopie
+    const gK = el.querySelector('[data-mood-ghost="k"]');   // šedé jádro ducha
     const BOUND = { x0: 44, x1: 318, y0: 300, y1: 34 };
     let dragging = false;
-    let cx = 185, cy = 165, tx = 185, ty = 165;        // aktuální (vykreslená) vs. cílová pozice
-    const tr = trails.map(() => ({ x: 185, y: 165 }));
+    let cx = 185, cy = 165, tx = 185, ty = 165;   // puntík: aktuální vs. cílová pozice
+    let ghX = 185, ghY = 165;                      // duch (trail) zaostává za puntíkem
 
     const toSvg = (evt) => {
       const pt = svg.createSVGPoint();
@@ -556,20 +558,24 @@
       };
     };
 
-    // plynulé tlumené sledování cíle + trail (puntík „doklouže")
+    // puntík lehce tlumeně sleduje cíl; duch zaostává → RGB rozklad podle rychlosti
     function tick() {
-      cx += (tx - cx) * 0.18;
-      cy += (ty - cy) * 0.18;
+      cx += (tx - cx) * 0.32;
+      cy += (ty - cy) * 0.32;
       dot.setAttribute("cx", cx.toFixed(1));
       dot.setAttribute("cy", cy.toFixed(1));
-      let px = cx, py = cy;
-      for (let i = 0; i < tr.length; i++) {
-        tr[i].x += (px - tr[i].x) * 0.32;
-        tr[i].y += (py - tr[i].y) * 0.32;
-        trails[i].setAttribute("cx", tr[i].x.toFixed(1));
-        trails[i].setAttribute("cy", tr[i].y.toFixed(1));
-        px = tr[i].x; py = tr[i].y;
-      }
+
+      ghX += (cx - ghX) * 0.16;
+      ghY += (cy - ghY) * 0.16;
+      // rychlost = jak moc duch zaostává; víc rychlosti = větší rozklad + drobný jitter
+      const vx = cx - ghX, vy = cy - ghY;
+      const speed = Math.hypot(vx, vy);
+      const split = Math.min(11, speed * 0.7);
+      const jit = split > 1 ? (Math.random() - 0.5) * split * 0.4 : 0;
+
+      gK.setAttribute("cx", ghX.toFixed(1)); gK.setAttribute("cy", ghY.toFixed(1));
+      gC.setAttribute("cx", (ghX - split).toFixed(1)); gC.setAttribute("cy", (ghY + jit).toFixed(1));
+      gM.setAttribute("cx", (ghX + split).toFixed(1)); gM.setAttribute("cy", (ghY - jit).toFixed(1));
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
