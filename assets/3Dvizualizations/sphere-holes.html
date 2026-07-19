@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Drátěná koule</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; background: #000; }
-  #container { width: 100%; height: 100vh; background: #000; position: relative; touch-action: none; cursor: grab; }
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+  #container { width: 100%; height: 100%; background: #000; position: relative; touch-action: none; cursor: grab; }
   #c { display: block; width: 100%; height: 100%; }
 </style>
 </head>
@@ -25,7 +25,7 @@
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-  camera.position.set(0, 0, 3.9);   // blíž = výrazně větší koule (dle návrhu)
+  camera.position.set(0, 0, 4.4);   // koule vyplní rám s malým odsazením (nepřetéká)
 
   var locked = false;               // časový limit vypršel → ťuknutí neoznačuje
   function postScore(){

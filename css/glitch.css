@@ -301,13 +301,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Hra na pozornost (časovač + koule)
    ========================================================================== */
 .atten-top   { display: flex; align-items: center; gap: 18px; }
-.atten-timer { display: grid; place-items: center; }
-.atten-num   { color: #1a1a1a; font-size: 22px; font-weight: 600; line-height: 1; letter-spacing: var(--tracking); }
 .atten-note  { color: rgba(255,255,255,0.72); }
 .atten-note.is-hidden { visibility: hidden; }
 .atten-help, .atten-count { color: var(--c-white); }
-/* velká koule přes celou šířku karty */
-.atten-viz { position: absolute; left: 0; right: 0; top: 51%; bottom: 8px; z-index: 1; }
+/* koule sedí do textového sloupce (okraje 40 px), čtverec, nepřetéká okraje */
+.atten-viz { position: absolute; left: 40px; right: 40px; top: 51%; aspect-ratio: 1 / 1; overflow: hidden; z-index: 1; }
 .atten-frame { width: 100%; height: 100%; }
 
 /* časovač na sebe upozorňuje pulzem + občasným glitchem (dokud neběží) */
@@ -322,7 +320,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   96% { transform: none; filter: none; }
 }
 .atten-timer { animation: atten-pulse 1.8s ease-in-out infinite, atten-glitch 3.6s steps(1, end) infinite; }
-.atten-timer.is-running { animation: none; box-shadow: 0 0 0 4px var(--c-yellow); }
+/* při běhu: bez pulzu, jen jemný obrys, aby byl vidět okraj kolečka i tam, kde se „ukrojilo" */
+.atten-timer.is-running { animation: none; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.25); }
 
 /* ==========================================================================
    Rychlá výzva (kvíz)

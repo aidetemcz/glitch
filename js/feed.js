@@ -68,12 +68,12 @@
 
     { type: "attention_game", category: "Hra na pozornost",
       title: "Kolik zvládneš označit děr v časovém limitu?",
-      viz: "assets/3Dvizualizations/sphere-holes.html?v=2" },
+      viz: "assets/3Dvizualizations/sphere-holes.html?v=3" },
 
     { type: "algorithm_demo", category: "Algoritmus", chapterNo: 5,
       title: "Hra života",
       body: "Hra života je ukázka algoritmu s pár jednoduchými pravidly. Ta určují, které buňky přežijí, které zaniknou a kde vznikne nová. Dokážeš pravidla popsat?",
-      viz: "assets/3Dvizualizations/game-of-life.html" },
+      viz: "assets/3Dvizualizations/game-of-life.html?v=2" },
 
     { type: "fun_fact", category: "Fun fact",
       title: "První počítačový bug byla můra.",
@@ -193,7 +193,7 @@
     attention_game(c) {
       return `${badges(c)}
         <div class="atten-top fx-block" style="top:14.5%">
-          <button class="timer-toggle atten-timer" data-atten-timer aria-label="Spustit časovač"><span class="atten-num" data-atten-num></span></button>
+          <button class="timer-toggle atten-timer" data-atten-timer aria-label="Spustit / zastavit časovač"></button>
           <p class="timer-note atten-note g-p-s" data-atten-note>Až budeš připravený*á, zapni si časovač. Stačí kliknout na kolečko.</p>
         </div>
         <h3 class="fx-block g-h3" style="top:27%">${esc(c.title)}</h3>
@@ -383,15 +383,14 @@
       b.addEventListener("click", () => b.classList.toggle("is-on")));
   }
 
-  /* ---- Hra na pozornost (časovač + skóre z iframu) ---- */
+  /* ---- Hra na pozornost (časovač-kolečko + skóre z iframu) ---- */
   function initAttention(el) {
-    const DURATION = 30;               // délka časového limitu (s)
+    const DURATION = 30000;            // délka časového limitu (ms)
     const btn    = el.querySelector("[data-atten-timer]");
-    const numEl  = el.querySelector("[data-atten-num]");
     const noteEl = el.querySelector("[data-atten-note]");
     const countEl= el.querySelector("[data-atten-count]");
     const iframe = el.querySelector(".atten-frame");
-    let running = false, timerId = null, remain = 0;
+    let running = false, rafId = null, t0 = 0;
 
     // návod se ukáže jen do prvního použití
     try { if (localStorage.getItem("glitch_attn_used") && noteEl) noteEl.classList.add("is-hidden"); } catch (_) {}
@@ -411,29 +410,34 @@
       if (countEl) countEl.textContent = d.hit + "/" + d.total;
     });
 
-    const stop = () => {
-      clearInterval(timerId); timerId = null; running = false;
-      post("lock");
+    // kolečko se po směru hodinových ručiček „ukrajuje" (bez číselného údaje)
+    const paint = (deg) => {
+      btn.style.background = "conic-gradient(transparent 0 " + deg + "deg, var(--c-white) " + deg + "deg 360deg)";
+    };
+    const idle = () => {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      btn.style.background = "";          // zpět na plné bílé kolečko (idle + pulz)
       btn.classList.remove("is-running");
-      if (numEl) numEl.textContent = "";
     };
-    const tick = () => {
-      remain--;
-      if (numEl) numEl.textContent = remain;
-      if (remain <= 0) stop();
+    const frame = (now) => {
+      const frac = Math.min((now - t0) / DURATION, 1);
+      paint(frac * 360);
+      if (frac >= 1) { post("lock"); idle(); return; }
+      rafId = requestAnimationFrame(frame);
     };
-    const start = () => {
-      if (running) return;
+    const toggle = () => {
+      if (running) { post("lock"); idle(); return; }   // klik = kdykoli zastavit
       running = true;
       try { localStorage.setItem("glitch_attn_used", "1"); } catch (_) {}
       if (noteEl) noteEl.classList.add("is-hidden");
       btn.classList.add("is-running");
       post("reset"); post("unlock");
-      remain = DURATION;
-      if (numEl) numEl.textContent = remain;
-      timerId = setInterval(tick, 1000);
+      t0 = performance.now();
+      rafId = requestAnimationFrame(frame);
     };
-    if (btn) btn.addEventListener("click", start);
+    if (btn) btn.addEventListener("click", toggle);
   }
 
   /* ---- Dechové cvičení ---- */
