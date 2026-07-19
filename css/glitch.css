@@ -60,7 +60,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .g-h2        { font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-chapter-no{ font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-h3        { font-size: calc(25 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.g-h4        { font-size: calc(18 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); } /* odhad — potvrdit z Figmy */
+.g-h4        { font-size: calc(20 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-category  { font-size: calc(16 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-p         { font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); }
 .g-p-s       { font-size: calc(15 * var(--u)); font-weight: 400; line-height: normal; letter-spacing: var(--tracking); }
@@ -362,12 +362,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-radius: calc(8 * var(--u));
   background: transparent;
   color: var(--c-white);
-  height: calc(55 * var(--u)); padding: 0 calc(15 * var(--u));
-  display: flex; align-items: center; justify-content: flex-start;
+  height: calc(55 * var(--u));
+  display: flex; align-items: center; justify-content: center;   /* text na střed (dle Figmy) */
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-/* úzké buttony (3 sloupce, krátká čísla) na střed */
-.quiz-options.cols-3 .quiz-opt { justify-content: center; padding: 0; }
 .quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .quiz-opt.is-wrong   { opacity: .4; }
 .quiz-figure svg { display: block; }

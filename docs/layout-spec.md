@@ -26,6 +26,7 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 | `glitch_H1` | 600 | 40 | normal | −0.04em (−1.6 px) | krátké titulky (Vítej, Jak se cítíš, Vibe Coding, Hra života, „310×15=") |
 | `glitch_H2` | 600 | 30 | normal | −0.04em (−1.2 px) | velký text / delší tvrzení — **jen Argumentuj** |
 | `glitch_H3` | 600 | 25 | normal | −0.04em (−1 px) | sekční nadpisy (Najdi chybu, Fun fact, Shrnutí, Hra na pozornost, otázka u trojúhelníků) |
+| `glitch_H4` | 600 | 20 | normal | −0.04em (−0.8 px) | texty v tlačítkách (odpovědi u Rychlé výzvy) |
 | `glitch_chapter-no` | 600 | 30 | normal | −0.04em (−1.2 px) | číslo kapitoly / velké číslo |
 | `glitch_category` | 600 | 16 | normal | −0.04em (−0.64 px) | badge |
 | `glitch_p` | 400 | 16 | **22 px** | −0.04em (−0.64 px) | běžný text / podtext |
@@ -40,10 +41,14 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 - 5 položek: Feed · Boardy · **+** (žluté kolečko ~34) · Hledat · Profil.
 - Avatar **34 px** kruh + 2 px bílá outline. Ikony ~24–25 px, přebarvení: aktivní žlutá, neaktivní bílá.
 
-## Tlačítka (výběr — typ Argumentuj)
+## Tlačítka
 
-- **134×47**, border **1 px solid `#000`**, radius **5**, text `glitch_p` (16/400) na střed, barva `#1a1a1a`.
-- Dvojice vedle sebe od `left: 40`, mezera 27, `top: 643`.
+**Argumentuj:** **134×47**, border **1 px solid `#000`**, radius **5**, text `glitch_p` (16/400) na střed, barva `#1a1a1a`. Dvojice vedle sebe od `left: 40`, mezera 27, `top: 643`.
+
+**Rychlá výzva (odpovědi):** kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), text `glitch_H4` (20/600) **na střed**, obrys 1,5 px bílý, radius 8, mezera ~15.
+- 2 sloupce (např. „310×15="): **111×55**, `left: 40`, řádky `top: 577 / 647`.
+- 3 sloupce (trojúhelníky): **57×55**, `left: 40`, `top: 689`.
+- 1 sloupec (topinky): **143×54**.
 
 ## Přesné Y-souřadnice karet (z Figmy)
 
