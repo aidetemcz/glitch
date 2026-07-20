@@ -202,14 +202,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Úvodní splash (žlutá) — logo Glitch + Tiny dole */
 .card[data-type="welcome"] { cursor: pointer; }
 .welcome-logo {
-  position: absolute; top: 33%; left: 50%; transform: translate(-50%, -50%);
-  width: calc(133 * var(--u)); height: auto;   /* o třetinu menší než dřív (200) + responzivní */
+  position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
+  width: calc(133 * var(--u)); height: auto;   /* Glitch hero na střed */
 }
 .welcome-tiny {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 46px);
-  width: calc(82 * var(--u)); height: auto;     /* jen o malinko menší (92) + responzivní */
+  position: absolute; top: 17%; left: 20%;
+  width: calc(82 * var(--u)); height: auto;     /* Tiny branding nahoře vlevo (dle návrhu) */
 }
+/* přihlášení přes Google (tmavé tlačítko na žluté) — uživatel může projít i bez něj */
+.welcome-login {
+  background: #1a1a1a; color: var(--c-white);
+  padding: calc(15 * var(--u)) calc(30 * var(--u)); border-radius: calc(8 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  transition: opacity .12s ease;
+}
+.welcome-login:active { opacity: .8; }
 
 /* Úvodní karta „Vítej v Glitchi" — logo nahoře (y≈159), text dole (y≈586) */
 .intro-logo {

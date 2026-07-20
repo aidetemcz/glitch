@@ -112,12 +112,15 @@
 
     welcome(c) {
       return `
+        <img class="welcome-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">
         <span class="pixel-deco" style="top:12%;right:16%;width:16px;height:16px">${ICON.spark}</span>
-        ${deco("", "top:53%;left:19%;width:13px;height:13px")}
-        ${deco("", "top:59%;left:53%;width:10px;height:10px")}
-        <span class="pixel-deco" style="top:69%;left:34%;width:15px;height:15px">${ICON.spark}</span>
+        ${deco("", "top:30%;left:14%;width:13px;height:13px")}
+        ${deco("", "top:52%;left:72%;width:11px;height:11px")}
+        <span class="pixel-deco" style="top:72%;left:18%;width:15px;height:15px">${ICON.spark}</span>
         <img class="welcome-logo" src="${LOGO}" alt="Glitch">
-        <img class="welcome-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">`;
+        <div class="card-footer">
+          <button class="welcome-login" data-welcome-login>Přihlášení Google účtem</button>
+        </div>`;
     },
 
     intro(c) {
@@ -382,7 +385,15 @@
     if (c.type === "argument") initArgument(el);
     if (c.type === "attention_game") initAttention(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
-    if (c.type === "welcome") el.addEventListener("click", () => nextFrom(el));
+    if (c.type === "welcome") {
+      el.addEventListener("click", () => nextFrom(el));
+      const lg = el.querySelector("[data-welcome-login]");
+      if (lg) lg.addEventListener("click", async (e) => {
+        e.stopPropagation();                     // klik na tlačítko neposune na další Glitch
+        try { if (typeof sbSignInWithGoogle === "function") await sbSignInWithGoogle(); }
+        catch (_) { toast("Přihlášení se nezdařilo."); }
+      });
+    }
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)
     el.querySelectorAll("[data-timer]").forEach((b) =>
       b.addEventListener("click", () => b.classList.toggle("is-on")));
