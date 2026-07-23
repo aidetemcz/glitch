@@ -41,16 +41,17 @@ Základní relace je **24 hodin**. To je doba, kdy má Glitch uložená citlivá
 
 Obsah se dělí do **7 typů** (= složky v `glitches/`). Legenda: **Rozklik** = karta se dá otevřít do hloubky · **Chatbot** = navazuje konverzace s Tinybotem.
 
-| # | Typ | Složka | Rozklik | Chatbot | Fork |
-|---|---|---|:---:|:---:|:---:|
-| 1 | Basic Glitch | [`basic-glitch/`](../glitches/basic-glitch) | ano | ano | ano |
-| 2 | Rychlá výzva | [`rychla-vyzva/`](../glitches/rychla-vyzva) | ne | ne | ne |
-| 3 | Wellbeing | [`wellbeing/`](../glitches/wellbeing) | někdy | ne | ne |
-| 4 | Fun fact | [`funfact/`](../glitches/funfact) | ano | ano | ano |
-| 5 | Najdi chybu | [`najdi-chybu/`](../glitches/najdi-chybu) | ano | ano | ano |
-| 6 | Historická osobnost | [`historicka-osobnost/`](../glitches/historicka-osobnost) | ano | ano | ano |
-| 7 | Argumentuj | [`argument/`](../glitches/argument) | ano | ano | ne |
+| # | Typ | Složka | Návrh karty | Rozklik | Chatbot | Fork |
+|---|---|---|---|:---:|:---:|:---:|
+| 1 | Basic Glitch | [`basic-glitch/`](../glitches/basic-glitch) | [karta](./karta-basic-glitch.md) | ano | ano | ano |
+| 2 | Rychlá výzva | [`rychla-vyzva/`](../glitches/rychla-vyzva) | [karta](./karta-rychla-vyzva.md) | ne | ne | ne |
+| 3 | Wellbeing | [`wellbeing/`](../glitches/wellbeing) | [karta](./karta-wellbeing.md) | někdy | ne | ne |
+| 4 | Fun fact | [`funfact/`](../glitches/funfact) | [karta](./karta-funfact.md) | ano | ano | ano |
+| 5 | Najdi chybu | [`najdi-chybu/`](../glitches/najdi-chybu) | [karta](./karta-najdi-chybu.md) | ano | ano | ano |
+| 6 | Historická osobnost | [`historicka-osobnost/`](../glitches/historicka-osobnost) | [karta](./karta-historicka-osobnost.md) | ano | ano | ano |
+| 7 | Argumentuj | [`argument/`](../glitches/argument) | [karta](./karta-argument.md) | ano | ano | ne |
 
+> **Návrh karty** = šablona sekcí + konkrétní příklad daného typu (podklad pro redakci i AI asistenta při tvorbě Glitchů).
 > **Systémové karty** (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace, nemají složku.
 
 ---
