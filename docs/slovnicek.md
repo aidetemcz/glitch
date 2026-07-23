@@ -33,7 +33,7 @@ AI průvodce/chatbot uvnitř Glitchů. Podle typu Glitche vede rozhovor, napoví
 Sesterská vzdělávací platforma. Glitch s ní sdílí některé formáty (např. „Argumentuj") a posílá do ní **důkaz o učení** (→ důkaz o učení).
 
 **p-book**
-Odborný výzkumný demo-systém Pavla Kordíka a Evy Nečasové (konference RecSys 2026) o tom, jak fungují → doporučovací systémy. Glitch z něj přebírá klíčové koncepty (→ kontrakt, → fasety, → elastický katalog, → serve-or-mint).
+Odborný výzkumný demo-systém Pavla Kordíka (konference RecSys 2026) o tom, jak fungují → doporučovací systémy. Glitch z něj přebírá klíčové koncepty (→ kontrakt, → fasety, → elastický katalog, → serve-or-mint).
 
 ---
 
@@ -50,7 +50,7 @@ Jedna konkrétní realizace konceptu — **jak** se to řekne. Tentýž koncept 
 
 **Faseta**
 Vlastnost podání, která popisuje jeho **formu** (ne obsah). Fasety jsou zároveň „přepínače" pro generování a signál pro → doporučovací systém, co komu sedí. Osy faset:
-- **svět příkladu** — z jakého prostředí jsou příklady (generický, e-shop, sociální sítě, hry…),
+- **téma** — z jakého prostředí jsou příklady (generický, e-shop, sociální sítě, hry…),
 - **hloubka** — pro koho (intro, standard, technická, výzkumná),
 - **vizualita** — kolik nesou obrázky (text-first, vyvážená, visual-first),
 - **formalismus** — kolik vzorců/zápisu (žádný, lehký, plný),
@@ -86,16 +86,16 @@ Informace o **původu** Glitche — kdo ho vytvořil a nakolik je prověřený. 
 **Core**
 Glitch vytvořený a ověřený námi (redakcí). Nejvyšší důvěra; „kanonický" obsah. Žije v → gitu.
 
-**Edited**
+**Fork**
 Původně náš Glitch, který uživatel → forknul a upravil.
 
-**Community**
+**Komunita**
 Glitch vytvořený uživatelem nebo skupinou uživatelů a nasdílený.
 
-**Generated**
+**Generovaný**
 Plně vygenerovaný Glitch (→ AI generování). Vždy viditelně označený.
 
-**Private** *(pracovní stav)*
+**Draft** *(pracovní stav)*
 Výtvor, který zatím vidí jen jeho autor (než ho nasdílí).
 
 **Ghost** *(navržený, ještě nenapsaný)*
@@ -151,7 +151,7 @@ Jak je Glitch těžký pro cílovou skupinu (1 lehká · 2 střední · 3 těžk
 Jakou myšlenkovou operaci Glitch vyžaduje — vyjádřeno v úrovních → revidované Bloomovy taxonomie.
 
 **Revidovaná Bloomova taxonomie**
-Žebříček myšlenkových operací od nejjednodušší po nejnáročnější: **zapamatovat → porozumět → aplikovat → analyzovat → hodnotit → vytvořit**. Používáme ji u jednotlivého Glitche.
+Žebříček myšlenkových operací od nejjednodušší po nejnáročnější: **zapamatovat → porozumět → aplikovat → analyzovat → hodnotit → tvořit**. Používáme ji u jednotlivého Glitche.
 
 **Marzano-Kendall (Nová taxonomie vzdělávacích cílů)**
 Jiný, novější žebříček úrovní zvládnutí, který používá → mapa konceptů pro gradaci cílů konceptu: **vybavení → porozumění → analýza → využití znalostí**. (Bloom u Glitche, Marzano u konceptu — obojí je „od jednoduššího ke složitějšímu".)
@@ -182,7 +182,7 @@ Interaktivní 3D hra pro „usazení" pozornosti; volitelný časovač.
 Data, která nejsou trvalá — žijí jen po dobu → relace (24 h) a pak se automaticky smažou. Týká se emočních dat (nálada, pozornost, frustrace). Nikdy netvoří trvalý štítek.
 
 **Důkaz o učení**
-To, co se z Glitche ukládá trvale do profilu (a případně posílá do → Tiny): **zvládnuté koncepty, kvalita argumentace, dokončení** — tedy pokrok, ne nálada ani názor na citlivé téma.
+To, co se z Glitche ukládá trvale do profilu (a případně posílá do → Tiny): **zvládnuté koncepty, úroveň kompetence, dokončení** — tedy pokrok, ne nálada ani názor na citlivé téma.
 
 **Časovač opt-in**
 Časomíra se nikdy nespouští sama — dítě si ji musí aktivně zapnout. Žádný časový tlak zvenčí.
@@ -241,10 +241,10 @@ Prochází feed, plní questy, ukládá si pokrok a náladu, může přidat komu
 Vidí své žáky/třídu a jejich → důkaz o učení (ne emoční data), zadává questy, může přidat Glitch.
 
 **Editor**
-Může upravovat obsah Glitchů přímo v aplikaci.
+Může navíc upravovat obsah Glitchů přímo v aplikaci.
 
 **Admin**
-Správa uživatelů, rolí a obsahu.
+Správa uživatelů, rolí a obsahu (navíc).
 
 ---
 
@@ -267,9 +267,6 @@ Služba, kde je Glitch nasazený (hostovaný). Každý push na GitHub spustí no
 
 **Serverless funkce**
 Malý kousek serverového kódu, který běží až na vyžádání (nemá stále běžící server). U Glitche jí voláme OpenAI, aby → API klíč zůstal skrytý.
-
-**API klíč**
-Tajné heslo pro přístup ke službě (např. OpenAI). Musí zůstat na serveru, nikdy v prohlížeči ani ve sdíleném dokumentu.
 
 **GPT / OpenAI**
 Jazykový model a firma, kterou používáme pro → AI generování a → Tinybota.
