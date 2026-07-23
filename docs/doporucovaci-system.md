@@ -207,4 +207,4 @@ Z profilu afinit pak plyne **cílový fasetový vektor**, a ten se buď **najde*
 
 ## Další krok: struktura databáze
 
-Až bude tenhle model odsouhlasený, navrhneme **strukturu databáze** — jak se signály (mood, pozornost, dokončení, kvalita konverzace, honest miss) a metadata karet ukládají tak, aby si z nich doporučovač mohl brát informace. To je samostatný dokument (`docs/databaze-navrh.md`, zatím neexistuje).
+Až bude tenhle model odsouhlasený, navrhneme **strukturu databáze** — jak se signály (mood, pozornost, dokončení, kvalita konverzace, honest miss) a metadata karet ukládají tak, aby si z nich doporučovač mohl brát informace. Návrh: [`databaze-navrh.md`](./databaze-navrh.md).
