@@ -43,9 +43,17 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 
 ## Tlačítka
 
-**Argumentuj:** **134×47**, border **1 px solid `#000`**, radius **5**, text `glitch_p` (16/400) na střed, barva `#1a1a1a`. Dvojice vedle sebe od `left: 40`, mezera 27, `top: 643`.
+**Jednotný styl — inverzní outline.** Všechna tlačítka vypadají stejně: průhledné
+pozadí, barva textu i rámečku = `--fg` dané karty → **bílá na tmavém, černá na
+bílém/žlutém**. Rámeček **1,5 px `--fg`**, radius **8**, text `glitch_H4` (20/600)
+na střed. Aktivní/vybraný stav = **plná inverze** (`background: --fg; color: --bg`).
+Pouze geometrie (šířka/výška/padding) se u jednotlivých typů liší; barvy a rámeček
+jsou společné (CSS: skupinový selektor `.welcome-login, .mood-cta, .breath-cta,
+.quiz-opt, .arg-opt`).
 
-**Rychlá výzva (odpovědi):** kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), text `glitch_H4` (20/600) **na střed**, obrys 1,5 px bílý, radius 8, mezera ~15.
+**Argumentuj:** **134×47**. Dvojice vedle sebe od `left: 40`, mezera 27, `top: 643`. Vybraná odpověď = plná inverze.
+
+**Rychlá výzva (odpovědi):** kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), text `glitch_H4` (20/600) **na střed**, mezera ~15. Správná odpověď = žlutá výplň, špatná = ztlumená (opacity .4).
 - 2 sloupce (např. „310×15="): **111×55**, `left: 40`, řádky `top: 577 / 647`.
 - 3 sloupce (trojúhelníky): **57×55**, `left: 40`, `top: 689`.
 - 1 sloupec (topinky): **143×54**.

@@ -209,14 +209,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: absolute; top: 17%; left: 20%;
   width: calc(82 * var(--u)); height: auto;     /* Tiny branding nahoře vlevo (dle návrhu) */
 }
-/* přihlášení přes Google (tmavé tlačítko na žluté) — uživatel může projít i bez něj */
-.welcome-login {
-  background: #1a1a1a; color: var(--c-white);
-  padding: calc(15 * var(--u)) calc(30 * var(--u)); border-radius: calc(8 * var(--u));
-  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
-  transition: opacity .12s ease;
+/* ==========================================================================
+   Tlačítka — jednotný styl: INVERZNÍ OUTLINE
+   Průhledné pozadí, barva textu i rámeček = --fg dané karty
+   → bílá na tmavém pozadí, černá na bílém/žlutém. Text = H4 (20/600).
+   Aktivní/vybraný stav = plná inverze (pozadí --fg, text --bg).
+   ========================================================================== */
+.welcome-login,
+.mood-cta,
+.breath-cta,
+.quiz-opt,
+.arg-opt {
+  background: transparent;
+  color: var(--fg);
+  border: 1.5px solid var(--fg);
+  border-radius: calc(8 * var(--u));
+  font-size: calc(20 * var(--u)); font-weight: 600;
+  line-height: normal; letter-spacing: var(--tracking);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, opacity .12s ease;
 }
-.welcome-login:active { opacity: .8; }
+.welcome-login:active,
+.mood-cta:active,
+.breath-cta:active,
+.quiz-opt:active,
+.arg-opt:active { opacity: .7; }
+
+/* přihlášení přes Google — uživatel může projít i bez něj */
+.welcome-login { padding: calc(15 * var(--u)) calc(30 * var(--u)); }
 
 /* Úvodní karta „Vítej v Glitchi" — logo nahoře (y≈159), text dole (y≈586) */
 .intro-logo {
@@ -254,12 +275,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Mood selector (2D diagram) — nadpis y=118, text y=176, diagram střed ~452
    ========================================================================== */
 .mood-wrap { position: absolute; left: 40px; right: 40px; top: 34%; bottom: calc(120 * var(--u)); }
-/* Potvrdit (primární tlačítko na bílé kartě) */
-.mood-cta {
-  background: var(--c-black); color: var(--c-white);
-  padding: calc(15 * var(--u)) calc(46 * var(--u)); border-radius: calc(8 * var(--u));
-  transition: opacity .12s ease;
-}
+/* Potvrdit (na bílé kartě → černý outline) */
+.mood-cta { padding: calc(15 * var(--u)) calc(46 * var(--u)); }
 .mood-cta:disabled { opacity: .55; cursor: default; }
 .mood-diagram { width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
 .mood-dot { cursor: grab; }
@@ -306,12 +323,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   will-change: transform;                                /* scale řídí JS po snímcích (kvůli pauze) */
 }
 .breath-hint { opacity: .9; text-align: center; }
-.breath-cta {
-  background: transparent; color: var(--c-white);
-  border: 1.5px solid rgba(255,255,255,0.45);
-  padding: calc(15 * var(--u)) calc(40 * var(--u)); border-radius: calc(9 * var(--u));
-  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
-}
+.breath-cta { padding: calc(15 * var(--u)) calc(40 * var(--u)); }
 
 /* ==========================================================================
    Obecné pravidlo: patička karty (nápověda + akční tlačítko dole)
@@ -371,15 +383,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .quiz-options.cols-1 { grid-template-columns: calc(143 * var(--u)); }
 .quiz-options.cols-2 { grid-template-columns: repeat(2, calc(111 * var(--u))); }
 .quiz-options.cols-3 { grid-template-columns: repeat(3, calc(57 * var(--u))); }
-.quiz-opt {
-  border: 1.5px solid rgba(255,255,255,0.85);
-  border-radius: calc(8 * var(--u));
-  background: transparent;
-  color: var(--c-white);
-  height: calc(55 * var(--u));
-  display: flex; align-items: center; justify-content: center;   /* text na střed (dle Figmy) */
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
-}
+.quiz-opt { height: calc(55 * var(--u)); }
 .quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .quiz-opt.is-wrong   { opacity: .4; }
 .quiz-figure svg { display: block; }
@@ -439,12 +443,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .arg-sub { position: absolute; left: 40px; right: 40px; top: 42.8%;
   font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); color: var(--c-black); z-index: 2; }
 .arg-actions { position: absolute; left: 40px; top: 78.6%; display: flex; gap: calc(27 * var(--u)); z-index: 2; }
-.arg-opt {
-  width: calc(134 * var(--u)); height: calc(47 * var(--u)); border: 1px solid var(--c-black); border-radius: calc(5 * var(--u));
-  background: transparent; color: #1a1a1a; font-size: calc(16 * var(--u)); font-weight: 400;
-  letter-spacing: var(--tracking); transition: all .12s ease;
-}
-.arg-opt.is-sel { background: var(--c-black); color: var(--c-white); border-color: var(--c-black); }
+.arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); }
+.arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 
 /* Algoritmus — 3D y=96 (321×322), kapitola y=532, nadpis y=585, text y=647 */
 .algo-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
