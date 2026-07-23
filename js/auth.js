@@ -78,7 +78,7 @@
     const u = sbCurrentUser;
     const ov = overlay(
       modalAvatar +
-      '<p class="auth-sub g-p">Přihlášen/a jako<br>' + escapeHtml(displayName(u)) + "</p>" +
+      '<p class="auth-sub g-p">Přihlášen*a jako<br>' + escapeHtml(displayName(u)) + "</p>" +
       '<button class="auth-cta" id="auth-signout" type="button">Odhlásit se</button>'
     );
     ov.querySelector("#auth-signout").addEventListener("click", async () => {
