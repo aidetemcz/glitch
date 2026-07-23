@@ -18,8 +18,25 @@ _Šablona sekcí Glitche typu **Historická osobnost** na příkladu „Alan Tur
 | typ | `historicka-osobnost` |
 | obor | Informatika, matematika, kryptografie |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-23 |
 | stav důvěry | `core` |
 | jazyk | cs |
+
+---
+
+## 0.1 Mapa konceptů
+
+*Provázání na [mapu konceptů](../knowledge-map/). Z konceptu se dědí RVP, digitální kompetence, oblast i téma.*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | `umela-inteligence-co-je-a-co-neni-ai` |
+| oblast (RVP okruh) | Data, informace a modelování (`INF-INF-001`) |
+| téma | Umělá inteligence |
+| vrstva | core |
+| RVP výstup | dle konceptu (kód `INF-INF-001-ZV9-…`; doslovné znění v mapě) |
+| digitální kompetence | ano — porozumění tomu, co je a co není „myslící stroj" |
 
 ---
 
@@ -74,9 +91,14 @@ Dítě si může rozhovor forknout a rozvést — např. sepsat, co ho na Turing
 | pole | hodnota |
 | ----- | ----- |
 | fasety | obor: informatika · éra: 20. století · formát: chat s personou |
+| **složitost** | `2` — porozumění/analýza (v dialogu s personou) |
+| **kognitivní náročnost** | střední |
+| **energetická náročnost** | střední (aktivní konverzace) |
+| **typ zátěže** | soustředění (rozhovor) |
+| **vhodné při náladě** | spíš vyšší energie; roztěkanému uživateli nabídnout až po zklidnění |
 | signál dokončení | proběhlá konverzace s personou |
 | fork | `true` (volitelný) |
-| vazby | koncepty z Mapy: co je výpočet, může stroj myslet, historie AI |
+| vazby | koncept z mapy: `umela-inteligence-co-je-a-co-neni-ai` |
 
 ---
 

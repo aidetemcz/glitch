@@ -16,10 +16,26 @@ _Šablona sekcí Glitche (kontrakt / podání / úrovně / kontext pro bota / be
 | quest | Od návodu k emergenci |
 | pořadí v questu | 5 (navazuje na úlohy o podmínkách a cyklech) |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-07 |
 | stav důvěry | `core` *(core → edited → community → generated; určuje označení karty a režim servírování)* |
 | jazyk | cs |
-| autor kontraktu | redakce AI dětem |
-| poslední revize | 2026-07-07 |
+
+---
+
+## **0.1 Mapa konceptů**
+
+*Provázání na konkrétní koncept v [mapě konceptů](../knowledge-map/). Z konceptu se dědí RVP, digitální kompetence, oblast i téma — zdroj pravdy je mapa, karta jen odkazuje.*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | `informaticke-mysleni-modelovani-a-simulace` |
+| oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
+| téma | Informatické myšlení |
+| vrstva | navazující |
+| RVP výstup | dle konceptu (kód `INF-INF-002-ZV9-…`; doslovné znění v mapě) |
+| digitální kompetence | ano — modelování a zjednodušování skutečnosti |
+| prerekvizity (z mapy) | `programovani-podminky-v-kodu`, `programovani-cykly-v-kodu` |
 
 ---
 
@@ -181,8 +197,13 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 | pole | hodnota |
 | ----- | ----- |
 | fasety kanonického podání | hloubka: intro · vizualita: visual-first · žánr: pozorování+výklad · délka: standard · svět: generický · formalismus: none |
-| prerekvizity | `algoritmus-podminky` (když–tak), `algoritmus-cykly` (opakuj) |
-| navazuje | `algoritmus-emergence-v-ai`, `algoritmus-vlastni-automat` |
+| **složitost** | `2` — aplikační/analýza (Marzano: `analyza`) |
+| **kognitivní náročnost** | střední |
+| **energetická náročnost** | střední |
+| **typ zátěže** | soustředění (pozorování + výklad) |
+| **vhodné při náladě** | spíš vyšší soustředění; při únavě servírovat kratší znalostní Glitch místo tohoto |
+| prerekvizity | `programovani-podminky-v-kodu`, `programovani-cykly-v-kodu` |
+| navazuje | `informaticke-mysleni-modelovani-a-simulace` → aplikační Glitche questu |
 | signál dokončení | jednoduchá: kvíz \+ vysvětlení · střední: dopočet \+ srovnání · master: forknutelný artefakt |
 | signály pro doporučení dalšího kroku | dokončená úroveň (ne čas na kartě); volba varianty A/B na master úrovni (papír vs. kód) jako slabý signál preference tvorby |
 | poctivá absence | pokud žák žádá podání, které neexistuje (např. „vysvětli mi to na fotbale"), loguje se jako poptávka; nesubstituovat tiše |

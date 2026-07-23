@@ -19,8 +19,22 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 | předmět | Matematika |
 | varianta | `vypocet` *(vypocet · slovni-uloha · obrazec)* |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-23 |
 | stav důvěry | `core` |
 | jazyk | cs |
+
+---
+
+## 0.1 Mapa konceptů
+
+*Provázání na [mapu konceptů](../knowledge-map/). Rychlá výzva je kognitivní **rozcvička**, ne výklad konceptu — proto obvykle **nemá napojení na koncept** (u matematických rozcviček je mimo informatickou mapu). Pokud výjimečně procvičuje konkrétní informatický koncept, uvede se `koncept` a zdědí RVP i digi kompetenci z mapy.*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | — *(bez napojení; matematická rozcvička)* |
+| oblast (RVP okruh) | — |
+| téma | rozcvička / procvičení |
 
 ---
 
@@ -64,6 +78,11 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 | pole | hodnota |
 | ----- | ----- |
 | fasety | předmět: matematika · varianta: vypocet · délka: mikro |
+| **složitost** | `1` — znalostní/procvičovací |
+| **kognitivní náročnost** | nízká |
+| **energetická náročnost** | nízká |
+| **typ zátěže** | rozcvička |
+| **vhodné při náladě** | kdykoli; vhodné i při nižší energii/soustředění jako lehké „nabuzení" mezi delšími Glitchi |
 | signál dokončení | zodpovězení (správně/špatně obojí je dokončení — nejde o skóre) |
 | fork | `false` |
 | poznámka | Rychlá výzva je rozcvička, ne zkoušení — slouží k rozproudění pozornosti mezi delšími Glitchi. |

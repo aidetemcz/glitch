@@ -128,6 +128,16 @@ Rozklikávací Glitch pro argumentaci a hodnotové uvažování (portace Tinybot
 
 ---
 
+## Společná pole každé karty
+
+Každý návrh karty (bez ohledu na typ) obsahuje kromě `verze` také:
+
+- **autor** a **datum vytvoření**,
+- **Mapa konceptů** (sekce 0.1) — provázání na konkrétní koncept v [mapě konceptů](../knowledge-map/); z něj se dědí **RVP, digitální kompetence, oblast a téma** (zdroj pravdy je mapa),
+- **metadata pro doporučování** (sekce 5) — **složitost**, kognitivní a energetická náročnost, typ zátěže, fasety, trust state.
+
+Jak se z těchto polí (a z wellbeing signálů) vybírá feed, popisuje **[`doporucovaci-system.md`](./doporucovaci-system.md)**.
+
 ## Formát souborů (společné)
 
 - Každý Glitch = **jeden MD soubor**: frontmatter (YAML) = strojová data + tělo (Markdown) = text pro dítě / redakci / chatbota.

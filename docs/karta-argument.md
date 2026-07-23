@@ -20,8 +20,25 @@ _Šablona sekcí Glitche typu **Argumentuj** na příkladu „Nemám co skrývat
 | typ | `argument` |
 | téma | Soukromí a hodnota osobních dat |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-23 |
 | stav důvěry | `core` |
 | jazyk | cs |
+
+---
+
+## 0.1 Mapa konceptů
+
+*Provázání na [mapu konceptů](../knowledge-map/). Z konceptu se dědí RVP, digitální kompetence, oblast i téma.*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | `digitalni-obcanstvi-digitalni-stopa-a-soukromi` |
+| oblast (RVP okruh) | Digitální technologie (`INF-INF-004`) |
+| téma | Digitální občanství |
+| vrstva | navazující |
+| RVP výstup | dle konceptu (kód `INF-INF-004-ZV9-…`; doslovné znění v mapě) |
+| digitální kompetence | ano — bezpečné a uvážlivé chování v digitálním světě, hodnota osobních dat |
 
 ---
 
@@ -88,9 +105,14 @@ Dítě: *zaujalo jasný postoj* · *dalo aspoň jeden vlastní důvod* (ne „pr
 | pole | hodnota |
 | ----- | ----- |
 | fasety | téma: soukromí · délka: střední · svět: běžné appky |
+| **složitost** | `3` — hodnotové uvažování a argumentace (nejvyšší kognitivní zapojení) |
+| **kognitivní náročnost** | vysoká |
+| **energetická náročnost** | vysoká (aktivní obhajoba postoje) |
+| **typ zátěže** | soustředění + kreativita (formulace argumentů) |
+| **vhodné při náladě** | vyšší energie i soustředění; unavenému/roztěkanému neservírovat — odložit na „nabitý" stav |
 | signál dokončení | absolvovaná argumentační smyčka (postoj → důvod → reakce na protiargument) |
 | fork | `false` |
-| vazby | koncepty z Mapy: soukromí, digitální stopa, doporučování |
+| vazby | koncept z mapy: `digitalni-obcanstvi-digitalni-stopa-a-soukromi` |
 
 ---
 

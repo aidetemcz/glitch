@@ -18,8 +18,25 @@ _Šablona sekcí Glitche typu **Najdi chybu** na příkladu „Doporučovací sy
 | typ | `najdi-chybu` |
 | téma | Doporučovací systémy |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-23 |
 | stav důvěry | `core` |
 | jazyk | cs |
+
+---
+
+## 0.1 Mapa konceptů
+
+*Provázání na [mapu konceptů](../knowledge-map/). Z konceptu se dědí RVP, digitální kompetence, oblast i téma.*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | `umela-inteligence-doporucovaci-systemy` |
+| oblast (RVP okruh) | Data, informace a modelování (`INF-INF-001`) |
+| téma | Umělá inteligence |
+| vrstva | navazující |
+| RVP výstup | dle konceptu (kód `INF-INF-001-ZV9-…`; doslovné znění v mapě) |
+| digitální kompetence | ano — kritické porozumění tomu, jak systémy vybírají obsah (mediální gramotnost) |
 
 ---
 
@@ -106,9 +123,14 @@ Dítě si může Najdi chybu forknout a rozvést — např. najít vlastní „s
 | pole | hodnota |
 | ----- | ----- |
 | fasety | téma: doporučovací systémy · délka: krátká · žánr: prebunking |
+| **složitost** | `2` — analýza (rozliš pravdu od chyby) |
+| **kognitivní náročnost** | střední |
+| **energetická náročnost** | střední |
+| **typ zátěže** | soustředění (kritické čtení) |
+| **vhodné při náladě** | spíš vyšší soustředění; při únavě odložit na později |
 | signál dokončení | označení v kvízu + přečtení vysvětlení |
 | fork | `true` (volitelný) |
-| vazby | koncepty z Mapy: doporučování, digitální stopa, personalizace |
+| vazby | koncept z mapy: `umela-inteligence-doporucovaci-systemy` |
 
 ---
 

@@ -18,8 +18,25 @@ _Šablona sekcí Glitche typu **Fun fact** na příkladu „První počítačov�
 | typ | `funfact` |
 | téma | Historie počítačů |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-23 |
 | stav důvěry | `core` |
 | jazyk | cs |
+
+---
+
+## 0.1 Mapa konceptů
+
+*Provázání na [mapu konceptů](../knowledge-map/). Z konceptu se dědí RVP, digitální kompetence, oblast i téma.*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | `programovani-ladeni-a-testovani` |
+| oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
+| téma | Programování |
+| vrstva | navazující |
+| RVP výstup | dle konceptu (kód `INF-INF-002-ZV9-…`; doslovné znění v mapě) |
+| digitální kompetence | ano — porozumění tomu, že chyby v programu jsou běžné a hledají se (ladění) |
 
 ---
 
@@ -86,9 +103,14 @@ Fun fact **může** mít fork (na rozdíl od Rychlé výzvy): dítě si fakt „
 | pole | hodnota |
 | ----- | ----- |
 | fasety | téma: historie počítačů · délka: krátká · vizualita: ilustrace |
+| **složitost** | `1` — znalostní (zpestření, bez úkolu) |
+| **kognitivní náročnost** | nízká |
+| **energetická náročnost** | nízká |
+| **typ zátěže** | odlehčení (čtení pro radost) |
+| **vhodné při náladě** | i při únavě/nižším soustředění — lehký oddechový Glitch mezi náročnějšími |
 | signál dokončení | rozklik (přečtení) · volitelně konverzace |
 | fork | `true` (volitelný) |
-| vazby | koncepty: chyba/ladění programu, historie výpočetní techniky |
+| vazby | koncept z mapy: `programovani-ladeni-a-testovani` |
 
 ---
 

@@ -18,8 +18,21 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 | typ | `wellbeing` |
 | podtyp | `mood_selector` *(mood_selector · breathing · attention_game)* |
 | verze | 1.0 |
+| autor | redakce AI dětem |
+| datum vytvoření | 2026-07-23 |
 | stav důvěry | `core` |
 | jazyk | cs |
+
+---
+
+## 0.1 Mapa konceptů
+
+*Wellbeing karty **nemají napojení na koncept** — nejsou znalostní obsah, ale péče o vnitřní nastavení (princip 9 doporučovacího systému). Do doporučování ale vstupují jako **zdroj signálu** (viz sekce 5 a [`doporucovaci-system.md`](./doporucovaci-system.md)).*
+
+| pole | hodnota |
+| ----- | ----- |
+| koncept | — *(bez napojení; wellbeing, ne znalostní obsah)* |
+| role v doporučování | **zdroj signálu** (mood / pozornost) pro úpravu obtížnosti feedu |
 
 ---
 
@@ -64,8 +77,13 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 | pole | hodnota |
 | ----- | ----- |
 | fasety | podtyp: mood_selector · délka: mikro · umístění: kdekoli ve feedu |
+| **složitost** | `1` — bez znalostní zátěže |
+| **kognitivní náročnost** | nízká |
+| **energetická náročnost** | nízká |
+| **typ zátěže** | relaxace (breathing) · soustředění (attention_game) |
+| **role ve stavu uživatele** | mood_selector **měří** stav (energie × soustředění); attention_game a breathing se **servírují při únavě/roztěkanosti** |
 | signál dokončení | mood: umístění a potvrzení tečky · breathing: dokončení cyklů · attention: ukončení hry |
-| vliv na doporučování | **jen mood** ovlivňuje výběr Glitchů pro daný den; ostatní podtypy neovlivňují |
+| vliv na doporučování | **jen mood** upravuje výběr Glitchů pro daný den (viz [`doporucovaci-system.md`](./doporucovaci-system.md)); ostatní podtypy neupravují |
 | fork | `false` |
 
 ---
