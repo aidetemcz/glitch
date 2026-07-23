@@ -212,13 +212,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Tlačítka — jednotný styl: INVERZNÍ OUTLINE
    Průhledné pozadí, barva textu i rámeček = --fg dané karty
-   → bílá na tmavém pozadí, černá na bílém/žlutém. Text = H4 (20/600).
+   → bílá na tmavém pozadí, černá na bílém/žlutém. Text velikosti glitch_p (16).
    Aktivní/vybraný stav = plná inverze (pozadí --fg, text --bg).
+   Pozn.: odpovědi u Rychlé výzvy (.quiz-opt) mají VLASTNÍ styl (viz níže).
    ========================================================================== */
 .welcome-login,
 .mood-cta,
 .breath-cta,
-.quiz-opt,
 .arg-opt {
   background: transparent;
   color: var(--fg);
@@ -233,7 +233,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .welcome-login:active,
 .mood-cta:active,
 .breath-cta:active,
-.quiz-opt:active,
 .arg-opt:active { opacity: .7; }
 
 /* přihlášení přes Google — uživatel může projít i bez něj */
@@ -383,7 +382,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .quiz-options.cols-1 { grid-template-columns: calc(143 * var(--u)); }
 .quiz-options.cols-2 { grid-template-columns: repeat(2, calc(111 * var(--u))); }
 .quiz-options.cols-3 { grid-template-columns: repeat(3, calc(57 * var(--u))); }
-.quiz-opt { height: calc(55 * var(--u)); }
+/* odpovědi mají VLASTNÍ styl (nezávislý na jednotných tlačítkách):
+   tenký bílý obrys, text glitch_H4 (20/600) na střed */
+.quiz-opt {
+  height: calc(55 * var(--u));
+  background: transparent;
+  color: var(--c-white);
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: calc(8 * var(--u));
+  font-size: calc(20 * var(--u)); font-weight: 600;
+  line-height: normal; letter-spacing: var(--tracking);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.quiz-opt:active { opacity: .7; }
 .quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .quiz-opt.is-wrong   { opacity: .4; }
 .quiz-figure svg { display: block; }

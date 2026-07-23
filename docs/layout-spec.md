@@ -49,11 +49,14 @@ bílém/žlutém**. Rámeček **1,5 px `--fg`**, radius **8**, text ve **velikos
 `glitch_p` (16)**, tučně (600), na střed. Aktivní/vybraný stav = **plná inverze** (`background: --fg; color: --bg`).
 Pouze geometrie (šířka/výška/padding) se u jednotlivých typů liší; barvy a rámeček
 jsou společné (CSS: skupinový selektor `.welcome-login, .mood-cta, .breath-cta,
-.quiz-opt, .arg-opt`).
+.arg-opt`).
+
+> **Výjimka:** odpovědi u **Rychlé výzvy** (`.quiz-opt`) mají **vlastní styl** —
+> tenký bílý obrys, text `glitch_H4` (20/600). Nejsou součástí jednotného stylu.
 
 **Argumentuj:** **134×47**. Dvojice vedle sebe od `left: 40`, mezera 27, `top: 643`. Vybraná odpověď = plná inverze.
 
-**Rychlá výzva (odpovědi):** kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), text ve velikosti `glitch_p` (16, tučně) **na střed**, mezera ~15. Správná odpověď = žlutá výplň, špatná = ztlumená (opacity .4).
+**Rychlá výzva (odpovědi):** vlastní styl (ne jednotný). Kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), tenký bílý obrys, text `glitch_H4` (20/600) **na střed**, mezera ~15. Správná odpověď = žlutá výplň, špatná = ztlumená (opacity .4).
 - 2 sloupce (např. „310×15="): **111×55**, `left: 40`, řádky `top: 577 / 647`.
 - 3 sloupce (trojúhelníky): **57×55**, `left: 40`, `top: 689`.
 - 1 sloupec (topinky): **143×54**.
