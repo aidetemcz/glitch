@@ -406,10 +406,11 @@
     if (c.type === "welcome") {
       el.addEventListener("click", () => nextFrom(el));
       const lg = el.querySelector("[data-welcome-login]");
-      if (lg) lg.addEventListener("click", async (e) => {
+      if (lg) lg.addEventListener("click", (e) => {
         e.stopPropagation();                     // klik na tlačítko neposune na další Glitch
-        try { if (typeof sbSignInWithGoogle === "function") await sbSignInWithGoogle(); }
-        catch (_) { toast("Přihlášení se nezdařilo."); }
+        if (typeof window.glitchOpenLogin === "function") { window.glitchOpenLogin(); return; }
+        // fallback: kdyby modál nebyl k dispozici, spusť přihlášení přímo
+        if (typeof sbSignInWithGoogle === "function") sbSignInWithGoogle().catch(() => toast("Přihlášení se nezdařilo."));
       });
     }
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)

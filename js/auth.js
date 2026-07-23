@@ -47,21 +47,23 @@
     closeOverlay();
     const ov = document.createElement("div");
     ov.id = "auth-overlay"; ov.className = "auth-overlay";
-    ov.innerHTML = '<div class="auth-sheet" role="dialog" aria-modal="true">' +
-      '<button class="auth-close" aria-label="Zavřít">✕</button>' + inner + "</div>";
+    ov.innerHTML = '<div class="auth-modal" role="dialog" aria-modal="true">' +
+      '<button class="auth-close" aria-label="Zavřít"><img src="assets/ui/Exit.svg" alt=""></button>' +
+      inner + "</div>";
     document.body.appendChild(ov);
     ov.addEventListener("mousedown", (e) => { if (e.target === ov) closeOverlay(); });
     ov.querySelector(".auth-close").addEventListener("click", closeOverlay);
     return ov;
   }
 
+  const modalAvatar = '<div class="auth-avatar"><img src="assets/ui/avatar-icon.png" alt=""></div>';
+
   function openSheet() {
     const ov = overlay(
-      '<div class="auth-logo"><img src="assets/glitch-logo.svg" alt="Glitch" width="76"></div>' +
-      '<h2 class="auth-title">Přihlas se do Glitche</h2>' +
-      '<p class="auth-sub">Ať se ti ukládá pokrok napříč zařízeními.</p>' +
-      '<button class="auth-google" id="auth-google" type="button">' + googleIcon +
-      "<span>Přihlásit se přes Google</span></button>" +
+      modalAvatar +
+      '<h2 class="auth-title g-h4">Přihlášení do Glitch</h2>' +
+      '<p class="auth-sub g-p">Pokud se přihlásíš, budeme moci ukládat tvůj pokrok.</p>' +
+      '<button class="auth-cta" id="auth-google" type="button">Přihlásit se Google účtem</button>' +
       '<div class="auth-err" id="auth-err" role="alert"></div>'
     );
     ov.querySelector("#auth-google").addEventListener("click", async () => {
@@ -74,21 +76,19 @@
 
   function openMenu() {
     const u = sbCurrentUser;
-    const ava = avatarUrl(u)
-      ? '<img class="auth-ava" src="' + avatarUrl(u) + '" alt="" referrerpolicy="no-referrer">'
-      : '<div class="auth-ava auth-ava-txt">' + escapeHtml(initials(u)) + "</div>";
     const ov = overlay(
-      '<div class="auth-account">' + ava +
-      '<div class="auth-who"><div class="auth-name">' + escapeHtml(displayName(u)) + "</div>" +
-      (u.email ? '<div class="auth-email">' + escapeHtml(u.email) + "</div>" : "") +
-      "</div></div>" +
-      '<button class="auth-signout" id="auth-signout" type="button">Odhlásit se</button>'
+      modalAvatar +
+      '<p class="auth-sub g-p">Přihlášen/a jako<br>' + escapeHtml(displayName(u)) + "</p>" +
+      '<button class="auth-cta" id="auth-signout" type="button">Odhlásit se</button>'
     );
     ov.querySelector("#auth-signout").addEventListener("click", async () => {
       try { await sbSignOut(); } catch (_) {}
       closeOverlay(); renderButton();
     });
   }
+
+  // zpřístupnit otevření přihlašovacího modálu i mimo tuto vrstvu (úvodní karta feedu)
+  window.glitchOpenLogin = openSheet;
 
   async function boot() {
     // návrat z Google OAuth + obnova relace (obojí bezpečně degraduje, když Supabase není)
