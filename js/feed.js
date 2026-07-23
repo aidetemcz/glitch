@@ -326,6 +326,24 @@
   });
 
   /* ==========================================================================
+     Úvodní přihlašovací karta se přihlášenému uživateli skryje (jinak matoucí).
+     Stav se načítá asynchronně → reagujeme na onAuthStateChange (+ počáteční stav).
+     ========================================================================== */
+  const welcomeCard = feed.querySelector('[data-type="welcome"]');
+  function applyWelcomeVisibility(loggedIn) {
+    if (!welcomeCard) return;
+    welcomeCard.classList.toggle("is-hidden", !!loggedIn);
+  }
+  if (typeof sbCurrentUser !== "undefined" && sbCurrentUser) applyWelcomeVisibility(true);
+  if (typeof sb !== "undefined" && sb && sb.auth && typeof sb.auth.onAuthStateChange === "function") {
+    sb.auth.onAuthStateChange((_event, session) => {
+      const loggedIn = !!(session && session.user);
+      applyWelcomeVisibility(loggedIn);
+      if (loggedIn) { try { feed.scrollTo({ top: 0 }); } catch (_) {} }
+    });
+  }
+
+  /* ==========================================================================
      Navigace (chevron / maskot → další karta)
      ========================================================================== */
   function scrollToIndex(i) {

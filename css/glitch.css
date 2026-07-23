@@ -97,6 +97,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--bg, var(--c-dark));
 }
 
+/* Skrytá karta (např. úvodní přihlášení pro přihlášeného uživatele) */
+.card.is-hidden { display: none; }
+
 /* Barevné varianty */
 .card--white  { --bg: var(--c-white);  --fg: var(--c-black); }
 .card--yellow { --bg: var(--c-yellow); --fg: var(--c-black); }
