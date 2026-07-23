@@ -26,7 +26,15 @@
     if (!btn) return;
     if (!btn.__wired) {
       btn.__wired = true;
-      btn.addEventListener("click", () => (typeof sbCurrentUser !== "undefined" && sbCurrentUser ? openMenu() : openSheet()));
+      btn.addEventListener("click", () => {
+        const loggedIn = (typeof sbCurrentUser !== "undefined" && sbCurrentUser);
+        if (loggedIn) {
+          if (typeof window.glitchOpenProfile === "function") window.glitchOpenProfile();
+          else openMenu();                      // fallback, kdyby profil nebyl načtený
+        } else {
+          openSheet();
+        }
+      });
     }
     renderButton();
   }
@@ -89,6 +97,8 @@
 
   // zpřístupnit otevření přihlašovacího modálu i mimo tuto vrstvu (úvodní karta feedu)
   window.glitchOpenLogin = openSheet;
+  // profil (js/profile.js) po odhlášení překreslí tlačítko účtu
+  window.glitchAuthRefresh = renderButton;
 
   async function boot() {
     // návrat z Google OAuth + obnova relace (obojí bezpečně degraduje, když Supabase není)
