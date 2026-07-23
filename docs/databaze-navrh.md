@@ -12,7 +12,7 @@ Navazuje na [`doporucovaci-system.md`](./doporucovaci-system.md), [`typy-obsahu.
 2. **Emoční data jsou efemérní.** Mood, pozornost, frustrace → jen **24 h**, pak se mažou automaticky. Nikdy netvoří trvalý štítek.
 3. **Do profilu jde důkaz o učení, ne názor ani nálada.** Zvládnuté koncepty a kvalita argumentace ano; postoj na citlivé téma ne.
 4. **Soukromí jako výchozí stav.** Osobní signály **nejsou veřejně čitelné** (RLS: vidí je jen jejich vlastník a případně učitel dané třídy). Žádné veřejné lajky/žebříčky → v DB pro ně není místo.
-5. **Trust ladder je stav položky.** `private → community → edited → core` (+ `generated`, + `ghost` pro navržené koncepty); mění se jen kurátorským krokem.
+5. **Trust ladder je stav položky.** `draft → komunita → fork → core` (+ `generovany`, + `ghost` pro navržené koncepty); mění se jen kurátorským krokem. (Štítky dle [slovníčku](./slovnicek.md): Core / Fork / Komunita / Generovaný / Draft / Ghost.)
 
 > ⚠️ **K nápravě u stávajících tabulek:** `progress` má dnes politiku „Anyone can read" a `activity_log` „Admins can read all (using true)". To je proti zásadě 4 — v návrhu níže to zpřísňuji (čte jen vlastník / učitel).
 
@@ -29,8 +29,6 @@ erDiagram
     profiles ||--o{ conversation_evaluations : "má"
     profiles ||--o{ wellbeing_signals : "má (24h)"
     profiles ||--o{ facet_affinities : "má"
-    classes ||--o{ class_members : "sdružuje"
-    profiles ||--o{ class_members : "je v"
     concepts ||--o{ glitches : "je podán jako"
     glitches ||--o{ events : "cíl"
     glitches ||--o{ progress : "cíl"
@@ -51,14 +49,13 @@ erDiagram
 | `display_name` | text | jméno |
 | `avatar` | text | odkaz/emoji |
 | `role` | enum `zak\|ucitel\|editor\|admin` | oprávnění (viz karta Role) |
+| **`vek`** | smallint | věk žáka (ať víme, pro koho obsah přizpůsobit) |
 | `created_at` | timestamptz | |
 
-> Role řídí, kdo smí editovat obsah (`editor`/`admin`), kdo přidávat komunitní Glitch (`zak`/`ucitel`), kdo vidí třídu (`ucitel`).
+> Role řídí, kdo smí editovat obsah (`editor`/`admin`), kdo přidávat komunitní Glitch (`zak`/`ucitel`).
 
-### `classes`, `class_members` *(pro učitele — lze odložit)*
-- `classes`: `id`, `name`, `owner` (učitel), `created_at`.
-- `class_members`: `class_id`, `user_id`, `role_in_class` (`zak`/`ucitel`), unikát `(class_id,user_id)`.
-- Umožní učiteli vidět **důkaz o učení** svých žáků (ne emoční data).
+### Třídy a class management — **přes Tiny (odloženo)**
+Třídy a správu žáků **nestavíme** — už existují v **Tiny**. Až se rozhodneme platformy propojit, vyřeší se to **přihlášením přes Tiny** (odtud přijde i vazba žák–třída–učitel). Pro teď žákovi stačí **věk v profilu** (`profiles.vek`), abychom věděli, pro koho obsah přizpůsobovat.
 
 ---
 
@@ -84,7 +81,7 @@ Jádro katalogu. `core` řádky se generují z MD v gitu; `community`/`generated
 | `id` | text PK | slug Glitche |
 | `type` | enum | `basic\|rychla-vyzva\|wellbeing\|funfact\|najdi-chybu\|historicka-osobnost\|argument` |
 | `concept_id` | text FK → concepts | čí koncept podává (u wellbeing/rozcvičky může být NULL) |
-| `trust_state` | enum `private\|community\|edited\|core\|generated\|ghost` | žebřík důvěry |
+| `trust_state` | enum `draft\|komunita\|fork\|core\|generovany\|ghost` | žebřík důvěry (štítky Core/Fork/Komunita/Generovaný/Draft/Ghost) |
 | `visibility` | enum `soukrome\|sdilene_anon\|sdilene_jmeno` | soukromí (zásada 4) |
 | `author_id` | uuid FK → profiles | autor |
 | `created_at` | timestamptz | datum vytvoření |
@@ -222,10 +219,10 @@ Navržené, ještě nenapsané koncepty; hlasy měří poptávku dřív, než n�
 
 ## G. Komunita a kurátorský žebřík
 
-- Žebřík řídí `glitches.trust_state` + `visibility`. **Sdílení vyžaduje souhlas** (výchozí anonymně) — přechod `private → community`.
+- Žebřík řídí `glitches.trust_state` + `visibility`. **Sdílení vyžaduje souhlas** (výchozí anonymně) — přechod `draft → komunita`.
 - **Editorská fronta** = pohled (view) nad `glitches` + `events` + `honest_misses`: co nominovat (dost čtenářů zaujalo), co je „nezdravé", co dopsat.
-- Adopce = editor/admin změní `trust_state` na `edited`/`core` (u `core` se obsah přenese do gitu jako kanonický).
-- Stávající `community_tips`/`teams`/… jsou dědictví staré appky — **nepřenášíme** (rozhodnuto 2026-07-23; viz níže). Komunitní obsah řeší přímo `glitches` s `trust_state = community`.
+- Adopce = editor/admin změní `trust_state` na `fork`/`core` (u `core` se obsah přenese do gitu jako kanonický).
+- Stávající `community_tips`/`teams`/… jsou dědictví staré appky — **nepřenášíme** (rozhodnuto 2026-07-23; viz níže). Komunitní obsah řeší přímo `glitches` s `trust_state = komunita`.
 
 ---
 
@@ -239,11 +236,11 @@ Exportní plocha „důkaz o učení" = `concept_mastery` + `conversation_evalua
 
 | tabulka | čte | zapisuje |
 | --- | --- | --- |
-| `profiles` | vlastník (+ učitel své třídy) | vlastník |
-| `events`, `progress`, `concept_mastery`, `conversation_evaluations` | **vlastník (+ učitel své třídy)** | vlastník (systém) |
+| `profiles` | vlastník | vlastník |
+| `events`, `progress`, `concept_mastery`, `conversation_evaluations` | **jen vlastník** *(učitelský pohled přijde přes Tiny)* | vlastník (systém) |
 | `wellbeing_signals` | **jen vlastník** | vlastník; mazání cron |
 | `facet_affinities` | vlastník | vlastník |
-| `glitches` (core/edited/community) | všichni (dle `visibility`) | autor / editor |
+| `glitches` (core/fork/komunita) | všichni (dle `visibility`) | autor / editor |
 | `glitches` (private) | jen autor | autor |
 | `generated_cache`, `honest_misses`, `concept_proposals` | čtení systém/editor | systém |
 
@@ -254,16 +251,29 @@ Exportní plocha „důkaz o učení" = `concept_mastery` + `conversation_evalua
 ## Rozhodnutí (2026-07-23)
 
 1. **Git = zdroj pravdy, DB = zrcadlo pro dotazy.** ✅ Potvrzeno.
-2. **Stará komunita** (`community_tips`, `community_teams`, `team_members`, `tip_comments`, `tip_upvotes`) — **nepotřebujeme**, byl to původní vstup pro „víc sociální" pojetí. V nové struktuře se **nezachovává**; komunitní obsah řeší `glitches` (trust_state `community`). Migrace = jen odstranit/nechat ležet ladem.
-3. **Generování / cache** (skupina F: `generated_cache`, `honest_misses`, `concept_proposals`) — **zatím ne**. Stavíme až po ručním katalogu. Zůstává v návrhu jako výhled.
-4. **Bezpečnostní oprava RLS** (`progress`, `activity_log`) — ano, zpřísnit na vlastníka (+ učitel).
+2. **Stará komunita** (`community_tips`, `community_teams`, `team_members`, `tip_comments`, `tip_upvotes`) — **nepotřebujeme**, byl to původní vstup pro „víc sociální" pojetí. V nové struktuře se **nezachovává**; komunitní obsah řeší `glitches` (trust_state `komunita`).
+3. **Třídy / class management** — **odloženo, vyřeší Tiny.** Třídy už existují v Tiny; propojíme je později **přihlášením přes Tiny**. Pro teď žák uvede do profilu **věk** (`profiles.vek`).
+4. **`facets` jako jsonb** ✅ — jde nám hlavně o **pružnost** (přidat osu bez zásahu do struktury). Uložíme jako `jsonb` + GIN index.
+5. **Generování / cache** (skupina F) — **zatím ne**. Stavíme až po ručním katalogu. Zůstává jako výhled.
+6. **Bezpečnostní oprava RLS** (`progress`, `activity_log`) — ano, zpřísnit na vlastníka.
 
-**Ještě k dořešení (viz vysvětlení v chatu):**
-- **Třídy/učitel** — čeká na potvrzení, zda je stavět teď (schéma je připravené, jinak odložíme).
-- **`facets` jako jsonb** — návrh: jsonb + GIN index (vysvětleno zvlášť).
+Tím je **směr pro skupiny A–E odsouhlasený** → další krok je SQL migrace.
+
+---
+
+## Poznámka: „bude databáze po SQL ještě dynamická?"
+
+**Ano.** Převedení návrhu do SQL nic „nezabetonuje":
+
+- **Data jsou dynamická vždycky.** Řádky (uživatelé, Glitche, signály) se přidávají, mění a mažou průběžně — to je normální provoz.
+- **Strukturu jde měnit i potom.** Přidat sloupec, tabulku nebo je upravit se dělá další **migrací** (další SQL skript). Schéma se vyvíjí postupně, není to „jednou a hotovo".
+- **`jsonb` dává navíc pružnost bez migrace** — novou fasetu nebo pole přidáš rovnou do balíčku, aniž bys sahala do struktury tabulky.
+- Jediné, na co si dát pozor: měnit strukturu na DB, kde **už jsou data**, se dělá opatrně (aby se data neztratila) — ale je to běžná, rutinní věc.
+
+Zkrátka: SQL je odrazový můstek, ne klec. Budeme ho rozvíjet, jak se budeme učit.
 
 ---
 
 ## Další krok
 
-Až se doladí třídy a fasety, připravím **SQL migraci** (idempotentní, jako `setup-community.sql`) po skupinách — nejdřív A–E (profil, obsah, signály, wellbeing, preference); F (generování/cache) a stará komunita se **nepřenášejí**. Nasadíš ji v Supabase SQL editoru.
+Připravím **SQL migraci** (idempotentní, jako `setup-community.sql`) pro skupiny A–E (profil s věkem, obsah, signály, wellbeing, preference); F (generování/cache) a stará komunita se **nepřenášejí**. Nasadíš ji v Supabase SQL editoru.
