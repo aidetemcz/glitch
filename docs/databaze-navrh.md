@@ -2,7 +2,7 @@
 
 _Jak ukládat obsah, signály a preference tak, aby si z toho doporučovací systém mohl brát data. **Návrh k odsouhlasení** — konkrétní SQL migrace přijde, až schválíš směr. Vytvořeno: 2026-07-23._
 
-Navazuje na [`doporucovaci-system.md`](./doporucovaci-system.md), [`typy-obsahu.md`](./typy-obsahu.md) a [mapu konceptů](../knowledge-map/). DB je **Supabase (PostgreSQL) + RLS**, jak už teď.
+Navazuje na [`doporucovaci-system.md`](./doporucovaci-system.md), [`typy-obsahu.md`](./typy-obsahu.md) a [mapu konceptů](../knowledge-map/). Neznámé pojmy → [`slovnicek.md`](./slovnicek.md). DB je **Supabase (PostgreSQL) + RLS**, jak už teď.
 
 ---
 
@@ -225,7 +225,7 @@ Navržené, ještě nenapsané koncepty; hlasy měří poptávku dřív, než n�
 - Žebřík řídí `glitches.trust_state` + `visibility`. **Sdílení vyžaduje souhlas** (výchozí anonymně) — přechod `private → community`.
 - **Editorská fronta** = pohled (view) nad `glitches` + `events` + `honest_misses`: co nominovat (dost čtenářů zaujalo), co je „nezdravé", co dopsat.
 - Adopce = editor/admin změní `trust_state` na `edited`/`core` (u `core` se obsah přenese do gitu jako kanonický).
-- Stávající `community_tips`/`teams`/… jsou dědictví staré appky — **rozhodnout**, zda je zachovat, migrovat do `glitches`, nebo utlumit.
+- Stávající `community_tips`/`teams`/… jsou dědictví staré appky — **nepřenášíme** (rozhodnuto 2026-07-23; viz níže). Komunitní obsah řeší přímo `glitches` s `trust_state = community`.
 
 ---
 
@@ -251,16 +251,19 @@ Exportní plocha „důkaz o učení" = `concept_mastery` + `conversation_evalua
 
 ---
 
-## Otevřené otázky k rozhodnutí
+## Rozhodnutí (2026-07-23)
 
-1. **Koncepty a core Glitche v DB, nebo jen v gitu?** Návrh: git = pravda, DB = zrcadlo pro dotazy (sync skriptem). Souhlas?
-2. **Třídy/učitel teď, nebo později?** Schéma je připravené, ale `classes` můžeme odložit.
-3. **Stará komunita** (`community_tips`…) — zachovat, migrovat, nebo utlumit?
-4. **`facets` jako jsonb vs. samostatná tabulka** — návrh jsonb + GIN; ok?
-5. **Kdy zapnout generování/cache** (tabulky F) — postavit rovnou, nebo až po ručním katalogu?
+1. **Git = zdroj pravdy, DB = zrcadlo pro dotazy.** ✅ Potvrzeno.
+2. **Stará komunita** (`community_tips`, `community_teams`, `team_members`, `tip_comments`, `tip_upvotes`) — **nepotřebujeme**, byl to původní vstup pro „víc sociální" pojetí. V nové struktuře se **nezachovává**; komunitní obsah řeší `glitches` (trust_state `community`). Migrace = jen odstranit/nechat ležet ladem.
+3. **Generování / cache** (skupina F: `generated_cache`, `honest_misses`, `concept_proposals`) — **zatím ne**. Stavíme až po ručním katalogu. Zůstává v návrhu jako výhled.
+4. **Bezpečnostní oprava RLS** (`progress`, `activity_log`) — ano, zpřísnit na vlastníka (+ učitel).
+
+**Ještě k dořešení (viz vysvětlení v chatu):**
+- **Třídy/učitel** — čeká na potvrzení, zda je stavět teď (schéma je připravené, jinak odložíme).
+- **`facets` jako jsonb** — návrh: jsonb + GIN index (vysvětleno zvlášť).
 
 ---
 
 ## Další krok
 
-Až schválíš směr, připravím **SQL migraci** (idempotentní, jako `setup-community.sql`) po skupinách — nejdřív A–E (profil, obsah, signály, wellbeing, preference), F–G až později. Nasadíš ji v Supabase SQL editoru.
+Až se doladí třídy a fasety, připravím **SQL migraci** (idempotentní, jako `setup-community.sql`) po skupinách — nejdřív A–E (profil, obsah, signály, wellbeing, preference); F (generování/cache) a stará komunita se **nepřenášejí**. Nasadíš ji v Supabase SQL editoru.
