@@ -119,16 +119,32 @@ Aby doporučovač mohl párovat obsah se stavem uživatele, každá karta v sekc
 
 | pole | hodnoty | k čemu |
 | --- | --- | --- |
-| **složitost** | `1` znalostní · `2` aplikační/analýza · `3` tvůrčí | párování s mood stavem; oblouk Questu (Marzano — viz mapa) |
-| **kognitivní náročnost** | nízká · střední · vysoká | kolik pozornosti Glitch vyžaduje |
-| **energetická náročnost** | nízká · střední · vysoká | kolik „šťávy" vyžaduje |
+| **obtížnost** | `1` lehká · `2` střední · `3` těžká (pro cílovou skupinu) | párování s mood stavem; **volí se u každého Glitche zvlášť** |
+| **kognitivní náročnost** | úroveň **revidované Bloomovy taxonomie**: zapamatovat · porozumět · aplikovat · analyzovat · hodnotit · vytvořit | jakou myšlenkovou operaci Glitch vyžaduje |
 | **typ zátěže** | soustředění · kreativita · relaxace · rozcvička | vyváženost feedu |
 | **délka** | mikro · krátká · standard · deep | čtenářský závazek |
-| **fasety podání** | hloubka, vizualita, formalismus, žánr, svět, jazyk | preference uživatele (editovatelný model) |
+| **fasety podání** | viz tabulka faset níže | preference uživatele (editovatelný model) |
 | **trust state** | core · edited · community · generated | označení a režim servírování |
 | **koncept** | id z mapy konceptů | prerekvizity, navazující, RVP, digi kompetence |
 
-> Škála **složitosti** je navázaná na **Marzano-Kendall** gradaci z mapy konceptů (`vybaveni` → `porozumeni` → `analyza` → `vyuziti-znalosti`), aby si obtížnost karty a úroveň konceptu odpovídaly.
+> **Obtížnost ani kognitivní náročnost nejsou dané typem Glitche** — i Fun fact může nést náročný obsah, i Basic Glitch může být jednoduchý. Volí se **při tvorbě konkrétního Glitche**. Kognitivní náročnost používá **revidovanou Bloomovu taxonomii** na úrovni jednotlivého Glitche; mapa konceptů gradovaně popisuje cíle konceptu v Marzano-Kendall škále — obojí je žebřík myšlenkových operací, jen na jiné úrovni (Glitch × koncept).
+
+### Fasety podání (taxonomie)
+
+Fasety popisují _jak_ je koncept podán. Jsou to zároveň vlastnosti položky (učí se z nich preference uživatele) i **rozhraní pro generování** (viz výhled níže). Vychází z taxonomie p-book (Table 1):
+
+| faseta | co zachycuje | hodnoty |
+| --- | --- | --- |
+| **svět příkladu** | z jakého světa jsou příklady | generický · e-shop · média · sociální sítě · vzdělávání · hry · … |
+| **hloubka** | předpokládané zázemí čtenáře | intro · standard · technická · výzkumná |
+| **vizualita** | jak moc nesou sdělení vizuály | text-first · vyvážená · visual-first |
+| **formalismus** | množství formálního/matematického zápisu | žádný · lehký · plný |
+| **délka** | čtenářský závazek | tl;dr · standard · deep |
+| **žánr** | strukturní forma | výklad · příběh · řešený příklad · komiks · animace · kvíz · … |
+| **jazyk** | přirozený jazyk | čeština · angličtina · … |
+| **nosiče** | stavební prvky (odvozené z obsahu) | text · tabulka · diagram · obrázek · animace · kód |
+
+Každá karta Glitche má vlastní **tabulku faset** (sekce 0.2) s konkrétními hodnotami svého podání.
 
 ---
 
@@ -154,6 +170,29 @@ Vyhodnocení konverzace, které jde do profilu žáka, má dělat **jiný AI asi
 - **Jiné guardrails** — hodnotitel je formativní (podstata, ne klíčová slova), nikdy nedává skóre ani nesrovnává s ostatními.
 
 → Patří do checklistu jako samostatná položka v sekci **AI asistenti**.
+
+---
+
+## Fasety a generování v reálném čase (výhled)
+
+_Semi-technicky, pro budoucí uvažování — ne pro současnou implementaci._
+
+**Otázka:** Když je napojené GPT, dokážeme Glitche generovat naživo na úrovni faset — tzn. karta drží, jak mají fasety vypadat, a GPT vytvoří podání podle preferencí uživatele, než se mu zobrazí?
+
+**Odpověď: koncepčně ano — je to přesně model p-book.** Karta odděluje _co_ se učí (koncept + **kontrakt** = neměnné) od _jak_ se to podá (**fasety** = generovací rozhraní). GPT umí vygenerovat podání pro zadaný **fasetový vektor** (např. `vizualita: visual-first`, `délka: tl;dr`, `svět: sociální sítě`). Ale aby to bylo bezpečné a udržitelné, neplatí „generuj všechno naživo pokaždé". Platí tři pravidla:
+
+1. **Nejdřív hledej, pak generuj.** Systém nejdřív nabídne existující (už jednou prověřené) podání. Teprve u skutečné mezery generuje. Vygenerované podání se **zacacheuje podle fasetového vektoru** a slouží všem, kdo mají stejné preference — generuje se **pro segment, ne pro jednoho člověka pokaždé znovu**. Personalizace je pak ve **výběru** (které podání ukázat), ne v neustálém přegenerovávání.
+2. **Brána před zobrazením.** U obsahu pro děti nesmí jít na obrazovku nic nezkontrolovaného. Každé vygenerované podání projde deterministickou branou: pokrytí povinných bodů kontraktu, žádné zakázané tvrzení, čerpání jen ze **zdroje pravdy** konceptu. Lidsky certifikovaný zůstává jen `core`.
+3. **Latence a cena jsou reálné.** Volání GPT trvá sekundy a stojí tokeny; feed má být okamžitý. Proto se generuje **on-demand a cacheuje**, ne synchronně před každým zobrazením každému uživateli.
+
+**Jak systém zjistí preference (tvůj příklad „obrázky vs. text, jak dlouho vydrží u čtení"):** dvěma cestami, které se sbíhají do jednoho **profilu fasetových afinit**:
+
+- **explicitně** — uživatel si zvolí (editovatelný model preferencí). Tvůj nápad na Glitch, který se zeptá / vysleduje, jestli má radši obrázky nebo text, je přesně tahle explicitní cesta.
+- **implicitně** — z chování: doba čtení, které podání dokončil, co přeskočil, výsledek hry na pozornost, mood. (Pozor: chování ≠ trvalá pravda o dítěti — implicitní signály jsou slabé a přebíjí je explicitní volba.)
+
+Z profilu afinit pak plyne **cílový fasetový vektor**, a ten se buď **najde** v katalogu, nebo (u mezery) **dogeneruje** přes bránu.
+
+**Co k tomu ještě chybí (proti dnešku):** napojené GPT (chat proxy) už máš — stačí na asistenty a na generování na vyžádání. Plné „fasety naživo" navíc potřebují: **fasetový model karet** (děláme teď — sekce 0.2 každé karty), **cache podle fasetového vektoru**, **kontrolní bránu** a **profil fasetových afinit**. To je cíl do budoucna, ne pro teď.
 
 ---
 

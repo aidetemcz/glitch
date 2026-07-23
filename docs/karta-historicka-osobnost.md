@@ -40,6 +40,23 @@ _Šablona sekcí Glitche typu **Historická osobnost** na příkladu „Alan Tur
 
 ---
 
+## 0.2 Fasety
+
+*Fasety tohoto podání (pro doporučování; hodnoty se volí u konkrétního Glitche).*
+
+| faseta | hodnota |
+| ----- | ----- |
+| svět příkladu | historie informatiky |
+| hloubka | standard |
+| vizualita | vyvážená (fotka + rozhovor) |
+| formalismus | žádný |
+| délka | standard |
+| žánr | chat s personou |
+| jazyk | čeština |
+| nosiče | obrázek, text (dialog) |
+
+---
+
 ## 1 Karta ve feedu *(viditelné)*
 
 - **Štítek:** `Historická osobnost`.
@@ -90,9 +107,9 @@ Dítě si může rozhovor forknout a rozvést — např. sepsat, co ho na Turing
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety | obor: informatika · éra: 20. století · formát: chat s personou |
-| **složitost** | `2` — porozumění/analýza (v dialogu s personou) |
-| **kognitivní náročnost** | střední |
+| fasety | viz sekce 0.2 (Fasety) |
+| **obtížnost** | `2` — střední *(tento příklad; volí se u konkrétního Glitche)* |
+| **kognitivní náročnost** | porozumět *(revidovaná Bloomova taxonomie; v dialogu se posouvá k „analyzovat")* |
 | **energetická náročnost** | střední (aktivní konverzace) |
 | **typ zátěže** | soustředění (rozhovor) |
 | **vhodné při náladě** | spíš vyšší energie; roztěkanému uživateli nabídnout až po zklidnění |

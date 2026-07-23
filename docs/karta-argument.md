@@ -42,6 +42,23 @@ _Šablona sekcí Glitche typu **Argumentuj** na příkladu „Nemám co skrývat
 
 ---
 
+## 0.2 Fasety
+
+*Fasety tohoto podání (pro doporučování; hodnoty se volí u konkrétního Glitche).*
+
+| faseta | hodnota |
+| ----- | ----- |
+| svět příkladu | běžné aplikace / soukromí |
+| hloubka | standard |
+| vizualita | text-first |
+| formalismus | žádný |
+| délka | standard |
+| žánr | vedená argumentace (chat) |
+| jazyk | čeština |
+| nosiče | text (dialog) |
+
+---
+
 ## 1 Kontrakt *(vlastní redakce, skryté)*
 
 ### 1.1 Výukový cíl (dvojí)
@@ -104,9 +121,9 @@ Dítě: *zaujalo jasný postoj* · *dalo aspoň jeden vlastní důvod* (ne „pr
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety | téma: soukromí · délka: střední · svět: běžné appky |
-| **složitost** | `3` — hodnotové uvažování a argumentace (nejvyšší kognitivní zapojení) |
-| **kognitivní náročnost** | vysoká |
+| fasety | viz sekce 0.2 (Fasety) |
+| **obtížnost** | `3` — těžká *(tento příklad; volí se u konkrétního Glitche)* |
+| **kognitivní náročnost** | hodnotit *(revidovaná Bloomova taxonomie — obhajoba a zvažování postoje)* |
 | **energetická náročnost** | vysoká (aktivní obhajoba postoje) |
 | **typ zátěže** | soustředění + kreativita (formulace argumentů) |
 | **vhodné při náladě** | vyšší energie i soustředění; unavenému/roztěkanému neservírovat — odložit na „nabitý" stav |

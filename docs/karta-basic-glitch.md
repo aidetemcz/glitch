@@ -39,6 +39,23 @@ _Šablona sekcí Glitche (kontrakt / podání / úrovně / kontext pro bota / be
 
 ---
 
+## **0.2 Fasety**
+
+*Jak je tohle podání vyrobené (nikoli co učí — to drží kontrakt). Fasety jsou vlastnosti položky pro doporučování i rozhraní pro generování dalších podání. Hodnoty platí pro toto kanonické podání; jiné podání téhož konceptu může mít fasety jiné.*
+
+| faseta | hodnota |
+| ----- | ----- |
+| svět příkladu | generický |
+| hloubka | intro |
+| vizualita | visual-first |
+| formalismus | žádný |
+| délka | standard |
+| žánr | pozorování + výklad |
+| jazyk | čeština |
+| nosiče | animace, text |
+
+---
+
 ## **1 Kontrakt**
 
 *Vlastní člověk. Každé podání — dnešní i budoucí, lidské i generované — se kontroluje proti němu. Beze změny kontraktu se nesmí změnit, co Glitch učí.*
@@ -196,9 +213,9 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety kanonického podání | hloubka: intro · vizualita: visual-first · žánr: pozorování+výklad · délka: standard · svět: generický · formalismus: none |
-| **složitost** | `2` — aplikační/analýza (Marzano: `analyza`) |
-| **kognitivní náročnost** | střední |
+| fasety kanonického podání | viz sekce 0.2 (Fasety) |
+| **obtížnost** | `2` — střední *(volí se u konkrétního Glitche; tato hodnota platí pro „Hru života")* |
+| **kognitivní náročnost** | analyzovat *(revidovaná Bloomova taxonomie)* |
 | **energetická náročnost** | střední |
 | **typ zátěže** | soustředění (pozorování + výklad) |
 | **vhodné při náladě** | spíš vyšší soustředění; při únavě servírovat kratší znalostní Glitch místo tohoto |

@@ -134,7 +134,8 @@ Každý návrh karty (bez ohledu na typ) obsahuje kromě `verze` také:
 
 - **autor** a **datum vytvoření**,
 - **Mapa konceptů** (sekce 0.1) — provázání na konkrétní koncept v [mapě konceptů](../knowledge-map/); z něj se dědí **RVP, digitální kompetence, oblast a téma** (zdroj pravdy je mapa),
-- **metadata pro doporučování** (sekce 5) — **složitost**, kognitivní a energetická náročnost, typ zátěže, fasety, trust state.
+- **Fasety** (sekce 0.2) — jak je podání vyrobené (svět příkladu, hloubka, vizualita, formalismus, délka, žánr, jazyk, nosiče); slouží doporučování i budoucímu generování,
+- **metadata pro doporučování** (sekce 5) — **obtížnost** a **kognitivní náročnost** (v úrovních revidované Bloomovy taxonomie), typ zátěže, trust state. Obtížnost i náročnost **nejsou dané typem** — volí se u konkrétního Glitche (i Fun fact může nést náročný obsah).
 
 Jak se z těchto polí (a z wellbeing signálů) vybírá feed, popisuje **[`doporucovaci-system.md`](./doporucovaci-system.md)**.
 

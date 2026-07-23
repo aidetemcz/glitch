@@ -38,6 +38,23 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 
 ---
 
+## 0.2 Fasety
+
+*Fasety tohoto podání (pro doporučování; hodnoty se volí u konkrétní výzvy).*
+
+| faseta | hodnota |
+| ----- | ----- |
+| svět příkladu | generický (čísla) |
+| hloubka | intro |
+| vizualita | text-first *(u varianty `obrazec` visual-first)* |
+| formalismus | lehký (číselný zápis) |
+| délka | tl;dr |
+| žánr | kvíz |
+| jazyk | čeština |
+| nosiče | text *(u `obrazec` i diagram/SVG)* |
+
+---
+
 ## 1 Zadání a řešení *(redakční, skryté)*
 
 *U Rychlé výzvy nahrazuje „kontrakt" jen stručná redakční poznámka: co se procvičuje, jaká je správná odpověď a proč jsou špatné odpovědi lákavé (aby nesprávné možnosti nebyly náhodné, ale dávaly smysl jako typické chyby).*
@@ -77,9 +94,9 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety | předmět: matematika · varianta: vypocet · délka: mikro |
-| **složitost** | `1` — znalostní/procvičovací |
-| **kognitivní náročnost** | nízká |
+| fasety | viz sekce 0.2 (Fasety) |
+| **obtížnost** | `1` — lehká *(volí se u konkrétní výzvy; příklad 310×15)* |
+| **kognitivní náročnost** | aplikovat *(revidovaná Bloomova taxonomie)* |
 | **energetická náročnost** | nízká |
 | **typ zátěže** | rozcvička |
 | **vhodné při náladě** | kdykoli; vhodné i při nižší energii/soustředění jako lehké „nabuzení" mezi delšími Glitchi |

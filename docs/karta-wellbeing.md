@@ -36,6 +36,19 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 
 ---
 
+## 0.2 Fasety
+
+*Wellbeing má **pevnou formu** — není to podání konceptu, takže se fasety **negenerují** (nemá smysl žánr/hloubka/svět příkladu). Tabulka je jen pro úplnost.*
+
+| faseta | hodnota |
+| ----- | ----- |
+| vizualita | visual-first (interaktivní prvek) |
+| délka | mikro |
+| jazyk | čeština |
+| ostatní fasety | neaplikuje se (pevná forma, negeneruje se) |
+
+---
+
 ## 1 Účel a zásady *(redakční)*
 
 *Wellbeing karty pečují o vnitřní nastavení dítěte — ne o znalosti. Nemají „správný výsledek". Řídí se přísnějšími pravidly na data.*
@@ -77,8 +90,8 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 | pole | hodnota |
 | ----- | ----- |
 | fasety | podtyp: mood_selector · délka: mikro · umístění: kdekoli ve feedu |
-| **složitost** | `1` — bez znalostní zátěže |
-| **kognitivní náročnost** | nízká |
+| **obtížnost** | `1` — lehká (bez znalostní zátěže) |
+| **kognitivní náročnost** | — *(neaplikuje se; wellbeing není znalostní obsah)* |
 | **energetická náročnost** | nízká |
 | **typ zátěže** | relaxace (breathing) · soustředění (attention_game) |
 | **role ve stavu uživatele** | mood_selector **měří** stav (energie × soustředění); attention_game a breathing se **servírují při únavě/roztěkanosti** |

@@ -40,6 +40,23 @@ _Šablona sekcí Glitche typu **Najdi chybu** na příkladu „Doporučovací sy
 
 ---
 
+## 0.2 Fasety
+
+*Fasety tohoto podání (pro doporučování; hodnoty se volí u konkrétního Glitche).*
+
+| faseta | hodnota |
+| ----- | ----- |
+| svět příkladu | sociální sítě / doporučování |
+| hloubka | standard |
+| vizualita | vyvážená (upoutávka + text) |
+| formalismus | žádný |
+| délka | krátká |
+| žánr | prebunking / kvíz |
+| jazyk | čeština |
+| nosiče | obrázek, text |
+
+---
+
 ## 1 Kontrakt *(vlastní redakce, skryté)*
 
 ### 1.1 Výukový cíl
@@ -122,9 +139,9 @@ Dítě si může Najdi chybu forknout a rozvést — např. najít vlastní „s
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety | téma: doporučovací systémy · délka: krátká · žánr: prebunking |
-| **složitost** | `2` — analýza (rozliš pravdu od chyby) |
-| **kognitivní náročnost** | střední |
+| fasety | viz sekce 0.2 (Fasety) |
+| **obtížnost** | `2` — střední *(tento příklad; volí se u konkrétního Glitche)* |
+| **kognitivní náročnost** | analyzovat *(revidovaná Bloomova taxonomie — rozliš pravdu od chyby)* |
 | **energetická náročnost** | střední |
 | **typ zátěže** | soustředění (kritické čtení) |
 | **vhodné při náladě** | spíš vyšší soustředění; při únavě odložit na později |

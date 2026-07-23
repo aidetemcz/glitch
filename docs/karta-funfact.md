@@ -40,6 +40,23 @@ _Šablona sekcí Glitche typu **Fun fact** na příkladu „První počítačov�
 
 ---
 
+## 0.2 Fasety
+
+*Fasety tohoto podání (pro doporučování; hodnoty se volí u konkrétního Glitche).*
+
+| faseta | hodnota |
+| ----- | ----- |
+| svět příkladu | historie počítačů |
+| hloubka | intro |
+| vizualita | vyvážená (ilustrace + text) |
+| formalismus | žádný |
+| délka | krátká |
+| žánr | zajímavost / výklad |
+| jazyk | čeština |
+| nosiče | obrázek, text |
+
+---
+
 ## 1 Kontrakt *(vlastní redakce, skryté)*
 
 ### 1.1 Jádro faktu (co musí zůstat pravda)
@@ -102,9 +119,9 @@ Fun fact **může** mít fork (na rozdíl od Rychlé výzvy): dítě si fakt „
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety | téma: historie počítačů · délka: krátká · vizualita: ilustrace |
-| **složitost** | `1` — znalostní (zpestření, bez úkolu) |
-| **kognitivní náročnost** | nízká |
+| fasety | viz sekce 0.2 (Fasety) |
+| **obtížnost** | `1` — lehká *(tento příklad; jiný Fun fact může nést i náročný obsah — volí se u konkrétního Glitche)* |
+| **kognitivní náročnost** | porozumět *(revidovaná Bloomova taxonomie; u náročnějšího faktu klidně výš)* |
 | **energetická náročnost** | nízká |
 | **typ zátěže** | odlehčení (čtení pro radost) |
 | **vhodné při náladě** | i při únavě/nižším soustředění — lehký oddechový Glitch mezi náročnějšími |
