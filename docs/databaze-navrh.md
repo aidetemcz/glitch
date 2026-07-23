@@ -274,6 +274,15 @@ Zkrátka: SQL je odrazový můstek, ne klec. Budeme ho rozvíjet, jak se budeme 
 
 ---
 
-## Další krok
+## Migrace
 
-Připravím **SQL migraci** (idempotentní, jako `setup-community.sql`) pro skupiny A–E (profil s věkem, obsah, signály, wellbeing, preference); F (generování/cache) a stará komunita se **nepřenášejí**. Nasadíš ji v Supabase SQL editoru.
+Skupiny A–E jsou hotové v [`../setup-glitch-core.sql`](../setup-glitch-core.sql) — idempotentní (bezpečné znovuspuštění), spouští se v **Supabase → SQL Editor**.
+
+**Praktické odchylky oproti návrhu výše** (a proč):
+- **„Enumy" jako text + CHECK**, ne pg `enum` — snazší pozdější rozšíření hodnot (bez `ALTER TYPE`).
+- **`activity_log` = log událostí** (role `events` z návrhu) — rozšířeno o `glitch_id`, `session_id`, ať se nerozbije to, co appka už zapisuje. Nová paralelní tabulka `events` se nezakládá.
+- **`wellbeing_signals`** je nový cíl pro mood/pozornost; staré `mood_entries` se **nemažou** (bez ztráty dat), appka se přepne později.
+- **RLS zpřísněno:** `progress` (dřív „Anyone can read") a `activity_log` (dřív „Admins can read all using true") čte nyní **jen vlastník**.
+- **24h mazání wellbeingu** přes `pg_cron` — v souboru jako komentář (nutno zapnout rozšíření a založit plán jednou ručně).
+
+Skupina F (generování/cache) a stará komunita se **nepřenášejí**.
