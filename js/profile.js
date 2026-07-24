@@ -27,7 +27,8 @@
   function setSetting(key, val) {
     const s = getSettings(); s[key] = val;
     try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (_) {}
-    // TODO: propsat do Supabase (facet_affinities / profiles), až bude wiring hotový
+    // propsat do Supabase (profiles.settings) — tiše degraduje, když není přihlášení/sloupec
+    try { if (typeof sbSaveSettings === "function") sbSaveSettings(s); } catch (_) {}
   }
   function getInterests() {
     try { return JSON.parse(localStorage.getItem(INTERESTS_KEY) || "[]"); } catch (_) { return []; }
@@ -158,6 +159,17 @@
     el.innerHTML = render(u);
     document.body.appendChild(el);
     wire(el);
+
+    // načíst nastavení z DB (mezi zařízeními) a sloučit; když není, zůstane localStorage
+    if (typeof sbLoadSettings === "function") {
+      sbLoadSettings().then((remote) => {
+        if (remote && typeof remote === "object") {
+          try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign(getSettings(), remote))); } catch (_) {}
+          const cur = document.getElementById("glitch-profile");
+          if (cur && state.tab === "settings") rerenderContent(cur);
+        }
+      }).catch(() => {});
+    }
   }
 
   function rerenderContent(el) {
@@ -221,4 +233,5 @@
 
   window.glitchOpenProfile = open;
   window.glitchCloseProfile = close;
+  window.glitchSettings = getSettings;   // čte feed (gating časovačů apod.)
 })();

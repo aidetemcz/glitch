@@ -108,6 +108,26 @@ async function sbSaveProfile(fields) {
   await sb.from('profiles').upsert({ id: sbCurrentUser.id, ...fields });
 }
 
+// ── NASTAVENÍ (profiles.settings jsonb) ──────
+async function sbSaveSettings(settings) {
+  if (!sb || !sbCurrentUser) return { ok: false };
+  try {
+    const { error } = await sb.from('profiles').upsert(
+      { id: sbCurrentUser.id, settings }, { onConflict: 'id' });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+
+async function sbLoadSettings() {
+  if (!sb || !sbCurrentUser) return null;
+  try {
+    const { data, error } = await sb.from('profiles')
+      .select('settings').eq('id', sbCurrentUser.id).single();
+    if (error) return null;
+    return (data && data.settings) || null;
+  } catch (_) { return null; }
+}
+
 // ── PROGRESS ─────────────────────────────────
 
 async function sbSaveGlitchDone(glitchId, correct) {

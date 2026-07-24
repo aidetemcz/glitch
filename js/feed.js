@@ -46,7 +46,7 @@
 
     { type: "quick_challenge", category: "Rychlá výzva", trust: "Generováno",
       question: "310×15=",
-      sub: "Zvládneš spočítat do časového limitu?",
+      sub: "Zvládneš to spočítat?",
       cols: 2,
       answers: [
         { label: "4 650", correct: true },
@@ -67,7 +67,7 @@
       ] },
 
     { type: "attention_game", category: "Hra na pozornost",
-      title: "Kolik zvládneš označit děr v časovém limitu?",
+      title: "Kolik zvládneš označit děr?",
       viz: "assets/3Dvizualizations/sphere-holes.html?v=5" },
 
     { type: "algorithm_demo", category: "Algoritmus", chapterNo: 5,
@@ -107,6 +107,12 @@
   const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
+
+  // Časovače jsou opt-in a navíc gated globálním nastavením (profil → Wellbeing a čas).
+  // Když je uživatel má vypnuté, nezobrazuje se nikde možnost je zapnout ani zmínka o čase.
+  const timersOn = () => {
+    try { return !!(window.glitchSettings && window.glitchSettings().casovace); } catch (_) { return false; }
+  };
 
   const RENDER = {
 
@@ -187,10 +193,10 @@
           <div class="quiz-options cols-3 fx-options" style="top:84.2%">${opts}</div>`;
       }
       return `${badges(c)}
-        <div class="timer-row fx-block" style="top:15.5%">
+        ${timersOn() ? `<div class="timer-row fx-block" style="top:15.5%">
           <button class="timer-toggle" data-timer aria-label="Zapnout časovač"></button>
           <p class="timer-note g-p-s">Pokud chceš, můžeš si zapnout časovač. Stačí kliknout na kolečko.</p>
-        </div>
+        </div>` : ""}
         <div class="fx-block" style="top:51%">
           <div class="g-h1">${esc(c.question)}</div>
           ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
@@ -200,10 +206,10 @@
 
     attention_game(c) {
       return `${badges(c)}
-        <div class="atten-top fx-block" style="top:14.5%">
+        ${timersOn() ? `<div class="atten-top fx-block" style="top:14.5%">
           <button class="timer-toggle atten-timer" data-atten-timer aria-label="Spustit / zastavit časovač"></button>
           <p class="timer-note atten-note g-p-s" data-atten-note>Až budeš připravený*á, zapni si časovač. Stačí kliknout na kolečko.</p>
-        </div>
+        </div>` : ""}
         <h3 class="fx-block g-h3" style="top:27%">${esc(c.title)}</h3>
         <p class="fx-block g-p atten-help" style="top:37%">Tažením otáčíš kouli. Díry označíš ťuknutím. Ale pozor: označit lze jen díry, které jsou vpředu.</p>
         <p class="fx-block g-p atten-count" style="top:47%">Označených děr: <span data-atten-count>0/0</span></p>
