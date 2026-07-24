@@ -10,6 +10,9 @@
   "use strict";
 
   const DAILY_CAP = 20;
+  // Denní strop dočasně vypnutý (na přání) — ať jsou při testování vidět všechny
+  // Glitche. Zpět zapneme nastavením DAILY_CAP_ENABLED = true.
+  const DAILY_CAP_ENABLED = false;
   const WELLBEING_TYPES = new Set(["mood_selector", "breathing", "attention_game"]);
 
   // do které skupiny „od koho vidím obsah" karta patří
@@ -101,8 +104,8 @@
     shuffle(pool);
     keepQuestOrder(pool);
 
-    // 3) denní strop
-    pool = pool.slice(0, DAILY_CAP);
+    // 3) denní strop (dočasně vypnutý — viz DAILY_CAP_ENABLED)
+    if (DAILY_CAP_ENABLED) pool = pool.slice(0, DAILY_CAP);
 
     return head.concat(pool, tail);
   }

@@ -194,10 +194,11 @@
     "title": "Edsger Dijkstra",
     "body": "Informatik, který tvrdil, že program se má hlavně chápat — ne jen spustit a doufat. Proslul větou, že testování ukáže, že chyby jsou, ale nikdy že nejsou. Zeptej se ho, proč na porozumění záleží." },
 
-  { "id": "algoritmus-co-je-algoritmus", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 1,
+  { "id": "algoritmus-co-je-algoritmus", "type": "algorithm_demo", "category": "Algoritmus", "trust": "Core", "chapterNo": 1,
     "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 1,
     "title": "Robot bere všechno doslova",
-    "body": "Tenhle robot udělá přesně to, co mu napíšeš — a ani o chlup víc. Dáš mu návod „namaž chleba“ a výsledek tě překvapí. Dokázal bys mu dát návod, který nejde splést?" },
+    "body": "Tenhle robot udělá přesně to, co mu napíšeš — a ani o chlup víc. Podle přesných kroků nakreslí čtverec pokaždé stejně. Dokázal bys mu dát návod, který nejde splést?",
+    "viz": "assets/3Dvizualizations/algorithm-steps.html?v=1" },
 
   { "id": "algoritmus-pseudokod-a-diagramy", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 2,
     "concept_id": "informaticke-mysleni-pseudokod-a-vyvojove-diagramy", "obtiznost": 2,

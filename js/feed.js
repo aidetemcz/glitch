@@ -411,7 +411,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=5", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=6", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
