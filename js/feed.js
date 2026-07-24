@@ -423,7 +423,14 @@
     if (e.key === "ArrowUp")   { e.preventDefault(); scrollToIndex(cur - 1); }
   });
   function currentIndex() {
-    return Math.round(feed.scrollTop / feed.clientHeight);
+    // karty mají pevnou výšku (ne výšku obrazovky) → najdi tu nejblíž hornímu okraji
+    const top = feed.scrollTop;
+    let best = 0, bestD = Infinity;
+    for (let i = 0; i < feed.children.length; i++) {
+      const d = Math.abs(feed.children[i].offsetTop - top);
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    return best;
   }
 
   /* ---- Spodní menu ---- */
