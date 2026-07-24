@@ -33,7 +33,7 @@ Dle revidovaného RVP ZV (`main-sources/RVP_revidované_2024-03-28.pdf`):
 
 ## Datové schéma
 
-Zdroj pravdy: **`app/data/knowledge-map.yaml`**. Dva typy záznamů — `areas` (oblasti) a `concepts` (koncepty). Vazby jsou uvnitř konceptů (`prerekvizity`, `souvisi`), aplikace z nich odvodí hrany grafu.
+Zdroj pravdy: **`app/data/Informatika/knowledge-map.yaml`**. Dva typy záznamů — `areas` (oblasti) a `concepts` (koncepty). Vazby jsou uvnitř konceptů (`prerekvizity`, `souvisi`), aplikace z nich odvodí hrany grafu.
 
 ### Oblast (`area`)
 

@@ -1,7 +1,7 @@
 /* ==========================================================================
    Mapa informatických konceptů — interaktivní graf (Cytoscape.js)
    Dvojí seskupení konceptů: podle témat (default) nebo podle okruhů RVP.
-   Data: data/knowledge-map.yaml · schéma: ../structure.md
+   Data: data/Informatika/knowledge-map.yaml · schéma: ../structure.md
    ========================================================================== */
 (function () {
   "use strict";
@@ -115,7 +115,7 @@
   }
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/knowledge-map.yaml?v=13")
+  fetch("data/Informatika/knowledge-map.yaml?v=14")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
@@ -420,7 +420,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h + adminBlock(); detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/o-mape.md?v=3")
+    fetch("data/Informatika/o-mape.md?v=4")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));

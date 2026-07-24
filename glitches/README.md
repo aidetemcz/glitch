@@ -1,34 +1,52 @@
 # Obsah Glitche — struktura
 
-Každý **Glitch = jeden Markdown soubor**. Soubory jsou roztříděné do složek podle **typu obsahu**. Struktura sekcí uvnitr souboru vychází ze šablony [`karta-basic-glitch.md`](../docs/karta-basic-glitch.md).
+Každý **Glitch = jeden Markdown soubor**. Struktura sekcí uvnitř souboru vychází ze šablony [`karta-basic-glitch.md`](../docs/karta-basic-glitch.md).
 
-## Typy obsahu (složky)
+## Organizace podle předmětu → tématu
 
-| Složka | Typ | Rozklik | Chatbot | K čemu |
-|---|---|:---:|:---:|---|
-| [`basic-glitch/`](./basic-glitch/) | výukový Glitch | ✅ | ✅ | Vzdělávací obsah (Algoritmus, Vibe Coding…). Třídí se do **témat → kapitol**, každá kapitola je zároveň **Quest** (lineární posloupnost). |
-| [`wellbeing/`](./wellbeing/) | selector / hra | ⚙️ | — | Interaktivní karty ve feedu: mood selector, dechové cvičení, hra na pozornost. |
-| [`rychla-vyzva/`](./rychla-vyzva/) | rychlá výzva | ❌ | — | Nerozklikávací. Dítě splní výzvu na úvodní obrazovce a scrolluje dál. |
-| [`historicka-osobnost/`](./historicka-osobnost/) | osobnost + persona | ✅ | ✅ | Po rozkliku chat s AI personou historické osobnosti. |
-| [`najdi-chybu/`](./najdi-chybu/) | najdi chybu | ✅ | ✅ | Multichoice (které tvrzení je chyba) → vyhodnocení → vysvětlení → chat. |
-| [`funfact/`](./funfact/) | fun fact | ✅ | ✅ | Po rozkliku vysvětlení konceptu + možnost si o tom popovídat s chatbotem. |
+Obsahové Glitche jsou tříděné podle **školního předmětu** a v něm podle **tématu**:
 
-> **Systémové karty** (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace, nemají složku.
+```
+glitches/
+  Informatika/
+    VibeCoding/        # Glitche o vibe codingu
+    Algoritmus/        # Glitche o algoritmech
+    UmelaInteligence/  # Glitche o AI (Argumentuj, Najdi chybu…)
+    …                  # další témata přibývají jako podsložky
+  (Cesky-jazyk/, Matematika/ … časem další předměty)
+```
 
-## Basic Glitch — témata, kapitoly, questy
+> Nový předmět = nová složka pod `glitches/` (např. `Cesky-jazyk/`), v ní témata.
+> Nové téma = nová podsložka pod předmětem (např. `Informatika/Data/`).
 
-Ve `basic-glitch/` jsou **podsložky podle témat** (pokrytí informatiky pro 2. stupeň ZŠ). Každé téma tvoří kapitolu a zároveň Quest — Glitche v něm jsou **lineárně řazené** (pole `pořadí v questu`). Zatím založené: `algoritmus/`, `vibe-coding/`. Další témata přibývají jako nové podsložky.
+Jeden Glitch má **typ** (Basic Glitch, Argumentuj, Fun fact…) v poli `type` ve frontmatteru — typ **není složka**, ale metadata. Specifikace jednotlivých typů (co obsahují, jak se chovají) jsou v type-složkách a v docs (viz níže).
 
-## Pojmenování souborů
+## Runtime katalog
 
-Kebab-case slug bez diakritiky: **`{tema}-{nazev}.md`**, např. `algoritmus-hra-zivota.md`. Slug se shoduje s polem `id` ve frontmatteru karty.
+- **`feed.json`** — katalog karet, který appka načítá do feedu za běhu (zdroj pro doporučovač). Odvozenina z MD obsahu; zatím udržovaný ručně.
 
-## Stav důvěry (trust state)
+## Specifikace typů obsahu (referenční)
 
-Každá karta má v identifikaci `stav důvěry`: `core → edited → community → generated`. Určuje označení karty a režim servírování.
+Popis jednotlivých typů (interakce, sekce, příklady) — **nejsou to složky s obsahem**, ale dokumentace typu:
 
-## Referenční dokumenty
+| Typ | Specifikace |
+|---|---|
+| Basic Glitch | [`basic-glitch/README.md`](./basic-glitch/) + [`docs/karta-basic-glitch.md`](../docs/karta-basic-glitch.md) |
+| Argumentuj | [`argument/README.md`](./argument/) + [`docs/karta-argument.md`](../docs/karta-argument.md) |
+| Wellbeing | [`wellbeing/`](./wellbeing/) + [`docs/karta-wellbeing.md`](../docs/karta-wellbeing.md) |
+| Rychlá výzva | [`rychla-vyzva/`](./rychla-vyzva/) + [`docs/karta-rychla-vyzva.md`](../docs/karta-rychla-vyzva.md) |
+| Fun fact | [`funfact/`](./funfact/) + [`docs/karta-funfact.md`](../docs/karta-funfact.md) |
+| Najdi chybu | [`najdi-chybu/`](./najdi-chybu/) + [`docs/karta-najdi-chybu.md`](../docs/karta-najdi-chybu.md) |
+| Historická osobnost | [`historicka-osobnost/`](./historicka-osobnost/) + [`docs/karta-historicka-osobnost.md`](../docs/karta-historicka-osobnost.md) |
 
-- [`karta-basic-glitch.md`](../docs/karta-basic-glitch.md) — obecná šablona sekcí Glitche (kontrakt, kanonické podání, úrovně, kontext pro Tinybota, metadata, bezpečnost).
-- [`glith-content-type.md`](./glith-content-type.md) — vizuální a interakční typy karet ve feedu.
-- [`../assets/glitch-design-tokens.md`](../assets/glitch-design-tokens.md) — barvy a typografie.
+> **Systémové karty** (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace.
+
+## Pojmenování a metadata
+
+- Kebab-case slug bez diakritiky: **`{tema}-{nazev}.md`**; slug = pole `id` ve frontmatteru.
+- **Stav důvěry** (`trust`): `core → edited → community → generated`. Zobrazované štítky: **Glitch / Fork / Komunita / Generováno**.
+- **Napojení na koncept** (`koncept`) → dědí RVP, digitální kompetenci, oblast a téma z [mapy konceptů](../knowledge-map/).
+
+## `_archiv/`
+
+Staré / osiřelé soubory (např. původní `index.json` misí a `community.json` z první verze). Ponecháno pro historii, není to zdroj pravdy.

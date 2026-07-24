@@ -94,7 +94,7 @@ Nastavení z profilu (`profiles.settings` / localStorage) vstupují do skórová
 
 ## Fáze implementace
 
-1. ✅ **Manifest katalogu** `glitches/feed.json` + feed čte data-driven (fallback = vestavěný `CARDS`). *(Pozor: `glitches/index.json` je něco jiného — stará struktura misí Vibe Codingu.)*
+1. ✅ **Manifest katalogu** `glitches/feed.json` + feed čte data-driven (fallback = vestavěný `CARDS`). *(Pozor: `glitches/_archiv/index.json` je stará struktura misí (archiv).)*
 2. ✅ **Skórovací modul** `js/recommender.js` — čistá funkce `serazFeed(cards, ctx)`: tvrdé filtry (denní strop, „od koho vidím obsah", mood check-in, dokončené) + řazení dle nálady (obtížnost). Bez nálady zachová původní pořadí (nedestruktivní).
 3. **Sběr signálů** — dopojit události (view/open/complete) a načíst mood/progres z DB (teď čte mood/progres z localStorage).
 4. **Měkké váhy** — fasety, zájmy (chips), rozmanitost, návaznost questu.

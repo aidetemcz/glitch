@@ -4,7 +4,7 @@ Tenhle balíček obsahuje **`knowledge-map.yaml`** — naplněná data pro appku
 
 ## Kam soubor patří
 
-Nahraď/naplň jím datový soubor mapy (dle briefu `knowledge-map/app/data/knowledge-map.yaml`). Je to jediný zdroj pravdy. Ověř parserem a nasaď.
+Nahraď/naplň jím datový soubor mapy (dle briefu `knowledge-map/app/data/Informatika/knowledge-map.yaml`). Je to jediný zdroj pravdy. Ověř parserem a nasaď.
 
 ## Co je v souboru (3 seznamy + meta)
 

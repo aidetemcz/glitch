@@ -12,7 +12,7 @@ Tenhle dokument je soběstačný brief pro práci v Cowork projektu **Glitch**. 
 
 ## 2. Co je výstup
 
-Záznamy **oblastí** a **konceptů** ve **YAML** dle schématu v sekci 5 — připravené k vložení do souboru `knowledge-map/app/data/knowledge-map.yaml` v repu.
+Záznamy **oblastí** a **konceptů** ve **YAML** dle schématu v sekci 5 — připravené k vložení do souboru `knowledge-map/app/data/Informatika/knowledge-map.yaml` v repu.
 
 Můžeš pracovat po oblastech (nejdřív jedna oblast kompletně, pak další) — ať to jde po částech.
 
@@ -135,4 +135,4 @@ concepts:
 
 ## 9. Až bude YAML hotový
 
-Předej ho zpět (klidně po oblastech). Promítnu ho do `knowledge-map/app/data/knowledge-map.yaml`, ověřím parserem a nasadím — objeví se v mapě.
+Předej ho zpět (klidně po oblastech). Promítnu ho do `knowledge-map/app/data/Informatika/knowledge-map.yaml`, ověřím parserem a nasadím — objeví se v mapě.
