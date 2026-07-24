@@ -190,13 +190,28 @@
     },
 
     quick_challenge(c) {
+      // dlouhé textové odpovědi (pojmové výzvy) → svislý sloupec, text velikosti p
+      const textLayout = c.layout === "text";
+      const optCls = textLayout ? "quiz-opt quiz-opt--text g-p" : "quiz-opt g-h4";
       const opts = c.answers.map((a, i) =>
-        `<button class="quiz-opt g-h4" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
+        `<button class="${optCls}" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
       if (c.figure === "triangles") {
         return `${badges(c)}
           <div class="fx-center" style="top:37.4%">${triangleFigure()}</div>
           <div class="fx-block g-h3" style="top:61.1%">${esc(c.question)}</div>
           <div class="quiz-options cols-3 fx-options" style="top:84.2%">${opts}</div>`;
+      }
+      if (textLayout) {
+        return `${badges(c)}
+          ${timersOn() ? `<div class="timer-row fx-block" style="top:14%">
+            <button class="timer-toggle" data-timer aria-label="Zapnout časovač"></button>
+            <p class="timer-note g-p-s">Pokud chceš, můžeš si zapnout časovač. Stačí kliknout na kolečko.</p>
+          </div>` : ""}
+          <div class="fx-block" style="top:${timersOn() ? "24%" : "18%"}">
+            <div class="g-h3">${esc(c.question)}</div>
+            ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
+          </div>
+          <div class="quiz-options cols-1v fx-options" style="top:${timersOn() ? "44%" : "38%"}">${opts}</div>`;
       }
       return `${badges(c)}
         ${timersOn() ? `<div class="timer-row fx-block" style="top:15.5%">
@@ -249,6 +264,17 @@
         <div class="fx-block" style="top:64.3%">
           <h3 class="fx-title mistake-claim g-h3">${esc(c.claim)}</h3>
           <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
+        </div>
+        ${chevron()}`;
+    },
+
+    historicka_osobnost(c) {
+      return `${badges(c)}
+        <div class="persona-photo fx-media" style="top:11.6%"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
+        <div class="fx-block" style="top:58.5%">
+          <h3 class="fx-title g-h3">${esc(c.title)}</h3>
+          <p class="fx-text g-p-s">${esc(c.body)}</p>
+          <button class="persona-cta g-p" data-persona>Zeptej se</button>
         </div>
         ${chevron()}`;
     },
@@ -324,7 +350,7 @@
     welcome: "yellow", intro: "white", argument: "pink", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black",
     quick_challenge: "red", spot_the_mistake: "purple", fun_fact: "teal",
-    quest_intro: "image"
+    historicka_osobnost: "blue", quest_intro: "image"
   };
 
   let welcomeCard = null;
@@ -371,7 +397,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=3", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=4", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -435,6 +461,7 @@
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el);
     if (c.type === "argument") initArgument(el);
+    if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") {
@@ -716,6 +743,12 @@
       });
       setTimeout(() => nextFrom(el), correct ? 850 : 1400);
     }));
+  }
+
+  /* ---- Historická osobnost (persona chat — připravujeme) ---- */
+  function initPersona(el) {
+    const cta = el.querySelector("[data-persona]");
+    if (cta) cta.addEventListener("click", () => toast("Chat s personou — připravujeme 🚧"));
   }
 
   /* ---- Argumentuj ---- */

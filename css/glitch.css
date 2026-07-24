@@ -222,6 +222,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .welcome-login,
 .mood-cta,
 .breath-cta,
+.persona-cta,
 .arg-opt {
   background: transparent;
   color: var(--fg);
@@ -236,6 +237,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .welcome-login:active,
 .mood-cta:active,
 .breath-cta:active,
+.persona-cta:active,
 .arg-opt:active { opacity: .7; }
 
 /* přihlášení přes Google — uživatel může projít i bez něj */
@@ -383,6 +385,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* kompaktní buttony pevné šířky, zarovnané vlevo (dle Figmy), ne roztažené */
 .quiz-options { display: grid; gap: calc(15 * var(--u)); justify-content: start; }
 .quiz-options.cols-1 { grid-template-columns: calc(143 * var(--u)); }
+.quiz-options.cols-1v { grid-template-columns: 1fr; }   /* svislý sloupec přes celou šířku (dlouhé texty) */
 .quiz-options.cols-2 { grid-template-columns: repeat(2, calc(111 * var(--u))); }
 .quiz-options.cols-3 { grid-template-columns: repeat(3, calc(57 * var(--u))); }
 /* odpovědi mají VLASTNÍ styl (nezávislý na jednotných tlačítkách):
@@ -402,6 +405,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .quiz-opt:active { opacity: .7; }
 .quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
 .quiz-opt.is-wrong   { opacity: .4; }
+/* dlouhé textové odpovědi — auto výška, text vlevo, velikost p (16) */
+.quiz-opt--text {
+  height: auto;
+  min-height: calc(48 * var(--u));
+  padding: calc(12 * var(--u)) calc(16 * var(--u));
+  justify-content: flex-start;
+  text-align: left;
+  font-size: calc(16 * var(--u)); font-weight: 500;
+  line-height: 1.3;
+}
 .quiz-figure svg { display: block; }
 
 /* ==========================================================================
@@ -452,6 +465,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   filter: grayscale(1);
 }
 .mistake-context { color: rgba(255,255,255,0.85); }
+
+/* Historická osobnost / Osobnost oboru — fotka nahoře, jméno + úvod + CTA dole */
+.persona-photo {
+  aspect-ratio: 318 / 340;
+  border-radius: 6px; overflow: hidden;
+  background: #2c2c2c;
+}
+.persona-photo img { width: 100%; height: 100%; object-fit: cover; }
+.persona-cta {
+  margin-top: calc(18 * var(--u));
+  padding: calc(12 * var(--u)) calc(26 * var(--u));
+}
 
 /* Argumentuj (růžová karta) — pozice dle Figmy */
 .arg-claim { position: absolute; left: 40px; right: calc(33 * var(--u)); top: 26.4%;

@@ -108,6 +108,92 @@
     "claim": "Když AI vytvoří obrázek podle mého promptu, je to moje dílo.",
     "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
 
+  { "id": "puvod-pojmu-vibecoding", "type": "fun_fact", "category": "Fun fact", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding", "obtiznost": 1,
+    "title": "Slovo „vibecoding“ je nejspíš mladší než tvoje bota.",
+    "body": "Pojmenoval ho začátkem roku 2025 vědec Andrej Karpathy — a za pár měsíců ho používal skoro celý internet." },
+
+  { "id": "ada-lovelace-prvni-algoritmus", "type": "fun_fact", "category": "Fun fact", "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 1,
+    "title": "První algoritmus vznikl skoro 100 let před prvním počítačem.",
+    "body": "V roce 1843 napsala Ada Lovelace postup pro stroj, který ještě ani neexistoval." },
+
+  { "id": "vibecoding-co-je-vibecoding", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding", "obtiznost": 1, "layout": "text", "cols": 1,
+    "question": "Co je vibecoding?",
+    "sub": "Vyber, co nejlíp sedí.",
+    "answers": [
+      { "label": "Popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš.", "correct": true },
+      { "label": "Programování poslepu, úplně bez plánu.", "correct": false },
+      { "label": "Hraní počítačových her o programování.", "correct": false },
+      { "label": "Ruční psaní kódu řádek po řádku bez jakékoli pomoci.", "correct": false }
+    ] },
+
+  { "id": "vibecoding-nejlepsi-prompt", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding", "obtiznost": 2, "layout": "text", "cols": 1,
+    "question": "Chceš appku na kapesné. Který prompt zafunguje nejlíp?",
+    "answers": [
+      { "label": "„Udělej appku.“", "correct": false },
+      { "label": "„Udělej appku na kapesné: zadám příjmy a výdaje, ukaž mi zůstatek a graf za měsíc. Jednoduchý vzhled, česky.“", "correct": true },
+      { "label": "„Něco s penězi, ať je to hezký.“", "correct": false },
+      { "label": "„Naprogramuj to nejlíp, jak umíš.“", "correct": false }
+    ] },
+
+  { "id": "vibecoding-appka-spadla", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "programovani-ladeni-a-testovani", "obtiznost": 2, "layout": "text", "cols": 1,
+    "question": "AI ti vytvořila appku, ale spadla s chybovou hláškou. Co uděláš nejdřív?",
+    "answers": [
+      { "label": "Přečtu si chybovou hlášku — často říká, kde a co se pokazilo.", "correct": true },
+      { "label": "Smažu všechno a začnu úplně od začátku.", "correct": false },
+      { "label": "Napíšu AI jen „nefunguje to, oprav to“ bez dalších detailů.", "correct": false },
+      { "label": "Budu appku spouštět pořád dokola a doufat, že se spraví sama.", "correct": false }
+    ] },
+
+  { "id": "vibecoding-frontend-backend", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-co-je-aplikace", "obtiznost": 2, "layout": "text", "cols": 1,
+    "question": "Appka má frontend (co vidíš) a backend (co běží na pozadí s daty). Co z toho patří do backendu?",
+    "answers": [
+      { "label": "Barva tlačítka a rozložení na obrazovce.", "correct": false },
+      { "label": "Uložení tvého účtu a hesla na serveru a jejich ověření při přihlášení.", "correct": true },
+      { "label": "Animace, když najedeš myší na obrázek.", "correct": false },
+      { "label": "Písmo a velikost nadpisu.", "correct": false }
+    ] },
+
+  { "id": "vibecoding-kdy-nocode", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-no-code-low-code", "obtiznost": 2, "layout": "text", "cols": 1,
+    "question": "Kdy je no-code (skládání appky bez psaní kódu) dobrá volba?",
+    "answers": [
+      { "label": "Když chci rychle vyzkoušet nápad a mít brzy něco funkčního.", "correct": true },
+      { "label": "Nikdy — bez psaní kódu nevznikne nic pořádného.", "correct": false },
+      { "label": "Jen když už umím dokonale programovat.", "correct": false },
+      { "label": "Když chci, aby appka byla schválně složitá.", "correct": false }
+    ] },
+
+  { "id": "vibecoding-uz-nemusis-rozumet", "type": "spot_the_mistake", "category": "Najdi chybu", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-iluze-ze-to-umim", "obtiznost": 2,
+    "claim": "Vibecoding znamená, že appku udělá AI za tebe — takže už nemusíš ničemu rozumět.",
+    "context": "Zní to lákavě. Rozklikni a najdi, co na tom nesedí." },
+
+  { "id": "vibecoding-ai-kod-je-vzdy-spravny", "type": "spot_the_mistake", "category": "Najdi chybu", "trust": "Core",
+    "concept_id": "programovani-cteni-a-hodnoceni-ai-kodu", "obtiznost": 2,
+    "claim": "Co ti AI vygeneruje jako kód, je vždycky správné a bezpečné — stačí zkopírovat.",
+    "context": "Vážně vždycky? Rozklikni a najdi, co na tom nesedí." },
+
+  { "id": "andrej-karpathy", "type": "historicka_osobnost", "category": "Osobnost oboru", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding", "obtiznost": 2,
+    "title": "Andrej Karpathy",
+    "body": "Vědec, který dal „vibecodingu“ jméno. Spoluzakládal OpenAI, vedl AI za autopilotem v Tesle a hlavně rád učí, jak dnešní AI vlastně funguje. Zeptej se ho, jak přemýšlet o tvorbě s AI." },
+
+  { "id": "grace-hopper", "type": "historicka_osobnost", "category": "Historická osobnost", "trust": "Core",
+    "concept_id": "tvorba-aplikaci-no-code-low-code", "obtiznost": 2,
+    "title": "Grace Hopper",
+    "body": "Programátorka a námořní admirálka, která věřila, že počítač má rozumět člověku — ne naopak. Vytvořila jeden z prvních překladačů, díky kterým nemusíme mluvit jen v jedničkách a nulách. Zeptej se jí." },
+
+  { "id": "edsger-dijkstra", "type": "historicka_osobnost", "category": "Historická osobnost", "trust": "Core",
+    "concept_id": "programovani-ladeni-a-testovani", "obtiznost": 2,
+    "title": "Edsger Dijkstra",
+    "body": "Informatik, který tvrdil, že program se má hlavně chápat — ne jen spustit a doufat. Proslul větou, že testování ukáže, že chyby jsou, ale nikdy že nejsou. Zeptej se ho, proč na porozumění záleží." },
+
   { "id": "shrnuti-dne", "type": "daily_summary", "category": "Shrnutí",
     "stats": [
       { "label": "Vyřešených Glitchů", "value": 2 },
