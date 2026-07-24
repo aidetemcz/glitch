@@ -127,6 +127,7 @@
   var isDragging = false;
   var lastX = 0, lastY = 0, downX = 0, downY = 0;
   var projected = [];        // promítnuté pozice slovních bodů (pro klikání)
+  var bubbleRect = [];       // obdélníky bublin se slovy (aby šlo potvrdit i ťukem na slovo)
 
   function confirmedCount(){
     var n = 0;
@@ -184,12 +185,22 @@
 
   function handleTap(px, py){
     if (state !== 'play') return;
-    var best = -1, bestD = 1e9;
-    for (var i = 0; i < projected.length; i++){
-      var pr = projected[i];
-      if (!pr || pr.z < -0.05) continue;      // bod je vzadu — ťuknutí se nepočítá
-      var d = Math.hypot(px - pr.x, py - pr.y);
-      if (d < Math.max(20, S * 0.06) && d < bestD){ bestD = d; best = i; }
+    var best = -1;
+    // 1) ťuk přímo na bublinu se slovem (potvrzení i ťukem na text, ne jen na bod)
+    for (var bi = 0; bi < DOTS.length; bi++){
+      if (DOTS[bi].st === 0) continue;
+      var br = bubbleRect[bi];
+      if (br && px >= br.x && px <= br.x + br.w && py >= br.y && py <= br.y + br.h){ best = bi; break; }
+    }
+    // 2) jinak nejbližší bod vepředu
+    if (best < 0){
+      var bestD = 1e9;
+      for (var i = 0; i < projected.length; i++){
+        var pr = projected[i];
+        if (!pr || pr.z < -0.05) continue;      // bod je vzadu — ťuknutí se nepočítá
+        var d = Math.hypot(px - pr.x, py - pr.y);
+        if (d < Math.max(20, S * 0.06) && d < bestD){ bestD = d; best = i; }
+      }
     }
     if (best < 0){                             // ťuknutí vedle → zruš rozečtený náhled
       for (var k = 0; k < DOTS.length; k++) if (DOTS[k].st === 1) DOTS[k].st = 0;
@@ -268,6 +279,7 @@
     ctx.textBaseline = 'middle';
     ctx.fillText(word, bx + bw / 2, by + bh / 2 + 0.5);
     ctx.globalAlpha = 1;
+    return { x: bx, y: by, w: bw, h: bh };
   }
 
   function draw(now){
@@ -400,11 +412,7 @@
         ctx.beginPath(); ctx.arc(pr3.x, pr3.y, r3 * 3.6, 0, Math.PI * 2); ctx.fill();
       }
 
-      // tmavý podklad + bod (zadní menší a ztlumený)
-      ctx.beginPath();
-      ctx.arc(pr3.x, pr3.y, r3 + 2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0,0,0,0.6)';
-      ctx.fill();
+      // bod (zadní menší a ztlumený); bez černého obrysu — čitelnost dělá glow
       ctx.beginPath();
       ctx.arc(pr3.x, pr3.y, r3 * (front ? 1 : 0.78), 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(' + col + ',' + (front ? 0.96 : 0.4).toFixed(3) + ')';
@@ -419,7 +427,9 @@
       }
     }
 
-    // bubliny se slovy: náhled (bílá) i potvrzené (žlutá)
+    // bubliny se slovy: náhled (bílá) i potvrzené (žlutá) — a ulož jejich obdélníky,
+    // aby šlo slovo potvrdit i ťukem na text (viz handleTap)
+    bubbleRect.length = 0;
     for (var bi = 0; bi < DOTS.length; bi++){
       var d4 = DOTS[bi];
       if (d4.st === 0) continue;
@@ -427,7 +437,7 @@
       if (pr4.z < -0.15) continue;
       var ap = Math.min(1, (now - (d4.t || now)) / 150);
       var colB = (d4.st === 2 || state === 'win') ? YELLOW : '#ffffff';
-      drawBubble(pr4, d4.word, ap, colB, 0, cx, cy);
+      bubbleRect[bi] = drawBubble(pr4, d4.word, ap, colB, 0, cx, cy);
     }
     // mizející bubliny špatných voleb (zatřesou se)
     for (var wi2 = 0; wi2 < wrongAnim.length; wi2++){
