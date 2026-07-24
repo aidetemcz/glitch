@@ -327,6 +327,10 @@
     el.dataset.index = i;
     el.dataset.type = c.type;
     el.innerHTML = (RENDER[c.type] || (() => `<div class="card-body">${esc(c.type)}</div>`))(c);
+    // gating karet dle nastavení: mood check-in vypnutý → mood karta se nezobrazí
+    if (c.type === "mood_selector") {
+      try { if (window.glitchSettings && window.glitchSettings().mood_checkin === false) el.classList.add("is-hidden"); } catch (_) {}
+    }
     feed.appendChild(el);
     initCard(el, c);
   });

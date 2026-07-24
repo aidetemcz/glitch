@@ -20,6 +20,7 @@ Kanonická dokumentace projektu — **zdroj pravdy je tady na GitHubu**. Dřív 
 
 - [`slovnicek.md`](./slovnicek.md) — slovníček všech pojmů (pro předání komukoliv).
 - [`doporucovaci-system.md`](./doporucovaci-system.md) — jak Glitch vybírá feed (11 principů, p-book, wellbeing signály → obtížnost, fasety a generování).
+- [`doporucovani-implementace.md`](./doporucovani-implementace.md) — implementační plán v1 (klientský ranker: katalog → signály → skórování → feed).
 - [`databaze-navrh.md`](./databaze-navrh.md) — návrh struktury databáze (obsah, signály, preference).
 
 ## Archiv
