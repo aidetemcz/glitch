@@ -3,10 +3,6 @@
 
   { "id": "intro", "type": "intro" },
 
-  { "id": "wellbeing-mood", "type": "mood_selector", "category": "Wellbeing",
-    "title": "Jak se teď cítíš?",
-    "body": "Potažením zvol svůj vibe. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
-
   { "id": "wellbeing-dech", "type": "breathing", "category": "Wellbeing",
     "title": "Dechové cvičení",
     "body": "Rovnoměrné vědomé dýchání ti může pomoci zlepšit soustředění.",
@@ -93,8 +89,23 @@
     "context": "Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců." },
 
   { "id": "argument-nemam-co-skryvat", "type": "argument", "category": "Argumentuj", "trust": "Core",
-    "obtiznost": 3,
+    "concept_id": "digitalni-obcanstvi-digitalni-stopa-a-soukromi", "obtiznost": 3,
     "claim": "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
+    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
+
+  { "id": "argument-scroll-vlastni-vule", "type": "argument", "category": "Argumentuj", "trust": "Core",
+    "concept_id": "umela-inteligence-doporucovaci-systemy", "obtiznost": 3,
+    "claim": "Kolik času proscrolluju, je jen na mojí vůli. Algoritmus za to nemůže.",
+    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
+
+  { "id": "argument-algoritmus-spravedlivejsi", "type": "argument", "category": "Argumentuj", "trust": "Core",
+    "concept_id": "umela-inteligence-bias-a-ferovost", "obtiznost": 3,
+    "claim": "Spravedlivěji rozhodne algoritmus než člověk.",
+    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
+
+  { "id": "argument-ai-obrazek-moje-dilo", "type": "argument", "category": "Argumentuj", "trust": "Core",
+    "concept_id": "umela-inteligence-kdy-ai-ne-pouzit-a-disclosure", "obtiznost": 3,
+    "claim": "Když AI vytvoří obrázek podle mého promptu, je to moje dílo.",
     "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
 
   { "id": "shrnuti-dne", "type": "daily_summary", "category": "Shrnutí",

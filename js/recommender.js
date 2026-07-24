@@ -2,9 +2,9 @@
    Glitch — doporučovací ranker v1 (klientský, transparentní)
    Viz docs/doporucovani-implementace.md
    serazFeed(cards, ctx) → seřazený seznam karet:
-     • tvrdé filtry: „od koho vidím obsah", mood check-in, dokončené, denní strop
-     • měkké řazení: shoda obtížnosti s náladou (jen když je nálada známá)
-   Bez nálady zachovává původní pořadí (nedestruktivní).
+     • tvrdé filtry: „od koho vidím obsah", dokončené, denní strop
+     • míchání: obsah se prokládá a po každém reloadu randomizuje;
+       questové karty (chapterNo) přitom drží pořadí kapitol (1→N), nic se negatuje
    ========================================================================== */
 (function () {
   "use strict";
@@ -29,13 +29,29 @@
     return 2;
   }
 
-  // cílová obtížnost dle nálady (energie × soustředění); null = neřadit dle obtížnosti
-  function moodTargetDifficulty(mood) {
-    if (!mood) return null;
-    const e = mood.energy, f = mood.focus;
-    if (e < 40 && f < 40) return 1;         // unavený + nepozorný → jednodušší
-    if (e >= 60 && f >= 60) return 3;       // nabitý + soustředěný → složitější
-    return 2;
+  // náhodné promíchání (Fisher–Yates) — randomizace po každém reloadu
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  // v rámci každého questu (karty stejné kategorie, které mají chapterNo) srovnej
+  // karty podle chapterNo, ale ponech jejich (náhodné) sloty v proudu → prokládané, ale v pořadí
+  function keepQuestOrder(list) {
+    const groups = {};
+    list.forEach((c, i) => {
+      if (c.chapterNo != null && c.category) (groups[c.category] = groups[c.category] || []).push(i);
+    });
+    Object.keys(groups).forEach((cat) => {
+      const slots = groups[cat];
+      if (slots.length < 2) return;
+      const ordered = slots.map((i) => list[i]).sort((a, b) => (a.chapterNo || 0) - (b.chapterNo || 0));
+      slots.forEach((slot, k) => { list[slot] = ordered[k]; });
+    });
+    return list;
   }
 
   // kontext ze zařízení (localStorage) — synchronně, bez DB
@@ -61,7 +77,6 @@
   function serazFeed(cards, ctx) {
     ctx = ctx || feedContext();
     const s = ctx.settings || {};
-    const targetDiff = moodTargetDifficulty(ctx.mood);
 
     // systémové karty drží pozici: welcome/intro nahoře, Shrnutí dole
     const head = [], rankable = [], tail = [];
@@ -73,7 +88,6 @@
 
     // 1) tvrdé filtry
     let pool = rankable.filter((c) => {
-      if (c.type === "mood_selector" && s.mood_checkin === false) return false;
       const b = trustBucket(c);
       if (b === "glitch" && s.odkoho_glitch === false) return false;
       if (b === "komunita" && s.odkoho_komunita === false) return false;
@@ -82,21 +96,10 @@
       return true;
     });
 
-    // 2) měkké řazení dle nálady — jen když je nálada známá.
-    //    Questové karty (mají chapterNo) drží pořadí kapitol na svých místech;
-    //    podle nálady se přeskládají jen OSTATNÍ karty (do jejich slotů).
-    //    → návazné Glitche zůstanou seřazené (1→6), nic se negatuje.
-    if (targetDiff != null) {
-      const otherSlots = [], others = [];
-      pool.forEach((c, i) => { if (c.chapterNo == null) { otherSlots.push(i); others.push(c); } });
-      others
-        .map((c, i) => ({
-          c, i,
-          sc: (3 - Math.abs(difficultyOf(c) - targetDiff)) + (WELLBEING_TYPES.has(c.type) ? 0.5 : 0)
-        }))
-        .sort((a, b) => (b.sc - a.sc) || (a.i - b.i))    // stabilní: při shodě původní pořadí
-        .forEach((x, k) => { pool[otherSlots[k]] = x.c; });
-    }
+    // 2) míchání: náhodně promíchat (prokládá questy s ostatním obsahem, randomizace po reloadu),
+    //    pak obnovit pořadí kapitol v rámci questů → questy prokládané, ale v pořadí 1→N
+    shuffle(pool);
+    keepQuestOrder(pool);
 
     // 3) denní strop
     pool = pool.slice(0, DAILY_CAP);

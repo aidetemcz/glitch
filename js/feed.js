@@ -102,8 +102,13 @@
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+  // zobrazované štítky důvěry: Core→Glitch, Community→Komunita, Generated→Generováno
+  const TRUST_LABEL = { core: "Glitch", community: "Komunita", "komunita": "Komunita",
+    generated: "Generováno", "generováno": "Generováno", generovany: "Generováno",
+    edited: "Fork", fork: "Fork" };
+  const trustLabel = (t) => TRUST_LABEL[String(t == null ? "core" : t).toLowerCase()] || String(t || "Glitch");
   const badges = (c) => c.category
-    ? `<div class="badges"><span class="badge trust">${esc(c.trust || "Core")}</span><span class="badge cat">${esc(c.category)}</span></div>`
+    ? `<div class="badges"><span class="badge trust">${esc(trustLabel(c.trust))}</span><span class="badge cat">${esc(c.category)}</span></div>`
     : "";
   const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
@@ -354,8 +359,11 @@
   if (typeof sb !== "undefined" && sb && sb.auth && typeof sb.auth.onAuthStateChange === "function") {
     sb.auth.onAuthStateChange((_event, session) => {
       const loggedIn = !!(session && session.user);
+      // scroll na začátek jen když PRÁVĚ skrýváme úvodní kartu (skutečné přihlášení),
+      // ne při každém obnovení tokenu / návratu do okna → jinak by to skákalo na první Glitch
+      const welcomeWasVisible = welcomeCard && !welcomeCard.classList.contains("is-hidden");
       applyWelcomeVisibility(loggedIn);
-      if (loggedIn) { try { feed.scrollTo({ top: 0 }); } catch (_) {} }
+      if (loggedIn && welcomeWasVisible) { try { feed.scrollTo({ top: 0 }); } catch (_) {} }
     });
   }
 
@@ -363,7 +371,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=2", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=3", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
