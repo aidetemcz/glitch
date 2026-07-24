@@ -180,7 +180,7 @@
         ? `<video class="quest-video" muted loop playsinline preload="none" data-poster="${poster}" data-video-src="${c.video}"></video><div class="quest-scrim"></div>`
         : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
-        <div class="fx-block quest-text reserve-chevron" style="top:65%">
+        <div class="fx-block quest-text reserve-chevron anchor-bottom">
           ${chapter(c.chapterNo)}
           <h1 class="fx-title g-h1">${esc(c.title)}</h1>
           <p class="fx-text g-p">${esc(c.body)}</p>
@@ -201,23 +201,23 @@
           <div class="quiz-options cols-3 fx-options" style="top:84.2%">${opts}</div>`;
       }
       if (textLayout) {
-        // dlouhé odpovědi → text nahoře, ať se vejde bez překryvu
+        // dlouhé odpovědi → otázka i odpovědi tečou pod sebou, ať se nepřekrývají
         return `${badges(c)}
-          <div class="fx-block" style="top:12%">
+          <div class="quiz-flow">
             <div class="g-h3">${esc(c.question)}</div>
             ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
-          </div>
-          <div class="quiz-options cols-1v fx-options" style="top:31%">${opts}</div>`;
+            <div class="quiz-options cols-1v quiz-flow-opts">${opts}</div>
+          </div>`;
       }
       // trasovací výzva s úryvkem kódu (krátké číselné odpovědi)
       if (c.code) {
         return `${badges(c)}
-          <pre class="quiz-code fx-block" style="top:14%">${esc(c.code)}</pre>
-          <div class="fx-block" style="top:46%">
-            <div class="g-h3">${esc(c.question)}</div>
+          <div class="quiz-flow">
+            <pre class="quiz-code">${esc(c.code)}</pre>
+            <div class="g-h3 quiz-flow-q">${esc(c.question)}</div>
             ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
-          </div>
-          <div class="quiz-options cols-${c.cols || 2} fx-options" style="top:58%">${opts}</div>`;
+            <div class="quiz-options cols-${c.cols || 2} quiz-flow-opts">${opts}</div>
+          </div>`;
       }
       return `${badges(c)}
         <div class="fx-block" style="top:51%">
@@ -241,50 +241,60 @@
 
     algorithm_demo(c) {
       return `${badges(c)}
-        <div class="algo-viz fx-media" style="top:11.7%">${vizFrame(c.viz)}</div>
-        <div class="fx-block algo-text reserve-chevron" style="top:65%">
-          ${chapter(c.chapterNo)}
-          <h1 class="fx-title g-h1">${esc(c.title)}</h1>
-          <p class="fx-text g-p">${esc(c.body)}</p>
+        <div class="stack">
+          <div class="stack-media"><div class="algo-viz">${vizFrame(c.viz)}</div></div>
+          <div class="stack-text">
+            ${chapter(c.chapterNo)}
+            <h1 class="fx-title g-h1">${esc(c.title)}</h1>
+            <p class="fx-text g-p">${esc(c.body)}</p>
+          </div>
         </div>
         ${chevron()}`;
     },
 
     fun_fact(c) {
       return `${badges(c)}
-        <div class="funfact-tile fx-media" style="top:11.6%"><div class="asset-missing">ilustrace<br>(doplnit)</div></div>
-        <div class="fx-block" style="top:53.3%">
-          <h3 class="fx-title g-h3">${esc(c.title)}</h3>
-          <p class="fx-text g-p-s">${esc(c.body)}</p>
+        <div class="stack">
+          <div class="stack-media"><div class="funfact-tile"><div class="asset-missing">ilustrace<br>(doplnit)</div></div></div>
+          <div class="stack-text">
+            <h3 class="fx-title g-h3">${esc(c.title)}</h3>
+            <p class="fx-text g-p-s">${esc(c.body)}</p>
+          </div>
         </div>
         ${chevron()}`;
     },
 
     spot_the_mistake(c) {
       return `${badges(c)}
-        <div class="mistake-photo fx-media" style="top:11.6%"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
-        <div class="fx-block" style="top:64.3%">
-          <h3 class="fx-title mistake-claim g-h3">${esc(c.claim)}</h3>
-          <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
+        <div class="stack">
+          <div class="stack-media"><div class="mistake-photo"><div class="asset-missing">fotografie<br>(doplnit)</div></div></div>
+          <div class="stack-text">
+            <h3 class="fx-title mistake-claim g-h3">${esc(c.claim)}</h3>
+            <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
+          </div>
         </div>
         ${chevron()}`;
     },
 
     historicka_osobnost(c) {
       return `${badges(c)}
-        <div class="persona-photo fx-media" style="top:11.6%"><div class="asset-missing">fotografie<br>(doplnit)</div></div>
-        <div class="fx-block" style="top:58.5%">
-          <h3 class="fx-title g-h3">${esc(c.title)}</h3>
-          <p class="fx-text g-p-s">${esc(c.body)}</p>
-          <button class="persona-cta g-p" data-persona>Zeptej se</button>
+        <div class="stack">
+          <div class="stack-media"><div class="persona-photo"><div class="asset-missing">fotografie<br>(doplnit)</div></div></div>
+          <div class="stack-text">
+            <h3 class="fx-title g-h3">${esc(c.title)}</h3>
+            <p class="fx-text g-p-s">${esc(c.body)}</p>
+            <button class="persona-cta g-p" data-persona>Zeptej se</button>
+          </div>
         </div>
         ${chevron()}`;
     },
 
     argument(c) {
       return `${badges(c)}
-        <h2 class="arg-claim">${esc(c.claim)}</h2>
-        <p class="arg-sub">${esc(c.sub)}</p>
+        <div class="arg-flow">
+          <h2 class="arg-claim">${esc(c.claim)}</h2>
+          <p class="arg-sub">${esc(c.sub)}</p>
+        </div>
         <div class="arg-actions">
           <button class="arg-opt" data-arg="agree">Souhlasím</button>
           <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>

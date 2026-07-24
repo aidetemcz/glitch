@@ -488,14 +488,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: calc(12 * var(--u)) calc(26 * var(--u));
 }
 
-/* Argumentuj (růžová karta) — pozice dle Figmy */
-.arg-claim { position: absolute; left: 40px; right: calc(33 * var(--u)); top: 26.4%;
-  font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); z-index: 2; }
-.arg-sub { position: absolute; left: 40px; right: 40px; top: 42.8%;
-  font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); color: var(--c-black); z-index: 2; }
-.arg-actions { position: absolute; left: 40px; top: 78.6%; display: flex; gap: calc(27 * var(--u)); z-index: 2; }
+/* Argumentuj (růžová karta) — tvrzení + podtitul tečou shora, tlačítka dole */
+.arg-flow { position: absolute; left: 40px; right: calc(33 * var(--u)); top: calc(60 * var(--u)); z-index: 2; }
+.arg-claim { margin: 0;
+  font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.arg-sub { margin-top: calc(18 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); color: var(--c-black); }
+.arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(72 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
 .arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); }
 .arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* ==========================================================================
+   Robustní tokové rozložení (mobil): obsah teče shora, nepřekrývá se a spodní
+   text se neořízne. Médium se v případě nedostatku místa zmenší.
+   ========================================================================== */
+.stack {
+  position: absolute; inset: 0;
+  padding: calc(60 * var(--u)) 40px calc(92 * var(--u));
+  display: flex; flex-direction: column; z-index: 2;
+}
+.stack-media {
+  flex: 1 1 0; min-height: calc(110 * var(--u));
+  display: flex; align-items: flex-start; justify-content: center;
+  overflow: hidden; margin-bottom: calc(18 * var(--u));
+}
+.stack-media > * { height: 100%; max-height: 100%; width: auto; max-width: 100%; }
+.stack-text { flex: 0 0 auto; }
+.stack-text .fx-title { margin: 0; }
+.stack-text .fx-text { margin-top: calc(12 * var(--u)); }
+.stack-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
+
+/* Textové výzvy / trasování kódu: otázka a odpovědi tečou pod sebou */
+.quiz-flow { position: absolute; left: 40px; right: 40px; top: calc(60 * var(--u)); bottom: calc(40 * var(--u)); z-index: 2; }
+.quiz-flow .quiz-sub { margin-top: calc(8 * var(--u)); }
+.quiz-flow .quiz-code { margin-top: 0; }
+.quiz-flow-q { margin-top: calc(20 * var(--u)); }
+.quiz-flow-opts { margin-top: calc(22 * var(--u)); }
+
+/* Quest / Algoritmus intro: text ukotvený u spodu (neořízne se dole) */
+.quest-text.anchor-bottom { top: auto; bottom: calc(46 * var(--u)); }
 
 /* Algoritmus — 3D y=96 (321×322), kapitola y=532, nadpis y=585, text y=647 */
 .algo-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
