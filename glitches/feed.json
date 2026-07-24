@@ -5,7 +5,19 @@
   },
   {
     "id": "intro",
-    "type": "intro"
+    "type": "intro",
+    "rozklik": {
+      "kind": "explainer",
+      "brand": "tiny-glitch",
+      "title": "Tiny Glitch je vzdělávací sociální síť",
+      "paragraphs": [
+        "Když se chceš ty něco nového naučit nebo pokud chceš naučit ty někoho jiného, tak tady je tvůj prostor.",
+        "Ve feedu najdeš tzv. Glitche. Jsou to mikrotémata. Některé Glitche jsou jen malé výzvy, které můžeš plnit přímo ve feedu. Jiné můžeš rozkliknout a popovídat si o nich s chatbotem, ověřit si znalosti kvízem.",
+        "Každý Glitch můžeš navíc remixovat. To znamená, že k němu přidáš to, co víš nebo vyzkoumáš a můžeš to sdílet s ostatními, kteří na tvou práci mohou dál navázat vlastním remixem.",
+        "Můžeš také vytvořit Glitche pro kamarády, kterými se něco naučí.",
+        "Glitche se řadí do tzv. questů. Když nějaký quest dokončíš, odemkneš si další a posuneš se zase o kousek dál."
+      ]
+    }
   },
   {
     "id": "wellbeing-dech",
@@ -25,7 +37,61 @@
     "title": "Co je vibe coding?",
     "body": "Řekneš přirozenou řečí, co chceš — a AI napíše kód. Ty ho spíš řídíš a hodnotíš, než píšeš řádek po řádku. Zjisti, jak to celé funguje.",
     "video": "assets/videos/vibe-coding_01.mp4?v=2",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "1/6",
+      "title": "Co je Vibe Coding",
+      "intro": "Vibe Coding je programování v přirozeném jazyce. Místo psaní kódu popíšeš vlastními slovy, co chceš, a umělá inteligence kód napíše za tebe.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Pojem Vibe Coding vymyslel Andrej Karpathy, který je zároveň spoluzakladatelem společnosti OpenAI."
+        },
+        {
+          "from": "bot",
+          "text": "Reagoval tak na vývoj umělé inteligence, protože ta dokáže vytvářet prototypy aplikací tak, že lidé popisují svou představu a AI píše kód."
+        },
+        {
+          "from": "bot",
+          "text": "Zkus se zamyslet nad slovním spojením Vibe Coding a říct, proč zvolil zrovna tento název."
+        },
+        {
+          "from": "user",
+          "text": "vibe znamena neco jakoze to je o pocitech"
+        },
+        {
+          "from": "bot",
+          "text": "Super, pojďme zkusit ověřit tvé znalosti kvízem. Zvol klidně více možností."
+        },
+        {
+          "from": "bot",
+          "text": "Co nového přinesl Vibe Coding do tvorby prototypů aplikací?"
+        },
+        {
+          "from": "quiz",
+          "multi": true,
+          "options": [
+            {
+              "label": "Vývoj aplikací je levnější.",
+              "correct": true
+            },
+            {
+              "label": "Je to o dost rychlejší.",
+              "correct": true
+            },
+            {
+              "label": "Mohou to dělat i lidé, kteří o tom zas tak moc nevědí.",
+              "correct": true
+            },
+            {
+              "label": "Dřív nemohl prototyp vytvářet jen jeden člověk.",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "vibecoding-bez-kodu",

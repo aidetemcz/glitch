@@ -744,3 +744,145 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: transparent; transition: opacity .12s ease;
 }
 .pf-signout:active { opacity: .7; }
+
+/* ==========================================================================
+   Rozklik (detail Glitche) — světlý panel nad feedem
+   Typy: explainer (vysvětlení) a chat (Basic Glitch — Tinybot + kvíz)
+   ========================================================================== */
+body.rz-lock { overflow: hidden; }
+.rz-overlay {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(0,0,0,0.35);
+  display: none;
+}
+.rz-overlay.is-open { display: block; }
+.rz-panel {
+  position: relative;
+  width: 100%; max-width: var(--feed-max); height: 100%;
+  margin: 0 auto;
+  background: var(--c-white); color: var(--c-black);
+  display: flex; flex-direction: column;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.rz-panel::-webkit-scrollbar { display: none; }
+
+/* horní lišta: zavírací šipka (vlevo) · kapitola · štítky (vpravo) */
+.rz-bar {
+  flex: 0 0 auto; position: sticky; top: 0; z-index: 3;
+  display: flex; align-items: center; gap: calc(12 * var(--u));
+  padding: calc(24 * var(--u)) calc(28 * var(--u)) calc(10 * var(--u));
+  background: var(--c-white);
+}
+.rz-close {
+  flex: 0 0 auto; display: grid; place-items: center;
+  transition: transform .12s ease;
+}
+.rz-close:active { transform: scale(.9); }
+.rz-close img { width: calc(38 * var(--u)); height: auto; transform: rotate(180deg); }
+.rz-chapter {
+  display: inline-flex; align-items: center; height: calc(32 * var(--u)); padding: 0 calc(12 * var(--u));
+  background: var(--c-black); color: var(--c-white);
+  border-radius: calc(8 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
+  letter-spacing: var(--tracking);
+}
+.rz-badges { margin-left: auto; display: flex; gap: calc(10 * var(--u)); }
+.rz-badge {
+  display: inline-flex; align-items: center; height: calc(32 * var(--u)); padding: 0 calc(12 * var(--u));
+  background: var(--c-white); color: var(--c-black);
+  border: 1px solid var(--c-grey-15); border-radius: calc(8 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1; letter-spacing: var(--tracking); white-space: nowrap;
+}
+
+.rz-body { flex: 1 1 auto; padding: calc(18 * var(--u)) calc(28 * var(--u)) calc(28 * var(--u)); }
+.rz-title { margin: 0; color: var(--c-black); }
+
+/* -- explainer -- */
+.rz-body--explainer { padding-top: calc(8 * var(--u)); }
+.rz-brand { display: block; margin: calc(6 * var(--u)) 0 calc(26 * var(--u)) auto; width: calc(120 * var(--u)); height: auto; }
+.rz-body--explainer .rz-title { margin-bottom: calc(22 * var(--u)); }
+.rz-para { color: var(--c-black); margin-bottom: calc(18 * var(--u)); }
+.rz-para:last-child { margin-bottom: 0; }
+
+/* -- chat -- */
+.rz-panel--chat { }
+.rz-intro { color: var(--c-black); margin: calc(14 * var(--u)) 0 calc(24 * var(--u)); }
+.rz-thread { display: flex; flex-direction: column; gap: calc(16 * var(--u)); }
+.rz-msg { display: flex; align-items: flex-end; gap: calc(10 * var(--u)); max-width: 100%; }
+.rz-msg--bot { justify-content: flex-start; }
+.rz-msg--user { justify-content: flex-end; }
+.rz-ava {
+  flex: 0 0 auto; width: calc(30 * var(--u)); height: calc(30 * var(--u)); border-radius: 50%;
+  overflow: hidden; align-self: flex-start;
+}
+.rz-ava--bot { background: var(--c-yellow); display: grid; place-items: center; }
+.rz-ava--bot img { width: 118%; height: 118%; object-fit: cover; object-position: center 34%; }
+.rz-ava--user { background: var(--c-yellow); border: 1px solid #e6e600; }
+.rz-bubble {
+  max-width: calc(238 * var(--u));
+  padding: calc(12 * var(--u)) calc(14 * var(--u));
+  border-radius: calc(12 * var(--u));
+  font-size: calc(16 * var(--u)); line-height: calc(21 * var(--u)); letter-spacing: var(--tracking);
+  color: var(--c-black); word-wrap: break-word; overflow-wrap: anywhere;
+}
+.rz-msg--bot .rz-bubble { background: #ececec; border-top-left-radius: calc(4 * var(--u)); }
+.rz-msg--user .rz-bubble { background: #fbfbcb; border-top-right-radius: calc(4 * var(--u)); }
+
+/* kvíz uvnitř chatu */
+.rz-quiz { display: flex; flex-direction: column; gap: calc(12 * var(--u)); padding: calc(4 * var(--u)) 0 0 calc(40 * var(--u)); }
+.rz-opt {
+  display: flex; align-items: flex-start; gap: calc(10 * var(--u));
+  background: transparent; text-align: left; color: var(--c-black);
+  font-size: calc(16 * var(--u)); line-height: calc(20 * var(--u)); letter-spacing: var(--tracking);
+}
+.rz-mark {
+  flex: 0 0 auto; width: calc(22 * var(--u)); height: calc(22 * var(--u));
+  border: 1.5px solid var(--c-black); background: var(--c-white);
+  display: grid; place-items: center; position: relative;
+}
+.rz-mark--checkbox { border-radius: calc(5 * var(--u)); }
+.rz-mark--radio { border-radius: 50%; }
+.rz-opt.is-sel .rz-mark { background: var(--c-yellow); }
+.rz-opt.is-sel .rz-mark--checkbox::after {
+  content: ""; width: calc(11 * var(--u)); height: calc(6 * var(--u));
+  border-left: 2px solid var(--c-black); border-bottom: 2px solid var(--c-black);
+  transform: translateY(-1px) rotate(-45deg);
+}
+.rz-opt.is-sel .rz-mark--radio::after {
+  content: ""; width: calc(10 * var(--u)); height: calc(10 * var(--u)); border-radius: 50%; background: var(--c-black);
+}
+.rz-opt.is-locked { opacity: .9; }
+.rz-opt.is-correct .rz-opt-label { font-weight: 600; }
+.rz-opt.is-correct .rz-mark { background: var(--c-yellow); border-color: var(--c-black); }
+.rz-opt.is-wrong .rz-mark { border-color: #b00020; }
+.rz-opt.is-wrong .rz-opt-label { color: #b00020; text-decoration: line-through; }
+.rz-quiz-submit {
+  align-self: flex-start; margin-top: calc(4 * var(--u));
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: calc(11 * var(--u)) calc(20 * var(--u));
+  font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); color: var(--c-black);
+  background: transparent; transition: opacity .12s ease;
+}
+.rz-quiz-submit:active { opacity: .7; }
+.rz-quiz-submit:disabled { opacity: .5; cursor: default; }
+
+/* vstupní pole chatu (dole) */
+.rz-input {
+  flex: 0 0 auto; position: sticky; bottom: 0;
+  display: flex; align-items: center; gap: calc(12 * var(--u));
+  padding: calc(14 * var(--u)) calc(28 * var(--u)) calc(18 * var(--u));
+  background: var(--c-white); border-top: 1px solid var(--c-grey-15);
+}
+.rz-input-field {
+  flex: 1 1 auto; height: calc(46 * var(--u));
+  border: 1px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: 0 calc(14 * var(--u));
+  font-family: var(--font); font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
+  color: var(--c-black); background: var(--c-white); outline: none;
+}
+.rz-input-field::placeholder { color: var(--c-grey-50); }
+.rz-send {
+  flex: 0 0 auto; width: calc(46 * var(--u)); height: calc(46 * var(--u));
+  background: var(--c-yellow); border-radius: calc(8 * var(--u));
+  display: grid; place-items: center; transition: transform .12s ease;
+}
+.rz-send:active { transform: scale(.92); }

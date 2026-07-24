@@ -109,14 +109,21 @@
   const trustLabel = (t) => TRUST_LABEL[String(t == null ? "core" : t).toLowerCase()] || String(t || "Glitch");
   // Štítky zleva: téma (topic) · typ Glitche (category) · autor (trust).
   // Basic Glitch (quest) nemá typ; historická osobnost nemá téma → render dle toho, co je.
+  // Shrnutí (a jiné systémové karty) nemají štítek autora — jen typ.
+  const NO_CREATOR = new Set(["daily_summary"]);
   const badges = (c) => {
     const parts = [];
     if (c.topic) parts.push(`<span class="badge topic">${esc(c.topic)}</span>`);
     if (c.category) parts.push(`<span class="badge type">${esc(c.category)}</span>`);
-    parts.push(`<span class="badge creator">${esc(trustLabel(c.trust))}</span>`);
+    if (!NO_CREATOR.has(c.type)) parts.push(`<span class="badge creator">${esc(trustLabel(c.trust))}</span>`);
     return `<div class="badges">${parts.join("")}</div>`;
   };
-  const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
+  // Žlutá šipka vpravo dole: rozklikne detail (má-li ho karta), jinak posune na další Glitch.
+  const chevron = (c) => {
+    const act = c && c.rozklik ? "rozklik" : "next";
+    const lbl = act === "rozklik" ? "Rozkliknout Glitch" : "Další Glitch";
+    return `<button class="nav-chevron" data-nav="${act}" aria-label="${lbl}"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
+  };
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
 
@@ -145,7 +152,7 @@
           <h1 class="fx-title g-h1">Vítej v Glitchi!</h1>
           <p class="fx-text g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
         </div>
-        ${chevron()}`;
+        ${chevron(c)}`;
     },
 
     mood_selector(c) {
@@ -191,7 +198,7 @@
           <h1 class="fx-title g-h1">${esc(c.title)}</h1>
           <p class="fx-text g-p">${esc(c.body)}</p>
         </div>
-        ${chevron()}`;
+        ${chevron(c)}`;
     },
 
     quick_challenge(c) {
@@ -238,7 +245,7 @@
             <p class="fx-text g-p">${esc(c.body)}</p>
           </div>
         </div>
-        ${chevron()}`;
+        ${chevron(c)}`;
     },
 
     fun_fact(c) {
@@ -250,7 +257,7 @@
             <p class="fx-text g-p-s">${esc(c.body)}</p>
           </div>
         </div>
-        ${chevron()}`;
+        ${chevron(c)}`;
     },
 
     spot_the_mistake(c) {
@@ -262,7 +269,7 @@
             <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
           </div>
         </div>
-        ${chevron()}`;
+        ${chevron(c)}`;
     },
 
     historicka_osobnost(c) {
@@ -274,7 +281,7 @@
             <p class="fx-text g-p-s">${esc(c.body)}</p>
           </div>
         </div>
-        ${chevron()}`;
+        ${chevron(c)}`;
     },
 
     argument(c) {
@@ -305,7 +312,7 @@
         <div class="summary-stats fx-block" style="top:50.7%">${rows}</div>
         <button class="summary-link fx-block" style="top:66.5%">Zobrazit dlouhodobé statistiky</button>
         <p class="summary-outro fx-block g-p reserve-chevron" style="top:76.3%">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
-        ${chevron()}`;
+        ${chevron(c)}`;
     }
   };
 
@@ -362,8 +369,10 @@
   }
 
   // Sestavení karet z katalogu, seřazené doporučovačem (js/recommender.js)
+  let _cardData = [];
   function buildCards(catalog) {
     const ordered = (typeof window.serazFeed === "function") ? window.serazFeed(catalog) : catalog;
+    _cardData = ordered;
     feed.innerHTML = "";
     ordered.forEach((c, i) => {
       const el = document.createElement("section");
@@ -399,7 +408,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=14", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=15", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -418,6 +427,8 @@
   }
 
   feed.addEventListener("click", (e) => {
+    const rz = e.target.closest("[data-nav='rozklik']");
+    if (rz) { const card = rz.closest(".card"); openRozklik(_cardData[card.dataset.index]); return; }
     const nav = e.target.closest("[data-nav='next']");
     if (nav) { nextFrom(nav.closest(".card")); }
   });
@@ -785,6 +796,161 @@
       // TODO: otevřít chat s Tinybotem (zatím není hotový)
       toast("Chat s Tinybotem — připravujeme 🚧");
     }));
+  }
+
+  /* ==========================================================================
+     Rozklik (detail Glitche) — celoobrazovkový světlý panel nad feedem.
+     Dva druhy: „explainer" (vysvětlení, např. Co je Glitch) a „chat"
+     (Basic Glitch — povídání s Tinybotem + kvíz). Chatbot se napojí později;
+     zatím je konverzace skriptovaná a vstupní pole jen přidá bublinu uživatele.
+     ========================================================================== */
+  const SEND_ICO =
+    '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">' +
+    '<path d="M3 11.5 21 3l-8.5 18-2.7-7.3L3 11.5Z" fill="#1a1a1a"/></svg>';
+
+  function rzBadges(c) {
+    // v rozkliku vpravo nahoře: autor (Glitch) + téma — bílé pilulky s obrysem
+    const parts = [];
+    if (!NO_CREATOR.has(c.type)) parts.push(`<span class="rz-badge">${esc(trustLabel(c.trust))}</span>`);
+    if (c.topic) parts.push(`<span class="rz-badge">${esc(c.topic)}</span>`);
+    return `<div class="rz-badges">${parts.join("")}</div>`;
+  }
+
+  function renderExplainer(c, r) {
+    const paras = (r.paragraphs || []).map((p) => `<p class="rz-para g-p">${esc(p)}</p>`).join("");
+    const brand = r.brand === "tiny-glitch"
+      ? `<img class="rz-brand" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny Glitch">`
+      : "";
+    return `
+      <header class="rz-bar">
+        <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
+        ${rzBadges(c)}
+      </header>
+      <div class="rz-body rz-body--explainer">
+        ${brand}
+        <h1 class="rz-title g-h1">${esc(r.title)}</h1>
+        ${paras}
+      </div>`;
+  }
+
+  function renderChat(c, r) {
+    const thread = (r.messages || []).map((m) => {
+      if (m.from === "bot") {
+        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="${LOGO}" alt="Tinybot"></span>` +
+               `<div class="rz-bubble">${esc(m.text)}</div></div>`;
+      }
+      if (m.from === "user") {
+        return `<div class="rz-msg rz-msg--user"><div class="rz-bubble">${esc(m.text)}</div>` +
+               `<span class="rz-ava rz-ava--user"></span></div>`;
+      }
+      if (m.from === "quiz") {
+        const type = m.multi ? "checkbox" : "radio";
+        const opts = (m.options || []).map((o, i) =>
+          `<button class="rz-opt" data-rz-opt="${i}" data-correct="${!!o.correct}" data-type="${type}">` +
+          `<span class="rz-mark rz-mark--${type}"></span><span class="rz-opt-label">${esc(o.label)}</span></button>`).join("");
+        return `<div class="rz-quiz" data-rz-quiz data-multi="${!!m.multi}">${opts}` +
+               `<button class="rz-quiz-submit" data-rz-submit>Odeslat odpověď</button></div>`;
+      }
+      return "";
+    }).join("");
+    return `
+      <header class="rz-bar">
+        <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
+        ${r.chapter ? `<span class="rz-chapter">${esc(r.chapter)}</span>` : ""}
+        ${rzBadges(c)}
+      </header>
+      <div class="rz-body rz-body--chat">
+        <h1 class="rz-title g-h1">${esc(r.title)}</h1>
+        ${r.intro ? `<p class="rz-intro g-p">${esc(r.intro)}</p>` : ""}
+        <div class="rz-thread" data-rz-thread>${thread}</div>
+      </div>
+      <form class="rz-input" data-rz-form>
+        <input class="rz-input-field" type="text" placeholder="Začni psát…" aria-label="Napiš zprávu" autocomplete="off">
+        <button class="rz-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>
+      </form>`;
+  }
+
+  let _rzOverlay = null;
+  function ensureRzOverlay() {
+    if (_rzOverlay) return _rzOverlay;
+    _rzOverlay = document.createElement("div");
+    _rzOverlay.className = "rz-overlay";
+    _rzOverlay.innerHTML = `<section class="rz-panel" role="dialog" aria-modal="true"></section>`;
+    document.body.appendChild(_rzOverlay);
+    // klik na tmavé pozadí (mimo panel) zavře
+    _rzOverlay.addEventListener("click", (e) => { if (e.target === _rzOverlay) closeRozklik(); });
+    return _rzOverlay;
+  }
+
+  function openRozklik(c) {
+    if (!c || !c.rozklik) return;
+    const r = c.rozklik;
+    const ov = ensureRzOverlay();
+    const panel = ov.querySelector(".rz-panel");
+    panel.className = "rz-panel rz-panel--" + (r.kind || "explainer");
+    panel.innerHTML = (r.kind === "chat") ? renderChat(c, r) : renderExplainer(c, r);
+    panel.scrollTop = 0;
+    ov.classList.add("is-open");
+    document.body.classList.add("rz-lock");
+
+    panel.querySelector("[data-rz-close]").addEventListener("click", closeRozklik);
+    if (r.kind === "chat") initRzChat(panel);
+  }
+
+  function closeRozklik() {
+    if (!_rzOverlay) return;
+    _rzOverlay.classList.remove("is-open");
+    document.body.classList.remove("rz-lock");
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && _rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
+  });
+
+  function initRzChat(panel) {
+    // Kvíz uvnitř chatu: výběr možností + vyhodnocení po odeslání
+    panel.querySelectorAll("[data-rz-quiz]").forEach((quiz) => {
+      const multi = quiz.dataset.multi === "true";
+      const opts = quiz.querySelectorAll(".rz-opt");
+      const submit = quiz.querySelector("[data-rz-submit]");
+      let done = false;
+      opts.forEach((opt) => opt.addEventListener("click", () => {
+        if (done) return;
+        if (multi) opt.classList.toggle("is-sel");
+        else { opts.forEach((o) => o.classList.toggle("is-sel", o === opt)); }
+      }));
+      if (submit) submit.addEventListener("click", () => {
+        if (done) return; done = true;
+        opts.forEach((o) => {
+          const correct = o.dataset.correct === "true";
+          const sel = o.classList.contains("is-sel");
+          if (correct) o.classList.add("is-correct");
+          if (sel && !correct) o.classList.add("is-wrong");
+          o.classList.add("is-locked");
+        });
+        submit.textContent = "Vyhodnoceno";
+        submit.disabled = true;
+      });
+    });
+
+    // Vstupní pole: přidá bublinu uživatele (napojení na Tinybota přijde později)
+    const form = panel.querySelector("[data-rz-form]");
+    const thread = panel.querySelector("[data-rz-thread]");
+    if (form && thread) form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const field = form.querySelector(".rz-input-field");
+      const text = (field.value || "").trim();
+      if (!text) return;
+      const msg = document.createElement("div");
+      msg.className = "rz-msg rz-msg--user";
+      msg.innerHTML = `<div class="rz-bubble"></div><span class="rz-ava rz-ava--user"></span>`;
+      msg.querySelector(".rz-bubble").textContent = text;
+      thread.appendChild(msg);
+      field.value = "";
+      thread.scrollIntoView({ block: "end" });
+      panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
+      toast("Tinybot se připojí brzy 🚧");
+    });
   }
 
 })();
