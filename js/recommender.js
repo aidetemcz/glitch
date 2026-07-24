@@ -82,15 +82,20 @@
       return true;
     });
 
-    // 2) měkké řazení — jen když máme náladu (jinak zachovej původní pořadí)
+    // 2) měkké řazení dle nálady — jen když je nálada známá.
+    //    Questové karty (mají chapterNo) drží pořadí kapitol na svých místech;
+    //    podle nálady se přeskládají jen OSTATNÍ karty (do jejich slotů).
+    //    → návazné Glitche zůstanou seřazené (1→6), nic se negatuje.
     if (targetDiff != null) {
-      pool = pool
+      const otherSlots = [], others = [];
+      pool.forEach((c, i) => { if (c.chapterNo == null) { otherSlots.push(i); others.push(c); } });
+      others
         .map((c, i) => ({
           c, i,
           sc: (3 - Math.abs(difficultyOf(c) - targetDiff)) + (WELLBEING_TYPES.has(c.type) ? 0.5 : 0)
         }))
         .sort((a, b) => (b.sc - a.sc) || (a.i - b.i))    // stabilní: při shodě původní pořadí
-        .map((x) => x.c);
+        .forEach((x, k) => { pool[otherSlots[k]] = x.c; });
     }
 
     // 3) denní strop
