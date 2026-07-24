@@ -416,6 +416,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.3;
 }
 .quiz-figure svg { display: block; }
+/* úryvek kódu u trasovací výzvy — monospace, zarovnaný vlevo */
+.quiz-code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: calc(17 * var(--u)); line-height: 1.5;
+  white-space: pre; overflow-x: auto;
+  color: var(--fg);
+  border-left: calc(3 * var(--u)) solid var(--fg);
+  padding: calc(4 * var(--u)) 0 calc(4 * var(--u)) calc(14 * var(--u));
+  letter-spacing: 0;
+}
 
 /* ==========================================================================
    Media (iframe vizualizace)

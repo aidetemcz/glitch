@@ -194,6 +194,112 @@
     "title": "Edsger Dijkstra",
     "body": "Informatik, který tvrdil, že program se má hlavně chápat — ne jen spustit a doufat. Proslul větou, že testování ukáže, že chyby jsou, ale nikdy že nejsou. Zeptej se ho, proč na porozumění záleží." },
 
+  { "id": "algoritmus-co-je-algoritmus", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 1,
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 1,
+    "title": "Robot bere všechno doslova",
+    "body": "Tenhle robot udělá přesně to, co mu napíšeš — a ani o chlup víc. Dáš mu návod „namaž chleba“ a výsledek tě překvapí. Dokázal bys mu dát návod, který nejde splést?" },
+
+  { "id": "algoritmus-pseudokod-a-diagramy", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 2,
+    "concept_id": "informaticke-mysleni-pseudokod-a-vyvojove-diagramy", "obtiznost": 2,
+    "title": "Nakresli postup",
+    "body": "Než něco naprogramuješ, můžeš postup nejdřív nakreslit — jako mapku se šipkami, kterou pochopí každý. Zvládneš přečíst, kudy se postup vydá, když prší?" },
+
+  { "id": "algoritmus-podminky-kdyz-tak", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 3,
+    "concept_id": "programovani-podminky-v-kodu", "obtiznost": 2,
+    "title": "Program se rozhoduje sám",
+    "body": "Jak appka pozná, kdy ukázat „Výhra“ a kdy „Hraj dál“? Nemá to napsané pro každý případ zvlášť — použije podmínku. Zvládneš říct, co se stane při skóre přesně 100?" },
+
+  { "id": "algoritmus-cykly-opakovani", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 4,
+    "concept_id": "programovani-cykly-v-kodu", "obtiznost": 2,
+    "title": "Nech to udělat počítač",
+    "body": "Musíš napsat „ahoj“ stokrát pod sebe. Napíšeš to stokrát ručně? Nebo počítači řekneš „opakuj 100×“? Právě od toho je cyklus. Spočítáš, co vypíše ten dole?" },
+
+  { "id": "algoritmus-puleni-v-milionu", "type": "fun_fact", "category": "Fun fact", "trust": "Core",
+    "concept_id": "informaticke-mysleni-zakladni-algoritmy", "obtiznost": 1,
+    "title": "V milionu seřazených jmen najdeš to pravé za ~20 kroků.",
+    "body": "Trik se jmenuje půlení — pokaždé zahodíš půlku, která tě nezajímá." },
+
+  { "id": "algoritmus-eukliduv-algoritmus", "type": "fun_fact", "category": "Fun fact", "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 1,
+    "title": "Nejstarší algoritmus, co pořád používáme, má přes 2000 let.",
+    "body": "Sepsal ho Euklides zhruba 300 let před naším letopočtem — a běží i v dnešních počítačích." },
+
+  { "id": "algoritmus-jen-pro-pocitace", "type": "spot_the_mistake", "category": "Najdi chybu", "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 2,
+    "claim": "Algoritmus je složitá věc, která existuje jen uvnitř počítačů.",
+    "context": "Vážně jen tam? Rozklikni a najdi, co na tom nesedí." },
+
+  { "id": "algoritmus-na-rychlosti-nezalezi", "type": "spot_the_mistake", "category": "Najdi chybu", "trust": "Core",
+    "concept_id": "informaticke-mysleni-efektivita-reseni", "obtiznost": 2,
+    "claim": "Hlavně že algoritmus vyjde. Na tom, jak dlouho to trvá, vůbec nezáleží.",
+    "context": "Fakt vůbec? Rozklikni a najdi, co na tom nesedí." },
+
+  { "id": "al-chwarizmi", "type": "historicka_osobnost", "category": "Historická osobnost", "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 2,
+    "title": "Muhammad al-Chwárizmí",
+    "body": "Matematik z doby před více než 1200 lety, po kterém se jmenuje slovo algoritmus. Sepisoval jasné postupy, jak krok za krokem vyřešit úlohu. Zeptej se ho, odkud se algoritmy vzaly." },
+
+  { "id": "katherine-johnson", "type": "historicka_osobnost", "category": "Historická osobnost", "trust": "Core",
+    "concept_id": "informaticke-mysleni-zakladni-algoritmy", "obtiznost": 2,
+    "title": "Katherine Johnson",
+    "body": "Matematička z NASA, která krok za krokem počítala dráhy prvních letů do vesmíru — tak přesně, že jí astronaut věřil víc než počítači. Zeptej se jí, proč na každém kroku záleží." },
+
+  { "id": "george-boole", "type": "historicka_osobnost", "category": "Historická osobnost", "trust": "Core",
+    "concept_id": "informaticke-mysleni-logika-a-booleovske-vyrazy", "obtiznost": 2,
+    "title": "George Boole",
+    "body": "Matematik, který proměnil „pravdu“ a „nepravdu“ v počty. Bez jeho nápadu by dnešní programy neuměly rozhodovat „když tohle, tak tamto“. Zeptej se ho, jak z logiky udělal matematiku." },
+
+  { "id": "algoritmus-rv-co-je-algoritmus", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 1, "layout": "text", "cols": 1,
+    "question": "Co je algoritmus?",
+    "answers": [
+      { "label": "Přesný návod krok za krokem, jak něco vyřešit.", "correct": true },
+      { "label": "Program napsaný v nějakém programovacím jazyce.", "correct": false },
+      { "label": "Chytrý počítač, který sám rozhoduje.", "correct": false },
+      { "label": "Náhodný nápad, jak něco udělat.", "correct": false }
+    ] },
+
+  { "id": "algoritmus-jednoznacnost", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 2, "layout": "text", "cols": 1,
+    "question": "Který z postupů je opravdový algoritmus (dojde podle něj každý ke stejnému výsledku)?",
+    "answers": [
+      { "label": "„Dej sáček do hrnku, zalij 250 ml vroucí vody, počkej 3 minuty, sáček vyndej.“", "correct": true },
+      { "label": "„Uvař čaj nějak dobře.“", "correct": false },
+      { "label": "„Přidej vodu, dokud to nebude tak akorát.“", "correct": false },
+      { "label": "„Zkoušej to, dokud ti to nevyjde.“", "correct": false }
+    ] },
+
+  { "id": "algoritmus-co-udela-cyklus", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "informaticke-mysleni-rizeni-toku", "obtiznost": 2, "cols": 2,
+    "code": "počet = 0\nopakuj 3×:\n    počet = počet + 2\nvypiš počet",
+    "question": "Co program vypíše?",
+    "answers": [
+      { "label": "2", "correct": false },
+      { "label": "3", "correct": false },
+      { "label": "6", "correct": true },
+      { "label": "5", "correct": false }
+    ] },
+
+  { "id": "algoritmus-podminka-konec-hry", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "informaticke-mysleni-logika-a-booleovske-vyrazy", "obtiznost": 2, "layout": "text", "cols": 1,
+    "question": "když (životy = 0) A ZÁROVEŇ (čas > 0): zobraz „Konec hry“ — kdy se „Konec hry“ opravdu zobrazí?",
+    "answers": [
+      { "label": "Když má hráč 0 životů a zároveň ještě zbývá čas.", "correct": true },
+      { "label": "Když má hráč 0 životů nebo když došel čas.", "correct": false },
+      { "label": "Když hráči došel čas.", "correct": false },
+      { "label": "Vždycky na konci hry.", "correct": false }
+    ] },
+
+  { "id": "algoritmus-dekompozice", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Core",
+    "concept_id": "informaticke-mysleni-dekompozice", "obtiznost": 1, "layout": "text", "cols": 1,
+    "question": "Máš naplánovat školní výlet (doprava, ubytování, program). Jak nejlíp začneš?",
+    "answers": [
+      { "label": "Rozdělím úkol na menší části (doprava, ubytování, program) a řeším je po jedné.", "correct": true },
+      { "label": "Udělám všechno najednou, ať je to rychle z krku.", "correct": false },
+      { "label": "Počkám, až mě napadne celé řešení naráz.", "correct": false },
+      { "label": "Vzdám to, je to moc velké.", "correct": false }
+    ] },
+
   { "id": "shrnuti-dne", "type": "daily_summary", "category": "Shrnutí",
     "stats": [
       { "label": "Vyřešených Glitchů", "value": 2 },

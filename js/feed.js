@@ -213,6 +213,20 @@
           </div>
           <div class="quiz-options cols-1v fx-options" style="top:${timersOn() ? "44%" : "38%"}">${opts}</div>`;
       }
+      // trasovací výzva s úryvkem kódu (krátké číselné odpovědi)
+      if (c.code) {
+        return `${badges(c)}
+          ${timersOn() ? `<div class="timer-row fx-block" style="top:14%">
+            <button class="timer-toggle" data-timer aria-label="Zapnout časovač"></button>
+            <p class="timer-note g-p-s">Pokud chceš, můžeš si zapnout časovač. Stačí kliknout na kolečko.</p>
+          </div>` : ""}
+          <pre class="quiz-code fx-block" style="top:${timersOn() ? "27%" : "22%"}">${esc(c.code)}</pre>
+          <div class="fx-block" style="top:53%">
+            <div class="g-h3">${esc(c.question)}</div>
+            ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
+          </div>
+          <div class="quiz-options cols-${c.cols || 2} fx-options" style="top:66%">${opts}</div>`;
+      }
       return `${badges(c)}
         ${timersOn() ? `<div class="timer-row fx-block" style="top:15.5%">
           <button class="timer-toggle" data-timer aria-label="Zapnout časovač"></button>
@@ -397,7 +411,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=4", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=5", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
