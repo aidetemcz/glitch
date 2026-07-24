@@ -330,7 +330,9 @@
 
   /* ---------- Dílčí komponenty ---------- */
   function vizFrame(src) {
-    return `<iframe class="viz-frame" src="${src}" loading="lazy" title="Vizualizace"
+    // src se nastaví až přes IntersectionObserver (viz initVizFrame) — spolehlivější
+    // než prohlížečové loading=lazy uvnitř posuvného feedu (na mobilech vynechává).
+    return `<iframe class="viz-frame" data-viz-src="${src}" title="Vizualizace"
               style="width:100%;height:100%;aspect-ratio:1/1"></iframe>`;
   }
 
@@ -482,6 +484,7 @@
     if (c.type === "argument") initArgument(el);
     if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el);
+    if (c.type === "algorithm_demo") initVizFrame(el);
     if (c.type === "quest_intro") initQuestVideo(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") {
@@ -497,6 +500,26 @@
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)
     el.querySelectorAll("[data-timer]").forEach((b) =>
       b.addEventListener("click", () => b.classList.toggle("is-on")));
+  }
+
+  /* ---- Spolehlivé načítání animací (iframe vizualizace) ----
+     Řízeno vlastním IntersectionObserverem (root = feed) místo prohlížečového
+     loading=lazy, které uvnitř posuvného feedu na mobilech vynechává. src se
+     nastaví, jakmile se karta blíží; jednou načtené se nechává (bez blikání). */
+  let _vizObserver = null;
+  function initVizFrame(el) {
+    const f = el.querySelector(".viz-frame[data-viz-src]");
+    if (!f) return;
+    const load = () => { if (!f.getAttribute("src")) f.src = f.dataset.vizSrc; };
+    if (!("IntersectionObserver" in window)) { load(); return; }
+    if (!_vizObserver) {
+      _vizObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { const fr = e.target; if (!fr.getAttribute("src")) fr.src = fr.dataset.vizSrc; }
+        });
+      }, { root: feed, rootMargin: "400px 0px", threshold: 0.01 });
+    }
+    _vizObserver.observe(f);
   }
 
   /* ---- Líné načítání videí u Quest karet ----
