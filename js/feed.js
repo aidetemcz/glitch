@@ -179,8 +179,11 @@
     quest_intro(c) {
       // Video se NEnačítá dopředu (preload=none, src až přes IntersectionObserver),
       // ať slabý internet netáhne všech 6 videí naráz — jen to zrovna viditelné.
+      // Náhledový obrázek (poster) je malý (~30 kB) a naskočí dřív než video →
+      // i na extra pomalém internetu je hned vidět náhled místo černé plochy.
+      const poster = c.video ? c.video.replace(/\/([^/]+)\.mp4(\?.*)?$/, "/posters/$1.jpg") : "";
       const bg = c.video
-        ? `<video class="quest-video" muted loop playsinline preload="none" data-video-src="${c.video}"></video><div class="quest-scrim"></div>`
+        ? `<video class="quest-video" muted loop playsinline preload="none" data-poster="${poster}" data-video-src="${c.video}"></video><div class="quest-scrim"></div>`
         : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
         <div class="fx-block quest-text reserve-chevron" style="top:65%">
@@ -500,17 +503,21 @@
      Video se stáhne a přehraje teprve, když je karta na řadě (viditelná). Šetří
      data na slabém internetu (školy) — nestahuje se všech 6 videí naráz. */
   let _videoObserver = null;
+  function loadQuestMedia(v) {
+    // poster jako první (malý, naskočí hned), pak teprve zdroj videa
+    if (v.dataset.poster && !v.getAttribute("poster")) v.setAttribute("poster", v.dataset.poster);
+    if (!v.src) v.src = v.dataset.videoSrc;
+  }
   function initQuestVideo(el) {
     const v = el.querySelector(".quest-video");
     if (!v || !v.dataset.videoSrc) return;
-    const load = () => { if (!v.src) v.src = v.dataset.videoSrc; };
     // bez IntersectionObserver (starý prohlížeč) → načti hned
-    if (!("IntersectionObserver" in window)) { load(); v.play().catch(() => {}); return; }
+    if (!("IntersectionObserver" in window)) { loadQuestMedia(v); v.play().catch(() => {}); return; }
     if (!_videoObserver) {
       _videoObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           const vid = e.target;
-          if (e.isIntersecting) { if (!vid.src) vid.src = vid.dataset.videoSrc; vid.play().catch(() => {}); }
+          if (e.isIntersecting) { loadQuestMedia(vid); vid.play().catch(() => {}); }
           else vid.pause();
         });
       }, { root: feed, rootMargin: "150px 0px", threshold: 0.35 });
