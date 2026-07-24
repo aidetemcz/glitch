@@ -8,6 +8,7 @@
   --c-black:      #000000;
   --c-dark:       #1a1a1a;
   --c-white:      #ffffff;
+  --c-grey-10:    #e7e7e7;
   --c-grey-15:    #d0d0d0;
   --c-grey-50:    #747474;
   --c-yellow:     #ffff00;
@@ -124,11 +125,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ========================================================================== */
 
 /* Štítky vlevo nahoře — pořadí: téma (žlutá) · typ (žlutá) · autor (bílá).
-   Rozestup 12 px (dle návrhu). */
-.badges { position: absolute; top: calc(28 * var(--u)); left: calc(28 * var(--u)); z-index: 5; display: flex; gap: calc(12 * var(--u)); }
+   Figma: top 26, left 23, výška 26, radius 5, mezera 12. */
+.badges { position: absolute; top: calc(26 * var(--u)); left: calc(23 * var(--u)); z-index: 5; display: flex; gap: calc(12 * var(--u)); }
 .badge {
-  display: flex; align-items: center; height: calc(32 * var(--u)); padding: 0 calc(12 * var(--u));
-  border-radius: calc(8 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
+  display: flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(11 * var(--u));
+  border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
   letter-spacing: var(--tracking); white-space: nowrap;
 }
 .badge.topic, .badge.type { background: var(--c-yellow); color: #1a1a1a; }
@@ -140,12 +141,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   align-self: flex-start;
   align-items: center;
   justify-content: center;
-  min-width: calc(40 * var(--u));
-  height: calc(40 * var(--u));
-  padding: 0 calc(10 * var(--u));
+  min-width: calc(30 * var(--u));
+  height: calc(39 * var(--u));
+  padding: 0 calc(6 * var(--u));
   background: var(--c-grey-15);
-  color: var(--c-black);
-  border-radius: calc(8 * var(--u));
+  color: #1a1a1a;
+  border-radius: calc(5 * var(--u));
   font-size: calc(30 * var(--u));
   font-weight: 600;
   line-height: 1;
@@ -155,14 +156,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Navigační „další Glitch" (žlutý zaoblený obdélník) */
 .nav-chevron {
   position: absolute;
-  right: calc(22 * var(--u));
-  bottom: calc(24 * var(--u));
+  right: calc(23 * var(--u));
+  bottom: calc(34 * var(--u));
   display: grid; place-items: center;
   z-index: 5;
   transition: transform .12s ease;
 }
 .nav-chevron:active { transform: scale(0.92); }
-.nav-chevron img { display: block; width: calc(40 * var(--u)); height: auto; }
+.nav-chevron img { display: block; width: calc(38 * var(--u)); height: auto; }
 /* text u karet se šipkou nesmí zajíždět pod šipku (vpravo dole) */
 .fx-block.reserve-chevron { right: calc(78 * var(--u)); }
 
@@ -203,13 +204,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Úvodní splash (žlutá) — logo Glitch + Tiny dole */
 .card[data-type="welcome"] { cursor: pointer; }
 .welcome-logo {
-  position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
-  width: calc(133 * var(--u)); height: auto;   /* Glitch hero na střed */
+  position: absolute; top: 41.5%; left: calc(50% - 7 * var(--u)); transform: translate(-50%, -50%);
+  width: calc(166 * var(--u)); height: auto;   /* Glitch hero (Figma 166×188, střed 7 px vlevo) */
 }
 .welcome-tiny {
-  position: absolute; top: 17%; left: 20%;
-  width: calc(82 * var(--u)); height: auto;     /* Tiny branding nahoře vlevo (dle návrhu) */
+  position: absolute; top: 17.9%; left: 20.4%;
+  width: calc(99 * var(--u)); height: auto;     /* Tiny branding nahoře vlevo (Figma 99×50) */
 }
+/* tlačítko přihlášení sedí 26 px nad menu (Figma y 753–800) */
+.card[data-type="welcome"] .card-footer { bottom: calc(25 * var(--u)); }
 /* ==========================================================================
    Tlačítka — jednotný styl: INVERZNÍ OUTLINE
    Průhledné pozadí, barva textu i rámeček = --fg dané karty
@@ -224,10 +227,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .arg-opt {
   background: transparent;
   color: var(--fg);
-  border: 1.5px solid var(--fg);
-  border-radius: calc(8 * var(--u));
-  font-size: calc(16 * var(--u)); font-weight: 600;   /* velikost dle glitch_p (16) */
-  line-height: normal; letter-spacing: var(--tracking);
+  border: 1px solid var(--fg);
+  border-radius: calc(5 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 400;   /* glitch_p (16/400) — dle Figmy */
+  line-height: calc(22 * var(--u)); letter-spacing: var(--tracking);
   display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer;
   transition: background .15s ease, color .15s ease, border-color .15s ease, opacity .12s ease;
@@ -238,14 +241,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .persona-cta:active,
 .arg-opt:active { opacity: .7; }
 
-/* přihlášení přes Google — uživatel může projít i bez něj */
-.welcome-login { padding: calc(15 * var(--u)) calc(30 * var(--u)); }
+/* přihlášení přes Google — uživatel může projít i bez něj (Figma 238×47) */
+.welcome-login { width: calc(238 * var(--u)); height: calc(47 * var(--u)); padding: 0; }
 
-/* Úvodní karta „Vítej v Glitchi" — logo nahoře (y≈159), text dole (y≈586) */
-.intro-logo {
-  position: absolute; top: 19.4%; left: 50%; transform: translateX(-50%);
-  width: calc(150 * var(--u)); height: auto;
+/* Úvodní karta „About Glitch" — loga vpravo nahoře, H2 + text na kartě (Figma 147:439) */
+.intro-tiny {
+  position: absolute; top: 6.6%; left: 52.2%;
+  width: calc(66 * var(--u)); height: auto;
 }
+.intro-glitch {
+  position: absolute; top: 10.4%; left: 56.2%;
+  width: calc(85 * var(--u)); height: auto;
+}
+.intro-body p + p { margin-top: calc(22 * var(--u)); }
+.intro-body { max-width: calc(301 * var(--u)); }
 
 /* Pixelové dekorace „+" na světlých kartách */
 .pixel-deco { position: absolute; z-index: 1; pointer-events: none; opacity: .92; }
@@ -255,28 +264,39 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Shrnutí (konec dne) — nadpis y=363, statistiky y=415..498, odkaz y=544
    ========================================================================== */
 .summary-mascot-wrap {
-  position: absolute; top: 12%; left: 0; right: 0;
+  position: absolute; top: 14.3%; left: 0; right: 0;
   display: grid; place-items: center; z-index: 1;
 }
-.summary-stats { }
+.summary-mascot-wrap img { width: calc(173 * var(--u)); height: auto; }
+.summary-stats { right: calc(45 * var(--u)); }
 .summary-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: calc(12 * var(--u)) 0;
-  border-bottom: 1px solid var(--c-grey-15);
+  padding: calc(10 * var(--u)) 0 calc(9 * var(--u));
+  border-bottom: 1px solid #1a1a1a;
   font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
 }
-.summary-row:first-child { border-top: 1px solid var(--c-grey-15); }
-.summary-row-val { font-weight: 400; }
+.summary-row-val { font-weight: 400; font-size: calc(18 * var(--u)); }
 .summary-link {
   color: var(--c-grey-50);
   font-size: calc(15 * var(--u)); letter-spacing: var(--tracking); text-align: left;
 }
-.summary-outro { color: var(--c-black); }
+.summary-outro { color: #1a1a1a; max-width: calc(246 * var(--u)); }
+
+/* ==========================================================================
+   Time to let go (závěrečná wellbeing karta) — H2 y=181, text y=238, kočka full-bleed dole
+   ========================================================================== */
+.letgo-text { max-width: calc(295 * var(--u)); }
+.letgo-img {
+  position: absolute; left: 0; right: 0; top: 47.7%; bottom: 0;
+  width: 100%; height: 52.3%;
+  object-fit: cover; z-index: 1;
+}
 
 /* ==========================================================================
    Mood selector (2D diagram) — nadpis y=118, text y=176, diagram střed ~452
    ========================================================================== */
-.mood-wrap { position: absolute; left: 40px; right: 40px; top: 34%; bottom: calc(120 * var(--u)); }
+/* diagram dle Figmy zabírá x 18–376, y 319–676 (přesahuje 40px okraj textu) */
+.mood-wrap { position: absolute; left: calc(18 * var(--u)); right: calc(26 * var(--u)); top: 38.6%; bottom: 18%; }
 /* Potvrdit (na bílé kartě → černý outline) */
 .mood-cta { padding: calc(15 * var(--u)) calc(46 * var(--u)); }
 .mood-cta:disabled { opacity: .55; cursor: default; }
@@ -295,37 +315,44 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: absolute; left: 40px; right: 40px; top: 37%; bottom: calc(158 * var(--u));
   display: flex; flex-direction: column; align-items: center;
 }
-.breath-counter { display: flex; align-items: center; gap: calc(16 * var(--u)); }
+.breath-counter { display: flex; align-items: center; gap: calc(11 * var(--u)); }
 .breath-step {
-  width: calc(40 * var(--u)); height: calc(40 * var(--u)); border-radius: 50%;
-  border: 1.5px solid rgba(208,208,208,0.5);
+  width: calc(26 * var(--u)); height: calc(26 * var(--u)); border-radius: 50%;
+  border: 1.5px solid var(--c-grey-50);
   display: grid; place-items: center;
-  color: var(--c-grey-15); font-size: calc(20 * var(--u)); line-height: 1;
+  color: var(--c-grey-50); font-size: calc(16 * var(--u)); font-weight: 400; line-height: 1;
 }
 .breath-value {
-  min-width: calc(54 * var(--u)); height: calc(40 * var(--u)); padding: 0 calc(8 * var(--u));
-  border-radius: 22px;
-  border: 1.5px solid rgba(208,208,208,0.5);
+  width: calc(48 * var(--u)); height: calc(48 * var(--u));
+  border-radius: 50%;
+  border: 1.5px solid var(--c-grey-50);
   display: grid; place-items: center;
-  font-size: calc(15 * var(--u)); letter-spacing: var(--tracking);
+  color: var(--c-grey-50);
+  font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
 }
-/* pevný vnější prstenec; vnitřní kolečko se v něm nafukuje/splaskává (dle návrhu) */
+/* pevný šedý kruh (178); vnitřní světlé kolečko (53) se v něm nafukuje/splaskává */
 .breath-ring {
   margin: auto 0;
-  width: calc(215 * var(--u)); height: calc(215 * var(--u)); border-radius: 50%;
-  background: rgba(255,255,255,0.06);
+  position: relative;
+  width: calc(178 * var(--u)); height: calc(178 * var(--u)); border-radius: 50%;
+  background: var(--c-grey-15);
   display: grid; place-items: center;
 }
+.breath-ring > * { grid-area: 1 / 1; }
 .breath-circle {
-  width: calc(150 * var(--u)); height: calc(150 * var(--u)); border-radius: 50%;
-  background: #faf9f5;                                   /* krémový střed (dle návrhu) */
-  color: var(--c-black);
-  display: grid; place-items: center;
-  font-size: calc(34 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  width: calc(53 * var(--u)); height: calc(53 * var(--u)); border-radius: 50%;
+  background: #dedede;                                   /* o chlup světlejší než kruh (dle Figmy) */
   will-change: transform;                                /* scale řídí JS po snímcích (kvůli pauze) */
 }
+.breath-digit {
+  z-index: 1; color: #1a1a1a;
+  display: grid; place-items: center;
+}
 .breath-hint { opacity: .9; text-align: center; }
-.breath-cta { padding: calc(15 * var(--u)) calc(40 * var(--u)); }
+.breath-cta {
+  width: calc(134 * var(--u)); height: calc(47 * var(--u)); padding: 0;
+  background: var(--c-white); color: #1a1a1a; border: none;   /* plná bílá (dle Figmy) */
+}
 
 /* ==========================================================================
    Obecné pravidlo: patička karty (nápověda + akční tlačítko dole)
@@ -357,8 +384,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .atten-note  { color: rgba(255,255,255,0.72); }
 .atten-note.is-hidden { visibility: hidden; }
 .atten-help, .atten-count { color: var(--c-white); }
-/* koule sedí do textového sloupce (okraje 40 px), čtverec, nepřetéká okraje */
-.atten-viz { position: absolute; left: 40px; right: 40px; top: 51%; aspect-ratio: 1 / 1; overflow: hidden; z-index: 1; }
+/* koule je full-bleed (Figma 467×481 na x −29): přetéká oba boky karty */
+.atten-viz { position: absolute; left: calc(-29 * var(--u)); right: calc(-36 * var(--u)); top: 37.6%; aspect-ratio: 467 / 481; overflow: hidden; z-index: 1; }
 .atten-frame { width: 100%; height: 100%; }
 
 /* časovač na sebe upozorňuje pulzem + občasným glitchem (dokud neběží) */
@@ -379,21 +406,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Rychlá výzva (kvíz)
    ========================================================================== */
-.quiz-sub { margin-top: 14px; color: rgba(255,255,255,0.85); }
+.quiz-sub { margin-top: calc(12 * var(--u)); color: var(--c-white); }
 /* kompaktní buttony pevné šířky, zarovnané vlevo (dle Figmy), ne roztažené */
-.quiz-options { display: grid; gap: calc(15 * var(--u)); justify-content: start; }
-.quiz-options.cols-1 { grid-template-columns: calc(143 * var(--u)); }
+.quiz-options { display: grid; row-gap: calc(16 * var(--u)); column-gap: calc(20 * var(--u)); justify-content: start; }
+.quiz-options.cols-1 { grid-template-columns: calc(125 * var(--u)); }
 .quiz-options.cols-1v { grid-template-columns: 1fr; }   /* svislý sloupec přes celou šířku (dlouhé texty) */
-.quiz-options.cols-2 { grid-template-columns: repeat(2, calc(111 * var(--u))); }
-.quiz-options.cols-3 { grid-template-columns: repeat(3, calc(57 * var(--u))); }
+.quiz-options.cols-2 { grid-template-columns: repeat(2, calc(108 * var(--u))); column-gap: calc(21 * var(--u)); }
+.quiz-options.cols-3 { grid-template-columns: repeat(3, calc(55 * var(--u))); column-gap: calc(19 * var(--u)); }
 /* odpovědi mají VLASTNÍ styl (nezávislý na jednotných tlačítkách):
    tenký bílý obrys, text glitch_H4 (20/600) na střed */
 .quiz-opt {
-  height: calc(55 * var(--u));
+  height: calc(47 * var(--u));
   background: transparent;
   color: var(--c-white);
-  border: 1.5px solid rgba(255,255,255,0.85);
-  border-radius: calc(8 * var(--u));
+  border: 1px solid var(--c-white);
+  border-radius: calc(5 * var(--u));
   font-size: calc(20 * var(--u)); font-weight: 600;
   line-height: normal; letter-spacing: var(--tracking);
   display: flex; align-items: center; justify-content: center;
@@ -429,7 +456,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Media (iframe vizualizace)
    ========================================================================== */
 .viz-frame { width: 100%; height: 100%; border: 0; background: var(--c-black); }
-.algo-viz { aspect-ratio: 1 / 1; border-radius: calc(10 * var(--u)); overflow: hidden; }
+.algo-viz { aspect-ratio: 1 / 1; border-radius: calc(5 * var(--u)); border: 1px solid var(--c-white); overflow: hidden; }
 
 /* Quest intro — video na pozadí, text u dolní třetiny (kapitola y=532) */
 .card--image { --fg: var(--c-white); }
@@ -449,35 +476,32 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   z-index: 0;
   background: var(--c-black);
 }
-.quest-scrim {
-  position: absolute; inset: 0; z-index: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 35%, rgba(0,0,0,0.65) 100%);
-}
 .quest-text { color: #fff; }
-.quest-text .chapter-no { margin-bottom: calc(16 * var(--u)); }
+.quest-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
 
 /* Fun fact — obrázek y=95 (320×293), nadpis y=436, text y=516 */
 .funfact-tile {
   aspect-ratio: 320 / 293;
-  border-radius: 6px;
+  border-radius: calc(5 * var(--u));
   background: var(--c-pink);
   display: grid; place-items: center;
   overflow: hidden;
 }
+.funfact-tile img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Najdi chybu — obrázek y=95 (318×381), tvrzení y=526, kontext y=636 */
 .mistake-photo {
   aspect-ratio: 318 / 381;
-  border-radius: 6px; overflow: hidden;
+  border-radius: calc(5 * var(--u)); overflow: hidden;
   background: #2c2c2c;
-  filter: grayscale(1);
 }
-.mistake-context { color: rgba(255,255,255,0.85); }
+.mistake-photo img { width: 100%; height: 100%; object-fit: cover; }
+.mistake-context { color: var(--c-white); }
 
-/* Historická osobnost / Osobnost oboru — fotka nahoře, jméno + úvod + CTA dole */
+/* Historická osobnost / Osobnost oboru — fotka nahoře, jméno (H1) + úvod dole */
 .persona-photo {
-  aspect-ratio: 318 / 340;
-  border-radius: 6px; overflow: hidden;
+  aspect-ratio: 321 / 337;
+  border-radius: calc(5 * var(--u)); overflow: hidden;
   background: #2c2c2c;
 }
 .persona-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -486,15 +510,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: calc(12 * var(--u)) calc(26 * var(--u));
 }
 
-/* Argumentuj (růžová karta) — tvrzení + podtitul vystředěné v horní třetině, tlačítka dole */
-.arg-flow { position: absolute; left: 40px; right: calc(33 * var(--u)); top: 0; height: 40%;
-  padding-top: calc(56 * var(--u)); display: flex; flex-direction: column; justify-content: center; z-index: 2; }
-.arg-claim { margin: 0;
-  font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
-.arg-sub { margin-top: calc(18 * var(--u));
-  font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); color: var(--c-black); }
-.arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(72 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
-.arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); }
+/* Argumentuj (růžová karta) — tvrzení y=216, podtext y=350, tlačítka y=665 (Figma) */
+.arg-claim { right: calc(33 * var(--u)); color: var(--c-black); }
+.arg-sub { max-width: calc(295 * var(--u)); color: var(--c-black); }
+.arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(111 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
+.arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); color: #1a1a1a; }
 .arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 
 /* ==========================================================================
@@ -503,7 +523,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ========================================================================== */
 .stack {
   position: absolute; inset: 0;
-  padding: calc(78 * var(--u)) 40px calc(92 * var(--u));
+  padding: calc(93 * var(--u)) 40px calc(67 * var(--u));
   display: flex; flex-direction: column; z-index: 2;
 }
 .stack-media {
@@ -514,26 +534,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .stack-media > * { height: 100%; max-height: 100%; width: auto; max-width: 100%; }
 .stack-text { flex: 0 0 auto; }
 .stack-text .fx-title { margin: 0; }
-.stack-text .fx-text { margin-top: calc(12 * var(--u)); }
+.stack-text .fx-text { margin-top: calc(12 * var(--u)); max-width: calc(255 * var(--u)); }
 .stack-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
 
-/* Rychlá výzva — jednotně: nadpis nahoře, úkol vystředěný, odpovědi dole */
+/* Rychlá výzva — jednotně: otázka na y≈216, úkol vystředěný, odpovědi dole
+   (Figma: otázka top 216/826, poslední tlačítko ~107 nad menu) */
 .quiz-frame {
   position: absolute; inset: 0;
-  padding: calc(64 * var(--u)) 40px calc(44 * var(--u));
+  padding: calc(210 * var(--u)) 40px calc(104 * var(--u));
   display: flex; flex-direction: column; z-index: 2;
 }
+/* dlouhé textové kvízy potřebují celou výšku karty */
+.quiz-frame--flow { padding: calc(64 * var(--u)) 40px calc(44 * var(--u)); }
 .quiz-head { flex: 0 0 auto; }
 .quiz-head .quiz-sub { margin-top: calc(8 * var(--u)); }
 .quiz-task {
   flex: 1 1 0; min-height: 0; overflow: hidden;
   display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
 }
-.quiz-task .quiz-figure-wrap { align-self: center; }
 .quiz-answers { flex: 0 0 auto; }
 
-/* Quest / Algoritmus intro: text ukotvený u spodu (neořízne se dole) */
-.quest-text.anchor-bottom { top: auto; bottom: calc(46 * var(--u)); }
+/* Quest / Algoritmus intro: text ukotvený u spodu (Figma: blok končí ~114 px nad menu) */
+.quest-text.anchor-bottom { top: auto; bottom: calc(111 * var(--u)); }
 
 /* Algoritmus — 3D y=96 (321×322), kapitola y=532, nadpis y=585, text y=647 */
 .algo-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
@@ -557,7 +579,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 100%; max-width: var(--feed-max); margin: 0 auto;
   height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: #000;
+  background: #1a1a1a;
+  border-top: 2px solid #fff;
   display: flex; align-items: stretch;
 }
 .nav-item {
@@ -569,7 +592,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* obrysové ikony (feed / boardy / hledat): přebarvení přes CSS mask.
    neaktivní = bílá, aktivní = žlutá */
 .nav-ico {
-  display: block; width: 22px; height: 22px;
+  display: block; width: 20px; height: 20px;
   background-color: var(--c-white);
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
@@ -577,11 +600,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transition: background-color .12s ease;
 }
 .nav-item.is-active .nav-ico { background-color: var(--c-yellow); }
+.nav-item[data-tab="boardy"] .nav-ico { width: 21px; height: 21px; }
 /* plus: žluté kolečko + tmavý plus (bez černého prstence) — vždy žluté */
-.plus-svg { width: 30px; height: 30px; display: block; }
+.plus-svg { width: 29px; height: 29px; display: block; }
 .nav-ava {
-  width: 28px; height: 28px; border-radius: 50%; overflow: hidden;
-  border: 2px solid #fff; display: block; background: #000;
+  width: 29px; height: 29px; border-radius: 50%; overflow: hidden;
+  display: block; background: var(--c-yellow);
 }
 .nav-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -770,7 +794,7 @@ body.rz-lock { overflow: hidden; }
 .rz-bar {
   flex: 0 0 auto; position: sticky; top: 0; z-index: 3;
   display: flex; align-items: center; gap: calc(12 * var(--u));
-  padding: calc(24 * var(--u)) calc(28 * var(--u)) calc(10 * var(--u));
+  padding: calc(22 * var(--u)) calc(25 * var(--u)) calc(10 * var(--u)) calc(32 * var(--u));
   background: var(--c-white);
 }
 .rz-close {
@@ -778,18 +802,18 @@ body.rz-lock { overflow: hidden; }
   transition: transform .12s ease;
 }
 .rz-close:active { transform: scale(.9); }
-.rz-close img { width: calc(38 * var(--u)); height: auto; transform: rotate(180deg); }
+.rz-close img { width: calc(23 * var(--u)); height: auto; transform: rotate(180deg); }
 .rz-chapter {
-  display: inline-flex; align-items: center; height: calc(32 * var(--u)); padding: 0 calc(12 * var(--u));
-  background: var(--c-black); color: var(--c-white);
-  border-radius: calc(8 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
+  display: inline-flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(6 * var(--u));
+  background: #1a1a1a; color: var(--c-white);
+  border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
   letter-spacing: var(--tracking);
 }
 .rz-badges { margin-left: auto; display: flex; gap: calc(10 * var(--u)); }
 .rz-badge {
-  display: inline-flex; align-items: center; height: calc(32 * var(--u)); padding: 0 calc(12 * var(--u));
-  background: var(--c-white); color: var(--c-black);
-  border: 1px solid var(--c-grey-15); border-radius: calc(8 * var(--u));
+  display: inline-flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(6 * var(--u));
+  background: var(--c-white); color: #1a1a1a;
+  border: 1px solid #1a1a1a; border-radius: calc(5 * var(--u));
   font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1; letter-spacing: var(--tracking); white-space: nowrap;
 }
 
@@ -805,50 +829,52 @@ body.rz-lock { overflow: hidden; }
 
 /* -- chat -- */
 .rz-panel--chat { }
+.rz-body--chat { padding: calc(26 * var(--u)) calc(35 * var(--u)) calc(28 * var(--u)) calc(33 * var(--u)); }
 .rz-intro { color: var(--c-black); margin: calc(14 * var(--u)) 0 calc(24 * var(--u)); }
-.rz-thread { display: flex; flex-direction: column; gap: calc(16 * var(--u)); }
-.rz-msg { display: flex; align-items: flex-end; gap: calc(10 * var(--u)); max-width: 100%; }
+.rz-thread { display: flex; flex-direction: column; gap: calc(13 * var(--u)); }
+.rz-msg { display: flex; align-items: flex-start; gap: calc(7 * var(--u)); max-width: 100%; }
 .rz-msg--bot { justify-content: flex-start; }
-.rz-msg--user { justify-content: flex-end; }
+.rz-msg--user { justify-content: flex-end; gap: calc(10 * var(--u)); margin: calc(12 * var(--u)) 0; }
 .rz-ava {
-  flex: 0 0 auto; width: calc(30 * var(--u)); height: calc(30 * var(--u)); border-radius: 50%;
+  flex: 0 0 auto; width: calc(21 * var(--u)); height: calc(21 * var(--u)); border-radius: 50%;
   overflow: hidden; align-self: flex-start;
 }
 .rz-ava--bot { background: var(--c-yellow); display: grid; place-items: center; }
-.rz-ava--bot img { width: 118%; height: 118%; object-fit: cover; object-position: center 34%; }
-.rz-ava--user { background: var(--c-yellow); border: 1px solid #e6e600; }
+.rz-ava--bot img { width: 100%; height: 100%; object-fit: cover; }
+.rz-ava--user { background: var(--c-yellow); }
 .rz-bubble {
-  max-width: calc(238 * var(--u));
-  padding: calc(12 * var(--u)) calc(14 * var(--u));
-  border-radius: calc(12 * var(--u));
-  font-size: calc(16 * var(--u)); line-height: calc(21 * var(--u)); letter-spacing: var(--tracking);
-  color: var(--c-black); word-wrap: break-word; overflow-wrap: anywhere;
+  max-width: calc(248 * var(--u));
+  padding: calc(12 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(5 * var(--u));
+  font-size: calc(15 * var(--u)); line-height: normal; letter-spacing: var(--tracking);
+  color: #1a1a1a; word-wrap: break-word; overflow-wrap: anywhere;
 }
-.rz-msg--bot .rz-bubble { background: #ececec; border-top-left-radius: calc(4 * var(--u)); }
-.rz-msg--user .rz-bubble { background: #fbfbcb; border-top-right-radius: calc(4 * var(--u)); }
+.rz-msg--bot .rz-bubble { background: var(--c-grey-10); }
+.rz-msg--user .rz-bubble { max-width: calc(238 * var(--u)); padding: calc(11 * var(--u)) calc(14 * var(--u)); background: rgba(255,255,0,0.27); }
 
 /* kvíz uvnitř chatu */
-.rz-quiz { display: flex; flex-direction: column; gap: calc(12 * var(--u)); padding: calc(4 * var(--u)) 0 0 calc(40 * var(--u)); }
+.rz-quiz { display: flex; flex-direction: column; gap: calc(9 * var(--u)); padding: calc(9 * var(--u)) 0 0 calc(44 * var(--u)); }
 .rz-opt {
-  display: flex; align-items: flex-start; gap: calc(10 * var(--u));
+  display: flex; align-items: flex-start; gap: calc(8 * var(--u));
   background: transparent; text-align: left; color: var(--c-black);
-  font-size: calc(16 * var(--u)); line-height: calc(20 * var(--u)); letter-spacing: var(--tracking);
+  font-size: calc(15 * var(--u)); line-height: normal; letter-spacing: var(--tracking);
 }
+.rz-opt[data-type="radio"] { gap: calc(5 * var(--u)); }
 .rz-mark {
-  flex: 0 0 auto; width: calc(22 * var(--u)); height: calc(22 * var(--u));
-  border: 1.5px solid var(--c-black); background: var(--c-white);
+  flex: 0 0 auto; width: calc(17 * var(--u)); height: calc(17 * var(--u));
+  border: 2px solid #1a1a1a; background: var(--c-white);
   display: grid; place-items: center; position: relative;
 }
 .rz-mark--checkbox { border-radius: calc(5 * var(--u)); }
-.rz-mark--radio { border-radius: 50%; }
+.rz-mark--radio { width: calc(19 * var(--u)); height: calc(19 * var(--u)); border-radius: 50%; background: var(--c-yellow); }
 .rz-opt.is-sel .rz-mark { background: var(--c-yellow); }
 .rz-opt.is-sel .rz-mark--checkbox::after {
-  content: ""; width: calc(11 * var(--u)); height: calc(6 * var(--u));
+  content: ""; width: calc(9 * var(--u)); height: calc(5 * var(--u));
   border-left: 2px solid var(--c-black); border-bottom: 2px solid var(--c-black);
   transform: translateY(-1px) rotate(-45deg);
 }
 .rz-opt.is-sel .rz-mark--radio::after {
-  content: ""; width: calc(10 * var(--u)); height: calc(10 * var(--u)); border-radius: 50%; background: var(--c-black);
+  content: ""; width: calc(7 * var(--u)); height: calc(7 * var(--u)); border-radius: 50%; background: var(--c-black);
 }
 .rz-opt.is-locked { opacity: .9; }
 .rz-opt.is-correct .rz-opt-label { font-weight: 600; }
@@ -856,10 +882,12 @@ body.rz-lock { overflow: hidden; }
 .rz-opt.is-wrong .rz-mark { border-color: #b00020; }
 .rz-opt.is-wrong .rz-opt-label { color: #b00020; text-decoration: line-through; }
 .rz-quiz-submit {
-  align-self: flex-start; margin-top: calc(4 * var(--u));
-  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
-  padding: calc(11 * var(--u)) calc(20 * var(--u));
-  font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); color: var(--c-black);
+  align-self: flex-start; margin-top: calc(12 * var(--u));
+  height: calc(37 * var(--u));
+  border: 1px solid var(--c-black); border-radius: calc(5 * var(--u));
+  padding: 0 calc(17 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u));
+  letter-spacing: var(--tracking); color: var(--c-black);
   background: transparent; transition: opacity .12s ease;
 }
 .rz-quiz-submit:active { opacity: .7; }
@@ -868,21 +896,21 @@ body.rz-lock { overflow: hidden; }
 /* vstupní pole chatu (dole) */
 .rz-input {
   flex: 0 0 auto; position: sticky; bottom: 0;
-  display: flex; align-items: center; gap: calc(12 * var(--u));
-  padding: calc(14 * var(--u)) calc(28 * var(--u)) calc(18 * var(--u));
-  background: var(--c-white); border-top: 1px solid var(--c-grey-15);
+  display: flex; align-items: center; gap: calc(13 * var(--u));
+  padding: calc(14 * var(--u)) calc(20 * var(--u)) calc(31 * var(--u)) calc(31 * var(--u));
+  background: var(--c-white);
 }
 .rz-input-field {
-  flex: 1 1 auto; height: calc(46 * var(--u));
-  border: 1px solid var(--c-black); border-radius: calc(8 * var(--u));
-  padding: 0 calc(14 * var(--u));
+  flex: 1 1 auto; height: calc(38 * var(--u));
+  border: 2px solid #1a1a1a; border-radius: calc(5 * var(--u));
+  padding: 0 calc(13 * var(--u));
   font-family: var(--font); font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
   color: var(--c-black); background: var(--c-white); outline: none;
 }
-.rz-input-field::placeholder { color: var(--c-grey-50); }
+.rz-input-field::placeholder { color: #1a1a1a; }
 .rz-send {
-  flex: 0 0 auto; width: calc(46 * var(--u)); height: calc(46 * var(--u));
-  background: var(--c-yellow); border-radius: calc(8 * var(--u));
+  flex: 0 0 auto; width: calc(39 * var(--u)); height: calc(38 * var(--u));
+  background: var(--c-yellow); border: 2px solid #1a1a1a; border-radius: calc(5 * var(--u));
   display: grid; place-items: center; transition: transform .12s ease;
 }
 .rz-send:active { transform: scale(.92); }

@@ -1,19 +1,20 @@
 # Glitch feed — layout spec
 
-Zdroj pravdy: Figma **„Glitch 2.0"** (`BkGKbtWymuDbuIQ3cBIeLW`). Hodnoty čteny přes Figma konektor (Dev Mode). Poslední sync: 2026-07-15.
+Zdroj pravdy: Figma **„Glitch 2.0"** (`BkGKbtWymuDbuIQ3cBIeLW`). Hodnoty čteny přes Figma konektor (Dev Mode). Poslední sync: 2026-07-24.
 
 ## Rám a plochy
 
 - **Karta = 402×874** (mobil). V kódu je feed `max-width: 480px`, ale všechny poměry drží z 402.
-- **Obsah karty:** 0–818 px. **Spodní menu:** 818–874 (výška **56 px**).
+- **Obsah karty:** 0–826 px. **Spodní menu:** 826–874 (výška **48 px**).
 - **Levý okraj obsahu: 40 px** (texty začínají na `x≈39–41`). *(Dřív jsme měli 28 px — to rozhazovalo vše.)*
 
-## Badge (dva: trust + kategorie)
+## Štítky (téma · typ · autor)
 
-Vpravo nahoře, zarovnané doprava.
+**Vlevo nahoře**, zarovnané zleva (novější rámce Figmy; starý right-aligned vzor už neplatí).
 
-- **Pozice:** `top: 26`, pravý okraj v `x=377` → **right: 25**, **výška: 26**, **radius: 5**, **mezera mezi nimi ~9**.
-- **Trust** (Core / Generováno / …): pozadí **bílé**, text **grey50 `#747474`**, styl `glitch_category`.
+- **Pozice:** `top: 26`, `left: ~23` (Figma kolísá 20–33), **výška: 26**, **radius: 5**, **mezera 12** (Figma kolísá 11–15), vnitřní odsazení ~11.
+- Pořadí zleva: **téma** (žlutá) · **typ Glitche** (žlutá) · **autor/trust** (bílá).
+- **Trust** (Glitch / Generováno / …): pozadí **bílé**, text **grey50 `#747474`**, styl `glitch_category`.
 - **Kategorie** (Argumentuj, Wellbeing…): pozadí **žluté `#ffff00`**, text **`#1a1a1a`**, styl `glitch_category`.
 - Karty *About Glitch* a *Welcome* badge nemají.
 
@@ -24,7 +25,7 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 | styl | řez | velikost | řádkování | tracking | použití |
 |---|---|---|---|---|---|
 | `glitch_H1` | 600 | 40 | normal | −0.04em (−1.6 px) | krátké titulky (Vítej, Jak se cítíš, Vibe Coding, Hra života, „310×15=") |
-| `glitch_H2` | 600 | 30 | normal | −0.04em (−1.2 px) | velký text / delší tvrzení — **jen Argumentuj** |
+| `glitch_H2` | 600 | 30 | normal | −0.04em (−1.2 px) | velký text / delší tvrzení — Argumentuj, About Glitch, Time to let go |
 | `glitch_H3` | 600 | 25 | normal | −0.04em (−1 px) | sekční nadpisy (Najdi chybu, Fun fact, Shrnutí, Aktivita, otázka u trojúhelníků) |
 | `glitch_H4` | 600 | 20 | normal | −0.04em (−0.8 px) | menší nadpisy |
 | `glitch_chapter-no` | 600 | 30 | normal | −0.04em (−1.2 px) | číslo kapitoly / velké číslo |
@@ -37,29 +38,30 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 
 ## Spodní menu
 
-- Výška **56**, pozadí **`#1a1a1a`**, horní obrys **2 px** (barvu drží pokyn: `#747474`).
-- 5 položek: Feed · Boardy · **+** (žluté kolečko ~34) · Hledat · Profil.
-- Avatar **34 px** kruh + 2 px bílá outline. Ikony ~24–25 px, přebarvení: aktivní žlutá, neaktivní bílá.
+- Výška **48** (menu 826–874), pozadí **`#1a1a1a`**, horní obrys **2 px bílý**.
+- 5 položek: Feed · Boardy · **+** (žluté kolečko 29) · Hledat · Profil.
+- Avatar **29 px** kruh (žluté pozadí, bez obrysu). Ikony **20–21 px**, přebarvení: aktivní žlutá, neaktivní bílá.
 
 ## Tlačítka
 
 **Jednotný styl — inverzní outline.** Všechna tlačítka vypadají stejně: průhledné
 pozadí, barva textu i rámečku = `--fg` dané karty → **bílá na tmavém, černá na
-bílém/žlutém**. Rámeček **1,5 px `--fg`**, radius **8**, text ve **velikosti
-`glitch_p` (16)**, tučně (600), na střed. Aktivní/vybraný stav = **plná inverze** (`background: --fg; color: --bg`).
+bílém/žlutém**. Rámeček **1 px `--fg`**, radius **5**, text ve **velikosti
+`glitch_p` (16/400, řádkování 22)**, na střed. Aktivní/vybraný stav = **plná inverze** (`background: --fg; color: --bg`).
 Pouze geometrie (šířka/výška/padding) se u jednotlivých typů liší; barvy a rámeček
 jsou společné (CSS: skupinový selektor `.welcome-login, .mood-cta, .breath-cta,
 .arg-opt`).
 
-> **Výjimka:** odpovědi u **Rychlé výzvy** (`.quiz-opt`) mají **vlastní styl** —
-> tenký bílý obrys, text `glitch_H4` (20/600). Nejsou součástí jednotného stylu.
+> **Výjimky:** odpovědi u **Rychlé výzvy** (`.quiz-opt`) mají **vlastní styl** —
+> tenký bílý obrys 1 px, text `glitch_H4` (20/600). Tlačítko **Začít** u dechového
+> cvičení je **plná bílá** (`#fff`, text `#1a1a1a`, 134×47) — dle Figmy.
 
-**Argumentuj:** **134×47**. Dvojice vedle sebe od `left: 40`, mezera 27, `top: 643`. Vybraná odpověď = plná inverze.
+**Argumentuj:** **134×47**. Dvojice vedle sebe od `left: 40`, mezera 27, `top: 665` (spodní hrana 114 px nad menu). Vybraná odpověď = plná inverze.
 
-**Rychlá výzva (odpovědi):** vlastní styl (ne jednotný). Kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), tenký bílý obrys, text `glitch_H4` (20/600) **na střed**, mezera ~15. Správná odpověď = žlutá výplň, špatná = ztlumená (opacity .4).
-- 2 sloupce (např. „310×15="): **111×55**, `left: 40`, řádky `top: 577 / 647`.
-- 3 sloupce (trojúhelníky): **57×55**, `left: 40`, `top: 689`.
-- 1 sloupec (topinky): **143×54**.
+**Rychlá výzva (odpovědi):** vlastní styl (ne jednotný). Kompaktní, pevná šířka, zarovnané **vlevo** (ne roztažené), bílý obrys 1 px, radius 5, text `glitch_H4` (20/600) **na střed**, mezera řádků 16. Správná odpověď = žlutá výplň, špatná = ztlumená (opacity .4).
+- 2 sloupce (např. „310×15="): **108×47**, `left: 40`, mezera sloupců 21, řádky `top: 609 / 672`.
+- 3 sloupce (trojúhelníky): **55×47**, `left: 40`, mezera 19–20, `top: 665`.
+- 1 sloupec (topinky): **125×47**, řádky od `top: 547`, mezera 15–16.
 
 ## Přesné Y-souřadnice karet (z Figmy)
 

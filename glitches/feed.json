@@ -20,6 +20,14 @@
     }
   },
   {
+    "id": "wellbeing-mood",
+    "type": "mood_selector",
+    "category": "Wellbeing",
+    "trust": "Core",
+    "title": "Jak se teď cítíš?",
+    "body": "Umísti potažením černou tečku na správné místo v diagramu. My podle toho upravíme Glitche, které se ti dnes zobrazí."
+  },
+  {
     "id": "wellbeing-dech",
     "type": "breathing",
     "category": "Wellbeing",
@@ -160,7 +168,7 @@
     "trust": "Generováno",
     "obtiznost": 1,
     "question": "310×15=",
-    "sub": "Zvládneš to spočítat?",
+    "sub": "Zvládneš spočítat do časového limitu?",
     "cols": 2,
     "answers": [
       {
@@ -180,7 +188,8 @@
         "correct": false
       }
     ],
-    "topic": "Matematika"
+    "topic": "Matematika",
+    "questionStyle": "h1"
   },
   {
     "id": "obrazec-trojuhelniky",
@@ -208,9 +217,33 @@
     "topic": "Matematika"
   },
   {
+    "id": "matematika-topinky",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "topic": "Matematika",
+    "trust": "Generováno",
+    "question": "Jedna topinka se smaží deset minut, tedy pět minut z každé strany. Na pánev se vejdou dvě topinky vedle sebe.",
+    "sub": "Za jak dlouho nejrychleji osmažíš na jedné pánvi tři topinky?",
+    "cols": 1,
+    "answers": [
+      {
+        "label": "10 minut",
+        "correct": false
+      },
+      {
+        "label": "15 minut",
+        "correct": true
+      },
+      {
+        "label": "20 minut",
+        "correct": false
+      }
+    ]
+  },
+  {
     "id": "hra-na-pozornost-koule",
     "type": "attention_game",
-    "category": "Aktivita",
+    "category": "Hra na pozornost",
     "title": "Kolik zvládneš označit děr?",
     "viz": "assets/3Dvizualizations/sphere-holes.html?v=5"
   },
@@ -244,7 +277,8 @@
     "obtiznost": 1,
     "title": "První počítačový bug byla můra.",
     "body": "Slovem bug označovali technici drobné závady už za Edisona. Ale když v roce 1947 kvůli můře, která vlétla dovnitř, přestal fungovat počítač Harvard Mark II, termín se ujal i u počítačů. Chybám dodnes říkáme bugy a jejich opravování debugging (doslova odhmyzení).",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "image": "assets/img/funfact-bug-moth.png"
   },
   {
     "id": "najdi-chybu-perceptron",
@@ -253,7 +287,8 @@
     "obtiznost": 2,
     "claim": "Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott!",
     "context": "Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců.",
-    "topic": "Umělá inteligence"
+    "topic": "Umělá inteligence",
+    "image": "assets/img/mistake-gott-perceptron.jpg"
   },
   {
     "id": "argument-nemam-co-skryvat",
@@ -814,5 +849,14 @@
         "value": 3
       }
     ]
+  },
+  {
+    "id": "wellbeing-cas-vypnout",
+    "type": "time_to_let_go",
+    "category": "Wellbeing",
+    "trust": "Core",
+    "title": "Je čas vypnout screen!",
+    "body": "Pro lepší spánek je dobré nedívat se do zařízení hodinu před usnutím. Tak třeba zase zítra!",
+    "image": "assets/img/time-to-let-go-cat.jpg"
   }
 ]

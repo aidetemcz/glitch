@@ -31,9 +31,9 @@
 
     { type: "intro" },
 
-    { type: "mood_selector", category: "Wellbeing",
+    { type: "mood_selector", category: "Wellbeing", trust: "Core",
       title: "Jak se teď cítíš?",
-      body: "Potažením zvol svůj vibe. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
+      body: "Umísti potažením černou tečku na správné místo v diagramu. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
 
     { type: "breathing", category: "Wellbeing",
       title: "Dechové cvičení",
@@ -47,7 +47,8 @@
 
     { type: "quick_challenge", category: "Rychlá výzva", trust: "Generováno",
       question: "310×15=",
-      sub: "Zvládneš to spočítat?",
+      questionStyle: "h1",
+      sub: "Zvládneš spočítat do časového limitu?",
       cols: 2,
       answers: [
         { label: "4 650", correct: true },
@@ -122,7 +123,7 @@
   const chevron = (c) => {
     const act = c && c.rozklik ? "rozklik" : "next";
     const lbl = act === "rozklik" ? "Rozkliknout Glitch" : "Další Glitch";
-    return `<button class="nav-chevron" data-nav="${act}" aria-label="${lbl}"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
+    return `<button class="nav-chevron" data-nav="${act}" aria-label="${lbl}"><img src="assets/ui/more-button.svg" alt="" width="38" height="59"></button>`;
   };
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
@@ -132,10 +133,10 @@
     welcome(c) {
       return `
         <img class="welcome-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">
-        <span class="pixel-deco" style="top:12%;right:16%;width:16px;height:16px">${ICON.spark}</span>
-        ${deco("", "top:30%;left:14%;width:13px;height:13px")}
-        ${deco("", "top:52%;left:72%;width:11px;height:11px")}
-        <span class="pixel-deco" style="top:72%;left:18%;width:15px;height:15px">${ICON.spark}</span>
+        <span class="pixel-deco" style="top:13.9%;right:16.4%;width:13px;height:16px">${ICON.spark}</span>
+        ${deco("", "top:31.4%;left:17.4%;width:12px;height:15px")}
+        ${deco("", "top:55.6%;left:74.9%;width:12px;height:12px")}
+        <span class="pixel-deco" style="top:75.9%;left:18.9%;width:12px;height:13px">${ICON.spark}</span>
         <img class="welcome-logo" src="${LOGO}" alt="Glitch">
         <div class="card-footer">
           <button class="welcome-login" data-welcome-login>Přihlášení Google účtem</button>
@@ -143,16 +144,21 @@
     },
 
     intro(c) {
+      // About Glitch (Figma 147:439): loga vpravo nahoře, H2 + celý text na kartě, bez šipky
       return `
-        <span class="pixel-deco" style="top:12%;right:16%;width:15px;height:15px">${ICON.spark}</span>
-        ${deco("", "top:52%;left:22%;width:13px;height:13px")}
-        ${deco("", "top:59%;left:55%;width:13px;height:13px")}
-        <img class="intro-logo" src="${LOGO}" alt="Glitch">
-        <div class="fx-block reserve-chevron" style="top:71.6%">
-          <h1 class="fx-title g-h1">Vítej v Glitchi!</h1>
-          <p class="fx-text g-p">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole nebo swipni dolů pro další Glitch.</p>
-        </div>
-        ${chevron(c)}`;
+        <span class="pixel-deco" style="top:18.3%;left:39.3%;width:8px;height:9px">${ICON.spark}</span>
+        ${deco("", "top:26.8%;left:84.8%;width:9px;height:12px")}
+        <img class="intro-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">
+        <img class="intro-glitch" src="${LOGO}" alt="Glitch">
+        <h2 class="fx-block g-h2" style="top:34%">Tiny Glitch je vzdělávací sociální síť</h2>
+        <div class="fx-block intro-body g-p" style="top:47.1%">
+          <p>Když se chceš ty něco nového naučit nebo pokud chceš naučit ty někoho jiného, tak tady je tvůj prostor.</p>
+          <p>Ve feedu najdeš tzv. Glitche. Jsou to mikrotémata. Některé Glitche jsou jen malé výzvy, které můžeš plnit přímo ve feedu. Jiné můžeš rozkliknout a popovídat si o nich s chatbotem, ověřit si znalosti kvízem.</p>
+          <p>Každý Glitch můžeš navíc remixovat. To znamená, že k němu přidáš to, co víš nebo vyzkoumáš a můžeš to sdílet s ostatními, kteří na tvou práci mohou dál navázat vlastním remixem.</p>
+          <p>Můžeš také vytvořit Glitche pro kamarády, kterými se něco naučí.</p>
+          <p>Glitche se řadí do tzv. questů. Když splníš všechny Glitche v questu, odemkne se ti speciální úkol.</p>
+          <p>Tak pojďme na to!</p>
+        </div>`;
     },
 
     mood_selector(c) {
@@ -175,10 +181,13 @@
             <div class="breath-value" data-breath="value">0/${c.cycles}</div>
             <button class="breath-step" data-breath="inc" aria-label="Více">+</button>
           </div>
-          <div class="breath-ring"><div class="breath-circle" data-breath="circle">${c.cycles}</div></div>
+          <div class="breath-ring">
+            <div class="breath-circle" data-breath="circle"></div>
+            <span class="breath-digit g-chapter-no" data-breath="digit">${c.cycles}</span>
+          </div>
         </div>
         <div class="card-footer">
-          <p class="breath-hint g-p-s" data-breath="hint">Pohodlně se usaď a stiskni tlačítko začít.</p>
+          <p class="breath-hint g-p" data-breath="hint">Pohodlně se usaď a stiskni tlačítko začít.</p>
           <button class="breath-cta" data-breath="start">Začít</button>
         </div>`;
     },
@@ -190,7 +199,7 @@
       // i na extra pomalém internetu je hned vidět náhled místo černé plochy.
       const poster = c.video ? c.video.replace(/\/([^/]+)\.mp4(\?.*)?$/, "/posters/$1.jpg") : "";
       const bg = c.video
-        ? `<video class="quest-video" muted loop playsinline preload="none" data-poster="${poster}" data-video-src="${c.video}"></video><div class="quest-scrim"></div>`
+        ? `<video class="quest-video" muted loop playsinline preload="none" data-poster="${poster}" data-video-src="${c.video}"></video>`
         : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
         <div class="fx-block quest-text reserve-chevron anchor-bottom">
@@ -202,21 +211,23 @@
     },
 
     quick_challenge(c) {
-      // Jednotné rozvržení pro všechny výzvy: nadpis (otázka) nahoře, úkol
+      // Jednotné rozvržení pro všechny výzvy: otázka nahoře (y≈216), úkol
       // (kód / obrazec) vystředěný v prázdném prostoru, odpovědi dole.
       const textLayout = c.layout === "text";
       const optCls = textLayout ? "quiz-opt quiz-opt--text g-p" : "quiz-opt g-h4";
       const opts = c.answers.map((a, i) =>
         `<button class="${optCls}" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
       const cols = textLayout ? "cols-1v" : (c.figure === "triangles" ? "cols-3" : ("cols-" + (c.cols || 2)));
+      // krátká otázka (např. „310×15=") má styl H1 (40), věty H3 (25) — dle Figmy
+      const qCls = c.questionStyle === "h1" ? "g-h1" : "g-h3";
       let task = "";
       if (c.figure === "triangles") task = `<div class="quiz-figure-wrap">${triangleFigure()}</div>`;
       else if (c.code) task = `<pre class="quiz-code">${esc(c.code)}</pre>`;
       return `${badges(c)}
-        <div class="quiz-frame">
+        <div class="quiz-frame${textLayout ? " quiz-frame--flow" : ""}">
           <div class="quiz-head">
-            <div class="g-h3">${esc(c.question)}</div>
-            ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
+            <div class="${qCls}">${esc(c.question)}</div>
+            ${c.sub ? `<p class="quiz-sub g-p">${esc(c.sub)}</p>` : ""}
           </div>
           <div class="quiz-task">${task}</div>
           <div class="quiz-answers"><div class="quiz-options ${cols}">${opts}</div></div>
@@ -229,9 +240,9 @@
       const countLabel = c.countLabel || "Označených děr";
       const countInit = c.countInit || "0/0";
       return `${badges(c)}
-        <h3 class="fx-block g-h3" style="top:13%">${esc(c.title)}</h3>
-        <p class="fx-block g-p atten-help" style="top:23%">${esc(help)}</p>
-        <p class="fx-block g-p atten-count" style="top:41%">${esc(countLabel)}: <span data-atten-count>${esc(countInit)}</span></p>
+        <h3 class="fx-block g-h3" style="top:17.4%">${esc(c.title)}</h3>
+        <p class="fx-block g-p atten-help" style="top:27%">${esc(help)}</p>
+        <p class="fx-block g-p atten-count" style="top:41%;pointer-events:none">${esc(countLabel)}: <span data-atten-count>${esc(countInit)}</span></p>
         <div class="atten-viz"><iframe class="viz-frame atten-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>`;
     },
 
@@ -249,36 +260,45 @@
     },
 
     fun_fact(c) {
+      const media = c.image
+        ? `<img src="${c.image}" alt="">`
+        : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
         <div class="stack">
-          <div class="stack-media"><div class="funfact-tile"><div class="asset-missing">ilustrace<br>(doplnit)</div></div></div>
+          <div class="stack-media"><div class="funfact-tile">${media}</div></div>
           <div class="stack-text">
             <h3 class="fx-title g-h3">${esc(c.title)}</h3>
-            <p class="fx-text g-p-s">${esc(c.body)}</p>
+            <p class="fx-text g-p">${esc(c.body)}</p>
           </div>
         </div>
         ${chevron(c)}`;
     },
 
     spot_the_mistake(c) {
+      const media = c.image
+        ? `<img src="${c.image}" alt="">`
+        : `<div class="asset-missing">fotografie<br>(doplnit)</div>`;
       return `${badges(c)}
         <div class="stack">
-          <div class="stack-media"><div class="mistake-photo"><div class="asset-missing">fotografie<br>(doplnit)</div></div></div>
+          <div class="stack-media"><div class="mistake-photo">${media}</div></div>
           <div class="stack-text">
             <h3 class="fx-title mistake-claim g-h3">${esc(c.claim)}</h3>
-            <p class="fx-text mistake-context g-p-s">${esc(c.context)}</p>
+            <p class="fx-text mistake-context g-p">${esc(c.context)}</p>
           </div>
         </div>
         ${chevron(c)}`;
     },
 
     historicka_osobnost(c) {
+      const media = c.image
+        ? `<img src="${c.image}" alt="">`
+        : `<div class="asset-missing">fotografie<br>(doplnit)</div>`;
       return `${badges(c)}
         <div class="stack">
-          <div class="stack-media"><div class="persona-photo"><div class="asset-missing">fotografie<br>(doplnit)</div></div></div>
+          <div class="stack-media"><div class="persona-photo">${media}</div></div>
           <div class="stack-text">
-            <h3 class="fx-title g-h3">${esc(c.title)}</h3>
-            <p class="fx-text g-p-s">${esc(c.body)}</p>
+            <h1 class="fx-title g-h1">${esc(c.title)}</h1>
+            <p class="fx-text g-p">${esc(c.body)}</p>
           </div>
         </div>
         ${chevron(c)}`;
@@ -286,10 +306,8 @@
 
     argument(c) {
       return `${badges(c)}
-        <div class="arg-flow">
-          <h2 class="arg-claim">${esc(c.claim)}</h2>
-          <p class="arg-sub">${esc(c.sub)}</p>
-        </div>
+        <h2 class="fx-block arg-claim g-h2" style="top:26.4%">${esc(c.claim)}</h2>
+        <p class="fx-block arg-sub g-p" style="top:42.8%">${esc(c.sub)}</p>
         <div class="arg-actions">
           <button class="arg-opt" data-arg="agree">Souhlasím</button>
           <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>
@@ -300,19 +318,25 @@
       const rows = c.stats.map((s) =>
         `<div class="summary-row"><span>${esc(s.label)}</span><span class="summary-row-val">${esc(s.value)}</span></div>`).join("");
       return `${badges(c)}
-        <span class="pixel-deco" style="top:8%;left:26%;width:15px;height:15px">${ICON.spark}</span>
-        ${deco("", "top:27%;left:14%;width:13px;height:13px")}
-        ${deco("", "top:32%;left:64%;width:13px;height:13px")}
+        <span class="pixel-deco" style="top:8.1%;left:26.6%;width:14px;height:17px">${ICON.spark}</span>
+        ${deco("", "top:27.9%;left:14.2%;width:13px;height:15px")}
+        ${deco("", "top:34.7%;left:66.2%;width:13px;height:13px")}
         <div class="summary-mascot-wrap">
-          <div style="width:150px;height:106px;overflow:hidden">
-            <img src="${LOGO}" alt="" style="width:150px;height:auto">
-          </div>
+          <img src="assets/img/summary-mascot.png" alt="">
         </div>
         <h3 class="fx-block g-h3" style="top:44.4%">Tvé shrnutí pro dnešek</h3>
         <div class="summary-stats fx-block" style="top:50.7%">${rows}</div>
         <button class="summary-link fx-block" style="top:66.5%">Zobrazit dlouhodobé statistiky</button>
         <p class="summary-outro fx-block g-p reserve-chevron" style="top:76.3%">Každý den ti zobrazíme maximálně 20 Glitchů. Sociální sítě by neměly brát příliš tvé pozornosti.<br><br>Těšíme se na tebe třeba zítra!</p>
         ${chevron(c)}`;
+    },
+
+    time_to_let_go(c) {
+      // Závěrečná wellbeing karta (Figma 125:278): H2 + text nahoře, kočka full-bleed dole
+      return `${badges(c)}
+        <h2 class="fx-block g-h2" style="top:22.1%">${esc(c.title)}</h2>
+        <p class="fx-block letgo-text g-p" style="top:29.1%">${esc(c.body)}</p>
+        <img class="letgo-img" src="${c.image || "assets/img/time-to-let-go-cat.jpg"}" alt="">`;
     }
   };
 
@@ -325,28 +349,31 @@
   }
 
   function triangleFigure() {
+    // geometrie přesně dle Figmy (27:218): čtverec 150, úhlopříčka TL→BR,
+    // TR→levá hrana (0,103), TR→spodní hrana (90,150)
     return `<div class="quiz-figure"><svg width="150" height="150" viewBox="0 0 150 150" fill="none">
-      <g stroke="#fff" stroke-width="1.4">
-        <rect x="2" y="2" width="146" height="146"/>
-        <line x1="2" y1="2" x2="148" y2="148"/>
-        <line x1="148" y1="2" x2="2" y2="148"/>
-        <line x1="2" y1="90" x2="100" y2="148"/>
+      <g stroke="#fff" stroke-width="1">
+        <rect x="0.5" y="0.5" width="149" height="149"/>
+        <line x1="0.5" y1="0.5" x2="149.5" y2="149.5"/>
+        <line x1="149.5" y1="0.5" x2="0" y2="103"/>
+        <line x1="149.5" y1="0.5" x2="90" y2="150"/>
       </g></svg></div>`;
   }
 
   function moodDiagram() {
     // osa X = SOUSTŘEDĚNÍ (0–100), osa Y = ENERGIE (0–100)
-    return `<svg class="mood-diagram" viewBox="0 0 340 360" data-mood preserveAspectRatio="xMidYMid meet">
+    // geometrie dle Figmy 16:67: počátek (36,324), osy přesahují počátek (33 dolů / 29 vlevo)
+    return `<svg class="mood-diagram" viewBox="0 0 358 357" data-mood preserveAspectRatio="xMidYMid meet">
       <defs><marker id="ah" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
         <path d="M0,0 L6,3 L0,6 Z" fill="#000"/></marker></defs>
-      <line x1="44" y1="300" x2="44" y2="34"  stroke="#000" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="44" y1="300" x2="318" y2="300" stroke="#000" stroke-width="1.5" marker-end="url(#ah)"/>
-      <text class="mood-axis-label" x="14" y="42">100</text>
-      <text class="mood-axis-label" x="20" y="322">O</text>
-      <text class="mood-axis-label" x="286" y="322">100</text>
-      <text class="mood-axis-label" x="132" y="338">SOUSTŘEDĚNÍ</text>
-      <text class="mood-axis-label" x="30" y="180" transform="rotate(-90 30 180)">ENERGIE</text>
-      <circle class="mood-dot" data-mood-dot cx="185" cy="165" r="22" fill="#000"/>
+      <line x1="36" y1="357" x2="36" y2="8"  stroke="#000" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="7" y1="324" x2="350" y2="324" stroke="#000" stroke-width="1.5" marker-end="url(#ah)"/>
+      <text class="mood-axis-label" x="0" y="12">100</text>
+      <text class="mood-axis-label" x="9" y="346">O</text>
+      <text class="mood-axis-label" x="331" y="346">100</text>
+      <text class="mood-axis-label" x="248" y="346" text-anchor="end">SOUSTŘEDĚNÍ</text>
+      <text class="mood-axis-label" x="14" y="160" transform="rotate(-90 14 160)" text-anchor="middle">ENERGIE</text>
+      <circle class="mood-dot" data-mood-dot cx="182.5" cy="155.5" r="22.5" fill="#000"/>
     </svg>`;
   }
 
@@ -357,7 +384,7 @@
 
   const BG = {
     welcome: "yellow", intro: "white", argument: "pink", mood_selector: "white", daily_summary: "white",
-    breathing: "black", attention_game: "black", algorithm_demo: "black",
+    breathing: "black", attention_game: "black", algorithm_demo: "black", time_to_let_go: "black",
     quick_challenge: "red", spot_the_mistake: "purple", fun_fact: "teal",
     historicka_osobnost: "blue", quest_intro: "image"
   };
@@ -408,7 +435,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=15", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=16", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -579,6 +606,7 @@
     let target = c.cycles;
     const valueEl  = el.querySelector("[data-breath='value']");
     const circleEl = el.querySelector("[data-breath='circle']");
+    const digitEl  = el.querySelector("[data-breath='digit']");
     const hintEl   = el.querySelector("[data-breath='hint']");
     const btnEl    = el.querySelector("[data-breath='start']");
     const IDLE_HINT = hintEl ? hintEl.textContent : "";
@@ -589,13 +617,13 @@
     const easeInOut = (p) => 0.5 * (1 - Math.cos(Math.PI * p));
     const setCounter = () => { valueEl.textContent = (state === "idle" ? 0 : Math.min(cycle, target)) + "/" + target; };
 
-    // odpočet + nafouknutí uvnitř kolečka, průvodní text (Nádech/Výdech) v patičce
+    // odpočet nad kolečkem; vnitřní kolečko (53) se nafukuje uvnitř šedého kruhu (178)
     const render = (elapsed) => {
       const p = Math.min(elapsed / PHASE, 1);
       const e = easeInOut(p);
-      const scale = phase === "in" ? (0.8 + 0.5 * e) : (1.3 - 0.5 * e);
+      const scale = phase === "in" ? (1 + 2 * e) : (3 - 2 * e);
       circleEl.style.transform = "scale(" + scale.toFixed(3) + ")";
-      circleEl.textContent = Math.max(1, Math.ceil((PHASE - elapsed) / 1000));
+      if (digitEl) digitEl.textContent = Math.max(1, Math.ceil((PHASE - elapsed) / 1000));
       if (hintEl) hintEl.textContent = phase === "in" ? "Nádech" : "Výdech";
     };
     const startPhase = (ph) => { phase = ph; phaseStart = performance.now(); };
@@ -635,13 +663,14 @@
       state = "done";
       if (rafId) cancelAnimationFrame(rafId); rafId = null;
       circleEl.style.transform = "scale(1)";
-      circleEl.textContent = "";
+      if (digitEl) digitEl.textContent = "";
       if (hintEl) hintEl.textContent = "Hotovo, skvělá práce!";
       btnEl.textContent = "Začít";
     }
     function toIdle() {
       state = "idle"; cycle = 0;
-      circleEl.style.transform = ""; circleEl.textContent = target;
+      circleEl.style.transform = "";
+      if (digitEl) digitEl.textContent = target;
       if (hintEl) hintEl.textContent = IDLE_HINT;
       btnEl.textContent = "Začít"; setCounter();
     }
@@ -664,10 +693,10 @@
     const SVGNS = "http://www.w3.org/2000/svg";
     const svg = el.querySelector("[data-mood]");
     const dot = el.querySelector("[data-mood-dot]");
-    const BOUND = { x0: 44, x1: 318, y0: 300, y1: 34 };
-    const N = 9, R = 22, CHAIN = 0.42;      // délka a těsnost ohonu
+    const BOUND = { x0: 36, x1: 350, y0: 324, y1: 8 };
+    const N = 9, R = 22.5, CHAIN = 0.42;    // délka a těsnost ohonu
     let dragging = false;
-    let cx = 185, cy = 165, tx = 185, ty = 165;   // puntík: aktuální vs. cílová pozice
+    let cx = 182.5, cy = 155.5, tx = 182.5, ty = 155.5;   // puntík: aktuální vs. cílová pozice
 
     // ohon = řetěz uzlů; každý má azurovou + purpurovou kopii, k dálce se rozkládají a mizí
     const nodes = [];
@@ -678,13 +707,13 @@
         c.setAttribute("class", "mood-ghost");
         c.setAttribute("r", (R * (1 - 0.45 * t)).toFixed(1));
         c.setAttribute("fill", color);
-        c.setAttribute("cx", 185); c.setAttribute("cy", 165);
+        c.setAttribute("cx", cx); c.setAttribute("cy", cy);
         c.style.mixBlendMode = "multiply";
         return c;
       };
       const cyan = mk("#21E0F0"), mag = mk("#FF2E9A");
       svg.insertBefore(cyan, dot); svg.insertBefore(mag, dot);
-      nodes.push({ x: 185, y: 165, t, cyan, mag });
+      nodes.push({ x: cx, y: cy, t, cyan, mag });
     }
 
     const toSvg = (evt) => {
@@ -805,8 +834,9 @@
      zatím je konverzace skriptovaná a vstupní pole jen přidá bublinu uživatele.
      ========================================================================== */
   const SEND_ICO =
-    '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">' +
-    '<path d="M3 11.5 21 3l-8.5 18-2.7-7.3L3 11.5Z" fill="#1a1a1a"/></svg>';
+    '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">' +
+    '<path d="M4 11.7 20.5 3.8l-7.3 16.7-2.4-6.6L4 11.7Z" stroke="#1a1a1a" stroke-width="1.7" stroke-linejoin="round"/>' +
+    '<path d="M10.8 13.9 20.5 3.8" stroke="#1a1a1a" stroke-width="1.7" stroke-linejoin="round"/></svg>';
 
   function rzBadges(c) {
     // v rozkliku vpravo nahoře: autor (Glitch) + téma — bílé pilulky s obrysem
@@ -836,7 +866,7 @@
   function renderChat(c, r) {
     const thread = (r.messages || []).map((m) => {
       if (m.from === "bot") {
-        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="${LOGO}" alt="Tinybot"></span>` +
+        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Tinybot"></span>` +
                `<div class="rz-bubble">${esc(m.text)}</div></div>`;
       }
       if (m.from === "user") {
@@ -848,11 +878,13 @@
         const opts = (m.options || []).map((o, i) =>
           `<button class="rz-opt" data-rz-opt="${i}" data-correct="${!!o.correct}" data-type="${type}">` +
           `<span class="rz-mark rz-mark--${type}"></span><span class="rz-opt-label">${esc(o.label)}</span></button>`).join("");
-        return `<div class="rz-quiz" data-rz-quiz data-multi="${!!m.multi}">${opts}` +
-               `<button class="rz-quiz-submit" data-rz-submit>Odeslat odpověď</button></div>`;
+        // tlačítko „Odeslat" má jen vícevolbový kvíz; jedna volba se vyhodnotí rovnou (dle Figmy)
+        const submit = m.multi ? `<button class="rz-quiz-submit" data-rz-submit>Odeslat odpověď</button>` : "";
+        return `<div class="rz-quiz" data-rz-quiz data-multi="${!!m.multi}">${opts}${submit}</div>`;
       }
       return "";
     }).join("");
+    // dle Figmy (153:703) nemá chat titulek ani intro — jen lištu a vlákno
     return `
       <header class="rz-bar">
         <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
@@ -860,8 +892,6 @@
         ${rzBadges(c)}
       </header>
       <div class="rz-body rz-body--chat">
-        <h1 class="rz-title g-h1">${esc(r.title)}</h1>
-        ${r.intro ? `<p class="rz-intro g-p">${esc(r.intro)}</p>` : ""}
         <div class="rz-thread" data-rz-thread>${thread}</div>
       </div>
       <form class="rz-input" data-rz-form>
@@ -914,13 +944,8 @@
       const opts = quiz.querySelectorAll(".rz-opt");
       const submit = quiz.querySelector("[data-rz-submit]");
       let done = false;
-      opts.forEach((opt) => opt.addEventListener("click", () => {
-        if (done) return;
-        if (multi) opt.classList.toggle("is-sel");
-        else { opts.forEach((o) => o.classList.toggle("is-sel", o === opt)); }
-      }));
-      if (submit) submit.addEventListener("click", () => {
-        if (done) return; done = true;
+      const evaluate = () => {
+        done = true;
         opts.forEach((o) => {
           const correct = o.dataset.correct === "true";
           const sel = o.classList.contains("is-sel");
@@ -928,9 +953,16 @@
           if (sel && !correct) o.classList.add("is-wrong");
           o.classList.add("is-locked");
         });
-        submit.textContent = "Vyhodnoceno";
-        submit.disabled = true;
-      });
+        if (submit) { submit.textContent = "Vyhodnoceno"; submit.disabled = true; }
+      };
+      opts.forEach((opt) => opt.addEventListener("click", () => {
+        if (done) return;
+        if (multi) { opt.classList.toggle("is-sel"); return; }
+        // jedna volba: výběr se vyhodnotí rovnou (bez tlačítka — dle Figmy)
+        opts.forEach((o) => o.classList.toggle("is-sel", o === opt));
+        evaluate();
+      }));
+      if (submit) submit.addEventListener("click", () => { if (!done) evaluate(); });
     });
 
     // Vstupní pole: přidá bublinu uživatele (napojení na Tinybota přijde později)
