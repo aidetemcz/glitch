@@ -177,8 +177,10 @@
     },
 
     quest_intro(c) {
+      // Video se NEnačítá dopředu (preload=none, src až přes IntersectionObserver),
+      // ať slabý internet netáhne všech 6 videí naráz — jen to zrovna viditelné.
       const bg = c.video
-        ? `<video class="quest-video" autoplay muted loop playsinline preload="auto"><source src="${c.video}" type="video/mp4"></video><div class="quest-scrim"></div>`
+        ? `<video class="quest-video" muted loop playsinline preload="none" data-video-src="${c.video}"></video><div class="quest-scrim"></div>`
         : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
         <div class="fx-block quest-text reserve-chevron" style="top:65%">
@@ -411,7 +413,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=6", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=7", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -477,6 +479,7 @@
     if (c.type === "argument") initArgument(el);
     if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el);
+    if (c.type === "quest_intro") initQuestVideo(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") {
       el.addEventListener("click", () => nextFrom(el));
@@ -491,6 +494,28 @@
     // opt-in časovač (vizuální přepínač; plná logika ve Fázi 3)
     el.querySelectorAll("[data-timer]").forEach((b) =>
       b.addEventListener("click", () => b.classList.toggle("is-on")));
+  }
+
+  /* ---- Líné načítání videí u Quest karet ----
+     Video se stáhne a přehraje teprve, když je karta na řadě (viditelná). Šetří
+     data na slabém internetu (školy) — nestahuje se všech 6 videí naráz. */
+  let _videoObserver = null;
+  function initQuestVideo(el) {
+    const v = el.querySelector(".quest-video");
+    if (!v || !v.dataset.videoSrc) return;
+    const load = () => { if (!v.src) v.src = v.dataset.videoSrc; };
+    // bez IntersectionObserver (starý prohlížeč) → načti hned
+    if (!("IntersectionObserver" in window)) { load(); v.play().catch(() => {}); return; }
+    if (!_videoObserver) {
+      _videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          const vid = e.target;
+          if (e.isIntersecting) { if (!vid.src) vid.src = vid.dataset.videoSrc; vid.play().catch(() => {}); }
+          else vid.pause();
+        });
+      }, { root: feed, rootMargin: "150px 0px", threshold: 0.35 });
+    }
+    _videoObserver.observe(v);
   }
 
   /* ---- Hra na pozornost (časovač-kolečko + skóre z iframu) ---- */

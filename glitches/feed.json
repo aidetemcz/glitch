@@ -198,7 +198,7 @@
     "concept_id": "informaticke-mysleni-algoritmus", "obtiznost": 1,
     "title": "Robot bere všechno doslova",
     "body": "Tenhle robot udělá přesně to, co mu napíšeš — a ani o chlup víc. Podle přesných kroků nakreslí čtverec pokaždé stejně. Dokázal bys mu dát návod, který nejde splést?",
-    "viz": "assets/3Dvizualizations/algorithm-steps.html?v=1" },
+    "viz": "assets/3Dvizualizations/algorithm-steps.html?v=2" },
 
   { "id": "algoritmus-pseudokod-a-diagramy", "type": "quest_intro", "category": "Algoritmus", "trust": "Core", "chapterNo": 2,
     "concept_id": "informaticke-mysleni-pseudokod-a-vyvojove-diagramy", "obtiznost": 2,
