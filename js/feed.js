@@ -107,9 +107,15 @@
     generated: "Generováno", "generováno": "Generováno", generovany: "Generováno",
     edited: "Fork", fork: "Fork" };
   const trustLabel = (t) => TRUST_LABEL[String(t == null ? "core" : t).toLowerCase()] || String(t || "Glitch");
-  const badges = (c) => c.category
-    ? `<div class="badges"><span class="badge trust">${esc(trustLabel(c.trust))}</span><span class="badge cat">${esc(c.category)}</span></div>`
-    : "";
+  // Štítky zleva: téma (topic) · typ Glitche (category) · autor (trust).
+  // Basic Glitch (quest) nemá typ; historická osobnost nemá téma → render dle toho, co je.
+  const badges = (c) => {
+    const parts = [];
+    if (c.topic) parts.push(`<span class="badge topic">${esc(c.topic)}</span>`);
+    if (c.category) parts.push(`<span class="badge type">${esc(c.category)}</span>`);
+    parts.push(`<span class="badge creator">${esc(trustLabel(c.trust))}</span>`);
+    return `<div class="badges">${parts.join("")}</div>`;
+  };
   const chevron = () => `<button class="nav-chevron" data-nav="next" aria-label="Další Glitch"><img src="assets/ui/more-button.svg" alt="" width="40" height="62"></button>`;
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
@@ -393,7 +399,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=13", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=14", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);

@@ -24,7 +24,7 @@
   --card-pad:     40px;
   --bottombar-h:  48px;
   --feed-max:     480px;
-  --nav-h:        56px;
+  --nav-h:        48px;
 
   /* Typografie */
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -123,16 +123,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    Sdílené prvky karet
    ========================================================================== */
 
-/* Badge kategorie (vpravo nahoře) */
-/* Badge: dva (trust + kategorie) vpravo nahoře — dle Figmy */
-.badges { position: absolute; top: calc(26 * var(--u)); right: calc(25 * var(--u)); z-index: 5; display: flex; gap: calc(9 * var(--u)); }
+/* Štítky vlevo nahoře — pořadí: téma (žlutá) · typ (žlutá) · autor (bílá).
+   Rozestup 12 px (dle návrhu). */
+.badges { position: absolute; top: calc(28 * var(--u)); left: calc(28 * var(--u)); z-index: 5; display: flex; gap: calc(12 * var(--u)); }
 .badge {
-  display: flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(10 * var(--u));
-  border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
+  display: flex; align-items: center; height: calc(32 * var(--u)); padding: 0 calc(12 * var(--u));
+  border-radius: calc(8 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
   letter-spacing: var(--tracking); white-space: nowrap;
 }
-.badge.trust { background: var(--c-white); color: var(--c-grey-50, #747474); }
-.badge.cat   { background: var(--c-yellow); color: #1a1a1a; }
+.badge.topic, .badge.type { background: var(--c-yellow); color: #1a1a1a; }
+.badge.creator { background: var(--c-white); color: var(--c-grey-50, #747474); }
 
 /* Číslo kapitoly (pill) */
 .chapter-no {
@@ -551,14 +551,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Utility */
 .hidden { display: none !important; }
 
-/* ---------- Spodní menu ---------- */
+/* ---------- Spodní menu (48 px, menší ikony, větší rozestupy) ---------- */
 #glitch-nav {
   flex: 0 0 auto; z-index: 40;
   width: 100%; max-width: var(--feed-max); margin: 0 auto;
   height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: #1A1A1A;
-  border-top: 2px solid #747474;
+  background: #000;
   display: flex; align-items: stretch;
 }
 .nav-item {
@@ -570,7 +569,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* obrysové ikony (feed / boardy / hledat): přebarvení přes CSS mask.
    neaktivní = bílá, aktivní = žlutá */
 .nav-ico {
-  display: block; width: 26px; height: 26px;
+  display: block; width: 22px; height: 22px;
   background-color: var(--c-white);
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
@@ -579,9 +578,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .nav-item.is-active .nav-ico { background-color: var(--c-yellow); }
 /* plus: žluté kolečko + tmavý plus (bez černého prstence) — vždy žluté */
-.plus-svg { width: 40px; height: 40px; display: block; }
+.plus-svg { width: 30px; height: 30px; display: block; }
 .nav-ava {
-  width: 34px; height: 34px; border-radius: 50%; overflow: hidden;
+  width: 28px; height: 28px; border-radius: 50%; overflow: hidden;
   border: 2px solid #fff; display: block; background: #000;
 }
 .nav-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
