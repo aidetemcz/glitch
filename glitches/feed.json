@@ -1,0 +1,75 @@
+[
+  { "id": "welcome", "type": "welcome" },
+
+  { "id": "intro", "type": "intro" },
+
+  { "id": "wellbeing-mood", "type": "mood_selector", "category": "Wellbeing",
+    "title": "Jak se teď cítíš?",
+    "body": "Potažením zvol svůj vibe. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
+
+  { "id": "wellbeing-dech", "type": "breathing", "category": "Wellbeing",
+    "title": "Dechové cvičení",
+    "body": "Rovnoměrné vědomé dýchání ti může pomoci zlepšit soustředění.",
+    "cycles": 7 },
+
+  { "id": "vibecoding-intro", "type": "quest_intro", "category": "Vibe Coding", "chapterNo": 1,
+    "title": "Vibe Coding",
+    "body": "Vibe Coding je programování v přirozeném jazyce. Zjisti, jak vznikl a jak to celé funguje.",
+    "video": "assets/videos/vibe-coding_01.mp4" },
+
+  { "id": "matematika-nasobeni-310x15", "type": "quick_challenge", "category": "Rychlá výzva", "trust": "Generováno",
+    "obtiznost": 1,
+    "question": "310×15=",
+    "sub": "Zvládneš to spočítat?",
+    "cols": 2,
+    "answers": [
+      { "label": "4 650", "correct": true },
+      { "label": "4 350", "correct": false },
+      { "label": "4 750", "correct": false },
+      { "label": "3 950", "correct": false }
+    ] },
+
+  { "id": "obrazec-trojuhelniky", "type": "quick_challenge", "category": "Rychlá výzva",
+    "obtiznost": 1,
+    "figure": "triangles",
+    "question": "Kolik trojúhelníků je celkem v obrazci?",
+    "questionStyle": "h3",
+    "cols": 3,
+    "answers": [
+      { "label": "9", "correct": false },
+      { "label": "10", "correct": false },
+      { "label": "11", "correct": true }
+    ] },
+
+  { "id": "hra-na-pozornost-koule", "type": "attention_game", "category": "Hra na pozornost",
+    "title": "Kolik zvládneš označit děr?",
+    "viz": "assets/3Dvizualizations/sphere-holes.html?v=5" },
+
+  { "id": "algoritmus-hra-zivota", "type": "algorithm_demo", "category": "Algoritmus", "chapterNo": 5,
+    "obtiznost": 2,
+    "title": "Hra života",
+    "body": "Hra života je ukázka algoritmu s pár jednoduchými pravidly. Ta určují, které buňky přežijí, které zaniknou a kde vznikne nová. Dokážeš pravidla popsat?",
+    "viz": "assets/3Dvizualizations/game-of-life.html?v=3" },
+
+  { "id": "funfact-bug-mura", "type": "fun_fact", "category": "Fun fact",
+    "obtiznost": 1,
+    "title": "První počítačový bug byla můra.",
+    "body": "Slovem bug označovali technici drobné závady už za Edisona. Ale když v roce 1947 kvůli můře, která vlétla dovnitř, přestal fungovat počítač Harvard Mark II, termín se ujal i u počítačů. Chybám dodnes říkáme bugy a jejich opravování debugging (doslova odhmyzení)." },
+
+  { "id": "najdi-chybu-perceptron", "type": "spot_the_mistake", "category": "Najdi chybu",
+    "obtiznost": 2,
+    "claim": "Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott!",
+    "context": "Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců." },
+
+  { "id": "argument-nemam-co-skryvat", "type": "argument", "category": "Argumentuj", "trust": "Core",
+    "obtiznost": 3,
+    "claim": "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
+    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
+
+  { "id": "shrnuti-dne", "type": "daily_summary", "category": "Shrnutí",
+    "stats": [
+      { "label": "Vyřešených Glitchů", "value": 2 },
+      { "label": "Splněných Questů", "value": 0 },
+      { "label": "Zvládnutých výzev", "value": 3 }
+    ] }
+]

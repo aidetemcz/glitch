@@ -30,7 +30,7 @@ flowchart LR
 
 ## 1. Katalog Glitchů (data-driven feed)
 
-Nahradit pevné `CARDS` **manifestem** (např. `glitches/index.json`), vygenerovaným z MD souborů (frontmatter). Každá položka nese pole potřebná pro řazení:
+Nahradit pevné `CARDS` **manifestem** `glitches/feed.json`, který feed načítá za běhu (později generovaný z MD frontmatteru). Každá položka nese pole potřebná pro řazení:
 
 | pole | k čemu |
 | --- | --- |
@@ -94,11 +94,13 @@ Nastavení z profilu (`profiles.settings` / localStorage) vstupují do skórová
 
 ## Fáze implementace
 
-1. **Manifest katalogu** (`glitches/index.json`) + přepnout feed na data-driven čtení.
-2. **Skórovací modul** `js/recommender.js` — čistá funkce `serazFeed(...)`, zatím jen tvrdé filtry + mood match + trust filtr.
-3. **Sběr signálů** — dopojit události (view/open/complete) a načíst mood/progres z DB.
-4. **Měkké váhy** — fasety, zájmy, rozmanitost.
+1. ✅ **Manifest katalogu** `glitches/feed.json` + feed čte data-driven (fallback = vestavěný `CARDS`). *(Pozor: `glitches/index.json` je něco jiného — stará struktura misí Vibe Codingu.)*
+2. ✅ **Skórovací modul** `js/recommender.js` — čistá funkce `serazFeed(cards, ctx)`: tvrdé filtry (denní strop, „od koho vidím obsah", mood check-in, dokončené) + řazení dle nálady (obtížnost). Bez nálady zachová původní pořadí (nedestruktivní).
+3. **Sběr signálů** — dopojit události (view/open/complete) a načíst mood/progres z DB (teď čte mood/progres z localStorage).
+4. **Měkké váhy** — fasety, zájmy (chips), rozmanitost, návaznost questu.
 5. **Transparentnost** — „proč vidím tohle" (malé vysvětlení u karty). *(výhled)*
+
+**Stav: kroky 1–2 hotové a nasazené.** Feed je data-driven a doporučovač aplikuje tvrdé filtry + řazení dle nálady.
 
 > v1 běží celý v prohlížeči, je deterministický a **vysvětlitelný** — u dětského vzdělávacího obsahu výhoda (dá se odůvodnit, proč se co ukázalo).
 

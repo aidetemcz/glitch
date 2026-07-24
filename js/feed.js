@@ -23,7 +23,8 @@
   const LOGO = "assets/glitch-logo.svg";
 
   /* ==========================================================================
-     Data karet (Fáze 1 — reprezentativní vzorek všech vizuálních rodin)
+     Data karet — FALLBACK. Zdroj pravdy je glitches/feed.json (načítá se za běhu);
+     tenhle vestavěný katalog se použije jen když se fetch nezdaří. Držet v souladu.
      ========================================================================== */
   const CARDS = [
     { type: "welcome" },
@@ -321,30 +322,35 @@
     quest_intro: "image"
   };
 
-  CARDS.forEach((c, i) => {
-    const el = document.createElement("section");
-    el.className = "card card--" + (BG[c.type] || "dark");
-    el.dataset.index = i;
-    el.dataset.type = c.type;
-    el.innerHTML = (RENDER[c.type] || (() => `<div class="card-body">${esc(c.type)}</div>`))(c);
-    // gating karet dle nastavení: mood check-in vypnutý → mood karta se nezobrazí
-    if (c.type === "mood_selector") {
-      try { if (window.glitchSettings && window.glitchSettings().mood_checkin === false) el.classList.add("is-hidden"); } catch (_) {}
-    }
-    feed.appendChild(el);
-    initCard(el, c);
-  });
-
-  /* ==========================================================================
-     Úvodní přihlašovací karta se přihlášenému uživateli skryje (jinak matoucí).
-     Stav se načítá asynchronně → reagujeme na onAuthStateChange (+ počáteční stav).
-     ========================================================================== */
-  const welcomeCard = feed.querySelector('[data-type="welcome"]');
+  let welcomeCard = null;
   function applyWelcomeVisibility(loggedIn) {
     if (!welcomeCard) return;
     welcomeCard.classList.toggle("is-hidden", !!loggedIn);
   }
-  if (typeof sbCurrentUser !== "undefined" && sbCurrentUser) applyWelcomeVisibility(true);
+
+  // Sestavení karet z katalogu, seřazené doporučovačem (js/recommender.js)
+  function buildCards(catalog) {
+    const ordered = (typeof window.serazFeed === "function") ? window.serazFeed(catalog) : catalog;
+    feed.innerHTML = "";
+    ordered.forEach((c, i) => {
+      const el = document.createElement("section");
+      el.className = "card card--" + (BG[c.type] || "dark");
+      el.dataset.index = i;
+      el.dataset.type = c.type;
+      el.innerHTML = (RENDER[c.type] || (() => `<div class="card-body">${esc(c.type)}</div>`))(c);
+      // gating karet dle nastavení: mood check-in vypnutý → mood karta se nezobrazí
+      if (c.type === "mood_selector") {
+        try { if (window.glitchSettings && window.glitchSettings().mood_checkin === false) el.classList.add("is-hidden"); } catch (_) {}
+      }
+      feed.appendChild(el);
+      initCard(el, c);
+    });
+    // úvodní přihlašovací karta se přihlášenému uživateli skryje
+    welcomeCard = feed.querySelector('[data-type="welcome"]');
+    if (typeof sbCurrentUser !== "undefined" && sbCurrentUser) applyWelcomeVisibility(true);
+  }
+
+  // reakce na přihlášení (welcomeCard se doplní po sestavení)
   if (typeof sb !== "undefined" && sb && sb.auth && typeof sb.auth.onAuthStateChange === "function") {
     sb.auth.onAuthStateChange((_event, session) => {
       const loggedIn = !!(session && session.user);
@@ -352,6 +358,16 @@
       if (loggedIn) { try { feed.scrollTo({ top: 0 }); } catch (_) {} }
     });
   }
+
+  // Data-driven: katalog z glitches/feed.json (zdroj pravdy). Fallback = vestavěný CARDS.
+  (async function loadAndBuild() {
+    let catalog = CARDS;
+    try {
+      const res = await fetch("glitches/feed.json?v=1", { cache: "no-cache" });
+      if (res.ok) catalog = await res.json();
+    } catch (_) {}
+    buildCards(catalog);
+  })();
 
   /* ==========================================================================
      Navigace (chevron / maskot → další karta)
