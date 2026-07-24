@@ -172,7 +172,7 @@ Denní „check-in": dítě potažením umístí tečku do diagramu **energie ×
 **Breathing (dechové cvičení)**
 Krátká řízená dechová aktivita pro zklidnění (nádech / výdech).
 
-**Attention game (hra na pozornost)**
+**Attention game (aktivita)**
 Interaktivní 3D hra pro „usazení" pozornosti; volitelný časovač.
 
 **Relace (session)**

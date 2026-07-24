@@ -106,7 +106,7 @@ Interaktivní karty — denní selectory a krátké hry. Součást feedu. Bez ch
 
 - **Mood_selector** — denní check-in: dítě potažením umístí tečku do diagramu (osy ENERGIE × SOUSTŘEDĚNÍ). Hodnota personalizuje výběr Glitchů pro daný den.
 - **Breathing** — dechové cvičení: nastavitelný počet cyklů, animované fáze nádech / zadrž / výdech.
-- **Attention_game** — hra na pozornost: interaktivní 3D objekt, opt-in časovač.
+- **Attention_game** — aktivita: interaktivní 3D objekt, opt-in časovač.
 
 Zásady: časovače opt-in, žádné srovnávání, emoční data jen po dobu 24hodinové relace.
 

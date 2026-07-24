@@ -44,7 +44,7 @@ Obsah se dělí do typů (= složky v glitches/):
 
 1.  **Basic Glitch** — jádro vzdělávacího obsahu; nejuniverzálnější typ, unese znalostní výklad i aplikační tvorbu („postav to"). Rozklik, chatbot, fork.
 2.  **Rychlá výzva** — nerozklikávací kognitivní rozcvička; dítě splní výzvu přímo na kartě a scrolluje dál.
-3.  **Wellbeing** — interaktivní karty (mood check-in, dýchání, hra na pozornost); součást feedu.
+3.  **Wellbeing** — interaktivní karty (mood check-in, dýchání, aktivita); součást feedu.
 4.  **Fun fact** — rozklikávací zajímavost bez úkolu, pro zpestření.
 5.  **Najdi chybu** — rozklikávací Glitch pro kritické myšlení a prebunking; dítě odhalí chybné tvrzení.
 6.  **Historická osobnost** — seznámení s osobností oboru + konverzace s AI personou.

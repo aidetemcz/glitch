@@ -93,7 +93,7 @@ Uživatel vidí **editovatelný model svých preferencí** (které fasety mu sed
 | zdroj | co měří | perioda |
 | --- | --- | --- |
 | **mood_selector** | energie (0–100) × soustředění (0–100) | denní check-in |
-| **attention_game** | zvládnutí hry na pozornost (v relaci) | při zahrání |
+| **attention_game** | zvládnutí aktivity (v relaci) | při zahrání |
 | **breathing** | využití zklidnění | při zahrání |
 
 > Všechna emoční data žijí jen v **24hodinové relaci** a pak se mažou (princip 11) — slouží k úpravě dnešního feedu, ne jako trvalý štítek.
@@ -104,9 +104,9 @@ Dvojice `(energie, soustředění)` z mood check-inu určuje profil dnešního f
 
 | stav uživatele | co systém servíruje |
 | --- | --- |
-| **nízká energie + nízké soustředění** (unavený, nepozorný) | jednodušší, kratší Glitche (znalostní); víc **wellbeing** a **her na pozornost**; méně tvůrčích úkolů |
+| **nízká energie + nízké soustředění** (unavený, nepozorný) | jednodušší, kratší Glitche (znalostní); víc **wellbeing** a **aktivit**; méně tvůrčích úkolů |
 | **vysoká energie + vysoké soustředění** (nabitý, soustředěný) | složitější, aplikační a **tvůrčí** Glitche (fork, „postav to"); delší podání |
-| **vysoká energie + nízké soustředění** (roztěkaný) | krátké aktivní úkoly + hra na pozornost pro „usazení"; pak přidat obtížnost |
+| **vysoká energie + nízké soustředění** (roztěkaný) | krátké aktivní úkoly + aktivita pro „usazení"; pak přidat obtížnost |
 | **nízká energie + vysoké soustředění** (klidný, ale bez šťávy) | střední obtížnost, spíš čtení/pozorování než náročná tvorba; nabídnout zklidňující tempo |
 
 Tím se naplňuje princip 5: **kvalita času = pokrok přiměřený stavu**, ne co nejdelší setrvání.
@@ -188,7 +188,7 @@ _Semi-technicky, pro budoucí uvažování — ne pro současnou implementaci._
 **Jak systém zjistí preference (tvůj příklad „obrázky vs. text, jak dlouho vydrží u čtení"):** dvěma cestami, které se sbíhají do jednoho **profilu fasetových afinit**:
 
 - **explicitně** — uživatel si zvolí (editovatelný model preferencí). Tvůj nápad na Glitch, který se zeptá / vysleduje, jestli má radši obrázky nebo text, je přesně tahle explicitní cesta.
-- **implicitně** — z chování: doba čtení, které podání dokončil, co přeskočil, výsledek hry na pozornost, mood. (Pozor: chování ≠ trvalá pravda o dítěti — implicitní signály jsou slabé a přebíjí je explicitní volba.)
+- **implicitně** — z chování: doba čtení, které podání dokončil, co přeskočil, výsledek aktivity, mood. (Pozor: chování ≠ trvalá pravda o dítěti — implicitní signály jsou slabé a přebíjí je explicitní volba.)
 
 Z profilu afinit pak plyne **cílový fasetový vektor**, a ten se buď **najde** v katalogu, nebo (u mezery) **dogeneruje** přes bránu.
 

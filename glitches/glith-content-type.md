@@ -17,7 +17,7 @@ Každý typ má vlastní barvu pozadí. Ve variables jsou jen `Red` a `BlackDark
 | Typ | Pozadí |
 |---|---|
 | Welcome, Mood Selector, Shrnutí | `WhiteWhite` |
-| Dechové cvičení, Hra na pozornost, Algoritmus | `BlackDark` |
+| Dechové cvičení, Aktivita, Algoritmus | `BlackDark` |
 | Rychlá výzva | `Red` (#FF7171) |
 | Historická osobnost | modrá ~#6490FF |
 | Najdi chybu | fialová ~#70558D |
@@ -89,11 +89,11 @@ Každý typ má vlastní barvu pozadí. Ve variables jsou jen `Red` a `BlackDark
 - Odpovědi: 2×2 nebo 1×N mřížka bílých tlačítek se zaoblenými rohy (radius ~12), text černý `glitch_H3`/`glitch_p`.
 - Interakce: výběr odpovědi → okamžitá zpětná vazba správně/špatně. Varianty zadání: výpočet, slovní úloha, obrazec (SVG/obrázek + otázka „Kolik trojúhelníků…").
 
-## 7. Hra na pozornost
+## 7. Aktivita
 
 Účel: krátká interaktivní hra (např. označování děr na 3D objektu).
 
-- Badge: „Hra na pozornost". Pozadí `BlackDark`, text bílý.
+- Badge: „Aktivita". Pozadí `BlackDark`, text bílý.
 - Opt-in časovač stejně jako u Rychlé výzvy (bílé kolečko + instrukce).
 - H1/H3: zadání hry („Kolik zvládneš označit děr v časovém limitu?").
 - Střed: interaktivní 3D objekt (koule s děrami) — tap označuje cíle.

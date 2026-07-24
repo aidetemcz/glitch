@@ -77,9 +77,9 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 - **Interakce:** nastavitelný počet cyklů; animované fáze **nádech / výdech** (bez zádrže), počítadlo uvnitř kolečka, fáze pojmenovaná v patičce. Tlačítko Začít → Pozastavit.
 - **Kam se ukládá:** nic citlivého; případně jen „dokončeno" jako neutrální signál.
 
-### 2.3 `attention_game` — hra na pozornost
+### 2.3 `attention_game` — aktivita
 
-- **Štítek:** `Hra na pozornost`. **Titulek + pokyn.**
+- **Štítek:** `Aktivita`. **Titulek + pokyn.**
 - **Interakce:** interaktivní 3D objekt (drátěná koule s dírami); dítě otáčí tažením a ťuká na díry vpředu. **Opt-in časovač** jako „ukrajující" kolečko.
 - **Kam se ukládá:** počet zásahů jen jako osobní zpětná vazba v relaci; žádné srovnávání.
 
@@ -105,5 +105,5 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 
 - **Emoční data (mood, frustrace, pozornost) jsou citlivá** → žijí jen v 24hodinové relaci, pak se mažou. Nepropisují se do trvalého profilu ani se neposílají jako hodnocení.
 - **Žádné srovnávání, žádné žebříčky, žádné veřejné sdílení** nálady ani výsledku hry.
-- **Časovač u hry na pozornost je opt-in** — časový tlak se nikdy nevytváří sám.
+- **Časovač u aktivity je opt-in** — časový tlak se nikdy nevytváří sám.
 - Wellbeing karta se **nedá „propadnout"** — neexistuje špatný výsledek, jen check-in.

@@ -353,7 +353,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .timer-note { color: rgba(255,255,255,0.85); max-width: 22ch; }
 
 /* ==========================================================================
-   Hra na pozornost (časovač + koule)
+   Aktivita (časovač + koule)
    ========================================================================== */
 .atten-top   { display: flex; align-items: center; gap: calc(18 * var(--u)); }
 .atten-note  { color: rgba(255,255,255,0.72); }

@@ -67,7 +67,7 @@
         { label: "11", correct: true }
       ] },
 
-    { type: "attention_game", category: "Hra na pozornost",
+    { type: "attention_game", category: "Aktivita",
       title: "Kolik zvládneš označit děr?",
       viz: "assets/3Dvizualizations/sphere-holes.html?v=5" },
 
@@ -245,15 +245,20 @@
     },
 
     attention_game(c) {
+      // data-driven: víc aktivit sdílí stejnou strukturu (nadpis, návod, počítadlo, koule)
+      const help = c.help || "Tažením otáčíš kouli. Díry označíš ťuknutím. Ale pozor: označit lze jen díry, které jsou vpředu.";
+      const countLabel = c.countLabel || "Označených děr";
+      const countInit = c.countInit || "0/0";
+      const showTimer = c.timer !== false;   // aktivity bez měření času (např. hledání slov) → timer:false
       return `${badges(c)}
-        ${timersOn() ? `<div class="atten-top fx-block" style="top:14.5%">
+        ${(showTimer && timersOn()) ? `<div class="atten-top fx-block" style="top:14.5%">
           <button class="timer-toggle atten-timer" data-atten-timer aria-label="Spustit / zastavit časovač"></button>
           <p class="timer-note atten-note g-p-s" data-atten-note>Až budeš připravený*á, zapni si časovač. Stačí kliknout na kolečko.</p>
         </div>` : ""}
         <h3 class="fx-block g-h3" style="top:27%">${esc(c.title)}</h3>
-        <p class="fx-block g-p atten-help" style="top:37%">Tažením otáčíš kouli. Díry označíš ťuknutím. Ale pozor: označit lze jen díry, které jsou vpředu.</p>
-        <p class="fx-block g-p atten-count" style="top:47%">Označených děr: <span data-atten-count>0/0</span></p>
-        <div class="atten-viz"><iframe class="viz-frame atten-frame" src="${c.viz}" loading="lazy" title="Koule s dírami"></iframe></div>`;
+        <p class="fx-block g-p atten-help" style="top:37%">${esc(help)}</p>
+        <p class="fx-block g-p atten-count" style="top:47%">${esc(countLabel)}: <span data-atten-count>${esc(countInit)}</span></p>
+        <div class="atten-viz"><iframe class="viz-frame atten-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>`;
     },
 
     algorithm_demo(c) {
@@ -418,7 +423,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=9", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=10", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -483,7 +488,7 @@
     if (c.type === "quick_challenge") initQuiz(el);
     if (c.type === "argument") initArgument(el);
     if (c.type === "historicka_osobnost") initPersona(el);
-    if (c.type === "attention_game") initAttention(el);
+    if (c.type === "attention_game") initAttention(el, c);
     if (c.type === "algorithm_demo") initVizFrame(el);
     if (c.type === "quest_intro") initQuestVideo(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
@@ -507,11 +512,9 @@
      loading=lazy, které uvnitř posuvného feedu na mobilech vynechává. src se
      nastaví, jakmile se karta blíží; jednou načtené se nechává (bez blikání). */
   let _vizObserver = null;
-  function initVizFrame(el) {
-    const f = el.querySelector(".viz-frame[data-viz-src]");
-    if (!f) return;
-    const load = () => { if (!f.getAttribute("src")) f.src = f.dataset.vizSrc; };
-    if (!("IntersectionObserver" in window)) { load(); return; }
+  function lazyLoadIframe(f) {
+    if (!f || !f.dataset.vizSrc) return;
+    if (!("IntersectionObserver" in window)) { if (!f.getAttribute("src")) f.src = f.dataset.vizSrc; return; }
     if (!_vizObserver) {
       _vizObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
@@ -520,6 +523,9 @@
       }, { root: feed, rootMargin: "400px 0px", threshold: 0.01 });
     }
     _vizObserver.observe(f);
+  }
+  function initVizFrame(el) {
+    lazyLoadIframe(el.querySelector(".viz-frame[data-viz-src]"));
   }
 
   /* ---- Líné načítání videí u Quest karet ----
@@ -548,31 +554,37 @@
     _videoObserver.observe(v);
   }
 
-  /* ---- Hra na pozornost (časovač-kolečko + skóre z iframu) ---- */
-  function initAttention(el) {
+  /* ---- Aktivita (koule: časovač-kolečko + skóre z iframu) ----
+     Podporuje víc her přes jmenný prostor zprávy (c.ns): "attention" (koule s
+     dírami, počítá zásahy) i "wordsphere" (hledání slov, počítá nalezená). */
+  function initAttention(el, c) {
     const DURATION = 30000;            // délka časového limitu (ms)
+    const NS = (c && c.ns) || "attention";
     const btn    = el.querySelector("[data-atten-timer]");
     const noteEl = el.querySelector("[data-atten-note]");
     const countEl= el.querySelector("[data-atten-count]");
     const iframe = el.querySelector(".atten-frame");
     let running = false, rafId = null, t0 = 0;
 
+    lazyLoadIframe(iframe);            // spolehlivé načtení koule (jako u ostatních animací)
+
     // návod se ukáže jen do prvního použití
     try { if (localStorage.getItem("glitch_attn_used") && noteEl) noteEl.classList.add("is-hidden"); } catch (_) {}
 
     const post = (type) => {
-      try { iframe && iframe.contentWindow && iframe.contentWindow.postMessage({ ns: "attention", type }, "*"); } catch (_) {}
+      try { iframe && iframe.contentWindow && iframe.contentWindow.postMessage({ ns: NS, type }, "*"); } catch (_) {}
     };
 
-    // po načtení iframu si vyžádáme aktuální skóre (celkový počet děr)
+    // po načtení iframu si vyžádáme aktuální skóre (u koule s dírami celkový počet)
     if (iframe) iframe.addEventListener("load", () => post("sync"));
 
-    // příjem skóre z koule
+    // příjem skóre z koule (hit = zásahy, found = nalezená slova)
     window.addEventListener("message", (ev) => {
       if (iframe && ev.source !== iframe.contentWindow) return;
       const d = ev.data || {};
-      if (d.ns !== "attention" || d.type !== "score") return;
-      if (countEl) countEl.textContent = d.hit + "/" + d.total;
+      if (d.ns !== NS || d.type !== "score") return;
+      const n = (d.hit != null) ? d.hit : d.found;
+      if (countEl) countEl.textContent = n + "/" + d.total;
     });
 
     // kolečko se po směru hodinových ručiček „ukrajuje" (bez číselného údaje)

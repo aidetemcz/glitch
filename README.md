@@ -40,7 +40,7 @@ Každý typ = složka v `glitches/`. Detail: **[`docs/typy-obsahu.md`](./docs/ty
 |---|---|:---:|:---:|:---:|
 | 1 | **Basic Glitch** — jádro vzdělávacího obsahu (výklad i tvorba) | ✅ | ✅ | ✅ |
 | 2 | **Rychlá výzva** — kognitivní rozcvička na kartě | ❌ | ❌ | ❌ |
-| 3 | **Wellbeing** — mood check-in, dýchání, hra na pozornost | ⚙️ | ❌ | ❌ |
+| 3 | **Wellbeing** — mood check-in, dýchání, aktivita | ⚙️ | ❌ | ❌ |
 | 4 | **Fun fact** — zajímavost bez úkolu | ✅ | ✅ | ✅ |
 | 5 | **Najdi chybu** — kritické myšlení / prebunking | ✅ | ✅ | ✅ |
 | 6 | **Historická osobnost** — konverzace s AI personou | ✅ | ✅ | ✅ |

@@ -25,7 +25,7 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 |---|---|---|---|---|---|
 | `glitch_H1` | 600 | 40 | normal | −0.04em (−1.6 px) | krátké titulky (Vítej, Jak se cítíš, Vibe Coding, Hra života, „310×15=") |
 | `glitch_H2` | 600 | 30 | normal | −0.04em (−1.2 px) | velký text / delší tvrzení — **jen Argumentuj** |
-| `glitch_H3` | 600 | 25 | normal | −0.04em (−1 px) | sekční nadpisy (Najdi chybu, Fun fact, Shrnutí, Hra na pozornost, otázka u trojúhelníků) |
+| `glitch_H3` | 600 | 25 | normal | −0.04em (−1 px) | sekční nadpisy (Najdi chybu, Fun fact, Shrnutí, Aktivita, otázka u trojúhelníků) |
 | `glitch_H4` | 600 | 20 | normal | −0.04em (−0.8 px) | menší nadpisy |
 | `glitch_chapter-no` | 600 | 30 | normal | −0.04em (−1.2 px) | číslo kapitoly / velké číslo |
 | `glitch_category` | 600 | 16 | normal | −0.04em (−0.64 px) | badge |
@@ -33,7 +33,7 @@ Přesně dle exportu textových stylů z Figmy „Glitch 2.0" (ověřeno i z vý
 | `glitch_p-s` | 400 | 15 | normal | −0.04em (−0.6 px) | malý / sekundární text |
 | `glitch_caps` | 400 | 15 | normal | 0 | popisky os / verzálky |
 
-> Pozn.: „delší tvrzení" ≠ automaticky H2. Ve Figmě je H2 (30 px) použité **jen** u Argumentuj; ostatní tvrzení a titulky (Najdi chybu, Fun fact, Shrnutí, Hra na pozornost) jsou H3 (25 px). „310×15=" je krátké → H1 (40 px), ale delší otázky (trojúhelníky) jsou H3.
+> Pozn.: „delší tvrzení" ≠ automaticky H2. Ve Figmě je H2 (30 px) použité **jen** u Argumentuj; ostatní tvrzení a titulky (Najdi chybu, Fun fact, Shrnutí, Aktivita) jsou H3 (25 px). „310×15=" je krátké → H1 (40 px), ale delší otázky (trojúhelníky) jsou H3.
 
 ## Spodní menu
 
@@ -72,7 +72,7 @@ Referenční pozice hlavních prvků (px od horního okraje karty). Slouží pro
 - **Fun fact:** nadpis `y=436`, text `y=516`, obrázek `y=95` (320×293).
 - **Najdi chybu:** tvrzení `y=526`, kontext `y=636`, obrázek `y=95` (318×381).
 - **Historická osobnost:** jméno `y=467`, text `y=527`, obrázek `y=95` (321×337).
-- **Hra na pozornost:** nadpis `y=236`, 3D `y=277`.
+- **Aktivita:** nadpis `y=236`, 3D `y=277`.
 - **Algoritmus (Hra života):** kapitola `y=532`, nadpis `y=585`, text `y=647`, 3D `y=96` (321×322).
 - **Shrnutí:** nadpis `y=363`, řádky statistik `y=415/456/498`, odkaz `y=544`, text `y=624`, chevron `y=732`.
 - **Rychlá výzva:** dotaz `y=417`, podtext `y=477`, tlačítka od `y=577` (2 sloupce 111×55). Kolečko časovače `y=127`.
@@ -95,7 +95,7 @@ Design je laděný na **referenční šířku 402 px**. Na užších displejích
 - **Text u karet se šipkou** má třídu `reserve-chevron` (`right: calc(78 * var(--u))`),
   aby nezajížděl pod šipku vpravo dole.
 - **Vložené HTML (hry/vizualizace)** vyplní svůj rám a při změně velikosti se
-  přepočítají přes `ResizeObserver` (viz `glitches/hra-na-pozornost/README.md`).
+  přepočítají přes `ResizeObserver` (viz `glitches/aktivita/README.md`).
 
 > Pravidlo pro nové prvky: nikdy nepiš pevné `px` u velikostí — vždy `calc(N * var(--u))`,
 > kde `N` je hodnota z Figmy (v referenčních 402 px). Okraj 40 px a `%`-pozice nech pevné.

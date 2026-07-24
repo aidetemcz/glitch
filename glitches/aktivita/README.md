@@ -1,4 +1,4 @@
-# Hra na pozornost
+# Aktivita
 
 Interaktivní Glitch, kde dítě v **časovém limitu** označuje díry na 3D kouli.
 Cvičí pozornost, prostorovou orientaci a soustředění.
@@ -46,4 +46,4 @@ nepřetéká okraje**.
 
 - Vizualizace: `assets/3Dvizualizations/sphere-holes.html` (koule), `game-of-life.html` (algoritmus).
 - Renderer karty + časovač: `js/feed.js` (`attention_game`, `initAttention`).
-- Styly: `css/glitch.css` (sekce „Hra na pozornost").
+- Styly: `css/glitch.css` (sekce „Aktivita").
