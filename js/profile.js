@@ -17,7 +17,7 @@
     soukromi_glitchfeed: true, soukromi_questy: true, soukromi_glitchboard: true,
     faseta_hloubka: false, faseta_obrazky: false, uceni_interakce: true,
     odkoho_glitch: true, odkoho_komunita: true, odkoho_generovany: true,
-    casovace: false, mood_checkin: true, notifikace: true
+    mood_checkin: true, notifikace: true
   };
   function getSettings() {
     let s = {};
@@ -123,8 +123,7 @@
         toggleRow("odkoho_komunita", "Komunita") +
         toggleRow("odkoho_generovany", "Generovaný AI") +
       '</div>' +
-      '<div class="pf-set-group"><h3>Wellbeing a čas</h3>' +
-        toggleRow("casovace", "Časovače") +
+      '<div class="pf-set-group"><h3>Wellbeing</h3>' +
         toggleRow("mood_checkin", "Denní mood check-in") +
         toggleRow("notifikace", "Notifikace") +
       '</div>' +
@@ -233,5 +232,5 @@
 
   window.glitchOpenProfile = open;
   window.glitchCloseProfile = close;
-  window.glitchSettings = getSettings;   // čte feed (gating časovačů apod.)
+  window.glitchSettings = getSettings;   // čte feed (gating obsahu dle nastavení)
 })();
