@@ -488,8 +488,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: calc(12 * var(--u)) calc(26 * var(--u));
 }
 
-/* Argumentuj (růžová karta) — tvrzení + podtitul tečou shora, tlačítka dole */
-.arg-flow { position: absolute; left: 40px; right: calc(33 * var(--u)); top: calc(60 * var(--u)); z-index: 2; }
+/* Argumentuj (růžová karta) — tvrzení + podtitul vystředěné v horní třetině, tlačítka dole */
+.arg-flow { position: absolute; left: 40px; right: calc(33 * var(--u)); top: 0; height: 40%;
+  padding-top: calc(56 * var(--u)); display: flex; flex-direction: column; justify-content: center; z-index: 2; }
 .arg-claim { margin: 0;
   font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .arg-sub { margin-top: calc(18 * var(--u));
@@ -504,7 +505,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ========================================================================== */
 .stack {
   position: absolute; inset: 0;
-  padding: calc(60 * var(--u)) 40px calc(92 * var(--u));
+  padding: calc(78 * var(--u)) 40px calc(92 * var(--u));
   display: flex; flex-direction: column; z-index: 2;
 }
 .stack-media {
@@ -518,12 +519,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .stack-text .fx-text { margin-top: calc(12 * var(--u)); }
 .stack-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
 
-/* Textové výzvy / trasování kódu: otázka a odpovědi tečou pod sebou */
-.quiz-flow { position: absolute; left: 40px; right: 40px; top: calc(60 * var(--u)); bottom: calc(40 * var(--u)); z-index: 2; }
-.quiz-flow .quiz-sub { margin-top: calc(8 * var(--u)); }
-.quiz-flow .quiz-code { margin-top: 0; }
-.quiz-flow-q { margin-top: calc(20 * var(--u)); }
-.quiz-flow-opts { margin-top: calc(22 * var(--u)); }
+/* Rychlá výzva — jednotně: nadpis nahoře, úkol vystředěný, odpovědi dole */
+.quiz-frame {
+  position: absolute; inset: 0;
+  padding: calc(64 * var(--u)) 40px calc(44 * var(--u));
+  display: flex; flex-direction: column; z-index: 2;
+}
+.quiz-head { flex: 0 0 auto; }
+.quiz-head .quiz-sub { margin-top: calc(8 * var(--u)); }
+.quiz-task {
+  flex: 1 1 0; min-height: 0; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+}
+.quiz-task .quiz-figure-wrap { align-self: center; }
+.quiz-answers { flex: 0 0 auto; }
 
 /* Quest / Algoritmus intro: text ukotvený u spodu (neořízne se dole) */
 .quest-text.anchor-bottom { top: auto; bottom: calc(46 * var(--u)); }

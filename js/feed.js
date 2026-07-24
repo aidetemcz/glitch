@@ -189,42 +189,25 @@
     },
 
     quick_challenge(c) {
-      // dlouhé textové odpovědi (pojmové výzvy) → svislý sloupec, text velikosti p
+      // Jednotné rozvržení pro všechny výzvy: nadpis (otázka) nahoře, úkol
+      // (kód / obrazec) vystředěný v prázdném prostoru, odpovědi dole.
       const textLayout = c.layout === "text";
       const optCls = textLayout ? "quiz-opt quiz-opt--text g-p" : "quiz-opt g-h4";
       const opts = c.answers.map((a, i) =>
         `<button class="${optCls}" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
-      if (c.figure === "triangles") {
-        return `${badges(c)}
-          <div class="fx-center" style="top:37.4%">${triangleFigure()}</div>
-          <div class="fx-block g-h3" style="top:61.1%">${esc(c.question)}</div>
-          <div class="quiz-options cols-3 fx-options" style="top:84.2%">${opts}</div>`;
-      }
-      if (textLayout) {
-        // dlouhé odpovědi → otázka i odpovědi tečou pod sebou, ať se nepřekrývají
-        return `${badges(c)}
-          <div class="quiz-flow">
+      const cols = textLayout ? "cols-1v" : (c.figure === "triangles" ? "cols-3" : ("cols-" + (c.cols || 2)));
+      let task = "";
+      if (c.figure === "triangles") task = `<div class="quiz-figure-wrap">${triangleFigure()}</div>`;
+      else if (c.code) task = `<pre class="quiz-code">${esc(c.code)}</pre>`;
+      return `${badges(c)}
+        <div class="quiz-frame">
+          <div class="quiz-head">
             <div class="g-h3">${esc(c.question)}</div>
             ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
-            <div class="quiz-options cols-1v quiz-flow-opts">${opts}</div>
-          </div>`;
-      }
-      // trasovací výzva s úryvkem kódu (krátké číselné odpovědi)
-      if (c.code) {
-        return `${badges(c)}
-          <div class="quiz-flow">
-            <pre class="quiz-code">${esc(c.code)}</pre>
-            <div class="g-h3 quiz-flow-q">${esc(c.question)}</div>
-            ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
-            <div class="quiz-options cols-${c.cols || 2} quiz-flow-opts">${opts}</div>
-          </div>`;
-      }
-      return `${badges(c)}
-        <div class="fx-block" style="top:51%">
-          <div class="g-h1">${esc(c.question)}</div>
-          ${c.sub ? `<p class="quiz-sub g-p-s">${esc(c.sub)}</p>` : ""}
-        </div>
-        <div class="quiz-options cols-2 fx-options" style="top:70.5%">${opts}</div>`;
+          </div>
+          <div class="quiz-task">${task}</div>
+          <div class="quiz-answers"><div class="quiz-options ${cols}">${opts}</div></div>
+        </div>`;
     },
 
     attention_game(c) {
@@ -283,7 +266,6 @@
           <div class="stack-text">
             <h3 class="fx-title g-h3">${esc(c.title)}</h3>
             <p class="fx-text g-p-s">${esc(c.body)}</p>
-            <button class="persona-cta g-p" data-persona>Zeptej se</button>
           </div>
         </div>
         ${chevron()}`;
