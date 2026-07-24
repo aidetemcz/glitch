@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Větvení if/else</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #ifCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="ifCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('ifCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  // padající skóre; 100 je hraniční případ (≥ platí → doprava)
+  var SEQ = [40, 150, 100, 80, 120];
+
+  // geometrie (normalizované souřadnice 0..1)
+  var DIA = { x: 0.5, y: 0.47, hw: 0.20, hh: 0.115, label: 'skóre ≥ 100?' };
+  var BOX_L = { x: 0.24, y: 0.78, w: 0.30, h: 0.10, label: 'Hraj dál' };
+  var BOX_R = { x: 0.76, y: 0.78, w: 0.30, h: 0.10, label: 'Výhra' };
+  var ARROW_L = [[0.30, 0.47], [0.24, 0.47], [0.24, 0.725]];
+  var ARROW_R = [[0.70, 0.47], [0.76, 0.47], [0.76, 0.725]];
+  var LBL_NE  = { x: 0.19, y: 0.45, text: 'ne' };
+  var LBL_ANO = { x: 0.81, y: 0.45, text: 'ano' };
+  var HOLD = { x: 0.5, y: 0.315 };                       // zastávka nad uzlem
+  var PATH_L = [[0.5, 0.315], [0.29, 0.425], [0.24, 0.72]]; // sklouznutí po hraně
+  var PATH_R = [[0.5, 0.315], [0.71, 0.425], [0.76, 0.72]];
+
+  // fáze jednoho čísla
+  var FALL = 1.25, EVAL = 0.7, SPEED = 0.5, ABSORB = 0.3, GAP = 0.35;
+
+  function polyLen(pts){
+    var l = 0;
+    for (var i = 1; i < pts.length; i++) l += Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]);
+    return l;
+  }
+  function pointAt(pts, frac){
+    var total = polyLen(pts), target = total * Math.max(0, Math.min(1, frac));
+    var acc = 0;
+    for (var i = 1; i < pts.length; i++){
+      var dx = pts[i][0] - pts[i-1][0], dy = pts[i][1] - pts[i-1][1];
+      var seg = Math.hypot(dx, dy);
+      if (acc + seg >= target){
+        var r = seg > 0 ? (target - acc) / seg : 0;
+        return { x: pts[i-1][0] + dx * r, y: pts[i-1][1] + dy * r };
+      }
+      acc += seg;
+    }
+    var lp = pts[pts.length - 1];
+    return { x: lp[0], y: lp[1] };
+  }
+
+  var TRAVEL = polyLen(PATH_R) / SPEED;
+  var PER = FALL + EVAL + TRAVEL + ABSORB + GAP;
+  var TOTAL = PER * SEQ.length;
+
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function easeOut(p){ return 1 - (1 - p) * (1 - p); }
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function fontStr(size, weight){
+    return (weight || 500) + ' ' + Math.round(size) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  }
+
+  function drawArrowhead(x, y, dir, style){
+    var hs = S * 0.016;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - dir[0] * hs * 1.8 - dir[1] * hs, y - dir[1] * hs * 1.8 + dir[0] * hs);
+    ctx.lineTo(x - dir[0] * hs * 1.8 + dir[1] * hs, y - dir[1] * hs * 1.8 - dir[0] * hs);
+    ctx.closePath();
+    ctx.fillStyle = style;
+    ctx.fill();
+  }
+
+  function strokePoly(pts, style, lw){
+    ctx.beginPath();
+    for (var i = 0; i < pts.length; i++){
+      i === 0 ? ctx.moveTo(pts[i][0] * S, pts[i][1] * S) : ctx.lineTo(pts[i][0] * S, pts[i][1] * S);
+    }
+    ctx.strokeStyle = style;
+    ctx.lineWidth = lw;
+    ctx.stroke();
+  }
+
+  function draw(now){
+    var t = (now / 1000) % TOTAL;
+    var idx = Math.floor(t / PER);
+    var local = t - idx * PER;
+    var val = SEQ[idx];
+    var goesRight = val >= 100;
+    var isEdge = val === 100;                 // hraniční případ — žlutě
+    var lit = isEdge ? '255,255,0' : '255,255,255';
+
+    // jas zvolené větve: rozsvítí se při vyhodnocení, zhasne v mezeře
+    var hl = clamp01((local - (FALL + EVAL * 0.45)) / 0.3)
+           * (1 - clamp01((local - (PER - 0.45)) / 0.4));
+    var evalP = clamp01((local - FALL) / EVAL);
+    var pulse = (local >= FALL && local < FALL + EVAL) ? Math.sin(Math.PI * evalP) : 0;
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round';
+
+    var fs = Math.max(10, S * 0.037);
+    var lwBase = Math.max(1.5, S * 0.0055);
+    var lwArrow = Math.max(1.25, S * 0.0045);
+
+    // vodicí čára pádu
+    ctx.setLineDash([S * 0.012, S * 0.014]);
+    strokePoly([[0.5, 0.04], [0.5, 0.275]], 'rgba(255,255,255,0.22)', Math.max(1, S * 0.003));
+    ctx.setLineDash([]);
+
+    // větve (šipky) — svítí jen ta, kudy číslo jde
+    var hlL = goesRight ? 0 : hl, hlR = goesRight ? hl : 0;
+    strokePoly(ARROW_L, 'rgba(255,255,255,0.38)', lwArrow);
+    drawArrowhead(ARROW_L[2][0] * S, ARROW_L[2][1] * S, [0, 1], 'rgba(255,255,255,0.45)');
+    if (hlL > 0){
+      strokePoly(ARROW_L, 'rgba(' + lit + ',' + (0.95 * hlL).toFixed(3) + ')', lwArrow * 1.4);
+      drawArrowhead(ARROW_L[2][0] * S, ARROW_L[2][1] * S, [0, 1], 'rgba(' + lit + ',' + hlL.toFixed(3) + ')');
+    }
+    strokePoly(ARROW_R, 'rgba(255,255,255,0.38)', lwArrow);
+    drawArrowhead(ARROW_R[2][0] * S, ARROW_R[2][1] * S, [0, 1], 'rgba(255,255,255,0.45)');
+    if (hlR > 0){
+      strokePoly(ARROW_R, 'rgba(' + lit + ',' + (0.95 * hlR).toFixed(3) + ')', lwArrow * 1.4);
+      drawArrowhead(ARROW_R[2][0] * S, ARROW_R[2][1] * S, [0, 1], 'rgba(' + lit + ',' + hlR.toFixed(3) + ')');
+    }
+
+    // popisky větví ano / ne
+    ctx.font = fontStr(fs * 0.9);
+    ctx.fillStyle = hlL > 0
+      ? 'rgba(' + lit + ',' + (0.5 + 0.5 * hlL).toFixed(3) + ')'
+      : 'rgba(255,255,255,0.5)';
+    ctx.fillText(LBL_NE.text, LBL_NE.x * S, LBL_NE.y * S);
+    ctx.fillStyle = hlR > 0
+      ? 'rgba(' + lit + ',' + (0.5 + 0.5 * hlR).toFixed(3) + ')'
+      : 'rgba(255,255,255,0.5)';
+    ctx.fillText(LBL_ANO.text, LBL_ANO.x * S, LBL_ANO.y * S);
+
+    // rozhodovací kosočtverec
+    ctx.beginPath();
+    ctx.moveTo(DIA.x * S, (DIA.y - DIA.hh) * S);
+    ctx.lineTo((DIA.x + DIA.hw) * S, DIA.y * S);
+    ctx.lineTo(DIA.x * S, (DIA.y + DIA.hh) * S);
+    ctx.lineTo((DIA.x - DIA.hw) * S, DIA.y * S);
+    ctx.closePath();
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.92)';
+    ctx.lineWidth = lwBase;
+    ctx.stroke();
+    if (pulse > 0){
+      ctx.strokeStyle = 'rgba(' + lit + ',' + (0.85 * pulse).toFixed(3) + ')';
+      ctx.stroke();
+    }
+    ctx.font = fontStr(fs);
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    ctx.fillText(DIA.label, DIA.x * S, DIA.y * S);
+
+    // cílové boxy
+    function drawBox(bx, hlB){
+      var x = (bx.x - bx.w / 2) * S, y = (bx.y - bx.h / 2) * S;
+      if (hlB > 0){
+        ctx.fillStyle = 'rgba(' + lit + ',' + (0.10 * hlB).toFixed(3) + ')';
+        ctx.fillRect(x, y, bx.w * S, bx.h * S);
+      }
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.5 + 0.42 * hlB).toFixed(3) + ')';
+      ctx.lineWidth = lwBase;
+      ctx.strokeRect(x, y, bx.w * S, bx.h * S);
+      if (hlB > 0){
+        ctx.strokeStyle = 'rgba(' + lit + ',' + (0.9 * hlB).toFixed(3) + ')';
+        ctx.strokeRect(x, y, bx.w * S, bx.h * S);
+      }
+      ctx.font = fontStr(fs);
+      ctx.fillStyle = hlB > 0
+        ? 'rgba(' + lit + ',' + (0.6 + 0.4 * hlB).toFixed(3) + ')'
+        : 'rgba(255,255,255,0.6)';
+      ctx.fillText(bx.label, bx.x * S, bx.y * S);
+    }
+    drawBox(BOX_L, hlL);
+    drawBox(BOX_R, hlR);
+
+    // padající číslo
+    var pos = null, alpha = 1, scale = 1;
+    if (local < FALL){
+      var pf = easeOut(local / FALL);
+      pos = { x: HOLD.x, y: -0.05 + (HOLD.y + 0.05) * pf };
+      alpha = clamp01(pf * 4);
+    } else if (local < FALL + EVAL){
+      pos = { x: HOLD.x, y: HOLD.y };
+    } else if (local < FALL + EVAL + TRAVEL){
+      pos = pointAt(goesRight ? PATH_R : PATH_L, (local - FALL - EVAL) / TRAVEL);
+    } else if (local < FALL + EVAL + TRAVEL + ABSORB){
+      var pa = (local - FALL - EVAL - TRAVEL) / ABSORB;
+      var end = goesRight ? PATH_R[PATH_R.length - 1] : PATH_L[PATH_L.length - 1];
+      var box = goesRight ? BOX_R : BOX_L;
+      pos = { x: end[0] + (box.x - end[0]) * pa, y: end[1] + (box.y - end[1]) * pa };
+      alpha = 1 - pa;
+      scale = 1 - 0.45 * pa;
+    }
+    if (pos && alpha > 0.02){
+      ctx.font = fontStr(S * 0.05 * scale, 600);
+      ctx.fillStyle = isEdge
+        ? 'rgba(255,255,0,' + alpha.toFixed(3) + ')'
+        : 'rgba(255,255,255,' + (0.95 * alpha).toFixed(3) + ')';
+      ctx.fillText(String(val), pos.x * S, pos.y * S);
+    }
+
+    ctx.restore();
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
