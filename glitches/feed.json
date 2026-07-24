@@ -74,9 +74,9 @@
 
   { "id": "aktivita-slova-algoritmus", "type": "attention_game", "category": "Aktivita",
     "title": "Najdi 3 slova týkající se algoritmu.",
-    "help": "Tažením otáčej koulí. Ťukni na bod u slova, které patří k algoritmu — najdi všechna tři. Když se spleteš, slovo se zatřese a zmizí.",
-    "countLabel": "Nalezená slova", "countInit": "0/3", "ns": "wordsphere", "timer": false,
-    "viz": "assets/3Dvizualizations/sphere-words.html?v=1" },
+    "help": "Tažením otáčej koulí. Ťukni na bod a přečti si slovo. Pokud patří k algoritmu, ťukni na něj ještě jednou a tím ho potvrdíš. Najdi všechna tři.",
+    "countLabel": "Potvrzená slova", "countInit": "0/3", "ns": "wordsphere", "timer": false,
+    "viz": "assets/3Dvizualizations/sphere-words.html?v=2" },
 
   { "id": "algoritmus-hra-zivota", "type": "algorithm_demo", "category": "Algoritmus", "chapterNo": 5,
     "obtiznost": 2,
