@@ -162,6 +162,71 @@
     "topic": "Vibe Coding"
   },
   {
+    "id": "data-co-je-datova-gramotnost",
+    "type": "quest_intro",
+    "topic": "Data",
+    "chapterNo": 1,
+    "trust": "Core",
+    "concept_id": "data-databaze-datova-gramotnost",
+    "title": "Co je datová gramotnost?",
+    "body": "Data jsou všude — ale umět je přečíst a nenechat se jimi obelhat je dovednost. Nauč se ptát na správné otázky.",
+    "video": "assets/videos/data_01.mp4",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "1/6",
+      "title": "Co je datová gramotnost?",
+      "intro": "Datová gramotnost je schopnost data přečíst, pochopit a kriticky posoudit — ne s nimi jen technicky pracovat.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Data jsou jen surovina — samotná čísla ještě nic neznamenají. Význam jim dáváš ty tím, na co se ptáš."
+        },
+        {
+          "from": "bot",
+          "text": "Příklad: teploty 21, 23, 19, 25. To jsou data. Informace je až to, co z nich vyčteš — třeba „nejtepleji bylo ve středu“."
+        },
+        {
+          "from": "bot",
+          "text": "Být datově gramotný znamená umět se ptát: Odkud data jsou? Kdo je sebral? Co v nich chybí? A plyne ten závěr opravdu z čísel?"
+        },
+        {
+          "from": "user",
+          "text": "aha takze stejny cisla muzou rikat ruzny veci"
+        },
+        {
+          "from": "bot",
+          "text": "Přesně tak — podle otázky nesou stejná data různou informaci. Pojď si to ověřit."
+        },
+        {
+          "from": "bot",
+          "text": "Kamarád ukáže graf a řekne: „Prodeje vyletěly o 200 %!“ Co si ověříš jako první? (Zvol klidně více možností.)"
+        },
+        {
+          "from": "quiz",
+          "multi": true,
+          "options": [
+            {
+              "label": "Odkud data jsou a za jaké období.",
+              "correct": true
+            },
+            {
+              "label": "Co graf NEukazuje — třeba jestli osa nezačíná až od velkého čísla.",
+              "correct": true
+            },
+            {
+              "label": "Jestli má graf hezké barvy.",
+              "correct": false
+            },
+            {
+              "label": "Nic — číslům se přece věří.",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "matematika-nasobeni-310x15",
     "type": "quick_challenge",
     "category": "Rychlá výzva",
