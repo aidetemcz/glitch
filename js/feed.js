@@ -223,13 +223,19 @@
       let task = "";
       if (c.figure === "triangles") task = `<div class="quiz-figure-wrap">${triangleFigure()}</div>`;
       else if (c.code) task = `<pre class="quiz-code">${esc(c.code)}</pre>`;
+      // Rychlá výzva má vždy: nadpis + prostřední prvek (kód/obrázek nebo podnadpis).
+      // Je-li prostřední prvek kód/obrázek, čte se sub jako otázka POD ním (nad odpověďmi);
+      // bez kódu/obrázku slouží sub jako podnadpis rovnou pod nadpisem.
+      const hasTask = !!task;
+      const sub = c.sub ? `<p class="quiz-sub g-p">${esc(c.sub)}</p>` : "";
       return `${badges(c)}
         <div class="quiz-frame${textLayout ? " quiz-frame--flow" : ""}">
           <div class="quiz-head">
             <div class="${qCls}">${esc(c.question)}</div>
-            ${c.sub ? `<p class="quiz-sub g-p">${esc(c.sub)}</p>` : ""}
+            ${hasTask ? "" : sub}
           </div>
           <div class="quiz-task">${task}</div>
+          ${hasTask && sub ? `<div class="quiz-caption">${sub}</div>` : ""}
           <div class="quiz-answers"><div class="quiz-options ${cols}">${opts}</div></div>
         </div>`;
     },

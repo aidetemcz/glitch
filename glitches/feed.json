@@ -780,7 +780,7 @@
     "obtiznost": 2,
     "layout": "text",
     "cols": 1,
-    "question": "když (životy = 0) A ZÁROVEŇ (čas > 0): zobraz „Konec hry“ — kdy se „Konec hry“ opravdu zobrazí?",
+    "question": "Kdy hráč ve hře skutečně skončí?",
     "answers": [
       {
         "label": "Když má hráč 0 životů a zároveň ještě zbývá čas.",
@@ -799,7 +799,9 @@
         "correct": false
       }
     ],
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "code": "když (životy = 0)\na zároveň (čas > 0):\n    zobraz „Konec hry“",
+    "sub": "Kdy se konec hry opravdu zobrazí?"
   },
   {
     "id": "algoritmus-dekompozice",
