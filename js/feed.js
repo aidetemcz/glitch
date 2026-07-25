@@ -497,6 +497,8 @@
       const item = e.target.closest(".nav-item");
       if (!item) return;
       const tab = item.dataset.tab;
+      // je-li otevřený rozklik, klik do menu ho nejdřív zavře (menu je vidět i v rozkliku)
+      if (_rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
       if (tab === "profile") return;                 // přihlášení řeší auth.js
       if (tab === "feed") { scrollToIndex(0); setActiveTab(item); return; }
       toast("Připravujeme 🚧");                        // boardy / tvořit / hledat zatím nejsou

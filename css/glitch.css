@@ -781,7 +781,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ========================================================================== */
 body.rz-lock { overflow: hidden; }
 .rz-overlay {
-  position: fixed; inset: 0; z-index: 60;
+  /* končí nad spodním menu, aby menu zůstalo viditelné i v rozkliku */
+  position: fixed; top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
   background: rgba(0,0,0,0.35);
   display: none;
 }
