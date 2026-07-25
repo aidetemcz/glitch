@@ -527,20 +527,36 @@
 
   /* ---- Spolehlivé načítání animací (iframe vizualizace) ----
      Řízeno vlastním IntersectionObserverem (root = feed) místo prohlížečového
-     loading=lazy, které uvnitř posuvného feedu na mobilech vynechává. src se
-     nastaví, jakmile se karta blíží; jednou načtené se nechává (bez blikání). */
-  let _vizObserver = null;
+     loading=lazy, které uvnitř posuvného feedu na mobilech vynechává.
+     DŮLEŽITÉ pro plynulost: animace se po odscrollování zase ODNAČTE
+     (src → about:blank), aby se zastavila její requestAnimationFrame smyčka.
+     Jinak by všechny už zobrazené animace běžely dál na pozadí a od půlky
+     feedu dál by se jich nasčítalo tolik, že by scroll začal sekat.
+     Hystereze: načíst do 500 px, odnačíst až za 900 px (žádné blikání na hraně). */
+  let _vizLoad = null, _vizUnload = null;
   function lazyLoadIframe(f) {
     if (!f || !f.dataset.vizSrc) return;
     if (!("IntersectionObserver" in window)) { if (!f.getAttribute("src")) f.src = f.dataset.vizSrc; return; }
-    if (!_vizObserver) {
-      _vizObserver = new IntersectionObserver((entries) => {
+    if (!_vizLoad) {
+      _vizLoad = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) { const fr = e.target; if (!fr.getAttribute("src")) fr.src = fr.dataset.vizSrc; }
+          if (!e.isIntersecting) return;
+          const fr = e.target;
+          if (fr.dataset.loaded !== "1") { fr.src = fr.dataset.vizSrc; fr.dataset.loaded = "1"; }
         });
-      }, { root: feed, rootMargin: "400px 0px", threshold: 0.01 });
+      }, { root: feed, rootMargin: "500px 0px", threshold: 0.01 });
+      _vizUnload = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) return;                 // pořád v širším okně → nech běžet
+          const fr = e.target;
+          if (fr.dataset.loaded === "1") {              // odjelo daleko → zastav animaci
+            fr.src = "about:blank"; fr.dataset.loaded = "0";
+          }
+        });
+      }, { root: feed, rootMargin: "900px 0px", threshold: 0.01 });
     }
-    _vizObserver.observe(f);
+    _vizLoad.observe(f);
+    _vizUnload.observe(f);
   }
   function initVizFrame(el) {
     lazyLoadIframe(el.querySelector(".viz-frame[data-viz-src]"));
