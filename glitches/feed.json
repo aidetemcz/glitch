@@ -167,8 +167,8 @@
     "category": "Rychlá výzva",
     "trust": "Generováno",
     "obtiznost": 1,
-    "question": "310×15=",
-    "sub": "Zvládneš spočítat do časového limitu?",
+    "question": "Rychlý počet z hlavy",
+    "sub": "Vyber správný výsledek.",
     "cols": 2,
     "answers": [
       {
@@ -189,15 +189,15 @@
       }
     ],
     "topic": "Matematika",
-    "questionStyle": "h1"
+    "questionStyle": "h3",
+    "taskText": "310 × 15 = ?"
   },
   {
     "id": "obrazec-trojuhelniky",
     "type": "quick_challenge",
     "category": "Rychlá výzva",
     "obtiznost": 1,
-    "figure": "triangles",
-    "question": "Kolik trojúhelníků je celkem v obrazci?",
+    "question": "Kolik trojúhelníků je v obrazci?",
     "questionStyle": "h3",
     "cols": 3,
     "answers": [
@@ -214,7 +214,9 @@
         "correct": true
       }
     ],
-    "topic": "Matematika"
+    "topic": "Matematika",
+    "sub": "Počítej i ty, které vzniknou překrytím čar.",
+    "figure": "triangles"
   },
   {
     "id": "matematika-topinky",
@@ -222,7 +224,7 @@
     "category": "Rychlá výzva",
     "topic": "Matematika",
     "trust": "Generováno",
-    "question": "Jedna topinka se smaží deset minut, tedy pět minut z každé strany. Na pánev se vejdou dvě topinky vedle sebe.",
+    "question": "Osmaž tři topinky",
     "sub": "Za jak dlouho nejrychleji osmažíš na jedné pánvi tři topinky?",
     "cols": 1,
     "answers": [
@@ -238,7 +240,10 @@
         "label": "20 minut",
         "correct": false
       }
-    ]
+    ],
+    "questionStyle": "h3",
+    "taskText": "Jedna topinka se smaží deset minut, tedy pět minut z každé strany. Na pánev se vejdou dvě topinky vedle sebe.",
+    "layout": "text"
   },
   {
     "id": "hra-na-pozornost-koule",
@@ -366,7 +371,7 @@
     "layout": "text",
     "cols": 1,
     "question": "Co je vibecoding?",
-    "sub": "Vyber, co nejlíp sedí.",
+    "sub": "Který popis vibecodingu sedí nejlíp?",
     "answers": [
       {
         "label": "Popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš.",
@@ -385,7 +390,9 @@
         "correct": false
       }
     ],
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "taskText": "Kamarád ti říká: „Napsal jsem počítači obyčejnou češtinou, co chci, a on mi appku vytvořil.“"
   },
   {
     "id": "vibecoding-nejlepsi-prompt",
@@ -396,7 +403,7 @@
     "obtiznost": 2,
     "layout": "text",
     "cols": 1,
-    "question": "Chceš appku na kapesné. Který prompt zafunguje nejlíp?",
+    "question": "Napiš dobrý prompt",
     "answers": [
       {
         "label": "„Udělej appku.“",
@@ -415,7 +422,10 @@
         "correct": false
       }
     ],
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "Který prompt zafunguje nejlíp?",
+    "taskText": "Chceš si vytvořit appku na kapesné."
   },
   {
     "id": "vibecoding-appka-spadla",
@@ -426,7 +436,7 @@
     "obtiznost": 2,
     "layout": "text",
     "cols": 1,
-    "question": "AI ti vytvořila appku, ale spadla s chybovou hláškou. Co uděláš nejdřív?",
+    "question": "Appka spadla",
     "answers": [
       {
         "label": "Přečtu si chybovou hlášku — často říká, kde a co se pokazilo.",
@@ -445,7 +455,10 @@
         "correct": false
       }
     ],
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "AI appku vytvořila, ale spadla s touhle hláškou. Co uděláš nejdřív?",
+    "code": "Chyba: nelze načíst „zustatek“\n  z undefined\n  → App.js, řádek 42"
   },
   {
     "id": "vibecoding-frontend-backend",
@@ -456,7 +469,7 @@
     "obtiznost": 2,
     "layout": "text",
     "cols": 1,
-    "question": "Appka má frontend (co vidíš) a backend (co běží na pozadí s daty). Co z toho patří do backendu?",
+    "question": "Frontend, nebo backend?",
     "answers": [
       {
         "label": "Barva tlačítka a rozložení na obrazovce.",
@@ -475,7 +488,10 @@
         "correct": false
       }
     ],
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "Co z nabídky patří do backendu?",
+    "taskText": "Appka má frontend (co vidíš) a backend (co běží na pozadí s daty)."
   },
   {
     "id": "vibecoding-kdy-nocode",
@@ -486,7 +502,7 @@
     "obtiznost": 2,
     "layout": "text",
     "cols": 1,
-    "question": "Kdy je no-code (skládání appky bez psaní kódu) dobrá volba?",
+    "question": "Kdy zvolit no-code?",
     "answers": [
       {
         "label": "Když chci rychle vyzkoušet nápad a mít brzy něco funkčního.",
@@ -505,7 +521,10 @@
         "correct": false
       }
     ],
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "Kdy je no-code dobrá volba?",
+    "taskText": "No-code znamená skládat appku z hotových bloků, bez psaní kódu."
   },
   {
     "id": "vibecoding-uz-nemusis-rozumet",
@@ -709,7 +728,10 @@
         "correct": false
       }
     ],
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Co nejlíp vystihuje, co je algoritmus?",
+    "taskText": "Ráno: vstát → vyčistit zuby → obléknout se → nasnídat se → vyrazit do školy."
   },
   {
     "id": "algoritmus-jednoznacnost",
@@ -720,7 +742,7 @@
     "obtiznost": 2,
     "layout": "text",
     "cols": 1,
-    "question": "Který z postupů je opravdový algoritmus (dojde podle něj každý ke stejnému výsledku)?",
+    "question": "Který postup je algoritmus?",
     "answers": [
       {
         "label": "„Dej sáček do hrnku, zalij 250 ml vroucí vody, počkej 3 minuty, sáček vyndej.“",
@@ -739,7 +761,10 @@
         "correct": false
       }
     ],
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Který z postupů je opravdový algoritmus?",
+    "taskText": "Algoritmus musí být jednoznačný — každý podle něj dojde ke stejnému výsledku."
   },
   {
     "id": "algoritmus-co-udela-cyklus",
@@ -749,7 +774,6 @@
     "concept_id": "informaticke-mysleni-rizeni-toku",
     "obtiznost": 2,
     "cols": 2,
-    "code": "počet = 0\nopakuj 3×:\n    počet = počet + 2\nvypiš počet",
     "question": "Co program vypíše?",
     "answers": [
       {
@@ -769,7 +793,10 @@
         "correct": false
       }
     ],
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Projdi cyklus krok po kroku. Co se nakonec vypíše?",
+    "code": "počet = 0\nopakuj 3×:\n    počet = počet + 2\nvypiš počet"
   },
   {
     "id": "algoritmus-podminka-konec-hry",
@@ -800,8 +827,9 @@
       }
     ],
     "topic": "Algoritmus",
-    "code": "když (životy = 0)\na zároveň (čas > 0):\n    zobraz „Konec hry“",
-    "sub": "Kdy se konec hry opravdu zobrazí?"
+    "sub": "Kdy se konec hry opravdu zobrazí?",
+    "questionStyle": "h3",
+    "code": "když (životy = 0)\na zároveň (čas > 0):\n    zobraz „Konec hry“"
   },
   {
     "id": "algoritmus-dekompozice",
@@ -812,7 +840,7 @@
     "obtiznost": 1,
     "layout": "text",
     "cols": 1,
-    "question": "Máš naplánovat školní výlet (doprava, ubytování, program). Jak nejlíp začneš?",
+    "question": "Naplánuj školní výlet",
     "answers": [
       {
         "label": "Rozdělím úkol na menší části (doprava, ubytování, program) a řeším je po jedné.",
@@ -831,7 +859,10 @@
         "correct": false
       }
     ],
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Jak se do toho nejlíp pustíš?",
+    "taskText": "Máš naplánovat školní výlet — dopravu, ubytování i program."
   },
   {
     "id": "shrnuti-dne",

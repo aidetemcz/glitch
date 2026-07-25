@@ -46,9 +46,10 @@
       video: "assets/videos/vibe-coding_01.mp4" },
 
     { type: "quick_challenge", category: "Rychlá výzva", trust: "Generováno",
-      question: "310×15=",
-      questionStyle: "h1",
-      sub: "Zvládneš spočítat do časového limitu?",
+      question: "Rychlý počet z hlavy",
+      questionStyle: "h3",
+      taskText: "310 × 15 = ?",
+      sub: "Vyber správný výsledek.",
       cols: 2,
       answers: [
         { label: "4 650", correct: true },
@@ -59,8 +60,9 @@
 
     { type: "quick_challenge", category: "Rychlá výzva",
       figure: "triangles",
-      question: "Kolik trojúhelníků je celkem v obrazci?",
+      question: "Kolik trojúhelníků je v obrazci?",
       questionStyle: "h3",
+      sub: "Počítej i ty, které vzniknou překrytím čar.",
       cols: 3,
       answers: [
         { label: "9", correct: false },
@@ -220,12 +222,15 @@
       const cols = textLayout ? "cols-1v" : (c.figure === "triangles" ? "cols-3" : ("cols-" + (c.cols || 2)));
       // krátká otázka (např. „310×15=") má styl H1 (40), věty H3 (25) — dle Figmy
       const qCls = c.questionStyle === "h1" ? "g-h1" : "g-h3";
+      // ÚLOHA (prostřední prvek) — jeden z: obrázek / kód / text (<p>). Pevná struktura
+      // rychlé výzvy: NADPIS → ÚLOHA → VYSVĚTLENÍ (<p>) → TLAČÍTKA (viz editor karet).
       let task = "";
       if (c.figure === "triangles") task = `<div class="quiz-figure-wrap">${triangleFigure()}</div>`;
+      else if (c.image) task = `<div class="quiz-image"><img src="${esc(c.image.src || c.image)}" alt="${esc(c.image.alt || "")}"></div>`;
       else if (c.code) task = `<pre class="quiz-code">${esc(c.code)}</pre>`;
-      // Rychlá výzva má vždy: nadpis + prostřední prvek (kód/obrázek nebo podnadpis).
-      // Je-li prostřední prvek kód/obrázek, čte se sub jako otázka POD ním (nad odpověďmi);
-      // bez kódu/obrázku slouží sub jako podnadpis rovnou pod nadpisem.
+      else if (c.taskText) task = `<p class="quiz-tasktext g-p">${esc(c.taskText)}</p>`;
+      // Vysvětlení (sub, <p>) se čte pod úlohou (nad tlačítky). Nemá-li výzva úlohu,
+      // zůstává sub podnadpisem hned pod nadpisem (bezpečný fallback).
       const hasTask = !!task;
       const sub = c.sub ? `<p class="quiz-sub g-p">${esc(c.sub)}</p>` : "";
       return `${badges(c)}
@@ -441,7 +446,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=16", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=17", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
