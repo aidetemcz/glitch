@@ -6,6 +6,7 @@
 :root {
   /* Barvy (color variables) */
   --c-black:      #000000;
+  --c-app:        #1c1c1c;   /* pozadí celé aplikace (za rámečky Glitchů) */
   --c-dark:       #1a1a1a;
   --c-white:      #ffffff;
   --c-grey-10:    #e7e7e7;
@@ -41,7 +42,7 @@
 
 html, body {
   height: 100%;
-  background: var(--c-black);
+  background: var(--c-app);
   color: var(--c-white);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -80,7 +81,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  background: var(--c-black);
+  background: var(--c-app);
+  /* rámečky Glitchů „plavou" na pozadí appky — pevné okraje (stejně na všech zařízeních) */
+  padding: 20px 12px 0;
 }
 #glitch-feed::-webkit-scrollbar { display: none; }
 
@@ -89,7 +92,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 100%;
   aspect-ratio: 1 / 2;          /* pevný rám 2:1 na výšku — nezávislý na výšce obrazovky */
   overflow: hidden;
-  margin-bottom: 20px;          /* černá mezera mezi Glitchi (feed má černé pozadí) */
+  margin-bottom: 20px;          /* mezera mezi Glitchi (prosvítá pozadí appky #1C1C1C) */
+  border: 1px solid #747474;    /* rámeček Glitche (stejný na všech zařízeních) */
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   color: var(--fg, var(--c-white));
@@ -578,7 +583,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 100%; max-width: var(--feed-max); margin: 0 auto;
   height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: #1a1a1a;
+  background: var(--c-app);
   border-top: 2px solid #fff;
   display: flex; align-items: stretch;
 }
