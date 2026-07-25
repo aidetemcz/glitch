@@ -248,7 +248,7 @@
   {
     "id": "hra-na-pozornost-koule",
     "type": "attention_game",
-    "category": "Hra na pozornost",
+    "category": "Aktivita",
     "title": "Kolik zvládneš označit děr?",
     "viz": "assets/3Dvizualizations/sphere-holes.html?v=5"
   },

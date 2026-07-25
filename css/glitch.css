@@ -394,7 +394,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .atten-note.is-hidden { visibility: hidden; }
 .atten-help, .atten-count { color: var(--c-white); }
 /* koule je full-bleed (Figma 467×481 na x −29): přetéká oba boky karty */
-.atten-viz { position: absolute; left: calc(-29 * var(--u)); right: calc(-36 * var(--u)); top: 37.6%; aspect-ratio: 467 / 481; overflow: hidden; z-index: 1; }
+/* Aktivity (koule / hledání slov) jsou VŽDY čtverec v marginech Glitche (40px),
+   nepřesahují okraje. Pevné pravidlo pro editor. */
+.atten-viz { position: absolute; left: 40px; right: 40px; top: 47%; aspect-ratio: 1 / 1; overflow: hidden; z-index: 1; }
 .atten-frame { width: 100%; height: 100%; }
 
 /* časovač na sebe upozorňuje pulzem + občasným glitchem (dokud neběží) */
