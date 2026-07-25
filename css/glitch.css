@@ -132,7 +132,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
   letter-spacing: var(--tracking); white-space: nowrap;
 }
-.badge.topic, .badge.type { background: var(--c-yellow); color: #1a1a1a; }
+/* téma: žlutá výplň, černý text */
+.badge.topic { background: var(--c-yellow); color: #1a1a1a; }
+/* typ Glitche: černá výplň, žlutá outline, žlutý text */
+.badge.type { background: var(--c-black); color: var(--c-yellow); box-shadow: inset 0 0 0 calc(1.5 * var(--u)) var(--c-yellow); }
+/* kdo vytvořil: bílá výplň, šedý text */
 .badge.creator { background: var(--c-white); color: var(--c-grey-50, #747474); }
 
 /* Číslo kapitoly (pill) */
@@ -484,42 +488,29 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .quest-text { color: #fff; }
 .quest-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
 
-/* Fun fact — obrázek y=95 (320×293), nadpis y=436, text y=516 */
-.funfact-tile {
-  aspect-ratio: 320 / 293;
+/* Fun fact / Najdi chybu / Historická osobnost — obrázek je VŽDY čtverec 1:1
+   (Figma 321×321). Libovolný poměr vloženého obrázku se ořízne (object-fit: cover). */
+.funfact-tile, .mistake-photo, .persona-photo {
+  aspect-ratio: 1 / 1;
   border-radius: calc(5 * var(--u));
-  background: var(--c-pink);
+  background: #2c2c2c;
   display: grid; place-items: center;
   overflow: hidden;
 }
-.funfact-tile img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Najdi chybu — obrázek y=95 (318×381), tvrzení y=526, kontext y=636 */
-.mistake-photo {
-  aspect-ratio: 318 / 381;
-  border-radius: calc(5 * var(--u)); overflow: hidden;
-  background: #2c2c2c;
+.funfact-tile img, .mistake-photo img, .persona-photo img {
+  width: 100%; height: 100%; object-fit: cover;
 }
-.mistake-photo img { width: 100%; height: 100%; object-fit: cover; }
 .mistake-context { color: var(--c-white); }
-
-/* Historická osobnost / Osobnost oboru — fotka nahoře, jméno (H1) + úvod dole */
-.persona-photo {
-  aspect-ratio: 321 / 337;
-  border-radius: calc(5 * var(--u)); overflow: hidden;
-  background: #2c2c2c;
-}
-.persona-photo img { width: 100%; height: 100%; object-fit: cover; }
 .persona-cta {
   margin-top: calc(18 * var(--u));
   padding: calc(12 * var(--u)) calc(26 * var(--u));
 }
 
 /* Argumentuj (růžová karta) — tvrzení y=216, podtext y=350, tlačítka y=665 (Figma) */
-.arg-claim { right: calc(33 * var(--u)); color: var(--c-black); }
-.arg-sub { max-width: calc(295 * var(--u)); color: var(--c-black); }
+.arg-claim { right: calc(33 * var(--u)); color: var(--fg); }
+.arg-sub { max-width: calc(295 * var(--u)); color: var(--fg); }
 .arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(111 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
-.arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); color: #1a1a1a; }
+.arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); }
 .arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 
 /* ==========================================================================
@@ -536,7 +527,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex; align-items: flex-start; justify-content: center;
   overflow: hidden; margin-bottom: calc(18 * var(--u));
 }
-.stack-media > * { height: 100%; max-height: 100%; width: auto; max-width: 100%; }
+/* médium (čtvercový obrázek / animace) vyplní šířku, výška dopočtená z poměru 1:1 */
+.stack-media > * { width: 100%; height: auto; max-height: 100%; }
 .stack-text { flex: 0 0 auto; }
 .stack-text .fx-title { margin: 0; }
 .stack-text .fx-text { margin-top: calc(12 * var(--u)); max-width: calc(255 * var(--u)); }

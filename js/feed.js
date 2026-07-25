@@ -393,11 +393,13 @@
      ========================================================================== */
   const feed = document.getElementById("glitch-feed");
 
+  // Sjednocené černé pozadí u obsahových karet (dřív barevné). Žlutý welcome
+  // a bílé systémové karty (intro/mood/shrnutí) zatím zůstávají.
   const BG = {
-    welcome: "yellow", intro: "white", argument: "pink", mood_selector: "white", daily_summary: "white",
+    welcome: "yellow", intro: "white", argument: "black", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black", time_to_let_go: "black",
-    quick_challenge: "red", spot_the_mistake: "purple", fun_fact: "teal",
-    historicka_osobnost: "blue", quest_intro: "image"
+    quick_challenge: "black", spot_the_mistake: "black", fun_fact: "black",
+    historicka_osobnost: "black", quest_intro: "image"
   };
 
   let welcomeCard = null;
