@@ -951,8 +951,11 @@
     </div>`;
   }
 
-  function renderChat(c, r) {
-    const thread = (r.messages || []).map((m) => {
+  function renderChat(c, r, opts) {
+    // pouzeHlavicka = jen lišta + nadpis + úvod (bez pre-testu, chatu, psaní).
+    // Používá se u už splněného Glitche, kam se pak vloží box s vyhodnocením.
+    const jenHlavicka = opts && opts.pouzeHlavicka;
+    const thread = jenHlavicka ? "" : (r.messages || []).map((m) => {
       if (m.from === "bot") {
         return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Tinybot"></span>` +
                `<div class="rz-bubble">${esc(m.text)}</div></div>`;
@@ -982,13 +985,13 @@
       <div class="rz-body rz-body--chat">
         ${r.title ? `<h1 class="rz-title g-h2">${esc(r.title)}</h1>` : ""}
         ${r.intro ? `<p class="rz-intro g-p">${esc(r.intro)}</p>` : ""}
-        ${pretestBlock(r)}
+        ${jenHlavicka ? "" : pretestBlock(r)}
         <div class="rz-thread" data-rz-thread>${thread}</div>
       </div>
-      <form class="rz-input is-hidden" data-rz-form>
+      ${jenHlavicka ? "" : `<form class="rz-input is-hidden" data-rz-form>
         <input class="rz-input-field" type="text" placeholder="Začni psát…" aria-label="Napiš zprávu" autocomplete="off">
         <button class="rz-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>
-      </form>`;
+      </form>`}`;
   }
 
   let _rzOverlay = null;
@@ -1003,11 +1006,64 @@
     return _rzOverlay;
   }
 
+  // Najde navazující kapitolu téhož questu (stejné téma, další číslo kapitoly).
+  function dalsiVQuestu(card) {
+    if (!card || card.chapterNo == null || !card.topic) return null;
+    for (let i = 0; i < _cardData.length; i++) {
+      const c = _cardData[i];
+      if (c && c.topic === card.topic && Number(c.chapterNo) === Number(card.chapterNo) + 1) {
+        return { index: i, card: c };
+      }
+    }
+    return null;
+  }
+
+  // Žlutý box „splněno" + dvě volby (další kapitola / zpět do feedu). Používá se
+  // po dokončení konverzace i při znovuotevření už splněného Glitche.
+  function hotovoBox(card, shrnuti) {
+    const tema = (card.rozklik && card.rozklik.title) || card.title || "tohle téma";
+    const box = document.createElement("div");
+    box.className = "rz-hotovo";
+    box.innerHTML =
+      `<p class="rz-hotovo-text g-p">${esc(shrnuti || ("Vypadá to, že už dobře víš, co je " + tema + "."))}</p>` +
+      `<p class="rz-hotovo-sub g-p-s">Chceš přejít na další Glitch v questu, nebo se vrátit na Glitchfeed pro další inspiraci?</p>` +
+      `<div class="rz-hotovo-akce">` +
+      (dalsiVQuestu(card) ? `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>` : "") +
+      `<button class="rz-hotovo-btn" data-rz-feed>Přejít na Glitchfeed</button></div>`;
+    const dalsi = box.querySelector("[data-rz-dalsi]");
+    if (dalsi) dalsi.addEventListener("click", () => {
+      const n = dalsiVQuestu(card);
+      closeRozklik();
+      if (n) { scrollToIndex(n.index); if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400); }
+    });
+    box.querySelector("[data-rz-feed]").addEventListener("click", closeRozklik);
+    return box;
+  }
+
   function openRozklik(c) {
     if (!c || !c.rozklik) return;
     const r = c.rozklik;
     const ov = ensureRzOverlay();
     const panel = ov.querySelector(".rz-panel");
+
+    // Už splněný Glitch (chat) → místo konverzace ukaž jeho vyhodnocení.
+    const done = c.id && typeof window.isGlitchDone === "function" && window.isGlitchDone(c.id);
+    if (r.kind === "chat" && done) {
+      panel.className = "rz-panel rz-panel--chat";
+      panel.innerHTML = renderChat(c, r, { pouzeHlavicka: true });
+      const zaznam = (window.glitchProgress && window.glitchProgress()[c.id]) || {};
+      const body = panel.querySelector(".rz-body--chat");
+      const hlaska = zaznam.uroven
+        ? (zaznam.shrnuti || "") + " Tohle už máš splněné."
+        : (zaznam.shrnuti || "Tohle už máš splněné.");
+      body.appendChild(hotovoBox(c, hlaska));
+      panel.scrollTop = 0;
+      ov.classList.add("is-open");
+      document.body.classList.add("rz-lock");
+      panel.querySelector("[data-rz-close]").addEventListener("click", closeRozklik);
+      return;
+    }
+
     panel.className = "rz-panel rz-panel--" + (r.kind || "explainer");
     panel.innerHTML = (r.kind === "chat") ? renderChat(c, r) : renderExplainer(c, r);
     panel.scrollTop = 0;
@@ -1245,41 +1301,10 @@
 
     // Nabídka po splnění: shrnutí + dvě volby, kam dál.
     function zobrazHotovo(v) {
-      const tema = (r.title || card.title || "tohle téma");
-      const box = document.createElement("div");
-      box.className = "rz-hotovo";
-      box.innerHTML =
-        `<p class="rz-hotovo-text g-p">${esc(v.shrnuti || ("Vypadá to, že už dobře víš, co je " + tema + "."))}</p>` +
-        `<p class="rz-hotovo-sub g-p-s">Chceš přejít na další Glitch v questu, nebo se vrátit na Glitchfeed pro další inspiraci?</p>` +
-        `<div class="rz-hotovo-akce">` +
-        (dalsiVQuestu() ? `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>` : "") +
-        `<button class="rz-hotovo-btn" data-rz-feed>Přejít na Glitchfeed</button></div>`;
+      const box = hotovoBox(card, v.shrnuti);
       thread.appendChild(box);
       form.classList.add("is-hidden");                 // konverzace uzavřená
       scrollDown();
-
-      const dalsi = box.querySelector("[data-rz-dalsi]");
-      if (dalsi) dalsi.addEventListener("click", () => {
-        const n = dalsiVQuestu();
-        closeRozklik();
-        if (n) {
-          scrollToIndex(n.index);
-          if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400);
-        }
-      });
-      box.querySelector("[data-rz-feed]").addEventListener("click", closeRozklik);
-    }
-
-    // Najde navazující kapitolu téhož questu (stejné téma, další číslo kapitoly).
-    function dalsiVQuestu() {
-      if (!card || card.chapterNo == null || !card.topic) return null;
-      for (let i = 0; i < _cardData.length; i++) {
-        const c = _cardData[i];
-        if (c && c.topic === card.topic && Number(c.chapterNo) === Number(card.chapterNo) + 1) {
-          return { index: i, card: c };
-        }
-      }
-      return null;
     }
 
     // Úvod: bot sám zahájí — nejdřív krátce uvede do tématu (žák o něm nemusí nic

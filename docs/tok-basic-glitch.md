@@ -25,10 +25,10 @@ flowchart TD
     I -->|ne| D
     I -->|ano| J(["Splněno — nabídka dalšího Glitche nebo feedu"])
 
-    style F fill:#ffff00,stroke:#000
-    style G fill:#ffff00,stroke:#000
-    style I fill:#ffff00,stroke:#000
-    style J fill:#ffff00,stroke:#000
+    style F fill:#ffff00,stroke:#000,color:#000
+    style G fill:#ffff00,stroke:#000,color:#000
+    style I fill:#ffff00,stroke:#000,color:#000
+    style J fill:#ffff00,stroke:#000,color:#000
 ```
 
 Žlutě jsou **AI funkce**. Každá má jediný úkol — proto je spolehlivá.
@@ -116,7 +116,7 @@ flowchart TD
     L --> R["Doporučovač — js/recommender.js"]
     R --> V["hotové Glitche se ve feedu neukazují"]
 
-    style H fill:#ffff00,stroke:#000
+    style H fill:#ffff00,stroke:#000,color:#000
 ```
 
 | Kam | Co | Kdy |
@@ -147,7 +147,8 @@ sám.** Když všechno vysvětlil bot a žák jen přikyvoval, splněno není.
 
 ## 6. Co ještě není hotové
 
-- [ ] Zobrazit **vyhodnocení** při znovuotevření splněného Glitche
-- [ ] Zápis do `concept_mastery` (úroveň zvládnutí konceptu)
+- [x] Zobrazit **vyhodnocení** při znovuotevření splněného Glitche
+- [x] Zápis do `concept_mastery` (úroveň zvládnutí konceptu) — `tg_mastery` + Supabase
 - [ ] **Profil žáka do promptu** (co už prošel, kde tápal)
 - [ ] **Mapa znalostí žáka** — mapa konceptů obarvená dosaženými úrovněmi
+  (data už jsou: `tg_mastery` / Supabase `concept_mastery`)

@@ -29,6 +29,7 @@
     all[id] = zaznam;
     writeAll(all);
     clearGlitchRetry(id);              // hotové už nečeká na druhou šanci
+    updateMastery(zaznam.concept_id, zaznam.uroven, id);   // do žákovy mapy konceptů
 
     // do účtu (jen když je uživatel přihlášený; jinak zůstane lokálně)
     try {
@@ -56,6 +57,26 @@
     if (all[id]) { delete all[id]; try { localStorage.setItem(RETRY_KEY, JSON.stringify(all)); } catch (_) {} }
   }
 
+  /* Zvládnutí konceptů (žákova knowledge map). Když je Glitch splněný s nějakou
+     úrovní, poznamená se u jeho konceptu — ale jen NAHORU (nejvyšší dosažená
+     úroveň zůstává). Pořadí úrovní podle Bloomovy taxonomie. */
+  const UROVNE = ["zapamatovani", "porozumeni", "aplikace", "analyza", "hodnoceni", "tvorba"];
+  const MASTERY_KEY = "tg_mastery";
+  const readMastery = () => {
+    try { return JSON.parse(localStorage.getItem(MASTERY_KEY) || "{}"); } catch (_) { return {}; }
+  };
+  function updateMastery(conceptId, uroven, glitchId) {
+    if (!conceptId || !uroven) return;
+    const noviIdx = UROVNE.indexOf(uroven);
+    if (noviIdx < 0) return;
+    const all = readMastery();
+    const staryIdx = all[conceptId] ? UROVNE.indexOf(all[conceptId].uroven) : -1;
+    if (noviIdx <= staryIdx) return;                  // stejná/nižší úroveň → nech být
+    all[conceptId] = { uroven: uroven, kdy: new Date().toISOString(), glitch_id: glitchId || null };
+    try { localStorage.setItem(MASTERY_KEY, JSON.stringify(all)); } catch (_) {}
+    try { if (typeof sbSaveMastery === "function") sbSaveMastery(conceptId, uroven); } catch (_) {}
+  }
+
   const isGlitchDone = (id) => !!(readAll()[id] || {}).hotovo;
   const glitchProgress = () => readAll();
   const doneCount = () => Object.keys(readAll()).length;
@@ -63,7 +84,7 @@
   /* Vymaže postup (na testování a na tlačítko v profilu). */
   async function resetProgress() {
     writeAll({});
-    try { localStorage.removeItem(RETRY_KEY); } catch (_) {}
+    try { localStorage.removeItem(RETRY_KEY); localStorage.removeItem(MASTERY_KEY); } catch (_) {}
     try { if (typeof sbResetProgress === "function") await sbResetProgress(); } catch (_) {}
     try { window.dispatchEvent(new CustomEvent("glitch:progress-reset")); } catch (_) {}
   }
@@ -71,6 +92,7 @@
   window.markGlitchDone = markGlitchDone;
   window.markGlitchRetry = markGlitchRetry;
   window.clearGlitchRetry = clearGlitchRetry;
+  window.glitchMastery = readMastery;
   window.isGlitchDone = isGlitchDone;
   window.glitchProgress = glitchProgress;
   window.glitchDoneCount = doneCount;

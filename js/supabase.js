@@ -130,6 +130,17 @@ async function sbLoadSettings() {
 
 // ── PROGRESS ─────────────────────────────────
 
+// Úroveň zvládnutí konceptu (žákova knowledge map). Ukládá se nejvyšší dosažená.
+async function sbSaveMastery(conceptId, uroven) {
+  if (!sb || !sbCurrentUser || !conceptId || !uroven) return;
+  await sb.from('concept_mastery').upsert({
+    user_id: sbCurrentUser.id,
+    concept_id: conceptId,
+    uroven: uroven,
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,concept_id' });
+}
+
 async function sbSaveGlitchDone(glitchId, correct) {
   if (!sb || !sbCurrentUser) return;
   await sb.from('progress').upsert({
