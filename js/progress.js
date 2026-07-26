@@ -28,6 +28,7 @@
     const zaznam = Object.assign({ hotovo: true, kdy: new Date().toISOString() }, info || {});
     all[id] = zaznam;
     writeAll(all);
+    clearGlitchRetry(id);              // hotové už nečeká na druhou šanci
 
     // do účtu (jen když je uživatel přihlášený; jinak zůstane lokálně)
     try {
@@ -39,6 +40,22 @@
     return zaznam;
   }
 
+  /* Druhá šance: Glitch, který žák neuhodl, se nezavírá — poznamená se
+     a doporučovač ho v dalším feedu zařadí o kus dál (ne hned na začátek). */
+  const RETRY_KEY = "tg_retry";
+  function markGlitchRetry(id) {
+    if (!id) return;
+    let all = {};
+    try { all = JSON.parse(localStorage.getItem(RETRY_KEY) || "{}"); } catch (_) {}
+    all[id] = { kdy: new Date().toISOString(), pokusy: ((all[id] || {}).pokusy || 0) + 1 };
+    try { localStorage.setItem(RETRY_KEY, JSON.stringify(all)); } catch (_) {}
+  }
+  function clearGlitchRetry(id) {
+    let all = {};
+    try { all = JSON.parse(localStorage.getItem(RETRY_KEY) || "{}"); } catch (_) {}
+    if (all[id]) { delete all[id]; try { localStorage.setItem(RETRY_KEY, JSON.stringify(all)); } catch (_) {} }
+  }
+
   const isGlitchDone = (id) => !!(readAll()[id] || {}).hotovo;
   const glitchProgress = () => readAll();
   const doneCount = () => Object.keys(readAll()).length;
@@ -46,11 +63,14 @@
   /* Vymaže postup (na testování a na tlačítko v profilu). */
   async function resetProgress() {
     writeAll({});
+    try { localStorage.removeItem(RETRY_KEY); } catch (_) {}
     try { if (typeof sbResetProgress === "function") await sbResetProgress(); } catch (_) {}
     try { window.dispatchEvent(new CustomEvent("glitch:progress-reset")); } catch (_) {}
   }
 
   window.markGlitchDone = markGlitchDone;
+  window.markGlitchRetry = markGlitchRetry;
+  window.clearGlitchRetry = clearGlitchRetry;
   window.isGlitchDone = isGlitchDone;
   window.glitchProgress = glitchProgress;
   window.glitchDoneCount = doneCount;

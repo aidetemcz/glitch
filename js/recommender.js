@@ -13,6 +13,8 @@
   // Denní strop dočasně vypnutý (na přání) — ať jsou při testování vidět všechny
   // Glitche. Zpět zapneme nastavením DAILY_CAP_ENABLED = true.
   const DAILY_CAP_ENABLED = false;
+  // o kolik karet dál se vrátí Glitch, který žák neuhodl (druhá šance s odstupem)
+  const RETRY_ODSTUP = 8;
   const WELLBEING_TYPES = new Set(["mood_selector", "breathing", "attention_game"]);
 
   // do které skupiny „od koho vidím obsah" karta patří
@@ -74,7 +76,10 @@
     let done = {};
     try { done = JSON.parse(localStorage.getItem("tg_progress") || "{}"); } catch (_) {}
 
-    return { settings, mood, done };
+    let retry = {};
+    try { retry = JSON.parse(localStorage.getItem("tg_retry") || "{}"); } catch (_) {}
+
+    return { settings, mood, done, retry };
   }
 
   function serazFeed(cards, ctx) {
@@ -103,6 +108,19 @@
     //    pak obnovit pořadí kapitol v rámci questů → questy prokládané, ale v pořadí 1→N
     shuffle(pool);
     keepQuestOrder(pool);
+
+    // 2b) druhá šance: co žák neuhodl, se nevyhazuje — jen posune dál od začátku,
+    //     ať se k tomu vrátí s odstupem (a ne hned na první kartě)
+    const retry = ctx.retry || {};
+    if (Object.keys(retry).length) {
+      const cekaji = [], ostatni = [];
+      pool.forEach((c) => (c.id && retry[c.id] ? cekaji : ostatni).push(c));
+      pool = ostatni;
+      cekaji.forEach((c) => {
+        const kam = Math.min(pool.length, RETRY_ODSTUP + Math.floor(Math.random() * 4));
+        pool.splice(kam, 0, c);
+      });
+    }
 
     // 3) denní strop (dočasně vypnutý — viz DAILY_CAP_ENABLED)
     if (DAILY_CAP_ENABLED) pool = pool.slice(0, DAILY_CAP);

@@ -461,8 +461,10 @@
     const target = feed.children[i];
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+  // pozice v DOM (ne dataset.index — ten je klíč do dat a karta se může přesunout
+  // kvůli druhé šanci, viz posunNaDruhouSanci)
   function nextFrom(el) {
-    const i = Number(el.dataset.index);
+    const i = Array.prototype.indexOf.call(feed.children, el);
     scrollToIndex(Math.min(i + 1, feed.children.length - 1));
   }
 
@@ -826,6 +828,28 @@
   }
 
   /* ---- Rychlá výzva (kvíz) ---- */
+  /* Druhá šance v běžící relaci: neuhodnutou kartu přesune o kus níž, aby se
+     k ní žák za chvíli vrátil. Děje se až po odскrolování na další kartu a
+     scrollTop se dorovná o výšku přesunuté karty, aby feed nepodskočil. */
+  const RETRY_POSUN = 8;
+  function posunNaDruhouSanci(el) {
+    setTimeout(() => {
+      const kolikDal = RETRY_POSUN;
+      const deti = Array.prototype.slice.call(feed.children);
+      const odkud = deti.indexOf(el);
+      if (odkud < 0) return;
+      const kam = Math.min(deti.length - 1, odkud + kolikDal);
+      if (kam <= odkud) return;                       // není kam posunout
+      const vyska = el.getBoundingClientRect().height +
+        parseFloat(getComputedStyle(el).marginBottom || 0);
+      const byloNad = el.getBoundingClientRect().bottom < 0;   // už je nad výřezem?
+      feed.insertBefore(el, feed.children[kam].nextSibling);
+      if (byloNad) feed.scrollTop -= vyska;           // dorovnat, ať nic nepodskočí
+      // dataset.index se NEpřečísluje — je to klíč do dat karty (_cardData);
+      // navigace pracuje s pořadím v DOM (viz nextFrom)
+    }, 1600);                                          // až po automatickém posunu dál
+  }
+
   function initQuiz(el, c) {
     const opts = el.querySelectorAll(".quiz-opt");
     let answered = false;
@@ -834,9 +858,14 @@
       answered = true;
       const correct = opt.dataset.correct === "true";
       // Rychlá výzva nemá konverzaci — hotová je správnou odpovědí.
-      // Při špatné se nezavírá, ať se vrátí ve feedu znovu.
-      if (correct && c && c.id && typeof window.markGlitchDone === "function") {
-        window.markGlitchDone(c.id, { typ: c.type, kviz: true, correct: true });
+      // Při špatné se nezavírá: dostane druhou šanci o kus dál ve feedu.
+      if (c && c.id) {
+        if (correct && typeof window.markGlitchDone === "function") {
+          window.markGlitchDone(c.id, { typ: c.type, kviz: true, correct: true });
+        } else if (!correct && typeof window.markGlitchRetry === "function") {
+          window.markGlitchRetry(c.id);
+          posunNaDruhouSanci(el);
+        }
       }
       opts.forEach((o) => {
         if (o.dataset.correct === "true") o.classList.add("is-correct");
