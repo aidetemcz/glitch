@@ -12,18 +12,18 @@ Kde jsou **zdroje**, kdy běží **která AI funkce** a co se **kam zapisuje**.
 
 ```mermaid
 flowchart TD
-    A([Žák rozklikne Glitch<br/>žlutá šipka ve feedu]) --> B[Pre-test<br/>„Co už o tématu víš?"]
-    B -->|zvolí úroveň| C[Bot zahájí:<br/>krátce uvede do tématu<br/>+ jedna otázka]
+    A(["Žák rozklikne Glitch — žlutá šipka ve feedu"]) --> B["Pre-test: Co už o tématu víš?"]
+    B -->|zvolí úroveň| C["Bot zahájí — krátce uvede do tématu a položí otázku"]
     C --> D{Konverzace}
-    D -->|žák píše| E[Odpověď bota<br/>vysvětluje / ptá se]
+    D -->|žák píše| E["Odpověď bota — vysvětluje nebo se ptá"]
     E --> D
 
-    D -.->|před každou odpovědí| F[Rozhodčí:<br/>je čas na kvíz?]
-    F -->|ANO| G[Generátor kvízu<br/>JSON režim]
-    G --> H[Kvíz v chatu<br/>single / multi]
-    H -->|žák odpoví| I[Hodnotitel:<br/>splnil kritéria?]
+    D -.->|před každou odpovědí| F["Rozhodčí — je čas na kvíz?"]
+    F -->|ANO| G["Generátor kvízu — JSON režim"]
+    G --> H["Kvíz v chatu — single nebo multi"]
+    H -->|žák odpoví| I["Hodnotitel — splnil kritéria?"]
     I -->|ne| D
-    I -->|ano| J([Splněno<br/>nabídka: další Glitch / feed])
+    I -->|ano| J(["Splněno — nabídka dalšího Glitche nebo feedu"])
 
     style F fill:#ffff00,stroke:#000
     style G fill:#ffff00,stroke:#000
@@ -52,12 +52,12 @@ neudělal. Rozdělením na samostatná volání dostane každý model jeden jasn
 
 ```mermaid
 flowchart LR
-    A[žák pošle zprávu] --> B{levná pravidla<br/>bez AI}
-    B -->|méně než 2 zprávy| N[bez kvízu]
+    A["žák pošle zprávu"] --> B{"levná pravidla — bez AI"}
+    B -->|méně než 2 zprávy| N["bez kvízu"]
     B -->|krátce po kvízu| N
-    B -->|žák si o kvíz řekl| Y[kvíz]
-    B -->|5+ zpráv bez kvízu| Y
-    B -->|jinak| C{Rozhodčí AI}
+    B -->|žák si o kvíz řekl| Y["kvíz"]
+    B -->|5 a více zpráv bez kvízu| Y
+    B -->|jinak| C{"Rozhodčí AI"}
     C -->|NE| N
     C -->|ANO| Y
 ```
@@ -70,18 +70,18 @@ Levná pravidla šetří volání: rozhodčí se ptá jen tehdy, když má smysl
 
 ```mermaid
 flowchart LR
-    subgraph zdroje [Zdroje pravdy]
-        P[Persony/*.md<br/>12 person]
-        M[knowledge-map.yaml<br/>mapa konceptů]
-        F[glitches/feed.json<br/>karty Glitchů]
+    subgraph zdroje ["Zdroje pravdy"]
+        P["Persony — 12 MD souborů"]
+        M["knowledge-map.yaml — mapa konceptů"]
+        F["glitches/feed.json — karty Glitchů"]
     end
 
-    P -->|build-catalog.py| PJ[Persony/personas.json]
-    M -->|build-concepts.py| MJ[knowledge-map/concepts.json]
+    P -->|build-catalog.py| PJ["Persony/personas.json"]
+    M -->|build-concepts.py| MJ["knowledge-map/concepts.json"]
 
-    PJ -->|prompt persony| S[api/gpt.js]
+    PJ -->|prompt persony| S["api/gpt.js"]
     F -->|kontext karty| S
-    MJ -->|cíle a kritéria| E[api/evaluate.js]
+    MJ -->|cíle a kritéria| E["api/evaluate.js"]
     F -->|concept_id| E
 
     style zdroje fill:#f6f6f6,stroke:#999
@@ -105,16 +105,16 @@ python3 knowledge-map/build-concepts.py
 
 ```mermaid
 flowchart TD
-    K[žák odpoví na kvíz] --> H[Hodnotitel<br/>api/evaluate.js]
-    H -->|nesplněno| P[pokračuje konverzace]
-    H -->|splněno| D[markGlitchDone<br/>js/progress.js]
+    K["žák odpoví na kvíz"] --> H["Hodnotitel — api/evaluate.js"]
+    H -->|nesplněno| P["pokračuje konverzace"]
+    H -->|splněno| D["markGlitchDone — js/progress.js"]
 
-    D --> L[(localStorage<br/>tg_progress)]
-    D --> S[(Supabase<br/>progress)]
-    D --> U[nabídka:<br/>další Glitch / feed]
+    D --> L[("localStorage — tg_progress")]
+    D --> S[("Supabase — progress")]
+    D --> U["nabídka dalšího Glitche nebo feedu"]
 
-    L --> R[Doporučovač<br/>js/recommender.js]
-    R --> V[hotové Glitche<br/>se ve feedu neukazují]
+    L --> R["Doporučovač — js/recommender.js"]
+    R --> V["hotové Glitche se ve feedu neukazují"]
 
     style H fill:#ffff00,stroke:#000
 ```
