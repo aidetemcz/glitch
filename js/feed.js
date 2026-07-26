@@ -1066,8 +1066,10 @@
     return box;
   }
 
+  let _openCardId = null;    // id právě rozkliknuté karty (kvůli skrytí po splnění)
   function openRozklik(c) {
     if (!c || !c.rozklik) return;
+    _openCardId = c.id || null;
     const r = c.rozklik;
     const ov = ensureRzOverlay();
     const panel = ov.querySelector(".rz-panel");
@@ -1100,10 +1102,25 @@
     if (r.kind === "chat") initRzChat(panel, c);
   }
 
+  // Skryje kartu ve feedu (po splnění), ať se v téže relaci znovu neukazuje.
+  // Při dalším načtení ji stejně vyfiltruje doporučovač (podle tg_progress).
+  function hideFeedCard(id) {
+    if (!id) return;
+    Array.prototype.forEach.call(feed.children, (el) => {
+      const d = _cardData[el.dataset.index];
+      if (d && d.id === id) el.classList.add("is-hidden");
+    });
+  }
+
   function closeRozklik() {
     if (!_rzOverlay) return;
     _rzOverlay.classList.remove("is-open");
     document.body.classList.remove("rz-lock");
+    // splněný Glitch schovej z feedu hned (ne až po reloadu)
+    if (_openCardId && typeof window.isGlitchDone === "function" && window.isGlitchDone(_openCardId)) {
+      hideFeedCard(_openCardId);
+    }
+    _openCardId = null;
   }
 
   window.addEventListener("keydown", (e) => {
