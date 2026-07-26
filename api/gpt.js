@@ -183,18 +183,23 @@ async function generateQuiz(key, convo, ctx) {
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content:
-          "Dostaneš přepis výukového rozhovoru. Vytvoř JEDNU kvízovou otázku pro žáka (11–18 let), " +
-          "která ověří, jestli pochopil to, o čem si právě povídali.\n\n" +
-          "NEJDŮLEŽITĚJŠÍ PRAVIDLO: otázka musí vycházet z KONKRÉTNÍHO OBSAHU rozhovoru — " +
-          "hlavně z posledních výměn (označené «poslední»). Ptej se na myšlenku, příklad nebo " +
-          "souvislost, která v rozhovoru SKUTEČNĚ ZAZNĚLA.\n" +
-          "ZAKÁZÁNO: obecná učebnicová otázka typu „Co je hlavní myšlenkou tématu?“ nebo " +
-          "definice tématu, pokud přesně tohle nebylo jádrem rozhovoru. Kdyby žák otázku " +
-          "zvládl bez toho rozhovoru, je špatná.\n\n" +
-          "Postupuj takto: nejdřív do pole \"zaznelo\" doslova opiš krátký úsek rozhovoru, " +
-          "na který se ptáš. Pak k němu teprve vymysli otázku.\n\n" +
+          "Dostaneš přepis výukového rozhovoru mezi žákem (11–18 let) a botem. " +
+          "Vytvoř JEDNU kvízovou otázku, která ověří, jestli žák POROZUMĚL tématu, o kterém si povídali.\n\n" +
+          "Otázku píšeš PŘÍMO ŽÁKOVI (mluvíš na něj, ne o něm). Testuješ jeho porozumění konceptu — " +
+          "třeba tím, že má poznat správný příklad mezi špatnými, použít myšlenku na novou situaci, " +
+          "nebo posoudit, co je a co není pravda.\n\n" +
+          "PŘÍSNĚ ZAKÁZÁNO:\n" +
+          "- Ptát se, co žák sám v rozhovoru řekl, uvedl nebo zmínil (např. „Jaký příklad žák uvedl…“, " +
+          "„Co jsi říkal o…“). To netestuje porozumění, ale paměť na rozhovor.\n" +
+          "- Psát otázku ve 3. osobě o „žákovi“ nebo „studentovi“ — mluv na něj přímo.\n" +
+          "- Udělat správnou odpověď z věty, kterou žák sám napsal (nesmí jen zopakovat svůj vlastní příklad).\n" +
+          "- Suchá učebnicová definice tématu, pokud přesně tohle nebylo jádrem rozhovoru.\n\n" +
+          "Otázka MÁ vycházet z tématu a úrovně rozhovoru (ne náhodná trivia), ale musí jít " +
+          "zodpovědět jen díky POCHOPENÍ — ne díky tomu, že si žák pamatuje, co psal.\n\n" +
+          "Postupuj takto: nejdřív do pole \"co_overuje\" napiš jednou větou, jaké porozumění " +
+          "otázka testuje (např. „umí rozpoznat příklad datové gramotnosti v praxi“). Pak vymysli otázku.\n\n" +
           "Vrať POUZE JSON:\n" +
-          '{"zaznelo":"…citace z rozhovoru…","typ":"single","otazka":"…",' +
+          '{"co_overuje":"…","typ":"single","otazka":"…",' +
           '"moznosti":[{"text":"…","spravne":true},{"text":"…","spravne":false}]}\n\n' +
           "Pravidla: \"typ\" je \"single\" (právě jedna správná) nebo \"multi\" (aspoň dvě správné). " +
           "2–4 možnosti, každá krátká. Nesprávné možnosti musí být věrohodné, ne zjevně hloupé. " +
@@ -210,7 +215,7 @@ async function generateQuiz(key, convo, ctx) {
     const moznosti = (d.moznosti || []).filter((o) => o && o.text).slice(0, 4)
       .map((o) => ({ text: String(o.text), spravne: !!o.spravne }));
     if (moznosti.length < 2 || !moznosti.some((o) => o.spravne) || !d.otazka) return null;
-    // "zaznelo" slouží jen k tomu, aby se model opřel o rozhovor — žákovi se neposílá
+    // "co_overuje" jen nutí model nejdřív pojmenovat testované porozumění — žákovi se neposílá
     return { typ: d.typ === "multi" ? "multi" : "single", otazka: String(d.otazka), moznosti: moznosti };
   } catch (_) {
     return null;
