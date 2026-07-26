@@ -127,6 +127,11 @@
         toggleRow("mood_checkin", "Denní mood check-in") +
         toggleRow("notifikace", "Notifikace") +
       '</div>' +
+      '<div class="pf-set-group"><h3>Postup</h3>' +
+        '<div class="pf-row"><span class="pf-row-label">Hotových Glitchů: ' +
+          (typeof window.glitchDoneCount === "function" ? window.glitchDoneCount() : 0) + '</span></div>' +
+        '<button class="pf-signout" data-pf-reset-progress type="button">Začít feed znovu</button>' +
+      '</div>' +
       '<div class="pf-set-group"><h3>Účet</h3>' +
         '<button class="pf-signout" data-pf-signout type="button">Odhlásit se</button>' +
       '</div>';
@@ -191,6 +196,13 @@
 
     // odhlášení
     el.addEventListener("click", async (e) => {
+      // vynulování postupu — hotové Glitche se zase začnou zobrazovat ve feedu
+      if (e.target.closest("[data-pf-reset-progress]")) {
+        if (typeof window.resetGlitchProgress === "function") await window.resetGlitchProgress();
+        close();
+        location.reload();
+        return;
+      }
       if (e.target.closest("[data-pf-signout]")) {
         try { if (typeof sbSignOut === "function") await sbSignOut(); } catch (_) {}
         close();

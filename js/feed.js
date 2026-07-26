@@ -521,7 +521,7 @@
   function initCard(el, c) {
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
-    if (c.type === "quick_challenge") initQuiz(el);
+    if (c.type === "quick_challenge") initQuiz(el, c);
     if (c.type === "argument") initArgument(el);
     if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el, c);
@@ -826,13 +826,17 @@
   }
 
   /* ---- Rychlá výzva (kvíz) ---- */
-  function initQuiz(el) {
+  function initQuiz(el, c) {
     const opts = el.querySelectorAll(".quiz-opt");
     let answered = false;
     opts.forEach((opt) => opt.addEventListener("click", () => {
       if (answered) return;
       answered = true;
       const correct = opt.dataset.correct === "true";
+      // rychlá výzva je hotová odpovědí (správně i špatně) → zmizí z dalšího feedu
+      if (c && c.id && typeof window.markGlitchDone === "function") {
+        window.markGlitchDone(c.id, { typ: c.type, kviz: true, correct: correct });
+      }
       opts.forEach((o) => {
         if (o.dataset.correct === "true") o.classList.add("is-correct");
         else if (o === opt) o.classList.add("is-wrong");
@@ -1099,7 +1103,7 @@
       const vse = zvolil.length === spravne.length && spravne.every((s) => zvolil.includes(s));
       if (typeof onAnswer === "function") {
         onAnswer(`(Odpověděl jsem v kvízu: ${zvolil.join(", ") || "nic"}. Správně bylo: ` +
-                 `${spravne.join(", ")}. ${vse ? "Měl jsem to celé správně." : "Neměl jsem to celé správně."})`);
+                 `${spravne.join(", ")}. ${vse ? "Měl jsem to celé správně." : "Neměl jsem to celé správně."})`, vse);
       }
     };
     opts.forEach((opt) => opt.addEventListener("click", () => {
@@ -1161,7 +1165,13 @@
         if (parsed.text) rzAppendBot(thread, parsed.text);
         if (parsed.kviz) {
           // odpověď z kvízu pošleme botovi zpět (neviditelně), ať na ni naváže
-          rzAppendKviz(thread, parsed.kviz, (vysledek) => ask(vysledek, { silent: true }));
+          rzAppendKviz(thread, parsed.kviz, (vysledek, vse) => {
+            // Glitch s chatem je hotový, jakmile žák zvládne kvíz v konverzaci
+            if (card && card.id && typeof window.markGlitchDone === "function") {
+              window.markGlitchDone(card.id, { typ: card.type, kviz: true, correct: !!vse });
+            }
+            ask(vysledek, { silent: true });
+          });
         }
       } catch (err) {
         typing.remove();
