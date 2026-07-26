@@ -85,9 +85,14 @@ nepošle. Proto se rozhoduje zvlášť, ve dvou krocích:
    (`gpt-4o-mini`, odpověď ANO/NE) nad přepisem konverzace: *rozumí už žák
    tématu natolik, aby šlo zkoušet?*
 
-Hlavní model pak dostane **jednoznačný pokyn** („TEĎ POŠLI KVÍZ" / „kvíz teď
-neposílej") místo vágního „můžeš, když uznáš za vhodné".
-Když si žák o kvíz řekne sám, dostane ho vždy.
+3. **Kvíz vyrobí zvlášť další volání** v JSON režimu (`response_format:
+   json_object`) — konverzační model kvíz nepíše vůbec. Napíše jen uvozovací větu
+   („Zkusíme, jestli ti to sedí.") a server za ni kvíz připojí.
+
+Proč krok 3: dřív si měl kvíz vymyslet sám konverzační model uprostřed odpovědi.
+Jenže jeho persona ho zároveň vede k „2–3 krátkým větám a jedné otázce", takže
+blok většinou vůbec nenapsal. Teď má každý model jeden úkol a kvíz vzniká
+spolehlivě. Když si žák o kvíz řekne sám, dostane ho vždy.
 
 ## Poznámky
 

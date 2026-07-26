@@ -23,9 +23,9 @@ const MAX_MESSAGES = 40;       // strop délky konverzace
 const MAX_CHARS = 4000;        // strop délky jedné zprávy
 
 // Kdy může přijít kvíz (viz shouldQuiz):
-const QUIZ_MIN_TURNS = 3;      // dřív než po 3 zprávách žáka se kvíz neřeší
+const QUIZ_MIN_TURNS = 2;      // dřív než po 2 zprávách žáka se kvíz neřeší
 const QUIZ_COOLDOWN = 4;       // po kvízu pauza — tolik zpráv bota bez dalšího
-const QUIZ_FORCE_TURNS = 7;    // po tolika zprávách žáka se kvíz vynutí (pojistka)
+const QUIZ_FORCE_TURNS = 5;    // po tolika zprávách žáka se kvíz vynutí (pojistka)
 
 const PERSONAS = new Map((CATALOG.personas || []).map((p) => [p.id, p]));
 
@@ -57,22 +57,10 @@ Postupuj takto:
 
 ### KVÍZ
 
-Když už si chvíli povídáte a máš pocit, že žák tématu rozumí, můžeš ho vyzkoušet
-krátkým kvízem. Otázku i možnosti vymýšlíš ty podle toho, o čem jste mluvili.
-
-Kvíz pošli jako blok přesně v tomhle formátu:
-
-\`\`\`kviz
-{"typ":"single","otazka":"Otázka?","moznosti":[{"text":"možnost A","spravne":true},{"text":"možnost B","spravne":false}]}
-\`\`\`
-
-Pravidla kvízu:
-- "typ": "single" = právě jedna správná možnost, "multi" = víc správných.
-- 2–4 možnosti, krátké. Vždy aspoň jedna správná.
-- Před blok napiš jednu krátkou uvozovací větu. Za blok už nepiš nic.
-- Kvíz posílej nanejvýš jednou za několik výměn a nikdy hned v první zprávě.
-- Až žák odpoví, dostaneš jeho výsledek — krátce zareaguj (co sedělo, co ne)
-  a pokračujte v rozhovoru.`;
+Kvíz do rozhovoru přidává systém — ty ho sám nevypisuješ a nevymýšlíš.
+Na konci téhle zprávy se dozvíš, jestli teď kvíz přijde, nebo ne, a podle toho
+zprávu ukonči. Až žák na kvíz odpoví, dostaneš jeho výsledek — krátce zareaguj
+(co sedělo, co ne) a pokračujte v rozhovoru.`;
 
 // Kontext Glitche → blok „zadání", na který jsou persony napsané
 // (téma / cíl / zadání; u Basic Glitche navíc pole karty).
@@ -107,14 +95,16 @@ function buildSystemPrompt(personaId, ctx, quizNow) {
       "Když žák odbočí jinam, vlídně ho vrať k tématu Glitche."
     );
   }
-  // Rozhodnutí o kvízu nenecháváme na modelu uprostřed dlouhého promptu —
-  // vyhodnocuje se zvlášť (viz shouldQuiz) a sem přijde jasný pokyn.
+  // Samotný kvíz negeneruje tenhle model (v proudu řeči to nespolehlivě vynechával) —
+  // skládá ho zvlášť generateQuiz() a server ho připojí. Tady jen řekneme, jak zprávu
+  // ukončit, aby na kvíz navazovala.
   parts.push(quizNow
-    ? "### TEĎ POŠLI KVÍZ\n\nŽák už tématu rozumí natolik, že ho můžeš vyzkoušet. " +
-      "V TÉHLE zprávě napiš jednu krátkou uvozovací větu a hned za ni blok ```kviz``` " +
-      "podle formátu výše. Kvíz musí vycházet z toho, o čem jste si povídali."
+    ? "### TEĎ PŘIJDE KVÍZ\n\nŽák už tématu rozumí natolik, že ho můžeme vyzkoušet. " +
+      "Napiš JEN jednu krátkou větu, kterou kvíz uvedeš (např. „Zkusíme, jestli ti to sedí.\"). " +
+      "Nepokládej v téhle zprávě žádnou vlastní otázku a sám kvíz nevypisuj — " +
+      "otázka s možnostmi se doplní automaticky hned za tvou větu."
     : "### KVÍZ TEĎ NEPOSÍLEJ\n\nV téhle zprávě kvíz neposílej — pokračuj v rozhovoru " +
-      "(vysvětluj a ptej se). Výjimka: pokud si žák o kvíz sám výslovně řekne, pošli mu ho.");
+      "(vysvětluj a ptej se).");
   return parts.join("\n\n---\n\n");
 }
 
@@ -128,13 +118,61 @@ async function callOpenAI(key, payload) {
   return { ok: r.ok, status: r.status, data };
 }
 
+/* Vygeneruje kvíz samostatným voláním v JSON režimu.
+   Dřív si kvíz měl vymyslet sám konverzační model uprostřed odpovědi — jenže jeho
+   persona ho zároveň vede k „2–3 krátkým větám a jedné otázce", takže blok často
+   vůbec nenapsal. Tady dostane model jediný úkol a formát si nemůže vymyslet
+   (response_format: json_object). Vrací hotový objekt kvízu, nebo null. */
+async function generateQuiz(key, convo, ctx) {
+  const prepis = convo.slice(-12)
+    .filter((m) => !/^\(/.test(m.content))
+    .map((m) => (m.role === "user" ? "ŽÁK: " : "BOT: ") + m.content.slice(0, 400))
+    .join("\n");
+  try {
+    const { ok, data } = await callOpenAI(key, {
+      model: "gpt-4o-mini",
+      temperature: 0.4,
+      max_tokens: 300,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content:
+          "Vytvoř jednu krátkou kvízovou otázku pro žáka (11–18 let) z toho, o čem byl rozhovor. " +
+          "Otázka musí ověřit porozumění tématu, ne detail formulace. Česky, jednoduše.\n\n" +
+          "Vrať POUZE JSON v tomhle tvaru:\n" +
+          '{"typ":"single","otazka":"…","moznosti":[{"text":"…","spravne":true},{"text":"…","spravne":false}]}\n\n' +
+          "Pravidla: \"typ\" je \"single\" (jedna správná) nebo \"multi\" (víc správných). " +
+          "2–4 možnosti, každá krátká. U \"single\" je právě jedna spravne:true, u \"multi\" aspoň dvě. " +
+          "Nesprávné možnosti musí být věrohodné, ne zjevně hloupé." },
+        { role: "user", content: (ctx && ctx.nazev ? "Téma: " + ctx.nazev + "\n\n" : "") + "Rozhovor:\n" + prepis }
+      ]
+    });
+    if (!ok) return null;
+    const raw = (data.choices && data.choices[0] && data.choices[0].message.content) || "";
+    const d = JSON.parse(raw);
+    const moznosti = (d.moznosti || []).filter((o) => o && o.text).slice(0, 4)
+      .map((o) => ({ text: String(o.text), spravne: !!o.spravne }));
+    if (moznosti.length < 2 || !moznosti.some((o) => o.spravne) || !d.otazka) return null;
+    return { typ: d.typ === "multi" ? "multi" : "single", otazka: String(d.otazka), moznosti: moznosti };
+  } catch (_) {
+    return null;
+  }
+}
+
 /* Kdy poslat kvíz — dvoustupňové rozhodnutí:
    1) levná pravidla v kódu (kolik zpráv, kdy byl kvíz naposledy) — bez volání AI,
    2) teprve když projdou, zeptáme se malého modelu („rozhodčí"), jestli už žák
       tématu rozumí. Model tak neřeší kvíz v každé zprávě uprostřed dlouhého promptu
       — dostane jednu jasnou otázku a odpoví ANO/NE. */
+const QUIZ_ASK_RE = /\b(kv[ií]z|vyzkou[sš]|otestuj|test|zkou[sš]k|ov[eě][řr] m[eě])/i;
+
 async function shouldQuiz(key, convo, ctx) {
-  const userTurns = convo.filter((m) => m.role === "user" && !/^\(/.test(m.content)).length;
+  const userMsgs = convo.filter((m) => m.role === "user" && !/^\(/.test(m.content));
+  const userTurns = userMsgs.length;
+
+  // žák si o kvíz řekl sám → dostane ho hned
+  const last = userMsgs[userMsgs.length - 1];
+  if (last && QUIZ_ASK_RE.test(last.content)) return true;
+
   if (userTurns < QUIZ_MIN_TURNS) return false;
 
   // po kvízu chvíli pauza
@@ -208,23 +246,35 @@ module.exports = async function handler(req, res) {
     }
 
     // Rozhodnutí o kvízu (levná pravidla + případně malý „rozhodčí" model).
-    // Přeskočí se, když si žák o kvíz řekne sám — to si vyřídí model podle pokynu.
-    const quizNow = body.quiz === false ? false : await shouldQuiz(key, convo, body.context);
+    // body.quiz === true → žák si o kvíz řekl sám, ptát se rozhodčího netřeba.
+    const quizNow = body.quiz === false ? false
+      : body.quiz === true ? true
+      : await shouldQuiz(key, convo, body.context);
 
     const messages = [
       { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow) },
       ...convo
     ];
 
-    const { ok, status, data } = await callOpenAI(key, {
-      model, messages, temperature, max_tokens: MAX_TOKENS
-    });
-    if (!ok) {
-      return res.status(status).json({ error: (data.error && data.error.message) || "Chyba OpenAI API." });
+    // odpověď bota a kvíz se generují souběžně (kvíz zvlášť, viz generateQuiz)
+    const [main, kviz] = await Promise.all([
+      callOpenAI(key, { model, messages, temperature, max_tokens: MAX_TOKENS }),
+      quizNow ? generateQuiz(key, convo, body.context) : Promise.resolve(null)
+    ]);
+
+    if (!main.ok) {
+      return res.status(main.status).json({
+        error: (main.data.error && main.data.error.message) || "Chyba OpenAI API."
+      });
     }
 
-    const text = (data.choices && data.choices[0] && data.choices[0].message.content) || "";
-    return res.status(200).json({ text });
+    let text = (main.data.choices && main.data.choices[0] && main.data.choices[0].message.content) || "";
+    if (kviz) {
+      // kdyby model kvíz přece jen vypsal sám, jeho blok zahodíme a použijeme náš
+      text = text.replace(/```(?:kviz|json)?\s*\{[\s\S]*?\}\s*```/gi, "").trim();
+      text += "\n\n```kviz\n" + JSON.stringify(kviz) + "\n```";
+    }
+    return res.status(200).json({ text, quiz: !!kviz });
   } catch (e) {
     return res.status(500).json({ error: "Neočekávaná chyba serveru." });
   }
