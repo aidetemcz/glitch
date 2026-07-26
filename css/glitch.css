@@ -743,6 +743,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pf-tab { width: calc(30 * var(--u)); height: calc(30 * var(--u)); color: var(--c-grey-50); display: grid; place-items: center; transition: color .12s ease; }
 .pf-tab svg { width: 100%; height: 100%; }
+.pf-tab-ic {
+  width: calc(24 * var(--u)); height: calc(24 * var(--u)); background: currentColor;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+}
 .pf-tab.is-active { color: var(--c-black); }
 
 /* obsah tabu */
@@ -806,6 +812,9 @@ button.km-cell:active { transform: scale(.9); }
   padding: calc(4 * var(--u)) calc(9 * var(--u));
   font-size: calc(13 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
 }
+/* krajní uzly: popisek zarovnat dovnitř, ať nepřeteče z obrazovky */
+.q-node--l .q-label { left: 0; transform: none; }
+.q-node--r .q-label { left: auto; right: 0; transform: none; }
 
 /* nastavení */
 .pf-set-group { padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }

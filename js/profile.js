@@ -85,13 +85,19 @@
   const PENCIL = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
   const GENDERS = [["holka", "Holka"], ["kluk", "Kluk"], ["jine", "Jiné"], ["neuvadet", "Nechci uvádět"]];
 
-  /* ---------- ikony tabů (stroke = currentColor) ---------- */
-  const ICONS = {
-    board: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>',
-    quests: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>',
-    saved: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.6l-8.9 8.9a5 5 0 0 1-7.1-7.1l8.9-8.9a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.65 1.65 0 0 1-2.3-2.3l8-8"/></svg>',
-    settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.5 14H4a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 5.6 7L5.5 7a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 11 4.5V4a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V10a1.6 1.6 0 0 0 1.5 1.5H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>'
+  /* ---------- ikony tabů (SVG z assets/ui, přebarvené přes CSS mask = currentColor) ---------- */
+  const TAB_ICON = {
+    quests: "questy.icon.svg",
+    board: "quests-boards-icon.svg",
+    saved: "saved-icon.svg",
+    settings: "settings-icon.svg"
   };
+  function tabIcon(id) {
+    const f = TAB_ICON[id];
+    if (!f) return "";
+    const url = "url('assets/ui/" + f + "')";
+    return '<span class="pf-tab-ic" style="-webkit-mask-image:' + url + ';mask-image:' + url + '"></span>';
+  }
 
   /* ---------- uživatel ---------- */
   const meta = (u) => (u && u.user_metadata) || {};
@@ -210,11 +216,17 @@
     if (!questsData.length) return '<div class="pf-empty">Zatím žádný quest. Otevři nějaký ve feedu a začni.</div>';
     return questsData.map((q) => {
       let currentSet = false;
-      const nodes = q.chapters.map((ch) => {
+      const n = q.chapters.length;
+      const nodes = q.chapters.map((ch, idx) => {
         const done = isDone(ch.id);
         let cls = "q-node", label = "";
         if (done) cls += " is-done";
-        else if (!currentSet) { cls += " is-current"; currentSet = true; label = '<span class="q-label">' + esc(ch.title) + '</span>'; }
+        else if (!currentSet) {
+          currentSet = true;
+          // popisek u krajních uzlů zarovnáme dovnitř, ať nepřeteče z obrazovky
+          cls += " is-current" + (idx === 0 ? " q-node--l" : (idx === n - 1 ? " q-node--r" : ""));
+          label = '<span class="q-label">' + esc(ch.title) + '</span>';
+        }
         return '<span class="' + cls + '">' + label + '</span>';
       }).join("");
       return '<div class="q-quest"><div class="q-name">' + esc(q.topic) + '</div>' +
@@ -265,9 +277,8 @@
 
   function tabsBar() {
     const all = TABS.concat([{ id: "settings" }]);
-    const ic = { board: ICONS.board, quests: ICONS.quests, saved: ICONS.saved, settings: ICONS.settings };
     return '<div class="pf-tabs">' + all.map((t) =>
-      '<button class="pf-tab' + (t.id === state.tab ? ' is-active' : '') + '" data-tab="' + t.id + '">' + ic[t.id] + '</button>'
+      '<button class="pf-tab' + (t.id === state.tab ? ' is-active' : '') + '" data-tab="' + t.id + '">' + tabIcon(t.id) + '</button>'
     ).join("") + '</div>';
   }
 
