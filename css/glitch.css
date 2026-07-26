@@ -677,11 +677,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    ========================================================================== */
 #glitch-profile {
   position: fixed; inset: 0; z-index: 35;
-  background: #fff; color: var(--c-black);
+  background: var(--c-app); color: var(--c-black);   /* tmavé okolí jako feed */
   overflow-y: auto; -webkit-overflow-scrolling: touch;
 }
 .pf-wrap {
-  max-width: var(--feed-max); margin: 0 auto;
+  max-width: var(--feed-max); margin: 0 auto; min-height: 100%;
+  background: #fff;                                   /* světlý obsah profilu na tmavém pozadí */
   padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(96 * var(--u));
 }
 
