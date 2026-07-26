@@ -1183,6 +1183,19 @@
     return el;
   }
 
+  /* Usekne z textu koncové otázky (necháme potvrzení/shrnutí). Používá se, když
+     Glitch končí — bot často zakončí otázkou, ale konverzace se zavírá, tak ať
+     tam nezůstane viset dotaz, na který už žák neodpoví. Vrátí "" = celé otázka. */
+  function stripKoncovaOtazka(text) {
+    const s = String(text || "").trim();
+    if (!s.endsWith("?")) return s;
+    const vety = s.match(/[^.!?]+[.!?]+(?:["""')\s]+|$)/g);
+    if (!vety || vety.length < 2) return "";
+    while (vety.length > 1 && vety[vety.length - 1].trim().endsWith("?")) vety.pop();
+    const out = vety.join("").trim();
+    return out.endsWith("?") ? "" : out;
+  }
+
   /* ---- Kvíz v chatu (obsah generuje chatbot) ----
      Bot pošle v odpovědi blok ```kviz {"typ":"single|multi","otazka":…,"moznosti":[…]}```.
      Ten z textu vyjmeme a místo něj vykreslíme interaktivní kvíz (single = kolečka
@@ -1366,6 +1379,14 @@
 
     // Nabídka po splnění: shrnutí + dvě volby, kam dál.
     function zobrazHotovo(v) {
+      // bot možná zakončil otázkou, ale Glitch končí → z poslední bubliny ji sundáme
+      const bubliny = thread.querySelectorAll(".rz-msg--bot .rz-bubble");
+      const last = bubliny[bubliny.length - 1];
+      if (last) {
+        const orez = stripKoncovaOtazka(last.textContent);
+        if (!orez) { const msg = last.closest(".rz-msg--bot"); if (msg) msg.remove(); }
+        else last.textContent = orez;
+      }
       const box = hotovoBox(card, v.shrnuti);
       thread.appendChild(box);
       form.classList.add("is-hidden");                 // konverzace uzavřená
