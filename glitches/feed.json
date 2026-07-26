@@ -50,55 +50,7 @@
       "kind": "chat",
       "chapter": "1/6",
       "title": "Co je Vibe Coding",
-      "intro": "Vibe Coding je programování v přirozeném jazyce. Místo psaní kódu popíšeš vlastními slovy, co chceš, a umělá inteligence kód napíše za tebe.",
-      "messages": [
-        {
-          "from": "bot",
-          "text": "Pojem Vibe Coding vymyslel Andrej Karpathy, který je zároveň spoluzakladatelem společnosti OpenAI."
-        },
-        {
-          "from": "bot",
-          "text": "Reagoval tak na vývoj umělé inteligence, protože ta dokáže vytvářet prototypy aplikací tak, že lidé popisují svou představu a AI píše kód."
-        },
-        {
-          "from": "bot",
-          "text": "Zkus se zamyslet nad slovním spojením Vibe Coding a říct, proč zvolil zrovna tento název."
-        },
-        {
-          "from": "user",
-          "text": "vibe znamena neco jakoze to je o pocitech"
-        },
-        {
-          "from": "bot",
-          "text": "Super, pojďme zkusit ověřit tvé znalosti kvízem. Zvol klidně více možností."
-        },
-        {
-          "from": "bot",
-          "text": "Co nového přinesl Vibe Coding do tvorby prototypů aplikací?"
-        },
-        {
-          "from": "quiz",
-          "multi": true,
-          "options": [
-            {
-              "label": "Vývoj aplikací je levnější.",
-              "correct": true
-            },
-            {
-              "label": "Je to o dost rychlejší.",
-              "correct": true
-            },
-            {
-              "label": "Mohou to dělat i lidé, kteří o tom zas tak moc nevědí.",
-              "correct": true
-            },
-            {
-              "label": "Dřív nemohl prototyp vytvářet jen jeden člověk.",
-              "correct": false
-            }
-          ]
-        }
-      ]
+      "intro": "Vibe Coding je programování v přirozeném jazyce. Místo psaní kódu popíšeš vlastními slovy, co chceš, a umělá inteligence kód napíše za tebe."
     }
   },
   {
@@ -175,55 +127,7 @@
       "kind": "chat",
       "chapter": "1/6",
       "title": "Co je datová gramotnost?",
-      "intro": "Datová gramotnost je schopnost data přečíst, pochopit a kriticky posoudit — ne s nimi jen technicky pracovat.",
-      "messages": [
-        {
-          "from": "bot",
-          "text": "Data jsou jen surovina — samotná čísla ještě nic neznamenají. Význam jim dáváš ty tím, na co se ptáš."
-        },
-        {
-          "from": "bot",
-          "text": "Příklad: teploty 21, 23, 19, 25. To jsou data. Informace je až to, co z nich vyčteš — třeba „nejtepleji bylo ve středu“."
-        },
-        {
-          "from": "bot",
-          "text": "Být datově gramotný znamená umět se ptát: Odkud data jsou? Kdo je sebral? Co v nich chybí? A plyne ten závěr opravdu z čísel?"
-        },
-        {
-          "from": "user",
-          "text": "aha takze stejny cisla muzou rikat ruzny veci"
-        },
-        {
-          "from": "bot",
-          "text": "Přesně tak — podle otázky nesou stejná data různou informaci. Pojď si to ověřit."
-        },
-        {
-          "from": "bot",
-          "text": "Kamarád ukáže graf a řekne: „Prodeje vyletěly o 200 %!“ Co si ověříš jako první? (Zvol klidně více možností.)"
-        },
-        {
-          "from": "quiz",
-          "multi": true,
-          "options": [
-            {
-              "label": "Odkud data jsou a za jaké období.",
-              "correct": true
-            },
-            {
-              "label": "Co graf NEukazuje — třeba jestli osa nezačíná až od velkého čísla.",
-              "correct": true
-            },
-            {
-              "label": "Jestli má graf hezké barvy.",
-              "correct": false
-            },
-            {
-              "label": "Nic — číslům se přece věří.",
-              "correct": false
-            }
-          ]
-        }
-      ]
+      "intro": "Datová gramotnost je schopnost data přečíst, pochopit a kriticky posoudit — ne s nimi jen technicky pracovat."
     }
   },
   {

@@ -448,7 +448,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=19", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=20", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -1082,6 +1082,30 @@
         scrollDown();
       }
     });
+
+    // Úvodní přivítání: po otevření chatu Glitchee sám krátce pozdraví, ať chat
+    // nezačíná prázdný. Je to jeho vlastní vygenerovaná zpráva (žádný placeholder).
+    async function greet() {
+      const typing = rzAppendBot(thread, "…");
+      typing.classList.add("rz-typing");
+      scrollDown();
+      try {
+        if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
+        const reply = await window.gptChat([
+          { role: "system", content: GLITCHEE_PERSONA + "\n\nKONTEXT GLITCHE:\n" + buildGlitchContext(card) },
+          { role: "user", content: "(Dítě právě otevřelo tento Glitch a zatím nic nenapsalo. Přivítej ho jednou až dvěma krátkými větami a pozvi ho, ať se zeptá.)" }
+        ], { temperature: 0.5 });
+        typing.remove();
+        rzAppendBot(thread, reply);
+        history.push({ role: "assistant", content: reply });
+      } catch (err) {
+        typing.remove();
+        const fb = r.intro || "Ahoj! Zeptej se mě na cokoli k tomuhle Glitchi.";
+        rzAppendBot(thread, fb);
+        history.push({ role: "assistant", content: fb });
+      }
+    }
+    if (history.length === 0) greet();
   }
 
 })();
