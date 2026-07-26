@@ -108,7 +108,7 @@ Dítě: *zaujalo jasný postoj* · *dalo aspoň jeden vlastní důvod* (ne „pr
 
 ---
 
-## 4 Kontext pro Tinybota *(skryté)*
+## 4 Kontext pro chatbota *(skryté)*
 
 - **4.1 Fakta a pozadí:** co je doloženo o sběru dat a personalizaci (a co je jen hodnocení). Soukromí jako kontrola nad informacemi o sobě.
 - **4.2 Hranice tématu:** bot se drží tématu tvrzení; mimo téma vlídně vrací.

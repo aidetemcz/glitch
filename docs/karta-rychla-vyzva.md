@@ -70,15 +70,25 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 
 ## 2 Karta ve feedu *(viditelné)*
 
+**Pevná struktura (platí pro každou Rychlou výzvu — kvůli editoru i konzistenci):**
+
+1. **Nadpis** — otázka/zadání jako nadpis. Styl `H1` / `H2` / `H3` podle délky
+   (pole `question` + `questionStyle`). Např. `310×15=`.
+2. **Úloha** — nepovinný nosič úlohy: kód (`code`), krátký text (`taskText`
+   → `<p>`) nebo obrázek (`figure`). Právě jeden podle varianty.
+3. **Vysvětlení / podotázka** — vždy odstavec `<p>` (pole `sub`). Volitelné,
+   např. „Zvládneš spočítat do časového limitu?".
+4. **Tlačítka odpovědí** — právě **jedna správná**. Rozvržení:
+   - `2x2` — čtyři možnosti (jako v příkladu),
+   - `1xN` — svislý sloupec,
+   - `row` — vodorovná řada (např. u obrazců).
+
 - **Štítek:** `Rychlá výzva` (žlutý).
-- **Velké zadání** (styl `glitch_H1`): `310×15=`
-- **Podotázka** (volitelná): „Zvládneš spočítat do časového limitu?"
-- **Odpovědi:** tlačítka, právě **jedna správná**. Rozvržení:
-  - `2x2` — čtyři možnosti (jako v příkladu),
-  - `1xN` — svislý sloupec,
-  - `row` — vodorovná řada (např. u obrazců).
 - **Časovač:** vždy **opt-in** — nikdy se nespustí automaticky. Dítě si ho zapne kliknutím na kolečko.
 - **Zpětná vazba:** okamžitá — správná odpověď se zvýrazní (žlutá výplň), špatná se ztlumí. Bez skóre, bez srovnávání.
+- **Druhá šance:** špatná odpověď Glitch **neuzavírá**. Zapíše se do `tg_retry`
+  a doporučovač kartu za chvíli zařadí znovu (o kus dál), ať si to dítě může
+  zkusit ještě jednou. Správná odpověď = hotovo (`tg_progress`).
 
 ### Varianty zadání
 
@@ -100,7 +110,7 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 | **energetická náročnost** | nízká |
 | **typ zátěže** | rozcvička |
 | **vhodné při náladě** | kdykoli; vhodné i při nižší energii/soustředění jako lehké „nabuzení" mezi delšími Glitchi |
-| signál dokončení | zodpovězení (správně/špatně obojí je dokončení — nejde o skóre) |
+| signál dokončení | správná odpověď = hotovo; špatná = **druhá šance** (karta se ve feedu vrátí později, nezavírá se) |
 | fork | `false` |
 | poznámka | Rychlá výzva je rozcvička, ne zkoušení — slouží k rozproudění pozornosti mezi delšími Glitchi. |
 

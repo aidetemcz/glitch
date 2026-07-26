@@ -63,7 +63,13 @@
     "title": "Programovat bez psaní kódu?",
     "body": "No-code nástroje i vibe coding tě nechají postavit funkční appku, aniž bys psal řádek po řádku. Kde je to skvělé a kde to naráží na hranice?",
     "video": "assets/videos/vibe-coding_02.mp4?v=2",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "2/6",
+      "title": "Programovat bez psaní kódu?",
+      "intro": "No-code a low-code nástroje tě nechají appku poskládat vizuálně, skoro bez psaní kódu. Jsou rychlá vstupní brána — něco funkčního postavíš hned, ale u složitějších věcí narazíš na hranice."
+    }
   },
   {
     "id": "vibecoding-prvni-prompt",
@@ -75,7 +81,13 @@
     "title": "Napiš svůj první prompt",
     "body": "Prompt není kouzelné zaklínadlo, ale dialog. Čím jasněji popíšeš cíl, kontext a formát, tím lepší výsledek. Zkus sestavit prompt, kterému AI rozumí.",
     "video": "assets/videos/vibe-coding_03.mp4?v=2",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "3/6",
+      "title": "Napiš svůj první prompt",
+      "intro": "Prompt je zadání, kterým úkoluješ AI. Není to kouzelné zaklínadlo, ale spíš dialog — čím jasněji popíšeš cíl, kontext a formát, tím lepší výsledek dostaneš."
+    }
   },
   {
     "id": "vibecoding-lepsi-prompt",
@@ -87,7 +99,13 @@
     "title": "Proč jeden prompt vyhraje?",
     "body": "Dva prompty, dva úplně jiné výsledky. Porovnej je a odhal, čím to je — a co dělá ze zadání dobré zadání.",
     "video": "assets/videos/vibe-coding_04.mp4?v=2",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "4/6",
+      "title": "Proč jeden prompt vyhraje?",
+      "intro": "Dva prompty na totéž můžou dopadnout úplně jinak. Rozdíl dělá, jak přesně popíšeš, co chceš — cíl, kontext, formát a upřesňování za pochodu."
+    }
   },
   {
     "id": "vibecoding-je-vystup-dobry",
@@ -99,7 +117,13 @@
     "title": "Je výstup AI dobrý?",
     "body": "AI se plete sebejistě — její výstup je návrh, ne pravda. Nauč se poznat možnou halucinaci a ověřit ji z druhého, důvěryhodného zdroje.",
     "video": "assets/videos/vibe-coding_05.mp4?v=2",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "5/6",
+      "title": "Je výstup AI dobrý?",
+      "intro": "AI se plete sebejistě, takže její výstup je návrh, ne pravda. Umět poznat možnou halucinaci a ověřit ji z druhého, důvěryhodného zdroje je základní dovednost."
+    }
   },
   {
     "id": "vibecoding-postav-si",
@@ -111,7 +135,13 @@
     "title": "Postav si vlastní appku",
     "body": "Čas postavit něco vlastního. Zvládneš appku nejen vytvořit, ale i pochopit natolik, abys ji uměl opravit, když se něco rozbije?",
     "video": "assets/videos/vibe-coding_06.mp4?v=2",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "6/6",
+      "title": "Postav si vlastní appku",
+      "intro": "Ve vibecodingu popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš. Postavíš reálnou věc rychle — ale bez porozumění základům snadno uvízneš, když se něco rozbije."
+    }
   },
   {
     "id": "data-co-je-datova-gramotnost",
@@ -242,7 +272,14 @@
     "title": "Hra života",
     "body": "Hra života je ukázka algoritmu s pár jednoduchými pravidly. Ta určují, které buňky přežijí, které zaniknou a kde vznikne nová. Dokážeš pravidla popsat?",
     "viz": "assets/3Dvizualizations/game-of-life.html?v=4",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "concept_id": "informaticke-mysleni-modelovani-a-simulace",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "5/5",
+      "title": "Hra života",
+      "intro": "Hra života je mřížka buněk, které žijí nebo umírají podle čtyř jednoduchých pravidel „když–tak\", opakovaných v krocích. Nikdo neřídí celek, a přesto vznikají putující a blikající vzory — tomu se říká emergence."
+    }
   },
   {
     "id": "funfact-bug-mura",
@@ -557,7 +594,13 @@
     "title": "Robot bere všechno doslova",
     "body": "Tenhle robot udělá přesně to, co mu napíšeš — a ani o chlup víc. Podle přesných kroků nakreslí čtverec pokaždé stejně. Dokázal bys mu dát návod, který nejde splést?",
     "viz": "assets/3Dvizualizations/algorithm-steps.html?v=3",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "1/5",
+      "title": "Co je algoritmus?",
+      "intro": "Algoritmus je přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku."
+    }
   },
   {
     "id": "algoritmus-pseudokod-a-diagramy",
@@ -569,7 +612,13 @@
     "title": "Nakresli postup",
     "body": "Než něco naprogramuješ, můžeš postup nejdřív nakreslit — jako mapku se šipkami, kterou pochopí každý. Zvládneš přečíst, kudy se postup vydá, když prší?",
     "viz": "assets/3Dvizualizations/flowchart.html?v=1",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "2/5",
+      "title": "Nakresli postup",
+      "intro": "Pseudokód a vývojové diagramy jsou způsoby, jak zapsat postup srozumitelně pro člověka, než ho napíšeš v programovacím jazyce. Pseudokód je „kód napůl česky\", diagram totéž nakreslené jako schéma se šipkami."
+    }
   },
   {
     "id": "algoritmus-podminky-kdyz-tak",
@@ -581,7 +630,13 @@
     "title": "Program se rozhoduje sám",
     "body": "Jak appka pozná, kdy ukázat „Výhra“ a kdy „Hraj dál“? Nemá to napsané pro každý případ zvlášť — použije podmínku. Zvládneš říct, co se stane při skóre přesně 100?",
     "viz": "assets/3Dvizualizations/if-else.html?v=1",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "3/5",
+      "title": "Program se rozhoduje sám",
+      "intro": "Podmínka je větvení: „když platí něco, udělej tohle, jinak tamto\" (if/else). Díky ní se program rozhoduje sám — třeba ukáže „výhra\", jen když skóre překročí cíl."
+    }
   },
   {
     "id": "algoritmus-cykly-opakovani",
@@ -593,7 +648,13 @@
     "title": "Nech to udělat počítač",
     "body": "Musíš napsat „ahoj“ stokrát pod sebe. Napíšeš to stokrát ručně? Nebo počítači řekneš „opakuj 100×“? Právě od toho je cyklus. Spočítáš, co vypíše ten dole?",
     "viz": "assets/3Dvizualizations/loop.html?v=1",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "4/5",
+      "title": "Nech to udělat počítač",
+      "intro": "Cyklus nechá počítač opakovat kroky, místo abys je psal pořád dokola. Cyklus for opakuje danou-krát, while opakuje, dokud něco platí — třeba dokud hráč neprohraje."
+    }
   },
   {
     "id": "algoritmus-puleni-v-milionu",

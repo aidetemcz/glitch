@@ -2,7 +2,9 @@
 
 _Šablona sekcí Glitche (kontrakt / podání / úrovně / kontext pro bota / bezpečnost) na příkladu „Hra života". Dřív Google Docs, teď zdroj pravdy tady. Poslední převod: 2026-07-15._
 
-**Jak číst tenhle soubor.** Karta je šablona i příklad v jednom: struktura sekcí je obecná pro každý Glitch, obsah je naplněný konkrétním Glitchem „Hra života" z kapitoly Algoritmus. Sekce 1 (kontrakt) vlastní redakce a mění se jen redakčním zásahem; sekce 2 je kanonické podání (jednou jich může být víc); sekce 3–6 jsou provozní metadata. Uživateli se zobrazují pouze sekce 2 a zadání ze sekce 3 — všechno ostatní slouží systému, chatbotovi a redakci.
+**Jak číst tenhle soubor.** Karta je šablona i příklad v jednom: struktura sekcí je obecná pro každý Glitch, obsah je naplněný konkrétním Glitchem „Hra života" z kapitoly Algoritmus. Sekce 1 (kontrakt) vlastní redakce a mění se jen redakčním zásahem; sekce 2 je kanonické podání (jednou jich může být víc); sekce 3–6 jsou provozní metadata. Uživateli se zobrazuje karta ve feedu (sekce 2.1) a po rozkliku úvodní text a konverzace s chatbotem; sekce 1, 3–6 slouží systému, chatbotovi a redakci.
+
+> **Aktuální běh appky popisuje sekce [0.3](#03-jak-glitch-běží-po-rozkliku-aktuální-stav).** Části téhle karty psané pro „forkování na board" a „volbu úrovně žákem" jsou zatím designový záměr — v produkci se Glitch po rozkliku otevře jako **konverzace s chatbotem** a za hotový se považuje, když **hodnotitel** potvrdí splnění kritérií konceptu. Podrobný diagram toků: [`tok-basic-glitch.md`](./tok-basic-glitch.md).
 
 ---
 
@@ -53,6 +55,34 @@ _Šablona sekcí Glitche (kontrakt / podání / úrovně / kontext pro bota / be
 | žánr | pozorování + výklad |
 | jazyk | čeština |
 | nosiče | animace, text |
+
+---
+
+## **0.3 Jak Glitch běží po rozkliku (aktuální stav)**
+
+*Technická realita dnešního běhu. Podrobný diagram je v [`tok-basic-glitch.md`](./tok-basic-glitch.md).*
+
+Po rozkliknutí Basic Glitche (žlutá šipka ve feedu) běží tento sled:
+
+1. **Pre-test „Co už o tématu víš?"** — žák zvolí, jak na tom je. Volba řídí, jak chatbot zahájí: buď téma krátce uvede a zeptá se, nebo (když žák uvede, že to zná) rovnou ověří porozumění otevřenou otázkou.
+2. **Konverzace s chatbotem** — vede ji **persona** (styl bota) + kontext karty. Persona se bere z pole `persona`, jinak podle typu karty, jinak výchozí `glitchee`. Do promptu jde i **profil žáka** (věk, rod, dřív zvládnuté koncepty) — bot podle něj volí jazyk, obtížnost a oslovení.
+3. **Kvíz** — do řeči ho přidává **systém, ne autor karty**: rozhodčí posoudí, kdy je čas, a generátor vyrobí otázku z právě proběhlé konverzace. Do karty se kvíz nepíše.
+4. **Vyhodnocení** — po odpovědi na kvíz posoudí hodnotitel konverzaci proti **kritériím konceptu** (`concept_id` → mapa konceptů). Počítá jen to, co žák prokazatelně řekl sám. Teprve když kritéria splnil, je Glitch hotový.
+5. **Nabídka po splnění** — „Navazující Glitch" (další kapitola questu) nebo „Přejít na Glitchfeed". Když navazující kapitola není, oznámí se, že tímhle Glitchem quest končí.
+6. **Druhá šance** — dokud kritéria nesplní, Glitch se nezavírá; doporučovač ho ve feedu později zařadí znovu.
+
+### Pole karty (JSON, `glitches/feed.json`)
+
+| pole | k čemu |
+| ----- | ----- |
+| `id`, `type`, `topic`, `chapterNo`, `trust` | identita, řazení v questu, stav důvěry |
+| `concept_id` | napojení na mapu konceptů → kritéria hodnocení (bez něj nejde vyhodnotit splnění) |
+| `persona` | volitelně styl chatbota (jinak dle typu / `glitchee`) |
+| `title`, `body`, `video` / `viz` | karta ve feedu (titulek, text, nosič — video nebo interaktivní vizualizace) |
+| `rozklik.kind` | `"chat"` u Basic Glitche |
+| `rozklik.chapter` | popisek kapitoly, např. `"3/6"` |
+| `rozklik.title` | nadpis panelu po rozkliku |
+| `rozklik.intro` | krátký úvodní text, který žák uvidí (a jde botovi jako kontext) |
 
 ---
 
@@ -115,6 +145,10 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 
 ### **2.4 Kvíz (rychlá kontrola porozumění)**
 
+> **Pozn. k aktuálnímu běhu:** kvíz se do karty **nepíše**. V produkci ho generuje
+> systém z právě proběhlé konverzace (viz sekce 0.3) a ptá se na to, co s botem
+> reálně probrali. Otázky níž jsou jen ilustrace typu porozumění, které se ověřuje.
+
 1. Co rozhoduje o tom, jestli buňka přežije? *(a) její barva, (b) její sousedé ✓, (c) hráč*  
 2. Kolik pravidel Hra života má? *(a) čtyři ✓, (b) čtyřicet, (c) pokaždé jiná*  
 3. Kdo naprogramoval klouzače — útvary putující po mřížce? *(a) Conway, (b) nikdo, vznikají z pravidel ✓, (c) počítač si je vymýšlí náhodně*
@@ -124,6 +158,8 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 ## **3 Úrovně vypracování a kritéria hodnocení**
 
 *Žák si úroveň volí sám při forku do svého boardu (autonomie, flow, diferenciace). Úroveň je informace pro žáka a učitele, ne veřejný odznak. Kritéria jsou formativní: říkají, co má výtvor umět. Posuzuje je LLM zkoušející — hodnotí podstatu, doptává se, nedává klíčoslovné skóre.*
+
+> **Pozn. k aktuálnímu běhu:** volba úrovně přes fork zatím není v produkci. Dnes žák na začátku projde **pre-test** („Co už o tématu víš?") a Glitch se považuje za hotový, když **hodnotitel** (`api/evaluate.js`) potvrdí splnění kritérií napojeného konceptu — počítá jen to, co žák prokazatelně řekl sám. Úrovňová kritéria níž slouží jako referenční hloubka pro redakci a pro budoucí forkování; kritéria pro dnešní hodnocení drží mapa konceptů (`concept_id`).
 
 ### **🟢 Jednoduchá**
 
@@ -151,9 +187,9 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 
 ---
 
-## **4 Kontext pro Tinybota**
+## **4 Kontext pro chatbota**
 
-*Nezobrazuje se uživateli. Nalévá se do systémového promptu chatbota v boardu, když je tento Glitch forknutý. Bot je omezen na téma tohoto Glitche (viz 4.2).*
+*Nezobrazuje se uživateli. Skládá se do systémového promptu chatbota (`api/gpt.js`) při rozkliku Glitche — spolu s personou a profilem žáka. Bot je omezen na téma tohoto Glitche (viz 4.2). (Dřív „Tinybot"; systémový prompt se skládá na serveru, aby ho nešlo z klienta přepsat.)*
 
 ### **4.1 Fakta a pozadí**
 

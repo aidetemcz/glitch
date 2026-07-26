@@ -92,7 +92,7 @@ Fun fact **může** mít fork (na rozdíl od Rychlé výzvy): dítě si fakt „
 
 ---
 
-## 4 Kontext pro Tinybota *(skryté)*
+## 4 Kontext pro chatbota *(skryté)*
 
 ### 4.1 Fakta a pozadí
 
