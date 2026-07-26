@@ -866,6 +866,24 @@ body.rz-lock { overflow: hidden; }
 .rz-msg--user .rz-bubble { max-width: calc(238 * var(--u)); padding: calc(11 * var(--u)) calc(14 * var(--u)); background: rgba(255,255,0,0.27); }
 
 /* kvíz uvnitř chatu */
+/* Pre-test „Co už o tématu víš?" — zobrazí se po rozkliknutí, než začne chat */
+.rz-pretest { display: flex; flex-direction: column; margin: calc(20 * var(--u)) 0 calc(6 * var(--u)); }
+.rz-pretest-title { color: var(--c-black); margin-bottom: calc(6 * var(--u)); }
+.rz-pretest-sub { color: var(--c-black); margin-bottom: calc(14 * var(--u)); }
+.rz-pretest-opt {
+  text-align: left; color: var(--c-black); background: var(--c-white);
+  border: 1px solid #1a1a1a; border-radius: calc(8 * var(--u));
+  padding: calc(12 * var(--u)) calc(14 * var(--u)); margin-bottom: calc(10 * var(--u));
+  font-size: calc(16 * var(--u)); line-height: calc(21 * var(--u)); letter-spacing: var(--tracking);
+  transition: background .15s ease, opacity .15s ease;
+}
+.rz-pretest-opt:active { opacity: .7; }
+.rz-pretest-opt.is-sel { background: var(--c-yellow); font-weight: 600; }
+.rz-pretest-opt.is-dim { opacity: .35; }
+.rz-pretest-opt:disabled { cursor: default; }
+/* vstupní pole se objeví až po volbě v pre-testu */
+.rz-input.is-hidden { display: none; }
+
 .rz-quiz { display: flex; flex-direction: column; gap: calc(9 * var(--u)); padding: calc(9 * var(--u)) 0 0 calc(44 * var(--u)); }
 /* otázka kvízu (kvíz generuje chatbot) */
 .rz-quiz-q { margin-bottom: calc(3 * var(--u)); color: var(--c-black); font-weight: 500; }
@@ -881,7 +899,8 @@ body.rz-lock { overflow: hidden; }
   display: grid; place-items: center; position: relative;
 }
 .rz-mark--checkbox { border-radius: calc(5 * var(--u)); }
-.rz-mark--radio { width: calc(19 * var(--u)); height: calc(19 * var(--u)); border-radius: 50%; background: var(--c-yellow); }
+/* kolečko: nevybrané = prázdné s černým obrysem, vybrané = žlutý prstenec s černým středem */
+.rz-mark--radio { width: calc(19 * var(--u)); height: calc(19 * var(--u)); border-radius: 50%; background: var(--c-white); }
 .rz-opt.is-sel .rz-mark { background: var(--c-yellow); }
 .rz-opt.is-sel .rz-mark--checkbox::after {
   content: ""; width: calc(9 * var(--u)); height: calc(5 * var(--u));
@@ -889,7 +908,7 @@ body.rz-lock { overflow: hidden; }
   transform: translateY(-1px) rotate(-45deg);
 }
 .rz-opt.is-sel .rz-mark--radio::after {
-  content: ""; width: calc(7 * var(--u)); height: calc(7 * var(--u)); border-radius: 50%; background: var(--c-black);
+  content: ""; width: calc(11 * var(--u)); height: calc(11 * var(--u)); border-radius: 50%; background: var(--c-black);
 }
 .rz-opt.is-locked { opacity: .9; }
 .rz-opt.is-correct .rz-opt-label { font-weight: 600; }

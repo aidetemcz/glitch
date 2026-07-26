@@ -894,6 +894,29 @@
       </div>`;
   }
 
+  /* ---- Pre-test: „Co už o tématu víš?" ----
+     Po rozkliknutí Glitche si žák zvolí, na čem je — bot pak podle toho přizpůsobí
+     výklad. Volby jdou přepsat v kartě (rozklik.pretest), jinak platí obecné
+     (bez skloňování názvu tématu, aby seděly na jakýkoli Glitch). */
+  const PRETEST_DEFAULT = [
+    { label: "Zatím o tom nevím vůbec nic.", level: "Žák o tématu zatím neví nic — vysvětluj od úplných základů, jednoduše a s příkladem." },
+    { label: "Už jsem o tom slyšel*a.", level: "Žák o tématu už slyšel, ale nezná detaily — stručně shrň podstatu a ověř, co si pamatuje." },
+    { label: "Už jsem to zkoušel*a.", level: "Žák už téma zkoušel — základy přeskoč, jdi rovnou do hloubky a souvislostí." }
+  ];
+  const pretestOf = (r) => (r && r.pretest === false) ? null
+    : (r && Array.isArray(r.pretest) && r.pretest.length ? r.pretest : PRETEST_DEFAULT);
+
+  function pretestBlock(r) {
+    const opts = pretestOf(r);
+    if (!opts) return "";
+    return `<div class="rz-pretest" data-rz-pretest>
+      <h2 class="rz-pretest-title g-h4">Co už o tématu víš?</h2>
+      <p class="rz-pretest-sub g-p-s">Zvol jednu z následujících možností:</p>
+      ${opts.map((o, i) =>
+        `<button class="rz-pretest-opt" data-rz-pre="${i}">${esc(o.label)}</button>`).join("")}
+    </div>`;
+  }
+
   function renderChat(c, r) {
     const thread = (r.messages || []).map((m) => {
       if (m.from === "bot") {
@@ -925,9 +948,10 @@
       <div class="rz-body rz-body--chat">
         ${r.title ? `<h1 class="rz-title g-h2">${esc(r.title)}</h1>` : ""}
         ${r.intro ? `<p class="rz-intro g-p">${esc(r.intro)}</p>` : ""}
+        ${pretestBlock(r)}
         <div class="rz-thread" data-rz-thread>${thread}</div>
       </div>
-      <form class="rz-input" data-rz-form>
+      <form class="rz-input is-hidden" data-rz-form>
         <input class="rz-input-field" type="text" placeholder="Začni psát…" aria-label="Napiš zprávu" autocomplete="off">
         <button class="rz-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>
       </form>`;
@@ -1159,14 +1183,34 @@
 
     // Úvod: bot sám zahájí — nejdřív krátce uvede do tématu (žák o něm nemusí nic
     // vědět, viděl jen úvodní text karty) a pak se zeptá.
-    function greet() {
+    // `uroven` = co žák zvolil v pre-testu, ať bot rovnou trefí obtížnost.
+    function greet(uroven) {
       return ask(
-        "(Žák právě otevřel tenhle Glitch a zatím nic nenapsal. O tématu nemusí vědět vůbec nic — " +
-        "viděl jen krátký úvodní text. Uveď ho krátce do tématu vlastními slovy a pak polož jednu otázku.)",
+        "(Žák právě otevřel tenhle Glitch a zatím nic nenapsal. Viděl jen krátký úvodní text. " +
+        (uroven ? uroven + " " : "O tématu nemusí vědět vůbec nic. ") +
+        "Uveď ho krátce do tématu vlastními slovy a pak polož jednu otázku.)",
         { silent: true, temperature: 0.5, fallback: r.intro || "Ahoj! Zeptej se mě na cokoli k tomuhle Glitchi." }
       );
     }
-    if (history.length === 0) greet();
+
+    // Pre-test: dokud si žák nezvolí úroveň, chat i psaní čekají.
+    const pretest = panel.querySelector("[data-rz-pretest]");
+    const pretestOpts = pretestOf(r);
+    if (pretest && pretestOpts) {
+      const btns = pretest.querySelectorAll("[data-rz-pre]");
+      let picked = false;
+      btns.forEach((btn) => btn.addEventListener("click", () => {
+        if (picked) return;
+        picked = true;
+        btn.classList.add("is-sel");                       // zvolená se vysvítí žlutě
+        btns.forEach((b) => { b.disabled = true; if (b !== btn) b.classList.add("is-dim"); });
+        form.classList.remove("is-hidden");                // objeví se pole pro psaní
+        greet((pretestOpts[Number(btn.dataset.rzPre)] || {}).level);
+      }));
+    } else {
+      form.classList.remove("is-hidden");
+      if (history.length === 0) greet();
+    }
   }
 
 })();
