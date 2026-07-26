@@ -203,7 +203,7 @@
   function loadQuests() {
     if (questsData) return Promise.resolve(questsData);
     if (questsPromise) return questsPromise;
-    questsPromise = fetch("glitches/feed.json?v=22")
+    questsPromise = fetch("glitches/feed.json?v=23")
       .then((r) => (r.ok ? r.json() : null))
       .then((cards) => { questsData = buildQuests(cards); return questsData; })
       .catch(() => { questsData = []; return questsData; });
@@ -243,6 +243,29 @@
     });
   }
 
+  /* ---------- Tvé projekty (fork posledního Glitche questu) ---------- */
+  function projectsHtml() {
+    const list = (typeof window.listProjects === "function") ? window.listProjects() : [];
+    if (!list.length) {
+      return '<div class="pf-empty">Zatím tu nic není — až dojdeš na konec questu, můžeš si poslední Glitch forknout do projektu a rozpracovat ho tady.</div>';
+    }
+    return '<div class="pf-projects">' + list.map((p) =>
+      '<div class="pf-proj" data-proj="' + esc(p.id) + '">' +
+        '<div class="pf-proj-top"><span class="pf-proj-tag">Projekt</span>' +
+        (p.quest_topic ? '<span class="pf-proj-topic">' + esc(p.quest_topic) + '</span>' : '') + '</div>' +
+        '<div class="pf-proj-title">' + esc(p.title || "Projekt") + '</div>' +
+        (p.brief ? '<div class="pf-proj-brief">' + esc(p.brief) + '</div>' : '') +
+      '</div>'
+    ).join("") + '</div>';
+  }
+  function hydrateProjects() {
+    if (state.tab !== "board") return;
+    const cur = document.getElementById("glitch-profile");
+    if (!cur) return;
+    const box = cur.querySelector("[data-pf-projects]");
+    if (box) box.innerHTML = projectsHtml();
+  }
+
   /* ---------- render ---------- */
   function chipsHtml() {
     return getInterests().map((name, i) =>
@@ -264,7 +287,7 @@
         '<div class="pf-stats">' +
           '<div class="pf-stat"><b>0</b><span>sleduji</span></div>' +
           '<div class="pf-stat"><b>0</b><span>sledujících</span></div>' +
-          '<div class="pf-stat"><b>0</b><span>forků</span></div>' +
+          '<div class="pf-stat"><b>' + ((typeof window.listProjects === "function" ? window.listProjects().length : 0)) + '</b><span>projektů</span></div>' +
         '</div>' +
         '<div class="pf-interests">' +
           '<button class="pf-interests-add" data-pf-interest-add type="button" aria-label="Přidat zájem"><img src="assets/ui/Plus.svg" alt=""></button>' +
@@ -363,11 +386,8 @@
         '</div>';
     }
     if (state.tab === "board") {
-      // Glitchboard zatím není navržený — prozatím sem dáváme mapu znalostí.
-      return '<h2 class="pf-section-title">Tvoje mapa znalostí</h2>' +
-        '<div class="km" data-pf-map>' +
-        (mapIndex ? knowledgeMapHtml() : '<div class="pf-empty">Načítám mapu…</div>') +
-        '</div>';
+      return '<h2 class="pf-section-title">Tvé projekty</h2>' +
+        '<div class="pf-proj-wrap" data-pf-projects>' + projectsHtml() + '</div>';
     }
     const t = TABS.find((x) => x.id === state.tab) || TABS[0];
     return '<h2 class="pf-section-title">' + esc(t.label) + '</h2>' +
@@ -382,18 +402,20 @@
   /* ---------- otevření / zavření / wiring ---------- */
   function close() { const e = document.getElementById("glitch-profile"); if (e) e.remove(); }
 
-  function open() {
+  const VALID_TABS = { quests: 1, board: 1, saved: 1, settings: 1 };
+  function open(tab) {
     const u = (typeof sbCurrentUser !== "undefined") ? sbCurrentUser : null;
     currentUser = u;
     close();
-    state.tab = "quests";
+    state.tab = VALID_TABS[tab] ? tab : "quests";
     const el = document.createElement("section");
     el.id = "glitch-profile";
     el.innerHTML = render(u);
     document.body.appendChild(el);
     wire(el);
-    hydrateQuests();                 // Tvé questy jsou první tab
-    hydrateMap();                    // mapa je pod Glitchboard — dotáhne se po přepnutí
+    hydrateQuests();                 // Tvé questy
+    hydrateProjects();               // Tvé projekty
+    // (mapa znalostí je zatím bez místa v UI — kód ponechán pro budoucí použití)
 
     // načíst nastavení z DB (mezi zařízeními) a sloučit; když není, zůstane localStorage
     if (typeof sbLoadSettings === "function") {
@@ -412,7 +434,7 @@
     const c = el.querySelector("[data-pf-content]");
     if (c) c.innerHTML = contentHtml();
     hydrateQuests();                 // po přepnutí dotáhni obsah tabu, pokud ještě není
-    hydrateMap();
+    hydrateProjects();
   }
 
   function wire(el) {

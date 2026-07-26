@@ -141,7 +141,10 @@
       "chapter": "6/6",
       "title": "Postav si vlastní appku",
       "intro": "Ve vibecodingu popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš. Postavíš reálnou věc rychle — ale bez porozumění základům snadno uvízneš, když se něco rozbije."
-    }
+    },
+    "project": true,
+    "projectTitle": "Postav si vlastní appku",
+    "projectBrief": "Vyber si nápad na jednoduchou appku a postav ji pomocí vibecodingu. Rozepiš si prompty, sestav appku po částech a průběžně ověřuj, jestli výstup sedí. Ukládej si sem odkazy, poznámky a screenshoty a poraď se s Glitcheem."
   },
   {
     "id": "data-co-je-datova-gramotnost",
@@ -280,7 +283,10 @@
       "chapter": "5/5",
       "title": "Hra života",
       "intro": "Hra života je mřížka buněk, které žijí nebo umírají podle čtyř jednoduchých pravidel „když–tak\", opakovaných v krocích. Nikdo neřídí celek, a přesto vznikají putující a blikající vzory — tomu se říká emergence."
-    }
+    },
+    "project": true,
+    "projectTitle": "Vytvoř svůj algoritmus",
+    "projectBrief": "Vymysli si problém a napiš na něj vlastní algoritmus, ve kterém použiješ podmínky (když–tak) i cyklus (opakování). Postup zapiš pseudokódem nebo nakresli jako vývojový diagram. Ukládej si sem zdroje a poraď se s Glitcheem."
   },
   {
     "id": "funfact-bug-mura",

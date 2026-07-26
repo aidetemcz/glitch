@@ -448,7 +448,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=22", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=23", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -503,7 +503,10 @@
       if (_rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
       if (tab === "profile") return;                 // přihlášení řeší auth.js
       if (tab === "feed") { scrollToIndex(0); setActiveTab(item); return; }
-      toast("Připravujeme 🚧");                        // boardy / tvořit / hledat zatím nejsou
+      // Questy a Projekty otevřou profil na příslušném tabu
+      if (tab === "questy" && typeof window.glitchOpenProfile === "function") { window.glitchOpenProfile("quests"); return; }
+      if (tab === "projekty" && typeof window.glitchOpenProfile === "function") { window.glitchOpenProfile("board"); return; }
+      toast("Připravujeme 🚧");                        // tvořit zatím není
     });
   }
   function setActiveTab(item) {
@@ -1042,14 +1045,38 @@
     const tema = (card.rozklik && card.rozklik.title) || card.title || "tohle téma";
     const box = document.createElement("div");
     box.className = "rz-hotovo";
+
+    // Poslední (aplikační) Glitch questu = projekt → místo „navazující" nabídneme fork.
+    const isProject = !!card.project;
+    const forked = isProject && typeof window.hasProject === "function" && window.hasProject(card.id);
+    const primary = isProject
+      ? `<button class="rz-hotovo-btn is-primary" data-rz-fork>${forked ? "Otevřít projekt" : "Forknout do projektu"}</button>`
+      : `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>`;
+    const sub = isProject
+      ? "Tímhle Glitchem quest končí. Forkni si ho do projektu a rozpracuj ho v Tvé projekty."
+      : "Chceš přejít na další Glitch v questu, nebo se vrátit na Glitchfeed pro další inspiraci?";
+
     box.innerHTML =
       `<p class="rz-hotovo-text g-p">${esc(shrnuti || ("Vypadá to, že už dobře víš, co je " + tema + "."))}</p>` +
-      `<p class="rz-hotovo-sub g-p-s">Chceš přejít na další Glitch v questu, nebo se vrátit na Glitchfeed pro další inspiraci?</p>` +
-      `<div class="rz-hotovo-akce">` +
-      `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>` +
+      `<p class="rz-hotovo-sub g-p-s">${sub}</p>` +
+      `<div class="rz-hotovo-akce">` + primary +
       `<button class="rz-hotovo-btn" data-rz-feed>Přejít na Glitchfeed</button></div>`;
+
+    const fork = box.querySelector("[data-rz-fork]");
+    if (fork) fork.addEventListener("click", () => {
+      if (typeof window.createProject === "function") {
+        window.createProject({
+          glitch_id: card.id, quest_topic: card.topic || "",
+          title: card.projectTitle || tema,
+          brief: card.projectBrief || ""
+        });
+      }
+      closeRozklik();
+      if (typeof window.glitchOpenProfile === "function") window.glitchOpenProfile("board");
+    });
+
     const dalsi = box.querySelector("[data-rz-dalsi]");
-    dalsi.addEventListener("click", () => {
+    if (dalsi) dalsi.addEventListener("click", () => {
       const n = dalsiVQuestu(card);
       if (n) {
         closeRozklik();
@@ -1057,8 +1084,8 @@
         if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400);
       } else {
         // žádná navazující kapitola → tímhle Glitchem quest končí
-        const sub = box.querySelector(".rz-hotovo-sub");
-        if (sub) sub.textContent = "Tímhle Glitchem tenhle quest končí — skvělá práce! 🎉 Vrať se na Glitchfeed pro další inspiraci.";
+        const s = box.querySelector(".rz-hotovo-sub");
+        if (s) s.textContent = "Tímhle Glitchem tenhle quest končí — skvělá práce! 🎉 Vrať se na Glitchfeed pro další inspiraci.";
         dalsi.disabled = true;
       }
     });

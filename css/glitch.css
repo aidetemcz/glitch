@@ -818,6 +818,27 @@ button.km-cell:active { transform: scale(.9); }
 .q-node:hover .q-tip, .q-node.is-open .q-tip { display: block; }
 .q-node--r .q-tip { left: auto; right: 0; }
 
+/* Tvé projekty — karty forknutých projektů */
+.pf-projects { display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
+.pf-proj {
+  border: 1px solid var(--c-grey-15); border-radius: calc(12 * var(--u));
+  padding: calc(14 * var(--u)) calc(16 * var(--u)); cursor: pointer; transition: border-color .12s ease;
+}
+.pf-proj:active { border-color: var(--c-black); }
+.pf-proj-top { display: flex; align-items: center; gap: calc(10 * var(--u)); margin-bottom: calc(8 * var(--u)); }
+.pf-proj-tag {
+  background: var(--c-yellow); color: var(--c-black); border: 1px solid var(--c-black);
+  border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(9 * var(--u));
+  font-size: calc(13 * var(--u)); font-weight: 700; letter-spacing: var(--tracking);
+}
+.pf-proj-topic { font-size: calc(13 * var(--u)); color: var(--c-grey-50); letter-spacing: var(--tracking); }
+.pf-proj-title { font-size: calc(17 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); }
+.pf-proj-brief {
+  margin-top: calc(6 * var(--u)); font-size: calc(14 * var(--u)); color: var(--c-grey-50);
+  line-height: 1.4; letter-spacing: var(--tracking);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
 /* nastavení */
 .pf-set-group { padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
 .pf-set-group:last-child { border-bottom: 0; }

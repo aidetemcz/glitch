@@ -158,6 +158,36 @@ async function sbResetProgress() {
   await sb.from('progress').delete().eq('user_id', sbCurrentUser.id);
 }
 
+// ── PROJEKTY ─────────────────────────────────
+// Založí / aktualizuje projekt (jeden na uživatele+glitch). Tiše degraduje.
+async function sbCreateProject(p) {
+  if (!sb || !sbCurrentUser || !p || !p.glitch_id) return;
+  try {
+    await sb.from('projects').upsert({
+      user_id: sbCurrentUser.id,
+      glitch_id: p.glitch_id,
+      quest_topic: p.quest_topic || null,
+      title: p.title || null,
+      brief: p.brief || null,
+      shared: !!p.shared,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,glitch_id' });
+  } catch (_) {}
+}
+
+async function sbRemoveProject(glitchId) {
+  if (!sb || !sbCurrentUser || !glitchId) return;
+  try { await sb.from('projects').delete().eq('user_id', sbCurrentUser.id).eq('glitch_id', glitchId); } catch (_) {}
+}
+
+async function sbListProjects() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('projects').select('*').eq('user_id', sbCurrentUser.id).order('created_at', { ascending: false });
+    return data || [];
+  } catch (_) { return []; }
+}
+
 // ── MOOD ─────────────────────────────────────
 // Uloží náladu (focus/energy 0–100). Vždy lokálně; při přihlášení i do DB.
 // Primárně do dedikované tabulky `mood_entries`, sekundárně do `activity_log`.
