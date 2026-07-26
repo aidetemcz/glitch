@@ -10,7 +10,7 @@ Výukové Glitche — jádro vzdělávacího obsahu (Algoritmus, Vibe Coding, �
 
 ## Formát souboru
 
-Každý Glitch = jeden MD soubor: **YAML frontmatter** (strojová data pro appku a editor) + **tělo v Markdownu** (text pro dítě, redakci a Tinybota, s pevnými nadpisy).
+Každý Glitch = jeden MD soubor: **YAML frontmatter** (strojová data pro appku a editor) + **tělo v Markdownu** (text pro dítě, redakci a chatbota, s pevnými nadpisy).
 
 📄 **Vzor:** [`algoritmus/algoritmus-hra-zivota.md`](./algoritmus/algoritmus-hra-zivota.md) · plná šablona sekcí: [`../../docs/karta-basic-glitch.md`](../../docs/karta-basic-glitch.md)
 
@@ -43,5 +43,5 @@ Každý Glitch = jeden MD soubor: **YAML frontmatter** (strojová data pro appku
 | `## Kontrakt` (Výukový cíl, Povinné body, Kanonická otázka, Zakázaná tvrzení) | ❌ | redakce + kontrola bota |
 | `## Podání` (Rozklik — vrstva 1, vrstva 2) | ✅ | dítě (rozklik) |
 | `## Úrovně vypracování` (🟢 / 🟡 / 🔴 + kritéria) | ✅ zadání / ❌ kritéria | dítě + LLM zkoušející |
-| `## Kontext pro Tinybota` (Fakta, Hranice tématu, Scaffolding, Co bot nesmí) | ❌ | chatbot |
+| `## Kontext pro chatbota` (Fakta, Hranice tématu, Scaffolding, Co bot nesmí) | ❌ | chatbot |
 | `## Bezpečnost a věková přiměřenost` | ❌ | redakce + bot |

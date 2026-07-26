@@ -53,5 +53,5 @@ card:
 **Kontrakt — co se má dítě naučit** (z mapy konceptů, `umela-inteligence-prompt-a-promptova-gramotnost`):
 Posoudí, který ze dvou promptů vede k lepšímu výsledku, a rozhodnutí zdůvodní.
 
-**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro Tinybota, úrovně
+**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro chatbota, úrovně
 vypracování a kritéria hodnocení (viz šablona `docs/karta-basic-glitch.md`).

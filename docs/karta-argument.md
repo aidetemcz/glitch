@@ -2,7 +2,7 @@
 
 _Šablona sekcí Glitche typu **Argumentuj** na příkladu „Nemám co skrývat…". Návrh k připomínkám. Vytvořeno: 2026-07-23. Plné schéma a vztah k Tiny: [`../glitches/argument/README.md`](../glitches/argument/README.md)._
 
-**Jak číst tenhle soubor.** Argumentuj je **rozklikávací Glitch pro argumentaci a hodnotové uvažování** (portace osvědčeného Tinybota z tiny.school). Dítě dostane názorové tvrzení, zaujme postoj (Souhlasím / Nesouhlasím) a bot ho krátkými otázkami vede, aby postoj promyslelo, podepřelo a obhájilo — a zvážilo druhou stranu. **Nemá fork** — výstupem je samotná konverzace.
+**Jak číst tenhle soubor.** Argumentuj je **rozklikávací Glitch pro argumentaci a hodnotové uvažování** (portace osvědčeného chatbota z tiny.school). Dítě dostane názorové tvrzení, zaujme postoj (Souhlasím / Nesouhlasím) a bot ho krátkými otázkami vede, aby postoj promyslelo, podepřelo a obhájilo — a zvážilo druhou stranu. **Nemá fork** — výstupem je samotná konverzace.
 
 **Řídící princip:** Argumentuj **neučí „správný názor" — učí dobře argumentovat.** Bot je neutrální průvodce, ne oponent s agendou. Kvalita se posuzuje na kvalitě argumentace, ne na tom, jestli má dítě „pravdu".
 

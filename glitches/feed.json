@@ -8,8 +8,8 @@
     "type": "intro",
     "rozklik": {
       "kind": "explainer",
-      "brand": "tiny-glitch",
-      "title": "Tiny Glitch je vzdělávací sociální síť",
+      "brand": "glitch",
+      "title": "Glitch je vzdělávací sociální síť",
       "paragraphs": [
         "Když se chceš ty něco nového naučit nebo pokud chceš naučit ty někoho jiného, tak tady je tvůj prostor.",
         "Ve feedu najdeš tzv. Glitche. Jsou to mikrotémata. Některé Glitche jsou jen malé výzvy, které můžeš plnit přímo ve feedu. Jiné můžeš rozkliknout a popovídat si o nich s chatbotem, ověřit si znalosti kvízem.",
@@ -309,7 +309,7 @@
     "concept_id": "digitalni-obcanstvi-digitalni-stopa-a-soukromi",
     "obtiznost": 3,
     "claim": "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
-    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "topic": "Digitální občanství"
   },
   {
@@ -320,7 +320,7 @@
     "concept_id": "umela-inteligence-doporucovaci-systemy",
     "obtiznost": 3,
     "claim": "Kolik času proscrolluju, je jen na mojí vůli. Algoritmus za to nemůže.",
-    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "topic": "Umělá inteligence"
   },
   {
@@ -331,7 +331,7 @@
     "concept_id": "umela-inteligence-bias-a-ferovost",
     "obtiznost": 3,
     "claim": "Spravedlivěji rozhodne algoritmus než člověk.",
-    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "topic": "Umělá inteligence"
   },
   {
@@ -342,7 +342,7 @@
     "concept_id": "umela-inteligence-kdy-ai-ne-pouzit-a-disclosure",
     "obtiznost": 3,
     "claim": "Když AI vytvoří obrázek podle mého promptu, je to moje dílo.",
-    "sub": "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "topic": "Umělá inteligence"
   },
   {

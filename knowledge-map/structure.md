@@ -76,7 +76,7 @@ Cíle i kritéria se **gradují primárně podle kognitivní úrovně**, ne podl
 | `analyza` | Analýza | rozliší, porovná, najde vztahy a chyby |
 | `vyuziti-znalosti` | Využití znalostí | použije na nový problém, navrhne, vytvoří |
 
-> Vyšší úrovně Nové taxonomie (metakognice, sebe-systém) jsou průřezové dispozice — negradují se u jednotlivého konceptu, řešíme je jinde (chování Tinybota, wellbeing). Přesné znění škály sladit se zdroji `Gradace na základě Nové taxonomie.pdf` a `Marzano Kendall — Nová taxonomie…pdf`.
+> Vyšší úrovně Nové taxonomie (metakognice, sebe-systém) jsou průřezové dispozice — negradují se u jednotlivého konceptu, řešíme je jinde (chování chatbota, wellbeing). Přesné znění škály sladit se zdroji `Gradace na základě Nové taxonomie.pdf` a `Marzano Kendall — Nová taxonomie…pdf`.
 
 ## Ukázka dat (skeleton — obsah k doplnění z RVP a zdrojů)
 

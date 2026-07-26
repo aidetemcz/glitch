@@ -20,7 +20,7 @@ Karta Glitche (`karta-basic-glitch.md`) — source of truth. Chatbot čte zejmé
 - **Sekce 1 – Kontrakt:** výukový cíl, povinné body, kanonická otázka, zakázaná tvrzení
 - **Sekce 2 – Obsah:** text karty, vrstva 1 (pozorování), vrstva 2 (odhalení), kvíz
 - **Sekce 3 – Úrovně vypracování:** jednoduchá / střední / master
-- **Sekce 4 – Kontext pro Tinybota:** fakta a pozadí, hranice tématu, scaffolding (typické zádrhely), co bot nesmí
+- **Sekce 4 – Kontext pro chatbota:** fakta a pozadí, hranice tématu, scaffolding (typické zádrhely), co bot nesmí
 - **Sekce 6 – Bezpečnost:** věková přiměřenost, jazykové rámování
 
 ### Jak se do promptu vkládá karta

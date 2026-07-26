@@ -140,7 +140,7 @@ Pseudokód a diagram říkají **totéž**, jen jinak. A všimni si dvou věcí,
 
 ---
 
-## 4 Kontext pro Tinybota
+## 4 Kontext pro chatbota
 
 ### 4.1 Fakta a pozadí
 

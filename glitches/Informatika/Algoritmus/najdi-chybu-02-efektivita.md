@@ -107,7 +107,7 @@ Dítě si může Najdi chybu forknout a rozvést — např. popsat dva způsoby,
 
 ---
 
-## 4 Kontext pro Tinybota *(skryté)*
+## 4 Kontext pro chatbota *(skryté)*
 
 ### 4.1 Fakta a pozadí
 

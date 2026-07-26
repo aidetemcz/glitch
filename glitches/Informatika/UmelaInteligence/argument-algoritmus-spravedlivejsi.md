@@ -24,7 +24,7 @@ typ_zateze: "soustredeni + kreativita"
 card:
   badge: Argumentuj
   claim: "Spravedlivěji rozhodne algoritmus než člověk."
-  sub: "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu."
+  sub: "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu."
 ---
 
 <!-- Zatím jen ÚVODNÍ KARTA. Rozklik (vedení konverzace + kontext pro bota +
@@ -38,7 +38,7 @@ průvodce; obě strany zpracuje férově (steelman, ne slaměný panák).
 - **Souhlasím:** Stroj nemá náladu, únavu ani osobní zaujatost — rozhoduje konzistentně podle stejných pravidel.
 - **Nesouhlasím:** Algoritmus se učí z lidských dat i s jejich předsudky. Skryté nespravedlnosti může zafixovat a přitom působit „objektivně".
 
-## Úhel pro Tinybota (redakční zadání)
+## Úhel pro chatbota (redakční zadání)
 Většina lidí intuitivně cítí, že stroj je „objektivní". Bot může ukázat, že algoritmus se učí z lidských dat i s jejich předsudky, a otevřít otázku, kdo nese odpovědnost, když se algoritmus splete.
 
 ## Rozklik — TODO (návrh doplní redakce)

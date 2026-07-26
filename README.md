@@ -26,7 +26,7 @@ Z jednoho repozitáře se nasazují **tři samostatné statické aplikace** (ka�
 - **Stav důvěry** každé karty: `core → edited → community → generated`. Určuje označení karty a režim servírování; po žebříčku posouvá obsah jen lidská redakce.
 - **Struktura obsahu:** Glitch → **Quest** (kapitola, lineárně řazený podle Bloomovy taxonomie) → **Téma**.
 - **Glitchboardy** (plánováno): portfolio + pracovna inspirovaná Are.na, kam si dítě **forkne** Glitche a staví na nich vlastní práci.
-- **Tinybot** (plánováno): chatbot, který vede dítě scaffoldingem (doptává se, aby na věc přišlo samo), čerpá z ověřených faktů.
+- **chatbot** (plánováno): chatbot, který vede dítě scaffoldingem (doptává se, aby na věc přišlo samo), čerpá z ověřených faktů.
 
 Kanonický popis fungování a obsahový model najdeš v **[`docs/`](./docs/)** — hlavně [`docs/popis-fungovani-glitche.md`](./docs/popis-fungovani-glitche.md), [`docs/typy-obsahu.md`](./docs/typy-obsahu.md) a [`docs/karta-basic-glitch.md`](./docs/karta-basic-glitch.md).
 
@@ -44,7 +44,7 @@ Každý typ = složka v `glitches/`. Detail: **[`docs/typy-obsahu.md`](./docs/ty
 | 4 | **Fun fact** — zajímavost bez úkolu | ✅ | ✅ | ✅ |
 | 5 | **Najdi chybu** — kritické myšlení / prebunking | ✅ | ✅ | ✅ |
 | 6 | **Historická osobnost** — konverzace s AI personou | ✅ | ✅ | ✅ |
-| 7 | **Argumentuj** — argumentace a hodnotové uvažování (portace Tinybota z Tiny) | ✅ | ✅ | ❌ |
+| 7 | **Argumentuj** — argumentace a hodnotové uvažování (portace chatbota z Tiny) | ✅ | ✅ | ❌ |
 
 Systémové karty (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace.
 
@@ -52,7 +52,7 @@ Systémové karty (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace.
 
 ## Tvorba komunitou (plánováno)
 
-Tlačítko **„+"** ve spodním menu umožní dětem **vytvořit vlastní Glitch a učit ostatní**. Celým procesem provází Tinybot (kvůli kvalitě): „Co chceš dnes ostatní naučit?" → výběr typu → chatbot doptáváním získá kontext → navrhne kartu → dítě schválí → post. Ve feedu se objeví s tagem **Komunita** (= stav důvěry `community`). Základní jednotka sdílení = **třída** (garant učitel), data napojená na Tiny.
+Tlačítko **„+"** ve spodním menu umožní dětem **vytvořit vlastní Glitch a učit ostatní**. Celým procesem provází chatbot (kvůli kvalitě): „Co chceš dnes ostatní naučit?" → výběr typu → chatbot doptáváním získá kontext → navrhne kartu → dítě schválí → post. Ve feedu se objeví s tagem **Komunita** (= stav důvěry `community`). Základní jednotka sdílení = **třída** (garant učitel), data napojená na Tiny.
 
 ---
 
@@ -125,7 +125,7 @@ python3 -m http.server 8000
 - ✅ **Mapa konceptů** — 3 pohledy (Témata / RVP / Digitální kompetence), detail s cíli, kritérii, RVP a KDI, **admin editor** (přihlášení → úprava → Draft/Hotovo → export YAML).
 - ✅ **Web splash** — glitch.tiny.school.
 - ✅ **Specifikace** všech 7 typů obsahu (vč. Argumentuj).
-- 📋 **Návrh / další kroky:** spodní menu, Glitchboardy + fork, tvorba komunitou (+), Tinybot, doporučovací systém, Tiny SSO, řazení Questů podle Bloomovy taxonomie, opakování s rozestupy.
+- 📋 **Návrh / další kroky:** spodní menu, Glitchboardy + fork, tvorba komunitou (+), chatbot, doporučovací systém, Tiny SSO, řazení Questů podle Bloomovy taxonomie, opakování s rozestupy.
 
 ---
 

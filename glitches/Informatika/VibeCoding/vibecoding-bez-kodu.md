@@ -53,5 +53,5 @@ card:
 **Kontrakt — co se má dítě naučit** (z mapy konceptů, `tvorba-aplikaci-no-code-low-code`):
 Na no-code platformě vizuálně poskládá jednoduchou funkční aplikaci; posoudí, kdy je no-code vhodné a kdy naráží na hranice.
 
-**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro Tinybota, úrovně
+**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro chatbota, úrovně
 vypracování a kritéria hodnocení (viz šablona `docs/karta-basic-glitch.md`).

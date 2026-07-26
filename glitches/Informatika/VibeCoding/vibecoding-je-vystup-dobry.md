@@ -53,5 +53,5 @@ card:
 **Kontrakt — co se má dítě naučit** (z mapy konceptů, `umela-inteligence-overovani-vystupu`):
 Vysvětlí, proč je výstup AI potřeba brát jako návrh, ne pravdu; ověří tvrzení z druhého důvěryhodného zdroje.
 
-**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro Tinybota, úrovně
+**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro chatbota, úrovně
 vypracování a kritéria hodnocení (viz šablona `docs/karta-basic-glitch.md`).

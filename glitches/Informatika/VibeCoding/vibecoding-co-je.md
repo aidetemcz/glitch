@@ -53,5 +53,5 @@ card:
 **Kontrakt — co se má dítě naučit** (z mapy konceptů, `tvorba-aplikaci-vibecoding`):
 Popisem v přirozené řeči nechá AI vytvořit funkční aplikaci a řídí její vznik dalšími pokyny; zhodnotí, zda dělá, co má.
 
-**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro Tinybota, úrovně
+**K doplnění:** vrstvy rozkliku (čtení / kvíz), kontext pro chatbota, úrovně
 vypracování a kritéria hodnocení (viz šablona `docs/karta-basic-glitch.md`).

@@ -56,7 +56,7 @@ Glitch stojí na dvou vrstvách, které spojuje jedna mechanika (fork).
 
 **Vrstva 1 — kurátorovaný obsah (učebnice).** Glitche, Questy, Kapitoly a GlitchFeed. Shora navržená, ověřená, strukturovaná vrstva — inspirační proud pro samouky i nová forma učebnice do škol.
 
-**Vrstva 2 — Glitchboardy (portfolio + pracovna).** Inspirováno Are.na. Každý žák si staví vlastní Glitchboardy — sbírky, do kterých si forkne Glitche, které ho zaujaly, a kolem nich staví vlastní práci. Board je zároveň portfolio (co jsem zvládl a vytvořil), zápisník (jak si to organizuju) i pracovna (kde na tom dělám). Uvnitř boardu žije Tinybot, který dítěti pomáhá studovat a radí s projektem. Kromě osobních boardů existují skupinové boardy pro spolupráci se skupinovým chatbotem — nositel sounáležitosti a peer learningu, ne soutěže.
+**Vrstva 2 — Glitchboardy (portfolio + pracovna).** Inspirováno Are.na. Každý žák si staví vlastní Glitchboardy — sbírky, do kterých si forkne Glitche, které ho zaujaly, a kolem nich staví vlastní práci. Board je zároveň portfolio (co jsem zvládl a vytvořil), zápisník (jak si to organizuju) i pracovna (kde na tom dělám). Uvnitř boardu žije chatbot, který dítěti pomáhá studovat a radí s projektem. Kromě osobních boardů existují skupinové boardy pro spolupráci se skupinovým chatbotem — nositel sounáležitosti a peer learningu, ne soutěže.
 
 ## Fork a úrovně vypracování
 Most mezi vrstvami jsou dvě mechaniky pod jedním tlačítkem:
@@ -66,7 +66,7 @@ Most mezi vrstvami jsou dvě mechaniky pod jedním tlačítkem:
 
 Při forku si žák volí **úroveň vypracování** — jednoduchá / střední / master. Trefuje to tři pedagogické principy najednou: autonomii (žák si volí náročnost), flow (výzva mírně nad aktuální úrovní) a diferenciaci ve třídě (jeden Glitch obslouží slabšího i nadaného). Úroveň je informace pro žáka a učitele, jak hluboko dítě šlo — ne veřejný odznak. Vyšší úroveň neodemyká status, ale zajímavější tvorbu (lepší věc do portfolia).
 
-## Tinybot
+## Chatbot
 Chatbot vystupuje ve dvou režimech: v Glitchi (mluví s dítětem o tématu karty) a v Glitchboardu po forku (omezený na kontext forknutého Glitche). Čerpá z ověřených faktů (source of truth) a řídí se scaffoldingem z kontraktu — nevysvětluje líp, ale doptává se tak, aby na věc přišlo dítě samo (Vygotského zóna nejbližšího vývoje). Úrovně vypracování hodnotí formativně **LLM zkoušející**: posuzuje podstatu, doptává se, na vágní odpověď reaguje navazující otázkou místo klíčoslovného skóre a nikdy nesrovnává dítě s ostatními.
 
 ## Doporučovací systém a elastický katalog

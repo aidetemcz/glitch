@@ -140,7 +140,7 @@ Robot není hloupý ani zlomyslný — dělá **přesně to, co je v krocích na
 
 ---
 
-## 4 Kontext pro Tinybota
+## 4 Kontext pro chatbota
 
 *Nezobrazuje se uživateli. Bot je omezen na téma tohoto Glitche.*
 

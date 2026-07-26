@@ -1,6 +1,6 @@
 # Argumentuj
 
-Rozklikávací Glitch pro **argumentaci, kritické myšlení a hodnotové uvažování**. Přenáší do Glitche osvědčený formát **Tinybota „Argumentuj"** z [tiny.school](https://tiny.school/): dítě dostane názorové tvrzení, zaujme postoj a chatbot ho pak vede krátkými otázkami k tomu, aby svůj postoj **promyslelo, podepřelo a obhájilo** — a zvážilo i druhou stranu.
+Rozklikávací Glitch pro **argumentaci, kritické myšlení a hodnotové uvažování**. Přenáší do Glitche osvědčený formát **chatbota „Argumentuj"** z [tiny.school](https://tiny.school/): dítě dostane názorové tvrzení, zaujme postoj a chatbot ho pak vede krátkými otázkami k tomu, aby svůj postoj **promyslelo, podepřelo a obhájilo** — a zvážilo i druhou stranu.
 
 **Interakce:** Rozklik ✅ · Chatbot ✅ · Fork ❌
 **Složka:** `glitches/argument/`
@@ -24,8 +24,8 @@ Bot je **neutrální průvodce**, ne oponent s vlastní agendou. Vede dítě k l
 ## Tok interakce
 
 1. **Karta ve feedu** — názorové tvrzení (tučně) + dvě tlačítka **Souhlasím / Nesouhlasím**. Bez rozkliku se nescrolluje dál jako u pasivní karty; postoj je vstupní brána.
-2. **Volba postoje** — kliknutí na Souhlasím/Nesouhlasím dá Tinybotovi **úvodní informaci o postoji dítěte** k tématu.
-3. **Otevře se chat** — Tinybot vede dítě **krátkými větami, jednou otázkou po druhé** (sokratovsky):
+2. **Volba postoje** — kliknutí na Souhlasím/Nesouhlasím dá chatbotovi **úvodní informaci o postoji dítěte** k tématu.
+3. **Otevře se chat** — chatbot vede dítě **krátkými větami, jednou otázkou po druhé** (sokratovsky):
    - nejdřív se zeptá **proč** (důvod),
    - pak si řekne o **konkrétní příklad / důkaz**,
    - pak nabídne **nejsilnější protiargument** druhé strany („a co by na to řekl někdo, kdo si myslí opak?") a nechá dítě reagovat,
@@ -60,7 +60,7 @@ Sekce vychází z obecné karty ([`karta-basic-glitch.md`](../../docs/karta-basi
 - **Fáze vedení:** postoj → důvod → důkaz/příklad → protiargument → shrnutí. Bot drží **krátké tahy**, jednu otázku naráz, navazuje na to, co dítě řeklo.
 - **Formativní kritéria** (posuzuje LLM zkoušející, ne skóre): dítě *zaujalo jasný postoj* · *dalo aspoň jeden vlastní důvod* (ne „protože jo") · *uvedlo konkrétní příklad* · *zareagovalo na protiargument* (nemusí názor změnit, stačí ho vzít vážně) · *na konci postoj srozumitelně shrnulo*.
 
-### 4 Kontext pro Tinybota *(skrytý)*
+### 4 Kontext pro chatbota *(skrytý)*
 - **4.1 Fakta a pozadí** k tématu (co je doloženo, případné mýty).
 - **4.2 Hranice tématu** — bot se drží tématu tvrzení; mimo téma vlídně vrací.
 - **4.3 Scaffolding** — jak doptávat, když dítě „nevím / protože jo": nabídnout dvě konkrétní situace na výběr, otočit otázku, požádat o příklad ze života. **Nikdy nedodat argument za dítě dřív, než se samo pokusí.**
@@ -90,4 +90,4 @@ Sekce vychází z obecné karty ([`karta-basic-glitch.md`](../../docs/karta-basi
 
 ## Vztah k Tiny
 
-Formát „Argumentuj" je **portace osvědčeného Tinybota z tiny.school** do prostředí Glitche (feed + krátká karta). Sdílí s Tiny logiku vedené argumentace a napojení na **profil dítěte jako důkaz o učení** — Glitch signály posílá do Tiny (viz sekce 6), takže argumentační dovednost roste napříč oběma platformami.
+Formát „Argumentuj" je **portace osvědčeného chatbota z tiny.school** do prostředí Glitche (feed + krátká karta). Sdílí s Tiny logiku vedené argumentace a napojení na **profil dítěte jako důkaz o učení** — Glitch signály posílá do Tiny (viz sekce 6), takže argumentační dovednost roste napříč oběma platformami.

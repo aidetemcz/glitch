@@ -850,7 +850,7 @@ button.km-cell:active { transform: scale(.9); }
 
 /* ==========================================================================
    Rozklik (detail Glitche) — světlý panel nad feedem
-   Typy: explainer (vysvětlení) a chat (Basic Glitch — Tinybot + kvíz)
+   Typy: explainer (vysvětlení) a chat (Basic Glitch — chatbot + kvíz)
    ========================================================================== */
 body.rz-lock { overflow: hidden; }
 .rz-overlay {
@@ -904,7 +904,7 @@ body.rz-lock { overflow: hidden; }
 
 /* -- explainer -- */
 .rz-body--explainer { padding-top: calc(8 * var(--u)); }
-.rz-brand { display: block; margin: calc(6 * var(--u)) 0 calc(26 * var(--u)) auto; width: calc(120 * var(--u)); height: auto; }
+.rz-brand { display: block; margin: calc(6 * var(--u)) 0 calc(26 * var(--u)) auto; height: calc(84 * var(--u)); width: auto; }
 .rz-body--explainer .rz-title { margin-bottom: calc(22 * var(--u)); }
 .rz-para { color: var(--c-black); margin-bottom: calc(18 * var(--u)); }
 .rz-para:last-child { margin-bottom: 0; }

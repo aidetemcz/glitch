@@ -149,7 +149,7 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 
 ---
 
-## Kontext pro Tinybota
+## Kontext pro chatbota
 
 *Nezobrazuje se uživateli. Nalévá se do systémového promptu chatbota v boardu, když je tento Glitch forknutý. Bot je omezen na téma tohoto Glitche.*
 

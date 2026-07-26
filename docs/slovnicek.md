@@ -26,8 +26,11 @@ Osobní „nástěnka" uživatele, kam si ukládá Glitche, které si → forknu
 **Fork**
 „Vezmi si a rozpracuj." Uživatel si Glitch zkopíruje do svého Boardu a dotvoří ho (vysvětlí, porovná, postaví artefakt). Ne každý typ Glitche jde forknout.
 
-**Tinybot**
-AI průvodce/chatbot uvnitř Glitchů. Podle typu Glitche vede rozhovor, napovídá, oponuje nebo hraje historickou personu.
+**Chatbot**
+AI průvodce uvnitř Glitchů. Jeho styl (jak mluví) určuje → persona — podle typu Glitche vede rozhovor, napovídá, oponuje nebo hraje historickou postavu. Systémový prompt se skládá na serveru (`api/gpt.js`) z persony, kontextu karty a profilu žáka.
+
+**Persona**
+Předpis, **jak** chatbot mluví (role, metoda, tón, bezpečnostní pravidla) — nezávisle na tom, **o čem** (to drží karta Glitche). Katalog 12 person je v `Persony/`, výchozí je „Glitchee". Vybírá se polem `persona` v kartě, jinak podle typu Glitche.
 
 **Tiny / tiny.school**
 Sesterská vzdělávací platforma. Glitch s ní sdílí některé formáty (např. „Argumentuj") a posílá do ní **důkaz o učení** (→ důkaz o učení).
@@ -66,10 +69,10 @@ Konkrétní kombinace hodnot faset jednoho podání (např. „visual-first + tl
 Jedna kontrolní otázka (s modelovou odpovědí), kterou by dítě mělo po zvládnutí konceptu umět zodpovědět. Součást → kontraktu.
 
 **Zakázaná tvrzení**
-Seznam nepravd/miskoncepcí, které podání ani → Tinybot nesmí říct (a bot na ně aktivně reaguje, když je řekne dítě). Součást → kontraktu.
+Seznam nepravd/miskoncepcí, které podání ani → chatbot nesmí říct (a bot na ně aktivně reaguje, když je řekne dítě). Součást → kontraktu.
 
 **Zdroj pravdy (source of truth)**
-Ověřená fakta konceptu, ze kterých čerpá → Tinybot i generování. Nic mimo zdroj pravdy se nesmí tvrdit. (Pozor: „zdroj pravdy" používáme i v technickém smyslu — → git jako zdroj pravdy.)
+Ověřená fakta konceptu, ze kterých čerpá → chatbot i generování. Nic mimo zdroj pravdy se nesmí tvrdit. (Pozor: „zdroj pravdy" používáme i v technickém smyslu — → git jako zdroj pravdy.)
 
 **Úrovně vypracování**
 Jednoduchá / střední / master — náročnost, kterou si dítě volí při → forku. Hodnotí je formativně LLM „zkoušející", ne známkou.
@@ -269,7 +272,7 @@ Služba, kde je Glitch nasazený (hostovaný). Každý push na GitHub spustí no
 Malý kousek serverového kódu, který běží až na vyžádání (nemá stále běžící server). U Glitche jí voláme OpenAI, aby → API klíč zůstal skrytý.
 
 **GPT / OpenAI**
-Jazykový model a firma, kterou používáme pro → AI generování a → Tinybota.
+Jazykový model a firma, kterou používáme pro → AI generování a → chatbota.
 
 **AI generování**
 Vytvoření obsahu (podání Glitche) modelem na vyžádání. Musí projít kontrolní „bránou" (→ kontrakt, → zdroj pravdy), než se ukáže dítěti.

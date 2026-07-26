@@ -153,7 +153,7 @@ A teď to spojení, kvůli kterému celý quest byl: v **Hře života (úloha 5)
 
 ---
 
-## 4 Kontext pro Tinybota
+## 4 Kontext pro chatbota
 
 ### 4.1 Fakta a pozadí
 

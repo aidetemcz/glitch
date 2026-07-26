@@ -24,7 +24,7 @@ typ_zateze: "soustredeni + kreativita"
 card:
   badge: Argumentuj
   claim: "Kolik času proscrolluju, je jen na mojí vůli. Algoritmus za to nemůže."
-  sub: "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu."
+  sub: "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu."
 ---
 
 <!-- Zatím jen ÚVODNÍ KARTA. Rozklik (vedení konverzace + kontext pro bota +
@@ -38,7 +38,7 @@ průvodce; obě strany zpracuje férově (steelman, ne slaměný panák).
 - **Souhlasím:** Mám svobodnou vůli — můžu kdykoli přestat. Odpovědnost za svůj čas je na mně.
 - **Nesouhlasím:** Feed je cíleně navržený, aby udržel pozornost (nekonečný scroll, autoplay, notifikace). Hraju hru, kterou navrhl někdo jiný.
 
-## Úhel pro Tinybota (redakční zadání)
+## Úhel pro chatbota (redakční zadání)
 Naráží na odpovědnost jednotlivce vs. cíleně navržený design, který má udržet pozornost. Obě strany mají pravdu do určité míry — bot nutí žáka rozlišit „můžu za to sám" vs. „hraju hru, kterou navrhl někdo jiný proti mně".
 
 ## Rozklik — TODO (návrh doplní redakce)

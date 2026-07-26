@@ -24,7 +24,7 @@ typ_zateze: "soustredeni + kreativita"
 card:
   badge: Argumentuj
   claim: "Když AI vytvoří obrázek podle mého promptu, je to moje dílo."
-  sub: "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu."
+  sub: "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu."
 ---
 
 <!-- Zatím jen ÚVODNÍ KARTA. Rozklik (vedení konverzace + kontext pro bota +
@@ -38,7 +38,7 @@ průvodce; obě strany zpracuje férově (steelman, ne slaměný panák).
 - **Souhlasím:** Myšlenka, prompt i výběr z variant jsou moje. Nástroj je jako štětec — dílo vzniklo z mého záměru.
 - **Nesouhlasím:** Většinu práce udělal model naučený z cizích děl. Kolik z výsledku je vlastně moje?
 
-## Úhel pro Tinybota (redakční zadání)
+## Úhel pro chatbota (redakční zadání)
 Napětí: kolik z výsledku je moje myšlenka a kolik práce modelu (a dat, na kterých se učil)? Kde končí nástroj a začíná autor?
 
 ## Rozklik — TODO (návrh doplní redakce)

@@ -6,7 +6,7 @@ Kanonická dokumentace projektu — **zdroj pravdy je tady na GitHubu**. Dřív 
 
 ## Návrh a fungování
 
-- [`popis-fungovani-glitche.md`](./popis-fungovani-glitche.md) — kanonický popis toho, jak Glitch funguje (obsahový model, feed, boardy, fork, Tinybot, doporučovací systém, kurátorství, wellbeing a bezpečí, vztah k p-book).
+- [`popis-fungovani-glitche.md`](./popis-fungovani-glitche.md) — kanonický popis toho, jak Glitch funguje (obsahový model, feed, boardy, fork, chatbot, doporučovací systém, kurátorství, wellbeing a bezpečí, vztah k p-book).
 - [`vymezeni-zakaz-socialnich-siti.md`](./vymezeni-zakaz-socialnich-siti.md) — proč zakazovat sociální sítě nefunguje a jak Glitch stavíme jinak.
 - [`modely-fungovani-socialnich-siti.md`](./modely-fungovani-socialnich-siti.md) — rešerše modelů fungování sociálních sítí (podklad pro návrh).
 

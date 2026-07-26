@@ -89,7 +89,7 @@
 
     { type: "argument", category: "Argumentuj", trust: "Core",
       claim: "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
-      sub: "Vyber, jak to vnímáš a dokaž Tinybotovi, že máš pravdu." },
+      sub: "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu." },
 
     { type: "daily_summary", category: "Shrnutí",
       stats: [
@@ -152,7 +152,7 @@
         ${deco("", "top:26.8%;left:84.8%;width:9px;height:12px")}
         <img class="intro-tiny" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny">
         <img class="intro-glitch" src="${LOGO}" alt="Glitch">
-        <h2 class="fx-block g-h2" style="top:34%">Tiny Glitch je vzdělávací sociální síť</h2>
+        <h2 class="fx-block g-h2" style="top:34%">Glitch je vzdělávací sociální síť</h2>
         <div class="fx-block intro-body g-p" style="top:47.1%">
           <p>Když se chceš ty něco nového naučit nebo pokud chceš naučit ty někoho jiného, tak tady je tvůj prostor.</p>
           <p>Ve feedu najdeš tzv. Glitche. Jsou to mikrotémata. Některé Glitche jsou jen malé výzvy, které můžeš plnit přímo ve feedu. Jiné můžeš rozkliknout a popovídat si o nich s chatbotem, ověřit si znalosti kvízem.</p>
@@ -448,7 +448,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=21", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=22", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     buildCards(catalog);
@@ -887,15 +887,15 @@
     const opts = el.querySelectorAll(".arg-opt");
     opts.forEach((btn) => btn.addEventListener("click", () => {
       opts.forEach((b) => b.classList.toggle("is-sel", b === btn));
-      // TODO: otevřít chat s Tinybotem (zatím není hotový)
-      toast("Chat s Tinybotem — připravujeme 🚧");
+      // TODO: otevřít chat s chatbotem (zatím není hotový)
+      toast("Chat s chatbotem — připravujeme 🚧");
     }));
   }
 
   /* ==========================================================================
      Rozklik (detail Glitche) — celoobrazovkový světlý panel nad feedem.
      Dva druhy: „explainer" (vysvětlení, např. Co je Glitch) a „chat"
-     (Basic Glitch — povídání s Tinybotem + kvíz). Chatbot se napojí později;
+     (Basic Glitch — povídání s chatbotem + kvíz). Chatbot se napojí později;
      zatím je konverzace skriptovaná a vstupní pole jen přidá bublinu uživatele.
      ========================================================================== */
   const SEND_ICO =
@@ -913,8 +913,8 @@
 
   function renderExplainer(c, r) {
     const paras = (r.paragraphs || []).map((p) => `<p class="rz-para g-p">${esc(p)}</p>`).join("");
-    const brand = r.brand === "tiny-glitch"
-      ? `<img class="rz-brand" src="assets/ui/tiny-logo-pixelized.svg" alt="Tiny Glitch">`
+    const brand = r.brand === "glitch"
+      ? `<img class="rz-brand" src="assets/glitch-logo.svg" alt="Glitch">`
       : "";
     return `
       <header class="rz-bar">
@@ -962,7 +962,7 @@
     const jenHlavicka = opts && opts.pouzeHlavicka;
     const thread = jenHlavicka ? "" : (r.messages || []).map((m) => {
       if (m.from === "bot") {
-        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Tinybot"></span>` +
+        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Glitchee"></span>` +
                `<div class="rz-bubble">${esc(m.text)}</div></div>`;
       }
       if (m.from === "user") {

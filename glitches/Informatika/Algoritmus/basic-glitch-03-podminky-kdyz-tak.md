@@ -143,7 +143,7 @@ A teď to hlavní pro tenhle quest: **pravidla Hry života (úloha 5) jsou přes
 
 ---
 
-## 4 Kontext pro Tinybota
+## 4 Kontext pro chatbota
 
 ### 4.1 Fakta a pozadí
 

@@ -39,7 +39,7 @@ Základní relace je **24 hodin**. To je doba, kdy má Glitch uložená citlivá
 
 ## Typy obsahu
 
-Obsah se dělí do **7 typů** (= složky v `glitches/`). Legenda: **Rozklik** = karta se dá otevřít do hloubky · **Chatbot** = navazuje konverzace s Tinybotem.
+Obsah se dělí do **7 typů** (= složky v `glitches/`). Legenda: **Rozklik** = karta se dá otevřít do hloubky · **Chatbot** = navazuje konverzace s chatbotem.
 
 | # | Typ | Složka | Návrh karty | Rozklik | Chatbot | Fork |
 |---|---|---|---|:---:|:---:|:---:|
@@ -124,7 +124,7 @@ Rozklikávací Glitch — seznámení s osobností oboru + konverzace s AI perso
 
 ### 7. Argumentuj
 
-Rozklikávací Glitch pro argumentaci a hodnotové uvažování (portace Tinybota z tiny.school). Tvrzení + Souhlasím/Nesouhlasím → chat, kde bot vede krátkými větami. **Bez forku.** Plné schéma: [`../glitches/argument/README.md`](../glitches/argument/README.md).
+Rozklikávací Glitch pro argumentaci a hodnotové uvažování (portace chatbota z tiny.school). Tvrzení + Souhlasím/Nesouhlasím → chat, kde bot vede krátkými větami. **Bez forku.** Plné schéma: [`../glitches/argument/README.md`](../glitches/argument/README.md).
 
 ---
 

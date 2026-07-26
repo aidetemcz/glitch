@@ -86,7 +86,7 @@ Fun fact může mít fork: dítě si fakt „vezme" do svého boardu a rozvede h
 
 ---
 
-## 4 Kontext pro Tinybota *(skryté)*
+## 4 Kontext pro chatbota *(skryté)*
 
 ### 4.1 Fakta a pozadí
 
