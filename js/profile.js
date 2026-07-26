@@ -62,6 +62,71 @@
 
   let state = { tab: "board" };
 
+  /* ---------- mapa znalostí (Glitchboard) ----------
+     Kostra mapy (témata → koncepty) se načítá z knowledge-map/map-index.json;
+     úrovně zvládnutí si dobarvíme z tg_mastery (js/progress.js). */
+  const KM_ORDER = ["zapamatovani", "porozumeni", "aplikace", "analyza", "hodnoceni", "tvorba"];
+  const KM_LABEL = {
+    zapamatovani: "zapamatování", porozumeni: "porozumění", aplikace: "aplikace",
+    analyza: "analýza", hodnoceni: "hodnocení", tvorba: "tvorba"
+  };
+  let mapIndex = null, mapPromise = null;
+  function loadMapIndex() {
+    if (mapIndex) return Promise.resolve(mapIndex);
+    if (mapPromise) return mapPromise;
+    mapPromise = fetch("knowledge-map/map-index.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { mapIndex = d; return d; })
+      .catch(() => null);
+    return mapPromise;
+  }
+  function masteryMap() {
+    try { return (typeof window.glitchMastery === "function") ? (window.glitchMastery() || {}) : {}; }
+    catch (_) { return {}; }
+  }
+  const lvIndex = (u) => { const i = KM_ORDER.indexOf(u); return i < 0 ? 0 : i + 1; };  // 1–6, 0 = nezačato
+
+  function knowledgeMapHtml() {
+    if (!mapIndex || !Array.isArray(mapIndex.temata)) return '<div class="pf-empty">Mapu se nepodařilo načíst.</div>';
+    const m = masteryMap();
+    let total = 0, done = 0;
+    const temata = mapIndex.temata.map((t) => {
+      let tdone = 0;
+      const cells = (t.koncepty || []).map((k) => {
+        total++;
+        const rec = m[k.id];
+        const lv = rec ? lvIndex(rec.uroven) : 0;
+        if (lv > 0) { done++; tdone++; }
+        const lvl = rec ? (KM_LABEL[rec.uroven] || rec.uroven) : "nezačato";
+        return '<button type="button" class="km-cell km-lv-' + lv + '" ' +
+          'data-km-name="' + esc(k.nazev) + '" data-km-lv="' + esc(lvl) + '" ' +
+          'title="' + esc(k.nazev) + ' — ' + esc(lvl) + '"></button>';
+      }).join("");
+      return '<div class="km-theme">' +
+        '<div class="km-theme-head"><span class="km-theme-name">' + esc(t.nazev) + '</span>' +
+        '<span class="km-theme-count">' + tdone + ' / ' + (t.koncepty || []).length + '</span></div>' +
+        '<div class="km-grid">' + cells + '</div></div>';
+    }).join("");
+    const legend = KM_ORDER.map((u, i) =>
+      '<span class="km-leg"><span class="km-cell km-lv-' + (i + 1) + '"></span>' + esc(KM_LABEL[u]) + '</span>'
+    ).join("");
+    return '<div class="km-summary">Zvládnuto <b>' + done + '</b> z ' + total + ' konceptů</div>' +
+      '<div class="km-cap" data-km-cap>Ťukni na dlaždici a ukáže se název konceptu.</div>' +
+      '<div class="km-legend"><span class="km-leg"><span class="km-cell km-lv-0"></span>nezačato</span>' + legend + '</div>' +
+      temata;
+  }
+
+  /* Doplní mapu do boardu (kostru dotahujeme asynchronně). */
+  function hydrateMap() {
+    if (state.tab !== "board" || mapIndex) return;
+    loadMapIndex().then(() => {
+      const cur = document.getElementById("glitch-profile");
+      if (!cur || state.tab !== "board") return;
+      const box = cur.querySelector("[data-pf-map]");
+      if (box) box.innerHTML = knowledgeMapHtml();
+    });
+  }
+
   /* ---------- render ---------- */
   function chipsHtml() {
     return getInterests().map((name, i) =>
@@ -141,6 +206,12 @@
     if (state.tab === "settings") {
       return '<h2 class="pf-section-title">Tvá nastavení</h2>' + settingsHtml();
     }
+    if (state.tab === "board") {
+      return '<h2 class="pf-section-title">Tvoje mapa znalostí</h2>' +
+        '<div class="km" data-pf-map>' +
+        (mapIndex ? knowledgeMapHtml() : '<div class="pf-empty">Načítám mapu…</div>') +
+        '</div>';
+    }
     const t = TABS.find((x) => x.id === state.tab) || TABS[0];
     return '<h2 class="pf-section-title">' + esc(t.label) + '</h2>' +
       '<div class="pf-empty">' + esc(t.empty) + '</div>';
@@ -163,6 +234,7 @@
     el.innerHTML = render(u);
     document.body.appendChild(el);
     wire(el);
+    hydrateMap();                    // board se otevírá jako první — dotáhni mapu znalostí
 
     // načíst nastavení z DB (mezi zařízeními) a sloučit; když není, zůstane localStorage
     if (typeof sbLoadSettings === "function") {
@@ -180,6 +252,7 @@
     el.querySelectorAll(".pf-tab").forEach((b) => b.classList.toggle("is-active", b.dataset.tab === state.tab));
     const c = el.querySelector("[data-pf-content]");
     if (c) c.innerHTML = contentHtml();
+    hydrateMap();                    // po přepnutí na board dotáhni mapu, pokud ještě není
   }
 
   function wire(el) {
@@ -196,6 +269,13 @@
 
     // odhlášení
     el.addEventListener("click", async (e) => {
+      // mapa znalostí: ťuknutí na dlaždici ukáže název konceptu a úroveň
+      const cell = e.target.closest(".km-cell[data-km-name]");
+      if (cell) {
+        const cap = el.querySelector("[data-km-cap]");
+        if (cap) cap.textContent = cell.dataset.kmName + " — " + cell.dataset.kmLv;
+        return;
+      }
       // vynulování postupu — hotové Glitche se zase začnou zobrazovat ve feedu
       if (e.target.closest("[data-pf-reset-progress]")) {
         if (typeof window.resetGlitchProgress === "function") await window.resetGlitchProgress();

@@ -1125,6 +1125,20 @@
     return ctx;
   }
 
+  /* Profil žáka pro chatbota: co už v jiných Glitchích zvládl a na jaké úrovni.
+     Bere se z žákovy mapy konceptů (tg_mastery). Posílá se jen concept_id + úroveň;
+     názvy konceptů dohledá server (má mapu konceptů). Bot to má jen jako kontext,
+     aby mohl navázat na známé — ne aby z toho zkoušel. Bez postupu vrací null. */
+  function buildZakProfil() {
+    let mastery = {};
+    try { if (typeof window.glitchMastery === "function") mastery = window.glitchMastery() || {}; } catch (_) {}
+    const ids = Object.keys(mastery);
+    if (!ids.length) return null;
+    ids.sort((a, b) => new Date(mastery[b].kdy || 0) - new Date(mastery[a].kdy || 0));
+    const zvladnute = ids.slice(0, 15).map((id) => ({ concept_id: id, uroven: mastery[id].uroven }));
+    return { zvladnute: zvladnute, pocet: ids.length };
+  }
+
   function rzAppendBot(thread, text) {
     const el = document.createElement("div");
     el.className = "rz-msg rz-msg--bot";
@@ -1247,6 +1261,7 @@
         const reply = await window.gptChat(history, {
           persona: personaOf(card),
           context: buildGlitchContext(card),
+          zak: buildZakProfil(),
           temperature: opts.temperature || 0.3
         });
         typing.remove();

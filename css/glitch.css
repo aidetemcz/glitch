@@ -749,6 +749,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pf-empty { text-align: center; color: var(--c-grey-50); font-size: calc(15 * var(--u)); line-height: 1.5; padding: calc(40 * var(--u)) calc(16 * var(--u)); }
 
+/* mapa znalostí (Glitchboard) — heatmapa konceptů obarvená dle úrovně zvládnutí */
+.km-summary { text-align: center; font-size: calc(15 * var(--u)); margin-bottom: calc(8 * var(--u)); }
+.km-summary b { font-weight: 700; font-size: calc(18 * var(--u)); }
+.km-cap { text-align: center; font-size: calc(13 * var(--u)); color: var(--c-grey-50); min-height: calc(18 * var(--u)); margin-bottom: calc(14 * var(--u)); }
+.km-legend {
+  display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)) calc(12 * var(--u)); justify-content: center;
+  padding: calc(12 * var(--u)); margin-bottom: calc(20 * var(--u));
+  border: 1px solid var(--c-grey-15); border-radius: calc(10 * var(--u));
+}
+.km-leg { display: inline-flex; align-items: center; gap: calc(6 * var(--u)); font-size: calc(12 * var(--u)); color: var(--c-grey-50); }
+.km-leg .km-cell { width: calc(15 * var(--u)); height: calc(15 * var(--u)); border-radius: calc(4 * var(--u)); }
+.km-theme { margin-bottom: calc(18 * var(--u)); }
+.km-theme-head { display: flex; align-items: baseline; justify-content: space-between; gap: calc(10 * var(--u)); margin-bottom: calc(8 * var(--u)); }
+.km-theme-name { font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); }
+.km-theme-count { flex: 0 0 auto; font-size: calc(13 * var(--u)); color: var(--c-grey-50); }
+.km-grid { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); }
+.km-cell {
+  width: calc(24 * var(--u)); height: calc(24 * var(--u)); flex: 0 0 auto;
+  border-radius: calc(5 * var(--u)); border: 1px solid rgba(0, 0, 0, .08);
+}
+button.km-cell { cursor: pointer; padding: 0; transition: transform .1s ease; }
+button.km-cell:active { transform: scale(.9); }
+.km-lv-0 { background: #f0f0f0; border-color: #e4e4e4; }
+.km-lv-1 { background: #fff3b0; }
+.km-lv-2 { background: #ffe873; }
+.km-lv-3 { background: #ffdf3d; }
+.km-lv-4 { background: #ffd000; }
+.km-lv-5 { background: #f5b301; }
+.km-lv-6 { background: #ef8f00; }
+
 /* nastavení */
 .pf-set-group { padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
 .pf-set-group:last-child { border-bottom: 0; }

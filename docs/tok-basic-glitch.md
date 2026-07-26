@@ -149,6 +149,9 @@ sám.** Když všechno vysvětlil bot a žák jen přikyvoval, splněno není.
 
 - [x] Zobrazit **vyhodnocení** při znovuotevření splněného Glitche
 - [x] Zápis do `concept_mastery` (úroveň zvládnutí konceptu) — `tg_mastery` + Supabase
-- [ ] **Profil žáka do promptu** (co už prošel, kde tápal)
-- [ ] **Mapa znalostí žáka** — mapa konceptů obarvená dosaženými úrovněmi
-  (data už jsou: `tg_mastery` / Supabase `concept_mastery`)
+- [x] **Profil žáka do promptu** — co už žák zvládl (z `tg_mastery`) jde do
+  systémového promptu chatbota jako blok „PROFIL ŽÁKA", ať může navázat na známé
+  (`js/feed.js` → `buildZakProfil()`, `api/gpt.js` → `zakBlock()`)
+- [x] **Mapa znalostí žáka** — heatmapa konceptů obarvená dosaženými úrovněmi
+  v profilu (Glitchboard). Kostra: `knowledge-map/map-index.json`
+  (`build-map-index.py`), obarvení z `tg_mastery` (`js/profile.js`)

@@ -18,6 +18,7 @@ async function gptChat(messages, opts) {
       messages,
       persona: opts.persona,         // id z Persony/personas.json (jinak výchozí)
       context: opts.context,         // kontext Glitche (téma, název, text karty…)
+      zak: opts.zak,                 // profil žáka (co už zvládl); názvy dohledá server
       model: opts.model,             // volitelně "gpt-4o" (jinak gpt-4o-mini)
       temperature: opts.temperature, // volitelně
     }),

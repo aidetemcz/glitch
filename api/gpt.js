@@ -16,6 +16,17 @@
 //   { "text": "..." }  nebo  { "error": "..." }
 
 const CATALOG = require("../Persony/personas.json");
+const CONCEPTS = require("../knowledge-map/concepts.json");   // pro překlad concept_id → název
+
+// Úrovně zvládnutí (Bloomova taxonomie) → čitelný český popisek do promptu.
+const UROVEN_LABEL = {
+  zapamatovani: "zapamatování",
+  porozumeni: "porozumění",
+  aplikace: "aplikace",
+  analyza: "analýza",
+  hodnoceni: "hodnocení",
+  tvorba: "tvorba",
+};
 
 const ALLOWED_MODELS = new Set(["gpt-4o-mini", "gpt-4o"]);
 const MAX_TOKENS = 800;        // strop odpovědi, ať se nedá utéct s náklady
@@ -83,7 +94,25 @@ function contextBlock(ctx) {
   ).trim();
 }
 
-function buildSystemPrompt(personaId, ctx, quizNow) {
+// Profil žáka → blok „profil žáka". Frontend posílá jen concept_id + úroveň;
+// názvy konceptů dohledáme tady z mapy konceptů. Slouží botovi jako kontext,
+// na co může navázat — ne jako látka ke zkoušení.
+function zakBlock(zak) {
+  if (!zak || typeof zak !== "object") return "";
+  const zvladnute = Array.isArray(zak.zvladnute) ? zak.zvladnute : [];
+  const radky = zvladnute
+    .map((z) => {
+      const c = z && z.concept_id && CONCEPTS[z.concept_id];
+      if (!c || !c.nazev) return "";
+      const uroven = UROVEN_LABEL[z.uroven] || "";
+      return "- " + c.nazev + (uroven ? " (" + uroven + ")" : "");
+    })
+    .filter(Boolean)
+    .slice(0, 15);
+  return radky.join("\n");
+}
+
+function buildSystemPrompt(personaId, ctx, quizNow, zak) {
   const persona = PERSONAS.get(personaId) || PERSONAS.get(CATALOG.default);
   const parts = [];
   if (persona && persona.prompt) parts.push(persona.prompt);
@@ -94,6 +123,18 @@ function buildSystemPrompt(personaId, ctx, quizNow) {
       "### ZADÁNÍ (kontext tohoto Glitche)\n\n" + block +
       "\n\nDrž se výhradně tohoto zadání. Nepřidávej látku mimo něj. " +
       "Když žák odbočí jinam, vlídně ho vrať k tématu Glitche."
+    );
+  }
+  // Profil žáka — co už zvládl jinde. Jen kontext, ať bot může navázat.
+  const zb = zakBlock(zak);
+  if (zb) {
+    parts.push(
+      "### PROFIL ŽÁKA (jen pro tebe — sám od sebe ho nezmiňuj)\n\n" +
+      "Tenhle žák už v jiných Glitchích zvládl tyhle koncepty (a na jaké úrovni):\n\n" + zb +
+      "\n\nSlouží ti to jen k tomu, aby ses mohl opřít o to, co už umí — když se to " +
+      "hodí, klidně na to krátce naváž („tohle znáš z…\"). Nevypisuj mu to jako seznam, " +
+      "nezkoušej ho z toho a nepředpokládej, že si všechno přesně pamatuje. Tenhle Glitch " +
+      "má svoje vlastní téma (viz ZADÁNÍ) — to je pořád to hlavní."
     );
   }
   // Samotný kvíz negeneruje tenhle model (v proudu řeči to nespolehlivě vynechával) —
@@ -270,7 +311,7 @@ module.exports = async function handler(req, res) {
       : await shouldQuiz(key, convo, body.context);
 
     const messages = [
-      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow) },
+      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow, body.zak) },
       ...convo
     ];
 
