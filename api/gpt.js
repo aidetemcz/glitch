@@ -22,6 +22,11 @@ const MAX_TOKENS = 800;        // strop odpovědi, ať se nedá utéct s náklad
 const MAX_MESSAGES = 40;       // strop délky konverzace
 const MAX_CHARS = 4000;        // strop délky jedné zprávy
 
+// Kdy může přijít kvíz (viz shouldQuiz):
+const QUIZ_MIN_TURNS = 3;      // dřív než po 3 zprávách žáka se kvíz neřeší
+const QUIZ_COOLDOWN = 4;       // po kvízu pauza — tolik zpráv bota bez dalšího
+const QUIZ_FORCE_TURNS = 7;    // po tolika zprávách žáka se kvíz vynutí (pojistka)
+
 const PERSONAS = new Map((CATALOG.personas || []).map((p) => [p.id, p]));
 
 // Pravidla platformy — platí pro VŠECHNY persony. Persony jsou psané pro školní
@@ -89,7 +94,7 @@ function contextBlock(ctx) {
   ).trim();
 }
 
-function buildSystemPrompt(personaId, ctx) {
+function buildSystemPrompt(personaId, ctx, quizNow) {
   const persona = PERSONAS.get(personaId) || PERSONAS.get(CATALOG.default);
   const parts = [];
   if (persona && persona.prompt) parts.push(persona.prompt);
@@ -102,7 +107,70 @@ function buildSystemPrompt(personaId, ctx) {
       "Když žák odbočí jinam, vlídně ho vrať k tématu Glitche."
     );
   }
+  // Rozhodnutí o kvízu nenecháváme na modelu uprostřed dlouhého promptu —
+  // vyhodnocuje se zvlášť (viz shouldQuiz) a sem přijde jasný pokyn.
+  parts.push(quizNow
+    ? "### TEĎ POŠLI KVÍZ\n\nŽák už tématu rozumí natolik, že ho můžeš vyzkoušet. " +
+      "V TÉHLE zprávě napiš jednu krátkou uvozovací větu a hned za ni blok ```kviz``` " +
+      "podle formátu výše. Kvíz musí vycházet z toho, o čem jste si povídali."
+    : "### KVÍZ TEĎ NEPOSÍLEJ\n\nV téhle zprávě kvíz neposílej — pokračuj v rozhovoru " +
+      "(vysvětluj a ptej se). Výjimka: pokud si žák o kvíz sám výslovně řekne, pošli mu ho.");
   return parts.join("\n\n---\n\n");
+}
+
+async function callOpenAI(key, payload) {
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    body: JSON.stringify(payload),
+  });
+  const data = await r.json();
+  return { ok: r.ok, status: r.status, data };
+}
+
+/* Kdy poslat kvíz — dvoustupňové rozhodnutí:
+   1) levná pravidla v kódu (kolik zpráv, kdy byl kvíz naposledy) — bez volání AI,
+   2) teprve když projdou, zeptáme se malého modelu („rozhodčí"), jestli už žák
+      tématu rozumí. Model tak neřeší kvíz v každé zprávě uprostřed dlouhého promptu
+      — dostane jednu jasnou otázku a odpoví ANO/NE. */
+async function shouldQuiz(key, convo, ctx) {
+  const userTurns = convo.filter((m) => m.role === "user" && !/^\(/.test(m.content)).length;
+  if (userTurns < QUIZ_MIN_TURNS) return false;
+
+  // po kvízu chvíli pauza
+  const sinceQuiz = convo.slice().reverse()
+    .filter((m) => m.role === "assistant")
+    .findIndex((m) => /```kviz/i.test(m.content));
+  if (sinceQuiz !== -1 && sinceQuiz < QUIZ_COOLDOWN) return false;
+
+  // pojistka: po dost dlouhém rozhovoru kvíz vynutíme i bez rozhodčího
+  if (userTurns >= QUIZ_FORCE_TURNS && sinceQuiz === -1) return true;
+
+  const prepis = convo.slice(-10)
+    .map((m) => (m.role === "user" ? "ŽÁK: " : "BOT: ") + m.content.slice(0, 400))
+    .join("\n");
+  try {
+    const { ok, data } = await callOpenAI(key, {
+      model: "gpt-4o-mini",
+      temperature: 0,
+      max_tokens: 3,
+      messages: [
+        { role: "system", content:
+          "Jsi hodnotitel výukového rozhovoru. Na základě přepisu rozhodni, jestli je vhodná chvíle " +
+          "vyzkoušet žáka krátkým kvízem.\n\nOdpověz ANO, pokud žák už tématu v základu rozumí — " +
+          "vlastními slovy něco správně popsal, odpovídal věcně nebo látku shrnul.\n" +
+          "Odpověz NE, pokud se teprve seznamuje s tématem, tápe, ptá se na základní vysvětlení, " +
+          "odpovídá jednoslovně, nebo bot právě něco vysvětlil a žák to ještě nepoužil.\n\n" +
+          "Odpovídej jediným slovem: ANO nebo NE." },
+        { role: "user", content: (ctx && ctx.nazev ? "Téma: " + ctx.nazev + "\n\n" : "") + "Přepis:\n" + prepis }
+      ]
+    });
+    if (!ok) return false;
+    const verdict = ((data.choices && data.choices[0] && data.choices[0].message.content) || "").trim().toUpperCase();
+    return verdict.startsWith("ANO");
+  } catch (_) {
+    return false;                 // rozhodčí selhal → radši žádný kvíz
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -139,23 +207,20 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Konverzace je prázdná." });
     }
 
+    // Rozhodnutí o kvízu (levná pravidla + případně malý „rozhodčí" model).
+    // Přeskočí se, když si žák o kvíz řekne sám — to si vyřídí model podle pokynu.
+    const quizNow = body.quiz === false ? false : await shouldQuiz(key, convo, body.context);
+
     const messages = [
-      { role: "system", content: buildSystemPrompt(body.persona, body.context) },
+      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow) },
       ...convo
     ];
 
-    const r = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({ model, messages, temperature, max_tokens: MAX_TOKENS }),
+    const { ok, status, data } = await callOpenAI(key, {
+      model, messages, temperature, max_tokens: MAX_TOKENS
     });
-
-    const data = await r.json();
-    if (!r.ok) {
-      return res.status(r.status).json({ error: (data.error && data.error.message) || "Chyba OpenAI API." });
+    if (!ok) {
+      return res.status(status).json({ error: (data.error && data.error.message) || "Chyba OpenAI API." });
     }
 
     const text = (data.choices && data.choices[0] && data.choices[0].message.content) || "";

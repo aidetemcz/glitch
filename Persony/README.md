@@ -73,6 +73,22 @@ jako blok, který frontend vyjme z textu a vykreslí jako interaktivní kvíz:
 - `multi` → čtverečky + tlačítko **Odeslat odpověď**
 - Výsledek se botovi pošle **neviditelně** zpět, takže na něj naváže.
 
+### Kdy kvíz přijde (rozhodování)
+
+Necháváme-li rozhodnutí jen na modelu uprostřed dlouhého promptu, kvíz většinou
+nepošle. Proto se rozhoduje zvlášť, ve dvou krocích:
+
+1. **Levná pravidla v kódu** (bez volání AI) — kvíz se neřeší dřív než po
+   3 zprávách žáka, po kvízu je pauza 4 zprávy, a po 7 zprávách bez kvízu se
+   kvíz vynutí (pojistka).
+2. **Rozhodčí** — teprve když pravidla projdou, zeptá se server malého modelu
+   (`gpt-4o-mini`, odpověď ANO/NE) nad přepisem konverzace: *rozumí už žák
+   tématu natolik, aby šlo zkoušet?*
+
+Hlavní model pak dostane **jednoznačný pokyn** („TEĎ POŠLI KVÍZ" / „kvíz teď
+neposílej") místo vágního „můžeš, když uznáš za vhodné".
+Když si žák o kvíz řekne sám, dostane ho vždy.
+
 ## Poznámky
 
 - Persony jsou psané pro školní kontext se **„zadáním od učitele"** (téma / cíl /
