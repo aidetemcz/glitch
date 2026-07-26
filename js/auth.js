@@ -1,7 +1,7 @@
 /* ==========================================================================
    Glitch — přihlášení (Supabase + Google)
    Lehká vrstva nad novým feedem. Využívá js/supabase.js (klient + auth).
-   Stará komunita/profil z app.js se sem záměrně NEPŘENÁŠÍ — obsahovou
+   Stará komunita/profil (původní SPA) se sem záměrně NEPŘENÁŠÍ — obsahovou
    důvěru řeší nový model (Core / Edited / Community / Generated).
    ========================================================================== */
 (function () {

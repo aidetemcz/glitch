@@ -624,12 +624,23 @@
     if (iframe) iframe.addEventListener("load", () => post("sync"));
 
     // příjem skóre z koule (hit = zásahy, found = potvrzená slova)
+    let hotovo = false;
     window.addEventListener("message", (ev) => {
       if (iframe && ev.source !== iframe.contentWindow) return;
       const d = ev.data || {};
       if (d.ns !== NS || d.type !== "score") return;
       const n = (d.hit != null) ? d.hit : d.found;
       if (countEl) countEl.textContent = n + "/" + d.total;
+
+      // splněno = nasbíral vše (všechna slova / všechny díry). Zaznamená se stejně
+      // jako rychlá výzva (localStorage + Supabase progress) a doporučovač ho pak
+      // z feedu vyfiltruje, takže se aktivita přestane objevovat.
+      if (!hotovo && d.total > 0 && n >= d.total && c && c.id) {
+        hotovo = true;
+        if (typeof window.markGlitchDone === "function") {
+          window.markGlitchDone(c.id, { typ: c.type, correct: true });
+        }
+      }
     });
   }
 
