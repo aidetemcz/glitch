@@ -197,7 +197,7 @@
       topic: topic,
       chapters: byTopic[topic].slice()
         .sort((a, b) => Number(a.chapterNo) - Number(b.chapterNo))
-        .map((c) => ({ id: c.id, title: (c.rozklik && c.rozklik.title) || c.title || "" }))
+        .map((c) => ({ id: c.id, title: c.projectTitle || (c.rozklik && c.rozklik.title) || c.title || "", project: !!c.project }))
     })).filter((q) => q.chapters.length);
   }
   function loadQuests() {
@@ -220,12 +220,19 @@
       let currentSet = false;
       const nodes = chapters.map((ch, idx) => {
         const done = isDone(ch.id);
+        const edge = idx === n - 1 ? " q-node--r" : "";   // tooltip u posledního zarovnat doprava
+        // projektový uzel (poslední, aplikační) — zamčený, dokud nejsou hotové předchozí kapitoly
+        if (ch.project) {
+          const locked = !chapters.slice(0, idx).every((c) => isDone(c.id));
+          const inner = locked ? '<img src="assets/ui/locked-icon.svg" alt="Zamčeno">' : '';
+          return '<span class="q-node q-node--project' + (locked ? " is-locked" : "") + edge + '" ' +
+            'data-gid="' + esc(ch.id) + '" tabindex="0" role="button" aria-label="' + esc(ch.title) + '">' +
+            inner + '<span class="q-tip">' + esc(ch.title) + '</span></span>';
+        }
         let cls = "q-node";
         if (done) cls += " is-done";
         else if (!currentSet) { currentSet = true; cls += " is-current"; }
-        // popisek (tooltip) u posledního uzlu zarovnáme doprava, ať nepřeteče
-        if (idx === n - 1) cls += " q-node--r";
-        return '<span class="' + cls + '" data-gid="' + esc(ch.id) + '" tabindex="0" role="button" ' +
+        return '<span class="' + cls + edge + '" data-gid="' + esc(ch.id) + '" tabindex="0" role="button" ' +
           'aria-label="' + esc(ch.title) + '"><span class="q-tip">' + esc(ch.title) + '</span></span>';
       }).join("");
       return '<div class="q-quest"><div class="q-name">' + esc(q.topic) + '</div>' +
@@ -472,6 +479,7 @@
       const tip = e.target.closest(".q-tip");
       if (tip) {
         const node = tip.closest(".q-node");
+        if (node && node.classList.contains("is-locked")) return;   // zamčený projekt zatím neotvírej
         if (node && node.dataset.gid && typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(node.dataset.gid);
         return;
       }

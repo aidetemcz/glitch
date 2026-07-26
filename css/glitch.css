@@ -817,6 +817,10 @@ button.km-cell:active { transform: scale(.9); }
 }
 .q-node:hover .q-tip, .q-node.is-open .q-tip { display: block; }
 .q-node--r .q-tip { left: auto; right: 0; }
+/* projektový uzel (poslední, aplikační): větší; odemčený žlutý, zamčený = ikona zámku */
+.q-node--project { width: calc(26 * var(--u)); height: calc(26 * var(--u)); background: var(--c-yellow); border: calc(2 * var(--u)) solid var(--c-black); }
+.q-node--project.is-locked { background: none; border: none; }
+.q-node--project.is-locked img { width: 100%; height: 100%; display: block; }
 
 /* Tvé projekty — karty forknutých projektů */
 .pf-projects { display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
