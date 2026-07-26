@@ -859,6 +859,9 @@ body.rz-lock { overflow: hidden; }
   color: #1a1a1a; word-wrap: break-word; overflow-wrap: anywhere;
 }
 .rz-msg--bot .rz-bubble { background: var(--c-grey-10); }
+/* „píše…" indikátor (během čekání na odpověď bota) */
+.rz-typing .rz-bubble { color: var(--c-grey-50); letter-spacing: calc(2 * var(--u)); animation: rz-blink 1s ease-in-out infinite; }
+@keyframes rz-blink { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
 .rz-msg--user .rz-bubble { max-width: calc(238 * var(--u)); padding: calc(11 * var(--u)) calc(14 * var(--u)); background: rgba(255,255,0,0.27); }
 
 /* kvíz uvnitř chatu */

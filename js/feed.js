@@ -955,7 +955,7 @@
     document.body.classList.add("rz-lock");
 
     panel.querySelector("[data-rz-close]").addEventListener("click", closeRozklik);
-    if (r.kind === "chat") initRzChat(panel);
+    if (r.kind === "chat") initRzChat(panel, c);
   }
 
   function closeRozklik() {
@@ -968,7 +968,39 @@
     if (e.key === "Escape" && _rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
   });
 
-  function initRzChat(panel) {
+  /* ---- Chatbot Glitchee (sdílená persona + kontext konkrétní karty) ----
+     Persona je pevná (jeden zdroj pravdy tady v kódu — OpenAI „Prompt objekty"
+     se ruší, tak na nich nestavíme). Kontext se skládá z dané karty + questu,
+     takže bot mluví jen o tomto Glitchi. Volá se přes /api/gpt (klíč je na serveru). */
+  const GLITCHEE_PERSONA =
+    "Jsi Glitchee, průvodce v aplikaci Glitch. Bavíš se s dítětem (11–18 let) česky, " +
+    "krátce a kamarádsky. Bavíš se POUZE o tomto Glitchi — když se uživatel ptá na něco " +
+    "jiného, laskavě ho vrať k tématu. Nevymýšlej si, drž se kontextu níže.";
+
+  function buildGlitchContext(c) {
+    const r = (c && c.rozklik) || {};
+    const parts = [];
+    if (c.topic) parts.push("Téma questu: " + c.topic);
+    if (r.title || c.title) parts.push("Glitch: " + (r.title || c.title));
+    if (r.intro) parts.push(r.intro);
+    else if (c.body) parts.push(c.body);
+    if (Array.isArray(r.messages)) {
+      const said = r.messages.filter((m) => m.from === "bot").map((m) => m.text).join(" ");
+      if (said) parts.push("Co už v Glitchi zaznělo: " + said);
+    }
+    return parts.join("\n");
+  }
+
+  function rzAppendBot(thread, text) {
+    const el = document.createElement("div");
+    el.className = "rz-msg rz-msg--bot";
+    el.innerHTML = `<span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Glitchee"></span><div class="rz-bubble"></div>`;
+    el.querySelector(".rz-bubble").textContent = text;
+    thread.appendChild(el);
+    return el;
+  }
+
+  function initRzChat(panel, card) {
     // Kvíz uvnitř chatu: výběr možností + vyhodnocení po odeslání
     panel.querySelectorAll("[data-rz-quiz]").forEach((quiz) => {
       const multi = quiz.dataset.multi === "true";
@@ -999,20 +1031,56 @@
     // Vstupní pole: přidá bublinu uživatele (napojení na Tinybota přijde později)
     const form = panel.querySelector("[data-rz-form]");
     const thread = panel.querySelector("[data-rz-thread]");
-    if (form && thread) form.addEventListener("submit", (e) => {
+    if (!form || !thread) return;
+
+    // Historie pro AI: naváž na skriptované bubliny (bot→assistant, uživatel→user)
+    const r = (card && card.rozklik) || {};
+    const history = (r.messages || [])
+      .filter((m) => m.from === "bot" || m.from === "user")
+      .map((m) => ({ role: m.from === "bot" ? "assistant" : "user", content: m.text }));
+    const scrollDown = () => panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const field = form.querySelector(".rz-input-field");
+      const sendBtn = form.querySelector(".rz-send");
       const text = (field.value || "").trim();
       if (!text) return;
-      const msg = document.createElement("div");
-      msg.className = "rz-msg rz-msg--user";
-      msg.innerHTML = `<div class="rz-bubble"></div><span class="rz-ava rz-ava--user"></span>`;
-      msg.querySelector(".rz-bubble").textContent = text;
-      thread.appendChild(msg);
+
+      // bublina uživatele
+      const um = document.createElement("div");
+      um.className = "rz-msg rz-msg--user";
+      um.innerHTML = `<div class="rz-bubble"></div><span class="rz-ava rz-ava--user"></span>`;
+      um.querySelector(".rz-bubble").textContent = text;
+      thread.appendChild(um);
+      history.push({ role: "user", content: text });
       field.value = "";
-      thread.scrollIntoView({ block: "end" });
-      panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
-      toast("Tinybot se připojí brzy 🚧");
+      scrollDown();
+
+      // „píše…" indikátor + zamčené pole během čekání
+      field.disabled = true; if (sendBtn) sendBtn.disabled = true;
+      const typing = rzAppendBot(thread, "…");
+      typing.classList.add("rz-typing");
+      scrollDown();
+
+      try {
+        if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
+        const messages = [
+          { role: "system", content: GLITCHEE_PERSONA + "\n\nKONTEXT GLITCHE:\n" + buildGlitchContext(card) },
+          ...history
+        ];
+        const reply = await window.gptChat(messages, { temperature: 0.3 });
+        typing.remove();
+        rzAppendBot(thread, reply);
+        history.push({ role: "assistant", content: reply });
+      } catch (err) {
+        typing.remove();
+        rzAppendBot(thread, "Teď se mi nepovedlo odpovědět 😥 Zkus to prosím za chvilku.");
+      } finally {
+        field.disabled = false; if (sendBtn) sendBtn.disabled = false;
+        field.focus();
+        scrollDown();
+      }
     });
   }
 
