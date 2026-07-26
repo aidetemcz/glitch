@@ -1043,9 +1043,9 @@
         scrollToIndex(n.index);
         if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400);
       } else {
-        // navazující kapitola tohoto questu zatím není hotová
+        // žádná navazující kapitola → tímhle Glitchem quest končí
         const sub = box.querySelector(".rz-hotovo-sub");
-        if (sub) sub.textContent = "Další kapitola tohoto questu se teprve připravuje 🚧 Zatím se mrkni na Glitchfeed pro další inspiraci.";
+        if (sub) sub.textContent = "Tímhle Glitchem tenhle quest končí — skvělá práce! 🎉 Vrať se na Glitchfeed pro další inspiraci.";
         dalsi.disabled = true;
       }
     });

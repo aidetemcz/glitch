@@ -37,6 +37,53 @@
     try { localStorage.setItem(INTERESTS_KEY, JSON.stringify(arr)); } catch (_) {}
   }
 
+  /* ---------- osobní údaje (tg_user): přezdívka, gender, věk, avatar ----------
+     Lokálně vždy; přezdívku a gender propíšeme i do Supabase (profiles). Věk a
+     nahraný avatar zatím jen lokálně (Supabase sloupce doplníme později). */
+  const USER_KEY = "tg_user";
+  function getUser() {
+    try { return JSON.parse(localStorage.getItem(USER_KEY) || "{}"); } catch (_) { return {}; }
+  }
+  function setUserFields(fields) {
+    const u = Object.assign(getUser(), fields);
+    try { localStorage.setItem(USER_KEY, JSON.stringify(u)); } catch (_) {}
+    try {
+      if (typeof sbSaveProfile === "function") {
+        const cols = {};
+        if ("nickname" in fields) cols.nickname = fields.nickname;
+        if ("gender" in fields) cols.gender = fields.gender;
+        if (Object.keys(cols).length) sbSaveProfile(cols);   // jen existující sloupce profiles
+      }
+    } catch (_) {}
+    return u;
+  }
+
+  /* Profilový obrázek: vlastní nahraný → Google avatar → maskot. */
+  const metaAvatar = (u) => { const m = (u && u.user_metadata) || {}; return m.avatar_url || m.picture || null; };
+  const avatarSrc = (u) => getUser().avatar || metaAvatar(u) || "assets/ui/avatar-icon.png";
+
+  /* Nahraný obrázek zmenšíme na max 256 px (ať se vejde do localStorage). */
+  function readImageScaled(file, cb) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 256, scale = Math.min(1, max / Math.max(img.width, img.height));
+        const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+        const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+        cv.getContext("2d").drawImage(img, 0, 0, w, h);
+        try { cb(cv.toDataURL("image/jpeg", 0.85)); } catch (_) { cb(null); }
+      };
+      img.onerror = () => cb(null);
+      img.src = reader.result;
+    };
+    reader.onerror = () => cb(null);
+    reader.readAsDataURL(file);
+  }
+
+  const PENCIL = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+  const GENDERS = [["holka", "Holka"], ["kluk", "Kluk"], ["jine", "Jiné"], ["neuvadet", "Nechci uvádět"]];
+
   /* ---------- ikony tabů (stroke = currentColor) ---------- */
   const ICONS = {
     board: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>',
@@ -52,7 +99,9 @@
     return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   }
-  const handleOf = (u) => "@" + (slug(nameOf(u)) || "uzivatel");
+  const handleOf = (u) => "@" + (getUser().nickname || slug(nameOf(u)) || "uzivatel");
+
+  let currentUser = null;   // nastaví open(u); používá personalHtml() pro fallback přezdívky
 
   const TABS = [
     { id: "board", label: "Tvůj Glitchboard", empty: "Zatím tu nic není — až si nějaký Glitch forkneš, objeví se na tvém boardu." },
@@ -139,20 +188,21 @@
     return '' +
       '<div class="pf-header">' +
         '<div class="pf-avatar">' +
-          '<img src="assets/ui/avatar-icon.png" alt="">' +
-          '<span class="pf-avatar-badge"><img src="assets/ui/Plus.svg" alt=""></span>' +
+          '<img src="' + esc(avatarSrc(u)) + '" alt="" referrerpolicy="no-referrer">' +
+          '<button class="pf-avatar-add" data-pf-avatar type="button" aria-label="Nahrát profilový obrázek"><img src="assets/ui/Plus.svg" alt=""></button>' +
+          '<input type="file" accept="image/*" class="pf-avatar-file" data-pf-avatar-file hidden>' +
         '</div>' +
         '<div class="pf-name">' + esc(nameOf(u)) + '</div>' +
-        '<div class="pf-handle">' + esc(handleOf(u)) + '</div>' +
+        '<div class="pf-handle" data-pf-handle>' + esc(handleOf(u)) + '</div>' +
         '<div class="pf-stats">' +
           '<div class="pf-stat"><b>0</b><span>sleduji</span></div>' +
           '<div class="pf-stat"><b>0</b><span>sledujících</span></div>' +
           '<div class="pf-stat"><b>0</b><span>forků</span></div>' +
         '</div>' +
         '<div class="pf-interests">' +
-          '<span class="pf-interests-ic"><img src="assets/ui/Plus.svg" alt=""></span>' +
+          '<button class="pf-interests-add" data-pf-interest-add type="button" aria-label="Přidat zájem"><img src="assets/ui/Plus.svg" alt=""></button>' +
           '<div class="pf-chips" data-pf-chips>' + chipsHtml() + '</div>' +
-          '<input class="pf-interest-input" data-pf-interest-input placeholder="Zatím neznáme tvé zájmy…">' +
+          '<input class="pf-interest-input" data-pf-interest-input placeholder="Napiš svůj zájem a dej Enter…">' +
         '</div>' +
       '</div>';
   }
@@ -171,8 +221,42 @@
       '<span class="pf-toggle"><input type="checkbox" data-setting="' + key + '"' + on + '><span class="pf-knob"></span></span></label>';
   }
 
+  function personalHtml() {
+    const u = getUser();
+    const nick = u.nickname || slug(nameOf(currentUser)) || "";
+    const g = u.gender || "";
+    const radios = GENDERS.map(([val, lab]) =>
+      '<label class="pf-radio"><input type="radio" name="pf-gender" value="' + val + '"' +
+      (g === val ? " checked" : "") + '><span class="pf-radio-mark"></span>' + esc(lab) + '</label>'
+    ).join("");
+    return '' +
+      '<div class="pf-set-group"><h3>Osobní údaje</h3>' +
+        '<div class="pf-field">' +
+          '<label class="pf-field-label">Uživatelské jméno</label>' +
+          '<div class="pf-input-wrap">' +
+            '<span class="pf-input-at">@</span>' +
+            '<input class="pf-input" data-pf-nickname value="' + esc(nick) + '" maxlength="24" autocomplete="off" spellcheck="false">' +
+            '<span class="pf-input-edit">' + PENCIL + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pf-field">' +
+          '<label class="pf-field-label">Tvůj gender</label>' +
+          '<div class="pf-radios">' + radios + '</div>' +
+        '</div>' +
+        '<div class="pf-field">' +
+          '<label class="pf-field-label">Tvůj věk</label>' +
+          '<div class="pf-age">' +
+            '<span class="pf-age-val" data-pf-age-val>' + (u.age ? esc(u.age + " let") : "—") + '</span>' +
+            '<button class="pf-age-btn" data-pf-age="-1" type="button" aria-label="Ubrat rok">−</button>' +
+            '<button class="pf-age-btn" data-pf-age="1" type="button" aria-label="Přidat rok">+</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
   function settingsHtml() {
     return '' +
+      personalHtml() +
       '<div class="pf-set-group"><h3>Soukromí a data</h3>' +
         toggleRow("soukromi_glitchfeed", "Můj obsah vidí komunita v Glitchfeedu") +
         toggleRow("soukromi_questy", "Moje questy vidí komunita") +
@@ -227,6 +311,7 @@
 
   function open() {
     const u = (typeof sbCurrentUser !== "undefined") ? sbCurrentUser : null;
+    currentUser = u;
     close();
     state.tab = "board";
     const el = document.createElement("section");
@@ -261,10 +346,27 @@
       state.tab = b.dataset.tab; rerenderContent(el);
     }));
 
-    // přepínače nastavení (delegace, protože se překreslují)
+    // přepínače a osobní údaje (delegace, protože se překreslují)
     el.addEventListener("change", (e) => {
       const t = e.target;
-      if (t && t.matches("input[data-setting]")) setSetting(t.dataset.setting, t.checked);
+      if (t && t.matches("input[data-setting]")) { setSetting(t.dataset.setting, t.checked); return; }
+      if (t && t.matches('input[name="pf-gender"]')) { setUserFields({ gender: t.value }); return; }
+      if (t && t.matches("[data-pf-nickname]")) {
+        const v = t.value.trim().replace(/^@+/, "");
+        setUserFields({ nickname: v });
+        const h = el.querySelector("[data-pf-handle]"); if (h) h.textContent = "@" + (v || "uzivatel");
+        return;
+      }
+      if (t && t.matches("[data-pf-avatar-file]")) {
+        const f = t.files && t.files[0];
+        if (f) readImageScaled(f, (dataUrl) => {
+          if (!dataUrl) return;
+          setUserFields({ avatar: dataUrl });
+          const img = el.querySelector(".pf-avatar img"); if (img) img.src = dataUrl;
+          if (typeof window.glitchAuthRefresh === "function") window.glitchAuthRefresh();  // i v menu
+        });
+        return;
+      }
     });
 
     // odhlášení
@@ -274,6 +376,25 @@
       if (cell) {
         const cap = el.querySelector("[data-km-cap]");
         if (cap) cap.textContent = cell.dataset.kmName + " — " + cell.dataset.kmLv;
+        return;
+      }
+      // nahrání profilového obrázku — otevři výběr souboru
+      if (e.target.closest("[data-pf-avatar]")) {
+        const fi = el.querySelector("[data-pf-avatar-file]"); if (fi) fi.click();
+        return;
+      }
+      // plus u zájmů — jen fokusni pole (vyjede klávesnice)
+      if (e.target.closest("[data-pf-interest-add]")) {
+        const inp = el.querySelector("[data-pf-interest-input]"); if (inp) inp.focus();
+        return;
+      }
+      // věk +/−
+      const ageBtn = e.target.closest("[data-pf-age]");
+      if (ageBtn) {
+        let next = (Number(getUser().age) || 12) + Number(ageBtn.dataset.pfAge);
+        next = Math.max(6, Math.min(120, next));
+        setUserFields({ age: next });
+        const val = el.querySelector("[data-pf-age-val]"); if (val) val.textContent = next + " let";
         return;
       }
       // vynulování postupu — hotové Glitche se zase začnou zobrazovat ve feedu

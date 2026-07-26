@@ -43,8 +43,10 @@
     const btn = document.getElementById("nav-profile");
     if (!btn) return;
     const u = (typeof sbCurrentUser !== "undefined") ? sbCurrentUser : null;
-    // odhlášen → maskot (avatar-icon.png), přihlášen → Google avatar; vždy 2px bílá outline
-    const src = (u && avatarUrl(u)) ? avatarUrl(u) : "assets/ui/avatar-icon.png";
+    // vlastní nahraný obrázek má přednost, pak Google avatar, jinak maskot; vždy 2px bílá outline
+    let stored = null;
+    try { stored = JSON.parse(localStorage.getItem("tg_user") || "{}").avatar || null; } catch (_) {}
+    const src = stored || ((u && avatarUrl(u)) ? avatarUrl(u) : "assets/ui/avatar-icon.png");
     btn.innerHTML = '<span class="nav-ava"><img src="' + src + '" alt="" referrerpolicy="no-referrer"></span>';
     btn.setAttribute("aria-label", u ? "Účet" : "Přihlásit se");
   }
