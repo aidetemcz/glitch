@@ -632,10 +632,12 @@
       const n = (d.hit != null) ? d.hit : d.found;
       if (countEl) countEl.textContent = n + "/" + d.total;
 
-      // splněno = nasbíral vše (všechna slova / všechny díry). Zaznamená se stejně
-      // jako rychlá výzva (localStorage + Supabase progress) a doporučovač ho pak
-      // z feedu vyfiltruje, takže se aktivita přestane objevovat.
-      if (!hotovo && d.total > 0 && n >= d.total && c && c.id) {
+      // splněno = nasbíral vše (všechna slova / všechny díry). Učební aktivita se
+      // zaznamená stejně jako rychlá výzva (localStorage + Supabase progress) a
+      // doporučovač ji pak z feedu vyfiltruje, takže se přestane objevovat.
+      // Wellbeingové aktivity (c.replayable, např. koule) se ZÁMĚRNĚ nezaznamenávají
+      // — mají se objevovat klidně občas znovu.
+      if (!hotovo && !c.replayable && d.total > 0 && n >= d.total && c && c.id) {
         hotovo = true;
         if (typeof window.markGlitchDone === "function") {
           window.markGlitchDone(c.id, { typ: c.type, correct: true });
@@ -1307,7 +1309,8 @@
           // Kvíz sám o sobě Glitch NEuzavírá — po odpovědi se pošle hodnocení
           // (kritéria z mapy konceptů) a teprve když žák cíl splnil, Glitch končí.
           rzAppendKviz(thread, parsed.kviz, (vysledek, vse) => {
-            ask(vysledek, { silent: true }).then(() => vyhodnot(vse));
+            kvizProslo = true; kvizSpravne = vse;
+            ask(vysledek, { silent: true }).then(() => vyhodnot());
           });
         }
       } catch (err) {
@@ -1325,22 +1328,31 @@
       const text = (field.value || "").trim();
       if (!text) return;
       field.value = "";
-      ask(text).then(() => field.focus());
+      // Po každé další zprávě (když už proběhl kvíz) zkusíme znovu vyhodnotit —
+      // porozumění se často doloží až v konverzaci PO kvízu, ne hned u něj.
+      ask(text).then(() => { field.focus(); vyhodnot(); });
     });
 
     /* Vyhodnocení Glitche. Glitch se uzavírá až tady — ne odpovědí na kvíz.
        Hodnotitel (api/evaluate) posoudí konverzaci proti kritériím konceptu;
        teprve když žák cíl splnil, Glitch se označí za hotový a nabídne se
        další krok (navazující Glitch v questu / zpět do feedu). */
-    let hodnoceno = false;
-    async function vyhodnot(kvizSpravne) {
-      if (hodnoceno || !card || !card.id) return;
+    let hodnoceno = false;      // už splněno a zobrazena nabídka
+    let hodnotiSe = false;      // právě běží jedno vyhodnocení (ať se nepřekrývají)
+    let kvizProslo = false;     // proběhl aspoň jeden kvíz (jinak nevyhodnocujeme)
+    let kvizSpravne = false;    // výsledek posledního kvízu
+    async function vyhodnot() {
+      if (hodnoceno || hodnotiSe || !kvizProslo || !card || !card.id) return;
       if (typeof window.gptEvaluate !== "function") return;
-      const v = await window.gptEvaluate(history, {
-        conceptId: card.concept_id,
-        context: buildGlitchContext(card),
-        kviz: { spravne: !!kvizSpravne }
-      });
+      hodnotiSe = true;
+      let v;
+      try {
+        v = await window.gptEvaluate(history, {
+          conceptId: card.concept_id,
+          context: buildGlitchContext(card),
+          kviz: { spravne: !!kvizSpravne }
+        });
+      } finally { hodnotiSe = false; }
       if (!v || !v.splneno || hodnoceno) return;
       hodnoceno = true;
       if (typeof window.markGlitchDone === "function") {

@@ -249,7 +249,8 @@
     "type": "attention_game",
     "category": "Aktivita",
     "title": "Kolik zvládneš označit děr?",
-    "viz": "assets/3Dvizualizations/sphere-holes.html?v=5"
+    "viz": "assets/3Dvizualizations/sphere-holes.html?v=5",
+    "replayable": true
   },
   {
     "id": "aktivita-slova-algoritmus",
