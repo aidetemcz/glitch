@@ -913,6 +913,7 @@ body.rz-lock { overflow: hidden; }
 }
 .rz-hotovo-btn.is-primary { background: var(--c-black); color: var(--c-yellow); }
 .rz-hotovo-btn:active { opacity: .7; }
+.rz-hotovo-btn:disabled { opacity: .4; pointer-events: none; }
 
 /* Pre-test „Co už o tématu víš?" — zobrazí se po rozkliknutí, než začne chat */
 .rz-pretest { display: flex; flex-direction: column; margin: calc(20 * var(--u)) 0 calc(6 * var(--u)); }

@@ -153,5 +153,5 @@ sám.** Když všechno vysvětlil bot a žák jen přikyvoval, splněno není.
   systémového promptu chatbota jako blok „PROFIL ŽÁKA", ať může navázat na známé
   (`js/feed.js` → `buildZakProfil()`, `api/gpt.js` → `zakBlock()`)
 - [x] **Mapa znalostí žáka** — heatmapa konceptů obarvená dosaženými úrovněmi
-  v profilu (Glitchboard). Kostra: `knowledge-map/map-index.json`
+  v profilu (záložka Moje questy). Kostra: `knowledge-map/map-index.json`
   (`build-map-index.py`), obarvení z `tg_mastery` (`js/profile.js`)

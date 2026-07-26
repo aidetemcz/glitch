@@ -1033,13 +1033,21 @@
       `<p class="rz-hotovo-text g-p">${esc(shrnuti || ("Vypadá to, že už dobře víš, co je " + tema + "."))}</p>` +
       `<p class="rz-hotovo-sub g-p-s">Chceš přejít na další Glitch v questu, nebo se vrátit na Glitchfeed pro další inspiraci?</p>` +
       `<div class="rz-hotovo-akce">` +
-      (dalsiVQuestu(card) ? `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>` : "") +
+      `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>` +
       `<button class="rz-hotovo-btn" data-rz-feed>Přejít na Glitchfeed</button></div>`;
     const dalsi = box.querySelector("[data-rz-dalsi]");
-    if (dalsi) dalsi.addEventListener("click", () => {
+    dalsi.addEventListener("click", () => {
       const n = dalsiVQuestu(card);
-      closeRozklik();
-      if (n) { scrollToIndex(n.index); if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400); }
+      if (n) {
+        closeRozklik();
+        scrollToIndex(n.index);
+        if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400);
+      } else {
+        // navazující kapitola tohoto questu zatím není hotová
+        const sub = box.querySelector(".rz-hotovo-sub");
+        if (sub) sub.textContent = "Další kapitola tohoto questu se teprve připravuje 🚧 Zatím se mrkni na Glitchfeed pro další inspiraci.";
+        dalsi.disabled = true;
+      }
     });
     box.querySelector("[data-rz-feed]").addEventListener("click", closeRozklik);
     return box;

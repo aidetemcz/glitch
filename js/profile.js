@@ -118,10 +118,10 @@
 
   /* Doplní mapu do boardu (kostru dotahujeme asynchronně). */
   function hydrateMap() {
-    if (state.tab !== "board" || mapIndex) return;
+    if (state.tab !== "quests" || mapIndex) return;
     loadMapIndex().then(() => {
       const cur = document.getElementById("glitch-profile");
-      if (!cur || state.tab !== "board") return;
+      if (!cur || state.tab !== "quests") return;
       const box = cur.querySelector("[data-pf-map]");
       if (box) box.innerHTML = knowledgeMapHtml();
     });
@@ -206,7 +206,7 @@
     if (state.tab === "settings") {
       return '<h2 class="pf-section-title">Tvá nastavení</h2>' + settingsHtml();
     }
-    if (state.tab === "board") {
+    if (state.tab === "quests") {
       return '<h2 class="pf-section-title">Tvoje mapa znalostí</h2>' +
         '<div class="km" data-pf-map>' +
         (mapIndex ? knowledgeMapHtml() : '<div class="pf-empty">Načítám mapu…</div>') +
@@ -234,7 +234,7 @@
     el.innerHTML = render(u);
     document.body.appendChild(el);
     wire(el);
-    hydrateMap();                    // board se otevírá jako první — dotáhni mapu znalostí
+    hydrateMap();                    // mapa znalostí je pod Questy — dotáhne se po přepnutí
 
     // načíst nastavení z DB (mezi zařízeními) a sloučit; když není, zůstane localStorage
     if (typeof sbLoadSettings === "function") {
