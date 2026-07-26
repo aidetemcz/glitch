@@ -55,6 +55,22 @@ def clean(s):
     return re.sub(r"\s+", " ", s)
 
 
+def strip_templates(prompt):
+    """Odstraní z promptu šablonové bloky s {{PLACEHOLDERY}}.
+
+    Některé persony (Glitchee) mají v promptu vzorový blok '### KARTA GLITCHE'
+    s poli {{NAZEV}}, {{VYUKOVY_CIL}}… Tuhle roli u nás plní blok ZADÁNÍ, který
+    skládá server ze skutečné karty. Kdyby šablona v promptu zůstala, model by
+    placeholdery klidně vypsal žákovi ({{NAZEV}} v bublině).
+    """
+    # ``` bloky, které obsahují placeholdery
+    prompt = re.sub(r"```[^\n]*\n(?:(?!```).)*?\{\{[A-Z_0-9]+\}\}(?:(?!```).)*?```",
+                    "(kontext Glitche dostaneš níže v bloku ZADÁNÍ)", prompt, flags=re.S)
+    # zbylé osamocené placeholdery (např. ve větě „Glitch o {{NAZEV}}")
+    prompt = re.sub(r"\{\{[A-Z_0-9]+\}\}", "…", prompt)
+    return prompt
+
+
 def build():
     personas = []
     for pid, fname in IDS.items():
@@ -74,6 +90,7 @@ def build():
 
         if not prompt:
             print(f"  ! {fname}: nenašel jsem '## Systémový prompt'")
+        prompt = strip_templates(prompt)
 
         personas.append({
             "id": pid,

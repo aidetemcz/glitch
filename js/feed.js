@@ -1015,35 +1015,80 @@
     return el;
   }
 
-  function initRzChat(panel, card) {
-    // Kvíz uvnitř chatu: výběr možností + vyhodnocení po odeslání
-    panel.querySelectorAll("[data-rz-quiz]").forEach((quiz) => {
-      const multi = quiz.dataset.multi === "true";
-      const opts = quiz.querySelectorAll(".rz-opt");
-      const submit = quiz.querySelector("[data-rz-submit]");
-      let done = false;
-      const evaluate = () => {
-        done = true;
-        opts.forEach((o) => {
-          const correct = o.dataset.correct === "true";
-          const sel = o.classList.contains("is-sel");
-          if (correct) o.classList.add("is-correct");
-          if (sel && !correct) o.classList.add("is-wrong");
-          o.classList.add("is-locked");
-        });
-        if (submit) { submit.textContent = "Vyhodnoceno"; submit.disabled = true; }
-      };
-      opts.forEach((opt) => opt.addEventListener("click", () => {
-        if (done) return;
-        if (multi) { opt.classList.toggle("is-sel"); return; }
-        // jedna volba: výběr se vyhodnotí rovnou (bez tlačítka — dle Figmy)
-        opts.forEach((o) => o.classList.toggle("is-sel", o === opt));
-        evaluate();
-      }));
-      if (submit) submit.addEventListener("click", () => { if (!done) evaluate(); });
-    });
+  /* ---- Kvíz v chatu (obsah generuje chatbot) ----
+     Bot pošle v odpovědi blok ```kviz {"typ":"single|multi","otazka":…,"moznosti":[…]}```.
+     Ten z textu vyjmeme a místo něj vykreslíme interaktivní kvíz (single = kolečka
+     a vyhodnotí se hned, multi = čtverečky a tlačítko Odeslat odpověď). Výsledek
+     pak pošleme botovi zpátky jako zprávu, aby na něj mohl navázat. */
+  const KVIZ_RE = /```kviz\s*([\s\S]*?)```/i;
 
-    // Vstupní pole: přidá bublinu uživatele (napojení na Tinybota přijde později)
+  function extractKviz(text) {
+    const m = KVIZ_RE.exec(text || "");
+    if (!m) return { text: text, kviz: null };
+    let kviz = null;
+    try {
+      const d = JSON.parse(m[1].trim());
+      const moznosti = (d.moznosti || d.options || []).filter((o) => o && (o.text || o.label));
+      if (moznosti.length >= 2) {
+        kviz = {
+          multi: String(d.typ || d.type).toLowerCase() === "multi",
+          otazka: d.otazka || d.question || "",
+          moznosti: moznosti.map((o) => ({
+            text: String(o.text || o.label),
+            spravne: !!(o.spravne != null ? o.spravne : o.correct)
+          }))
+        };
+        if (!kviz.moznosti.some((o) => o.spravne)) kviz = null;   // bez správné odpovědi nedává smysl
+      }
+    } catch (_) {}
+    return { text: (text.slice(0, m.index) + text.slice(m.index + m[0].length)).trim(), kviz: kviz };
+  }
+
+  function rzAppendKviz(thread, kviz, onAnswer) {
+    const type = kviz.multi ? "checkbox" : "radio";
+    const wrap = document.createElement("div");
+    wrap.className = "rz-quiz";
+    wrap.innerHTML =
+      (kviz.otazka ? `<p class="rz-quiz-q g-p">${esc(kviz.otazka)}</p>` : "") +
+      kviz.moznosti.map((o, i) =>
+        `<button class="rz-opt" data-rz-opt="${i}" data-correct="${!!o.spravne}">` +
+        `<span class="rz-mark rz-mark--${type}"></span>` +
+        `<span class="rz-opt-label">${esc(o.text)}</span></button>`).join("") +
+      (kviz.multi ? `<button class="rz-quiz-submit" data-rz-submit>Odeslat odpověď</button>` : "");
+    thread.appendChild(wrap);
+
+    const opts = wrap.querySelectorAll(".rz-opt");
+    const submit = wrap.querySelector("[data-rz-submit]");
+    let done = false;
+    const evaluate = () => {
+      done = true;
+      const zvolil = [], spravne = [];
+      opts.forEach((o, i) => {
+        const ok = o.dataset.correct === "true";
+        const sel = o.classList.contains("is-sel");
+        if (ok) { o.classList.add("is-correct"); spravne.push(kviz.moznosti[i].text); }
+        if (sel && !ok) o.classList.add("is-wrong");
+        if (sel) zvolil.push(kviz.moznosti[i].text);
+        o.classList.add("is-locked");
+      });
+      if (submit) { submit.textContent = "Vyhodnoceno"; submit.disabled = true; }
+      const vse = zvolil.length === spravne.length && spravne.every((s) => zvolil.includes(s));
+      if (typeof onAnswer === "function") {
+        onAnswer(`(Odpověděl jsem v kvízu: ${zvolil.join(", ") || "nic"}. Správně bylo: ` +
+                 `${spravne.join(", ")}. ${vse ? "Měl jsem to celé správně." : "Neměl jsem to celé správně."})`);
+      }
+    };
+    opts.forEach((opt) => opt.addEventListener("click", () => {
+      if (done) return;
+      if (kviz.multi) { opt.classList.toggle("is-sel"); return; }
+      opts.forEach((o) => o.classList.toggle("is-sel", o === opt));
+      evaluate();                                    // jedna volba se vyhodnotí hned
+    }));
+    if (submit) submit.addEventListener("click", () => { if (!done) evaluate(); });
+    return wrap;
+  }
+
+  function initRzChat(panel, card) {
     const form = panel.querySelector("[data-rz-form]");
     const thread = panel.querySelector("[data-rz-thread]");
     if (!form || !thread) return;
@@ -1054,25 +1099,25 @@
       .filter((m) => m.from === "bot" || m.from === "user")
       .map((m) => ({ role: m.from === "bot" ? "assistant" : "user", content: m.text }));
     const scrollDown = () => panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
+    const field = form.querySelector(".rz-input-field");
+    const sendBtn = form.querySelector(".rz-send");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const field = form.querySelector(".rz-input-field");
-      const sendBtn = form.querySelector(".rz-send");
-      const text = (field.value || "").trim();
-      if (!text) return;
+    // Jedno místo pro dotaz na bota: pošle historii, vykreslí odpověď a případný kvíz.
+    // `silent` = zpráva se do vlákna nezobrazí (úvodní pobídka, výsledek kvízu).
+    async function ask(text, opts) {
+      opts = opts || {};
+      if (text) {
+        history.push({ role: "user", content: text });
+        if (!opts.silent) {
+          const um = document.createElement("div");
+          um.className = "rz-msg rz-msg--user";
+          um.innerHTML = `<div class="rz-bubble"></div><span class="rz-ava rz-ava--user"></span>`;
+          um.querySelector(".rz-bubble").textContent = text;
+          thread.appendChild(um);
+        }
+        scrollDown();
+      }
 
-      // bublina uživatele
-      const um = document.createElement("div");
-      um.className = "rz-msg rz-msg--user";
-      um.innerHTML = `<div class="rz-bubble"></div><span class="rz-ava rz-ava--user"></span>`;
-      um.querySelector(".rz-bubble").textContent = text;
-      thread.appendChild(um);
-      history.push({ role: "user", content: text });
-      field.value = "";
-      scrollDown();
-
-      // „píše…" indikátor + zamčené pole během čekání
       field.disabled = true; if (sendBtn) sendBtn.disabled = true;
       const typing = rzAppendBot(thread, "…");
       typing.classList.add("rz-typing");
@@ -1083,45 +1128,43 @@
         const reply = await window.gptChat(history, {
           persona: personaOf(card),
           context: buildGlitchContext(card),
-          temperature: 0.3
+          temperature: opts.temperature || 0.3
         });
         typing.remove();
-        rzAppendBot(thread, reply);
         history.push({ role: "assistant", content: reply });
+
+        const parsed = extractKviz(reply);
+        if (parsed.text) rzAppendBot(thread, parsed.text);
+        if (parsed.kviz) {
+          // odpověď z kvízu pošleme botovi zpět (neviditelně), ať na ni naváže
+          rzAppendKviz(thread, parsed.kviz, (vysledek) => ask(vysledek, { silent: true }));
+        }
       } catch (err) {
         typing.remove();
-        rzAppendBot(thread, "Teď se mi nepovedlo odpovědět 😥 Zkus to prosím za chvilku.");
+        const fb = opts.fallback || "Teď se mi nepovedlo odpovědět. Zkus to prosím za chvilku.";
+        rzAppendBot(thread, fb);
       } finally {
         field.disabled = false; if (sendBtn) sendBtn.disabled = false;
-        field.focus();
         scrollDown();
       }
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = (field.value || "").trim();
+      if (!text) return;
+      field.value = "";
+      ask(text).then(() => field.focus());
     });
 
-    // Úvodní přivítání: po otevření chatu Glitchee sám krátce pozdraví, ať chat
-    // nezačíná prázdný. Je to jeho vlastní vygenerovaná zpráva (žádný placeholder).
-    async function greet() {
-      const typing = rzAppendBot(thread, "…");
-      typing.classList.add("rz-typing");
-      scrollDown();
-      try {
-        if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
-        const reply = await window.gptChat([
-          { role: "user", content: "(Žák právě otevřel tenhle Glitch a zatím nic nenapsal. Zahaj konverzaci podle své role — krátce, jednou až dvěma větami.)" }
-        ], {
-          persona: personaOf(card),
-          context: buildGlitchContext(card),
-          temperature: 0.5
-        });
-        typing.remove();
-        rzAppendBot(thread, reply);
-        history.push({ role: "assistant", content: reply });
-      } catch (err) {
-        typing.remove();
-        const fb = r.intro || "Ahoj! Zeptej se mě na cokoli k tomuhle Glitchi.";
-        rzAppendBot(thread, fb);
-        history.push({ role: "assistant", content: fb });
-      }
+    // Úvod: bot sám zahájí — nejdřív krátce uvede do tématu (žák o něm nemusí nic
+    // vědět, viděl jen úvodní text karty) a pak se zeptá.
+    function greet() {
+      return ask(
+        "(Žák právě otevřel tenhle Glitch a zatím nic nenapsal. O tématu nemusí vědět vůbec nic — " +
+        "viděl jen krátký úvodní text. Uveď ho krátce do tématu vlastními slovy a pak polož jednu otázku.)",
+        { silent: true, temperature: 0.5, fallback: r.intro || "Ahoj! Zeptej se mě na cokoli k tomuhle Glitchi." }
+      );
     }
     if (history.length === 0) greet();
   }

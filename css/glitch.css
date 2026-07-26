@@ -867,6 +867,8 @@ body.rz-lock { overflow: hidden; }
 
 /* kvíz uvnitř chatu */
 .rz-quiz { display: flex; flex-direction: column; gap: calc(9 * var(--u)); padding: calc(9 * var(--u)) 0 0 calc(44 * var(--u)); }
+/* otázka kvízu (kvíz generuje chatbot) */
+.rz-quiz-q { margin-bottom: calc(3 * var(--u)); color: var(--c-black); font-weight: 500; }
 .rz-opt {
   display: flex; align-items: flex-start; gap: calc(8 * var(--u));
   background: transparent; text-align: left; color: var(--c-black);

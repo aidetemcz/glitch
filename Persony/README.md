@@ -47,6 +47,32 @@ se bere zvlášť z konkrétní karty Glitche.
   Prohlížeč posílá jen id persony + kontext + konverzaci — **prompt ani bezpečnostní
   pravidla nejdou z klienta přepsat** (podvržená `system` zpráva se zahazuje).
 
+## Pravidla platformy (platí pro všech 12 person)
+
+Persony jsou psané pro školní zadání, kde žák látku už probíral. V Glitchi je to
+jinak — žák si jen rozklikl kartu ve feedu a nemusí o tématu vědět nic. Server
+proto ke každé personě přidává blok `### JAK TO CHODÍ V GLITCHI`:
+
+1. Nepředpokládej, že žák téma zná (neptej se „co ti utkvělo").
+2. **Nejdřív krátce uveď do tématu**, pak se ptej.
+3. Dál se **střídej**: když žák neví → vysvětli; když ví → naváž a posuň dál.
+4. Nikdy neodpovídej jen otázkou na otázku.
+
+## Kvíz (obsah generuje chatbot)
+
+Bot může kdykoli poslat kvíz — pozná sám, kdy už žáka může vyzkoušet. Pošle ho
+jako blok, který frontend vyjme z textu a vykreslí jako interaktivní kvíz:
+
+````
+```kviz
+{"typ":"single","otazka":"…","moznosti":[{"text":"…","spravne":true}, …]}
+```
+````
+
+- `single` → kolečka, vyhodnotí se **hned po ťuknutí** (bez tlačítka)
+- `multi` → čtverečky + tlačítko **Odeslat odpověď**
+- Výsledek se botovi pošle **neviditelně** zpět, takže na něj naváže.
+
 ## Poznámky
 
 - Persony jsou psané pro školní kontext se **„zadáním od učitele"** (téma / cíl /
