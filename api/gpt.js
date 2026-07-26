@@ -142,12 +142,27 @@ function buildSystemPrompt(personaId, ctx, quizNow, zak) {
   // ukončit, aby na kvíz navazovala.
   parts.push(quizNow
     ? "### TEĎ PŘIJDE KVÍZ\n\nŽák už tématu rozumí natolik, že ho můžeme vyzkoušet. " +
-      "Napiš JEN jednu krátkou větu, kterou kvíz uvedeš (např. „Zkusíme, jestli ti to sedí.\"). " +
-      "Nepokládej v téhle zprávě žádnou vlastní otázku a sám kvíz nevypisuj — " +
-      "otázka s možnostmi se doplní automaticky hned za tvou větu."
+      "Napiš jen krátce (jednou větou): potvrď nebo oceň jeho poslední odpověď a naznač, " +
+      "že si to teď rychle ověříte (např. „Přesně tak — pojď si to rychle zkusit.\"). " +
+      "NEPOKLÁDEJ v téhle zprávě žádnou novou otázku (žádné „jaké…?\", „proč…?\", „umíš…?\") " +
+      "a sám kvíz nevypisuj — otázka s možnostmi se doplní automaticky hned za tvou větu."
     : "### KVÍZ TEĎ NEPOSÍLEJ\n\nV téhle zprávě kvíz neposílej — pokračuj v rozhovoru " +
       "(vysvětluj a ptej se).");
   return parts.join("\n\n---\n\n");
+}
+
+/* Pojistka: než připojíme kvíz, useknout z odpovědi koncové otázky.
+   Bot má před kvízem jen potvrdit odpověď, ale persona ho tlačí končit otázkou —
+   a dvě otázky těsně nad sebou (jeho + kvíz) matou. Necháme potvrzení, otázky
+   na konci zahodíme. Když by nezbylo nic, dáme neutrální uvození. */
+function stripKoncovaOtazka(text) {
+  const s = String(text || "").trim();
+  if (!s.endsWith("?")) return s;
+  const vety = s.match(/[^.!?]+[.!?]+(?:["“”)\s]+|$)/g);
+  if (!vety || vety.length < 2) return "Pojď si to rychle ověřit.";  // celé jedna otázka
+  while (vety.length > 1 && vety[vety.length - 1].trim().endsWith("?")) vety.pop();
+  const out = vety.join("").trim();
+  return out && !out.endsWith("?") ? out : "Pojď si to rychle ověřit.";
 }
 
 async function callOpenAI(key, payload) {
@@ -336,6 +351,8 @@ module.exports = async function handler(req, res) {
     if (kviz) {
       // kdyby model kvíz přece jen vypsal sám, jeho blok zahodíme a použijeme náš
       text = text.replace(/```(?:kviz|json)?\s*\{[\s\S]*?\}\s*```/gi, "").trim();
+      // před kvízem nesmí zůstat vlastní otázka bota — necháme jen potvrzení
+      text = stripKoncovaOtazka(text);
       text += "\n\n```kviz\n" + JSON.stringify(kviz) + "\n```";
     }
     return res.status(200).json({ text, quiz: !!kviz });
