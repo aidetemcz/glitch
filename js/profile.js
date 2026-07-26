@@ -88,7 +88,7 @@
   /* ---------- ikony tabů (stroke = currentColor) ---------- */
   const ICONS = {
     board: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg>',
-    quests: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.5 13.4l7 4M15.5 6.6l-7 4"/></svg>',
+    quests: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>',
     saved: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.6l-8.9 8.9a5 5 0 0 1-7.1-7.1l8.9-8.9a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.65 1.65 0 0 1-2.3-2.3l8-8"/></svg>',
     settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.5 14H4a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 5.6 7L5.5 7a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 11 4.5V4a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V10a1.6 1.6 0 0 0 1.5 1.5H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>'
   };
@@ -105,12 +105,12 @@
   let currentUser = null;   // nastaví open(u); používá personalHtml() pro fallback přezdívky
 
   const TABS = [
-    { id: "board", label: "Tvůj Glitchboard", empty: "Zatím tu nic není — až si nějaký Glitch forkneš, objeví se na tvém boardu." },
     { id: "quests", label: "Tvé questy", empty: "Zatím žádný quest. Otevři nějaký ve feedu a začni." },
+    { id: "board", label: "Tvůj Glitchboard", empty: "Zatím tu nic není — až si nějaký Glitch forkneš, objeví se na tvém boardu." },
     { id: "saved", label: "Tvé uložené Glitche", empty: "Nic uloženého. Glitche, které si uložíš, najdeš tady." }
   ];
 
-  let state = { tab: "board" };
+  let state = { tab: "quests" };
 
   /* ---------- mapa znalostí (Glitchboard) ----------
      Kostra mapy (témata → koncepty) se načítá z knowledge-map/map-index.json;
@@ -166,14 +166,69 @@
       temata;
   }
 
-  /* Doplní mapu do boardu (kostru dotahujeme asynchronně). */
+  /* Doplní mapu (zatím pod Glitchboard, než ho navrhneme) — kostru dotahujeme async. */
   function hydrateMap() {
-    if (state.tab !== "quests" || mapIndex) return;
+    if (state.tab !== "board" || mapIndex) return;
     loadMapIndex().then(() => {
       const cur = document.getElementById("glitch-profile");
-      if (!cur || state.tab !== "quests") return;
+      if (!cur || state.tab !== "board") return;
       const box = cur.querySelector("[data-pf-map]");
       if (box) box.innerHTML = knowledgeMapHtml();
+    });
+  }
+
+  /* ---------- Tvé questy (dráhy postupu) ----------
+     Questy odvodíme z glitches/feed.json: karty s chapterNo seskupené podle tématu,
+     seřazené podle čísla kapitoly. Každá kapitola = uzel v dráze; splněné žlutě,
+     první nesplněná je „aktuální" (s popiskem), zbytek černě. */
+  let questsData = null, questsPromise = null;
+  function buildQuests(cards) {
+    const byTopic = {};
+    (cards || []).forEach((c) => {
+      if (c && c.chapterNo != null && c.topic) (byTopic[c.topic] = byTopic[c.topic] || []).push(c);
+    });
+    return Object.keys(byTopic).map((topic) => ({
+      topic: topic,
+      chapters: byTopic[topic].slice()
+        .sort((a, b) => Number(a.chapterNo) - Number(b.chapterNo))
+        .map((c) => ({ id: c.id, title: (c.rozklik && c.rozklik.title) || c.title || "" }))
+    })).filter((q) => q.chapters.length);
+  }
+  function loadQuests() {
+    if (questsData) return Promise.resolve(questsData);
+    if (questsPromise) return questsPromise;
+    questsPromise = fetch("glitches/feed.json?v=22")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((cards) => { questsData = buildQuests(cards); return questsData; })
+      .catch(() => { questsData = []; return questsData; });
+    return questsPromise;
+  }
+  const isDone = (id) => { try { return typeof window.isGlitchDone === "function" && window.isGlitchDone(id); } catch (_) { return false; } };
+
+  function questsHtml() {
+    if (!questsData) return '<div class="pf-empty">Načítám questy…</div>';
+    if (!questsData.length) return '<div class="pf-empty">Zatím žádný quest. Otevři nějaký ve feedu a začni.</div>';
+    return questsData.map((q) => {
+      let currentSet = false;
+      const nodes = q.chapters.map((ch) => {
+        const done = isDone(ch.id);
+        let cls = "q-node", label = "";
+        if (done) cls += " is-done";
+        else if (!currentSet) { cls += " is-current"; currentSet = true; label = '<span class="q-label">' + esc(ch.title) + '</span>'; }
+        return '<span class="' + cls + '">' + label + '</span>';
+      }).join("");
+      return '<div class="q-quest"><div class="q-name">' + esc(q.topic) + '</div>' +
+        '<div class="q-track">' + nodes + '</div></div>';
+    }).join("");
+  }
+
+  function hydrateQuests() {
+    if (state.tab !== "quests" || questsData) return;
+    loadQuests().then(() => {
+      const cur = document.getElementById("glitch-profile");
+      if (!cur || state.tab !== "quests") return;
+      const box = cur.querySelector("[data-pf-quests]");
+      if (box) box.innerHTML = questsHtml();
     });
   }
 
@@ -292,6 +347,13 @@
       return '<h2 class="pf-section-title">Tvá nastavení</h2>' + settingsHtml();
     }
     if (state.tab === "quests") {
+      return '<h2 class="pf-section-title">Tvé questy</h2>' +
+        '<div class="q-wrap" data-pf-quests>' +
+        (questsData ? questsHtml() : '<div class="pf-empty">Načítám questy…</div>') +
+        '</div>';
+    }
+    if (state.tab === "board") {
+      // Glitchboard zatím není navržený — prozatím sem dáváme mapu znalostí.
       return '<h2 class="pf-section-title">Tvoje mapa znalostí</h2>' +
         '<div class="km" data-pf-map>' +
         (mapIndex ? knowledgeMapHtml() : '<div class="pf-empty">Načítám mapu…</div>') +
@@ -314,13 +376,14 @@
     const u = (typeof sbCurrentUser !== "undefined") ? sbCurrentUser : null;
     currentUser = u;
     close();
-    state.tab = "board";
+    state.tab = "quests";
     const el = document.createElement("section");
     el.id = "glitch-profile";
     el.innerHTML = render(u);
     document.body.appendChild(el);
     wire(el);
-    hydrateMap();                    // mapa znalostí je pod Questy — dotáhne se po přepnutí
+    hydrateQuests();                 // Tvé questy jsou první tab
+    hydrateMap();                    // mapa je pod Glitchboard — dotáhne se po přepnutí
 
     // načíst nastavení z DB (mezi zařízeními) a sloučit; když není, zůstane localStorage
     if (typeof sbLoadSettings === "function") {
@@ -338,7 +401,8 @@
     el.querySelectorAll(".pf-tab").forEach((b) => b.classList.toggle("is-active", b.dataset.tab === state.tab));
     const c = el.querySelector("[data-pf-content]");
     if (c) c.innerHTML = contentHtml();
-    hydrateMap();                    // po přepnutí na board dotáhni mapu, pokud ještě není
+    hydrateQuests();                 // po přepnutí dotáhni obsah tabu, pokud ještě není
+    hydrateMap();
   }
 
   function wire(el) {

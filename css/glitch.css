@@ -782,6 +782,31 @@ button.km-cell:active { transform: scale(.9); }
 .km-lv-5 { background: #f5b301; }
 .km-lv-6 { background: #ef8f00; }
 
+/* Tvé questy — dráhy postupu (uzly = kapitoly; splněné žlutě, aktuální s popiskem) */
+.q-quest { margin-bottom: calc(40 * var(--u)); }
+.q-quest:last-child { margin-bottom: calc(8 * var(--u)); }
+.q-name { font-size: calc(17 * var(--u)); font-weight: 700; letter-spacing: var(--tracking); margin-bottom: calc(16 * var(--u)); }
+.q-track { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: calc(18 * var(--u)); }
+.q-track::before {
+  content: ""; position: absolute; left: calc(9 * var(--u)); right: calc(9 * var(--u)); top: 50%;
+  height: calc(2 * var(--u)); background: var(--c-black); transform: translateY(-50%);
+}
+.q-node {
+  position: relative; z-index: 1; flex: 0 0 auto;
+  width: calc(12 * var(--u)); height: calc(12 * var(--u)); border-radius: 50%; background: var(--c-black);
+}
+.q-node.is-done, .q-node.is-current {
+  width: calc(18 * var(--u)); height: calc(18 * var(--u));
+  background: var(--c-yellow); border: calc(2 * var(--u)) solid var(--c-black);
+}
+.q-label {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: calc(9 * var(--u));
+  white-space: nowrap; background: var(--c-yellow); color: var(--c-black);
+  border: 1px solid var(--c-black); border-radius: calc(6 * var(--u));
+  padding: calc(4 * var(--u)) calc(9 * var(--u));
+  font-size: calc(13 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+}
+
 /* nastavení */
 .pf-set-group { padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
 .pf-set-group:last-child { border-bottom: 0; }
