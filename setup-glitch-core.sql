@@ -27,6 +27,14 @@ alter table profiles add column if not exists role text
   check (role in ('zak','ucitel','editor','admin')) default 'zak';
 alter table profiles add column if not exists vek smallint;
 
+-- Osobní údaje z profilu (zapisuje je klient přes js/supabase.js). Idempotentní —
+-- když sloupce už existují, nic se nestane.
+alter table profiles add column if not exists nickname text;
+alter table profiles add column if not exists full_name text;
+alter table profiles add column if not exists gender text;
+alter table profiles add column if not exists learning_style text;
+alter table profiles add column if not exists settings jsonb;
+
 alter table profiles enable row level security;
 drop policy if exists "Profiles select own" on profiles;
 create policy "Profiles select own" on profiles for select using (auth.uid() = id);

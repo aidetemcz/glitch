@@ -38,8 +38,8 @@
   }
 
   /* ---------- osobní údaje (tg_user): přezdívka, gender, věk, avatar ----------
-     Lokálně vždy; přezdívku a gender propíšeme i do Supabase (profiles). Věk a
-     nahraný avatar zatím jen lokálně (Supabase sloupce doplníme později). */
+     Lokálně vždy; přezdívku, gender i věk (→ profiles.vek) propíšeme i do Supabase.
+     Nahraný avatar zatím jen lokálně (velký data URL — přesuneme do Storage později). */
   const USER_KEY = "tg_user";
   function getUser() {
     try { return JSON.parse(localStorage.getItem(USER_KEY) || "{}"); } catch (_) { return {}; }
@@ -52,7 +52,8 @@
         const cols = {};
         if ("nickname" in fields) cols.nickname = fields.nickname;
         if ("gender" in fields) cols.gender = fields.gender;
-        if (Object.keys(cols).length) sbSaveProfile(cols);   // jen existující sloupce profiles
+        if ("age" in fields) cols.vek = fields.age;           // věk → profiles.vek
+        if (Object.keys(cols).length) sbSaveProfile(cols);
       }
     } catch (_) {}
     return u;

@@ -1138,13 +1138,27 @@
      názvy konceptů dohledá server (má mapu konceptů). Bot to má jen jako kontext,
      aby mohl navázat na známé — ne aby z toho zkoušel. Bez postupu vrací null. */
   function buildZakProfil() {
+    const out = {};
+
+    // zvládnuté koncepty (žákova mapa)
     let mastery = {};
     try { if (typeof window.glitchMastery === "function") mastery = window.glitchMastery() || {}; } catch (_) {}
     const ids = Object.keys(mastery);
-    if (!ids.length) return null;
-    ids.sort((a, b) => new Date(mastery[b].kdy || 0) - new Date(mastery[a].kdy || 0));
-    const zvladnute = ids.slice(0, 15).map((id) => ({ concept_id: id, uroven: mastery[id].uroven }));
-    return { zvladnute: zvladnute, pocet: ids.length };
+    if (ids.length) {
+      ids.sort((a, b) => new Date(mastery[b].kdy || 0) - new Date(mastery[a].kdy || 0));
+      out.zvladnute = ids.slice(0, 15).map((id) => ({ concept_id: id, uroven: mastery[id].uroven }));
+      out.pocet = ids.length;
+    }
+
+    // osobní údaje (věk, rod) — bot podle nich přizpůsobí jazyk a oslovení
+    let user = {};
+    try { user = JSON.parse(localStorage.getItem("tg_user") || "{}"); } catch (_) {}
+    const osobni = {};
+    if (user.age) osobni.vek = user.age;
+    if (user.gender) osobni.gender = user.gender;
+    if (Object.keys(osobni).length) out.osobni = osobni;
+
+    return Object.keys(out).length ? out : null;
   }
 
   function rzAppendBot(thread, text) {

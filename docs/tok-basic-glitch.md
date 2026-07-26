@@ -79,8 +79,12 @@ flowchart LR
     P -->|build-catalog.py| PJ["Persony/personas.json"]
     M -->|build-concepts.py| MJ["knowledge-map/concepts.json"]
 
+    Z["Profil žáka — tg_mastery + tg_user (věk, rod)"]
+
     PJ -->|prompt persony| S["api/gpt.js"]
     F -->|kontext karty| S
+    Z -->|blok PROFIL ŽÁKA| S
+    MJ -->|názvy konceptů| S
     MJ -->|cíle a kritéria| E["api/evaluate.js"]
     F -->|concept_id| E
 
@@ -90,8 +94,13 @@ flowchart LR
 - **Persony** = *jak* bot mluví. Vybírá se polem `persona` v kartě
   (jinak dle typu karty, jinak `glitchee`).
 - **Karta Glitche** = *o čem* mluví (téma, název, úvodní text).
+- **Profil žáka** = *komu* bot mluví. Do promptu jde blok **PROFIL ŽÁKA**:
+  věk a rod (`tg_user` → přizpůsobí slovník, obtížnost a oslovení v češtině)
+  a zvládnuté koncepty (`tg_mastery` → na co může navázat). Je to jen kontext,
+  ne látka ke zkoušení.
 - **Mapa konceptů** = podle čeho se **hodnotí** (výukové cíle + kritéria),
-  napojená přes `concept_id` karty.
+  napojená přes `concept_id` karty; z ní se taky berou **názvy konceptů**
+  do profilu žáka.
 
 ⚠️ Po úpravě zdrojů je potřeba přegenerovat:
 ```bash
@@ -124,6 +133,11 @@ flowchart TD
 | `localStorage.tg_progress` | `{hotovo, kdy, uroven, shrnuti, concept_id}` | při splnění |
 | `localStorage.tg_retry` | `{kdy, pokusy}` | při špatné odpovědi |
 | Supabase `progress` | totéž, jen pro přihlášené | při splnění |
+| `localStorage.tg_mastery` + Supabase `concept_mastery` | nejvyšší dosažená úroveň konceptu | při splnění |
+| `localStorage.tg_user` + Supabase `profiles` | přezdívka, gender, věk (`vek`), avatar | při úpravě profilu |
+
+Věk, gender a přezdívka se ukládají do `profiles` (avatar zatím jen lokálně).
+Věk a rod pak jdou i chatbotovi (viz blok PROFIL ŽÁKA v části 3).
 
 ### Druhá šance
 

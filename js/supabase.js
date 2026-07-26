@@ -100,6 +100,7 @@ async function sbCreateProfile(userId) {
     full_name: local.fullName || null,
     gender: local.gender || null,
     learning_style: local.learningStyle || null,
+    vek: local.age || null,
   }, { onConflict: 'id', ignoreDuplicates: true });
 }
 
@@ -250,6 +251,7 @@ async function sbMergeToLocal(userId) {
       fullName: profile.full_name || user.fullName,
       gender: profile.gender || user.gender,
       learningStyle: profile.learning_style || user.learningStyle,
+      age: profile.vek || user.age,
     }));
   }
 }

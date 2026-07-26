@@ -112,6 +112,25 @@ function zakBlock(zak) {
   return radky.join("\n");
 }
 
+// Osobní údaje žáka (věk, rod) → řádky do profilu. Bot podle nich přizpůsobí
+// slovník, obtížnost a oslovení (v češtině záleží na rodě u sloves v minulém čase).
+function osobniRadky(zak) {
+  const o = (zak && typeof zak === "object" && zak.osobni) || {};
+  const radky = [];
+  const vek = parseInt(o.vek, 10);
+  if (vek >= 5 && vek <= 120) {
+    radky.push("Věk žáka: " + vek + " let — přizpůsob tomu slovník, příklady i obtížnost.");
+  }
+  if (o.gender === "holka") {
+    radky.push("Rod žáka: holka — oslovuj ji a shoduj slovesa v ženském rodě (např. „zvládla jsi\", „napsala jsi\").");
+  } else if (o.gender === "kluk") {
+    radky.push("Rod žáka: kluk — oslovuj ho a shoduj slovesa v mužském rodě (např. „zvládl jsi\", „napsal jsi\").");
+  } else if (o.gender === "jine" || o.gender === "neuvadet") {
+    radky.push("Rod žáka: neuvedený — vol neutrální formulace a vyhýbej se rodově zabarveným tvarům (např. „povedlo se ti to\" místo „zvládl/zvládla jsi\").");
+  }
+  return radky;
+}
+
 function buildSystemPrompt(personaId, ctx, quizNow, zak) {
   const persona = PERSONAS.get(personaId) || PERSONAS.get(CATALOG.default);
   const parts = [];
@@ -125,17 +144,20 @@ function buildSystemPrompt(personaId, ctx, quizNow, zak) {
       "Když žák odbočí jinam, vlídně ho vrať k tématu Glitche."
     );
   }
-  // Profil žáka — co už zvládl jinde. Jen kontext, ať bot může navázat.
+  // Profil žáka — osobní údaje (věk, rod) + co už zvládl jinde. Jen kontext.
+  const osobni = osobniRadky(zak);
   const zb = zakBlock(zak);
-  if (zb) {
-    parts.push(
-      "### PROFIL ŽÁKA (jen pro tebe — sám od sebe ho nezmiňuj)\n\n" +
-      "Tenhle žák už v jiných Glitchích zvládl tyhle koncepty (a na jaké úrovni):\n\n" + zb +
-      "\n\nSlouží ti to jen k tomu, aby ses mohl opřít o to, co už umí — když se to " +
-      "hodí, klidně na to krátce naváž („tohle znáš z…\"). Nevypisuj mu to jako seznam, " +
-      "nezkoušej ho z toho a nepředpokládej, že si všechno přesně pamatuje. Tenhle Glitch " +
-      "má svoje vlastní téma (viz ZADÁNÍ) — to je pořád to hlavní."
-    );
+  if (osobni.length || zb) {
+    let s = "### PROFIL ŽÁKA (jen pro tebe — sám od sebe ho nezmiňuj)\n\n";
+    if (osobni.length) s += osobni.join("\n") + "\n\n";
+    if (zb) {
+      s += "Koncepty, které už žák v jiných Glitchích zvládl (a na jaké úrovni):\n\n" + zb +
+        "\n\nNa tohle můžeš navázat („to znáš z…\"), ale nevypisuj mu to jako seznam a nezkoušej " +
+        "ho z toho — nepředpokládej, že si všechno přesně pamatuje.\n\n";
+    }
+    s += "Celý tenhle profil je jen kontext pro tebe. Tenhle Glitch má svoje vlastní téma " +
+      "(viz ZADÁNÍ) — to je pořád to hlavní.";
+    parts.push(s);
   }
   // Samotný kvíz negeneruje tenhle model (v proudu řeči to nespolehlivě vynechával) —
   // skládá ho zvlášť generateQuiz() a server ho připojí. Tady jen řekneme, jak zprávu
