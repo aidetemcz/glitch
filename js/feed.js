@@ -1123,6 +1123,14 @@
     _openCardId = null;
   }
 
+  // Otevře rozklik konkrétního Glitche podle id (volá profil — dráhy questů).
+  // U splněného ukáže vyhodnocení, u nesplněného konverzaci. Overlay je nad profilem.
+  window.glitchOpenGlitch = function (id) {
+    if (!id) return;
+    const c = _cardData.find((x) => x && x.id === id);
+    if (c && c.rozklik) openRozklik(c);
+  };
+
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && _rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
   });

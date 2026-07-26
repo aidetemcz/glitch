@@ -788,33 +788,35 @@ button.km-cell:active { transform: scale(.9); }
 .km-lv-5 { background: #f5b301; }
 .km-lv-6 { background: #ef8f00; }
 
-/* Tvé questy — dráhy postupu (uzly = kapitoly; splněné žlutě, aktuální s popiskem) */
+/* Tvé questy — dráhy postupu (uzly = kapitoly; splněné žlutě, aktuální žlutě, zbytek černě).
+   Rozestup teček je FIXNÍ (dráha má max 10 uzlů), takže délka čáry roste s počtem kapitol. */
 .q-quest { margin-bottom: calc(40 * var(--u)); }
 .q-quest:last-child { margin-bottom: calc(8 * var(--u)); }
 .q-name { font-size: calc(17 * var(--u)); font-weight: 700; letter-spacing: var(--tracking); margin-bottom: calc(16 * var(--u)); }
-.q-track { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: calc(18 * var(--u)); }
+.q-track { position: relative; display: inline-flex; align-items: center; gap: calc(22 * var(--u)); min-height: calc(18 * var(--u)); max-width: 100%; }
 .q-track::before {
   content: ""; position: absolute; left: calc(9 * var(--u)); right: calc(9 * var(--u)); top: 50%;
   height: calc(2 * var(--u)); background: var(--c-black); transform: translateY(-50%);
 }
 .q-node {
-  position: relative; z-index: 1; flex: 0 0 auto;
+  position: relative; z-index: 1; flex: 0 0 auto; cursor: pointer;
   width: calc(12 * var(--u)); height: calc(12 * var(--u)); border-radius: 50%; background: var(--c-black);
 }
 .q-node.is-done, .q-node.is-current {
   width: calc(18 * var(--u)); height: calc(18 * var(--u));
   background: var(--c-yellow); border: calc(2 * var(--u)) solid var(--c-black);
 }
-.q-label {
-  position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: calc(9 * var(--u));
+/* žlutý tooltip s názvem kapitoly — na tap (mobil) / hover (desktop); klik otevře Glitch */
+.q-tip {
+  position: absolute; top: 100%; left: 0; margin-top: calc(9 * var(--u));
   white-space: nowrap; background: var(--c-yellow); color: var(--c-black);
   border: 1px solid var(--c-black); border-radius: calc(6 * var(--u));
   padding: calc(4 * var(--u)) calc(9 * var(--u));
   font-size: calc(13 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  display: none; z-index: 5; cursor: pointer;
 }
-/* krajní uzly: popisek zarovnat dovnitř, ať nepřeteče z obrazovky */
-.q-node--l .q-label { left: 0; transform: none; }
-.q-node--r .q-label { left: auto; right: 0; transform: none; }
+.q-node:hover .q-tip, .q-node.is-open .q-tip { display: block; }
+.q-node--r .q-tip { left: auto; right: 0; }
 
 /* nastavení */
 .pf-set-group { padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }

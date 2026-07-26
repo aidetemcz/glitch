@@ -112,7 +112,7 @@
 
   const TABS = [
     { id: "quests", label: "Tvé questy", empty: "Zatím žádný quest. Otevři nějaký ve feedu a začni." },
-    { id: "board", label: "Tvůj Glitchboard", empty: "Zatím tu nic není — až si nějaký Glitch forkneš, objeví se na tvém boardu." },
+    { id: "board", label: "Tvé projekty", empty: "Zatím tu nic není — až si forkneš poslední Glitch questu, objeví se tu tvůj projekt." },
     { id: "saved", label: "Tvé uložené Glitche", empty: "Nic uloženého. Glitche, které si uložíš, najdeš tady." }
   ];
 
@@ -215,19 +215,18 @@
     if (!questsData) return '<div class="pf-empty">Načítám questy…</div>';
     if (!questsData.length) return '<div class="pf-empty">Zatím žádný quest. Otevři nějaký ve feedu a začni.</div>';
     return questsData.map((q) => {
+      const chapters = q.chapters.slice(0, 10);      // dráha má vždy max 10 uzlů (fixní rozestup)
+      const n = chapters.length;
       let currentSet = false;
-      const n = q.chapters.length;
-      const nodes = q.chapters.map((ch, idx) => {
+      const nodes = chapters.map((ch, idx) => {
         const done = isDone(ch.id);
-        let cls = "q-node", label = "";
+        let cls = "q-node";
         if (done) cls += " is-done";
-        else if (!currentSet) {
-          currentSet = true;
-          // popisek u krajních uzlů zarovnáme dovnitř, ať nepřeteče z obrazovky
-          cls += " is-current" + (idx === 0 ? " q-node--l" : (idx === n - 1 ? " q-node--r" : ""));
-          label = '<span class="q-label">' + esc(ch.title) + '</span>';
-        }
-        return '<span class="' + cls + '">' + label + '</span>';
+        else if (!currentSet) { currentSet = true; cls += " is-current"; }
+        // popisek (tooltip) u posledního uzlu zarovnáme doprava, ať nepřeteče
+        if (idx === n - 1) cls += " q-node--r";
+        return '<span class="' + cls + '" data-gid="' + esc(ch.id) + '" tabindex="0" role="button" ' +
+          'aria-label="' + esc(ch.title) + '"><span class="q-tip">' + esc(ch.title) + '</span></span>';
       }).join("");
       return '<div class="q-quest"><div class="q-name">' + esc(q.topic) + '</div>' +
         '<div class="q-track">' + nodes + '</div></div>';
@@ -447,6 +446,17 @@
 
     // odhlášení
     el.addEventListener("click", async (e) => {
+      // dráhy questů: klik na žlutý tooltip → otevři vyhodnocení / Glitch
+      const tip = e.target.closest(".q-tip");
+      if (tip) {
+        const node = tip.closest(".q-node");
+        if (node && node.dataset.gid && typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(node.dataset.gid);
+        return;
+      }
+      // klik na tečku → ukaž její tooltip (a zavři ostatní); klik jinam → zavři všechny
+      const qnode = e.target.closest(".q-node");
+      el.querySelectorAll(".q-node.is-open").forEach((x) => { if (x !== qnode) x.classList.remove("is-open"); });
+      if (qnode) { qnode.classList.toggle("is-open"); return; }
       // mapa znalostí: ťuknutí na dlaždici ukáže název konceptu a úroveň
       const cell = e.target.closest(".km-cell[data-km-name]");
       if (cell) {
