@@ -124,26 +124,42 @@ async function callOpenAI(key, payload) {
    vůbec nenapsal. Tady dostane model jediný úkol a formát si nemůže vymyslet
    (response_format: json_object). Vrací hotový objekt kvízu, nebo null. */
 async function generateQuiz(key, convo, ctx) {
-  const prepis = convo.slice(-12)
-    .filter((m) => !/^\(/.test(m.content))
-    .map((m) => (m.role === "user" ? "ŽÁK: " : "BOT: ") + m.content.slice(0, 400))
+  // celý rozhovor bez interních zpráv v závorkách; poslední výměny jsou nejdůležitější
+  const relevantni = convo.filter((m) => !/^\(/.test(m.content)).slice(-14);
+  const prepis = relevantni
+    .map((m, i) => {
+      const zbyva = relevantni.length - i;
+      const mark = zbyva <= 4 ? " «poslední»" : "";
+      return (m.role === "user" ? "ŽÁK" : "BOT") + mark + ": " + m.content.slice(0, 600);
+    })
     .join("\n");
   try {
     const { ok, data } = await callOpenAI(key, {
       model: "gpt-4o-mini",
-      temperature: 0.4,
-      max_tokens: 300,
+      temperature: 0.3,
+      max_tokens: 400,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content:
-          "Vytvoř jednu krátkou kvízovou otázku pro žáka (11–18 let) z toho, o čem byl rozhovor. " +
-          "Otázka musí ověřit porozumění tématu, ne detail formulace. Česky, jednoduše.\n\n" +
-          "Vrať POUZE JSON v tomhle tvaru:\n" +
-          '{"typ":"single","otazka":"…","moznosti":[{"text":"…","spravne":true},{"text":"…","spravne":false}]}\n\n' +
-          "Pravidla: \"typ\" je \"single\" (jedna správná) nebo \"multi\" (víc správných). " +
-          "2–4 možnosti, každá krátká. U \"single\" je právě jedna spravne:true, u \"multi\" aspoň dvě. " +
-          "Nesprávné možnosti musí být věrohodné, ne zjevně hloupé." },
-        { role: "user", content: (ctx && ctx.nazev ? "Téma: " + ctx.nazev + "\n\n" : "") + "Rozhovor:\n" + prepis }
+          "Dostaneš přepis výukového rozhovoru. Vytvoř JEDNU kvízovou otázku pro žáka (11–18 let), " +
+          "která ověří, jestli pochopil to, o čem si právě povídali.\n\n" +
+          "NEJDŮLEŽITĚJŠÍ PRAVIDLO: otázka musí vycházet z KONKRÉTNÍHO OBSAHU rozhovoru — " +
+          "hlavně z posledních výměn (označené «poslední»). Ptej se na myšlenku, příklad nebo " +
+          "souvislost, která v rozhovoru SKUTEČNĚ ZAZNĚLA.\n" +
+          "ZAKÁZÁNO: obecná učebnicová otázka typu „Co je hlavní myšlenkou tématu?“ nebo " +
+          "definice tématu, pokud přesně tohle nebylo jádrem rozhovoru. Kdyby žák otázku " +
+          "zvládl bez toho rozhovoru, je špatná.\n\n" +
+          "Postupuj takto: nejdřív do pole \"zaznelo\" doslova opiš krátký úsek rozhovoru, " +
+          "na který se ptáš. Pak k němu teprve vymysli otázku.\n\n" +
+          "Vrať POUZE JSON:\n" +
+          '{"zaznelo":"…citace z rozhovoru…","typ":"single","otazka":"…",' +
+          '"moznosti":[{"text":"…","spravne":true},{"text":"…","spravne":false}]}\n\n' +
+          "Pravidla: \"typ\" je \"single\" (právě jedna správná) nebo \"multi\" (aspoň dvě správné). " +
+          "2–4 možnosti, každá krátká. Nesprávné možnosti musí být věrohodné, ne zjevně hloupé. " +
+          "Česky, jednoduchým jazykem." },
+        { role: "user", content:
+          "Téma Glitche (jen pro kontext, NEptej se na jeho definici): " +
+          ((ctx && ctx.nazev) || "—") + "\n\nPřepis rozhovoru:\n" + prepis }
       ]
     });
     if (!ok) return null;
@@ -152,6 +168,7 @@ async function generateQuiz(key, convo, ctx) {
     const moznosti = (d.moznosti || []).filter((o) => o && o.text).slice(0, 4)
       .map((o) => ({ text: String(o.text), spravne: !!o.spravne }));
     if (moznosti.length < 2 || !moznosti.some((o) => o.spravne) || !d.otazka) return null;
+    // "zaznelo" slouží jen k tomu, aby se model opřel o rozhovor — žákovi se neposílá
     return { typ: d.typ === "multi" ? "multi" : "single", otazka: String(d.otazka), moznosti: moznosti };
   } catch (_) {
     return null;
