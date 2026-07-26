@@ -923,6 +923,8 @@
         ${rzBadges(c)}
       </header>
       <div class="rz-body rz-body--chat">
+        ${r.title ? `<h1 class="rz-title g-h2">${esc(r.title)}</h1>` : ""}
+        ${r.intro ? `<p class="rz-intro g-p">${esc(r.intro)}</p>` : ""}
         <div class="rz-thread" data-rz-thread>${thread}</div>
       </div>
       <form class="rz-input" data-rz-form>
