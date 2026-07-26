@@ -970,27 +970,40 @@
     if (e.key === "Escape" && _rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
   });
 
-  /* ---- Chatbot Glitchee (sdílená persona + kontext konkrétní karty) ----
-     Persona je pevná (jeden zdroj pravdy tady v kódu — OpenAI „Prompt objekty"
-     se ruší, tak na nich nestavíme). Kontext se skládá z dané karty + questu,
-     takže bot mluví jen o tomto Glitchi. Volá se přes /api/gpt (klíč je na serveru). */
-  const GLITCHEE_PERSONA =
-    "Jsi Glitchee, průvodce v aplikaci Glitch. Bavíš se s dítětem (11–18 let) česky, " +
-    "krátce a kamarádsky. Bavíš se POUZE o tomto Glitchi — když se uživatel ptá na něco " +
-    "jiného, laskavě ho vrať k tématu. Nevymýšlej si, drž se kontextu níže.";
+  /* ---- Chatbot v Glitchi (persona + kontext konkrétní karty) ----
+     Personu (systémový prompt vč. bezpečnostních pravidel) skládá SERVER podle
+     jejího id — katalog je v Persony/personas.json. Odsud posíláme jen id persony
+     a kontext karty, takže bot mluví jen o tomhle Glitchi a pravidla nejdou
+     z prohlížeče přepsat. Personu si autor vybere v kartě (pole "persona"). */
+  const DEFAULT_PERSONA = "glitchee";
+  // Přednastavení podle typu karty (v editoru půjde přepsat polem "persona").
+  const PERSONA_BY_TYPE = {
+    quest_intro: "glitchee",
+    algorithm_demo: "glitchee",
+    argument: "argumentacni-partner",
+    historicka_osobnost: "historicka-postava",
+    spot_the_mistake: "chybujici-chatbot"
+  };
+  // Pořadí: co je v kartě → přednastavení dle typu → výchozí Glitchee.
+  const personaOf = (c) =>
+    (c && c.persona) || (c && c.rozklik && c.rozklik.persona) ||
+    (c && PERSONA_BY_TYPE[c.type]) || DEFAULT_PERSONA;
 
   function buildGlitchContext(c) {
     const r = (c && c.rozklik) || {};
-    const parts = [];
-    if (c.topic) parts.push("Téma questu: " + c.topic);
-    if (r.title || c.title) parts.push("Glitch: " + (r.title || c.title));
-    if (r.intro) parts.push(r.intro);
-    else if (c.body) parts.push(c.body);
+    const ctx = {
+      tema: c.topic || c.category || "",
+      nazev: r.title || c.title || "",
+      kapitola: r.chapter || (c.chapterNo != null ? String(c.chapterNo) : ""),
+      cil: r.cil || "",
+      zadani: r.zadani || "",
+      text: r.intro || c.body || ""
+    };
     if (Array.isArray(r.messages)) {
       const said = r.messages.filter((m) => m.from === "bot").map((m) => m.text).join(" ");
-      if (said) parts.push("Co už v Glitchi zaznělo: " + said);
+      if (said) ctx.receno = said;
     }
-    return parts.join("\n");
+    return ctx;
   }
 
   function rzAppendBot(thread, text) {
@@ -1067,11 +1080,11 @@
 
       try {
         if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
-        const messages = [
-          { role: "system", content: GLITCHEE_PERSONA + "\n\nKONTEXT GLITCHE:\n" + buildGlitchContext(card) },
-          ...history
-        ];
-        const reply = await window.gptChat(messages, { temperature: 0.3 });
+        const reply = await window.gptChat(history, {
+          persona: personaOf(card),
+          context: buildGlitchContext(card),
+          temperature: 0.3
+        });
         typing.remove();
         rzAppendBot(thread, reply);
         history.push({ role: "assistant", content: reply });
@@ -1094,9 +1107,12 @@
       try {
         if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
         const reply = await window.gptChat([
-          { role: "system", content: GLITCHEE_PERSONA + "\n\nKONTEXT GLITCHE:\n" + buildGlitchContext(card) },
-          { role: "user", content: "(Dítě právě otevřelo tento Glitch a zatím nic nenapsalo. Přivítej ho jednou až dvěma krátkými větami a pozvi ho, ať se zeptá.)" }
-        ], { temperature: 0.5 });
+          { role: "user", content: "(Žák právě otevřel tenhle Glitch a zatím nic nenapsal. Zahaj konverzaci podle své role — krátce, jednou až dvěma větami.)" }
+        ], {
+          persona: personaOf(card),
+          context: buildGlitchContext(card),
+          temperature: 0.5
+        });
         typing.remove();
         rzAppendBot(thread, reply);
         history.push({ role: "assistant", content: reply });

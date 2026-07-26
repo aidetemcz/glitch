@@ -1,13 +1,63 @@
 // Serverová proxy k OpenAI. Klíč zůstává na serveru (Vercel env: OPENAI_API_KEY)
 // a do prohlížeče se nikdy nepošle. Frontend volá POST /api/gpt.
 //
+// Systémový prompt (persona) se skládá TADY na serveru — ne v prohlížeči.
+// Důvod: persony obsahují bezpečnostní pravidla pro práci s dětmi a ta nesmí jít
+// z klienta přepsat. Frontend posílá jen id persony + kontext Glitche.
+//
 // Tělo požadavku (JSON):
-//   { "messages": [{ "role": "user", "content": "..." }], "model": "gpt-4o-mini", "temperature": 0.7 }
+//   {
+//     "persona": "glitchee",              // id z Persony/personas.json (volitelné)
+//     "context": { "tema": "...", "nazev": "...", "cil": "...", "zadani": "..." },
+//     "messages": [{ "role": "user", "content": "..." }],
+//     "model": "gpt-4o-mini", "temperature": 0.3
+//   }
 // Odpověď:
 //   { "text": "..." }  nebo  { "error": "..." }
 
+const CATALOG = require("../Persony/personas.json");
+
 const ALLOWED_MODELS = new Set(["gpt-4o-mini", "gpt-4o"]);
-const MAX_TOKENS = 800; // strop odpovědi, ať se nedá utéct s náklady
+const MAX_TOKENS = 800;        // strop odpovědi, ať se nedá utéct s náklady
+const MAX_MESSAGES = 40;       // strop délky konverzace
+const MAX_CHARS = 4000;        // strop délky jedné zprávy
+
+const PERSONAS = new Map((CATALOG.personas || []).map((p) => [p.id, p]));
+
+// Kontext Glitche → blok „zadání", na který jsou persony napsané
+// (téma / cíl / zadání; u Basic Glitche navíc pole karty).
+function contextBlock(ctx) {
+  if (!ctx || typeof ctx !== "object") return "";
+  const line = (label, val) => {
+    if (val == null) return "";
+    const s = String(val).trim().slice(0, MAX_CHARS);
+    return s ? `${label}: ${s}\n` : "";
+  };
+  return (
+    line("Téma", ctx.tema) +
+    line("Název Glitche", ctx.nazev) +
+    line("Kapitola", ctx.kapitola) +
+    line("Cíl", ctx.cil) +
+    line("Zadání / průběh aktivity", ctx.zadani) +
+    line("Text karty, který žák viděl", ctx.text) +
+    line("Co už v Glitchi zaznělo", ctx.receno)
+  ).trim();
+}
+
+function buildSystemPrompt(personaId, ctx) {
+  const persona = PERSONAS.get(personaId) || PERSONAS.get(CATALOG.default);
+  const parts = [];
+  if (persona && persona.prompt) parts.push(persona.prompt);
+  const block = contextBlock(ctx);
+  if (block) {
+    parts.push(
+      "### ZADÁNÍ (kontext tohoto Glitche)\n\n" + block +
+      "\n\nDrž se výhradně tohoto zadání. Nepřidávej látku mimo něj. " +
+      "Když žák odbočí jinam, vlídně ho vrať k tématu Glitche."
+    );
+  }
+  return parts.join("\n\n---\n\n");
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -25,13 +75,28 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = req.body || {};
-    const messages = body.messages;
     const model = ALLOWED_MODELS.has(body.model) ? body.model : "gpt-4o-mini";
-    const temperature = typeof body.temperature === "number" ? body.temperature : 0.7;
+    const temperature = typeof body.temperature === "number" ? body.temperature : 0.3;
 
-    if (!Array.isArray(messages) || messages.length === 0) {
+    if (!Array.isArray(body.messages) || body.messages.length === 0) {
       return res.status(400).json({ error: "Chybí pole 'messages'." });
     }
+
+    // Z klienta bereme JEN konverzaci (user/assistant). Systémovou roli ignorujeme —
+    // skládá se na serveru, aby nešla přepsat.
+    const convo = body.messages
+      .filter((m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
+      .slice(-MAX_MESSAGES)
+      .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_CHARS) }));
+
+    if (!convo.length) {
+      return res.status(400).json({ error: "Konverzace je prázdná." });
+    }
+
+    const messages = [
+      { role: "system", content: buildSystemPrompt(body.persona, body.context) },
+      ...convo
+    ];
 
     const r = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
