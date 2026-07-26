@@ -833,9 +833,10 @@
       if (answered) return;
       answered = true;
       const correct = opt.dataset.correct === "true";
-      // rychlá výzva je hotová odpovědí (správně i špatně) → zmizí z dalšího feedu
-      if (c && c.id && typeof window.markGlitchDone === "function") {
-        window.markGlitchDone(c.id, { typ: c.type, kviz: true, correct: correct });
+      // Rychlá výzva nemá konverzaci — hotová je správnou odpovědí.
+      // Při špatné se nezavírá, ať se vrátí ve feedu znovu.
+      if (correct && c && c.id && typeof window.markGlitchDone === "function") {
+        window.markGlitchDone(c.id, { typ: c.type, kviz: true, correct: true });
       }
       opts.forEach((o) => {
         if (o.dataset.correct === "true") o.classList.add("is-correct");
@@ -1165,12 +1166,10 @@
         if (parsed.text) rzAppendBot(thread, parsed.text);
         if (parsed.kviz) {
           // odpověď z kvízu pošleme botovi zpět (neviditelně), ať na ni naváže
+          // Kvíz sám o sobě Glitch NEuzavírá — po odpovědi se pošle hodnocení
+          // (kritéria z mapy konceptů) a teprve když žák cíl splnil, Glitch končí.
           rzAppendKviz(thread, parsed.kviz, (vysledek, vse) => {
-            // Glitch s chatem je hotový, jakmile žák zvládne kvíz v konverzaci
-            if (card && card.id && typeof window.markGlitchDone === "function") {
-              window.markGlitchDone(card.id, { typ: card.type, kviz: true, correct: !!vse });
-            }
-            ask(vysledek, { silent: true });
+            ask(vysledek, { silent: true }).then(() => vyhodnot(vse));
           });
         }
       } catch (err) {
@@ -1190,6 +1189,69 @@
       field.value = "";
       ask(text).then(() => field.focus());
     });
+
+    /* Vyhodnocení Glitche. Glitch se uzavírá až tady — ne odpovědí na kvíz.
+       Hodnotitel (api/evaluate) posoudí konverzaci proti kritériím konceptu;
+       teprve když žák cíl splnil, Glitch se označí za hotový a nabídne se
+       další krok (navazující Glitch v questu / zpět do feedu). */
+    let hodnoceno = false;
+    async function vyhodnot(kvizSpravne) {
+      if (hodnoceno || !card || !card.id) return;
+      if (typeof window.gptEvaluate !== "function") return;
+      const v = await window.gptEvaluate(history, {
+        conceptId: card.concept_id,
+        context: buildGlitchContext(card),
+        kviz: { spravne: !!kvizSpravne }
+      });
+      if (!v || !v.splneno || hodnoceno) return;
+      hodnoceno = true;
+      if (typeof window.markGlitchDone === "function") {
+        window.markGlitchDone(card.id, {
+          typ: card.type, concept_id: card.concept_id,
+          uroven: v.uroven || null, shrnuti: v.shrnuti || ""
+        });
+      }
+      zobrazHotovo(v);
+    }
+
+    // Nabídka po splnění: shrnutí + dvě volby, kam dál.
+    function zobrazHotovo(v) {
+      const tema = (r.title || card.title || "tohle téma");
+      const box = document.createElement("div");
+      box.className = "rz-hotovo";
+      box.innerHTML =
+        `<p class="rz-hotovo-text g-p">${esc(v.shrnuti || ("Vypadá to, že už dobře víš, co je " + tema + "."))}</p>` +
+        `<p class="rz-hotovo-sub g-p-s">Chceš přejít na další Glitch v questu, nebo se vrátit na Glitchfeed pro další inspiraci?</p>` +
+        `<div class="rz-hotovo-akce">` +
+        (dalsiVQuestu() ? `<button class="rz-hotovo-btn is-primary" data-rz-dalsi>Navazující Glitch</button>` : "") +
+        `<button class="rz-hotovo-btn" data-rz-feed>Přejít na Glitchfeed</button></div>`;
+      thread.appendChild(box);
+      form.classList.add("is-hidden");                 // konverzace uzavřená
+      scrollDown();
+
+      const dalsi = box.querySelector("[data-rz-dalsi]");
+      if (dalsi) dalsi.addEventListener("click", () => {
+        const n = dalsiVQuestu();
+        closeRozklik();
+        if (n) {
+          scrollToIndex(n.index);
+          if (n.card.rozklik) setTimeout(() => openRozklik(n.card), 400);
+        }
+      });
+      box.querySelector("[data-rz-feed]").addEventListener("click", closeRozklik);
+    }
+
+    // Najde navazující kapitolu téhož questu (stejné téma, další číslo kapitoly).
+    function dalsiVQuestu() {
+      if (!card || card.chapterNo == null || !card.topic) return null;
+      for (let i = 0; i < _cardData.length; i++) {
+        const c = _cardData[i];
+        if (c && c.topic === card.topic && Number(c.chapterNo) === Number(card.chapterNo) + 1) {
+          return { index: i, card: c };
+        }
+      }
+      return null;
+    }
 
     // Úvod: bot sám zahájí — nejdřív krátce uvede do tématu (žák o něm nemusí nic
     // vědět, viděl jen úvodní text karty) a pak se zeptá.

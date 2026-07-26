@@ -866,6 +866,24 @@ body.rz-lock { overflow: hidden; }
 .rz-msg--user .rz-bubble { max-width: calc(238 * var(--u)); padding: calc(11 * var(--u)) calc(14 * var(--u)); background: rgba(255,255,0,0.27); }
 
 /* kvíz uvnitř chatu */
+/* Splněno — shrnutí od hodnotitele + volba, kam dál */
+.rz-hotovo {
+  margin-top: calc(18 * var(--u)); padding: calc(16 * var(--u));
+  border: 2px solid var(--c-black); border-radius: calc(10 * var(--u));
+  background: var(--c-yellow); color: var(--c-black);
+}
+.rz-hotovo-text { font-weight: 600; margin-bottom: calc(6 * var(--u)); }
+.rz-hotovo-sub { margin-bottom: calc(14 * var(--u)); }
+.rz-hotovo-akce { display: flex; flex-direction: column; gap: calc(9 * var(--u)); }
+.rz-hotovo-btn {
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: calc(11 * var(--u)) calc(16 * var(--u)); background: transparent;
+  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); color: var(--c-black);
+  transition: opacity .12s ease;
+}
+.rz-hotovo-btn.is-primary { background: var(--c-black); color: var(--c-yellow); }
+.rz-hotovo-btn:active { opacity: .7; }
+
 /* Pre-test „Co už o tématu víš?" — zobrazí se po rozkliknutí, než začne chat */
 .rz-pretest { display: flex; flex-direction: column; margin: calc(20 * var(--u)) 0 calc(6 * var(--u)); }
 .rz-pretest-title { color: var(--c-black); margin-bottom: calc(6 * var(--u)); }

@@ -27,4 +27,27 @@ async function gptChat(messages, opts) {
   return data.text;
 }
 
+// Vyhodnocení Glitche — posoudí konverzaci proti kritériím z mapy konceptů.
+// Vrací { splneno, uroven, shrnuti, kriteria }. Při chybě { splneno: false }.
+async function gptEvaluate(messages, opts) {
+  opts = opts || {};
+  try {
+    const res = await fetch("/api/evaluate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages,
+        conceptId: opts.conceptId,
+        context: opts.context,
+        kviz: opts.kviz
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    return res.ok ? data : { splneno: false };
+  } catch (_) {
+    return { splneno: false };
+  }
+}
+
 window.gptChat = gptChat;
+window.gptEvaluate = gptEvaluate;
