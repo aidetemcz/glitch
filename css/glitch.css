@@ -301,6 +301,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   object-fit: cover; z-index: 1;
 }
 
+/* Noční zámek: jediná karta „Je čas vypnout screen!" přes celou obrazovku,
+   bez štítků a bez spodního menu (třída se přepíná v js/feed.js). */
+body.glitch-night #glitch-nav { display: none; }
+body.glitch-night #glitch-feed { padding: 0; max-width: none; }
+body.glitch-night .card { aspect-ratio: auto; height: 100%; margin: 0; border: 0; border-radius: 0; }
+body.glitch-night .card .badges { display: none; }
+
 /* ==========================================================================
    Mood selector (2D diagram) — nadpis y=118, text y=176, diagram střed ~452
    ========================================================================== */

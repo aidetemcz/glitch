@@ -410,8 +410,13 @@
 
   // Sestavení karet z katalogu, seřazené doporučovačem (js/recommender.js)
   let _cardData = [];
+  let _catalog = null;
   function buildCards(catalog) {
     const ordered = (typeof window.serazFeed === "function") ? window.serazFeed(catalog) : catalog;
+    // Noční zámek = jediná karta „Je čas vypnout screen!" → celoobrazovkově,
+    // bez štítků a bez spodního menu (viz .glitch-night v CSS).
+    const nightlock = ordered.length === 1 && ordered[0] && ordered[0].type === "time_to_let_go";
+    document.body.classList.toggle("glitch-night", nightlock);
     _cardData = ordered;
     feed.innerHTML = "";
     ordered.forEach((c, i) => {
@@ -451,8 +456,18 @@
       const res = await fetch("glitches/feed.json?v=24", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
+    _catalog = catalog;
     buildCards(catalog);
   })();
+
+  // Noční zámek se má aktivovat i bez reloadu — každou minutu zkontroluj, jestli
+  // se překlopil den↔noc, a když ano, přestav feed.
+  let _wasNight = (function () { const h = new Date().getHours(); return h >= 22 || h < 6; })();
+  setInterval(function () {
+    const h = new Date().getHours();
+    const night = h >= 22 || h < 6;
+    if (night !== _wasNight && _catalog) { _wasNight = night; buildCards(_catalog); }
+  }, 60000);
 
   /* ==========================================================================
      Navigace (chevron / maskot → další karta)
