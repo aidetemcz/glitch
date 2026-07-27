@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Déšť nad věžemi</title>
+<title>Déšť nad vrstevnicemi</title>
 <style>
   html, body { margin: 0; padding: 0; background: #000; }
   body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
@@ -32,28 +32,73 @@
   var ctx = canvas.getContext('2d');
   var W = 0, H = 0;
 
-  var T = 14;            // perioda morfování terénu (smyčka)
-  var G = 16;            // mřížka věží G×G
-
   function hash(a, b){
     var v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
     return v - Math.floor(v);
   }
   function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function easeInOut(p){ return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
 
-  // ---- kapky deště (recyklují se — smyčka je bezešvá) ----
+  // ---- statické organické pole výšek (0..1) na jemné mřížce ----
+  var N = 46;
+  var base = new Float32Array((N + 1) * (N + 1));
+  function fieldBase(u, v){
+    var x = u * 6.2, y = v * 6.2;
+    var s = 0.45 * (0.5 + 0.5 * Math.sin(x * 1.0 + y * 0.6 + 1.2) * Math.cos(x * 0.5 - y * 0.8 + 0.7));
+    s += 0.85 * (0.5 + 0.5 * Math.sin(x * 2.1 - y * 1.4 + 3.9) * Math.cos(x * 1.1 + y * 1.7 + 1.8));
+    s += 0.55 * (0.5 + 0.5 * Math.sin(x * 3.3 + y * 2.6 + 0.4) * Math.cos(x * 1.9 - y * 2.2 + 2.6));
+    s /= 1.5;
+    var d = Math.hypot(u - 0.5, v - 0.5) * 2;
+    var mask = clamp01(1.18 - 1.35 * d * d);
+    return Math.pow(clamp01(s * mask), 1.2);
+  }
+  for (var j = 0; j <= N; j++){
+    for (var i = 0; i <= N; i++){
+      base[j * (N + 1) + i] = fieldBase(i / N, j / N);
+    }
+  }
+  function B(i, j){ return base[j * (N + 1) + i]; }
+
+  // vrcholy kopců — tam porostou kvítky (jen pár nejvyšších)
+  var PEAKS = [];
+  (function(){
+    var cand = [];
+    for (var j2 = 3; j2 <= N - 3; j2++){
+      for (var i2 = 3; i2 <= N - 3; i2++){
+        var v0 = B(i2, j2);
+        if (v0 < 0.42) continue;
+        var isMax = true;
+        for (var dj = -2; dj <= 2 && isMax; dj++){
+          for (var di = -2; di <= 2; di++){
+            if (di === 0 && dj === 0) continue;
+            if (B(i2 + di, j2 + dj) > v0){ isMax = false; break; }
+          }
+        }
+        if (isMax) cand.push({ u: i2 / N, v: j2 / N, b: v0, phi: hash(i2, j2) * Math.PI * 2 });
+      }
+    }
+    cand.sort(function(a, b2){ return b2.b - a.b; });
+    for (var c = 0; c < cand.length && PEAKS.length < 9; c++){
+      var ok = true;
+      for (var p2 = 0; p2 < PEAKS.length; p2++){
+        if (Math.hypot(cand[c].u - PEAKS[p2].u, cand[c].v - PEAKS[p2].v) < 0.14){ ok = false; break; }
+      }
+      if (ok) PEAKS.push(cand[c]);
+    }
+    PEAKS.sort(function(a, b2){ return (a.u + a.v) - (b2.u + b2.v); });   // malíř: zadní dřív
+  })();
+
+  // ---- šikmý déšť ----
+  var SLOPE = 0.30;                       // posun x na jednotku pádu
   var DROPS = [];
-  for (var i = 0; i < 70; i++){
+  for (var r = 0; r < 64; r++){
     DROPS.push({
-      x: hash(i, 1),                 // 0..1 šířky
-      off: hash(i, 2),               // fáze pádu
-      speed: 0.16 + hash(i, 3) * 0.22,   // výšky za sekundu
-      len: 0.55 + hash(i, 4) * 0.9,
-      a: 0.5 + hash(i, 5) * 0.5
+      x: hash(r, 1), off: hash(r, 2),
+      speed: 0.15 + hash(r, 3) * 0.2,
+      len: 0.55 + hash(r, 4) * 0.9,
+      a: 0.5 + hash(r, 5) * 0.5
     });
   }
-
-  // sprity kapky: stejná čára v několika úrovních rozmazání
   var LINE_SPRITES = [];
   (function(){
     var blurs = [0, 1.2, 2.6, 4.5];
@@ -82,109 +127,127 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  // výška věže — kombinace hladkých polí s periodickými vahami (loopuje po T)
-  function towerH(x, y, t){
-    var u = x * 0.55, v = y * 0.55;
-    var nA = 0.5 + 0.5 * Math.sin(u * 1.1 + v * 0.7 + 1.7) * Math.cos(u * 0.4 - v * 0.9 + 0.5);
-    var nB = 0.5 + 0.5 * Math.sin(u * 2.3 - v * 1.5 + 4.1) * Math.cos(u * 1.2 + v * 1.7 + 2.2);
-    var nC = 0.5 + 0.5 * Math.sin(u * 3.1 + v * 2.6 + 0.9);
-    var w = Math.PI * 2 / T;
-    var sA = 0.5 + 0.5 * Math.sin(w * t + hash(x, y) * 0.9);
-    var sB = 0.5 + 0.5 * Math.sin(2 * w * t + 2.1);
-    var sC = 0.5 + 0.5 * Math.sin(3 * w * t + 4.2);
-    var val = (nA * (0.45 + 0.55 * sA) + nB * (0.35 + 0.45 * sB) + nC * (0.25 + 0.4 * sC)) / 1.6;
-    // okraje plochy nižší, střed vyšší
-    var cx = (G - 1) / 2;
-    var d = Math.hypot(x - cx, y - cx) / (G * 0.62);
-    val *= clamp01(1.25 - d * d * 1.4);
-    return Math.pow(clamp01(val), 1.5);
-  }
-
   function draw(now){
     var t = now / 1000;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
 
-    // ---- izometrický terén dole ----
-    var isoX = W * 0.47 / (G - 1);
-    var isoY = isoX * 0.5;
-    var maxH = H * 0.23;
-    var frontY = H - H * 0.025;                    // přední roh podstavy
-    var cxs = W / 2;
-    var dz = Math.max(2.2, H * 0.0062);
+    // dech terénu: přesně 1 s nahoru, 1 s dolů, s ease
+    var p = t % 2;
+    var breath = p < 1 ? easeInOut(p) : easeInOut(2 - p);
+    var ampPx = H * (0.07 + 0.115 * breath);
+
+    // izometrická projekce podstavy
+    var IX = W * 0.46, IY = W * 0.23;
+    var baseY = H - H * 0.03 - IY;
+    function projX(u, v){ return W / 2 + (u - v) * IX; }
+    function projY(u, v, z){ return baseY + (u + v - 1) * IY - z; }
 
     // obrys podstavy
-    var backY = frontY - 2 * (G - 1) * isoY;
-    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.20)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(cxs, frontY);
-    ctx.lineTo(cxs + (G - 1) * isoX, frontY - (G - 1) * isoY);
-    ctx.lineTo(cxs, backY);
-    ctx.lineTo(cxs - (G - 1) * isoX, frontY - (G - 1) * isoY);
+    ctx.moveTo(projX(0, 0), projY(0, 0, 0));
+    ctx.lineTo(projX(1, 0), projY(1, 0, 0));
+    ctx.lineTo(projX(1, 1), projY(1, 1, 0));
+    ctx.lineTo(projX(0, 1), projY(0, 1, 0));
     ctx.closePath();
     ctx.stroke();
 
-    // věže: odzadu dopředu (malíř)
-    for (var s = 0; s <= 2 * (G - 1); s++){
-      for (var gx = 0; gx <= s; gx++){
-        var gy = s - gx;
-        if (gx >= G || gy >= G) continue;
-        var bx = cxs + (gx - gy) * isoX;
-        var by = backY + s * isoY;
-        var h = towerH(gx, gy, t) * maxH;
-        if (h < dz * 1.2) continue;
-        // vodorovné vrstevnice věže
-        var n = Math.floor(h / dz);
-        for (var k = 0; k < n; k++){
-          var z = k * dz;
-          var wseg = isoX * (0.72 + 0.26 * Math.sin(z * 0.09 + gx * 1.3 + gy * 0.7));
-          ctx.strokeStyle = 'rgba(255,255,255,' + (0.2 + 0.26 * hash(gx * 3 + k, gy * 5)).toFixed(3) + ')';
-          ctx.beginPath();
-          ctx.moveTo(bx - wseg, by - z);
-          ctx.lineTo(bx + wseg, by - z);
-          ctx.stroke();
+    // ---- organické vrstevnice (marching squares nad polem výšek) ----
+    var dz = H * 0.0125;
+    var K = Math.floor(ampPx / dz);
+    for (var k = 1; k <= K; k++){
+      var th = k * dz / ampPx;
+      if (th > 0.985) break;
+      var zk = k * dz;
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.16 + 0.34 * (k / 14)).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var j3 = 0; j3 < N; j3++){
+        for (var i3 = 0; i3 < N; i3++){
+          var a = B(i3, j3), b2 = B(i3 + 1, j3), c2 = B(i3 + 1, j3 + 1), d2 = B(i3, j3 + 1);
+          var m = (a > th ? 8 : 0) | (b2 > th ? 4 : 0) | (c2 > th ? 2 : 0) | (d2 > th ? 1 : 0);
+          if (m === 0 || m === 15) continue;
+          // body na hranách buňky (lineární interpolace)
+          var pts = [];
+          function edge(v1, v2, x1, y1, x2, y2){
+            var f = (th - v1) / (v2 - v1);
+            pts.push([(x1 + (x2 - x1) * f) / N, (y1 + (y2 - y1) * f) / N]);
+          }
+          if ((a > th) !== (b2 > th)) edge(a, b2, i3, j3, i3 + 1, j3);
+          if ((b2 > th) !== (c2 > th)) edge(b2, c2, i3 + 1, j3, i3 + 1, j3 + 1);
+          if ((c2 > th) !== (d2 > th)) edge(c2, d2, i3 + 1, j3 + 1, i3, j3 + 1);
+          if ((d2 > th) !== (a > th)) edge(d2, a, i3, j3 + 1, i3, j3);
+          if (pts.length >= 2){
+            ctx.moveTo(projX(pts[0][0], pts[0][1]), projY(pts[0][0], pts[0][1], zk));
+            ctx.lineTo(projX(pts[1][0], pts[1][1]), projY(pts[1][0], pts[1][1], zk));
+            if (pts.length === 4){
+              ctx.moveTo(projX(pts[2][0], pts[2][1]), projY(pts[2][0], pts[2][1], zk));
+              ctx.lineTo(projX(pts[3][0], pts[3][1]), projY(pts[3][0], pts[3][1], zk));
+            }
+          }
         }
-        // žlutý vršek — izometrická „střecha"
-        var capY = by - h;
-        var cw = isoX * 0.92, ch = isoY * 0.92;
-        ctx.beginPath();
-        ctx.moveTo(bx, capY - ch);
-        ctx.lineTo(bx + cw, capY);
-        ctx.lineTo(bx, capY + ch);
-        ctx.lineTo(bx - cw, capY);
-        ctx.closePath();
-        ctx.fillStyle = 'rgba(255,255,0,' + (0.72 + 0.28 * (h / maxH)).toFixed(3) + ')';
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(255,255,180,0.5)';
-        ctx.stroke();
       }
+      ctx.stroke();
     }
 
-    // ---- déšť: nahoře rozmazaný, dole ostrý ----
+    // ---- žluté kvítky na vrcholech ----
+    for (var f2 = 0; f2 < PEAKS.length; f2++){
+      var pk = PEAKS[f2];
+      var hz = pk.b * ampPx;
+      var fx = projX(pk.u, pk.v), fy = projY(pk.u, pk.v, hz);
+      var fr = W * (0.030 + 0.028 * pk.b) * (0.85 + 0.15 * breath);
+      ctx.beginPath();
+      for (var a2 = 0; a2 <= 40; a2++){
+        var th2 = (a2 / 40) * Math.PI * 2;
+        var rr = fr * (1 + 0.30 * Math.sin(5 * th2 + pk.phi));
+        var px2 = fx + Math.cos(th2) * rr;
+        var py2 = fy + Math.sin(th2) * rr * 0.5;
+        a2 === 0 ? ctx.moveTo(px2, py2) : ctx.lineTo(px2, py2);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,255,0,0.9)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,190,0.55)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // tmavý střed květu
+      ctx.beginPath();
+      ctx.ellipse(fx, fy, fr * 0.30, fr * 0.15, 0, 0, Math.PI * 2);
+      ctx.fillStyle = '#000';
+      ctx.fill();
+    }
+
+    // ---- šikmý déšť: nahoře rozmazaný, dole ostrý ----
     var rainTop = -0.06;
-    var rainBottom = 1 - (H * 0.34) / H;           // mizí u horní hrany terénu
-    for (var di = 0; di < DROPS.length; di++){
-      var d2 = DROPS[di];
-      var cycle = (d2.off + t * d2.speed) % 1;
+    var rainBottom = 0.60;
+    var ang = Math.atan(SLOPE);
+    for (var di2 = 0; di2 < DROPS.length; di2++){
+      var dr = DROPS[di2];
+      var cycle = (dr.off + t * dr.speed) % 1;
       var yn = rainTop + cycle * (rainBottom - rainTop + 0.10);
       if (yn > rainBottom + 0.02) continue;
       var y = yn * H;
-      var p = clamp01((yn - rainTop) / (rainBottom - rainTop));   // 0 nahoře … 1 dole
-      var lvl = (1 - p) * (LINE_SPRITES.length - 1);
-      var i0 = Math.floor(lvl), fr = lvl - i0;
-      var la = d2.a * (0.35 + 0.65 * p);
-      la *= clamp01((rainBottom + 0.02 - yn) / 0.05);             // doznění u terénu
+      var x2 = ((dr.x + (yn - rainTop) * SLOPE * (H / W)) % 1.2 - 0.1) * W;
+      var pr = clamp01((yn - rainTop) / (rainBottom - rainTop));
+      var lvl = (1 - pr) * (LINE_SPRITES.length - 1);
+      var i0 = Math.floor(lvl), fr2 = lvl - i0;
+      var la = dr.a * (0.35 + 0.65 * pr);
+      la *= clamp01((rainBottom + 0.02 - yn) / 0.05);
       if (la <= 0.01) continue;
-      var lh = H * 0.055 * d2.len;
+      var lh = H * 0.055 * dr.len;
       var lw = lh * (36 / 96);
-      var x2 = d2.x * W;
-      ctx.globalAlpha = la * (1 - fr);
-      ctx.drawImage(LINE_SPRITES[i0], x2 - lw / 2, y, lw, lh);
-      if (fr > 0.01 && i0 + 1 < LINE_SPRITES.length){
-        ctx.globalAlpha = la * fr;
-        ctx.drawImage(LINE_SPRITES[i0 + 1], x2 - lw / 2, y, lw, lh);
+      ctx.save();
+      ctx.translate(x2, y + lh / 2);
+      ctx.rotate(-ang);
+      ctx.globalAlpha = la * (1 - fr2);
+      ctx.drawImage(LINE_SPRITES[i0], -lw / 2, -lh / 2, lw, lh);
+      if (fr2 > 0.01 && i0 + 1 < LINE_SPRITES.length){
+        ctx.globalAlpha = la * fr2;
+        ctx.drawImage(LINE_SPRITES[i0 + 1], -lw / 2, -lh / 2, lw, lh);
       }
+      ctx.restore();
       ctx.globalAlpha = 1;
     }
   }
