@@ -203,7 +203,7 @@
   function loadQuests() {
     if (questsData) return Promise.resolve(questsData);
     if (questsPromise) return questsPromise;
-    questsPromise = fetch("glitches/feed.json?v=25")
+    questsPromise = fetch("glitches/feed.json?v=26")
       .then((r) => (r.ok ? r.json() : null))
       .then((cards) => { questsData = buildQuests(cards); return questsData; })
       .catch(() => { questsData = []; return questsData; });
