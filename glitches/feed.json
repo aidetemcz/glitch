@@ -169,8 +169,8 @@
     "category": "Rychlá výzva",
     "trust": "Generováno",
     "obtiznost": 1,
-    "question": "Rychlý počet z hlavy",
-    "sub": "Vyber správný výsledek.",
+    "question": "310 × 15 = ?",
+    "sub": "Zvládneš spočítat do časového limitu?",
     "cols": 2,
     "answers": [
       {
@@ -191,13 +191,13 @@
       }
     ],
     "topic": "Matematika",
-    "questionStyle": "h3",
-    "taskText": "310 × 15 = ?"
+    "questionStyle": "h1"
   },
   {
     "id": "obrazec-trojuhelniky",
     "type": "quick_challenge",
     "category": "Rychlá výzva",
+    "trust": "Generováno",
     "obtiznost": 1,
     "question": "Kolik trojúhelníků je v obrazci?",
     "questionStyle": "h3",
@@ -226,7 +226,7 @@
     "category": "Rychlá výzva",
     "topic": "Matematika",
     "trust": "Generováno",
-    "question": "Osmaž tři topinky",
+    "question": "Jedna topinka se smaží deset minut, tedy pět minut z každé strany. Na pánev se vejdou dvě topinky vedle sebe.",
     "sub": "Za jak dlouho nejrychleji osmažíš na jedné pánvi tři topinky?",
     "cols": 1,
     "answers": [
@@ -243,9 +243,7 @@
         "correct": false
       }
     ],
-    "questionStyle": "h3",
-    "taskText": "Jedna topinka se smaží deset minut, tedy pět minut z každé strany. Na pánev se vejdou dvě topinky vedle sebe.",
-    "layout": "text"
+    "questionStyle": "h3"
   },
   {
     "id": "hra-na-pozornost-koule",

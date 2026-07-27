@@ -215,7 +215,10 @@
     quick_challenge(c) {
       // Jednotné rozvržení pro všechny výzvy: otázka nahoře (y≈216), úkol
       // (kód / obrazec) vystředěný v prázdném prostoru, odpovědi dole.
-      const textLayout = c.layout === "text";
+      // Styl odpovědí podle jejich DÉLKY (ne podle příznaku): dlouhé věty → textová
+      // tlačítka přes celou šířku + tok shora; krátké → kompaktní tlačítka na střed.
+      const longAns = (c.answers || []).some((a) => String((a && a.label) || a).length > 20);
+      const textLayout = longAns;
       const optCls = textLayout ? "quiz-opt quiz-opt--text g-p" : "quiz-opt g-h4";
       const opts = c.answers.map((a, i) =>
         `<button class="${optCls}" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
@@ -365,7 +368,7 @@
     // geometrie přesně dle Figmy (27:218): čtverec 150, úhlopříčka TL→BR,
     // TR→levá hrana (0,103), TR→spodní hrana (90,150)
     return `<div class="quiz-figure"><svg width="150" height="150" viewBox="0 0 150 150" fill="none">
-      <g stroke="#fff" stroke-width="1">
+      <g stroke="#1A1A1A" stroke-width="1">
         <rect x="0.5" y="0.5" width="149" height="149"/>
         <line x1="0.5" y1="0.5" x2="149.5" y2="149.5"/>
         <line x1="149.5" y1="0.5" x2="0" y2="103"/>
@@ -455,7 +458,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=26", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=27", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
