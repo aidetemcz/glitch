@@ -600,7 +600,18 @@
     "obtiznost": 2,
     "title": "Andrej Karpathy",
     "body": "Vědec, který dal „vibecodingu“ jméno. Spoluzakládal OpenAI, vedl AI za autopilotem v Tesle a hlavně rád učí, jak dnešní AI vlastně funguje. Zeptej se ho, jak přemýšlet o tvorbě s AI.",
-    "image": "assets/img/andrej-karpathy.jpg"
+    "image": "assets/img/andrej-karpathy.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Andrej Karpathy",
+      "cil": "Žák pochopí, co je vibecoding a že kód od AI je potřeba řídit a ověřovat, ne slepě zkopírovat.",
+      "intro": "Ahoj, jsem Andrej Karpathy. Pomáhal jsem rozjíždět OpenAI, vedl jsem AI za autopilotem v Tesle a slovo „vibecoding“ jsem vlastně pojmenoval já. Nejradši ale lidem vysvětluju, jak dnešní AI uvnitř funguje.",
+      "messages": [
+        { "from": "bot", "text": "Chceš vědět, co vibecoding vlastně je, nebo jak přemýšlet o tom, kdy se na kód od AI dá spolehnout a kdy ne?" }
+      ]
+    }
   },
   {
     "id": "grace-hopper",
@@ -611,7 +622,18 @@
     "obtiznost": 2,
     "title": "Grace Hopper",
     "body": "Programátorka a námořní admirálka, která věřila, že počítač má rozumět člověku — ne naopak. Vytvořila jeden z prvních překladačů, díky kterým nemusíme mluvit jen v jedničkách a nulách. Zeptej se jí.",
-    "image": "assets/img/grace-hopper.jpg"
+    "image": "assets/img/grace-hopper.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Grace Hopper",
+      "cil": "Žák pochopí, proč vznikly nástroje, které přibližují programování lidské řeči (abstrakce nad kódem).",
+      "intro": "Ahoj, jsem Grace Hopper. Byla jsem programátorka a taky admirálka námořnictva a nesnášela jsem větu „takhle se to dělalo vždycky“. Věřila jsem, že počítač má rozumět člověku, ne naopak — tak jsem pomohla vymyslet jeden z prvních překladačů.",
+      "messages": [
+        { "from": "bot", "text": "Zajímá tě, jak jsem přesvědčila lidi, že se dá programovat skoro lidskou řečí, nebo co je to vlastně ten překladač?" }
+      ]
+    }
   },
   {
     "id": "edsger-dijkstra",
@@ -622,7 +644,18 @@
     "obtiznost": 2,
     "title": "Edsger Dijkstra",
     "body": "Informatik, který tvrdil, že program se má hlavně chápat — ne jen spustit a doufat. Proslul větou, že testování ukáže, že chyby jsou, ale nikdy že nejsou. Zeptej se ho, proč na porozumění záleží.",
-    "image": "assets/img/edsger-dijkstra.jpg"
+    "image": "assets/img/edsger-dijkstra.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Edsger Dijkstra",
+      "cil": "Žák pochopí, proč je důležité programu rozumět a ověřovat ho, ne jen spustit a doufat.",
+      "intro": "Ahoj, jsem Edsger Dijkstra. Byl jsem informatik a hrozně mě trápilo, když někdo napsal program a jen doufal, že funguje. Proslul jsem větou, že testování ukáže, že chyby jsou — ale nikdy že nejsou.",
+      "messages": [
+        { "from": "bot", "text": "Chceš, abych ti vysvětlil, proč programu nestačí jen věřit, nebo jak poznám, že mu doopravdy rozumím?" }
+      ]
+    }
   },
   {
     "id": "algoritmus-co-je-algoritmus",
@@ -751,7 +784,18 @@
     "obtiznost": 2,
     "title": "Muhammad al-Chwárizmí",
     "body": "Matematik z doby před více než 1200 lety, po kterém se jmenuje slovo algoritmus. Sepisoval jasné postupy, jak krok za krokem vyřešit úlohu. Zeptej se ho, odkud se algoritmy vzaly.",
-    "image": "assets/img/muhammad-al-chwarizmi.jpg"
+    "image": "assets/img/muhammad-al-chwarizmi.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Muhammad al-Chwárizmí",
+      "cil": "Žák pochopí, co je algoritmus — jednoznačný postup krok za krokem, který vede ke stejnému výsledku.",
+      "intro": "Ahoj, jsem Muhammad al-Chwárizmí. Žil jsem před více než 1200 lety v Bagdádu a sepisoval jsem jasné postupy, jak krok za krokem vyřešit úlohu. Z mého jména později vzniklo slovo, které dnes znáš — algoritmus.",
+      "messages": [
+        { "from": "bot", "text": "Zajímá tě, odkud se vzaly algoritmy, nebo jak vypadal takový postup, když ještě žádné počítače nebyly?" }
+      ]
+    }
   },
   {
     "id": "katherine-johnson",
@@ -762,7 +806,18 @@
     "obtiznost": 2,
     "title": "Katherine Johnson",
     "body": "Matematička z NASA, která krok za krokem počítala dráhy prvních letů do vesmíru — tak přesně, že jí astronaut věřil víc než počítači. Zeptej se jí, proč na každém kroku záleží.",
-    "image": "assets/img/katherine-johnson.jpg"
+    "image": "assets/img/katherine-johnson.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Katherine Johnson",
+      "cil": "Žák pochopí, že u algoritmu záleží na správném pořadí a přesnosti každého kroku.",
+      "intro": "Ahoj, jsem Katherine Johnson. Počítala jsem v NASA dráhy prvních letů do vesmíru — ručně, krok za krokem. Když měl člověk poprvé obletět Zemi, chtěl, abych čísla z počítače přepočítala já, protože mi věřil víc.",
+      "messages": [
+        { "from": "bot", "text": "Chceš vědět, proč u výpočtu záleží na každém jednom kroku, nebo jak se dá spočítat cesta až do vesmíru?" }
+      ]
+    }
   },
   {
     "id": "george-boole",
@@ -773,7 +828,18 @@
     "obtiznost": 2,
     "title": "George Boole",
     "body": "Matematik, který proměnil „pravdu“ a „nepravdu“ v počty. Bez jeho nápadu by dnešní programy neuměly rozhodovat „když tohle, tak tamto“. Zeptej se ho, jak z logiky udělal matematiku.",
-    "image": "assets/img/george-boole.jpg"
+    "image": "assets/img/george-boole.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "George Boole",
+      "cil": "Žák pochopí základ booleovské logiky — rozhodování z hodnot pravda/nepravda (a operací AND/OR/NOT).",
+      "intro": "Ahoj, jsem George Boole. Byl jsem matematik a napadlo mě něco zvláštního: co kdyby se s „pravdou“ a „nepravdou“ dalo počítat jako s čísly? Z toho vznikla logika, díky které dnešní stroje umí rozhodovat „když tohle, tak tamto“.",
+      "messages": [
+        { "from": "bot", "text": "Zajímá tě, jak jsem z logiky udělal matematiku, nebo jak se dvěma hodnotami — pravda a nepravda — dá rozhodovat cokoli?" }
+      ]
+    }
   },
   {
     "id": "algoritmus-rv-co-je-algoritmus",

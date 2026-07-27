@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=39", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=40", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -1363,7 +1363,9 @@
   function buildGlitchContext(c) {
     const r = (c && c.rozklik) || {};
     const ctx = {
-      tema: c.topic || c.category || "",
+      // U Historické osobnosti je „téma" pro personu SAMA POSTAVA (koho má hrát),
+      // ne kategorie — persona historicka-postava podle toho ví, koho hraje.
+      tema: c.type === "historicka_osobnost" ? (r.title || c.title || "") : (c.topic || c.category || ""),
       nazev: r.title || c.title || "",
       kapitola: r.chapter || (c.chapterNo != null ? String(c.chapterNo) : ""),
       cil: r.cil || "",
