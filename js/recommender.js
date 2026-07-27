@@ -79,7 +79,13 @@
     let retry = {};
     try { retry = JSON.parse(localStorage.getItem("tg_retry") || "{}"); } catch (_) {}
 
-    return { settings, mood, done, retry };
+    // témata „nezajímá mě" a zájmy (zájem má přednost před „nezajímá")
+    let notint = [];
+    try { notint = JSON.parse(localStorage.getItem("tg_notinterested") || "[]"); } catch (_) {}
+    let interests = [];
+    try { interests = JSON.parse(localStorage.getItem("tg_interests") || "[]"); } catch (_) {}
+
+    return { settings, mood, done, retry, notint, interests };
   }
 
   function serazFeed(cards, ctx) {
@@ -101,10 +107,17 @@
       else rankable.push(c);
     });
 
+    // témata „nezajímá mě" (zájem má přednost — zapsaný zájem téma vrátí)
+    const norm = (x) => String(x || "").trim().toLowerCase();
+    const notintSet = new Set((ctx.notint || []).map(norm));
+    const interests = (ctx.interests || []).map(norm).filter(Boolean);
+    const jeZajem = (t) => interests.some((iv) => t.includes(iv) || iv.includes(t));
+
     // 1) tvrdé filtry
     let pool = rankable.filter((c) => {
       if (c.project) return false;                            // aplikační (projektový) Glitch není ve feedu
       if (c.type === "time_to_let_go") return false;          // zamykací obrazovka jen v noci (viz výše)
+      if (c.topic) { const t = norm(c.topic); if (notintSet.has(t) && !jeZajem(t)) return false; }  // „nezajímá mě"
       const b = trustBucket(c);
       if (b === "glitch" && s.odkoho_glitch === false) return false;
       if (b === "komunita" && s.odkoho_komunita === false) return false;

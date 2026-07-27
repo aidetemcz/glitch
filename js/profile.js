@@ -266,6 +266,18 @@
       '</div>'
     ).join("") + '</div>';
   }
+  /* ---------- Tvé uložené Glitche ---------- */
+  function savedHtml() {
+    const list = (typeof window.listSaved === "function") ? window.listSaved() : [];
+    if (!list.length) return '<div class="pf-empty">Nic uloženého. Glitche, které si uložíš přes menu (tři tečky), najdeš tady.</div>';
+    return '<div class="pf-projects">' + list.map((s) =>
+      '<div class="pf-proj" data-saved="' + esc(s.id) + '">' +
+        (s.topic ? '<div class="pf-proj-top"><span class="pf-proj-topic">' + esc(s.topic) + '</span></div>' : '') +
+        '<div class="pf-proj-title">' + esc(s.title || s.id) + '</div>' +
+      '</div>'
+    ).join("") + '</div>';
+  }
+
   function hydrateProjects() {
     if (state.tab !== "board") return;
     const cur = document.getElementById("glitch-profile");
@@ -396,6 +408,9 @@
     if (state.tab === "board") {
       return '<h2 class="pf-section-title">Tvé projekty</h2>' +
         '<div class="pf-proj-wrap" data-pf-projects>' + projectsHtml() + '</div>';
+    }
+    if (state.tab === "saved") {
+      return '<h2 class="pf-section-title">Tvé uložené Glitche</h2>' + savedHtml();
     }
     const t = TABS.find((x) => x.id === state.tab) || TABS[0];
     return '<h2 class="pf-section-title">' + esc(t.label) + '</h2>' +

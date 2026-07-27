@@ -400,7 +400,7 @@
   const BG = {
     welcome: "yellow", intro: "white", argument: "black", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black", time_to_let_go: "black",
-    quick_challenge: "black", spot_the_mistake: "black", fun_fact: "black",
+    quick_challenge: "pink", spot_the_mistake: "black", fun_fact: "black",
     historicka_osobnost: "black", quest_intro: "image"
   };
 
@@ -486,6 +486,34 @@
   }
 
   feed.addEventListener("click", (e) => {
+    // menu Glitche (tři tečky) — otevři/zavři, případně proveď akci
+    const mItem = e.target.closest(".card-menu-item");
+    if (mItem) {
+      const card = mItem.closest(".card");
+      const c = card && _cardData[card.dataset.index];
+      if (c) {
+        if (mItem.dataset.menu === "save") {
+          if (typeof window.saveGlitch === "function") window.saveGlitch({ id: c.id, topic: c.topic || "", title: (c.rozklik && c.rozklik.title) || c.title || c.question || "", type: c.type });
+          toast("Uloženo do profilu 💾");
+        } else if (mItem.dataset.menu === "notinterested") {
+          if (typeof window.markNotInterested === "function") window.markNotInterested(c.topic || "");
+          toast("Díky, tohle už ti nebudeme tolik ukazovat.");
+          card.classList.add("is-hidden");                  // hned zmiz z feedu
+        }
+      }
+      closeCardMenus();
+      return;
+    }
+    const mBtn = e.target.closest(".card-menu-btn");
+    if (mBtn) {
+      const pop = mBtn.parentElement.querySelector(".card-menu-pop");
+      const willOpen = pop && pop.hidden;
+      closeCardMenus();
+      if (pop) pop.hidden = !willOpen;
+      return;
+    }
+    closeCardMenus();                                        // klik jinam → zavři menu
+
     const rz = e.target.closest("[data-nav='rozklik']");
     if (rz) { const card = rz.closest(".card"); openRozklik(_cardData[card.dataset.index]); return; }
     const nav = e.target.closest("[data-nav='next']");
@@ -540,7 +568,25 @@
   /* ==========================================================================
      Interakce jednotlivých karet
      ========================================================================== */
+  // Menu Glitche (tři tečky vpravo nahoře) — jen na obsahových Glitchích,
+  // ne na systémových/wellbeing kartách.
+  const MENU_TYPES = new Set(["quick_challenge", "fun_fact", "spot_the_mistake",
+    "historicka_osobnost", "argument", "attention_game", "algorithm_demo", "quest_intro"]);
+  function cardMenu() {
+    return `<div class="card-menu" data-card-menu>
+        <button class="card-menu-btn" aria-label="Menu Glitche" aria-haspopup="true"><span class="card-menu-ic"></span></button>
+        <div class="card-menu-pop" hidden>
+          <button class="card-menu-item" data-menu="save">Uložit Glitch</button>
+          <button class="card-menu-item" data-menu="notinterested">Tohle mě nezajímá</button>
+        </div>
+      </div>`;
+  }
+  function closeCardMenus() {
+    feed.querySelectorAll(".card-menu-pop:not([hidden])").forEach((p) => { p.hidden = true; });
+  }
+
   function initCard(el, c) {
+    if (MENU_TYPES.has(c.type)) el.insertAdjacentHTML("beforeend", cardMenu());
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el, c);

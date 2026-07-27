@@ -188,6 +188,29 @@ async function sbListProjects() {
   } catch (_) { return []; }
 }
 
+// ── MENU GLITCHE: uložené + „nezajímá" ───────
+async function sbSaveSaved(info) {
+  if (!sb || !sbCurrentUser || !info || !info.id) return;
+  try {
+    await sb.from('saved_glitches').upsert({
+      user_id: sbCurrentUser.id, glitch_id: info.id,
+      topic: info.topic || null, title: info.title || null, glitch_type: info.type || null
+    }, { onConflict: 'user_id,glitch_id' });
+  } catch (_) {}
+}
+async function sbUnsaveSaved(id) {
+  if (!sb || !sbCurrentUser || !id) return;
+  try { await sb.from('saved_glitches').delete().eq('user_id', sbCurrentUser.id).eq('glitch_id', id); } catch (_) {}
+}
+async function sbMarkNotInterested(topic) {
+  if (!sb || !sbCurrentUser || !topic) return;
+  try {
+    await sb.from('topic_signals').upsert({
+      user_id: sbCurrentUser.id, topic: topic, signal: 'not_interested'
+    }, { onConflict: 'user_id,topic' });
+  } catch (_) {}
+}
+
 // ── MOOD ─────────────────────────────────────
 // Uloží náladu (focus/energy 0–100). Vždy lokálně; při přihlášení i do DB.
 // Primárně do dedikované tabulky `mood_entries`, sekundárně do `activity_log`.

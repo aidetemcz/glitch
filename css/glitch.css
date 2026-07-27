@@ -144,6 +144,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* kdo vytvořil: bílá výplň, šedý text */
 .badge.creator { background: var(--c-white); color: var(--c-grey-50, #747474); }
 
+/* Menu Glitche (tři tečky vpravo nahoře) + rozbalovací submenu */
+.card-menu { position: absolute; top: calc(26 * var(--u)); right: calc(23 * var(--u)); z-index: 6; }
+.card-menu-btn { display: grid; place-items: center; width: calc(30 * var(--u)); height: calc(28 * var(--u)); }
+.card-menu-ic {
+  width: calc(5 * var(--u)); height: calc(21 * var(--u)); background: var(--fg, var(--c-white));
+  -webkit-mask: url('assets/ui/more-icon.svg') center/contain no-repeat;
+  mask: url('assets/ui/more-icon.svg') center/contain no-repeat;
+}
+.card-menu-pop {
+  position: absolute; top: calc(36 * var(--u)); right: 0; z-index: 7;
+  background: #fff; color: #1a1a1a; border-radius: calc(10 * var(--u));
+  box-shadow: 0 calc(6 * var(--u)) calc(24 * var(--u)) rgba(0, 0, 0, .28);
+  padding: calc(6 * var(--u)); min-width: calc(190 * var(--u));
+}
+.card-menu-pop[hidden] { display: none; }
+.card-menu-item {
+  display: block; width: 100%; text-align: left; white-space: nowrap;
+  padding: calc(11 * var(--u)) calc(12 * var(--u)); border-radius: calc(7 * var(--u));
+  font-size: calc(15 * var(--u)); color: #1a1a1a; letter-spacing: var(--tracking);
+}
+.card-menu-item:active { background: var(--c-grey-10); }
+
 /* Číslo kapitoly (pill) */
 .chapter-no {
   display: inline-flex;
@@ -424,7 +446,7 @@ body.glitch-night .card .badges { display: none; }
 /* ==========================================================================
    Rychlá výzva (kvíz)
    ========================================================================== */
-.quiz-sub { margin-top: calc(12 * var(--u)); color: var(--c-white); }
+.quiz-sub { margin-top: calc(12 * var(--u)); color: var(--fg); }
 /* kompaktní buttony pevné šířky, zarovnané vlevo (dle Figmy), ne roztažené */
 .quiz-options { display: grid; row-gap: calc(16 * var(--u)); column-gap: calc(20 * var(--u)); justify-content: start; }
 .quiz-options.cols-1 { grid-template-columns: calc(125 * var(--u)); }
@@ -436,8 +458,8 @@ body.glitch-night .card .badges { display: none; }
 .quiz-opt {
   height: calc(47 * var(--u));
   background: transparent;
-  color: var(--c-white);
-  border: 1px solid var(--c-white);
+  color: var(--fg);
+  border: 1px solid var(--fg);
   border-radius: calc(5 * var(--u));
   font-size: calc(20 * var(--u)); font-weight: 600;
   line-height: normal; letter-spacing: var(--tracking);
