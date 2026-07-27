@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=41", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=42", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -684,7 +684,7 @@
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el, c);
-    if (c.type === "argument") { initArgument(el); initVizFrame(el); }
+    if (c.type === "argument") { initArgument(el, c); initVizFrame(el); }
     if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el, c);
     if (c.type === "algorithm_demo") initVizFrame(el);
@@ -1078,12 +1078,14 @@
   }
 
   /* ---- Argumentuj ---- */
-  function initArgument(el) {
+  function initArgument(el, c) {
     const opts = el.querySelectorAll(".arg-opt");
     opts.forEach((btn) => btn.addEventListener("click", () => {
       opts.forEach((b) => b.classList.toggle("is-sel", b === btn));
-      // TODO: otevřít chat s chatbotem (zatím není hotový)
-      toast("Chat s chatbotem — připravujeme 🚧");
+      if (!c || !c.rozklik) return;
+      // zapamatuj zvolený postoj → persona (argumentacni-partner) podle něj zahájí
+      c._postoj = btn.dataset.arg === "agree" ? "souhlas" : "nesouhlas";
+      openRozklik(c);
     }));
   }
 
@@ -1184,7 +1186,7 @@
         ${rzBadges(c)}
       </header>
       <div class="rz-body rz-body--chat">
-        ${(r.title || c.title) ? `<h1 class="rz-title g-h2">${esc(r.title || c.title)}</h1>` : ""}
+        ${(r.title || c.title || c.claim) ? `<h1 class="rz-title g-h2">${esc(r.title || c.title || c.claim)}</h1>` : ""}
         ${(r.intro || c.body) ? `<p class="rz-intro g-p">${esc(r.intro || c.body)}</p>` : ""}
         ${(function () { const img = r.image || (c.type === "fun_fact" ? c.image : ""); return img ? `<div class="rz-photo"><img src="${esc(img)}" alt=""></div>` : ""; })()}
         ${jenHlavicka ? "" : pretestBlock(r)}
@@ -1378,11 +1380,11 @@
       // U Historické osobnosti je „téma" pro personu SAMA POSTAVA (koho má hrát),
       // ne kategorie — persona historicka-postava podle toho ví, koho hraje.
       tema: c.type === "historicka_osobnost" ? (r.title || c.title || "") : (c.topic || c.category || ""),
-      nazev: r.title || c.title || "",
+      nazev: r.title || c.title || c.claim || "",
       kapitola: r.chapter || (c.chapterNo != null ? String(c.chapterNo) : ""),
       cil: r.cil || "",
       zadani: r.zadani || "",
-      text: r.intro || c.body || ""
+      text: r.intro || c.body || c.claim || ""
     };
     if (Array.isArray(r.messages)) {
       const said = r.messages.filter((m) => m.from === "bot").map((m) => m.text).join(" ");
@@ -1667,7 +1669,15 @@
       }));
     } else {
       form.classList.remove("is-hidden");
-      if (history.length === 0) greet();
+      if (history.length === 0) greet(argOpening(card));
+    }
+
+    // U Argumentuj persona zahájí podle zvoleného postoje (souhlas / nesouhlas).
+    function argOpening(c) {
+      if (!c || c.type !== "argument") return undefined;
+      const postoj = c._postoj === "nesouhlas" ? "NESOUHLASÍ" : "SOUHLASÍ";
+      return "Žák si u tohohle tvrzení zvolil, že s ním " + postoj + ". Nevysvětluj mu téma. " +
+        "Krátce potvrď jeho volbu a vyzvi ho, ať ti svůj postoj obhájí — polož mu k tomu jednu otevřenou otázku.";
     }
   }
 

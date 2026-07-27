@@ -359,7 +359,12 @@
     "claim": "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "viz": "assets/3Dvizualizations/asciicat.html?v=4",
-    "topic": "Digitální občanství"
+    "topic": "Digitální občanství",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Je to skutečně tak? Jak moc důležité jsou pro algoritmy informace o nás? Co z nich firmy získávají — a co z toho máme my?"
+    }
   },
   {
     "id": "argument-scroll-vlastni-vule",
@@ -371,7 +376,12 @@
     "claim": "Kolik času proscrolluju, je jen na mojí vůli. Algoritmus za to nemůže.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "viz": "assets/3Dvizualizations/asciicat.html?v=4",
-    "topic": "Umělá inteligence"
+    "topic": "Umělá inteligence",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Fakt za to může jen tvoje vůle? Jak jsou aplikace navržené, aby tě udržely u obrazovky? A kde končí tvoje volba a začíná jejich design?"
+    }
   },
   {
     "id": "argument-algoritmus-spravedlivejsi",
@@ -383,7 +393,12 @@
     "claim": "Spravedlivěji rozhodne algoritmus než člověk.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "viz": "assets/3Dvizualizations/asciicat.html?v=4",
-    "topic": "Umělá inteligence"
+    "topic": "Umělá inteligence",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Opravdu je algoritmus spravedlivější? Podle čeho se rozhoduje? A co když se naučí z dat, která spravedlivá nebyla?"
+    }
   },
   {
     "id": "argument-ai-obrazek-moje-dilo",
@@ -395,7 +410,12 @@
     "claim": "Když AI vytvoří obrázek podle mého promptu, je to moje dílo.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
     "viz": "assets/3Dvizualizations/asciicat.html?v=4",
-    "topic": "Umělá inteligence"
+    "topic": "Umělá inteligence",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Je to opravdu tvoje dílo? Co jsi vytvořil ty a co model? A z čeho vlastně AI ten obrázek složila?"
+    }
   },
   {
     "id": "puvod-pojmu-vibecoding",
