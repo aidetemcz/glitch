@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=43", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=44", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -1099,11 +1099,8 @@
     return `<div class="rz-badges">${parts.join("")}</div>`;
   }
 
-  // šipka sekce: žluté kolečko s „>" (po rozbalení se otočí dolů)
-  const SEC_ARROW =
-    '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">' +
-    '<circle cx="12" cy="12" r="11" fill="#ffff00"/>' +
-    '<path d="M10 7.5 14.5 12 10 16.5" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // šipka sekce: žluté kolečko se šipkou (po rozbalení se otočí dolů)
+  const SEC_ARROW = '<img src="assets/ui/open-icon.svg?v=1" alt="" width="18" height="18">';
 
   function renderExplainer(c, r) {
     const paras = (r.paragraphs || []).map((p) => `<p class="rz-para g-p">${esc(p)}</p>`).join("");
@@ -1114,24 +1111,22 @@
       return `<section class="rz-sec" data-rz-sec>
         <button class="rz-sec-head" data-rz-sec-toggle>
           <span class="rz-sec-ico">${SEC_ARROW}</span>
-          <span class="rz-sec-title g-h4">${esc(s.title)}</span>
+          <p class="rz-sec-title g-p">${esc(s.title)}</p>
         </button>
         ${s.summary ? `<p class="rz-sec-summary g-p">${esc(s.summary)}</p>` : ""}
         <div class="rz-sec-content">${content}</div>
       </section>`;
     }).join("");
     const secWrap = sections ? `<div class="rz-sections">${sections}</div>` : "";
-    const brand = r.brand === "glitch"
-      ? `<img class="rz-brand" src="assets/glitch-logo.svg" alt="Glitch">`
-      : "";
+    // štítek (např. „O Glitchi") sedí vlevo hned vedle šipky zpět
+    const badge = r.badge ? `<span class="rz-badge">${esc(r.badge)}</span>` : "";
     return `
-      <header class="rz-bar">
+      <header class="rz-bar rz-bar--left">
         <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
-        ${rzBadges(c)}
+        ${badge || rzBadges(c)}
       </header>
       <div class="rz-body rz-body--explainer">
-        ${brand}
-        <h1 class="rz-title g-h1">${esc(r.title)}</h1>
+        <h1 class="rz-title g-h3">${esc(r.title)}</h1>
         ${paras}
         ${outro}
         ${secWrap}
