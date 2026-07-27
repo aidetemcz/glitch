@@ -536,9 +536,9 @@ body.glitch-night .card .badges { display: none; }
 .funfact-tile img, .mistake-photo img, .persona-photo img {
   width: 100%; height: 100%; object-fit: cover;
 }
-/* fun fact může mít místo obrázku animaci (iframe) — vyplní čtverec */
-.funfact-tile iframe { width: 100%; height: 100%; border: 0; display: block; }
-.funfact-tile:has(iframe) { background: var(--c-black); }
+/* fun fact / najdi chybu / historická osobnost mohou mít místo obrázku animaci (iframe) — vyplní čtverec */
+.funfact-tile iframe, .mistake-photo iframe, .persona-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
+.funfact-tile:has(iframe), .mistake-photo:has(iframe), .persona-photo:has(iframe) { background: var(--c-black); }
 .mistake-context { color: var(--c-white); }
 .persona-cta {
   margin-top: calc(18 * var(--u));
