@@ -537,6 +537,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* médium (čtvercový obrázek / animace) vyplní šířku, výška dopočtená z poměru 1:1 */
 .stack-media > * { width: 100%; height: auto; max-height: 100%; }
 .stack-text { flex: 0 0 auto; }
+/* Najdi chybu / Historická osobnost: text hned pod obrázkem (médium neroztahovat) */
+.stack--pod .stack-media { flex: 0 0 auto; }
 .stack-text .fx-title { margin: 0; }
 .stack-text .fx-text { margin-top: calc(12 * var(--u)); max-width: calc(255 * var(--u)); }
 .stack-text .chapter-no { margin-bottom: calc(14 * var(--u)); }

@@ -290,7 +290,7 @@
         ? `<img src="${c.image}" alt="">`
         : `<div class="asset-missing">fotografie<br>(doplnit)</div>`;
       return `${badges(c)}
-        <div class="stack">
+        <div class="stack stack--pod">
           <div class="stack-media"><div class="mistake-photo">${media}</div></div>
           <div class="stack-text">
             <h3 class="fx-title mistake-claim g-h3">${esc(c.claim)}</h3>
@@ -305,7 +305,7 @@
         ? `<img src="${c.image}" alt="">`
         : `<div class="asset-missing">fotografie<br>(doplnit)</div>`;
       return `${badges(c)}
-        <div class="stack">
+        <div class="stack stack--pod">
           <div class="stack-media"><div class="persona-photo">${media}</div></div>
           <div class="stack-text">
             <h1 class="fx-title g-h1">${esc(c.title)}</h1>
