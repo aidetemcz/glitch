@@ -534,19 +534,19 @@ body.glitch-night .card .badges { display: none; }
 
 /* Fun fact / Najdi chybu / Historická osobnost — obrázek je VŽDY čtverec 1:1
    (Figma 321×321). Libovolný poměr vloženého obrázku se ořízne (object-fit: cover). */
-.funfact-tile, .mistake-photo, .persona-photo {
+.funfact-tile, .mistake-photo, .persona-photo, .arg-photo {
   aspect-ratio: 1 / 1;
   border-radius: calc(5 * var(--u));
   background: #2c2c2c;
   display: grid; place-items: center;
   overflow: hidden;
 }
-.funfact-tile img, .mistake-photo img, .persona-photo img {
+.funfact-tile img, .mistake-photo img, .persona-photo img, .arg-photo img {
   width: 100%; height: 100%; object-fit: cover;
 }
 /* fun fact / najdi chybu / historická osobnost mohou mít místo obrázku animaci (iframe) — vyplní čtverec */
-.funfact-tile iframe, .mistake-photo iframe, .persona-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
-.funfact-tile:has(iframe), .mistake-photo:has(iframe), .persona-photo:has(iframe) { background: var(--c-black); }
+.funfact-tile iframe, .mistake-photo iframe, .persona-photo iframe, .arg-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
+.funfact-tile:has(iframe), .mistake-photo:has(iframe), .persona-photo:has(iframe), .arg-photo:has(iframe) { background: var(--c-black); }
 .mistake-context { color: var(--c-white); }
 .persona-cta {
   margin-top: calc(18 * var(--u));
@@ -554,8 +554,8 @@ body.glitch-night .card .badges { display: none; }
 }
 
 /* Argumentuj (růžová karta) — tvrzení y=216, podtext y=350, tlačítka y=665 (Figma) */
-.arg-claim { right: calc(33 * var(--u)); color: var(--fg); }
-.arg-sub { max-width: calc(295 * var(--u)); color: var(--fg); }
+.arg-claim { color: var(--fg); }
+.arg-sub { color: var(--fg); }
 .arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(111 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
 .arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); }
 .arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }

@@ -331,6 +331,7 @@
     "obtiznost": 3,
     "claim": "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=1",
     "topic": "Digitální občanství"
   },
   {
@@ -342,6 +343,7 @@
     "obtiznost": 3,
     "claim": "Kolik času proscrolluju, je jen na mojí vůli. Algoritmus za to nemůže.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=1",
     "topic": "Umělá inteligence"
   },
   {
@@ -353,6 +355,7 @@
     "obtiznost": 3,
     "claim": "Spravedlivěji rozhodne algoritmus než člověk.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=1",
     "topic": "Umělá inteligence"
   },
   {
@@ -364,6 +367,7 @@
     "obtiznost": 3,
     "claim": "Když AI vytvoří obrázek podle mého promptu, je to moje dílo.",
     "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=1",
     "topic": "Umělá inteligence"
   },
   {

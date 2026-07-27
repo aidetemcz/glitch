@@ -354,9 +354,21 @@
     },
 
     argument(c) {
+      // stejná kostra jako Najdi chybu / Fun fact: čtvercová animace nahoře,
+      // tvrzení + výzva pod ní, tlačítka Souhlasím/Nesouhlasím ukotvená dole.
+      const media = c.viz
+        ? vizFrame(c.viz)
+        : c.image
+          ? `<img src="${c.image}" alt="">`
+          : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
-        <h2 class="fx-block arg-claim g-h2" style="top:26.4%">${esc(c.claim)}</h2>
-        <p class="fx-block arg-sub g-p" style="top:42.8%">${esc(c.sub)}</p>
+        <div class="stack stack--pod">
+          <div class="stack-media"><div class="arg-photo">${media}</div></div>
+          <div class="stack-text">
+            <h3 class="fx-title arg-claim g-h3">${esc(c.claim)}</h3>
+            <p class="fx-text arg-sub g-p">${esc(c.sub)}</p>
+          </div>
+        </div>
         <div class="arg-actions">
           <button class="arg-opt" data-arg="agree">Souhlasím</button>
           <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>
@@ -497,7 +509,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=32", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=33", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -659,7 +671,7 @@
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el, c);
-    if (c.type === "argument") initArgument(el);
+    if (c.type === "argument") { initArgument(el); initVizFrame(el); }
     if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el, c);
     if (c.type === "algorithm_demo") initVizFrame(el);
