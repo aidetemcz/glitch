@@ -686,6 +686,7 @@
     "obtiznost": 1,
     "title": "Nejstarší algoritmus, co pořád používáme, má přes 2000 let.",
     "body": "Sepsal ho Euklides zhruba 300 let před naším letopočtem — a běží i v dnešních počítačích.",
+    "image": "assets/img/euklides.jpg",
     "topic": "Algoritmus"
   },
   {
