@@ -125,7 +125,9 @@
   const chevron = (c) => {
     const act = c && c.rozklik ? "rozklik" : "next";
     const lbl = act === "rozklik" ? "Rozkliknout Glitch" : "Další Glitch";
-    return `<button class="nav-chevron" data-nav="${act}" aria-label="${lbl}"><img src="assets/ui/more-button.svg" alt="" width="38" height="59"></button>`;
+    // Na žluté úvodní kartě je žlutá šipka neviditelná → bílý podklad s černou outline.
+    const src = c && c.type === "welcome" ? "assets/ui/more-button-light.svg" : "assets/ui/more-button.svg";
+    return `<button class="nav-chevron" data-nav="${act}" aria-label="${lbl}"><img src="${src}" alt="" width="38" height="59"></button>`;
   };
   const chapter = (n) => n != null ? `<span class="chapter-no">${esc(n)}</span>` : "";
   const deco = (cls, style) => `<span class="pixel-deco ${cls}" style="${style}">${ICON.plus}</span>`;
@@ -138,7 +140,7 @@
         <span class="pixel-deco" style="top:13.9%;right:16.4%;width:13px;height:16px">${ICON.spark}</span>
         ${deco("", "top:31.4%;left:17.4%;width:12px;height:15px")}
         ${deco("", "top:55.6%;left:74.9%;width:12px;height:12px")}
-        <span class="pixel-deco" style="top:75.9%;left:18.9%;width:12px;height:13px">${ICON.spark}</span>
+        <span class="pixel-deco" style="top:82.5%;left:18.9%;width:12px;height:13px">${ICON.spark}</span>
         <img class="welcome-logo" src="${LOGO}" alt="Glitch">
         <h1 class="fx-block g-h1 welcome-h" style="top:60%">Vítej v Glitchi!</h1>
         <p class="fx-block g-p welcome-sub" style="top:70%">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole, nebo swipni dolů pro další Glitch.</p>
