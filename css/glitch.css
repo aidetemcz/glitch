@@ -450,15 +450,15 @@ body.glitch-night .card .badges { display: none; }
 }
 .insp-input {
   flex: 1 1 auto; min-width: 0; height: calc(46 * var(--u));
-  border: 2px solid #1a1a1a; border-radius: calc(6 * var(--u));
+  border: 2px solid var(--c-white); border-radius: calc(6 * var(--u));
   padding: 0 calc(15 * var(--u));
   font-family: var(--font); font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
-  color: var(--c-black); background: var(--c-white); outline: none;
+  color: var(--c-white); background: var(--c-black); outline: none;
 }
 .insp-input::placeholder { color: #8a8a8a; }
 .insp-send {
   flex: 0 0 auto; width: calc(46 * var(--u)); height: calc(46 * var(--u));
-  background: var(--c-yellow); border: 2px solid #1a1a1a; border-radius: calc(6 * var(--u));
+  background: var(--c-yellow); border: 2px solid var(--c-yellow); border-radius: calc(6 * var(--u));
   display: grid; place-items: center; transition: transform .12s ease; cursor: pointer;
 }
 .insp-send:active { transform: scale(.92); }

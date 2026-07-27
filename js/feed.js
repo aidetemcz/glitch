@@ -419,8 +419,8 @@
       // celou plochu a dole vstupní pole. Žák napíše nápady → otevře se detail
       // (chat s Glitchee o tom, co vizualizovat, a případné založení projektu).
       return `${badges(c)}
-        <h2 class="fx-block g-h2 insp-txt" style="top:9%">${esc(c.title)}</h2>
-        <p class="fx-block g-p insp-txt" style="top:16%">${esc(c.body || "")}</p>
+        <h2 class="fx-block g-h2 insp-txt" style="top:12.5%">${esc(c.title)}</h2>
+        <p class="fx-block g-p insp-txt" style="top:19%">${esc(c.body || "")}</p>
         <div class="insp-viz"><iframe class="viz-frame insp-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>
         <form class="insp-form" data-insp-form>
           <input class="insp-input" type="text" placeholder="Začni psát…" aria-label="Napiš své nápady na vizualizaci" autocomplete="off">
