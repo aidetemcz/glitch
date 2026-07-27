@@ -37,26 +37,36 @@
   // slova na kole — ml: patří ke strojovému učení?
   var WORDS = [
     { w: 'model',      ml: true },
-    { w: 'palačinka',  ml: false },
+    { w: 'klávesnice', ml: false },
     { w: 'data',       ml: true },
-    { w: 'šnek',       ml: false },
-    { w: 'učení',      ml: true },
-    { w: 'kytara',     ml: false },
-    { w: 'neuron',     ml: true },
-    { w: 'deštník',    ml: false },
+    { w: 'tiskárna',   ml: false },
     { w: 'trénink',    ml: true },
-    { w: 'ponorka',    ml: false },
-    { w: 'vzor',       ml: true },
-    { w: 'svetr',      ml: false },
+    { w: 'kabel',      ml: false },
+    { w: 'neuron',     ml: true },
+    { w: 'baterie',    ml: false },
     { w: 'predikce',   ml: true },
-    { w: 'lampa',      ml: false },
-    { w: 'trampolína', ml: false }
+    { w: 'obrazovka',  ml: false },
+    { w: 'vzor',       ml: true },
+    { w: 'myš',        ml: false },
+    { w: 'klasifikace', ml: true },
+    { w: 'složka',     ml: false },
+    { w: 'wifi',       ml: false }
   ];
   var N = WORDS.length;
   var STEP = Math.PI * 2 / N;
 
   // geometrie kola: střed daleko vlevo, viditelný jen oblouk se 3 nody
   var CX = -0.45, CY = 0.5, R = 0.95;
+
+  // hvězdy v pozadí — pár bílých pixelů, plynule se rozsvěcejí a zhasínají
+  var STARS = [
+    { x: 0.62, y: 0.095, p: 5.3, o: 0.0 },
+    { x: 0.80, y: 0.185, p: 3.9, o: 2.1 },
+    { x: 0.90, y: 0.44,  p: 6.1, o: 4.0 },
+    { x: 0.56, y: 0.315, p: 4.6, o: 1.2 },
+    { x: 0.87, y: 0.76,  p: 5.7, o: 3.3 },
+    { x: 0.68, y: 0.905, p: 4.2, o: 5.1 }
+  ];
 
   // stav
   var rot = 0, targetRot = 0;
@@ -259,6 +269,16 @@
     var ai = activeIdx();
     var snapP = 1 - clamp01(Math.abs(rot - targetRot) / (STEP * 0.5));
 
+    // hvězdy v pozadí
+    for (var sti = 0; sti < STARS.length; sti++){
+      var st = STARS[sti];
+      var tw = 0.5 + 0.5 * Math.sin(now / 1000 * (Math.PI * 2 / st.p) + st.o);
+      var sa = 0.08 + 0.6 * tw * tw;
+      var ps = Math.max(1.5, S * 0.005);
+      ctx.fillStyle = 'rgba(255,255,255,' + sa.toFixed(3) + ')';
+      ctx.fillRect(st.x * S - ps / 2, st.y * S - ps / 2, ps, ps);
+    }
+
     // dekorativní vedlejší oblouky
     ctx.strokeStyle = 'rgba(255,255,255,0.09)';
     ctx.lineWidth = 1;
@@ -357,10 +377,6 @@
           ctx.stroke();
           ctx.restore();
           drawMark(bx + bs / 2, by2 + bs / 2, d2.t, bs * 0.2, '255,255,255', 0.9 * btnA);
-          ctx.font = fontStr(S * 0.028);
-          ctx.textAlign = 'center';
-          ctx.fillStyle = 'rgba(255,255,255,' + (0.45 * btnA).toFixed(3) + ')';
-          ctx.fillText(d2.t, d2.x + B / 2, by + B + S * 0.032);
           if (answers[ai] === null){
             if (bi === 0) btnNo = { x: d2.x, y: by, w: B, h: B };
             else btnYes = { x: d2.x, y: by, w: B, h: B };
@@ -369,20 +385,9 @@
       }
     }
 
-    // výsledek: jen žluté číslo; chybné nody svítí žlutě na kole,
+    // po dokončení svítí chybné nody žlutě na kole;
     // po chvíli se hra sama vrátí na začátek
-    if (done){
-      var dp = clamp01((now - doneAt) / 400);
-      ctx.save();
-      ctx.shadowColor = 'rgba(255,255,0,0.55)';
-      ctx.shadowBlur = 14;
-      ctx.font = fontStr(S * 0.085, 600);
-      ctx.textAlign = 'center';
-      ctx.fillStyle = 'rgba(255,255,0,' + (0.95 * dp).toFixed(3) + ')';
-      ctx.fillText(score + ' / ' + N, S * 0.66, S * 0.62);
-      ctx.restore();
-      if (now - doneAt > 8000) resetGame();
-    }
+    if (done && now - doneAt > 8000) resetGame();
 
     ctx.restore();
   }
