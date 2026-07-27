@@ -43,15 +43,15 @@
     return arr;
   }
 
-  // v rámci každého questu (karty stejné kategorie, které mají chapterNo) srovnej
+  // v rámci každého questu (karty stejného tématu, které mají chapterNo) srovnej
   // karty podle chapterNo, ale ponech jejich (náhodné) sloty v proudu → prokládané, ale v pořadí
   function keepQuestOrder(list) {
     const groups = {};
     list.forEach((c, i) => {
-      if (c.chapterNo != null && c.category) (groups[c.category] = groups[c.category] || []).push(i);
+      if (c.chapterNo != null && c.topic) (groups[c.topic] = groups[c.topic] || []).push(i);
     });
-    Object.keys(groups).forEach((cat) => {
-      const slots = groups[cat];
+    Object.keys(groups).forEach((tema) => {
+      const slots = groups[tema];
       if (slots.length < 2) return;
       const ordered = slots.map((i) => list[i]).sort((a, b) => (a.chapterNo || 0) - (b.chapterNo || 0));
       slots.forEach((slot, k) => { list[slot] = ordered[k]; });
@@ -86,6 +86,13 @@
     ctx = ctx || feedContext();
     const s = ctx.settings || {};
 
+    // Noční zámek: mezi 22:00 a 7:00 se zobrazuje JEN „Je čas vypnout screen!" —
+    // zamykací obrazovka, aby děti v noci nekoukaly na feed.
+    const hod = new Date().getHours();
+    const noc = (hod >= 22 || hod < 7);
+    const lockCard = cards.find((c) => c.type === "time_to_let_go");
+    if (noc && lockCard) return [lockCard];
+
     // systémové karty drží pozici: welcome/intro nahoře, Shrnutí dole
     const head = [], rankable = [], tail = [];
     cards.forEach((c) => {
@@ -96,6 +103,8 @@
 
     // 1) tvrdé filtry
     let pool = rankable.filter((c) => {
+      if (c.project) return false;                            // aplikační (projektový) Glitch není ve feedu
+      if (c.type === "time_to_let_go") return false;          // zamykací obrazovka jen v noci (viz výše)
       const b = trustBucket(c);
       if (b === "glitch" && s.odkoho_glitch === false) return false;
       if (b === "komunita" && s.odkoho_komunita === false) return false;

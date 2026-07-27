@@ -197,7 +197,7 @@
       topic: topic,
       chapters: byTopic[topic].slice()
         .sort((a, b) => Number(a.chapterNo) - Number(b.chapterNo))
-        .map((c) => ({ id: c.id, title: c.projectTitle || (c.rozklik && c.rozklik.title) || c.title || "", project: !!c.project }))
+        .map((c) => ({ id: c.id, title: c.projectTitle || (c.rozklik && c.rozklik.title) || c.title || "", project: !!c.project, brief: c.projectBrief || "" }))
     })).filter((q) => q.chapters.length);
   }
   function loadQuests() {
@@ -226,7 +226,8 @@
           const locked = !chapters.slice(0, idx).every((c) => isDone(c.id));
           const inner = locked ? '<img src="assets/ui/locked-icon.svg" alt="Zamčeno">' : '';
           return '<span class="q-node q-node--project' + (locked ? " is-locked" : "") + edge + '" ' +
-            'data-gid="' + esc(ch.id) + '" tabindex="0" role="button" aria-label="' + esc(ch.title) + '">' +
+            'data-gid="' + esc(ch.id) + '" data-proj-topic="' + esc(q.topic) + '" data-proj-title="' + esc(ch.title) +
+            '" data-proj-brief="' + esc(ch.brief || "") + '" tabindex="0" role="button" aria-label="' + esc(ch.title) + '">' +
             inner + '<span class="q-tip">' + esc(ch.title) + '</span></span>';
         }
         let cls = "q-node";
@@ -479,8 +480,19 @@
       const tip = e.target.closest(".q-tip");
       if (tip) {
         const node = tip.closest(".q-node");
-        if (node && node.classList.contains("is-locked")) return;   // zamčený projekt zatím neotvírej
-        if (node && node.dataset.gid && typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(node.dataset.gid);
+        if (!node) return;
+        if (node.classList.contains("is-locked")) return;           // zamčený projekt neotvírej
+        // projektový (aplikační) uzel: nefrkuje chat, ale založí projekt a otevře Tvé projekty
+        if (node.classList.contains("q-node--project")) {
+          const gid = node.dataset.gid;
+          if (typeof window.hasProject === "function" && !window.hasProject(gid) && typeof window.createProject === "function") {
+            window.createProject({ glitch_id: gid, quest_topic: node.dataset.projTopic || "",
+              title: node.dataset.projTitle || "", brief: node.dataset.projBrief || "" });
+          }
+          if (typeof window.glitchOpenProfile === "function") window.glitchOpenProfile("board");
+          return;
+        }
+        if (node.dataset.gid && typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(node.dataset.gid);
         return;
       }
       // klik na tečku → ukaž její tooltip (a zavři ostatní); klik jinam → zavři všechny
