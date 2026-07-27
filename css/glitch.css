@@ -58,7 +58,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ==========================================================================
    Typografické styly (tokeny)
    ========================================================================== */
-.g-h1        { font-size: calc(40 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h1        { font-size: calc(37 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-h2        { font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-chapter-no{ font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
 .g-h3        { font-size: calc(25 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
@@ -559,6 +559,9 @@ body.glitch-night .card .badges { display: none; }
 }
 /* dlouhé textové kvízy potřebují celou výšku karty */
 .quiz-frame--flow { padding: calc(64 * var(--u)) 40px calc(44 * var(--u)); }
+/* obsah teče shora: úloha hned pod nadpisem, vysvětlení + tlačítka za ní
+   (neroztahovat do prázdna a nekotvit tlačítka až dole) */
+.quiz-frame--flow .quiz-task { flex: 0 0 auto; justify-content: flex-start; margin: calc(30 * var(--u)) 0; }
 .quiz-head { flex: 0 0 auto; }
 .quiz-head .quiz-sub { margin-top: calc(8 * var(--u)); }
 .quiz-task {

@@ -275,7 +275,7 @@
         ? `<img src="${c.image}" alt="">`
         : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
-        <div class="stack">
+        <div class="stack stack--pod">
           <div class="stack-media"><div class="funfact-tile">${media}</div></div>
           <div class="stack-text">
             <h3 class="fx-title g-h3">${esc(c.title)}</h3>
