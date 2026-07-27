@@ -44,13 +44,13 @@
     { w: 'vzor',        ml: true },
     { w: 'klasifikace', ml: true },
     { w: 'klávesnice',  ml: false },
-    { w: 'tiskárna',    ml: false },
-    { w: 'kabel',       ml: false },
     { w: 'baterie',     ml: false },
-    { w: 'obrazovka',   ml: false },
-    { w: 'myš',         ml: false },
-    { w: 'reproduktor', ml: false },
-    { w: 'sluchátka',   ml: false }
+    { w: 'kabel',       ml: false },
+    { w: 'deštník',     ml: false },
+    { w: 'pizza',       ml: false },
+    { w: 'sopka',       ml: false },
+    { w: 'housle',      ml: false },
+    { w: 'pyramida',    ml: false }
   ];
   // náhodné pořadí slov na kole (Fisher–Yates) — ať se správná/špatná nestřídají
   (function shuffle(a){ for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } })(WORDS);

@@ -424,6 +424,9 @@ body.glitch-night .card .badges { display: none; }
 .atten-note  { color: rgba(255,255,255,0.72); }
 .atten-note.is-hidden { visibility: hidden; }
 .atten-help, .atten-count { color: var(--c-white); }
+/* řádky počítadla (správně/špatně) těsně pod sebou — bez prázdného řádku */
+.atten-count-line { margin: 0; }
+.atten-count-line + .atten-count-line { margin-top: calc(4 * var(--u)); }
 /* koule je full-bleed (Figma 467×481 na x −29): přetéká oba boky karty */
 /* Aktivity (koule / hledání slov) jsou VŽDY čtverec v marginech Glitche (40px),
    nepřesahují okraje. Pevné pravidlo pro editor. */
@@ -534,19 +537,24 @@ body.glitch-night .card .badges { display: none; }
 
 /* Fun fact / Najdi chybu / Historická osobnost — obrázek je VŽDY čtverec 1:1
    (Figma 321×321). Libovolný poměr vloženého obrázku se ořízne (object-fit: cover). */
-.funfact-tile, .mistake-photo, .persona-photo, .arg-photo {
+.funfact-tile, .mistake-photo, .persona-photo {
   aspect-ratio: 1 / 1;
   border-radius: calc(5 * var(--u));
   background: #2c2c2c;
   display: grid; place-items: center;
   overflow: hidden;
 }
-.funfact-tile img, .mistake-photo img, .persona-photo img, .arg-photo img {
+.funfact-tile img, .mistake-photo img, .persona-photo img {
   width: 100%; height: 100%; object-fit: cover;
 }
 /* fun fact / najdi chybu / historická osobnost mohou mít místo obrázku animaci (iframe) — vyplní čtverec */
-.funfact-tile iframe, .mistake-photo iframe, .persona-photo iframe, .arg-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
-.funfact-tile:has(iframe), .mistake-photo:has(iframe), .persona-photo:has(iframe), .arg-photo:has(iframe) { background: var(--c-black); }
+.funfact-tile iframe, .mistake-photo iframe, .persona-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
+.funfact-tile:has(iframe), .mistake-photo:has(iframe), .persona-photo:has(iframe) { background: var(--c-black); }
+/* Argumentuj: animace BEZ rámečku (bez podkladu/obrysu), zarovnaná doleva a menší */
+.stack-media.arg-media { justify-content: flex-start; }
+.arg-media > .arg-photo { width: 55%; }
+.arg-photo { aspect-ratio: 1 / 1; overflow: hidden; background: transparent; }
+.arg-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
 .mistake-context { color: var(--c-white); }
 .persona-cta {
   margin-top: calc(18 * var(--u));

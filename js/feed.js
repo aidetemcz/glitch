@@ -280,10 +280,14 @@
       const counters = Array.isArray(c.counters) && c.counters.length
         ? c.counters
         : [{ label: c.countLabel || "Označených děr", init: c.countInit || "0/0" }];
-      const baseTop = counters.length > 1 ? 37 : 41;
-      const countLines = counters.map((ct, i) =>
-        `<p class="fx-block g-p atten-count" style="top:${baseTop + i * 5}%;pointer-events:none">${esc(ct.label)}: <span data-atten-count${ct.field ? ` data-count-field="${esc(ct.field)}"` : ""}>${esc(ct.init)}</span></p>`
-      ).join("");
+      // víc řádků počítadla těsně pod sebou (jeden blok, přirozené řádkování)
+      const countTop = counters.length > 1 ? 39 : 41;
+      const countLines =
+        `<div class="fx-block atten-count" style="top:${countTop}%;pointer-events:none">` +
+        counters.map((ct) =>
+          `<p class="g-p atten-count-line">${esc(ct.label)}: <span data-atten-count${ct.field ? ` data-count-field="${esc(ct.field)}"` : ""}>${esc(ct.init)}</span></p>`
+        ).join("") +
+        `</div>`;
       return `${badges(c)}
         <h3 class="fx-block g-h3" style="top:17.4%">${esc(c.title)}</h3>
         <p class="fx-block g-p atten-help" style="top:27%">${esc(help)}</p>
@@ -363,7 +367,7 @@
           : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
         <div class="stack stack--pod">
-          <div class="stack-media"><div class="arg-photo">${media}</div></div>
+          <div class="stack-media arg-media"><div class="arg-photo">${media}</div></div>
           <div class="stack-text">
             <h3 class="fx-title arg-claim g-h3">${esc(c.claim)}</h3>
             <p class="fx-text arg-sub g-p">${esc(c.sub)}</p>
@@ -509,7 +513,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=33", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=34", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
