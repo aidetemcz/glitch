@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffff00">
+  <title>Glitch</title>
+  <meta name="description" content="Glitch — vzdělávací síť, kde se děti učí tvořit s AI.">
+  <meta property="og:title" content="Glitch">
+  <meta property="og:description" content="Vzdělávací síť, kde se děti učí tvořit s AI.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://glitch.tiny.school">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/svg+xml" href="glitch-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000; --yellow: #ffff00;
+      --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: var(--yellow); color: var(--black); font-family: var(--font);
+      -webkit-font-smoothing: antialiased; min-height: 100dvh; position: relative; overflow: hidden;
+    }
+    /* pixelové dekorace */
+    .deco { position: absolute; z-index: 1; pointer-events: none; }
+    .deco svg { width: 100%; height: 100%; display: block; }
+    .d1 { top: 12%; right: 16%; width: 16px; height: 16px; }
+    .d2 { top: 53%; left: 19%; width: 13px; height: 13px; }
+    .d3 { top: 59%; left: 53%; width: 10px; height: 10px; }
+    .d4 { top: 69%; left: 34%; width: 15px; height: 15px; }
+
+    .logo {
+      position: absolute; top: 33%; left: 50%; transform: translate(-50%, -50%);
+      width: min(60vw, 200px); height: auto;
+    }
+    .tiny {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 46px);
+      display: block;
+    }
+    .tiny img { width: 96px; height: auto; display: block; }
+  </style>
+</head>
+<body>
+  <span class="deco d1"><svg viewBox="0 0 12 12" aria-hidden="true"><g fill="#000"><rect x="0" y="0" width="4" height="4"/><rect x="8" y="0" width="4" height="4"/><rect x="4" y="4" width="4" height="4"/><rect x="0" y="8" width="4" height="4"/><rect x="8" y="8" width="4" height="4"/></g></svg></span>
+  <span class="deco d2"><svg viewBox="0 0 12 12" aria-hidden="true"><g fill="#000"><rect x="4" y="0" width="4" height="12"/><rect x="0" y="4" width="12" height="4"/></g></svg></span>
+  <span class="deco d3"><svg viewBox="0 0 12 12" aria-hidden="true"><g fill="#000"><rect x="4" y="0" width="4" height="12"/><rect x="0" y="4" width="12" height="4"/></g></svg></span>
+  <span class="deco d4"><svg viewBox="0 0 12 12" aria-hidden="true"><g fill="#000"><rect x="0" y="0" width="4" height="4"/><rect x="8" y="0" width="4" height="4"/><rect x="4" y="4" width="4" height="4"/><rect x="0" y="8" width="4" height="4"/><rect x="8" y="8" width="4" height="4"/></g></svg></span>
+
+  <img class="logo" src="glitch-logo.svg" alt="Glitch">
+
+  <a class="tiny" href="https://tiny.school" aria-label="Tiny">
+    <img src="tiny-logo-pixelized.svg" alt="Tiny">
+  </a>
+</body>
+</html>

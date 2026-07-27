@@ -1,0 +1,916 @@
+/* ==========================================================================
+   Glitch — Design System
+   Zdroj tokenů: assets/glitch-design-tokens.md (Figma „Glitch 2.0")
+   ========================================================================== */
+
+:root {
+  /* Barvy (color variables) */
+  --c-black:      #000000;
+  --c-dark:       #1a1a1a;
+  --c-white:      #ffffff;
+  --c-grey-10:    #e7e7e7;
+  --c-grey-15:    #d0d0d0;
+  --c-grey-50:    #747474;
+  --c-yellow:     #ffff00;
+  --c-red:        #ff7171;
+  --c-red-15:     #ffcfcf;
+
+  /* Barvy pozadí karet (odečteno ze screenshotů — potvrdit s Figmou) */
+  --c-blue:       #6490ff;
+  --c-purple:     #70558d;
+  --c-teal:       #558d86;
+  --c-pink:       #ff6ea9;   /* dlaždice u Fun fact */
+
+  /* Layout */
+  --card-pad:     40px;
+  --bottombar-h:  48px;
+  --feed-max:     480px;
+  --nav-h:        48px;
+
+  /* Typografie */
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --tracking: -0.04em;
+
+  /* Responzivní jednotka — 1px na referenční šířce 402, dolů se zmenšuje.
+     Násob referenční hodnoty: calc(40 * var(--u)). Nad 402 se dál nezvětšuje. */
+  --u: min(1px, 100vw / 402);
+}
+
+/* ---------- Reset ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+body { overflow: hidden; height: 100dvh; display: flex; flex-direction: column; }
+
+img, svg, iframe { display: block; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* ==========================================================================
+   Typografické styly (tokeny)
+   ========================================================================== */
+.g-h1        { font-size: calc(40 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h2        { font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-chapter-no{ font-size: calc(30 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h3        { font-size: calc(25 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-h4        { font-size: calc(20 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-category  { font-size: calc(16 * var(--u)); font-weight: 600; line-height: normal; letter-spacing: var(--tracking); }
+.g-p         { font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u)); letter-spacing: var(--tracking); }
+.g-p-s       { font-size: calc(15 * var(--u)); font-weight: 400; line-height: normal; letter-spacing: var(--tracking); }
+.g-caps      { font-size: calc(15 * var(--u)); font-weight: 400; line-height: normal; letter-spacing: 0; }
+
+/* ==========================================================================
+   Feed (plynulý scroll jako Instagram; karta má pevný poměr stran 2:1 na výšku)
+   ========================================================================== */
+#glitch-feed {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--feed-max);
+  margin: 0 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  background: var(--c-black);
+}
+#glitch-feed::-webkit-scrollbar { display: none; }
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 2;          /* pevný rám 2:1 na výšku — nezávislý na výšce obrazovky */
+  overflow: hidden;
+  margin-bottom: 20px;          /* černá mezera mezi Glitchi (feed má černé pozadí) */
+  display: flex;
+  flex-direction: column;
+  color: var(--fg, var(--c-white));
+  background: var(--bg, var(--c-dark));
+}
+
+/* Skrytá karta (např. úvodní přihlášení pro přihlášeného uživatele) */
+.card.is-hidden { display: none; }
+
+/* Barevné varianty */
+.card--white  { --bg: var(--c-white);  --fg: var(--c-black); }
+.card--yellow { --bg: var(--c-yellow); --fg: var(--c-black); }
+.card--dark   { --bg: var(--c-dark);   --fg: var(--c-white); }
+.card--black  { --bg: var(--c-black);  --fg: var(--c-white); }
+.card--red    { --bg: var(--c-red);    --fg: var(--c-white); }
+.card--pink   { --bg: var(--c-red-15); --fg: var(--c-black); }
+.card--blue   { --bg: var(--c-blue);   --fg: var(--c-white); }
+.card--purple { --bg: var(--c-purple); --fg: var(--c-white); }
+.card--teal   { --bg: var(--c-teal);   --fg: var(--c-white); }
+
+/* Vnitřní obsah karty */
+.card-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 64px var(--card-pad) calc(var(--bottombar-h) + 24px);
+  min-height: 0;
+}
+
+/* ==========================================================================
+   Sdílené prvky karet
+   ========================================================================== */
+
+/* Štítky vlevo nahoře — pořadí: téma (žlutá) · typ (žlutá) · autor (bílá).
+   Figma: top 26, left 23, výška 26, radius 5, mezera 12. */
+.badges { position: absolute; top: calc(26 * var(--u)); left: calc(23 * var(--u)); z-index: 5; display: flex; gap: calc(12 * var(--u)); }
+.badge {
+  display: flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(11 * var(--u));
+  border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
+  letter-spacing: var(--tracking); white-space: nowrap;
+}
+.badge.topic, .badge.type { background: var(--c-yellow); color: #1a1a1a; }
+.badge.creator { background: var(--c-white); color: var(--c-grey-50, #747474); }
+
+/* Číslo kapitoly (pill) */
+.chapter-no {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(30 * var(--u));
+  height: calc(39 * var(--u));
+  padding: 0 calc(6 * var(--u));
+  background: var(--c-grey-15);
+  color: #1a1a1a;
+  border-radius: calc(5 * var(--u));
+  font-size: calc(30 * var(--u));
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking);
+}
+
+/* Navigační „další Glitch" (žlutý zaoblený obdélník) */
+.nav-chevron {
+  position: absolute;
+  right: calc(23 * var(--u));
+  bottom: calc(34 * var(--u));
+  display: grid; place-items: center;
+  z-index: 5;
+  transition: transform .12s ease;
+}
+.nav-chevron:active { transform: scale(0.92); }
+.nav-chevron img { display: block; width: calc(38 * var(--u)); height: auto; }
+/* text u karet se šipkou nesmí zajíždět pod šipku (vpravo dole) */
+.fx-block.reserve-chevron { right: calc(78 * var(--u)); }
+
+/* Maskot / scroll-down (žlutý kruh — interaktivní karty) */
+.nav-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: grid; place-items: center;
+  z-index: 5;
+  transition: transform .12s ease;
+}
+.nav-mascot:active { transform: translateX(-50%) scale(0.92); }
+.nav-mascot img { display: block; width: 56px; height: 56px; }
+
+/* Titulky / text helpery */
+.card-title  { margin: 0; }
+.card-lead   { margin-top: 14px; max-width: 34ch; opacity: .96; }
+.text-center { text-align: center; }
+
+/* ==========================================================================
+   Figma layout — absolutně pozicované prvky
+   Rám karty 402×818 (obsah nad menu). Svislé pozice v % z 818, aby držely
+   napříč výškami displejů; vodorovný okraj pevných 40 px.
+   ========================================================================== */
+.fx-block   { position: absolute; left: 40px; right: 40px; margin: 0; z-index: 2; }
+.fx-block.text-center { text-align: center; }
+.fx-title   { margin: 0; }
+.fx-text    { margin-top: calc(12 * var(--u)); }
+.fx-media   { position: absolute; left: 40px; right: 40px; z-index: 1; }
+.fx-center  { position: absolute; left: 0; right: 0; display: flex; justify-content: center; z-index: 1; }
+.fx-options { position: absolute; left: 40px; right: 40px; z-index: 2; }
+
+/* ==========================================================================
+   Welcome
+   ========================================================================== */
+/* Úvodní splash (žlutá) — logo Glitch + Tiny dole */
+.card[data-type="welcome"] { cursor: pointer; }
+.welcome-logo {
+  position: absolute; top: 41.5%; left: calc(50% - 7 * var(--u)); transform: translate(-50%, -50%);
+  width: calc(166 * var(--u)); height: auto;   /* Glitch hero (Figma 166×188, střed 7 px vlevo) */
+}
+.welcome-tiny {
+  position: absolute; top: 17.9%; left: 20.4%;
+  width: calc(99 * var(--u)); height: auto;     /* Tiny branding nahoře vlevo (Figma 99×50) */
+}
+/* tlačítko přihlášení sedí 26 px nad menu (Figma y 753–800) */
+.card[data-type="welcome"] .card-footer { bottom: calc(25 * var(--u)); }
+/* ==========================================================================
+   Tlačítka — jednotný styl: INVERZNÍ OUTLINE
+   Průhledné pozadí, barva textu i rámeček = --fg dané karty
+   → bílá na tmavém pozadí, černá na bílém/žlutém. Text velikosti glitch_p (16).
+   Aktivní/vybraný stav = plná inverze (pozadí --fg, text --bg).
+   Pozn.: odpovědi u Rychlé výzvy (.quiz-opt) mají VLASTNÍ styl (viz níže).
+   ========================================================================== */
+.welcome-login,
+.mood-cta,
+.breath-cta,
+.persona-cta,
+.arg-opt {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--fg);
+  border-radius: calc(5 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 400;   /* glitch_p (16/400) — dle Figmy */
+  line-height: calc(22 * var(--u)); letter-spacing: var(--tracking);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, opacity .12s ease;
+}
+.welcome-login:active,
+.mood-cta:active,
+.breath-cta:active,
+.persona-cta:active,
+.arg-opt:active { opacity: .7; }
+
+/* přihlášení přes Google — uživatel může projít i bez něj (Figma 238×47) */
+.welcome-login { width: calc(238 * var(--u)); height: calc(47 * var(--u)); padding: 0; }
+
+/* Úvodní karta „About Glitch" — loga vpravo nahoře, H2 + text na kartě (Figma 147:439) */
+.intro-tiny {
+  position: absolute; top: 6.6%; left: 52.2%;
+  width: calc(66 * var(--u)); height: auto;
+}
+.intro-glitch {
+  position: absolute; top: 10.4%; left: 56.2%;
+  width: calc(85 * var(--u)); height: auto;
+}
+.intro-body p + p { margin-top: calc(22 * var(--u)); }
+.intro-body { max-width: calc(301 * var(--u)); }
+
+/* Pixelové dekorace „+" na světlých kartách */
+.pixel-deco { position: absolute; z-index: 1; pointer-events: none; opacity: .92; }
+.pixel-deco svg { width: 100%; height: 100%; }
+
+/* ==========================================================================
+   Shrnutí (konec dne) — nadpis y=363, statistiky y=415..498, odkaz y=544
+   ========================================================================== */
+.summary-mascot-wrap {
+  position: absolute; top: 14.3%; left: 0; right: 0;
+  display: grid; place-items: center; z-index: 1;
+}
+.summary-mascot-wrap img { width: calc(173 * var(--u)); height: auto; }
+.summary-stats { right: calc(45 * var(--u)); }
+.summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(10 * var(--u)) 0 calc(9 * var(--u));
+  border-bottom: 1px solid #1a1a1a;
+  font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
+}
+.summary-row-val { font-weight: 400; font-size: calc(18 * var(--u)); }
+.summary-link {
+  color: var(--c-grey-50);
+  font-size: calc(15 * var(--u)); letter-spacing: var(--tracking); text-align: left;
+}
+.summary-outro { color: #1a1a1a; max-width: calc(246 * var(--u)); }
+
+/* ==========================================================================
+   Time to let go (závěrečná wellbeing karta) — H2 y=181, text y=238, kočka full-bleed dole
+   ========================================================================== */
+.letgo-text { max-width: calc(295 * var(--u)); }
+.letgo-img {
+  position: absolute; left: 0; right: 0; top: 47.7%; bottom: 0;
+  width: 100%; height: 52.3%;
+  object-fit: cover; z-index: 1;
+}
+
+/* ==========================================================================
+   Mood selector (2D diagram) — nadpis y=118, text y=176, diagram střed ~452
+   ========================================================================== */
+/* diagram dle Figmy zabírá x 18–376, y 319–676 (přesahuje 40px okraj textu) */
+.mood-wrap { position: absolute; left: calc(18 * var(--u)); right: calc(26 * var(--u)); top: 38.6%; bottom: 18%; }
+/* Potvrdit (na bílé kartě → černý outline) */
+.mood-cta { padding: calc(15 * var(--u)) calc(46 * var(--u)); }
+.mood-cta:disabled { opacity: .55; cursor: default; }
+.mood-diagram { width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
+.mood-dot { cursor: grab; }
+.mood-dot:active { cursor: grabbing; }
+.mood-axis-label { font-size: calc(15 * var(--u)); font-weight: 400; letter-spacing: 0; fill: var(--c-black); }
+/* comet tail za puntíkem: řetěz azurových + purpurových kopií, k dálce se rozkládají
+   (RGB) a mizí; v klidu splynou pod puntíkem → čisté (pozice/opacita řídí JS) */
+.mood-ghost { pointer-events: none; mix-blend-mode: multiply; }
+
+/* ==========================================================================
+   Dechové cvičení — nadpis y=133, text y=191, ovládání pod tím
+   ========================================================================== */
+.breath-controls {
+  position: absolute; left: 40px; right: 40px; top: 37%; bottom: calc(158 * var(--u));
+  display: flex; flex-direction: column; align-items: center;
+}
+.breath-counter { display: flex; align-items: center; gap: calc(11 * var(--u)); }
+.breath-step {
+  width: calc(26 * var(--u)); height: calc(26 * var(--u)); border-radius: 50%;
+  border: 1.5px solid var(--c-grey-50);
+  display: grid; place-items: center;
+  color: var(--c-grey-50); font-size: calc(16 * var(--u)); font-weight: 400; line-height: 1;
+}
+.breath-value {
+  width: calc(48 * var(--u)); height: calc(48 * var(--u));
+  border-radius: 50%;
+  border: 1.5px solid var(--c-grey-50);
+  display: grid; place-items: center;
+  color: var(--c-grey-50);
+  font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
+}
+/* pevný šedý kruh (178); vnitřní světlé kolečko (53) se v něm nafukuje/splaskává */
+.breath-ring {
+  margin: auto 0;
+  position: relative;
+  width: calc(178 * var(--u)); height: calc(178 * var(--u)); border-radius: 50%;
+  background: var(--c-grey-15);
+  display: grid; place-items: center;
+}
+.breath-ring > * { grid-area: 1 / 1; }
+.breath-circle {
+  width: calc(53 * var(--u)); height: calc(53 * var(--u)); border-radius: 50%;
+  background: #dedede;                                   /* o chlup světlejší než kruh (dle Figmy) */
+  will-change: transform;                                /* scale řídí JS po snímcích (kvůli pauze) */
+}
+.breath-digit {
+  z-index: 1; color: #1a1a1a;
+  display: grid; place-items: center;
+}
+.breath-hint { opacity: .9; text-align: center; }
+.breath-cta {
+  width: calc(134 * var(--u)); height: calc(47 * var(--u)); padding: 0;
+  background: var(--c-white); color: #1a1a1a; border: none;   /* plná bílá (dle Figmy) */
+}
+
+/* ==========================================================================
+   Obecné pravidlo: patička karty (nápověda + akční tlačítko dole)
+   Pro interaktivní Glitche s pokynem + CTA (dech a další podobné typy).
+   ========================================================================== */
+.card-footer {
+  position: absolute; left: 40px; right: 40px; bottom: calc(40 * var(--u));
+  display: flex; flex-direction: column; align-items: center; gap: calc(16 * var(--u));
+  z-index: 2;
+}
+
+/* ==========================================================================
+   Opt-in časovač (kolečko, y≈127)
+   ========================================================================== */
+.timer-row { display: flex; align-items: center; gap: calc(18 * var(--u)); }
+.timer-toggle {
+  flex: none;
+  width: calc(62 * var(--u)); height: calc(62 * var(--u)); border-radius: 50%;
+  background: var(--c-white);
+  position: relative;
+}
+.timer-toggle.is-on { box-shadow: 0 0 0 4px var(--c-yellow); }
+.timer-note { color: rgba(255,255,255,0.85); max-width: 22ch; }
+
+/* ==========================================================================
+   Aktivita (časovač + koule)
+   ========================================================================== */
+.atten-top   { display: flex; align-items: center; gap: calc(18 * var(--u)); }
+.atten-note  { color: rgba(255,255,255,0.72); }
+.atten-note.is-hidden { visibility: hidden; }
+.atten-help, .atten-count { color: var(--c-white); }
+/* koule je full-bleed (Figma 467×481 na x −29): přetéká oba boky karty */
+.atten-viz { position: absolute; left: calc(-29 * var(--u)); right: calc(-36 * var(--u)); top: 37.6%; aspect-ratio: 467 / 481; overflow: hidden; z-index: 1; }
+.atten-frame { width: 100%; height: 100%; }
+
+/* časovač na sebe upozorňuje pulzem + občasným glitchem (dokud neběží) */
+@keyframes atten-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,0,0); }
+  50%      { box-shadow: 0 0 0 7px rgba(255,255,0,0.16); }
+}
+@keyframes atten-glitch {
+  0%, 88%, 100% { transform: none; filter: none; }
+  90% { transform: translateX(-2px); filter: drop-shadow(3px 0 rgba(255,0,128,0.9)) drop-shadow(-3px 0 rgba(0,255,255,0.9)); }
+  93% { transform: translateX(2px);  filter: drop-shadow(-3px 0 rgba(255,0,128,0.9)) drop-shadow(3px 0 rgba(0,255,255,0.9)); }
+  96% { transform: none; filter: none; }
+}
+.atten-timer { animation: atten-pulse 1.8s ease-in-out infinite, atten-glitch 3.6s steps(1, end) infinite; }
+/* při běhu: bez pulzu, jen jemný obrys, aby byl vidět okraj kolečka i tam, kde se „ukrojilo" */
+.atten-timer.is-running { animation: none; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.25); }
+
+/* ==========================================================================
+   Rychlá výzva (kvíz)
+   ========================================================================== */
+.quiz-sub { margin-top: calc(12 * var(--u)); color: var(--c-white); }
+/* kompaktní buttony pevné šířky, zarovnané vlevo (dle Figmy), ne roztažené */
+.quiz-options { display: grid; row-gap: calc(16 * var(--u)); column-gap: calc(20 * var(--u)); justify-content: start; }
+.quiz-options.cols-1 { grid-template-columns: calc(125 * var(--u)); }
+.quiz-options.cols-1v { grid-template-columns: 1fr; }   /* svislý sloupec přes celou šířku (dlouhé texty) */
+.quiz-options.cols-2 { grid-template-columns: repeat(2, calc(108 * var(--u))); column-gap: calc(21 * var(--u)); }
+.quiz-options.cols-3 { grid-template-columns: repeat(3, calc(55 * var(--u))); column-gap: calc(19 * var(--u)); }
+/* odpovědi mají VLASTNÍ styl (nezávislý na jednotných tlačítkách):
+   tenký bílý obrys, text glitch_H4 (20/600) na střed */
+.quiz-opt {
+  height: calc(47 * var(--u));
+  background: transparent;
+  color: var(--c-white);
+  border: 1px solid var(--c-white);
+  border-radius: calc(5 * var(--u));
+  font-size: calc(20 * var(--u)); font-weight: 600;
+  line-height: normal; letter-spacing: var(--tracking);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.quiz-opt:active { opacity: .7; }
+.quiz-opt.is-correct { background: var(--c-yellow); color: var(--c-black); border-color: var(--c-yellow); }
+.quiz-opt.is-wrong   { opacity: .4; }
+/* dlouhé textové odpovědi — auto výška, text vlevo, velikost p (16) */
+.quiz-opt--text {
+  height: auto;
+  min-height: calc(48 * var(--u));
+  padding: calc(12 * var(--u)) calc(16 * var(--u));
+  justify-content: flex-start;
+  text-align: left;
+  font-size: calc(16 * var(--u)); font-weight: 500;
+  line-height: 1.3;
+}
+.quiz-figure svg { display: block; }
+/* úryvek kódu u trasovací výzvy — monospace, zarovnaný vlevo */
+.quiz-code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: calc(17 * var(--u)); line-height: 1.5;
+  white-space: pre; overflow-x: auto;
+  color: var(--fg);
+  border-left: calc(3 * var(--u)) solid var(--fg);
+  padding: calc(4 * var(--u)) 0 calc(4 * var(--u)) calc(14 * var(--u));
+  letter-spacing: 0;
+}
+
+/* ==========================================================================
+   Media (iframe vizualizace)
+   ========================================================================== */
+.viz-frame { width: 100%; height: 100%; border: 0; background: var(--c-black); }
+.algo-viz { aspect-ratio: 1 / 1; border-radius: calc(5 * var(--u)); border: 1px solid var(--c-white); overflow: hidden; }
+
+/* Quest intro — video na pozadí, text u dolní třetiny (kapitola y=532) */
+.card--image { --fg: var(--c-white); }
+.quest-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 80% at 70% 20%, #3a3a3a 0%, #141414 55%, #000 100%);
+  z-index: 0;
+}
+.quest-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%);
+}
+.quest-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  background: var(--c-black);
+}
+.quest-text { color: #fff; }
+.quest-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
+
+/* Fun fact — obrázek y=95 (320×293), nadpis y=436, text y=516 */
+.funfact-tile {
+  aspect-ratio: 320 / 293;
+  border-radius: calc(5 * var(--u));
+  background: var(--c-pink);
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.funfact-tile img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Najdi chybu — obrázek y=95 (318×381), tvrzení y=526, kontext y=636 */
+.mistake-photo {
+  aspect-ratio: 318 / 381;
+  border-radius: calc(5 * var(--u)); overflow: hidden;
+  background: #2c2c2c;
+}
+.mistake-photo img { width: 100%; height: 100%; object-fit: cover; }
+.mistake-context { color: var(--c-white); }
+
+/* Historická osobnost / Osobnost oboru — fotka nahoře, jméno (H1) + úvod dole */
+.persona-photo {
+  aspect-ratio: 321 / 337;
+  border-radius: calc(5 * var(--u)); overflow: hidden;
+  background: #2c2c2c;
+}
+.persona-photo img { width: 100%; height: 100%; object-fit: cover; }
+.persona-cta {
+  margin-top: calc(18 * var(--u));
+  padding: calc(12 * var(--u)) calc(26 * var(--u));
+}
+
+/* Argumentuj (růžová karta) — tvrzení y=216, podtext y=350, tlačítka y=665 (Figma) */
+.arg-claim { right: calc(33 * var(--u)); color: var(--c-black); }
+.arg-sub { max-width: calc(295 * var(--u)); color: var(--c-black); }
+.arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(111 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
+.arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); color: #1a1a1a; }
+.arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* ==========================================================================
+   Robustní tokové rozložení (mobil): obsah teče shora, nepřekrývá se a spodní
+   text se neořízne. Médium se v případě nedostatku místa zmenší.
+   ========================================================================== */
+.stack {
+  position: absolute; inset: 0;
+  padding: calc(93 * var(--u)) 40px calc(67 * var(--u));
+  display: flex; flex-direction: column; z-index: 2;
+}
+.stack-media {
+  flex: 1 1 0; min-height: calc(110 * var(--u));
+  display: flex; align-items: flex-start; justify-content: center;
+  overflow: hidden; margin-bottom: calc(18 * var(--u));
+}
+.stack-media > * { height: 100%; max-height: 100%; width: auto; max-width: 100%; }
+.stack-text { flex: 0 0 auto; }
+.stack-text .fx-title { margin: 0; }
+.stack-text .fx-text { margin-top: calc(12 * var(--u)); max-width: calc(255 * var(--u)); }
+.stack-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
+
+/* Rychlá výzva — jednotně: otázka na y≈216, úkol vystředěný, odpovědi dole
+   (Figma: otázka top 216/826, poslední tlačítko ~107 nad menu) */
+.quiz-frame {
+  position: absolute; inset: 0;
+  padding: calc(210 * var(--u)) 40px calc(104 * var(--u));
+  display: flex; flex-direction: column; z-index: 2;
+}
+/* dlouhé textové kvízy potřebují celou výšku karty */
+.quiz-frame--flow { padding: calc(64 * var(--u)) 40px calc(44 * var(--u)); }
+.quiz-head { flex: 0 0 auto; }
+.quiz-head .quiz-sub { margin-top: calc(8 * var(--u)); }
+.quiz-task {
+  flex: 1 1 0; min-height: 0; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+}
+.quiz-answers { flex: 0 0 auto; }
+
+/* Quest / Algoritmus intro: text ukotvený u spodu (Figma: blok končí ~114 px nad menu) */
+.quest-text.anchor-bottom { top: auto; bottom: calc(111 * var(--u)); }
+
+/* Algoritmus — 3D y=96 (321×322), kapitola y=532, nadpis y=585, text y=647 */
+.algo-text .chapter-no { margin-bottom: calc(14 * var(--u)); }
+
+/* Placeholder pro chybějící média */
+.asset-missing {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px; letter-spacing: 0;
+  text-align: center; padding: 20px;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, transparent 10px 20px);
+}
+
+/* Utility */
+.hidden { display: none !important; }
+
+/* ---------- Spodní menu (48 px, menší ikony, větší rozestupy) ---------- */
+#glitch-nav {
+  flex: 0 0 auto; z-index: 40;
+  width: 100%; max-width: var(--feed-max); margin: 0 auto;
+  height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: #1a1a1a;
+  border-top: 2px solid #fff;
+  display: flex; align-items: stretch;
+}
+.nav-item {
+  flex: 1 1 0; display: flex; align-items: center; justify-content: center;
+  height: var(--nav-h); position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-item:active { transform: scale(.92); }
+/* obrysové ikony (feed / boardy / hledat): přebarvení přes CSS mask.
+   neaktivní = bílá, aktivní = žlutá */
+.nav-ico {
+  display: block; width: 20px; height: 20px;
+  background-color: var(--c-white);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+  transition: background-color .12s ease;
+}
+.nav-item.is-active .nav-ico { background-color: var(--c-yellow); }
+.nav-item[data-tab="boardy"] .nav-ico { width: 21px; height: 21px; }
+/* plus: žluté kolečko + tmavý plus (bez černého prstence) — vždy žluté */
+.plus-svg { width: 29px; height: 29px; display: block; }
+.nav-ava {
+  width: 29px; height: 29px; border-radius: 50%; overflow: hidden;
+  display: block; background: var(--c-yellow);
+}
+.nav-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Toast (dočasné hlášky, např. „připravujeme") */
+.glitch-toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 16px);
+  background: rgba(0,0,0,0.85); color: #fff; font-size: 14px; font-weight: 500;
+  padding: 10px 16px; border-radius: 999px; z-index: 50;
+  opacity: 0; pointer-events: none; transition: opacity .18s ease;
+}
+.glitch-toast.show { opacity: 1; }
+
+/* ---------- Přihlášení (Supabase + Google) ---------- */
+
+/* Modály přihlášení/odhlášení (dle Figmy): žlutá karta na tmavém závoji */
+.auth-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(20,20,0,0.55);              /* tmavý závoj — nad žlutou působí olivově */
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.auth-modal {
+  position: relative;
+  width: calc(338 * var(--u)); max-width: 92vw;
+  background: var(--c-yellow); color: var(--c-black);
+  border-radius: calc(16 * var(--u));
+  padding: calc(30 * var(--u)) calc(28 * var(--u));
+  text-align: center;
+  box-shadow: 0 calc(20 * var(--u)) calc(60 * var(--u)) rgba(0,0,0,0.35);
+}
+.auth-close {
+  position: absolute; top: calc(22 * var(--u)); right: calc(22 * var(--u));
+  width: calc(22 * var(--u)); height: auto; display: grid; place-items: center;
+  transition: opacity .12s ease;
+}
+.auth-close:active { opacity: .6; }
+.auth-close img { width: 100%; height: auto; }
+.auth-avatar {
+  width: calc(96 * var(--u)); height: calc(96 * var(--u));
+  margin: calc(8 * var(--u)) auto calc(22 * var(--u));
+  border-radius: 50%; border: 2px solid var(--c-black);
+  overflow: hidden; background: var(--c-yellow);
+}
+.auth-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.auth-title { margin: 0 0 calc(10 * var(--u)); color: var(--c-black); }
+.auth-sub { margin: 0 auto calc(26 * var(--u)); max-width: 30ch; color: var(--c-black); }
+/* CTA — inverzní outline (černá na žluté), jako ostatní tlačítka */
+.auth-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: calc(232 * var(--u));
+  padding: calc(15 * var(--u)) calc(24 * var(--u));
+  background: transparent; color: var(--c-black);
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  transition: opacity .12s ease;
+}
+.auth-cta:active { opacity: .7; }
+.auth-err { color: #b00020; font-size: calc(13 * var(--u)); min-height: 16px; margin-top: calc(10 * var(--u)); }
+
+/* ==========================================================================
+   Uživatelský profil (celoobrazovkový panel, světlý)
+   ========================================================================== */
+#glitch-profile {
+  position: fixed; inset: 0; z-index: 35;
+  background: #fff; color: var(--c-black);
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+.pf-wrap {
+  max-width: var(--feed-max); margin: 0 auto;
+  padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(96 * var(--u));
+}
+
+/* hlavička */
+.pf-header { text-align: center; }
+.pf-avatar { position: relative; width: calc(96 * var(--u)); height: calc(96 * var(--u)); margin: 0 auto calc(12 * var(--u)); }
+.pf-avatar > img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--c-black); object-fit: cover; }
+.pf-avatar-badge {
+  position: absolute; right: calc(-2 * var(--u)); bottom: calc(2 * var(--u));
+  width: calc(30 * var(--u)); height: calc(30 * var(--u));
+  background: var(--c-yellow); border: 2px solid var(--c-black); border-radius: 50%;
+  display: grid; place-items: center;
+}
+.pf-avatar-badge img { width: 50%; height: auto; }
+.pf-name { font-size: calc(22 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); }
+.pf-handle { color: var(--c-grey-50); font-size: calc(15 * var(--u)); margin-top: calc(2 * var(--u)); }
+.pf-stats { display: flex; justify-content: center; gap: calc(34 * var(--u)); margin: calc(18 * var(--u)) 0 calc(20 * var(--u)); }
+.pf-stat { display: flex; flex-direction: column; align-items: center; gap: calc(2 * var(--u)); }
+.pf-stat b { font-size: calc(20 * var(--u)); font-weight: 700; }
+.pf-stat span { font-size: calc(13 * var(--u)); color: var(--c-grey-50); }
+
+/* lišta zájmů */
+.pf-interests {
+  display: flex; align-items: center; gap: calc(8 * var(--u));
+  border: 1px solid var(--c-grey-15); border-radius: calc(10 * var(--u));
+  padding: calc(9 * var(--u)) calc(12 * var(--u)); overflow-x: auto; scrollbar-width: none;
+}
+.pf-interests::-webkit-scrollbar { display: none; }
+.pf-interests-ic {
+  flex: 0 0 auto; width: calc(24 * var(--u)); height: calc(24 * var(--u));
+  background: var(--c-yellow); border: 2px solid var(--c-black); border-radius: 50%;
+  display: grid; place-items: center;
+}
+.pf-interests-ic img { width: 50%; height: auto; }
+.pf-chips { display: flex; gap: calc(8 * var(--u)); }
+.pf-chip {
+  display: inline-flex; align-items: center; gap: calc(6 * var(--u));
+  background: var(--c-yellow); border: 1px solid var(--c-black); border-radius: calc(6 * var(--u));
+  padding: calc(4 * var(--u)) calc(8 * var(--u));
+  font-size: calc(14 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); white-space: nowrap;
+}
+.pf-chip button { width: calc(11 * var(--u)); height: auto; display: flex; }
+.pf-chip button img { width: 100%; height: auto; }
+.pf-interest-input {
+  flex: 1 1 auto; min-width: calc(120 * var(--u)); border: 0; outline: 0;
+  background: transparent; color: var(--c-black); font-size: calc(14 * var(--u)); letter-spacing: var(--tracking);
+}
+.pf-interest-input::placeholder { color: var(--c-grey-50); }
+
+/* taby */
+.pf-tabs {
+  display: flex; justify-content: space-around;
+  margin-top: calc(18 * var(--u)); padding-bottom: calc(12 * var(--u));
+  border-bottom: 1px solid var(--c-grey-15);
+}
+.pf-tab { width: calc(30 * var(--u)); height: calc(30 * var(--u)); color: var(--c-grey-50); display: grid; place-items: center; transition: color .12s ease; }
+.pf-tab svg { width: 100%; height: 100%; }
+.pf-tab.is-active { color: var(--c-black); }
+
+/* obsah tabu */
+.pf-section-title {
+  text-align: center; font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  padding: calc(16 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); margin-bottom: calc(18 * var(--u));
+}
+.pf-empty { text-align: center; color: var(--c-grey-50); font-size: calc(15 * var(--u)); line-height: 1.5; padding: calc(40 * var(--u)) calc(16 * var(--u)); }
+
+/* nastavení */
+.pf-set-group { padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
+.pf-set-group:last-child { border-bottom: 0; }
+.pf-set-group h3 { font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); margin-bottom: calc(12 * var(--u)); }
+.pf-row { display: flex; align-items: center; justify-content: space-between; gap: calc(16 * var(--u)); padding: calc(9 * var(--u)) 0; cursor: pointer; }
+.pf-row-label { font-size: calc(15 * var(--u)); letter-spacing: var(--tracking); }
+
+/* přepínač (toggle) — žlutý zapnuto, šedý vypnuto */
+.pf-toggle { position: relative; flex: 0 0 auto; width: calc(46 * var(--u)); height: calc(26 * var(--u)); }
+.pf-toggle input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.pf-knob { position: absolute; inset: 0; background: #fff; border: 2px solid var(--c-black); border-radius: 999px; transition: background .15s ease; }
+.pf-knob::after {
+  content: ""; position: absolute; top: 50%; left: calc(4 * var(--u)); transform: translateY(-50%);
+  width: calc(16 * var(--u)); height: calc(16 * var(--u)); background: var(--c-black); border-radius: 50%;
+  transition: left .15s ease;
+}
+.pf-toggle input:checked + .pf-knob { background: var(--c-yellow); }
+.pf-toggle input:checked + .pf-knob::after { left: calc(24 * var(--u)); }
+
+.pf-signout {
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: calc(12 * var(--u)) calc(24 * var(--u));
+  font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); color: var(--c-black);
+  background: transparent; transition: opacity .12s ease;
+}
+.pf-signout:active { opacity: .7; }
+
+/* ==========================================================================
+   Rozklik (detail Glitche) — světlý panel nad feedem
+   Typy: explainer (vysvětlení) a chat (Basic Glitch — Tinybot + kvíz)
+   ========================================================================== */
+body.rz-lock { overflow: hidden; }
+.rz-overlay {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(0,0,0,0.35);
+  display: none;
+}
+.rz-overlay.is-open { display: block; }
+.rz-panel {
+  position: relative;
+  width: 100%; max-width: var(--feed-max); height: 100%;
+  margin: 0 auto;
+  background: var(--c-white); color: var(--c-black);
+  display: flex; flex-direction: column;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.rz-panel::-webkit-scrollbar { display: none; }
+
+/* horní lišta: zavírací šipka (vlevo) · kapitola · štítky (vpravo) */
+.rz-bar {
+  flex: 0 0 auto; position: sticky; top: 0; z-index: 3;
+  display: flex; align-items: center; gap: calc(12 * var(--u));
+  padding: calc(22 * var(--u)) calc(25 * var(--u)) calc(10 * var(--u)) calc(32 * var(--u));
+  background: var(--c-white);
+}
+.rz-close {
+  flex: 0 0 auto; display: grid; place-items: center;
+  transition: transform .12s ease;
+}
+.rz-close:active { transform: scale(.9); }
+.rz-close img { width: calc(23 * var(--u)); height: auto; transform: rotate(180deg); }
+.rz-chapter {
+  display: inline-flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(6 * var(--u));
+  background: #1a1a1a; color: var(--c-white);
+  border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
+  letter-spacing: var(--tracking);
+}
+.rz-badges { margin-left: auto; display: flex; gap: calc(10 * var(--u)); }
+.rz-badge {
+  display: inline-flex; align-items: center; height: calc(26 * var(--u)); padding: 0 calc(6 * var(--u));
+  background: var(--c-white); color: #1a1a1a;
+  border: 1px solid #1a1a1a; border-radius: calc(5 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1; letter-spacing: var(--tracking); white-space: nowrap;
+}
+
+.rz-body { flex: 1 1 auto; padding: calc(18 * var(--u)) calc(28 * var(--u)) calc(28 * var(--u)); }
+.rz-title { margin: 0; color: var(--c-black); }
+
+/* -- explainer -- */
+.rz-body--explainer { padding-top: calc(8 * var(--u)); }
+.rz-brand { display: block; margin: calc(6 * var(--u)) 0 calc(26 * var(--u)) auto; width: calc(120 * var(--u)); height: auto; }
+.rz-body--explainer .rz-title { margin-bottom: calc(22 * var(--u)); }
+.rz-para { color: var(--c-black); margin-bottom: calc(18 * var(--u)); }
+.rz-para:last-child { margin-bottom: 0; }
+
+/* -- chat -- */
+.rz-panel--chat { }
+.rz-body--chat { padding: calc(26 * var(--u)) calc(35 * var(--u)) calc(28 * var(--u)) calc(33 * var(--u)); }
+.rz-intro { color: var(--c-black); margin: calc(14 * var(--u)) 0 calc(24 * var(--u)); }
+.rz-thread { display: flex; flex-direction: column; gap: calc(13 * var(--u)); }
+.rz-msg { display: flex; align-items: flex-start; gap: calc(7 * var(--u)); max-width: 100%; }
+.rz-msg--bot { justify-content: flex-start; }
+.rz-msg--user { justify-content: flex-end; gap: calc(10 * var(--u)); margin: calc(12 * var(--u)) 0; }
+.rz-ava {
+  flex: 0 0 auto; width: calc(21 * var(--u)); height: calc(21 * var(--u)); border-radius: 50%;
+  overflow: hidden; align-self: flex-start;
+}
+.rz-ava--bot { background: var(--c-yellow); display: grid; place-items: center; }
+.rz-ava--bot img { width: 100%; height: 100%; object-fit: cover; }
+.rz-ava--user { background: var(--c-yellow); }
+.rz-bubble {
+  max-width: calc(248 * var(--u));
+  padding: calc(12 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(5 * var(--u));
+  font-size: calc(15 * var(--u)); line-height: normal; letter-spacing: var(--tracking);
+  color: #1a1a1a; word-wrap: break-word; overflow-wrap: anywhere;
+}
+.rz-msg--bot .rz-bubble { background: var(--c-grey-10); }
+.rz-msg--user .rz-bubble { max-width: calc(238 * var(--u)); padding: calc(11 * var(--u)) calc(14 * var(--u)); background: rgba(255,255,0,0.27); }
+
+/* kvíz uvnitř chatu */
+.rz-quiz { display: flex; flex-direction: column; gap: calc(9 * var(--u)); padding: calc(9 * var(--u)) 0 0 calc(44 * var(--u)); }
+.rz-opt {
+  display: flex; align-items: flex-start; gap: calc(8 * var(--u));
+  background: transparent; text-align: left; color: var(--c-black);
+  font-size: calc(15 * var(--u)); line-height: normal; letter-spacing: var(--tracking);
+}
+.rz-opt[data-type="radio"] { gap: calc(5 * var(--u)); }
+.rz-mark {
+  flex: 0 0 auto; width: calc(17 * var(--u)); height: calc(17 * var(--u));
+  border: 2px solid #1a1a1a; background: var(--c-white);
+  display: grid; place-items: center; position: relative;
+}
+.rz-mark--checkbox { border-radius: calc(5 * var(--u)); }
+.rz-mark--radio { width: calc(19 * var(--u)); height: calc(19 * var(--u)); border-radius: 50%; background: var(--c-yellow); }
+.rz-opt.is-sel .rz-mark { background: var(--c-yellow); }
+.rz-opt.is-sel .rz-mark--checkbox::after {
+  content: ""; width: calc(9 * var(--u)); height: calc(5 * var(--u));
+  border-left: 2px solid var(--c-black); border-bottom: 2px solid var(--c-black);
+  transform: translateY(-1px) rotate(-45deg);
+}
+.rz-opt.is-sel .rz-mark--radio::after {
+  content: ""; width: calc(7 * var(--u)); height: calc(7 * var(--u)); border-radius: 50%; background: var(--c-black);
+}
+.rz-opt.is-locked { opacity: .9; }
+.rz-opt.is-correct .rz-opt-label { font-weight: 600; }
+.rz-opt.is-correct .rz-mark { background: var(--c-yellow); border-color: var(--c-black); }
+.rz-opt.is-wrong .rz-mark { border-color: #b00020; }
+.rz-opt.is-wrong .rz-opt-label { color: #b00020; text-decoration: line-through; }
+.rz-quiz-submit {
+  align-self: flex-start; margin-top: calc(12 * var(--u));
+  height: calc(37 * var(--u));
+  border: 1px solid var(--c-black); border-radius: calc(5 * var(--u));
+  padding: 0 calc(17 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 400; line-height: calc(22 * var(--u));
+  letter-spacing: var(--tracking); color: var(--c-black);
+  background: transparent; transition: opacity .12s ease;
+}
+.rz-quiz-submit:active { opacity: .7; }
+.rz-quiz-submit:disabled { opacity: .5; cursor: default; }
+
+/* vstupní pole chatu (dole) */
+.rz-input {
+  flex: 0 0 auto; position: sticky; bottom: 0;
+  display: flex; align-items: center; gap: calc(13 * var(--u));
+  padding: calc(14 * var(--u)) calc(20 * var(--u)) calc(31 * var(--u)) calc(31 * var(--u));
+  background: var(--c-white);
+}
+.rz-input-field {
+  flex: 1 1 auto; height: calc(38 * var(--u));
+  border: 2px solid #1a1a1a; border-radius: calc(5 * var(--u));
+  padding: 0 calc(13 * var(--u));
+  font-family: var(--font); font-size: calc(16 * var(--u)); letter-spacing: var(--tracking);
+  color: var(--c-black); background: var(--c-white); outline: none;
+}
+.rz-input-field::placeholder { color: #1a1a1a; }
+.rz-send {
+  flex: 0 0 auto; width: calc(39 * var(--u)); height: calc(38 * var(--u));
+  background: var(--c-yellow); border: 2px solid #1a1a1a; border-radius: calc(5 * var(--u));
+  display: grid; place-items: center; transition: transform .12s ease;
+}
+.rz-send:active { transform: scale(.92); }
