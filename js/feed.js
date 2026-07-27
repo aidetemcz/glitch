@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=40", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=41", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -1155,9 +1155,10 @@
     // pouzeHlavicka = jen lišta + nadpis + úvod (bez pre-testu, chatu, psaní).
     // Používá se u už splněného Glitche, kam se pak vloží box s vyhodnocením.
     const jenHlavicka = opts && opts.pouzeHlavicka;
+    const ava = botAva(c);
     const thread = jenHlavicka ? "" : (r.messages || []).map((m) => {
       if (m.from === "bot") {
-        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Glitchee"></span>` +
+        return `<div class="rz-msg rz-msg--bot"><span class="rz-ava rz-ava--bot"><img src="${esc(ava)}" alt="Chatbot"></span>` +
                `<div class="rz-bubble">${esc(m.text)}</div></div>`;
       }
       if (m.from === "user") {
@@ -1183,8 +1184,9 @@
         ${rzBadges(c)}
       </header>
       <div class="rz-body rz-body--chat">
-        ${r.title ? `<h1 class="rz-title g-h2">${esc(r.title)}</h1>` : ""}
-        ${r.intro ? `<p class="rz-intro g-p">${esc(r.intro)}</p>` : ""}
+        ${(r.title || c.title) ? `<h1 class="rz-title g-h2">${esc(r.title || c.title)}</h1>` : ""}
+        ${(r.intro || c.body) ? `<p class="rz-intro g-p">${esc(r.intro || c.body)}</p>` : ""}
+        ${(function () { const img = r.image || (c.type === "fun_fact" ? c.image : ""); return img ? `<div class="rz-photo"><img src="${esc(img)}" alt=""></div>` : ""; })()}
         ${jenHlavicka ? "" : pretestBlock(r)}
         <div class="rz-thread" data-rz-thread>${thread}</div>
       </div>
@@ -1360,6 +1362,16 @@
     (c && c.persona) || (c && c.rozklik && c.rozklik.persona) ||
     (c && PERSONA_BY_TYPE[c.type]) || DEFAULT_PERSONA;
 
+  // Avatar bota v chatu: u Historické osobnosti fotka dané postavy, jinak
+  // Glitchee (nebo explicitní rozklik.avatar).
+  const DEFAULT_AVA = "assets/ui/avatar-icon.png";
+  function botAva(c) {
+    const r = (c && c.rozklik) || {};
+    if (r.avatar) return r.avatar;
+    if (c && c.type === "historicka_osobnost" && c.image) return c.image;
+    return DEFAULT_AVA;
+  }
+
   function buildGlitchContext(c) {
     const r = (c && c.rozklik) || {};
     const ctx = {
@@ -1407,10 +1419,10 @@
     return Object.keys(out).length ? out : null;
   }
 
-  function rzAppendBot(thread, text) {
+  function rzAppendBot(thread, text, avaSrc) {
     const el = document.createElement("div");
     el.className = "rz-msg rz-msg--bot";
-    el.innerHTML = `<span class="rz-ava rz-ava--bot"><img src="assets/ui/avatar-icon.png" alt="Glitchee"></span><div class="rz-bubble"></div>`;
+    el.innerHTML = `<span class="rz-ava rz-ava--bot"><img src="${esc(avaSrc || DEFAULT_AVA)}" alt="Chatbot"></span><div class="rz-bubble"></div>`;
     el.querySelector(".rz-bubble").textContent = text;
     thread.appendChild(el);
     return el;
@@ -1506,6 +1518,7 @@
     const form = panel.querySelector("[data-rz-form]");
     const thread = panel.querySelector("[data-rz-thread]");
     if (!form || !thread) return;
+    const ava = botAva(card);
 
     // Historie pro AI: naváž na skriptované bubliny (bot→assistant, uživatel→user)
     const r = (card && card.rozklik) || {};
@@ -1533,7 +1546,7 @@
       }
 
       field.disabled = true; if (sendBtn) sendBtn.disabled = true;
-      const typing = rzAppendBot(thread, "…");
+      const typing = rzAppendBot(thread, "…", ava);
       typing.classList.add("rz-typing");
       scrollDown();
 
@@ -1549,7 +1562,7 @@
         history.push({ role: "assistant", content: reply });
 
         const parsed = extractKviz(reply);
-        if (parsed.text) rzAppendBot(thread, parsed.text);
+        if (parsed.text) rzAppendBot(thread, parsed.text, ava);
         if (parsed.kviz) {
           // odpověď z kvízu pošleme botovi zpět (neviditelně), ať na ni naváže
           // Kvíz sám o sobě Glitch NEuzavírá — po odpovědi se pošle hodnocení
@@ -1562,7 +1575,7 @@
       } catch (err) {
         typing.remove();
         const fb = opts.fallback || "Teď se mi nepovedlo odpovědět. Zkus to prosím za chvilku.";
-        rzAppendBot(thread, fb);
+        rzAppendBot(thread, fb, ava);
       } finally {
         field.disabled = false; if (sendBtn) sendBtn.disabled = false;
         scrollDown();

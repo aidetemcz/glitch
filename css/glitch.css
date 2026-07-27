@@ -1033,6 +1033,9 @@ body.rz-lock { overflow: hidden; }
 .rz-panel--chat { }
 .rz-body--chat { padding: calc(26 * var(--u)) calc(35 * var(--u)) calc(28 * var(--u)) calc(33 * var(--u)); }
 .rz-intro { color: var(--c-black); margin: calc(14 * var(--u)) 0 calc(24 * var(--u)); }
+/* obrázek v chatu (např. u Fun factu) — čtvercový, zaoblený, nad vláknem */
+.rz-photo { margin: 0 0 calc(24 * var(--u)); border-radius: calc(8 * var(--u)); overflow: hidden; }
+.rz-photo img { display: block; width: 100%; height: auto; }
 .rz-thread { display: flex; flex-direction: column; gap: calc(13 * var(--u)); }
 .rz-msg { display: flex; align-items: flex-start; gap: calc(7 * var(--u)); max-width: 100%; }
 .rz-msg--bot { justify-content: flex-start; }
