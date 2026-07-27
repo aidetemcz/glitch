@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kolo slov — strojové učení</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+    touch-action: none;
+    cursor: grab;
+  }
+  #wwCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="wwCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('wwCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  // slova na kole — ml: patří ke strojovému učení?
+  var WORDS = [
+    { w: 'model',      ml: true },
+    { w: 'palačinka',  ml: false },
+    { w: 'data',       ml: true },
+    { w: 'šnek',       ml: false },
+    { w: 'učení',      ml: true },
+    { w: 'kytara',     ml: false },
+    { w: 'neuron',     ml: true },
+    { w: 'deštník',    ml: false },
+    { w: 'trénink',    ml: true },
+    { w: 'ponorka',    ml: false },
+    { w: 'vzor',       ml: true },
+    { w: 'svetr',      ml: false },
+    { w: 'predikce',   ml: true },
+    { w: 'lampa',      ml: false },
+    { w: 'trampolína', ml: false }
+  ];
+  var N = WORDS.length;
+  var STEP = Math.PI * 2 / N;
+
+  // geometrie kola: střed daleko vlevo, viditelný jen oblouk se 3 nody
+  var CX = -0.45, CY = 0.5, R = 0.95;
+
+  // stav
+  var rot = 0, targetRot = 0;
+  var answers = new Array(N).fill(null);   // 'ano' | 'ne' | null
+  var done = false, score = 0;
+  var isDragging = false, moved = 0;
+  var lastY = 0, downX = 0, downY = 0;
+  var pressBtn = null, pressT = 0;
+  var hintSeen = false;
+  var btnNo = null, btnYes = null, btnAgain = null;   // aktuální obdélníky tlačítek
+
+  function mod(i, n){ return ((i % n) + n) % n; }
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+
+  function postState(){
+    var answered = 0;
+    for (var i = 0; i < N; i++) if (answers[i] !== null) answered++;
+    try {
+      if (done) window.parent.postMessage({ ns: 'wheelwords', type: 'score', correct: score, total: N }, '*');
+      else window.parent.postMessage({ ns: 'wheelwords', type: 'progress', answered: answered, total: N }, '*');
+    } catch (e) {}
+  }
+  function resetGame(){
+    answers = new Array(N).fill(null);
+    done = false; score = 0;
+    targetRot = 0; rot = 0;
+    postState();
+  }
+  window.addEventListener('message', function(ev){
+    var d = ev.data || {};
+    if (d.ns === 'wheelwords' && d.type === 'reset') resetGame();
+  });
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function fontStr(size, weight){
+    return (weight || 500) + ' ' + Math.round(size) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  }
+
+  function nodeAngle(i){
+    var a = (i * STEP - rot) % (Math.PI * 2);
+    if (a > Math.PI) a -= Math.PI * 2;
+    if (a < -Math.PI) a += Math.PI * 2;
+    return a;
+  }
+  function nodePos(i){
+    var a = nodeAngle(i);
+    return { x: (CX + R * Math.cos(a)) * S, y: (CY + R * Math.sin(a)) * S, a: a };
+  }
+  function activeIdx(){ return mod(Math.round(targetRot / STEP), N); }
+  function snapped(){ return Math.abs(rot - targetRot) < 0.02; }
+
+  function answeredCount(){
+    var n = 0;
+    for (var i = 0; i < N; i++) if (answers[i] !== null) n++;
+    return n;
+  }
+
+  function finish(){
+    score = 0;
+    for (var i = 0; i < N; i++){
+      if ((answers[i] === 'ano') === WORDS[i].ml) score++;
+    }
+    done = true;
+    postState();
+  }
+
+  function answer(choice){
+    if (done || !snapped()) return;
+    var ai = activeIdx();
+    if (answers[ai] !== null) return;
+    answers[ai] = choice;
+    postState();
+    if (answeredCount() === N){
+      setTimeout(finish, 350);
+      return;
+    }
+    // po chvilce se kolo samo pootočí na nejbližší nezodpovězené slovo
+    setTimeout(function(){
+      var base = Math.round(targetRot / STEP);
+      for (var d = 1; d <= N; d++){
+        var up = mod(base + d, N), dn = mod(base - d, N);
+        if (answers[up] === null){ targetRot = (base + d) * STEP; return; }
+        if (answers[dn] === null){ targetRot = (base - d) * STEP; return; }
+      }
+    }, 320);
+  }
+
+  // --- ovládání ---
+  function inRect(px, py, r){
+    return r && px >= r.x && px <= r.x + r.w && py >= r.y && py <= r.y + r.h;
+  }
+  function toLocal(e){
+    var rect = frame.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left - (rect.width - S) / 2,
+      y: e.clientY - rect.top - (rect.height - S) / 2
+    };
+  }
+  function onDown(e){
+    isDragging = true;
+    moved = 0;
+    frame.style.cursor = 'grabbing';
+    lastY = e.clientY;
+    downX = e.clientX; downY = e.clientY;
+    var p = toLocal(e);
+    if (!done && inRect(p.x, p.y, btnNo)){ pressBtn = 'ne'; pressT = performance.now(); }
+    else if (!done && inRect(p.x, p.y, btnYes)){ pressBtn = 'ano'; pressT = performance.now(); }
+    else if (done && inRect(p.x, p.y, btnAgain)){ pressBtn = 'again'; pressT = performance.now(); }
+    else pressBtn = null;
+  }
+  function onMove(e){
+    if (!isDragging) return;
+    var dy = e.clientY - lastY;
+    lastY = e.clientY;
+    moved += Math.abs(dy) + Math.abs(e.movementX || 0);
+    if (pressBtn && moved > 8) pressBtn = null;
+    if (!pressBtn){
+      rot -= dy / (R * S);
+      targetRot = rot;
+      if (Math.abs(dy) > 1) hintSeen = true;
+    }
+    e.preventDefault();
+  }
+  function onUp(e){
+    if (!isDragging) return;
+    isDragging = false;
+    frame.style.cursor = 'grab';
+    var dist = Math.hypot(e.clientX - downX, e.clientY - downY);
+    if (dist < 8 && pressBtn){
+      if (pressBtn === 'again') resetGame();
+      else answer(pressBtn);
+    } else if (dist < 8){
+      // ťuknutí na sousední nod otočí kolo na něj
+      var p = toLocal(e);
+      for (var d = -2; d <= 2; d++){
+        var i = mod(Math.round(rot / STEP) + d, N);
+        var np = nodePos(i);
+        if (Math.hypot(p.x - np.x, p.y - np.y) < S * 0.09 && d !== 0){
+          targetRot = (Math.round(rot / STEP) + d) * STEP;
+          break;
+        }
+      }
+      targetRot = Math.round(targetRot / STEP) * STEP;
+    } else {
+      targetRot = Math.round(rot / STEP) * STEP;
+    }
+    pressBtn = null;
+  }
+  frame.addEventListener('pointerdown', onDown);
+  window.addEventListener('pointermove', onMove, { passive: false });
+  window.addEventListener('pointerup', onUp);
+
+  function drawMark(x, y, type, size, color, alpha){
+    ctx.strokeStyle = 'rgba(' + color + ',' + alpha.toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1.5, S * 0.005);
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (type === 'ano'){
+      ctx.moveTo(x - size, y + size * 0.1);
+      ctx.lineTo(x - size * 0.25, y + size * 0.75);
+      ctx.lineTo(x + size, y - size * 0.65);
+    } else {
+      ctx.moveTo(x - size * 0.8, y - size * 0.8);
+      ctx.lineTo(x + size * 0.8, y + size * 0.8);
+      ctx.moveTo(x + size * 0.8, y - size * 0.8);
+      ctx.lineTo(x - size * 0.8, y + size * 0.8);
+    }
+    ctx.stroke();
+  }
+
+  function roundRectPath(x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function draw(now){
+    if (!isDragging){
+      rot += (targetRot - rot) * 0.14;
+    }
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+    ctx.textBaseline = 'middle';
+
+    var cx = CX * S, cy = CY * S, r = R * S;
+    var ai = activeIdx();
+    var snapP = 1 - clamp01(Math.abs(rot - targetRot) / (STEP * 0.5));
+
+    // dekorativní vedlejší oblouky
+    ctx.strokeStyle = 'rgba(255,255,255,0.09)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, r - S * 0.032, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r + S * 0.032, 0, Math.PI * 2); ctx.stroke();
+
+    // hlavní oblouk kola se září
+    ctx.save();
+    ctx.shadowColor = 'rgba(255,255,255,0.6)';
+    ctx.shadowBlur = 8;
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+    ctx.lineWidth = Math.max(1, S * 0.0035);
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+
+    // radiální zoubky v místě každého nodu
+    for (var ti = 0; ti < N; ti++){
+      var ta = nodeAngle(ti);
+      var tx = cx + Math.cos(ta) * r, ty = cy + Math.sin(ta) * r;
+      if (tx < -S * 0.05 || ty < -S * 0.1 || ty > S * 1.1) continue;
+      ctx.beginPath();
+      ctx.moveTo(tx - Math.cos(ta) * S * 0.012, ty - Math.sin(ta) * S * 0.012);
+      ctx.lineTo(tx + Math.cos(ta) * S * 0.012, ty + Math.sin(ta) * S * 0.012);
+      ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // nody + slova
+    for (var i = 0; i < N; i++){
+      var np = nodePos(i);
+      if (Math.abs(np.a) > 1.0) continue;
+      var isActive = i === ai;
+      var closeness = clamp01(1 - Math.abs(np.a) / STEP);   // 1 ve středu okna
+      var dotR = S * (0.008 + 0.009 * closeness);
+      var wrong = done && answers[i] !== null && ((answers[i] === 'ano') !== WORDS[i].ml);
+
+      // tečka nodu (se září)
+      ctx.save();
+      ctx.shadowColor = wrong ? 'rgba(255,255,0,0.9)' : 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 6 + 10 * closeness;
+      ctx.beginPath();
+      ctx.arc(np.x, np.y, dotR * (isActive && !done ? 1 + 0.06 * Math.sin(now / 300) : 1), 0, Math.PI * 2);
+      ctx.fillStyle = wrong ? 'rgba(255,255,0,0.95)' : 'rgba(255,255,255,' + (0.55 + 0.45 * closeness).toFixed(3) + ')';
+      ctx.fill();
+      ctx.restore();
+
+      // slovo — natočené po tečně kola, u aktivního velké
+      var fs = S * (0.036 + 0.024 * closeness);
+      ctx.save();
+      ctx.translate(np.x + S * 0.045, np.y);
+      ctx.rotate(np.a * 0.85);
+      ctx.font = fontStr(fs, isActive ? 600 : 500);
+      ctx.textAlign = 'left';
+      if (isActive){
+        ctx.shadowColor = 'rgba(255,255,255,0.55)';
+        ctx.shadowBlur = 10;
+      }
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.4 + 0.6 * closeness).toFixed(3) + ')';
+      ctx.fillText(WORDS[i].w, 0, 0);
+      ctx.restore();
+
+      // značka odpovědi vlevo od tečky; po vyhodnocení u chyb žlutě správná
+      if (answers[i] !== null){
+        var ms = S * 0.011;
+        var mx = np.x - S * 0.038, my = np.y;
+        if (wrong){
+          drawMark(mx, my, WORDS[i].ml ? 'ano' : 'ne', ms, '255,255,0', 0.95);
+        } else {
+          drawMark(mx, my, answers[i], ms, '255,255,255', 0.55);
+        }
+      }
+    }
+
+    // nápověda: kolem jde točit
+    if (!hintSeen && !done){
+      var hb = 0.35 + 0.2 * Math.sin(now / 400);
+      var hx = (CX + R * Math.cos(0.21)) * S, hy1 = (CY - R * Math.sin(0.21)) * S, hy2 = (CY + R * Math.sin(0.21)) * S;
+      ctx.strokeStyle = 'rgba(255,255,255,' + hb.toFixed(3) + ')';
+      ctx.lineWidth = Math.max(1.25, S * 0.004);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(hx - S * 0.015, hy1 + S * 0.02); ctx.lineTo(hx, hy1); ctx.lineTo(hx + S * 0.015, hy1 + S * 0.02);
+      ctx.moveTo(hx - S * 0.015, hy2 - S * 0.02); ctx.lineTo(hx, hy2); ctx.lineTo(hx + S * 0.015, hy2 - S * 0.02);
+      ctx.stroke();
+    }
+
+    // tlačítka ✗ / ✓ pro aktivní slovo
+    btnNo = btnYes = null;
+    if (!done){
+      var ansA = answers[ai] === null ? 1 : 0.25;
+      var btnA = snapP * ansA;
+      if (btnA > 0.05){
+        var B = S * 0.115, by = S * 0.585;
+        var defs = [ { x: S * 0.56, t: 'ne' }, { x: S * 0.72, t: 'ano' } ];
+        for (var bi = 0; bi < 2; bi++){
+          var d2 = defs[bi];
+          var scale = pressBtn === d2.t ? 0.92 : 1;
+          var bx = d2.x + B * (1 - scale) / 2, by2 = by + B * (1 - scale) / 2, bs = B * scale;
+          ctx.save();
+          ctx.shadowColor = 'rgba(255,255,255,0.4)';
+          ctx.shadowBlur = 8;
+          roundRectPath(bx, by2, bs, bs, 10);
+          ctx.fillStyle = '#000';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(255,255,255,' + (0.9 * btnA).toFixed(3) + ')';
+          ctx.lineWidth = Math.max(1.5, S * 0.006);
+          ctx.stroke();
+          ctx.restore();
+          drawMark(bx + bs / 2, by2 + bs / 2, d2.t, bs * 0.2, '255,255,255', 0.9 * btnA);
+          ctx.font = fontStr(S * 0.028);
+          ctx.textAlign = 'center';
+          ctx.fillStyle = 'rgba(255,255,255,' + (0.45 * btnA).toFixed(3) + ')';
+          ctx.fillText(d2.t, d2.x + B / 2, by + B + S * 0.032);
+          if (answers[ai] === null){
+            if (bi === 0) btnNo = { x: d2.x, y: by, w: B, h: B };
+            else btnYes = { x: d2.x, y: by, w: B, h: B };
+          }
+        }
+      }
+    }
+
+    // průběh / výsledek
+    ctx.textAlign = 'right';
+    if (!done){
+      ctx.font = fontStr(S * 0.036);
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.fillText(answeredCount() + ' / ' + N, S * 0.94, S * 0.075);
+      ctx.textAlign = 'left';
+      ctx.font = fontStr(S * 0.030);
+      ctx.fillStyle = 'rgba(255,255,255,0.45)';
+      ctx.fillText('patří ke strojovému učení?', S * 0.06, S * 0.075);
+      btnAgain = null;
+    } else {
+      // podložka, ať výsledek nekoliduje se slovy na kole
+      ctx.fillStyle = 'rgba(0,0,0,0.88)';
+      ctx.fillRect(S * 0.42, S * 0.02, S * 0.56, S * 0.28);
+      ctx.save();
+      ctx.shadowColor = 'rgba(255,255,0,0.5)';
+      ctx.shadowBlur = 10;
+      ctx.font = fontStr(S * 0.052, 600);
+      ctx.fillStyle = 'rgba(255,255,0,0.95)';
+      ctx.fillText('správně: ' + score + ' / ' + N, S * 0.94, S * 0.08);
+      ctx.restore();
+      ctx.font = fontStr(S * 0.030);
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.fillText(score === N ? 'výborně!' : 'chyby jsou žlutě', S * 0.94, S * 0.145);
+      // tlačítko znovu
+      var gw = S * 0.19, gh = S * 0.085, gx = S * 0.75, gy = S * 0.20;
+      roundRectPath(gx, gy, gw, gh, 10);
+      var pr = pressBtn === 'again' ? 0.7 : 0.9;
+      ctx.strokeStyle = 'rgba(255,255,255,' + pr + ')';
+      ctx.lineWidth = Math.max(1.25, S * 0.0045);
+      ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.font = fontStr(S * 0.034);
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.fillText('znovu', gx + gw / 2, gy + gh / 2 + 1);
+      btnAgain = { x: gx, y: gy, w: gw, h: gh };
+    }
+
+    ctx.restore();
+  }
+
+  // testovací háček (jen s ?debug v URL)
+  if (location.search.indexOf('debug') !== -1){
+    window.__wheelDebug = function(){
+      return {
+        active: activeIdx(),
+        word: WORDS[activeIdx()].w,
+        ml: WORDS[activeIdx()].ml,
+        answers: answers.slice(),
+        done: done,
+        score: score,
+        snapped: snapped(),
+        btnNo: btnNo, btnYes: btnYes, btnAgain: btnAgain
+      };
+    };
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
