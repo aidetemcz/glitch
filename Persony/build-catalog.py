@@ -27,6 +27,7 @@ IDS = {
     "zvedavy-mimon": "09_zvedavy-mimon.md",
     "historicka-postava": "10_historicka-postava.md",
     "argumentacni-partner": "11_argumentacni-partner.md",
+    "detektiv-chyb": "12_detektiv-chyb.md",
 }
 
 

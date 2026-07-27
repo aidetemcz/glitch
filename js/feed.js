@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=44", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=45", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -1120,6 +1120,13 @@
     const secWrap = sections ? `<div class="rz-sections">${sections}</div>` : "";
     // štítek (např. „O Glitchi") sedí vlevo hned vedle šipky zpět
     const badge = r.badge ? `<span class="rz-badge">${esc(r.badge)}</span>` : "";
+    // Přihlášení Google účtem — dole pod rozjížďítky (dřív bývalo na žluté welcome kartě)
+    const login = r.login ? `
+      <div class="rz-login">
+        <button class="rz-login-btn" data-rz-login type="button">
+          ${GOOGLE_ICON}<span>Přihlásit se Google účtem</span>
+        </button>
+      </div>` : "";
     return `
       <header class="rz-bar rz-bar--left">
         <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
@@ -1130,8 +1137,10 @@
         ${paras}
         ${outro}
         ${secWrap}
+        ${login}
       </div>`;
   }
+  const GOOGLE_ICON = '<svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 20-8 20-20 0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 18.9 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16 4 9.1 8.6 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.2 34.9 26.7 36 24 36c-5.3 0-9.7-3.1-11.3-7.6l-6.5 5C9.1 39.3 16 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.3 5.3C41.4 36 44 30.5 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>';
 
   /* ---- Pre-test: „Co už o tématu víš?" ----
      Po rozkliknutí Glitche si žák zvolí, na čem je — bot pak podle toho přizpůsobí
@@ -1195,7 +1204,7 @@
       </header>
       <div class="rz-body rz-body--chat">
         ${(r.title || c.title || c.claim) ? `<h1 class="rz-title g-h2">${esc(r.title || c.title || c.claim)}</h1>` : ""}
-        ${(r.intro || c.body) ? `<p class="rz-intro g-p">${esc(r.intro || c.body)}</p>` : ""}
+        ${(c.type !== "spot_the_mistake" && (r.intro || c.body)) ? `<p class="rz-intro g-p">${esc(r.intro || c.body)}</p>` : ""}
         ${(function () { const img = r.image || (c.type === "fun_fact" ? c.image : ""); return img ? `<div class="rz-photo"><img src="${esc(img)}" alt=""></div>` : ""; })()}
         ${jenHlavicka ? "" : pretestBlock(r)}
         <div class="rz-thread" data-rz-thread>${thread}</div>
@@ -1325,6 +1334,12 @@
         if (sec) sec.classList.toggle("is-open");
       });
     });
+    // Přihlášení Google účtem (dole v O Glitchi)
+    const loginBtn = panel.querySelector("[data-rz-login]");
+    if (loginBtn) loginBtn.addEventListener("click", async () => {
+      try { if (typeof sbSignInWithGoogle === "function") await sbSignInWithGoogle(); }
+      catch (_) { if (typeof toast === "function") toast("Přihlášení se nezdařilo."); }
+    });
   }
 
   // Skryje kartu ve feedu (po splnění), ať se v téže relaci znovu neukazuje.
@@ -1372,7 +1387,7 @@
     algorithm_demo: "glitchee",
     argument: "argumentacni-partner",
     historicka_osobnost: "historicka-postava",
-    spot_the_mistake: "chybujici-chatbot"
+    spot_the_mistake: "detektiv-chyb"
   };
   // Pořadí: co je v kartě → přednastavení dle typu → výchozí Glitchee.
   const personaOf = (c) =>
@@ -1399,7 +1414,11 @@
       kapitola: r.chapter || (c.chapterNo != null ? String(c.chapterNo) : ""),
       cil: r.cil || "",
       zadani: r.zadani || "",
-      text: r.intro || c.body || c.claim || ""
+      // U „Najdi chybu" vidí žák tvrzení i doprovodný text — persona (Detektiv chyb)
+      // musí mít celý text, ve kterém jsou schválně chyby, ne jen titulek.
+      text: c.type === "spot_the_mistake"
+        ? [c.claim, c.context].filter(Boolean).join("\n")
+        : (r.intro || c.body || c.claim || "")
     };
     if (Array.isArray(r.messages)) {
       const said = r.messages.filter((m) => m.from === "bot").map((m) => m.text).join(" ");
@@ -1684,7 +1703,7 @@
       }));
     } else {
       form.classList.remove("is-hidden");
-      if (history.length === 0) greet(argOpening(card));
+      if (history.length === 0) greet(argOpening(card) || mistakeOpening(card));
     }
 
     // U Argumentuj persona zahájí podle zvoleného postoje (souhlas / nesouhlas).
@@ -1693,6 +1712,14 @@
       const postoj = c._postoj === "nesouhlas" ? "NESOUHLASÍ" : "SOUHLASÍ";
       return "Žák si u tohohle tvrzení zvolil, že s ním " + postoj + ". Nevysvětluj mu téma. " +
         "Krátce potvrď jeho volbu a vyzvi ho, ať ti svůj postoj obhájí — polož mu k tomu jednu otevřenou otázku.";
+    }
+
+    // U „Najdi chybu" persona nevysvětluje téma — pobídne žáka hledat chybu v textu karty.
+    function mistakeOpening(c) {
+      if (!c || c.type !== "spot_the_mistake") return undefined;
+      return "Tohle je Glitch typu Najdi chybu. V textu karty (máš ho v ZADÁNÍ) jsou schválně chyby. " +
+        "Nevysvětluj téma a neprozrazuj, kde chyby jsou ani kolik jich je. Krátce žáka pobídni, ať se na " +
+        "text podívá kriticky, a polož mu jednu otázku, jestli v něm nějakou chybu vidí.";
     }
   }
 

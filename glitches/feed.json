@@ -94,7 +94,8 @@
             "Tak jdeme na to."
           ]
         }
-      ]
+      ],
+      "login": true
     }
   },
   {
@@ -425,7 +426,15 @@
     "claim": "Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott!",
     "context": "Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců.",
     "topic": "Umělá inteligence",
-    "image": "assets/img/mistake-gott-perceptron.jpg"
+    "image": "assets/img/mistake-gott-perceptron.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák odhalí faktickou chybu v autorství a vysvětlí, kdo Perceptron skutečně vytvořil.",
+      "zadani": "Text na kartě: „Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott! Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců.“ CHYBY (klíč, žákovi neprozrazuj): 1) Perceptron nevytvořil Karel Gott — to byl zpěvák, s neuronovými sítěmi nemá nic společného. Skutečným autorem byl americký psycholog Frank Rosenblatt (1958). Zbytek textu je správně: síť se opravdu jmenovala Perceptron, měla jeden neuron a rozpoznávala jednoduché obrazce — na to žáka nenaváděj jako na chybu.",
+      "intro": "Ten text na kartě zní sebejistě, ale něco v něm vážně nesedí. Vidíš, co je špatně?"
+    }
   },
   {
     "id": "argument-nemam-co-skryvat",
@@ -713,7 +722,15 @@
     "claim": "Vibecoding znamená, že appku udělá AI za tebe — takže už nemusíš ničemu rozumět.",
     "context": "Zní to lákavě. Rozklikni a najdi, co na tom nesedí.",
     "viz": "assets/3Dvizualizations/vibecoding.html?v=1",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák rozpozná, že i při vibecodingu je porozumění pořád potřeba.",
+      "zadani": "Text na kartě: „Vibecoding znamená, že appku udělá AI za tebe — takže už nemusíš ničemu rozumět.“ CHYBA (klíč, žákovi neprozrazuj): Zavádějící je část „už nemusíš ničemu rozumět“. I když kód píše AI, musíš rozumět tomu, co vlastně chceš (zadat úkol), umět výsledek zkontrolovat, otestovat a opravit, když AI udělá chybu. Bez porozumění nepoznáš, že appka dělá něco špatně nebo nebezpečně. Sám pojem vibecoding (že appku pomáhá tvořit AI) je v pořádku — chyba je v tom závěru „nemusíš rozumět“.",
+      "intro": "Zní to lákavě, co? Ale jedna část toho tvrzení nesedí. Vidíš která?"
+    }
   },
   {
     "id": "vibecoding-ai-kod-je-vzdy-spravny",
@@ -725,7 +742,15 @@
     "claim": "Co ti AI vygeneruje jako kód, je vždycky správné a bezpečné — stačí zkopírovat.",
     "context": "Vážně vždycky? Rozklikni a najdi, co na tom nesedí.",
     "viz": "assets/3Dvizualizations/ai-code-check.html?v=1",
-    "topic": "Vibe Coding"
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák pochopí, že kód od AI se musí ověřovat, ne slepě kopírovat.",
+      "zadani": "Text na kartě: „Co ti AI vygeneruje jako kód, je vždycky správné a bezpečné — stačí zkopírovat.“ CHYBA (klíč, žákovi neprozrazuj): Kód od AI NENÍ vždycky správný ani bezpečný. AI se plete (halucinuje), může použít zastaralé postupy nebo do kódu zanést bezpečnostní díry. Kód se musí přečíst, otestovat a ověřit, ne slepě zkopírovat. Klíčová slova „vždycky“ a „stačí zkopírovat“ jsou právě to, co je špatně.",
+      "intro": "Vážně vždycky správné a bezpečné? Zamysli se — co na tom tvrzení nesedí?"
+    }
   },
   {
     "id": "andrej-karpathy",
@@ -927,7 +952,15 @@
     "obtiznost": 2,
     "claim": "Algoritmus je složitá věc, která existuje jen uvnitř počítačů.",
     "context": "Vážně jen tam? Rozklikni a najdi, co na tom nesedí.",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák pochopí, že algoritmus je obecný postup a nemusí být složitý ani vázaný na počítač.",
+      "zadani": "Text na kartě: „Algoritmus je složitá věc, která existuje jen uvnitř počítačů.“ CHYBY (klíč, žákovi neprozrazuj): 1) „Jen uvnitř počítačů“ — algoritmus je obecný postup krok za krokem, jak něco udělat; existuje i mimo počítače (recept na vaření, návod na složení nábytku, postup ranního vstávání). 2) „Složitá věc“ — algoritmus nemusí být složitý, může mít jen pár jednoduchých kroků. Obě slova („složitá“ i „jen uvnitř počítačů“) jsou chybná.",
+      "intro": "Vážně jen v počítačích a vážně vždycky složité? Co v tom tvrzení nesedí?"
+    }
   },
   {
     "id": "algoritmus-na-rychlosti-nezalezi",
@@ -938,7 +971,15 @@
     "obtiznost": 2,
     "claim": "Hlavně že algoritmus vyjde. Na tom, jak dlouho to trvá, vůbec nezáleží.",
     "context": "Fakt vůbec? Rozklikni a najdi, co na tom nesedí.",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák pochopí, že na efektivitě (rychlosti) algoritmu záleží.",
+      "zadani": "Text na kartě: „Hlavně že algoritmus vyjde. Na tom, jak dlouho to trvá, vůbec nezáleží.“ CHYBA (klíč, žákovi neprozrazuj): Na rychlosti (efektivitě) algoritmu záleží hodně. Dva algoritmy můžou dát stejný výsledek, ale jeden ho spočítá za zlomek vteřiny a druhý za roky. U velkého množství dat je pomalý algoritmus prakticky nepoužitelný — proto se u algoritmů řeší časová složitost. Chybná je část „vůbec nezáleží“.",
+      "intro": "Fakt vůbec nezáleží? Zkus přijít na to, proč tohle tvrzení nesedí."
+    }
   },
   {
     "id": "al-chwarizmi",
