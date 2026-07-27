@@ -271,9 +271,11 @@
     },
 
     fun_fact(c) {
-      const media = c.image
-        ? `<img src="${c.image}" alt="">`
-        : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
+      const media = c.viz
+        ? vizFrame(c.viz)
+        : c.image
+          ? `<img src="${c.image}" alt="">`
+          : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
         <div class="stack stack--pod">
           <div class="stack-media"><div class="funfact-tile">${media}</div></div>
@@ -453,7 +455,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=24", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=25", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -546,6 +548,7 @@
     if (c.type === "historicka_osobnost") initPersona(el);
     if (c.type === "attention_game") initAttention(el, c);
     if (c.type === "algorithm_demo") initVizFrame(el);
+    if (c.type === "fun_fact") initVizFrame(el);            // fun fact může mít animaci (viz) místo obrázku
     if (c.type === "quest_intro") initQuestVideo(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") {

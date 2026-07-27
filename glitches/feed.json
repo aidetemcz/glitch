@@ -672,7 +672,8 @@
     "obtiznost": 1,
     "title": "V milionu seřazených jmen najdeš to pravé za ~20 kroků.",
     "body": "Trik se jmenuje půlení — pokaždé zahodíš půlku, která tě nezajímá.",
-    "topic": "Algoritmus"
+    "topic": "Algoritmus",
+    "viz": "assets/3Dvizualizations/binary-search.html?v=1"
   },
   {
     "id": "algoritmus-eukliduv-algoritmus",
