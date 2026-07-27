@@ -213,37 +213,60 @@
     },
 
     quick_challenge(c) {
-      // Jednotné rozvržení pro všechny výzvy: otázka nahoře (y≈216), úkol
-      // (kód / obrazec) vystředěný v prázdném prostoru, odpovědi dole.
-      // Styl odpovědí podle jejich DÉLKY (ne podle příznaku): dlouhé věty → textová
-      // tlačítka přes celou šířku + tok shora; krátké → kompaktní tlačítka na střed.
-      const longAns = (c.answers || []).some((a) => String((a && a.label) || a).length > 20);
-      const textLayout = longAns;
-      const optCls = textLayout ? "quiz-opt quiz-opt--text g-p" : "quiz-opt g-h4";
-      const opts = c.answers.map((a, i) =>
+      // ── PEVNÁ PRAVIDLA ROZLOŽENÍ (dle Figmy, viz docs/karta-rychla-vyzva.md) ──
+      // Pozice prvků jsou VŽDY stejné, mění se jen jejich obsah a (v editoru)
+      // zvolený styl fontu u každého textu:
+      //   NADPIS (nahoře, y≈216) → POPIS: scénář + otázka (hned pod nadpisem)
+      //   → VIZUÁL: obrazec/obrázek/kód (vystředěný v prázdném prostoru, nepovinný)
+      //   → ODPOVĚDI (ukotvené dole).
+      // Když je vizuál, otázka (sub) se čte jako popisek těsně nad tlačítky.
+      //
+      // Styl fontu je u KAŽDÉHO textu volitelný (h1/h3/h4/p). Výchozí hodnoty
+      // odpovídají návrhu; editor je později přepíše přes *Style pole v datech.
+      const st = (v, def) => "g-" + (["h1", "h3", "h4", "p"].indexOf(v) >= 0 ? v : def);
+
+      // Odpovědi: dlouhé věty → textová tlačítka přes celou šířku (text vlevo);
+      // krátké → kompaktní tlačítka na střed (mřížka / řada / sloupec).
+      const answers = c.answers || [];
+      const longAns = answers.some((a) => String((a && a.label) || a).length > 20);
+      const optStyle = st(c.answerStyle, longAns ? "p" : "h4");
+      const optCls = "quiz-opt " + (longAns ? "quiz-opt--text " : "") + optStyle;
+      const opts = answers.map((a, i) =>
         `<button class="${optCls}" data-quiz="${i}" data-correct="${!!a.correct}">${esc(a.label)}</button>`).join("");
-      const cols = textLayout ? "cols-1v" : (c.figure === "triangles" ? "cols-3" : ("cols-" + (c.cols || 2)));
-      // krátká otázka (např. „310×15=") má styl H1 (40), věty H3 (25) — dle Figmy
-      const qCls = c.questionStyle === "h1" ? "g-h1" : "g-h3";
-      // ÚLOHA (prostřední prvek) — jeden z: obrázek / kód / text (<p>). Pevná struktura
-      // rychlé výzvy: NADPIS → ÚLOHA → VYSVĚTLENÍ (<p>) → TLAČÍTKA (viz editor karet).
-      let task = "";
-      if (c.figure === "triangles") task = `<div class="quiz-figure-wrap">${triangleFigure()}</div>`;
-      else if (c.image) task = `<div class="quiz-image"><img src="${esc(c.image.src || c.image)}" alt="${esc(c.image.alt || "")}"></div>`;
-      else if (c.code) task = `<pre class="quiz-code">${esc(c.code)}</pre>`;
-      else if (c.taskText) task = `<p class="quiz-tasktext g-p">${esc(c.taskText)}</p>`;
-      // Vysvětlení (sub, <p>) se čte pod úlohou (nad tlačítky). Nemá-li výzva úlohu,
-      // zůstává sub podnadpisem hned pod nadpisem (bezpečný fallback).
-      const hasTask = !!task;
-      const sub = c.sub ? `<p class="quiz-sub g-p">${esc(c.sub)}</p>` : "";
+      const cols = longAns ? "cols-1v" : (c.figure === "triangles" ? "cols-3" : ("cols-" + (c.cols || 2)));
+
+      // NADPIS (velký text výzvy) — výchozí styl H3, krátké příklady „310×15=" H1.
+      const qCls = st(c.questionStyle, "h3");
+
+      // VIZUÁL (nepovinný prostřední prvek) — POUZE obrazec / obrázek / kód.
+      // Textový úkol (taskText) je PROZA a patří do popisu nahoře, ne doprostřed.
+      let visual = "";
+      if (c.figure === "triangles") visual = `<div class="quiz-figure-wrap">${triangleFigure()}</div>`;
+      else if (c.image) visual = `<div class="quiz-image"><img src="${esc(c.image.src || c.image)}" alt="${esc(c.image.alt || "")}"></div>`;
+      else if (c.code) visual = `<pre class="quiz-code">${esc(c.code)}</pre>`;
+      const hasVisual = !!visual;
+
+      // POPIS: scénář (taskText) + otázka (sub).
+      const desc = c.taskText ? `<p class="quiz-desc ${st(c.taskStyle, "p")}">${esc(c.taskText)}</p>` : "";
+      const sub = c.sub ? `<p class="quiz-sub ${st(c.subStyle, "p")}">${esc(c.sub)}</p>` : "";
+
+      // UMÍSTĚNÍ podle typu odpovědí:
+      //  • krátké odpovědi → střed karty je volný: vizuál se vystředí (quiz-task),
+      //    otázka se čte jako popisek nad tlačítky (quiz-caption);
+      //  • dlouhé (textové) odpovědi → spodek patří tlačítkům, takže veškerý
+      //    kontext (popis, vizuál i otázka) je kompaktně nahoře a prázdný prostor
+      //    zůstává mezi ním a tlačítky.
+      const topVisual = longAns && hasVisual ? `<div class="quiz-visual-top">${visual}</div>` : "";
       return `${badges(c)}
-        <div class="quiz-frame${textLayout ? " quiz-frame--flow" : ""}">
+        <div class="quiz-frame">
           <div class="quiz-head">
             <div class="${qCls}">${esc(c.question)}</div>
-            ${hasTask ? "" : sub}
+            ${desc}
+            ${topVisual}
+            ${longAns || !hasVisual ? sub : ""}
           </div>
-          <div class="quiz-task">${task}</div>
-          ${hasTask && sub ? `<div class="quiz-caption">${sub}</div>` : ""}
+          <div class="quiz-task">${longAns ? "" : visual}</div>
+          ${!longAns && hasVisual && sub ? `<div class="quiz-caption">${sub}</div>` : ""}
           <div class="quiz-answers"><div class="quiz-options ${cols}">${opts}</div></div>
         </div>`;
     },
@@ -460,7 +483,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=28", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=29", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;

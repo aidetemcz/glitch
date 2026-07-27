@@ -17,7 +17,7 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 | název | Násobení 310×15 |
 | typ | `rychla-vyzva` |
 | předmět | Matematika |
-| varianta | `vypocet` *(vypocet · slovni-uloha · obrazec)* |
+| varianta | `vypocet` *(vypocet · slovni-uloha · obrazec · textove-odpovedi)* |
 | verze | 1.0 |
 | autor | redakce AI dětem |
 | datum vytvoření | 2026-07-23 |
@@ -70,18 +70,30 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
 
 ## 2 Karta ve feedu *(viditelné)*
 
-**Pevná struktura (platí pro každou Rychlou výzvu — kvůli editoru i konzistenci):**
+**Pevná struktura (platí pro KAŽDOU Rychlou výzvu — kvůli editoru i konzistenci).**
+Pozice prvků jsou vždy stejné (dle Figmy, rámec 402×874); mění se jen jejich
+**obsah** a v editoru **zvolený styl fontu** u každého textu. Rozvržení shora dolů:
 
-1. **Nadpis** — otázka/zadání jako nadpis. Styl `H1` / `H2` / `H3` podle délky
-   (pole `question` + `questionStyle`). Např. `310×15=`.
-2. **Úloha** — nepovinný nosič úlohy: kód (`code`), krátký text (`taskText`
-   → `<p>`) nebo obrázek (`figure`). Právě jeden podle varianty.
-3. **Vysvětlení / podotázka** — vždy odstavec `<p>` (pole `sub`). Volitelné,
-   např. „Zvládneš spočítat do časového limitu?".
-4. **Tlačítka odpovědí** — právě **jedna správná**. Rozvržení:
-   - `2x2` — čtyři možnosti (jako v příkladu),
-   - `1xN` — svislý sloupec,
-   - `row` — vodorovná řada (např. u obrazců).
+1. **Nadpis** (nahoře, y≈216) — velký text výzvy (pole `question`). Styl fontu
+   volitelný přes `questionStyle` = `h1` / `h3` / `h4` (výchozí `h3`; krátký
+   číselný příklad jako „310×15=" má `h1`).
+2. **Popis / scénář** — nepovinná próza hned pod nadpisem (pole `taskText` →
+   `<p>`). Styl přes `taskStyle` (výchozí `p`). Např. „Kamarádka ti říká: …".
+3. **Otázka / podotázka** — nepovinný odstavec `<p>` (pole `sub`). Styl přes
+   `subStyle` (výchozí `p`). Např. „Který popis sedí nejlíp?".
+   *Pozn.: když je přítomen vizuál (bod 4), otázka se čte jako popisek těsně nad
+   tlačítky (aby vizuál zůstal vystředěný); jinak stojí hned pod nadpisem.*
+4. **Vizuál** — nepovinný prostřední prvek, vystředěný v prázdném prostoru.
+   Právě jeden z: obrazec (`figure`), obrázek (`image`) nebo kód (`code`).
+   **Textový úkol NENÍ vizuál** — próza patří vždy do bodů 2–3 nahoře.
+5. **Tlačítka odpovědí** (ukotvená DOLE) — právě **jedna správná**. Styl textu
+   přes `answerStyle` (výchozí `h4` u krátkých, `p` u dlouhých). Rozvržení se
+   řídí délkou popisků a počtem možností (viz tabulka typů níže).
+
+**Font-styl je u každého textu volitelný, pozice se nemění.** Editor u nadpisu,
+popisu, otázky i tlačítek nabídne výběr `h1 / h3 / h4 / p`; do dat se uloží jako
+`questionStyle` / `taskStyle` / `subStyle` / `answerStyle`. Kód sází styly jako
+třídy `g-h1 / g-h3 / g-h4 / g-p` (viz `js/feed.js` → `quick_challenge`).
 
 - **Štítek:** `Rychlá výzva` (žlutý).
 - **Časovač:** vždy **opt-in** — nikdy se nespustí automaticky. Dítě si ho zapne kliknutím na kolečko.
@@ -90,13 +102,22 @@ _Šablona sekcí Glitche typu **Rychlá výzva** na příkladu „Násobení 310
   a doporučovač kartu za chvíli zařadí znovu (o kus dál), ať si to dítě může
   zkusit ještě jednou. Správná odpověď = hotovo (`tg_progress`).
 
-### Varianty zadání
+### Typy rychlé výzvy *(všechny sdílejí pevnou kostru výše)*
 
-| varianta | co obsahuje | příklad |
-| ----- | ----- | ----- |
-| `vypocet` | číselný příklad | „310×15=" |
-| `slovni-uloha` | krátký text s otázkou | „V appce je 8 řad po 15 videích. Kolik videí je vidět?" |
-| `obrazec` | SVG obrázek + otázka | „Který obrazec je na řadě?" (doplň vzor) |
+Liší se jen blokem zadání a rozvržením odpovědí. Pokrývají všechny čtyři návrhy
+z Figmy (Quick Challenge 1–4):
+
+| typ | nadpis | prostřední prvek | odpovědi | Figma |
+| ----- | ----- | ----- | ----- | ----- |
+| **výpočet** (mřížka) | `h1`, krátký příklad („310 × 15 = ?") | — | 4× krátká, mřížka **2×2** (108×47), text na střed `h4` | QC1 `23:161` |
+| **slovní úloha** (sloupec) | `h3`, delší zadání | — | 3× krátká, **svislý sloupec** (125×47), text na střed `h4` | QC2 `26:188` |
+| **obrazec** (řada) | `h3`, krátká otázka | SVG/obrázek/kód (150×150) | 3× krátká, **vodorovná řada** (55×47), text na střed `h4` | QC3 `27:218` |
+| **textové odpovědi** (věty) | `h3`, nadpis + scénář + otázka | — | 4× dlouhá, **svislý sloupec přes celou šířku**, proměnná výška, text **vlevo** `p` | QC4 `193:1769` |
+
+**Volba rozvržení odpovědí je automatická podle obsahu:** obsahuje-li kterákoli
+odpověď dlouhou větu (>20 znaků), použije se sloupec textových tlačítek přes
+celou šířku; jinak kompaktní tlačítka na střed (mřížka/řada/sloupec dle `cols` a
+`figure`). Tlačítka jsou vždy ukotvená u spodního okraje karty.
 
 ---
 
