@@ -562,10 +562,9 @@
         if (mItem.dataset.menu === "save") {
           if (typeof window.saveGlitch === "function") window.saveGlitch({ id: c.id, topic: c.topic || "", title: (c.rozklik && c.rozklik.title) || c.title || c.question || "", type: c.type });
           toast("Uloženo do profilu 💾");
-        } else if (mItem.dataset.menu === "notinterested") {
-          if (typeof window.markNotInterested === "function") window.markNotInterested(c.topic || "");
-          toast("Díky, tohle už ti nebudeme tolik ukazovat.");
-          card.classList.add("is-hidden");                  // hned zmiz z feedu
+        } else if (mItem.dataset.menu === "report") {
+          if (typeof window.reportGlitch === "function") window.reportGlitch({ id: c.id, type: c.type, topic: c.topic || "" });
+          toast("Díky, obsah jsme nahlásili k prověření.");
         }
       }
       closeCardMenus();
@@ -662,16 +661,15 @@
   /* ==========================================================================
      Interakce jednotlivých karet
      ========================================================================== */
-  // Menu Glitche (tři tečky vpravo nahoře) — jen na obsahových Glitchích,
-  // ne na systémových/wellbeing kartách.
-  const MENU_TYPES = new Set(["quick_challenge", "fun_fact", "spot_the_mistake",
-    "historicka_osobnost", "argument", "attention_game", "algorithm_demo", "quest_intro"]);
+  // Menu Glitche (tři tečky vpravo nahoře) — na každém Glitchi.
+  // Výjimka: úvodní „welcome" karta (má vlastní layout a smysl ji nedává).
+  const MENU_SKIP = new Set(["welcome"]);
   function cardMenu() {
     return `<div class="card-menu" data-card-menu>
         <button class="card-menu-btn" aria-label="Menu Glitche" aria-haspopup="true"><span class="card-menu-ic"></span></button>
         <div class="card-menu-pop" hidden>
           <button class="card-menu-item" data-menu="save">Uložit Glitch</button>
-          <button class="card-menu-item" data-menu="notinterested">Tohle mě nezajímá</button>
+          <button class="card-menu-item" data-menu="report">Nahlásit nevhodný obsah</button>
         </div>
       </div>`;
   }
@@ -680,7 +678,7 @@
   }
 
   function initCard(el, c) {
-    if (MENU_TYPES.has(c.type)) el.insertAdjacentHTML("beforeend", cardMenu());
+    if (!MENU_SKIP.has(c.type)) el.insertAdjacentHTML("beforeend", cardMenu());
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
     if (c.type === "quick_challenge") initQuiz(el, c);
