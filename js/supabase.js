@@ -211,6 +211,24 @@ async function sbMarkNotInterested(topic) {
   } catch (_) {}
 }
 
+// ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
+// Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
+// přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.
+async function sbReportGlitch(info, reason) {
+  if (!sb || !sbCurrentUser) return { ok: false, reason: 'auth' };
+  if (!info || !info.id) return { ok: false, reason: 'input' };
+  try {
+    const { error } = await sb.from('content_reports').insert({
+      user_id: sbCurrentUser.id,
+      glitch_id: info.id,
+      glitch_type: info.type || null,
+      topic: info.topic || null,
+      reason: (reason || '').trim().slice(0, 2000) || null
+    });
+    return { ok: !error, reason: error ? 'db' : null };
+  } catch (_) { return { ok: false, reason: 'db' }; }
+}
+
 // ── MOOD ─────────────────────────────────────
 // Uloží náladu (focus/energy 0–100). Vždy lokálně; při přihlášení i do DB.
 // Primárně do dedikované tabulky `mood_entries`, sekundárně do `activity_log`.

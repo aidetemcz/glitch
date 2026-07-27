@@ -68,17 +68,22 @@
 
   const modalAvatar = '<div class="auth-avatar"><img src="assets/ui/avatar-icon.png" alt=""></div>';
 
-  function openSheet() {
+  // opts.sub = vlastní podtitulek (např. při nahlašování); opts.beforeGoogle =
+  // callback těsně před přesměrováním na Google (uloží si např. rozdělaný záměr).
+  function openSheet(opts) {
+    opts = opts || {};
+    const sub = opts.sub || "Pokud se přihlásíš, budeme moci ukládat tvůj pokrok.";
     const ov = overlay(
       modalAvatar +
       '<h2 class="auth-title g-h4">Přihlášení do Glitch</h2>' +
-      '<p class="auth-sub g-p">Pokud se přihlásíš, budeme moci ukládat tvůj pokrok.</p>' +
+      '<p class="auth-sub g-p">' + escapeHtml(sub) + '</p>' +
       '<button class="auth-cta" id="auth-google" type="button">Přihlásit se Google účtem</button>' +
       '<div class="auth-err" id="auth-err" role="alert"></div>'
     );
     ov.querySelector("#auth-google").addEventListener("click", async () => {
       const err = document.getElementById("auth-err");
       err.textContent = "";
+      try { if (typeof opts.beforeGoogle === "function") opts.beforeGoogle(); } catch (_) {}
       try { await sbSignInWithGoogle(); }
       catch (e) { err.textContent = (e && e.message) || "Přihlášení se nezdařilo."; }
     });
@@ -107,6 +112,16 @@
     try { if (typeof sbHandleOAuthCallback === "function") await sbHandleOAuthCallback(); } catch (_) {}
     try { if (typeof sbInit === "function") await sbInit(); } catch (_) {}
     mountButton();
+    // Nahlašování: uživatel klikl „Nahlásit", nebyl přihlášen → přihlásil se přes
+    // Google (redirect). Po návratu hned otevři modál pro nahlášení tam, kde skončil.
+    try {
+      const pend = sessionStorage.getItem("tg_pending_report");
+      const loggedIn = (typeof sbCurrentUser !== "undefined" && sbCurrentUser);
+      if (pend && loggedIn && typeof window.glitchOpenReportModal === "function") {
+        sessionStorage.removeItem("tg_pending_report");
+        window.glitchOpenReportModal(JSON.parse(pend));
+      }
+    } catch (_) {}
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

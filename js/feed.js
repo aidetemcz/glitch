@@ -565,8 +565,7 @@
           if (typeof window.saveGlitch === "function") window.saveGlitch({ id: c.id, topic: c.topic || "", title: (c.rozklik && c.rozklik.title) || c.title || c.question || "", type: c.type });
           toast("Uloženo do profilu 💾");
         } else if (mItem.dataset.menu === "report") {
-          if (typeof window.reportGlitch === "function") window.reportGlitch({ id: c.id, type: c.type, topic: c.topic || "" });
-          toast("Díky, obsah jsme nahlásili k prověření.");
+          reportFlow({ id: c.id, type: c.type, topic: c.topic || "" });
         }
       }
       closeCardMenus();
@@ -659,6 +658,67 @@
     el.textContent = msg; el.classList.add("show");
     clearTimeout(_toastTimer); _toastTimer = setTimeout(() => el.classList.remove("show"), 1600);
   }
+
+  /* ---- Nahlášení nevhodného obsahu ----
+     Tok: klik na „Nahlásit" → přihlášený uživatel dostane modál s důvodem,
+     nepřihlášený nejdřív přihlašovací okno (a po přihlášení přes Google se mu
+     modál otevře rovnou — záměr si držíme v sessionStorage, viz auth.js boot). */
+  function reportFlow(info) {
+    const loggedIn = (typeof sbCurrentUser !== "undefined" && sbCurrentUser);
+    if (loggedIn) { openReportModal(info); return; }
+    if (typeof window.glitchOpenLogin === "function") {
+      window.glitchOpenLogin({
+        sub: "Pokud chceš nahlásit nevhodný obsah, nejprve je třeba se přihlásit.",
+        beforeGoogle: () => { try { sessionStorage.setItem("tg_pending_report", JSON.stringify(info)); } catch (_) {} }
+      });
+    } else {
+      toast("Nahlašovat lze až po přihlášení.");
+    }
+  }
+
+  function openReportModal(info) {
+    closeReportModal();
+    const ov = document.createElement("div");
+    ov.id = "report-overlay";
+    ov.className = "report-overlay";
+    ov.innerHTML =
+      '<div class="report-modal" role="dialog" aria-modal="true" aria-label="Nahlášení nevhodného obsahu">' +
+        '<button class="report-close" data-report-close aria-label="Zavřít"><img src="assets/ui/Exit.svg" alt=""></button>' +
+        '<h2 class="report-title g-h4">Nahlášení nevhodného obsahu</h2>' +
+        '<p class="report-sub g-p">Prosím, napiš nám, proč ti obsah připadá nevhodný.</p>' +
+        '<textarea class="report-input" placeholder="Začni psát sem…" rows="5" aria-label="Důvod nahlášení"></textarea>' +
+        '<button class="report-send" type="button" data-report-send>Odeslat</button>' +
+      '</div>';
+    document.body.appendChild(ov);
+    document.body.classList.add("rz-lock");
+    const field = ov.querySelector(".report-input");
+    const sendBtn = ov.querySelector("[data-report-send]");
+    ov.addEventListener("mousedown", (e) => { if (e.target === ov) closeReportModal(); });
+    ov.querySelector("[data-report-close]").addEventListener("click", closeReportModal);
+    setTimeout(() => { if (field) field.focus(); }, 60);
+
+    sendBtn.addEventListener("click", async () => {
+      const reason = (field.value || "").trim();
+      sendBtn.disabled = true;
+      let res = { ok: false };
+      try {
+        if (typeof sbReportGlitch === "function") res = await sbReportGlitch(info, reason);
+      } catch (_) {}
+      closeReportModal();
+      toast(res && res.ok
+        ? "Díky, obsah jsme nahlásili k prověření."
+        : "Nahlášení se teď nepovedlo uložit. Zkus to prosím znovu.");
+    });
+  }
+
+  function closeReportModal() {
+    const ov = document.getElementById("report-overlay");
+    if (ov) ov.remove();
+    // zámek scrollu drž jen když není otevřený jiný overlay (rozklik)
+    if (!(_rzOverlay && _rzOverlay.classList.contains("is-open"))) document.body.classList.remove("rz-lock");
+  }
+  // volá auth.js po přihlášení přes Google (nedokončené nahlášení)
+  window.glitchOpenReportModal = openReportModal;
 
   /* ==========================================================================
      Interakce jednotlivých karet

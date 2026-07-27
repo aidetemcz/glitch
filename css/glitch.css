@@ -731,6 +731,54 @@ body.glitch-night .card .badges { display: none; }
 .auth-cta:active { opacity: .7; }
 .auth-err { color: #b00020; font-size: calc(13 * var(--u)); min-height: 16px; margin-top: calc(10 * var(--u)); }
 
+/* Modál pro nahlášení nevhodného obsahu (bílý, zarovnaný vlevo) */
+.report-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(20,20,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.report-modal {
+  position: relative;
+  width: calc(338 * var(--u)); max-width: 92vw;
+  background: var(--c-white); color: var(--c-black);
+  border-radius: calc(16 * var(--u));
+  padding: calc(30 * var(--u)) calc(28 * var(--u));
+  text-align: left;
+  box-shadow: 0 calc(20 * var(--u)) calc(60 * var(--u)) rgba(0,0,0,0.35);
+}
+.report-close {
+  position: absolute; top: calc(22 * var(--u)); right: calc(22 * var(--u));
+  width: calc(22 * var(--u)); height: auto; display: grid; place-items: center;
+  transition: opacity .12s ease;
+}
+.report-close:active { opacity: .6; }
+.report-close img { width: 100%; height: auto; }
+.report-title { margin: 0 calc(30 * var(--u)) calc(10 * var(--u)) 0; color: var(--c-black); }
+.report-sub { margin: 0 0 calc(18 * var(--u)); color: var(--c-black); }
+.report-input {
+  display: block; width: 100%; box-sizing: border-box;
+  min-height: calc(150 * var(--u)); resize: vertical;
+  padding: calc(13 * var(--u)) calc(14 * var(--u));
+  border: 1.5px solid var(--c-black); border-radius: calc(10 * var(--u));
+  background: var(--c-white); color: var(--c-black);
+  font-family: inherit; font-size: calc(15 * var(--u)); line-height: 1.45;
+  letter-spacing: var(--tracking);
+}
+.report-input::placeholder { color: var(--c-grey-40, #9a9a9a); }
+.report-input:focus { outline: none; border-color: var(--c-black); }
+.report-send {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-top: calc(18 * var(--u));
+  padding: calc(13 * var(--u)) calc(26 * var(--u));
+  background: transparent; color: var(--c-black);
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  cursor: pointer; transition: opacity .12s ease;
+}
+.report-send:active { opacity: .7; }
+.report-send:disabled { opacity: .5; }
+
 /* ==========================================================================
    Uživatelský profil (celoobrazovkový panel, světlý)
    ========================================================================== */
