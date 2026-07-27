@@ -274,12 +274,20 @@
     attention_game(c) {
       // data-driven: víc aktivit sdílí stejnou strukturu (nadpis, návod, počítadlo, koule)
       const help = c.help || "Tažením otáčíš kouli. Díry označíš ťuknutím. Ale pozor: označit lze jen díry, které jsou vpředu.";
-      const countLabel = c.countLabel || "Označených děr";
-      const countInit = c.countInit || "0/0";
+      // Počítadlo: buď jednořádkové (countLabel/countInit + N/total), nebo víc
+      // řádků přes pole `counters` [{label, init, field}] — field = které pole
+      // zprávy z hry se do řádku propisuje (např. "correct" / "wrong").
+      const counters = Array.isArray(c.counters) && c.counters.length
+        ? c.counters
+        : [{ label: c.countLabel || "Označených děr", init: c.countInit || "0/0" }];
+      const baseTop = counters.length > 1 ? 37 : 41;
+      const countLines = counters.map((ct, i) =>
+        `<p class="fx-block g-p atten-count" style="top:${baseTop + i * 5}%;pointer-events:none">${esc(ct.label)}: <span data-atten-count${ct.field ? ` data-count-field="${esc(ct.field)}"` : ""}>${esc(ct.init)}</span></p>`
+      ).join("");
       return `${badges(c)}
         <h3 class="fx-block g-h3" style="top:17.4%">${esc(c.title)}</h3>
         <p class="fx-block g-p atten-help" style="top:27%">${esc(help)}</p>
-        <p class="fx-block g-p atten-count" style="top:41%;pointer-events:none">${esc(countLabel)}: <span data-atten-count>${esc(countInit)}</span></p>
+        ${countLines}
         <div class="atten-viz"><iframe class="viz-frame atten-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>`;
     },
 
@@ -483,7 +491,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=31", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=32", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -707,8 +715,19 @@
      Bez časovače — hraje se volně. */
   function initAttention(el, c) {
     const NS = (c && c.ns) || "attention";
-    const countEl = el.querySelector("[data-atten-count]");
+    const countEls = el.querySelectorAll("[data-atten-count]");
     const iframe = el.querySelector(".atten-frame");
+
+    // aktualizace počítadel: řádek s data-count-field ukazuje dané pole zprávy
+    // (např. correct/wrong jako prosté číslo), jinak jednořádkové N/total.
+    const updateCounts = (d) => {
+      const n = [d.hit, d.found, d.correct, d.answered].find((v) => v != null);
+      countEls.forEach((elc) => {
+        const f = elc.getAttribute("data-count-field");
+        if (f) { if (d[f] != null) elc.textContent = String(d[f]); }
+        else if (n != null && d.total != null) elc.textContent = n + "/" + d.total;
+      });
+    };
 
     lazyLoadIframe(iframe);            // spolehlivé načtení koule (jako u ostatních animací)
 
@@ -733,7 +752,7 @@
       if (d.ns !== NS) return;
       if (d.type !== "score" && d.type !== "progress") return;
       const n = [d.hit, d.found, d.correct, d.answered].find((v) => v != null);
-      if (countEl && n != null && d.total != null) countEl.textContent = n + "/" + d.total;
+      updateCounts(d);
 
       if (d.type === "progress") { prubezna = true; return; }
 
@@ -743,8 +762,6 @@
       const dokonceno = prubezna || (d.total > 0 && n != null && n >= d.total);
       if (!hotovo && !c.replayable && dokonceno && c && c.id) {
         hotovo = true;
-        // u kola ukážeme počítadlo jako „vše zodpovězeno" (total/total)
-        if (prubezna && countEl && d.total != null) countEl.textContent = d.total + "/" + d.total;
         if (typeof window.markGlitchDone === "function") {
           window.markGlitchDone(c.id, { typ: c.type, correct: true });
         }

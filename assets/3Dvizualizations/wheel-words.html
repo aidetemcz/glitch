@@ -34,24 +34,26 @@
   var ctx = canvas.getContext('2d');
   var S = 0;
 
-  // slova na kole — ml: patří ke strojovému učení?
+  // slova na kole — ml: patří ke strojovému učení? (false = jen hardwarová věc)
   var WORDS = [
-    { w: 'model',      ml: true },
-    { w: 'klávesnice', ml: false },
-    { w: 'data',       ml: true },
-    { w: 'tiskárna',   ml: false },
-    { w: 'trénink',    ml: true },
-    { w: 'kabel',      ml: false },
-    { w: 'neuron',     ml: true },
-    { w: 'baterie',    ml: false },
-    { w: 'predikce',   ml: true },
-    { w: 'obrazovka',  ml: false },
-    { w: 'vzor',       ml: true },
-    { w: 'myš',        ml: false },
+    { w: 'model',       ml: true },
+    { w: 'data',        ml: true },
+    { w: 'trénink',     ml: true },
+    { w: 'neuron',      ml: true },
+    { w: 'predikce',    ml: true },
+    { w: 'vzor',        ml: true },
     { w: 'klasifikace', ml: true },
-    { w: 'složka',     ml: false },
-    { w: 'wifi',       ml: false }
+    { w: 'klávesnice',  ml: false },
+    { w: 'tiskárna',    ml: false },
+    { w: 'kabel',       ml: false },
+    { w: 'baterie',     ml: false },
+    { w: 'obrazovka',   ml: false },
+    { w: 'myš',         ml: false },
+    { w: 'reproduktor', ml: false },
+    { w: 'sluchátka',   ml: false }
   ];
+  // náhodné pořadí slov na kole (Fisher–Yates) — ať se správná/špatná nestřídají
+  (function shuffle(a){ for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } })(WORDS);
   var N = WORDS.length;
   var STEP = Math.PI * 2 / N;
 
@@ -80,12 +82,22 @@
   function mod(i, n){ return ((i % n) + n) % n; }
   function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
 
+  function tallies(){
+    var c = 0, w = 0, a = 0;
+    for (var i = 0; i < N; i++){
+      if (answers[i] === null) continue;
+      a++;
+      if ((answers[i] === 'ano') === WORDS[i].ml) c++; else w++;
+    }
+    return { correct: c, wrong: w, answered: a };
+  }
   function postState(){
-    var answered = 0;
-    for (var i = 0; i < N; i++) if (answers[i] !== null) answered++;
+    var t = tallies();
     try {
-      if (done) window.parent.postMessage({ ns: 'wheelwords', type: 'score', correct: score, total: N }, '*');
-      else window.parent.postMessage({ ns: 'wheelwords', type: 'progress', answered: answered, total: N }, '*');
+      window.parent.postMessage({
+        ns: 'wheelwords', type: done ? 'score' : 'progress',
+        correct: t.correct, wrong: t.wrong, answered: t.answered, total: N
+      }, '*');
     } catch (e) {}
   }
   function resetGame(){
@@ -314,15 +326,16 @@
       var isActive = i === ai;
       var closeness = clamp01(1 - Math.abs(np.a) / STEP);   // 1 ve středu okna
       var dotR = S * (0.008 + 0.009 * closeness);
-      var wrong = done && answers[i] !== null && ((answers[i] === 'ano') !== WORDS[i].ml);
+      // správně zodpovězené slovo se hned vysvítí žlutě (pozitivní zpětná vazba)
+      var correct = answers[i] !== null && ((answers[i] === 'ano') === WORDS[i].ml);
 
       // tečka nodu (se září)
       ctx.save();
-      ctx.shadowColor = wrong ? 'rgba(255,255,0,0.9)' : 'rgba(255,255,255,0.9)';
+      ctx.shadowColor = correct ? 'rgba(255,255,0,0.9)' : 'rgba(255,255,255,0.9)';
       ctx.shadowBlur = 6 + 10 * closeness;
       ctx.beginPath();
       ctx.arc(np.x, np.y, dotR * (isActive && !done ? 1 + 0.06 * Math.sin(now / 300) : 1), 0, Math.PI * 2);
-      ctx.fillStyle = wrong ? 'rgba(255,255,0,0.95)' : 'rgba(255,255,255,' + (0.55 + 0.45 * closeness).toFixed(3) + ')';
+      ctx.fillStyle = correct ? 'rgba(255,255,0,0.95)' : 'rgba(255,255,255,' + (0.55 + 0.45 * closeness).toFixed(3) + ')';
       ctx.fill();
       ctx.restore();
 
@@ -334,24 +347,23 @@
         ctx.save();
         ctx.translate(np.x + S * 0.045, np.y);
         ctx.rotate(np.a * 0.85);
-        ctx.font = fontStr(fs, 400);
+        ctx.font = fontStr(fs, correct ? 600 : 400);
         ctx.textAlign = 'left';
-        ctx.shadowColor = 'rgba(255,255,255,0.55)';
+        ctx.shadowColor = correct ? 'rgba(255,255,0,0.65)' : 'rgba(255,255,255,0.55)';
         ctx.shadowBlur = 10;
-        ctx.fillStyle = 'rgba(255,255,255,' + (0.95 * wordA).toFixed(3) + ')';
+        ctx.fillStyle = correct
+          ? 'rgba(255,255,0,' + (0.98 * wordA).toFixed(3) + ')'
+          : 'rgba(255,255,255,' + (0.95 * wordA).toFixed(3) + ')';
         ctx.fillText(label, 0, 0);
         ctx.restore();
       }
 
-      // značka odpovědi vlevo od tečky; po vyhodnocení u chyb žlutě správná
+      // značka volby vlevo od tečky: správně žlutě, špatně tlumeně bíle
       if (answers[i] !== null){
         var ms = S * 0.011;
         var mx = np.x - S * 0.038, my = np.y;
-        if (wrong){
-          drawMark(mx, my, WORDS[i].ml ? 'ano' : 'ne', ms, '255,255,0', 0.95);
-        } else {
-          drawMark(mx, my, answers[i], ms, '255,255,255', 0.55);
-        }
+        if (correct) drawMark(mx, my, answers[i], ms, '255,255,0', 0.95);
+        else drawMark(mx, my, answers[i], ms, '255,255,255', 0.5);
       }
     }
 
@@ -386,9 +398,7 @@
       }
     }
 
-    // po dokončení svítí chybné nody žlutě na kole;
-    // po chvíli se hra sama vrátí na začátek
-    if (done && now - doneAt > 8000) resetGame();
+    // po dokončení zůstává vyhodnocení na kole (bez automatického resetu)
 
     ctx.restore();
   }
