@@ -433,6 +433,12 @@ body.glitch-night .card .badges { display: none; }
 .atten-viz { position: absolute; left: 40px; right: 40px; top: 47%; aspect-ratio: 1 / 1; overflow: hidden; z-index: 1; }
 .atten-frame { width: 100%; height: 100%; }
 
+/* ASMR — interaktivní světelná stopa přes celou kartu (pod nadpisem/návodem).
+   Text nahoře propouští tahy skrz (pointer-events:none), ať se dá kreslit i u něj. */
+.asmr-viz { position: absolute; inset: 0; z-index: 1; }
+.asmr-frame { width: 100%; height: 100%; }
+.asmr-txt { z-index: 2; pointer-events: none; color: var(--c-white); }
+
 /* časovač na sebe upozorňuje pulzem + občasným glitchem (dokud neběží) */
 @keyframes atten-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,0,0); }
@@ -550,11 +556,14 @@ body.glitch-night .card .badges { display: none; }
 /* fun fact / najdi chybu / historická osobnost mohou mít místo obrázku animaci (iframe) — vyplní čtverec */
 .funfact-tile iframe, .mistake-photo iframe, .persona-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
 .funfact-tile:has(iframe), .mistake-photo:has(iframe), .persona-photo:has(iframe) { background: var(--c-black); }
-/* Argumentuj: animace BEZ rámečku (bez podkladu/obrysu), zarovnaná doleva a menší */
-.stack-media.arg-media { justify-content: flex-start; }
-.arg-media > .arg-photo { width: 55%; }
-.arg-photo { aspect-ratio: 1 / 1; overflow: hidden; background: transparent; }
-.arg-photo iframe { width: 100%; height: 100%; border: 0; display: block; }
+/* Argumentuj: ilustrace maskota vlevo nahoře (~42 % šířky, dle Figmy 92:229),
+   bez rámečku (animace plyne na černém pozadí) */
+.arg-illus {
+  position: absolute; left: 40px; width: 42%;
+  aspect-ratio: 1 / 1; overflow: hidden; z-index: 2; background: transparent;
+}
+.arg-illus iframe { width: 100%; height: 100%; border: 0; display: block; }
+.arg-illus img { width: 100%; height: 100%; object-fit: contain; }
 .mistake-context { color: var(--c-white); }
 .persona-cta {
   margin-top: calc(18 * var(--u));
@@ -562,8 +571,8 @@ body.glitch-night .card .badges { display: none; }
 }
 
 /* Argumentuj (růžová karta) — tvrzení y=216, podtext y=350, tlačítka y=665 (Figma) */
-.arg-claim { color: var(--fg); }
-.arg-sub { color: var(--fg); }
+.arg-text .arg-claim { margin: 0; color: var(--fg); }
+.arg-text .arg-sub { margin-top: calc(20 * var(--u)); color: var(--fg); }
 .arg-actions { position: absolute; left: 40px; right: 40px; bottom: calc(111 * var(--u)); display: flex; gap: calc(27 * var(--u)); z-index: 2; }
 .arg-opt { width: calc(134 * var(--u)); height: calc(47 * var(--u)); }
 .arg-opt.is-sel { background: var(--fg); color: var(--bg); border-color: var(--fg); }

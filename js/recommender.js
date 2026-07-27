@@ -15,7 +15,7 @@
   const DAILY_CAP_ENABLED = false;
   // o kolik karet dál se vrátí Glitch, který žák neuhodl (druhá šance s odstupem)
   const RETRY_ODSTUP = 8;
-  const WELLBEING_TYPES = new Set(["mood_selector", "breathing", "attention_game"]);
+  const WELLBEING_TYPES = new Set(["mood_selector", "breathing", "attention_game", "asmr"]);
 
   // do které skupiny „od koho vidím obsah" karta patří
   function trustBucket(card) {

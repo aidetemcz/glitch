@@ -36,6 +36,15 @@
     "cycles": 7
   },
   {
+    "id": "wellbeing-asmr",
+    "type": "asmr",
+    "category": "Wellbeing",
+    "trust": "Core",
+    "title": "ASMR time!",
+    "help": "Táhni prstem nebo ťukej.",
+    "viz": "assets/3Dvizualizations/asmrtrail.html?v=1"
+  },
+  {
     "id": "vibecoding-co-je",
     "type": "quest_intro",
     "trust": "Core",

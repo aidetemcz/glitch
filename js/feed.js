@@ -358,25 +358,33 @@
     },
 
     argument(c) {
-      // stejná kostra jako Najdi chybu / Fun fact: čtvercová animace nahoře,
-      // tvrzení + výzva pod ní, tlačítka Souhlasím/Nesouhlasím ukotvená dole.
+      // Rozvržení dle Figmy (92:229): ilustrace maskota vlevo nahoře (~42 %
+      // šířky), hlavní tvrzení (H2) níž, instrukce pod ním, tlačítka volby dole.
       const media = c.viz
         ? vizFrame(c.viz)
         : c.image
           ? `<img src="${c.image}" alt="">`
           : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
-        <div class="stack stack--pod">
-          <div class="stack-media arg-media"><div class="arg-photo">${media}</div></div>
-          <div class="stack-text">
-            <h3 class="fx-title arg-claim g-h3">${esc(c.claim)}</h3>
-            <p class="fx-text arg-sub g-p">${esc(c.sub)}</p>
-          </div>
+        <div class="arg-illus" style="top:14%">${media}</div>
+        <div class="fx-block arg-text" style="top:48%">
+          <h2 class="arg-claim g-h2">${esc(c.claim)}</h2>
+          <p class="arg-sub g-p">${esc(c.sub)}</p>
         </div>
         <div class="arg-actions">
           <button class="arg-opt" data-arg="agree">Souhlasím</button>
           <button class="arg-opt" data-arg="disagree">Nesouhlasím</button>
         </div>`;
+    },
+
+    asmr(c) {
+      // Wellbeing hravá aktivita: nadpis + návod nahoře, interaktivní animace
+      // (světelná stopa) přes celou plochu karty. Bez počítadla, bez dokončení
+      // (jako dech/nálada — může se objevit klidně znovu).
+      return `${badges(c)}
+        <h3 class="fx-block g-h3 asmr-txt" style="top:13%">${esc(c.title)}</h3>
+        <p class="fx-block g-p asmr-txt" style="top:18.5%">${esc(c.help || "")}</p>
+        <div class="asmr-viz"><iframe class="viz-frame asmr-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>`;
     },
 
     daily_summary(c) {
@@ -452,6 +460,7 @@
   const BG = {
     welcome: "yellow", intro: "white", argument: "black", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black", time_to_let_go: "black",
+    asmr: "black",
     quick_challenge: "pink", spot_the_mistake: "black", fun_fact: "black",
     historicka_osobnost: "black", quest_intro: "image"
   };
@@ -513,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=34", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=35", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -681,6 +690,7 @@
     if (c.type === "algorithm_demo") initVizFrame(el);
     if (c.type === "fun_fact") initVizFrame(el);            // fun fact může mít animaci (viz) místo obrázku
     if (c.type === "spot_the_mistake") initVizFrame(el);    // i „najdi chybu" může mít animaci místo fotky
+    if (c.type === "asmr") initVizFrame(el);                // ASMR: interaktivní světelná stopa přes celou kartu
     if (c.type === "quest_intro") initQuestVideo(el);
     // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
     if (c.type === "welcome") {
