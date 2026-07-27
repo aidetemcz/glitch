@@ -209,9 +209,9 @@
     ctx.save();
     ctx.translate((w - S) / 2, (h - S) / 2);
 
-    // kočka se otáčí doprava, otazník nad hlavou v protisměru
-    drawObject(catPts, S * 0.225, S * 0.5, S * 0.635, t * 0.6, t, S * 0.030);
-    drawObject(qmPts, S * 0.0062, S * 0.5, S * 0.175 + Math.sin(t * 1.3) * S * 0.012, -t * 1.2, t, S * 0.016);
+    // kočka se otáčí doprava, otazník (velký jako hlava) v protisměru
+    drawObject(catPts, S * 0.225, S * 0.5, S * 0.68, t * 0.6, t, S * 0.030);
+    drawObject(qmPts, S * 0.016, S * 0.5, S * 0.20 + Math.sin(t * 1.3) * S * 0.012, -t * 1.2, t, S * 0.024);
 
     ctx.restore();
   }
