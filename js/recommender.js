@@ -86,10 +86,10 @@
     ctx = ctx || feedContext();
     const s = ctx.settings || {};
 
-    // Noční zámek: mezi 22:00 a 7:00 se zobrazuje JEN „Je čas vypnout screen!" —
+    // Noční zámek: mezi 22:00 a 6:00 se zobrazuje JEN „Je čas vypnout screen!" —
     // zamykací obrazovka, aby děti v noci nekoukaly na feed.
     const hod = new Date().getHours();
-    const noc = (hod >= 22 || hod < 7);
+    const noc = (hod >= 22 || hod < 6);
     const lockCard = cards.find((c) => c.type === "time_to_let_go");
     if (noc && lockCard) return [lockCard];
 
