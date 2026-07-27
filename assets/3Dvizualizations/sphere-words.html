@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koule slov</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+    touch-action: none;
+    cursor: grab;
+    position: relative;
+  }
+  #wsCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="wsCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('wsCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  var YELLOW = '#ffff00';
+  var CAPTION = 'Najdi 3 slova, která patří k algoritmu';
+
+  // slova na koncích linií — 3 patří k algoritmu, zbytek ne
+  var WORDS = [
+    { word: 'krok',     correct: true },
+    { word: 'podmínka', correct: true },
+    { word: 'cyklus',   correct: true },
+    { word: 'banán',    correct: false },
+    { word: 'ponožka',  correct: false },
+    { word: 'mrak',     correct: false },
+    { word: 'žirafa',   correct: false },
+    { word: 'koláč',    correct: false },
+    { word: 'písnička', correct: false },
+    { word: 'balón',    correct: false }
+  ];
+
+  // deterministický generátor — koule vypadá pokaždé stejně
+  function mulberry32(seed){
+    return function(){
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var rnd = mulberry32(42);
+
+  function norm(v){
+    var l = Math.hypot(v[0], v[1], v[2]) || 1;
+    return [v[0] / l, v[1] / l, v[2] / l];
+  }
+  function fib(i, n, jitter){
+    var y = 1 - 2 * (i + 0.5) / n;
+    var r = Math.sqrt(Math.max(0, 1 - y * y));
+    var phi = i * 2.399963229728653;
+    var d = [Math.cos(phi) * r, y, Math.sin(phi) * r];
+    return norm([d[0] + (rnd() - 0.5) * jitter, d[1] + (rnd() - 0.5) * jitter, d[2] + (rnd() - 0.5) * jitter]);
+  }
+
+  // dekorativní paprsky ze středu (jako v předloze — jemné, část tečkovaně)
+  var RAYS = [];
+  var NRAYS = 150;
+  for (var i = 0; i < NRAYS; i++){
+    RAYS.push({
+      dir: fib(i, NRAYS, 0.22),
+      L: rnd() < 0.78 ? 0.86 + rnd() * 0.14 : 0.5 + rnd() * 0.35,
+      dashed: rnd() < 0.45,
+      lineA: 0.14 + rnd() * 0.16,
+      dotR: 0.8 + rnd() * 1.1,
+      dotA: 0.4 + rnd() * 0.45
+    });
+  }
+
+  // 10 velkých klikacích bodů se slovy
+  var DOTS = [];
+  for (var wi = 0; wi < WORDS.length; wi++){
+    DOTS.push({ dir: fib(wi, WORDS.length, 0.3), word: WORDS[wi].word, correct: WORDS[wi].correct });
+  }
+
+  // stav hry
+  var sel = [];              // indexy označených bodů (s časem výběru)
+  var selT = {};
+  var state = 'play';        // play | checking | win
+  var tCheck = 0, tWin = 0;
+  var wrongAnim = [];        // {i, t0} — špatné volby: zatřesou se a zmizí
+  var rotX = -0.35, rotY = 0.6;
+  var velX = 0, velY = 0.0025;
+  var isDragging = false;
+  var lastX = 0, lastY = 0, downX = 0, downY = 0;
+  var projected = [];        // promítnuté pozice slovních bodů (pro klikání)
+
+  function postScore(){
+    var found = 0;
+    for (var i = 0; i < sel.length; i++) if (DOTS[sel[i]].correct) found++;
+    try { window.parent.postMessage({ ns: 'wordsphere', type: 'score', found: found, total: 3 }, '*'); } catch (e) {}
+  }
+  function resetGame(){
+    sel = []; selT = {}; wrongAnim = []; state = 'play';
+    postScore();
+  }
+  window.addEventListener('message', function(ev){
+    var d = ev.data || {};
+    if (d.ns === 'wordsphere' && d.type === 'reset') resetGame();
+  });
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function fontStr(size, weight){
+    return (weight || 500) + ' ' + Math.round(size) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  }
+
+  // rotace koule + slabá perspektiva
+  function project(p, cx, cy, R){
+    var cy1 = Math.cos(rotY), sy1 = Math.sin(rotY);
+    var cx1 = Math.cos(rotX), sx1 = Math.sin(rotX);
+    var x1 = p[0] * cy1 + p[2] * sy1;
+    var z1 = -p[0] * sy1 + p[2] * cy1;
+    var y2 = p[1] * cx1 - z1 * sx1;
+    var z2 = p[1] * sx1 + z1 * cx1;
+    var pers = 3.2 / (3.2 - z2);
+    return { x: cx + x1 * R * pers, y: cy + y2 * R * pers, z: z2, pers: pers };
+  }
+
+  function roundRectPath(x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function selIndex(i){ return sel.indexOf(i); }
+
+  function handleTap(px, py){
+    if (state !== 'play') return;
+    var best = -1, bestD = 1e9;
+    for (var i = 0; i < projected.length; i++){
+      var pr = projected[i];
+      if (!pr || pr.z < -0.05) continue;      // bod je vzadu — ťuknutí se nepočítá
+      var d = Math.hypot(px - pr.x, py - pr.y);
+      if (d < Math.max(18, S * 0.05) && d < bestD){ bestD = d; best = i; }
+    }
+    if (best < 0) return;
+    var si = selIndex(best);
+    if (si >= 0){
+      sel.splice(si, 1);
+      delete selT[best];
+    } else {
+      sel.push(best);
+      selT[best] = performance.now();
+      if (sel.length === 3){
+        state = 'checking';
+        tCheck = performance.now() + 550;
+      }
+    }
+    postScore();
+  }
+
+  // tažením otáčet, ťuknutí = výběr (stejně jako hra na pozornost)
+  function onDown(e){
+    isDragging = true;
+    frame.style.cursor = 'grabbing';
+    lastX = downX = e.clientX;
+    lastY = downY = e.clientY;
+  }
+  function onMove(e){
+    if (!isDragging) return;
+    var dx = e.clientX - lastX;
+    var dy = e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    velY = dx * 0.006;
+    velX = dy * 0.006;
+    rotY += velY;
+    rotX += velX;
+    e.preventDefault();
+  }
+  function onUp(e){
+    if (!isDragging) return;
+    isDragging = false;
+    frame.style.cursor = 'grab';
+    var dx = e.clientX - downX;
+    var dy = e.clientY - downY;
+    if (Math.sqrt(dx * dx + dy * dy) < 6){
+      var rect = frame.getBoundingClientRect();
+      handleTap(e.clientX - rect.left - (rect.width - S) / 2, e.clientY - rect.top - (rect.height - S) / 2);
+    }
+  }
+  frame.addEventListener('pointerdown', onDown);
+  window.addEventListener('pointermove', onMove, { passive: false });
+  window.addEventListener('pointerup', onUp);
+
+  function drawBubble(pr, word, alpha, color, shakeX, cx, cy){
+    var fs = Math.max(11, S * 0.042);
+    ctx.font = fontStr(fs);
+    var tw = ctx.measureText(word).width;
+    var padX = Math.max(8, S * 0.028), padY = Math.max(5, S * 0.016);
+    var bw = tw + padX * 2, bh = fs + padY * 2;
+    var dotR = S * 0.0155 * pr.pers;
+    var ux = pr.x - cx, uy = pr.y - cy;
+    var ul = Math.hypot(ux, uy) || 1;
+    ux /= ul; uy /= ul;
+    var bx = ux >= 0 ? pr.x + dotR + 8 : pr.x - dotR - 8 - bw;
+    var by = pr.y + uy * (dotR + 8) - bh / 2;
+    bx = Math.max(3, Math.min(S - bw - 3, bx + shakeX));
+    by = Math.max(3, Math.min(S - bh - 3, by));
+    ctx.globalAlpha = alpha;
+    roundRectPath(bx, by, bw, bh, 10);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(word, bx + bw / 2, by + bh / 2 + 0.5);
+    ctx.globalAlpha = 1;
+  }
+
+  function draw(now){
+    // setrvačnost + pomalé samovolné otáčení
+    if (!isDragging){
+      rotY += velY;
+      rotX += velX;
+      velY *= 0.96;
+      velX *= 0.96;
+      if (Math.abs(velY) < 0.0008) velY += (0.0025 - velY) * 0.01;
+    }
+
+    // vyhodnocení tří označených
+    if (state === 'checking' && now >= tCheck){
+      var allOk = sel.length === 3 && sel.every(function(i){ return DOTS[i].correct; });
+      if (allOk){
+        state = 'win';
+        tWin = now;
+        try { window.parent.postMessage({ ns: 'wordsphere', type: 'win' }, '*'); } catch (e) {}
+      } else {
+        for (var iw = sel.length - 1; iw >= 0; iw--){
+          var di = sel[iw];
+          if (!DOTS[di].correct){
+            wrongAnim.push({ i: di, t0: now });
+            sel.splice(iw, 1);
+            delete selT[di];
+          }
+        }
+        state = 'play';
+        postScore();
+      }
+    }
+    if (state === 'win' && now > tWin + 3500) resetGame();
+    for (var wa = wrongAnim.length - 1; wa >= 0; wa--){
+      if (now - wrongAnim[wa].t0 > 700) wrongAnim.splice(wa, 1);
+    }
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+
+    var cx = S * 0.5, cy = S * 0.53, R = S * 0.40;
+    var winP = state === 'win' ? Math.min(1, (now - tWin) / 300) : 0;
+    var winPulse = state === 'win' ? 0.75 + 0.25 * Math.sin((now - tWin) / 180) : 0;
+
+    // zadání
+    ctx.font = fontStr(Math.max(11, S * 0.036));
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText(CAPTION, S * 0.5, S * 0.055);
+
+    // zář středu
+    var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, S * 0.07);
+    g.addColorStop(0, 'rgba(255,255,255,0.9)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(cx, cy, S * 0.07, 0, Math.PI * 2);
+    ctx.fill();
+
+    // dekorativní paprsky s tečkami na koncích
+    ctx.lineCap = 'round';
+    for (var ri = 0; ri < RAYS.length; ri++){
+      var ray = RAYS[ri];
+      var end = project([ray.dir[0] * ray.L, ray.dir[1] * ray.L, ray.dir[2] * ray.L], cx, cy, R);
+      var depth = 0.45 + 0.55 * (end.z + 1) / 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(end.x, end.y);
+      if (ray.dashed) ctx.setLineDash([2, 4.5]);
+      ctx.strokeStyle = 'rgba(255,255,255,' + (ray.lineA * depth).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.arc(end.x, end.y, ray.dotR * end.pers * (S / 360), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + (ray.dotA * depth).toFixed(3) + ')';
+      ctx.fill();
+    }
+
+    // slovní body — paprsek, bod, případně kroužek výběru
+    projected = [];
+    var order = [];
+    for (var di2 = 0; di2 < DOTS.length; di2++){
+      var pr2 = project(DOTS[di2].dir, cx, cy, R);
+      projected[di2] = pr2;
+      order.push(di2);
+    }
+    order.sort(function(a, b){ return projected[a].z - projected[b].z; });
+
+    // spojnice vítězné trojice
+    if (state === 'win'){
+      ctx.beginPath();
+      for (var li = 0; li < sel.length; li++){
+        var pw = projected[sel[li]];
+        li === 0 ? ctx.moveTo(pw.x, pw.y) : ctx.lineTo(pw.x, pw.y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(255,255,0,' + (0.7 * winP * winPulse).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(1.25, S * 0.004);
+      ctx.stroke();
+    }
+
+    for (var oi = 0; oi < order.length; oi++){
+      var idx = order[oi];
+      var d3 = DOTS[idx];
+      var pr3 = projected[idx];
+      var depth3 = 0.45 + 0.55 * (pr3.z + 1) / 2;
+      var isSel = selIndex(idx) >= 0;
+      var isWinDot = state === 'win' && isSel;
+      var col = isWinDot ? '255,255,0' : '255,255,255';
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(pr3.x, pr3.y);
+      ctx.strokeStyle = 'rgba(' + col + ',' + ((isWinDot ? 0.75 : 0.45) * depth3).toFixed(3) + ')';
+      ctx.lineWidth = 1.3;
+      ctx.stroke();
+
+      var r3 = S * 0.0155 * pr3.pers * (isWinDot ? 1 + 0.25 * winPulse : 1);
+      ctx.beginPath();
+      ctx.arc(pr3.x, pr3.y, r3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + col + ',' + (0.55 + 0.45 * depth3).toFixed(3) + ')';
+      ctx.fill();
+
+      if (isSel){
+        ctx.beginPath();
+        ctx.arc(pr3.x, pr3.y, r3 + Math.max(3, S * 0.012), 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(' + col + ',0.9)';
+        ctx.lineWidth = Math.max(1.25, S * 0.005);
+        ctx.stroke();
+      }
+    }
+
+    // bublinky se slovy (kreslí se nad vším)
+    for (var bi = 0; bi < sel.length; bi++){
+      var idx2 = sel[bi];
+      var pr4 = projected[idx2];
+      if (pr4.z < -0.15) continue;           // bod je moc vzadu — bublinu schovej
+      var ap = Math.min(1, (now - (selT[idx2] || now)) / 150);
+      var colB = (state === 'win') ? YELLOW : '#ffffff';
+      drawBubble(pr4, DOTS[idx2].word, ap, colB, 0, cx, cy);
+    }
+    // mizející bubliny špatných voleb (zatřesou se)
+    for (var wi2 = 0; wi2 < wrongAnim.length; wi2++){
+      var an = wrongAnim[wi2];
+      var pw2 = projected[an.i];
+      if (pw2.z < -0.15) continue;
+      var pp = (now - an.t0) / 700;
+      var shake = Math.sin((now - an.t0) / 28) * 5 * (1 - pp);
+      drawBubble(pw2, DOTS[an.i].word, 1 - pp, '#ffffff', shake, cx, cy);
+    }
+
+    ctx.restore();
+  }
+
+  // testovací háček (jen s ?debug v URL) — pozice slovních bodů na obrazovce
+  if (location.search.indexOf('debug') !== -1){
+    window.__debugDots = function(){
+      return DOTS.map(function(d, i){
+        var p = projected[i] || {};
+        return { x: p.x, y: p.y, z: p.z, word: d.word, correct: d.correct, state: state, selected: sel.indexOf(i) >= 0 };
+      });
+    };
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyklus — opakování</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #loopCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="loopCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('loopCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  // smyčka: 4 oběhy, při každém se provede „počet = počet + 3“
+  var REV = 2.2, N = 4, PAUSE = 1.6, RESET = 0.7;
+  var STEP_ADD = 3;
+  var TOTAL = N * REV + PAUSE + RESET;
+
+  // geometrie (normalizované souřadnice 0..1)
+  var C = { x: 0.42, y: 0.50, r: 0.235 };
+  var STEPBOX = { x: 0.42, y: 0.265, w: 0.35, h: 0.078, label: 'počet = počet + 3' };
+  var LIST_X = 0.755, LIST_Y0 = 0.375, LIST_DY = 0.088;
+
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function ease(p){ return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; }
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function fontStr(size, weight){
+    return (weight || 500) + ' ' + Math.round(size) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  }
+
+  function draw(now){
+    var t = (now / 1000) % TOTAL;
+
+    // špička startuje kousek ZA boxem kroku, takže po zastavení zůstane vidět
+    // a rotace navazuje přes restart bezešvě
+    var OFF = 0.8, OFRAC = OFF / (2 * Math.PI);
+    var theta;                               // úhel špičky rotující šipky
+    if (t < N * REV){
+      theta = -Math.PI / 2 + OFF + 2 * Math.PI * ((t % REV) / REV);
+    } else {
+      theta = -Math.PI / 2 + OFF;
+    }
+    var k = Math.min(N, Math.floor(t / REV + OFRAC));   // dokončené oběhy
+    var value = STEP_ADD * k;
+    var tSince = k > 0 ? t - REV * (k - OFRAC) : 99;    // čas od posledního provedení kroku
+    var flash = clamp01(1 - tSince / 0.9);   // žluté zvýraznění nové hodnoty
+    var pop = clamp01(1 - tSince / 0.3);
+    var resetA = t >= N * REV + PAUSE ? 1 - ease((t - N * REV - PAUSE) / RESET) : 1;
+    var introA = clamp01(t / 0.35);
+    var dynA = Math.min(resetA, introA);     // průhlednost počítadla a odškrtů
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    var cx = C.x * S, cy = C.y * S, r = C.r * S;
+
+    // slabá celá kružnice — dráha smyčky
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.lineWidth = Math.max(1, S * 0.003);
+    ctx.stroke();
+
+    // rotující oblouk s dohasínajícím ocasem
+    var TAIL = 1.7, SEGS = 7;
+    for (var sgi = 0; sgi < SEGS; sgi++){
+      var a1 = theta - TAIL * (sgi + 1) / SEGS;
+      var a2 = theta - TAIL * sgi / SEGS;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, a1, a2);
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.88 * (1 - sgi / SEGS)).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(2, S * 0.008);
+      ctx.stroke();
+    }
+    // šipka na špičce (tečna po směru otáčení)
+    var hx = cx + r * Math.cos(theta), hy = cy + r * Math.sin(theta);
+    var dirx = -Math.sin(theta), diry = Math.cos(theta);
+    var hs = S * 0.022;
+    ctx.beginPath();
+    ctx.moveTo(hx + dirx * hs * 1.4, hy + diry * hs * 1.4);
+    ctx.lineTo(hx - dirx * hs * 0.6 - diry * hs, hy - diry * hs * 0.6 + dirx * hs);
+    ctx.lineTo(hx - dirx * hs * 0.6 + diry * hs, hy - diry * hs * 0.6 - dirx * hs);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    ctx.fill();
+
+    // krok, který se při každém oběhu provede
+    var bx = (STEPBOX.x - STEPBOX.w / 2) * S, by = (STEPBOX.y - STEPBOX.h / 2) * S;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(bx, by, STEPBOX.w * S, STEPBOX.h * S);
+    ctx.strokeStyle = 'rgba(255,255,255,' + (0.55 + 0.4 * flash).toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1.5, S * 0.0055);
+    ctx.strokeRect(bx, by, STEPBOX.w * S, STEPBOX.h * S);
+    ctx.font = fontStr(S * 0.036);
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.7 + 0.3 * flash).toFixed(3) + ')';
+    ctx.fillText(STEPBOX.label, STEPBOX.x * S, STEPBOX.y * S);
+
+    // „+3“ letí z kroku do počítadla
+    if (k > 0 && tSince < 0.8 && resetA > 0.9){
+      var pp = tSince / 0.8;
+      ctx.font = fontStr(S * 0.045, 600);
+      ctx.fillStyle = 'rgba(255,255,0,' + (1 - pp).toFixed(3) + ')';
+      ctx.fillText('+' + STEP_ADD, 0.42 * S, (0.325 + 0.09 * ease(pp)) * S);
+    }
+
+    // počítadlo uprostřed
+    ctx.font = fontStr(S * 0.034);
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.5 * resetA).toFixed(3) + ')';
+    ctx.fillText('počet', C.x * S, 0.435 * S);
+    var vfs = S * 0.10 * (1 + 0.16 * pop);
+    ctx.font = fontStr(vfs, 600);
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.95 * dynA).toFixed(3) + ')';
+    ctx.fillText(String(value), C.x * S, 0.545 * S);
+    if (flash > 0.01){
+      // nová hodnota naskočí žlutě a plynule zbělá
+      ctx.fillStyle = 'rgba(255,255,0,' + (flash * dynA).toFixed(3) + ')';
+      ctx.fillText(String(value), C.x * S, 0.545 * S);
+    }
+
+    // odškrtnutá opakování
+    ctx.font = fontStr(S * 0.030);
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.fillText('opakování', (LIST_X + 0.055) * S, 0.295 * S);
+    for (var i = 1; i <= k; i++){
+      var ap = i < k ? 1 : clamp01(tSince / 0.5);
+      var ra = ap * resetA;
+      if (ra <= 0.02) continue;
+      var y = LIST_Y0 + (i - 1) * LIST_DY;
+      ctx.font = fontStr(S * 0.038);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.8 * ra).toFixed(3) + ')';
+      ctx.fillText(i + '.', (LIST_X + 0.02) * S, y * S);
+      ctx.textAlign = 'center';
+      // fajfka se dokreslí postupně
+      var tickP = clamp01((ap - 0.25) / 0.75);
+      if (tickP > 0){
+        var t0 = { x: LIST_X + 0.05, y: y - 0.002 };
+        var pts = [[t0.x, t0.y], [t0.x + 0.016, t0.y + 0.016], [t0.x + 0.048, t0.y - 0.022]];
+        var lens = [Math.hypot(0.016, 0.016), Math.hypot(0.032, 0.038)];
+        var totalLen = lens[0] + lens[1];
+        var target = totalLen * tickP;
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0] * S, pts[0][1] * S);
+        if (target <= lens[0]){
+          var r1 = target / lens[0];
+          ctx.lineTo((pts[0][0] + (pts[1][0] - pts[0][0]) * r1) * S, (pts[0][1] + (pts[1][1] - pts[0][1]) * r1) * S);
+        } else {
+          ctx.lineTo(pts[1][0] * S, pts[1][1] * S);
+          var r2 = (target - lens[0]) / lens[1];
+          ctx.lineTo((pts[1][0] + (pts[2][0] - pts[1][0]) * r2) * S, (pts[1][1] + (pts[2][1] - pts[1][1]) * r2) * S);
+        }
+        ctx.strokeStyle = 'rgba(255,255,255,' + (0.85 * ra).toFixed(3) + ')';
+        ctx.lineWidth = Math.max(1.5, S * 0.005);
+        ctx.stroke();
+      }
+    }
+
+    ctx.restore();
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,4210 @@
+meta:
+  verze: 0.12-draft
+  popis: 'Mapa znalostí Glitch. Dvojí seskupení konceptů: podle tema (obsahová témata) a podle oblast (okruhy RVP Informatika). RVP znění doslovně z RVP_revidované_2024-03-28.pdf.'
+  paleta:
+    - '#ffff00'
+    - '#ffffff'
+    - '#000000'
+  uroven: 2. stupeň ZŠ s přesahem výš
+  kompetence_popis: Klíčová kompetence digitální představuje soubor znalostí, dovedností a postojů, které umožňují žákům účelně, bezpečně a efektivně využívat digitální technologie při práci, při učení, ve volném čase i při zapojování do společnosti a občanského života, aktivně a respektujícím způsobem se podílet na utváření digitálního světa a nacházet rovnováhu mezi světem digitálním a fyzickým.
+areas:
+  - id: data-modelovani
+    nazev: Data, informace a modelování
+    kod: INF-INF-001
+    popis: |-
+      S daty pracují počítače i my, když přemýšlíme. Informace zpřesňují naše představy o světě a tím nám pomáhají správně se rozhodovat. Řadu podrobností přitom pomíjíme a pracujeme jen s tím, co je pro danou situaci důležité. Vznikají tak zjednodušující reprezentace, modely. Abychom je mohli ukládat a spolehlivě a levně přenášet a kopírovat, kódujeme je do posloupností znaků – písmen, nul a jedniček atp.
+
+      V informatice se žák učí nejen využívat hotové modely, ale také vytvářet nové. Postupuje při tom cílevědomě, sleduje záměr vyřešit daný problém, hledá rovnováhu mezi rozsahem a složitostí modelu a jednoduchostí jeho použití. Hodnotí spolehlivost získávaných informací a míru jistoty, s jakou se podle nich může rozhodovat. Nalézání efektivních reprezentací složitých skutečností je předpokladem úspěšné komunikace, učení i řešení problémů.
+
+      Na 1. stupni si žák začíná všímat dat kolem sebe a reflektuje, jak mu mohou být užitečná. Tvoří první schematické modely situací a využívá je k získání informací.
+
+      Na 2. stupni už se žák seznamuje s pokročilejším kódováním a modely, které sám tvoří, včetně grafů a trénování modelů strojového učení. Zvyká si na to, že informace jsou správné jen s určitou pravděpodobností.
+    barva: '#ffff00'
+  - id: algoritmizace
+    nazev: Algoritmizace a programování
+    kod: INF-INF-002
+    popis: |-
+      Žák se prováděním postupů učí získávat výsledky konkrétních úloh. V informatice pak zaměřuje pozornost na postupy jako takové. Zjišťuje, jak se postupy vedoucí ke stejným výsledkům mohou mezi sebou lišit, tvoří a popisuje postupy vlastní. Všímá si toho, že některé jsou spolehlivější než jiné a co tu spolehlivost určuje. Jejich kvalitní formulace může vyřešit celou skupinu podobných problémů.
+
+      Postupy žák zapisuje i jako programy, čímž se učí pracovat s omezenou sadou instrukcí a doslovnou interpretací svých výstupů. Kromě toho získává povědomí o základech fungování běžně používaných aplikací. Cílevědomé plánování pracovních postupů je příležitost k rozvoji strukturovaného přístupu k řešení problémů. Jejich jednoznačný a úsporný popis vyžaduje komunikační dovednosti. Automatizovatelnost postupů je předpokladem uplatnitelnosti v práci a podnikání.
+
+      Na 1. stupni žák zkoumá souvislosti vstupů, podmínek, postupů a výstupů, navrhuje jednoduché posloupnosti kroků a zažívá, jak může programováním určovat chování stroje.
+
+      Na 2. stupni se žák setkává se složitějšími problémy, do programování přibývají další řídicí struktury. Všímá si výhod a důsledků automatizace svých postupů.
+    barva: '#ffffff'
+  - id: informacni-systemy
+    nazev: Informační systémy
+    kod: INF-INF-003
+    popis: |-
+      Řadu potřeb společnosti pomáhají plnit informační systémy. Lidé je nevyhnutelně využívají, vypořádávají se s jejich nedostatky, mají požadavky na jejich chování. Většina lidí také nějaké evidence sama tvoří, v osobním i pracovním životě (seznam k balení na výlet, evidence zakázek k vyřízení). Výhodu v tom mají ti, kteří mají na základě praktické zkušenosti představu o tom, jak takové systémy vnitřně fungují, jak se vyvíjejí, co mohou pomoci řešit a co už nikoli. Iterativní vývoj a testování řešení se zaměřením na potřeby klienta je znakem užitečných podniků. Uživatelské rozhraní informačních systémů je komunikačním kanálem. Důsledky fungování řady systémů ovlivňují celou občanskou společnost.
+
+      Na 1. stupni žák začíná informační systémy zkoumat. Kromě práce s uživatelským rozhraním se učí orientovat i přímo v tabulkách a podobných strukturách.
+
+      Na 2. stupni žák svůj průzkum prohlubuje a kromě významu pro uživatele precizněji popisuje, co přesně systémy dělají. Pro řešení konkrétních problémů tvoří také vlastní evidence dat.
+    barva: '#ffff00'
+  - id: digitalni-technologie
+    nazev: Digitální technologie
+    kod: INF-INF-004
+    popis: |-
+      Digitální technologie poskytují konkrétní příklady principů, které žák zkoumá v ostatních okruzích. Dohromady se tak žák učí rozumět tomu, jak technologie a svět kolem něj fungují a jaké to má praktické důsledky. Je to jedním z předpokladů pro to, aby je mohl bezpečně a efektivně využívat v běžném životě. Porozumění principům fungování technologií mimo jiné umožňuje hodnotit, jak ovlivňují společnost a jak jejich provoz dopadá na životní prostředí. Rozšiřuje možnosti žáků využívat je k rutinní i tvořivé práci.
+
+      Na 1. stupni se žák zaměřuje na základní porozumění funkcím digitálních technologií, jejich vhodné využití pro řešení problémů a na pravidla bezpečného používání aplikací a sítí.
+
+      Na 2. stupni se výuka prohlubuje o další technické znalosti a dovednosti, které umožní poučeně vybírat hardware, software a propojení do sítě a řešit pokročilejší problémy. Kromě bezpečnosti se žák v bohatých souvislostech věnuje také inovacím.
+    barva: '#ffffff'
+temata:
+  - id: digitalni-zaklady
+    nazev: Digitální základy
+    vrstva_mapy: 0
+    popis: 'Digitální základy jsou vstupní vrstva celé mapy — vysvětlují, jak vlastně funguje svět, ve kterém se všechno ostatní odehrává. Žák tu získá mentální model počítače (hardware a software), internetu a sítí (klient–server), cloudu a serverů i toho, jak spolu programy mluví přes API a jak se data kódují, aby šla uložit a přenášet. Nejde o to stát se technikem, ale o demystifikaci: když víš, že „cloud" je jen cizí počítač a že appka volá službu přes API, přestává být digitální svět kouzelná černá skříňka. Na těchto základech pak stojí Tvorba webů, Tvorba aplikací, Data i Umělá inteligence — proto je téma v mapě úplně na začátku.'
+    barva: '#ffffff'
+    navazuje_na: []
+  - id: informaticke-mysleni
+    nazev: Informatické myšlení a algoritmizace
+    vrstva_mapy: 0
+    popis: Tohle téma učí univerzální způsob přemýšlení, který je jádrem celé informatiky a nezávisí na žádném programovacím jazyce. Žák se učí rozložit velký problém na menší části (dekompozice), odfiltrovat nepodstatné detaily (abstrakce), všímat si opakujících se vzorů a popsat řešení jako jednoznačný postup krok za krokem (algoritmus) složený ze sekvence, větvení a opakování. Tyhle dovednosti se v mapě vracejí prakticky všude — v programování, práci s daty, robotice i při přemýšlení o AI — proto stojí hned vedle Digitálních základů jako druhý pilíř, na kterém teprve začíná skutečná tvorba.
+    barva: '#ffff00'
+    navazuje_na: []
+  - id: programovani
+    nazev: Programování
+    vrstva_mapy: 1
+    popis: Programování je krok od myšlenky ke kódu, který počítač skutečně vykoná. Žák tu poznává stavební kameny každého programu — proměnné, podmínky, cykly a funkce — a hlavně dovednost ladit, tedy hledat a opravovat chyby. Postupuje od blokového prostředí (Scratch) k textovému jazyku (Python) a učí se pracovat s verzováním i s cizím, dnes často AI vygenerovaným kódem; v éře AI se totiž těžiště přesouvá od „napiš každý řádek ručně" k „rozuměj, uprav a odlaď". Programování navazuje na Informatické myšlení a je branou k tvůrčím tématům mapy — webům, aplikacím, hrám i robotice.
+    barva: '#ffffff'
+    navazuje_na:
+      - informaticke-mysleni
+      - digitalni-zaklady
+  - id: umela-inteligence
+    nazev: Umělá inteligence
+    vrstva_mapy: 2
+    popis: Umělá inteligence je v mapě samostatné téma, protože prostupuje celou dnešní informatikou — a zároveň se jako průřezová vrstva vrací u mnoha dalších témat. Žák se tu učí, co AI je a co není, jak se učí z dat a proč generativní modely umí „halucinovat", jak s AI účelně pracovat (prompty, ověřování výstupů) a jak ji používat kriticky a eticky (bias, soukromí, kdy AI raději nepoužít). Řídící myšlenkou je „ověřuj, ale využívej" a vědomí, že rozhoduje pořád člověk, ne nástroj. Téma staví na Digitálních základech a úzce se prolíná s Daty, protože kvalita dat určuje, co z AI vypadne.
+    barva: '#ffff00'
+    navazuje_na:
+      - digitalni-zaklady
+      - data-databaze
+  - id: data-databaze
+    nazev: Data, databáze a datová gramotnost
+    vrstva_mapy: 1
+    popis: 'Data jsou surovinou informací i palivem umělé inteligence, a tohle téma učí s nimi zacházet — od kritického čtení až po technické uložení. Žák pochopí datový cyklus (sběr → čištění → analýza → vizualizace → interpretace), naučí se volit správný graf, evidovat data v tabulkách a databázích a klást jim otázky (SQL). Velký důraz je na datové gramotnosti: poznat zavádějící graf, rozdíl mezi korelací a kauzalitou i to, odkud data pocházejí a co v nich chybí. Právě datová gramotnost je předstupněm gramotnosti v AI, takže tohle téma tvoří s Umělou inteligencí provázané jádro celé mapy.'
+    barva: '#ffff00'
+    navazuje_na:
+      - digitalni-zaklady
+  - id: tvorba-webu
+    nazev: Tvorba webů
+    vrstva_mapy: 1
+    popis: 'Tvorba webů je jedno z nejvděčnějších témat, protože vede k hmatatelnému, sdílitelnému výsledku — vlastní stránce na internetu. Žák pozná, jak web funguje (klient–server), i tři základní vrstvy stránky: strukturu (HTML), vzhled (CSS) a interaktivitu (JavaScript), a naučí se web publikovat přes doménu a hosting. V éře AI k tomu přibývá dovednost pracovat s nástroji, které web vytvoří z popisu — a umět jejich výstup přečíst, upravit a posoudit. Téma staví na Programování a přirozeně vede k Tvorbě aplikací.'
+    barva: '#ffffff'
+    navazuje_na:
+      - programovani
+  - id: tvorba-aplikaci
+    nazev: Tvorba aplikací a vibecoding
+    vrstva_mapy: 1
+    popis: 'Tvorba aplikací ukazuje, jak z nápadu vznikne funkční appka — a je to možná nejsilnější motivační téma éry AI. Žák pochopí rozdíl mezi tím, co vidí (frontend) a co běží na pozadí (backend), vyzkouší no-code nástroje i „vibecoding", kdy popíše záměr přirozenou řečí a AI napíše kód. Klíčové poselství tématu je, že AI je programovací parťák, ne náhrada porozumění: bez znalosti základů snadno vznikne „iluze, že to umím", dokud se něco nerozbije. Téma spojuje Programování, Tvorbu webů a Umělou inteligenci dohromady.'
+    barva: '#ffffff'
+    navazuje_na:
+      - programovani
+      - tvorba-webu
+      - umela-inteligence
+  - id: tvorba-obsahu
+    nazev: Tvorba digitálního obsahu s AI
+    vrstva_mapy: 1
+    popis: 'Tohle téma je o tvorbě obrazu, videa, hudby a hlasu s generativními nástroji — o oblasti, kterou AI proměnila nejdramatičtěji. Žák se učí „mluvit" s nástroji přes prompt, ale i to, že vkus a základ vizuálního jazyka (kompozice, barva, typografie) AI nenahradí — pořád musíš umět posoudit, jestli je výsledek dobrý. Neoddělitelnou součástí je etika a autorství: na čích dílech se model učil, komu patří výstup a jak poctivě označit AI obsah, plus obezřetnost kvůli deepfakes. Téma staví na Umělé inteligenci a s ohledem na bezpečí nezletilých se dotýká i Kyberbezpečnosti.'
+    barva: '#ffff00'
+    navazuje_na:
+      - umela-inteligence
+  - id: herni-vyvoj
+    nazev: Herní vývoj
+    vrstva_mapy: 1
+    popis: 'Herní vývoj je vnitřně motivující téma — žák tvoří to, co sám hraje, a výsledek jde hned sdílet. Od blokového Scratche se posouvá k lehkým i skutečným enginům (Godot, Unity) a poznává základní stavbu hry: herní smyčku, objekty, kolize, stavy a hlavně herní design (pravidla, obtížnost, zpětná vazba, „flow"). AI dnes umí generovat grafiku i kód, takže se těžiště přesouvá od ruční výroby k návrhu a kurátorství. Téma staví na Informatickém myšlení a Programování a je skvělým „hřištěm", kde se tyhle dovednosti spojí do konkrétního výtvoru.'
+    barva: '#ffffff'
+    navazuje_na:
+      - informaticke-mysleni
+      - programovani
+  - id: fyzicky-computing
+    nazev: Fyzický computing, robotika a IoT
+    vrstva_mapy: 1
+    popis: 'Fyzický computing je programování, které hýbe skutečným světem — kód tu má okamžitý hmatatelný efekt. Na destičce micro:bit se žák naučí číst senzory a ovládat výstupy (LED, motory), postoupí k robotům, Arduinu a Raspberry Pi a k internetu věcí (IoT), kde zařízení posílají data do cloudu. Zvlášť cenné je, že si tu AI osahá fyzicky: v micro:bit CreateAI si sám natrénuje model přímo na zařízení (TinyML). Téma staví na Programování a propojuje ho s Daty i Umělou inteligencí; jeho přirozeným omezením je hardware, takže doma se leccos nahradí simulátory.'
+    barva: '#ffffff'
+    navazuje_na:
+      - informaticke-mysleni
+      - programovani
+  - id: kyberbezpecnost
+    nazev: Kyberbezpečnost a digitální bezpečí
+    vrstva_mapy: 3
+    popis: 'Kyberbezpečnost učí, jak chránit sebe, svá data a zařízení — a v mapě má zvláštní váhu, protože bezpečí nezletilých je priorita. Žák si osvojí základní hygienu (silná hesla, 2FA, poznat phishing, chránit soukromí) a pochopí i to, jak AI posunula podvody na novou úroveň: deepfake, klonování hlasu a dokonalý phishing bez chyb, takže stará rada „poznáš to podle chyb v textu" už neplatí. Novou obranou je ověřovat informace jinou cestou a zdravá skepse. Téma se úzce prolíná s Digitálním občanstvím a s Umělou inteligencí.'
+    barva: '#ffff00'
+    navazuje_na:
+      - digitalni-zaklady
+  - id: digitalni-obcanstvi
+    nazev: Digitální občanství, média a wellbeing
+    vrstva_mapy: 3
+    popis: 'Tohle téma je „severní směr" celého Glitche: učí rozumět tomu, jak fungují sítě a algoritmy, kriticky číst obsah a udržet si zdravý vztah k technologiím. Žák pozná, jak doporučovací algoritmy tvarují, co vidí (bublina, ekonomika pozornosti), jak rozpoznat dezinformace a manipulaci, jakou hodnotu mají jeho data a jak nepodlehnout návykovému designu. Patří sem i občanské minimum o AI (proč modely halucinují a mají bias) a etika jejího používání ve škole. Cílem není technologie zavrhnout, ale používat je vědomě a tak, aby sloužily člověku — což je hodnota, na které stojí celá mapa.'
+    barva: '#ffff00'
+    navazuje_na: []
+kompetence:
+  - id: kdi-dat
+    nazev: Digitální informace a data
+    kod: KDI-DAT-000-ZV9-001
+    vystup: Data získaná na základě vlastních kritérií a formulovaných dotazů z různých digitálních zdrojů posuzuje z hlediska souladu s již známými poznatky i nároku na spolehlivost zdroje.
+    barva: '#ffff00'
+  - id: kdi-zap
+    nazev: Zapojení do společnosti prostřednictvím digitálních technologií
+    kod: KDI-ZAP-000-ZV9-001
+    vystup: Účelně a uvážlivě sdílí data a informace v digitálním prostředí s cílem osobního růstu, podpory školní či zájmové komunity nebo za účelem týmové práce na školních projektech.
+    barva: '#ffffff'
+  - id: kdi-tdo
+    nazev: Tvorba digitálního obsahu
+    kod: KDI-TDO-000-ZV9-001
+    vystup: Generuje digitální obsah v různých formátech s cílem umocnit výstupy vlastní tvořivé činnosti.
+    barva: '#ffff00'
+  - id: kdi-bzk
+    nazev: Bezpečnost v digitálním prostředí
+    kod: KDI-BZK-000-ZV9-001
+    vystup: Předchází situacím ohrožujícím bezpečnost zařízení a dat nebo jeho tělesné či duševní zdraví.
+    barva: '#ffffff'
+  - id: kdi-vin
+    nazev: Digitální vývoj a inovace
+    kod: KDI-VIN-000-ZV9-001
+    vystup: Využívá digitální technologie, aby sobě či ostatním usnadnil či zjednodušil pracovní postupy a zkvalitnil výsledky práce.
+    barva: '#ffff00'
+tagy:
+  - tag: praktická dovednost
+    pocet: 68
+  - tag: teoretický základ
+    pocet: 54
+  - tag: důvěra a ověřování
+    pocet: 17
+  - tag: bezpečí a rizika
+    pocet: 16
+  - tag: soukromí
+    pocet: 10
+  - tag: dopad na společnost
+    pocet: 8
+  - tag: etika a odpovědnost
+    pocet: 8
+  - tag: lidský dohled a agency
+    pocet: 7
+  - tag: pozornost a wellbeing
+    pocet: 7
+  - tag: férovost a předpojatost
+    pocet: 6
+  - tag: moc a peníze
+    pocet: 6
+  - tag: udržitelnost
+    pocet: 4
+concepts:
+  - id: digitalni-zaklady-hardware-a-software
+    nazev: Hardware a software
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Hardware jsou fyzické součástky, na které si můžeš sáhnout (procesor, paměť, displej); software jsou programy, které v nich běží. Každý počítač i telefon přitom pracuje ve smyčce vstup → zpracování → výstup: dostane data, něco s nimi udělá a vrátí výsledek.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí vlastními slovy rozdíl mezi hardwarem a softwarem na konkrétním příkladu zařízení.
+        rocnik: 6
+      - uroven: hodnoceni
+        text: Žák podle zadaných potřeb doporučí vhodný hardware a software a svůj výběr zdůvodní jejich vlastnostmi.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u konkrétního zařízení určí, které části jsou hardware a které software, a doplní příklad smyčky vstup → zpracování → výstup.
+      - uroven: hodnoceni
+        text: Žák pro zadanou situaci vybere zařízení a v jedné větě zdůvodní volbu jeho vlastností.
+    prerekvizity: []
+    souvisi:
+      - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
+      - tvorba-aplikaci-co-je-aplikace
+      - fyzicky-computing-arduino-a-raspberry-pi
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-data-a-informace
+    nazev: Data a informace
+    tema: digitalni-zaklady
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Data jsou holé zaznamenané hodnoty (třeba číslo 21 nebo řada naměřených teplot), informace je jejich význam pro konkrétní situaci („dnes je tepleji než včera"). Stejná data můžou nést různé informace podle toho, na co se ptáš — a umět tyhle dvě věci rozlišit je základ veškeré práce s daty i s AI.
+    rvp:
+      - kod: INF-INF-001-ZV9-001
+        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi daty a informací a uvede příklad, kdy stejná data nesou různé informace.
+        rocnik: 6
+      - uroven: aplikace
+        text: Žák z konkrétní sady dat získá informaci potřebnou k vyřešení zadaného problému.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u dané dvojice (data / informace) rozliší, co je záznam hodnoty a co je jeho význam pro situaci.
+      - uroven: aplikace
+        text: Žák z tabulky nebo řady hodnot vyčte odpověď na položenou otázku.
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-internet-a-sit
+    nazev: Internet a síť
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Internet je obrovská síť propojených počítačů, které si navzájem posílají data. Když otevřeš stránku, tvůj prohlížeč (klient) pošle požadavek počítači, kde stránka „bydlí" (server), a ten mu obsah pošle zpátky — tomuhle vztahu se říká klient–server.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí vlastními slovy vztah klient–server na příkladu otevření webové stránky.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák pro danou situaci doporučí vhodný způsob připojení zařízení do sítě a volbu zdůvodní.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, kdo v komunikaci posílá požadavek a kdo odpověď, když načítá stránku.
+      - uroven: hodnoceni
+        text: Žák u zadané potřeby vybere způsob připojení a uvede jeho výhodu i nevýhodu.
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cloud-a-server
+    nazev: Cloud a server
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: „Cloud" zní tajemně, ale je to jen cizí výkonný počítač (server) v datovém centru, ke kterému se připojuješ přes internet. Když si ukládáš fotky „do cloudu" nebo píšeš ChatGPT, ve skutečnosti pracuje někde daleko něčí server, ne tvůj telefon.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vlastními slovy vysvětlí, co znamená ukládat data „do cloudu“, a popíše, kde data ve skutečnosti leží.
+        rocnik: 7
+      - uroven: analyza
+        text: Žák rozliší, které úkoly řeší jeho vlastní zařízení a které vzdálený server.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu ukládání fotek nebo psaní chatbotu ukáže, kde výpočet a data reálně jsou.
+      - uroven: analyza
+        text: Žák u konkrétní služby označí činnost běžící na jeho zařízení a činnost běžící na serveru.
+    prerekvizity:
+      - digitalni-zaklady-internet-a-sit
+    souvisi: []
+    tagy:
+      - teoretický základ
+      - udržitelnost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-api
+    nazev: API
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'API je domluvené rozhraní, přes které spolu dva programy „mluví" — něco jako jídelní lístek: řekneš, co chceš, a dostaneš to, aniž bys musel vědět, jak se to v kuchyni připravuje. Přes API získávají appky data z jiných služeb (počasí, mapy) a stejně tak se volá i AI.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí na příměru (např. jídelní lístek), k čemu slouží API mezi dvěma programy.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák u konkrétní aplikace rozliší, která data si vytváří sama a která získává přes API z jiné služby.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, že přes API dostane program výsledek, aniž musí vědět, jak vzniká.
+      - uroven: analyza
+        text: Žák u zadané appky určí alespoň jeden údaj získaný přes API z jiné služby.
+    prerekvizity:
+      - digitalni-zaklady-cloud-a-server
+    souvisi:
+      - tvorba-webu-jak-funguje-web
+      - data-databaze-ucel-informacnich-systemu
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-reprezentace-dat
+    nazev: Reprezentace dat
+    tema: digitalni-zaklady
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.
+    rvp:
+      - kod: INF-INF-001-ZV9-002
+        vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč počítač převádí čísla, text i obraz na bity.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák porovná dva způsoby kódování dat a posoudí, který se hodí pro úsporné uložení a který pro bezchybný přenos.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák u zadaného účelu (uložení / přenos) vybere vhodnější kódování a volbu zdůvodní.
+    prerekvizity:
+      - digitalni-zaklady-data-a-informace
+    souvisi:
+      - umela-inteligence-ai-se-uci-z-dat
+      - programovani-promenne-a-datove-typy
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-adresy-a-protokoly
+    nazev: Adresy a protokoly
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Aby se zařízení na internetu našla a rozuměla si, používají adresy a dohodnutá pravidla komunikace: doména (seznam.cz) se přes DNS přeloží na číselnou IP adresu a data putují podle protokolu HTTP(S). Je to jako poštovní adresa plus společný jazyk dopisu.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák vlastními slovy vysvětlí, jak se doména přes DNS přeloží na IP adresu.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák rozliší roli domény, IP adresy a protokolu HTTP při načítání stránky.
+        rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: Žák u načtení stránky přiřadí každému pojmu (doména, IP, protokol) jeho úlohu.
+    prerekvizity:
+      - digitalni-zaklady-internet-a-sit
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-vrstvy-pocitace
+    nazev: Vrstvy počítače
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí na příkladu, jak vrstvy hardware – operační systém – aplikace skrývají složitost té pod sebou.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák seřadí vrstvy od hardwaru po aplikaci a u jedné z nich uvede, co skrývá.
+    prerekvizity:
+      - digitalni-zaklady-hardware-a-software
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-operacni-system-a-soubory
+    nazev: Operační systém a soubory
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: navazujici
+    popis: Operační systém (Windows, Android, iOS) je program, který řídí celé zařízení a dává ostatním aplikacím přístup k hardwaru. Stará se i o soubory a složky — o to, kam se ukládají tvoje fotky a dokumenty a jak je zase najdeš.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, k čemu slouží operační systém a jak spravuje soubory a složky.
+        rocnik: 6
+      - uroven: aplikace
+        text: Žák uspořádá soubory do složek tak, aby je později snadno našel.
+        rocnik: 6
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří strukturu složek a umístí do ní zadané soubory podle jasného pravidla.
+    prerekvizity:
+      - digitalni-zaklady-hardware-a-software
+    souvisi:
+      - digitalni-zaklady-kde-jsou-data-fyzicky
+      - digitalni-zaklady-reprezentace-dat
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-kde-jsou-data-fyzicky
+    nazev: Kde jsou data fyzicky
+    tema: digitalni-zaklady
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: Data z aplikací neleží „někde v internetu", ale na konkrétních serverech na konkrétním místě na světě. Kde přesně jsou, ovlivňuje rychlost (latenci) i to, jaké zákony na ně platí — třeba jestli je chrání evropské GDPR.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč místo uložení dat ovlivňuje rychlost i to, jaké zákony na ně platí.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák u konkrétní služby posoudí riziko plynoucí z toho, kde jsou uložena její data.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák u zadané služby uvede jedno riziko spojené s umístěním dat a zmíní roli ochrany GDPR.
+    prerekvizity:
+      - digitalni-zaklady-cloud-a-server
+    souvisi:
+      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    tagy:
+      - bezpečí a rizika
+      - soukromí
+      - teoretický základ
+      - udržitelnost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-dekompozice
+    nazev: Dekompozice
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Rozložení velkého, nepřehledného úkolu na menší kousky, které se dají řešit po jednom. Když plánuješ školní výlet, taky ho rozdělíš na dopravu, ubytování a program — v informatice se to samé dělá s problémy i s programy.
+    rvp:
+      - kod: INF-INF-002-ZV9-006
+        vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč se velký úkol snáz řeší, když ho rozloží na menší části.
+        rocnik: 6
+      - uroven: aplikace
+        text: Žák rozdělí zadaný složitější úkol na jednotlivě řešitelné části.
+        rocnik: 6
+    kriteria:
+      - uroven: aplikace
+        text: Žák u zadaného problému vypíše dílčí části, které jde řešit samostatně.
+    prerekvizity: []
+    souvisi:
+      - tvorba-aplikaci-logika-aplikace
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-abstrakce
+    nazev: Abstrakce
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: 'Schopnost odfiltrovat nepodstatné detaily a soustředit se jen na to, co je pro řešení důležité. Mapa metra je skvělá abstrakce: neukazuje skutečné vzdálenosti ani ulice, jen to, jak na sebe stanice navazují — přesně to, co potřebuješ.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí na příkladu (mapa metra), co znamená abstrakce jako vynechání nepodstatných detailů.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák u zadaného problému vybere, které informace jsou pro řešení podstatné a které lze vynechat.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák u zadané úlohy oddělí podstatné údaje od nepodstatných a svůj výběr krátce doloží.
+    prerekvizity: []
+    souvisi:
+      - digitalni-zaklady-vrstvy-pocitace
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-rozpoznavani-vzoru
+    nazev: Rozpoznávání vzorů
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Všímání si opakování a pravidelností, které řešení zjednoduší. Když zjistíš, že se v úloze pořád vrací stejný krok, můžeš ho vyřešit jednou a použít znovu — místo abys vymýšlel pokaždé znovu od začátku.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vlastními slovy vysvětlí, jak všímání si opakování zjednoduší řešení úlohy.
+        rocnik: 6
+      - uroven: analyza
+        text: Žák v zadané úloze najde opakující se krok nebo vzor.
+        rocnik: 6
+    kriteria:
+      - uroven: analyza
+        text: Žák v předložené posloupnosti nebo úloze označí prvek, který se opakuje.
+    prerekvizity: []
+    souvisi:
+      - umela-inteligence-ai-se-uci-z-dat
+      - umela-inteligence-strojove-uceni-prakticky
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-algoritmus
+    nazev: Algoritmus
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: 'Přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku.'
+    rvp:
+      - kod: INF-INF-002-ZV9-006
+        vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, čím se vyznačuje dobrý algoritmus, a proč musí být jednoznačný.
+        rocnik: 6
+      - uroven: tvorba
+        text: Žák navrhne vlastní algoritmus krok za krokem pro řešení zadané úlohy.
+        rocnik: 7
+    kriteria:
+      - uroven: tvorba
+        text: Žák sestaví postup, podle kterého kdokoli dojde ke stejnému výsledku, a kroky seřadí jednoznačně.
+    prerekvizity:
+      - informaticke-mysleni-dekompozice
+      - informaticke-mysleni-rozpoznavani-vzoru
+    souvisi:
+      - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-rizeni-toku
+    nazev: Řízení toku
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: 'Tři způsoby, jak řídit pořadí kroků: sekvence (dělej popořadě), větvení („když platí tohle, udělej tamto") a opakování (dělej dokola, dokud něco platí). Z těchhle tří stavebních kamenů se dá poskládat každý program.'
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi sekvencí, větvením a opakováním a uvede příklad každého.
+        rocnik: 6
+      - uroven: aplikace
+        text: Žák v blokovém prostředí použije větvení a opakování k sestavení funkčního programu.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u ukázky kódu určí, kde jde o sekvenci, kde o větvení a kde o opakování.
+      - uroven: aplikace
+        text: Žák odevzdá funkční program, který obsahuje alespoň jedno větvení a jedno opakování.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-pseudokod-a-vyvojove-diagramy
+    nazev: Pseudokód a vývojové diagramy
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Způsoby, jak zapsat postup srozumitelně pro člověka ještě předtím, než ho napíšeš v konkrétním programovacím jazyce. Pseudokód je „kód napůl česky", vývojový diagram totéž nakreslené jako schéma se šipkami.
+    rvp:
+      - kod: INF-INF-002-ZV9-005
+        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+    cile:
+      - uroven: porozumeni
+        text: Žák po přečtení pseudokódu nebo vývojového diagramu vysvětlí, co daný postup dělá.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák zapíše jednoduchý postup jako pseudokód nebo vývojový diagram.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u předloženého diagramu popíše celý postup a určí problém, který řeší.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - programovani-blokove-vs-textove-programovani
+      - informaticke-mysleni-modelovani-a-simulace
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-logika-a-booleovske-vyrazy
+    nazev: Logika a booleovské výrazy
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Rozhodování v programech stojí na výrocích, které jsou buď pravda, nebo nepravda („má hráč míň než nula životů?"). Ty se spojují spojkami A ZÁROVEŇ (AND), NEBO (OR) a NE (NOT) do složitějších podmínek.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí význam spojek A ZÁROVEŇ, NEBO a NE na konkrétní podmínce.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák sestaví složenou podmínku pomocí spojek AND, OR a NOT pro zadanou situaci.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák pro zadané pravidlo zapíše správnou složenou podmínku a určí, kdy je pravdivá.
+    prerekvizity:
+      - informaticke-mysleni-rizeni-toku
+    souvisi:
+      - data-databaze-dotazovani-sql
+      - herni-vyvoj-kolize-a-jednoducha-fyzika
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-modelovani-a-simulace
+    nazev: Modelování a simulace
+    tema: informaticke-mysleni
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: navazujici
+    popis: Model je zjednodušený obraz skutečnosti — třeba graf, schéma nebo tabulka — který zachytí to podstatné a zbytek vynechá. Na modelu jde situaci pochopit nebo „přehrát" dopředu (simulovat), aniž bys ji musel zkoušet naostro.
+    rvp:
+      - kod: INF-INF-001-ZV9-003
+        vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co je model a proč zachycuje jen to podstatné.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák zadanou situaci znázorní modelem, například grafem nebo schématem.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří graf nebo schéma, které zachytí podstatné prvky zadané situace.
+    prerekvizity:
+      - informaticke-mysleni-abstrakce
+    souvisi:
+      - data-databaze-vizualizace-a-volba-grafu
+      - herni-vyvoj-kolize-a-jednoducha-fyzika
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-efektivita-reseni
+    nazev: Efektivita řešení
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Stejný problém jde vyřešit mnoha způsoby, ale ne všechny stojí stejně — liší se počtem kroků, časem nebo pamětí. Rozpoznat, které řešení je „levnější", začne být důležité, jakmile přibude dat nebo uživatelů.
+    rvp: []
+    cile:
+      - uroven: analyza
+        text: Žák porovná dvě řešení stejné úlohy a rozliší, které vyžaduje méně kroků.
+        rocnik: 9
+    kriteria:
+      - uroven: analyza
+        text: Žák u dvou postupů spočítá nebo odhadne počet kroků a označí úspornější z nich.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - programovani-ladeni-a-testovani
+      - informaticke-mysleni-zakladni-algoritmy
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-zakladni-algoritmy
+    nazev: Základní algoritmy
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Osvědčené postupy, které se používají pořád dokola, hlavně hledání (najdi prvek v seznamu) a řazení (seřaď podle velikosti). Jsou to takové „klasické recepty" informatiky, které stojí za to znát.
+    rvp:
+      - kod: INF-INF-002-ZV9-005
+        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+    cile:
+      - uroven: porozumeni
+        text: Žák po přečtení kroků vyhledávacího nebo řadicího algoritmu vysvětlí, co dělá a jaký problém řeší.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák podle postupu vyhledávání najde prvek v zadaném seznamu.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u předloženého algoritmu popíše celý postup a určí, zda jde o hledání, nebo řazení.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - programovani-seznamy-a-kolekce
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: informaticke-mysleni-hodnoceni-a-analyza-chyb
+    nazev: Hodnocení a analýza chyb
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Umět se na hotové řešení podívat kriticky: funguje? kde se láme? proč dělá zrovna tohle? Hledání příčiny chyby (ne jen jejího příznaku) je dovednost, kterou využiješ v programování i kdekoli jinde.'
+    rvp:
+      - kod: INF-INF-002-ZV9-005
+        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+    cile:
+      - uroven: hodnoceni
+        text: Žák ověří, zda hotové řešení funguje, a určí krok, ve kterém se láme.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák u chybného postupu odliší příčinu chyby od jejího příznaku.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák u předloženého řešení otestuje jeho funkčnost a pojmenuje místo selhání.
+      - uroven: analyza
+        text: Žák u konkrétní chyby rozliší, co je jen její projev a co skutečná příčina.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - důvěra a ověřování
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-promenne-a-datove-typy
+    nazev: Proměnné a datové typy
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Proměnná je pojmenovaná „krabička", do které si program ukládá hodnotu, aby s ní mohl dál pracovat (třeba skore = 0). Typ určuje, co je uvnitř — číslo, text, nebo pravda/nepravda — a co se s tím dá dělat.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, k čemu v programu slouží proměnná a čím se od ní liší datový typ.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák použije v programu proměnnou k uložení a průběžné změně hodnoty, například skóre.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše na příkladu, jakou hodnotu proměnná uchovává a jakého je typu (číslo, text, pravda/nepravda).
+      - uroven: aplikace
+        text: Žák vytvoří proměnnou, přiřadí jí hodnotu a během běhu programu ji správně změní.
+    prerekvizity: []
+    souvisi:
+      - herni-vyvoj-vstup-hrace-stavy-a-skore
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-podminky-v-kodu
+    nazev: Podmínky v kódu
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: 'Zápis větvení: „když platí podmínka, udělej tohle, jinak tamto" (if/else). Díky němu se program rozhoduje sám — třeba zobrazí „výhra", jen když skóre překročí cíl.'
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak se program pomocí konstrukce if/else rozhoduje mezi dvěma větvemi.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák použije větvení if/else tak, aby program reagoval různě podle splnění podmínky.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, kdy se vykoná větev if a kdy větev else.
+      - uroven: aplikace
+        text: Žák sestaví podmínku, která podle hodnoty proměnné zobrazí správný výsledek.
+    prerekvizity:
+      - programovani-promenne-a-datove-typy
+      - informaticke-mysleni-logika-a-booleovske-vyrazy
+    souvisi:
+      - informaticke-mysleni-rizeni-toku
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-cykly-v-kodu
+    nazev: Cykly v kódu
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Způsob, jak nechat počítač opakovat kroky, místo abys je psal pořád dokola. Cyklus for opakuje danou-krát, cyklus while opakuje, dokud něco platí — třeba dokud hráč neprohraje.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi cyklem for a cyklem while.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák použije cyklus k opakování kroků místo jejich ručního psaní.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, co určuje počet opakování u cyklu for a co u cyklu while.
+      - uroven: aplikace
+        text: Žák sestaví cyklus, který zopakuje danou akci požadovaný početkrát.
+    prerekvizity:
+      - programovani-promenne-a-datove-typy
+      - informaticke-mysleni-rizeni-toku
+    souvisi:
+      - herni-vyvoj-herni-smycka-scena-a-objekty
+      - informaticke-mysleni-zakladni-algoritmy
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-funkce-a-procedury
+    nazev: Funkce a procedury
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Pojmenovaný, znovupoužitelný kousek kódu, který napíšeš jednou a pak už jen „zavoláš", kdykoli ho potřebuješ. Můžeš mu předat vstupy (parametry) a dostat zpět výsledek — tím se kód zkrátí a zpřehlední.
+    rvp:
+      - kod: INF-INF-002-ZV9-006
+        vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč se opakující se kód vyplatí uložit do pojmenované funkce.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák vytvoří vlastní funkci s parametrem a zavolá ji na více místech programu.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, co je vstup (parametr) a co výstup funkce.
+      - uroven: aplikace
+        text: Žák sestaví funkci, předá jí vstup a použije její výsledek ve svém programu.
+    prerekvizity:
+      - programovani-promenne-a-datove-typy
+      - informaticke-mysleni-dekompozice
+    souvisi:
+      - informaticke-mysleni-zakladni-algoritmy
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-ladeni-a-testovani
+    nazev: Ladění a testování
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Ladění (debugging) je hledání a oprava chyb; testování je ověřování, že program dělá to, co má, i v neobvyklých případech. Chyby k programování patří — dovednost je umět je systematicky najít, ne se jim vyhnout.
+    rvp:
+      - kod: INF-INF-002-ZV9-005
+        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi laděním, tedy hledáním chyb, a testováním, tedy ověřováním funkčnosti.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák najde v nefunkčním programu příčinu chyby a odliší ji od jejího příznaku.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše na příkladu, co se při ladění a co při testování programu dělá.
+      - uroven: analyza
+        text: Žák určí konkrétní krok programu, ve kterém chyba vzniká, a zdůvodní proč.
+    prerekvizity:
+      - programovani-podminky-v-kodu
+      - programovani-cykly-v-kodu
+    souvisi:
+      - informaticke-mysleni-hodnoceni-a-analyza-chyb
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-blokove-vs-textove-programovani
+    nazev: Blokové vs. textové programování
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Na začátku se programuje skládáním barevných bloků (Scratch), kde nejde udělat překlep. Postupně se přechází k psaní textového kódu (třeba v Pythonu), který je mocnější, ale vyžaduje přesnost.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák porovná blokové a textové programování z hlediska přesnosti zápisu a možností.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede aspoň jeden důvod, proč začátečník začíná bloky a proč se přechází k textovému kódu.
+    prerekvizity:
+      - programovani-cykly-v-kodu
+      - informaticke-mysleni-algoritmus
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-seznamy-a-kolekce
+    nazev: Seznamy a kolekce
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Když nestačí jedna proměnná, uloží se víc hodnot najednou do seznamu (třeba jména všech hráčů). S kolekcí pak jde pracovat hromadně — projít ji, seřadit, něco v ní najít.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, kdy je výhodnější uložit hodnoty do seznamu než do samostatných proměnných.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák použije seznam k uložení více hodnot a projde jeho prvky cyklem.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, co je prvek seznamu a jak se k němu přistupuje.
+      - uroven: aplikace
+        text: Žák sestaví seznam a hromadně s ním provede zvolenou operaci, například jej projde nebo v něm něco najde.
+    prerekvizity:
+      - programovani-promenne-a-datove-typy
+    souvisi:
+      - data-databaze-tabulky-a-relacni-model
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-udalosti
+    nazev: Události
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Programy často nečekají v jednom sledu, ale reagují na to, co udělá uživatel — klik, stisk klávesy, dotyk. Takovému stylu „když se stane tohle, spusť tamto" se říká událostmi řízené programování.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí princip událostmi řízeného programování ve tvaru „když se stane X, spusť Y“.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák vytvoří program, který reaguje na uživatelskou událost, například klik nebo stisk klávesy.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák sestaví obsluhu události, která po zásahu uživatele provede zvolenou akci.
+    prerekvizity:
+      - programovani-podminky-v-kodu
+    souvisi:
+      - fyzicky-computing-senzory-a-aktuatory
+      - herni-vyvoj-kolize-a-jednoducha-fyzika
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-knihovny-a-volani-api-v-kodu
+    nazev: Knihovny a volání API v kódu
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Nemusíš psát všechno od nuly — knihovna je hotový cizí kód, který zavoláš a použiješ (třeba na práci s datem nebo grafy). Přes API se stejně tak volají i vzdálené služby, včetně AI modelů.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč se vyplatí použít hotovou knihovnu místo psaní kódu od nuly.
+        rocnik: 9
+      - uroven: aplikace
+        text: Žák použije funkci z knihovny nebo volání API k vyřešení dílčího úkolu.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák zavolá připravenou funkci knihovny a využije její výsledek ve svém programu.
+    prerekvizity:
+      - programovani-funkce-a-procedury
+      - digitalni-zaklady-api
+    souvisi:
+      - tvorba-aplikaci-prace-s-api-a-backendem
+      - tvorba-webu-frameworky
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-verzovani-kodu
+    nazev: Verzování kódu
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: kdi-zap
+    vrstva: navazujici
+    popis: Git a GitHub ukládají historii změn kódu, takže se vždycky můžeš vrátit k funkční verzi a víc lidí může pracovat na jednom projektu, aniž by si přepsali práci. Je to jako „zpět" a sdílená složka pro programátory dohromady.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, k čemu slouží verzování kódu a proč umožňuje návrat k dřívější funkční verzi.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, jak Git a GitHub pomáhají více lidem pracovat na jednom projektu, aniž si přepíší práci.
+    prerekvizity:
+      - programovani-blokove-vs-textove-programovani
+    souvisi:
+      - herni-vyvoj-publikace-hry
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-cteni-a-hodnoceni-ai-kodu
+    nazev: Čtení a hodnocení AI kódu
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Dnes velkou část kódu napíše AI — o to důležitější je umět cizí kód přečíst, pochopit, co dělá, a posoudit, jestli je správný a bezpečný. Bez toho jen slepě věříš něčemu, čemu nerozumíš.
+    rvp:
+      - kod: INF-INF-002-ZV9-005
+        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+    cile:
+      - uroven: porozumeni
+        text: Žák vlastními slovy vysvětlí, co dělá krátký úsek kódu vygenerovaný AI, a určí problém, který řeší.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák posoudí, zda je vygenerovaný kód správný a bezpečný.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, jaký problém daný AI kód řeší a v jakém pořadí probíhají jeho kroky.
+      - uroven: hodnoceni
+        text: Žák zdůvodní, zda kódu důvěřovat, a uvede konkrétní důvod svého závěru.
+    prerekvizity:
+      - programovani-ladeni-a-testovani
+    souvisi:
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - důvěra a ověřování
+      - lidský dohled a agency
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: programovani-zaklady-objektu-oop
+    nazev: Základy objektů (OOP)
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: Objekt spojuje data a to, co s nimi jde dělat, do jednoho celku (třeba „hráč" má životy i umí skočit). Objektové myšlení pomáhá zorganizovat větší programy tak, aby se v nich dalo vyznat.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak objekt spojuje data a chování do jednoho celku.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše na příkladu, například u objektu „hráč“, jeho vlastnosti a to, co umí.
+    prerekvizity:
+      - programovani-funkce-a-procedury
+    souvisi:
+      - herni-vyvoj-herni-smycka-scena-a-objekty
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-co-je-a-co-neni-ai
+    nazev: Co je a co není AI
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: core
+    popis: 'AI je software, který zvládá úlohy, jež dřív vyžadovaly člověka — rozpoznat obličej, přeložit větu, poradit. Dnešní AI je „úzká": umí skvěle jednu věc, ale nemá vědomí ani porozumění jako člověk; je to velmi šikovný nástroj, ne bytost.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí vlastními slovy rozdíl mezi dnešní úzkou AI a lidskou myslí (vědomím a skutečným porozuměním).
+        rocnik: 6
+      - uroven: hodnoceni
+        text: Žák posoudí u konkrétních příkladů technologií, které z nich jsou umělá inteligence a které ne.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede alespoň dvě vlastnosti, kterými se dnešní AI liší od člověka.
+      - uroven: hodnoceni
+        text: Žák u tří příkladů rozhodne AI/ne-AI a rozhodnutí doloží konkrétním znakem.
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-rozumet-ai-halucinace-bias
+      - umela-inteligence-ai-a-spolecnost
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-ai-se-uci-z-dat
+    nazev: AI se učí z dat
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: core
+    popis: 'Většina dnešní AI se nenaprogramuje pravidly, ale „natrénuje" na obrovském množství příkladů, ze kterých si sama odvodí vzorce. Proto platí „co do ní vložíš, to z ní vypadne": když jsou trénovací data zkreslená nebo chybná, bude takový i výsledek.'
+    rvp:
+      - kod: INF-INF-001-ZV9-004
+        vystup: natrénuje model strojového učení
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, jak se dnešní AI učí z příkladů (trénovacích dat) místo z pevně naprogramovaných pravidel.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák natrénuje jednoduchý model strojového učení na vlastních příkladech dat.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu vysvětlí pravidlo „co do modelu vložíš, to z něj vypadne".
+      - uroven: aplikace
+        text: Žák nasbírá vlastní trénovací data, spustí trénink a předvede funkční model.
+    prerekvizity:
+      - umela-inteligence-co-je-a-co-neni-ai
+      - data-databaze-datova-gramotnost
+    souvisi: []
+    tagy:
+      - férovost a předpojatost
+      - teoretický základ
+      - udržitelnost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-jak-funguje-generativni-model
+    nazev: Jak funguje generativní model
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: core
+    popis: Modely jako ChatGPT nevytahují odpovědi z databáze — slovo po slovu předpovídají, co nejpravděpodobněji následuje. Umí proto znít sebejistě i tehdy, když si fakta „vymyslí" (halucinace), protože nesledují pravdu, ale pravděpodobnost.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, že generativní model předpovídá další slovo podle pravděpodobnosti, místo aby vyhledával v databázi.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák rozliší ve výstupu generativního modelu tvrzení, která mohou být halucinace.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše vlastními slovy, proč model může znít sebejistě i u vymyšlené informace.
+      - uroven: analyza
+        text: Žák označí v ukázce odpovědi místa, která je nutné ověřit.
+    prerekvizity:
+      - umela-inteligence-ai-se-uci-z-dat
+    souvisi:
+      - tvorba-obsahu-prompt-pro-media
+      - umela-inteligence-typy-ai-uloh
+    tagy:
+      - důvěra a ověřování
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-doporucovaci-systemy
+    nazev: Doporučovací systémy
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: core
+    popis: Feed na TikToku, YouTube i na Glitchi řídí algoritmus, který ti podle tvého chování vybírá, co uvidíš dál. Pochopit, že tě systém profiluje a proč ti ukazuje zrovna tohle, je první krok k tomu ho ovládat, a ne být ovládán jím.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, jak doporučovací algoritmus vybírá obsah podle chování uživatele.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák zhodnotí, jak doporučovací systém ovlivňuje, co sám na feedu vidí.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu feedu vysvětlí, proč se dvěma lidem zobrazuje jiný obsah.
+      - uroven: hodnoceni
+        text: Žák uvede jedno riziko personalizovaného feedu a zdůvodní, proč jde o riziko.
+    prerekvizity:
+      - umela-inteligence-ai-se-uci-z-dat
+    souvisi:
+      - data-databaze-vektorove-databaze
+    tagy:
+      - dopad na společnost
+      - moc a peníze
+      - pozornost a wellbeing
+      - soukromí
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-prompt-a-promptova-gramotnost
+    nazev: Prompt a promptová gramotnost
+    tema: umela-inteligence
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: core
+    popis: 'Prompt je zadání, kterým AI úkoluješ. Není to kouzelné zaklínadlo, ale spíš dialog: čím jasněji popíšeš cíl, kontext a formát a čím víc zadání upřesňuješ, tím lepší výsledek dostaneš.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák sestaví strukturovaný prompt obsahující cíl, kontext a požadovaný formát výstupu.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí, který ze dvou promptů vede k lepšímu výsledku, a rozhodnutí zdůvodní.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žákův prompt obsahuje jasně formulovaný cíl, kontext i formát.
+      - uroven: hodnoceni
+        text: Žák zdůvodní výběr lepšího promptu konkrétním rozdílem ve výstupu.
+    prerekvizity:
+      - umela-inteligence-jak-funguje-generativni-model
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-overovani-vystupu
+    nazev: Ověřování AI generovaných výstupů
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: AI se plete sebejistě, takže její výstup je návrh, ne pravda. Poznat možnou halucinaci a ověřit tvrzení z druhého, důvěryhodného zdroje je základní dovednost každého, kdo AI používá.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč je výstup AI potřeba brát jako návrh, ne jako ověřenou pravdu.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák ověří tvrzení z výstupu AI porovnáním s důvěryhodným druhým zdrojem.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, co je halucinace AI a jak se projevuje.
+      - uroven: hodnoceni
+        text: Žák u konkrétního tvrzení najde druhý zdroj a rozhodne, zda tvrzení platí.
+    prerekvizity:
+      - umela-inteligence-jak-funguje-generativni-model
+    souvisi:
+      - digitalni-obcanstvi-kriticke-mysleni-online
+    tagy:
+      - důvěra a ověřování
+      - lidský dohled a agency
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: umela-inteligence-vlastni-agency
+    nazev: Vlastní agency
+    tema: umela-inteligence
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: I když ti AI radí, rozhoduješ pořád ty. „Agency" znamená vědomí, že jsi to ty, kdo drží řízení a nese odpovědnost — AI je nástroj, který ti pomáhá, ne autorita, které se podřizuješ.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, že za rozhodnutí a jeho následky nese odpovědnost člověk, ne AI.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí u konkrétní situace, kde má rozhodnutí nechat na sobě a kde se může opřít o AI.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák vlastními slovy odliší roli nástroje (AI) od role rozhodujícího člověka.
+      - uroven: hodnoceni
+        text: Žák u dané situace rozhodne o míře využití AI a rozhodnutí zdůvodní.
+    prerekvizity: []
+    souvisi:
+      - tvorba-aplikaci-iluze-ze-to-umim
+      - programovani-cteni-a-hodnoceni-ai-kodu
+      - digitalni-obcanstvi-digitalni-wellbeing
+    tagy:
+      - lidský dohled a agency
+      - pozornost a wellbeing
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+    nazev: Kdy AI (ne)použít a disclosure
+    tema: umela-inteligence
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: U každého úkolu se vyplatí zvážit, jestli ti AI pomůže se něco naučit, nebo tě o učení připraví (napíše za tebe úkol, který tě měl něco naučit). K poctivé práci patří i přiznat, kde jsi AI použil.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč je poctivé přiznat (disclosure), kde při práci použil AI.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí u konkrétního úkolu, zda je vhodné použít AI, a rozhodnutí obhájí.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede, jakou formou lze u práce označit použití AI.
+      - uroven: hodnoceni
+        text: Žák u zadaného úkolu rozhodne o (ne)použití AI a doloží to vztahem k cíli učení.
+    prerekvizity:
+      - umela-inteligence-vlastni-agency
+    souvisi: []
+    tagy:
+      - etika a odpovědnost
+      - lidský dohled a agency
+      - pozornost a wellbeing
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-bias-a-ferovost
+    nazev: Bias a férovost
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: AI přebírá zkreslení (bias) z dat, na kterých se učila — může tak třeba nadržovat jedné skupině lidí. Vědět, odkud se bias bere a jak se projevuje, je nutné, aby AI nerozhodovala nespravedlivě.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak se do AI dostává zkreslení (bias) z trénovacích dat.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák najde v konkrétním výstupu nebo rozhodnutí AI možný projev biasu.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu popíše, proč zkreslená data vedou ke zkreslenému výsledku.
+      - uroven: analyza
+        text: Žák označí ve výstupu skupinu, které by systém mohl nespravedlivě nadržovat či ubližovat.
+    prerekvizity:
+      - umela-inteligence-ai-se-uci-z-dat
+    souvisi:
+      - digitalni-obcanstvi-dezinformace-a-manipulace
+    tagy:
+      - férovost a předpojatost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-soukromi-pri-praci-s-ai
+    nazev: Soukromí při práci s AI
+    tema: umela-inteligence
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Co napíšeš do promptu, se může ukládat nebo použít k dalšímu trénování. Proto do AI nepatří hesla ani osobní či cizí citlivé údaje — vždycky mysli na to, komu vlastně data předáváš.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, co se může stát s údaji, které zadá do promptu.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí, které informace do AI zadat smí a které ne.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč do AI nepatří hesla ani cizí osobní údaje.
+      - uroven: hodnoceni
+        text: Žák u seznamu údajů rozhodne, které je bezpečné zadat, a rozhodnutí zdůvodní.
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-soukromi-a-digitalni-stopa
+      - digitalni-obcanstvi-pravo-a-etika
+    tagy:
+      - bezpečí a rizika
+      - soukromí
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-pet-velkych-ideji-ai
+    nazev: Pět velkých idejí AI
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Přehledný rámec, který shrnuje, co AI umí, do pěti oblastí: vnímání (senzory), reprezentace a usuzování, učení z dat, přirozená interakce s lidmi a společenský dopad. Dává dohromady mapu celého tématu.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše pět velkých idejí AI (vnímání, reprezentace a usuzování, učení z dat, interakce s lidmi, společenský dopad).
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák zařadí konkrétní příklad AI do odpovídající z pěti oblastí.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák ke každé z pěti oblastí uvede jeden příklad.
+      - uroven: aplikace
+        text: Žák u tří příkladů určí, do které velké ideje patří.
+    prerekvizity:
+      - umela-inteligence-co-je-a-co-neni-ai
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-strojove-uceni-prakticky
+    nazev: Strojové učení prakticky
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'AI nejlíp pochopíš, když si sám natrénuješ malý model — třeba v Teachable Machine nebo micro:bit CreateAI ho naučíš rozpoznat gesto či obrázek. Projdeš celý postup: nasbírat data, natrénovat, otestovat a vylepšit.'
+    rvp:
+      - kod: INF-INF-001-ZV9-004
+        vystup: natrénuje model strojového učení
+    cile:
+      - uroven: aplikace
+        text: Žák natrénuje vlastní model v nástroji jako Teachable Machine (nasbírá data, natrénuje, otestuje).
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák zhodnotí přesnost svého natrénovaného modelu na nových příkladech.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák předvede funkční model natrénovaný na vlastních datech.
+      - uroven: hodnoceni
+        text: Žák otestuje model na nových datech a posoudí, kde chybuje.
+    prerekvizity:
+      - umela-inteligence-ai-se-uci-z-dat
+      - data-databaze-datovy-cyklus
+    souvisi:
+      - data-databaze-cisteni-realnych-dat
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-typy-ai-uloh
+    nazev: Typy AI úloh
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'AI úlohy se dělí na pár základních druhů: klasifikace (zařaď do kategorie — spam/ne-spam), predikce (odhadni číslo — třeba cenu) a generování (vytvoř nový obsah — text, obraz). Poznat druh úlohy pomáhá vybrat správný nástroj.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše rozdíl mezi klasifikací, predikcí a generováním.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák u konkrétních zadání určí, o který typ AI úlohy jde.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák ke každému typu úlohy uvede vlastní příklad.
+      - uroven: aplikace
+        text: Žák u tří příkladů správně určí typ úlohy.
+    prerekvizity:
+      - umela-inteligence-strojove-uceni-prakticky
+    souvisi:
+      - informaticke-mysleni-modelovani-a-simulace
+      - fyzicky-computing-ai-primo-na-zarizeni-tinyml
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-jak-funguji-chatboti-llm-rag
+    nazev: Jak fungují chatboti (LLM, RAG)
+    tema: umela-inteligence
+    oblast: data-modelovani
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Dnešní chatboti stojí na velkých jazykových modelech (LLM) natrénovaných na obrovském množství textu. Aby uměli odpovídat i z konkrétních dokumentů (třeba školních), používají RAG: nejdřív si v datech vyhledají, co se k tématu hodí, a teprve pak odpoví.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak RAG pomáhá chatbotovi odpovídat z konkrétních dokumentů.
+        rocnik: 9
+      - uroven: analyza
+        text: Žák rozliší, kdy chatbot odpovídá z natrénovaných znalostí a kdy z dodaných dokumentů (RAG).
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: 'Žák popíše dva kroky RAG: nejdřív vyhledá, teprve pak odpoví.'
+      - uroven: analyza
+        text: Žák u příkladu odpovědi určí, zda pochází z obecného modelu, nebo z dokumentů.
+    prerekvizity:
+      - umela-inteligence-jak-funguje-generativni-model
+    souvisi:
+      - data-databaze-vektorove-databaze
+      - tvorba-aplikaci-ai-nastroje-pro-tvorbu
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-hlubsi-etika-ai
+    nazev: Hlubší etika AI
+    tema: umela-inteligence
+    oblast: null
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Za používáním AI stojí etické otázky: neškodit, být spravedlivý ke všem skupinám, být průhledný v tom, jak AI rozhoduje, a myslet i na její energetickou náročnost. Etika není dodatek — patří už do návrhu.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč etika patří už do návrhu AI, ne až jako dodatek.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák posoudí konkrétní použití AI podle etických kritérií (neškodit, spravedlnost, průhlednost).
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede příklad etického problému spojeného s AI (např. energetickou náročnost).
+      - uroven: hodnoceni
+        text: Žák u dané situace uvede, které etické kritérium je porušeno, a zdůvodní to.
+    prerekvizity:
+      - umela-inteligence-bias-a-ferovost
+    souvisi:
+      - digitalni-obcanstvi-pravo-a-etika
+    tagy:
+      - etika a odpovědnost
+      - udržitelnost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-deepfakes-a-synteticka-media
+    nazev: Deepfakes a syntetická média
+    tema: umela-inteligence
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: AI umí vyrobit falešné, ale realisticky vypadající video, foto nebo hlas. Vědět, že „vidět neznamená věřit", a znát způsoby ověření původu (vodoznaky jako SynthID, C2PA) je dnes nutná obrana proti podvodům a dezinformacím.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak vzniká deepfake a proč „vidět neznamená věřit".
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí u konkrétního videa nebo obrázku, zda může jít o deepfake, a zdůvodní to.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše alespoň jeden způsob, jak lze deepfake vytvořit.
+      - uroven: hodnoceni
+        text: Žák u ukázky uvede znaky nebo postupy (např. SynthID, C2PA), podle kterých ověřuje pravost.
+    prerekvizity:
+      - umela-inteligence-jak-funguje-generativni-model
+    souvisi:
+      - tvorba-obsahu-puvod-obsahu-a-vodoznaky
+      - digitalni-obcanstvi-dezinformace-a-manipulace
+    tagy:
+      - bezpečí a rizika
+      - důvěra a ověřování
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: umela-inteligence-ai-a-spolecnost
+    nazev: AI a společnost
+    tema: umela-inteligence
+    oblast: null
+    kompetence: null
+    vrstva: navazujici
+    popis: AI mění práci, vzdělávání i to, jak vzniká a šíří se informace — přináší příležitosti i rizika (dezinformace, závislost). Být aktivní znamená nejen se přizpůsobit, ale i spolurozhodovat, jak se AI má a nemá používat.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, jak AI mění práci, vzdělávání a šíření informací, včetně příležitostí i rizik.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák obhájí vlastní stanovisko, jak by se AI v konkrétní oblasti měla a neměla používat.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede jednu příležitost a jedno riziko AI pro společnost.
+      - uroven: hodnoceni
+        text: Žák formuluje stanovisko a podpoří ho alespoň dvěma argumenty.
+    prerekvizity:
+      - umela-inteligence-hlubsi-etika-ai
+    souvisi:
+      - digitalni-obcanstvi-dezinformace-a-manipulace
+    tagy:
+      - dopad na společnost
+      - moc a peníze
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-datova-gramotnost
+    nazev: Datová gramotnost
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Schopnost data přečíst, správně pochopit a kriticky posoudit — ne s nimi jen technicky pracovat. Ptáš se: odkud data jsou, kdo je sebral, co v nich chybí a jestli závěr opravdu plyne z čísel. Je to i předstupeň porozumění AI.'
+    rvp:
+      - kod: INF-INF-001-ZV9-001
+        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi daty a informací a na konkrétním příkladu popíše, jakou informaci z daných dat získá.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí u předloženého závěru opřeného o data, zda z čísel opravdu plyne, a přitom zohlední zdroj dat a to, co v nich chybí.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák vlastními slovy vysvětlí, proč stejná data mohou nést různé informace podle položené otázky.
+      - uroven: hodnoceni
+        text: Žák u tvrzení opřeného o data uvede aspoň dvě otázky (odkud data jsou, co v nich chybí), podle nichž jeho spolehlivost posoudí.
+    prerekvizity:
+      - digitalni-zaklady-data-a-informace
+    souvisi:
+      - digitalni-obcanstvi-kriticke-mysleni-online
+    tagy:
+      - důvěra a ověřování
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-datovy-cyklus
+    nazev: Datový cyklus
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Práce s daty je příběh o pěti krocích: sběr → čištění → analýza → vizualizace → interpretace. Když některý přeskočíš (třeba čištění), zkreslíš i výsledek na konci.'
+    rvp:
+      - kod: INF-INF-001-ZV9-001
+        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+    cile:
+      - uroven: zapamatovani
+        text: Žák vyjmenuje pět kroků datového cyklu ve správném pořadí (sběr, čištění, analýza, vizualizace, interpretace).
+        rocnik: 7
+      - uroven: analyza
+        text: Žák v konkrétním příkladu práce s daty rozliší jednotlivé kroky cyklu a předpoví, jak vynechání čištění zkreslí výsledek.
+        rocnik: 8
+    kriteria:
+      - uroven: zapamatovani
+        text: Žák vyjmenuje všech pět kroků datového cyklu ve správném pořadí.
+      - uroven: analyza
+        text: Žák v popsaném postupu určí, který krok chybí, a předpoví jeho dopad na výsledek.
+    prerekvizity:
+      - data-databaze-datova-gramotnost
+    souvisi:
+      - data-databaze-strukturovana-vs-nestrukturovana-data
+      - data-databaze-analyza-dat-pomoci-ai
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-strukturovana-vs-nestrukturovana-data
+    nazev: Strukturovaná vs. nestrukturovaná data
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Strukturovaná data mají jasný řád (tabulka s řádky a sloupci), nestrukturovaná ho nemají (volný text, fotky, videa). Každý druh se ukládá i zpracovává jinak — a nestrukturovaných dat je dnes většina.
+    rvp:
+      - kod: INF-INF-001-ZV9-002
+        vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
+    cile:
+      - uroven: porozumeni
+        text: Žák porovná strukturovaná a nestrukturovaná data a ke každému typu uvede příklad a způsob uložení.
+        rocnik: 7
+      - uroven: analyza
+        text: Žák u předložené sady dat (tabulka, fotka, volný text) rozliší, která data jsou strukturovaná a která nestrukturovaná.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede aspoň dva příklady ke každému typu dat a popíše, čím se jejich ukládání liší.
+      - uroven: analyza
+        text: Žák správně zařadí předložené vzorky dat do kategorií strukturovaná a nestrukturovaná.
+    prerekvizity:
+      - data-databaze-datova-gramotnost
+      - digitalni-zaklady-reprezentace-dat
+    souvisi:
+      - data-databaze-nosql-a-dokumentove-databaze
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-tabulky-a-relacni-model
+    nazev: Tabulky a relační model
+    tema: data-databaze
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: core
+    popis: 'Nejběžnější způsob, jak evidovat data: tabulky s řádky (záznamy) a sloupci (vlastnosti), propojené přes klíče. Tak fungují školní systémy, e-shopy i většina aplikací „na pozadí".'
+    rvp:
+      - kod: INF-INF-003-ZV9-009
+        vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše stavbu tabulky (řádek = záznam, sloupec = vlastnost) a vysvětlí, k čemu slouží klíč propojující tabulky.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák pro zadaný problém vytvoří tabulku evidence dat s vhodnými sloupci a stanoví pravidla pro zápis záznamů.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u ukázkové tabulky správně označí, co je záznam, co vlastnost a co klíč.
+      - uroven: aplikace
+        text: Žák vytvořená tabulka má smysluplné sloupce, jednotný formát záznamů a určený klíč pro práci se záznamy.
+    prerekvizity:
+      - data-databaze-strukturovana-vs-nestrukturovana-data
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-vizualizace-a-volba-grafu
+    nazev: Vizualizace a volba grafu
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Dobrý graf udělá z čísel srozumitelný příběh — ale jen když zvolíš správný typ (spojnicový na vývoj v čase, sloupcový na porovnání) a čteš osy a měřítka. Špatně zvolený nebo zmanipulovaný graf umí naopak klamat.
+    rvp:
+      - kod: INF-INF-001-ZV9-003
+        vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
+    cile:
+      - uroven: aplikace
+        text: Žák pro daná data vytvoří vhodný typ grafu (spojnicový pro vývoj v čase, sloupcový pro porovnání) s popsanými osami.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák u předloženého grafu najde zavádějící prvek (useknutá osa, špatné měřítko) a předpoví, k jakému mylnému závěru čtenáře svede.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák zvolí typ grafu odpovídající povaze dat a správně popíše obě osy včetně měřítka.
+      - uroven: analyza
+        text: Žák v zavádějícím grafu označí konkrétní manipulaci a předpoví její účinek na čtení.
+    prerekvizity:
+      - data-databaze-datovy-cyklus
+    souvisi: []
+    tagy:
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-dotazovani-sql
+    nazev: Dotazování (SQL)
+    tema: data-databaze
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: SQL je jazyk, kterým se databáze ptáš na to, co potřebuješ („vyber všechny žáky z 8.A"). Základní příkazy (SELECT, WHERE, JOIN) umí data filtrovat, propojovat a vybírat z tabulek.
+    rvp:
+      - kod: INF-INF-003-ZV9-010
+        vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, k čemu slouží příkazy SELECT, WHERE a JOIN při práci s tabulkovými daty.
+        rocnik: 9
+      - uroven: aplikace
+        text: Žák pomocí jednoduchého dotazu (SELECT, WHERE) vybere z tabulky záznamy splňující zadanou podmínku a nastaví tak požadované zobrazení dat.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u každého ze tří příkazů (SELECT, WHERE, JOIN) uvede, co s daty dělá.
+      - uroven: aplikace
+        text: Žák sestaví dotaz, který vrátí právě požadované záznamy (např. všechny žáky z 8.A).
+    prerekvizity:
+      - data-databaze-tabulky-a-relacni-model
+      - data-databaze-strukturovana-vs-nestrukturovana-data
+    souvisi:
+      - data-databaze-programova-analyza-dat
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-ucel-informacnich-systemu
+    nazev: Účel informačních systémů
+    tema: data-databaze
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Informační systém je software, který eviduje a zpracovává data pro nějakou potřebu — školní matrika, rezervace, e-shop. Umět posoudit, k čemu systém slouží a jestli je opravdu užitečný, patří k digitální gramotnosti.
+    rvp:
+      - kod: INF-INF-003-ZV9-008
+        vystup: posoudí účel a užitečnost informačních systémů, které používá
+    cile:
+      - uroven: porozumeni
+        text: Žák na příkladu systému, který používá (školní systém, rezervace, e-shop), vysvětlí, co je informační systém a jaká data eviduje.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí u informačního systému, který používá, k čemu slouží a zda je pro daný účel opravdu užitečný.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák u konkrétního informačního systému uvede jeho účel a druh dat, která uchovává.
+      - uroven: hodnoceni
+        text: Žák uvede aspoň jeden argument pro a jeden proti užitečnosti daného systému.
+    prerekvizity:
+      - data-databaze-tabulky-a-relacni-model
+    souvisi:
+      - digitalni-obcanstvi-obchodni-modely-platforem
+      - tvorba-aplikaci-databaze-a-autentizace
+    tagy:
+      - dopad na společnost
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-statisticka-gramotnost
+    nazev: Statistická gramotnost
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: 'Aby tě čísla nezmátla: korelace (dvě věci jdou spolu) neznamená kauzalitu (jedna způsobuje druhou), malý nebo nereprezentativní vzorek klame a graf jde snadno „natáhnout" k požadovanému závěru. Klíčová občanská dovednost.'
+    rvp:
+      - kod: INF-INF-001-ZV9-001
+        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+    cile:
+      - uroven: porozumeni
+        text: Žák na příkladu vysvětlí rozdíl mezi korelací a kauzalitou.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák posoudí u předloženého tvrzení, zda ho nezkresluje malý či nereprezentativní vzorek nebo záměna korelace a kauzality.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede příklad dvou jevů, které spolu souvisejí, aniž jeden způsobuje druhý.
+      - uroven: hodnoceni
+        text: Žák u tvrzení opřeného o statistiku pojmenuje aspoň jedno riziko zkreslení závěru.
+    prerekvizity:
+      - data-databaze-vizualizace-a-volba-grafu
+    souvisi:
+      - umela-inteligence-bias-a-ferovost
+      - digitalni-obcanstvi-kriticke-mysleni-online
+    tagy:
+      - důvěra a ověřování
+      - férovost a předpojatost
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-cisteni-realnych-dat
+    nazev: Čištění reálných dat
+    tema: data-databaze
+    oblast: informacni-systemy
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: Skutečná data jsou „špinavá" — chybí hodnoty, opakují se, jsou v různých formátech. Jejich úklid zabere většinu práce a je nudný, ale bez něj vyjde ze sebelepší analýzy nesmysl.
+    rvp:
+      - kod: INF-INF-003-ZV9-010
+        vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
+    cile:
+      - uroven: analyza
+        text: Žák v reálné (špinavé) sadě dat najde chyby jako chybějící hodnoty, duplicity a různé formáty zápisu.
+        rocnik: 9
+      - uroven: aplikace
+        text: Žák upraví zadanou tabulku tak, aby měla ve sloupcích jednotný formát a byla bez duplicit.
+        rocnik: 9
+    kriteria:
+      - uroven: analyza
+        text: Žák v ukázkových datech označí aspoň tři typy nečistot.
+      - uroven: aplikace
+        text: Žák výsledná tabulka je bez duplicit a hodnoty v každém sloupci mají jednotný formát.
+    prerekvizity:
+      - data-databaze-datovy-cyklus
+    souvisi:
+      - umela-inteligence-ai-se-uci-z-dat
+    tagy:
+      - férovost a předpojatost
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-nosql-a-dokumentove-databaze
+    nazev: NoSQL a dokumentové databáze
+    tema: data-databaze
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Ne všechno se hodí do tabulek — NoSQL databáze ukládají data volněji (třeba jako dokumenty), což se hodí pro obsah, který nemá pevný tvar. Jiný nástroj na jiný druh dat.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, čím se dokumentová (NoSQL) databáze liší od tabulkové a pro jaký druh dat se hodí.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede příklad obsahu, který nemá pevný tvar, a popíše, proč se pro něj tabulka nehodí.
+    prerekvizity:
+      - data-databaze-tabulky-a-relacni-model
+    souvisi:
+      - umela-inteligence-jak-funguji-chatboti-llm-rag
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-vektorove-databaze
+    nazev: Vektorové databáze
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Text nebo obrázek se dá převést na řadu čísel (embedding), která zachycuje jeho význam. Vektorová databáze pak umí hledat podle podobnosti významu, ne podle přesné shody slov — díky tomu chatbot najde odpověď ve vlastních dokumentech (RAG).
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, že se text nebo obrázek dá převést na čísla (embedding) a že vektorová databáze hledá podle podobnosti významu, ne podle přesné shody slov.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu popíše rozdíl mezi hledáním podle přesné shody slov a podle podobnosti významu.
+    prerekvizity:
+      - data-databaze-nosql-a-dokumentove-databaze
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-programova-analyza-dat
+    nazev: Programová analýza dat
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'Když je dat moc na ruční klikání, zpracují se kódem (typicky Python + knihovna pandas). Výhoda: je to rychlé, opakovatelné a doložitelné — kdokoli spustí stejný postup a dostane stejný výsledek.'
+    rvp:
+      - kod: INF-INF-001-ZV9-001
+        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí výhody zpracování dat kódem (rychlost, opakovatelnost, doložitelnost) oproti ručnímu klikání.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede aspoň dvě výhody programového zpracování dat oproti ručnímu.
+    prerekvizity:
+      - data-databaze-datovy-cyklus
+    souvisi:
+      - programovani-seznamy-a-kolekce
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: data-databaze-analyza-dat-pomoci-ai
+    nazev: Analýza dat pomocí AI
+    tema: data-databaze
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: Dnes stačí data nahrát a zeptat se běžnou řečí („ukaž trend prodejů po měsících") — AI vygeneruje graf i vysvětlení. O to důležitější je umět posoudit, jestli je výsledek správný, protože AI si i tady umí čísla vymýšlet.
+    rvp:
+      - kod: INF-INF-001-ZV9-001
+        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
+    cile:
+      - uroven: aplikace
+        text: Žák pomocí AI nástroje nechá z nahraných dat vytvořit graf a jeho vysvětlení podle dotazu zadaného běžnou řečí.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák ověří u výstupu, který mu AI z dat vygenerovala, zda čísla a závěr odpovídají skutečným datům.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák formuluje běžnou řečí dotaz, na jehož základě AI vytvoří odpovídající graf.
+      - uroven: hodnoceni
+        text: Žák porovná aspoň jeden údaj z výstupu AI s původními daty a rozhodne o jeho správnosti.
+    prerekvizity:
+      - data-databaze-dotazovani-sql
+    souvisi:
+      - umela-inteligence-overovani-vystupu
+      - data-databaze-vizualizace-a-volba-grafu
+    tagy:
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-jak-funguje-web
+    nazev: Jak funguje web
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Když napíšeš adresu, prohlížeč (klient) požádá server, kde stránka „bydlí", a ten mu pošle její obsah přes protokol HTTP. Web je tahle nekonečná výměna požadavek–odpověď mezi prohlížeči a servery.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vlastními slovy popíše výměnu požadavek–odpověď mezi prohlížečem (klientem) a serverem při načtení stránky.
+        rocnik: 7
+      - uroven: analyza
+        text: Žák na konkrétním příkladu rozliší, které kroky při zobrazení webu provádí klient a které server.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák správně popíše, že prohlížeč pošle serveru požadavek přes HTTP a server vrátí obsah stránky.
+      - uroven: analyza
+        text: Žák u zadané situace přiřadí jednotlivé úkony ke klientovi, nebo k serveru a zdůvodní zařazení.
+    prerekvizity:
+      - digitalni-zaklady-internet-a-sit
+    souvisi:
+      - digitalni-zaklady-adresy-a-protokoly
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-html
+    nazev: HTML
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: HTML je kostra stránky — určuje, co je nadpis, odstavec, obrázek nebo odkaz. Nejde o vzhled, ale o význam a strukturu obsahu (sémantiku), na kterou se pak „navěsí" všechno ostatní.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák podle vzoru sestaví jednoduchou stránku s nadpisy, odstavci, obrázkem a odkazem pomocí HTML značek.
+        rocnik: 7
+      - uroven: analyza
+        text: Žák v ukázce HTML rozliší, které značky nesou strukturu a význam obsahu (sémantiku) a které ne.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří platnou HTML stránku, v níž správně použije značky pro nadpis, odstavec, obrázek i odkaz.
+      - uroven: analyza
+        text: Žák v předloženém kódu určí sémantické značky a vysvětlí, jakou strukturu obsahu vyjadřují.
+    prerekvizity:
+      - tvorba-webu-jak-funguje-web
+    souvisi:
+      - tvorba-obsahu-vizualni-jazyk
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-css
+    nazev: CSS
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'CSS dává stránce vzhled: barvy, písmo, rozvržení. Moderní nástroje (Flexbox, Grid) umí uspořádat prvky tak, aby se stránka hezky přizpůsobila mobilu i velké obrazovce (responzivita).'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák pomocí CSS upraví u existující stránky barvy, písmo a rozvržení podle zadání.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí, zda se stránka vhodně přizpůsobuje mobilu i velké obrazovce (responzivita).
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák správně nastaví CSS vlastnosti tak, aby stránka odpovídala zadanému vzhledu a rozvržení.
+      - uroven: hodnoceni
+        text: Žák na dvou velikostech obrazovky ověří responzivitu a zdůvodní, kde se rozvržení chová dobře a kde ne.
+    prerekvizity:
+      - tvorba-webu-html
+    souvisi:
+      - tvorba-obsahu-vizualni-jazyk
+      - tvorba-webu-pristupnost-a-seo
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-domena-a-hosting
+    nazev: Doména a hosting
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Aby tvůj web viděl kdokoli, potřebuje „bydlet" na serveru (hosting) a mít adresu, kterou si lidi zapamatují (doménu, třeba mujweb.cz). Dnes to jde i zdarma za pár minut — „publikuj svůj web" je reálný cíl i pro začátečníka.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi doménou (adresou webu) a hostingem (místem, kde web běží).
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák podle postupu publikuje jednoduchý web tak, aby byl dostupný pod veřejnou adresou.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák správně přiřadí pojmům doména a hosting jejich funkci a uvede příklad každého.
+      - uroven: aplikace
+        text: Žák zveřejní stránku, kterou lze otevřít z jiného zařízení přes její adresu.
+    prerekvizity:
+      - tvorba-webu-jak-funguje-web
+      - digitalni-zaklady-cloud-a-server
+    souvisi:
+      - digitalni-zaklady-adresy-a-protokoly
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-interaktivita-javascript
+    nazev: Interaktivita (JavaScript)
+    tema: tvorba-webu
+    oblast: algoritmizace
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: JavaScript stránku oživí — reaguje na kliknutí, mění obsah, počítá. Dělá to tak, že za běhu upravuje strukturu stránky (té se říká DOM), takže se web chová jako aplikace, ne jen jako statický plakát.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák pomocí JavaScriptu podle vzoru zařídí, aby stránka reagovala na kliknutí změnou obsahu.
+        rocnik: 8
+      - uroven: porozumeni
+        text: Žák vysvětlí, že JavaScript oživuje stránku úpravou její struktury (DOM) za běhu.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří funkční tlačítko, jehož stisk viditelně změní obsah stránky.
+      - uroven: porozumeni
+        text: Žák popíše na příkladu, jak skript mění DOM a tím i to, co uživatel na stránce vidí.
+    prerekvizity:
+      - tvorba-webu-html
+      - programovani-udalosti
+    souvisi:
+      - tvorba-aplikaci-logika-aplikace
+      - herni-vyvoj-vstup-hrace-stavy-a-skore
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-ai-asistovana-tvorba-webu
+    nazev: AI-asistovaná tvorba webu
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: Nástroje jako v0, Lovable nebo Claude Artifacts vytvoří funkční stránku z pouhého popisu za pár vteřin. Těžiště se tím posouvá od „napiš každou značku ručně" k „rozuměj tomu, co vzniklo, uprav to a posuď kvalitu".
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák z textového popisu vygeneruje pomocí AI nástroje funkční stránku a upraví ji podle svého záměru.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí kvalitu a použitelnost stránky, kterou vytvořila AI, a zdůvodní navržené úpravy.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák získá z AI nástroje funkční stránku a provede v ní alespoň jednu cílenou úpravu.
+      - uroven: hodnoceni
+        text: Žák vyjmenuje konkrétní silné a slabé stránky vygenerovaného webu a zdůvodní, co by změnil.
+    prerekvizity:
+      - tvorba-webu-css
+    souvisi:
+      - tvorba-aplikaci-vibecoding
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-frameworky
+    nazev: Frameworky
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: U větších webů se nepíše všechno od nuly — frameworky (React a spol.) a knihovny stylů (Tailwind) dávají hotové stavební bloky a řád. Zrychlují práci, ale předpokládají, že rozumíš základům pod nimi.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč frameworky a knihovny stylů urychlují tvorbu webu a co předpokládají u tvůrce.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede příklad hotového stavebního bloku z frameworku a popíše, co jeho použití zjednoduší.
+    prerekvizity:
+      - tvorba-webu-interaktivita-javascript
+      - programovani-funkce-a-procedury
+    souvisi:
+      - tvorba-aplikaci-no-code-low-code
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-nasazeni-webu
+    nazev: Nasazení webu
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: kdi-zap
+    vrstva: navazujici
+    popis: Nasazení (deployment) je krok, kdy se web z tvého počítače dostane na internet. Služby jako Vercel, Netlify nebo GitHub Pages to zvládnou pár kliknutími nebo automaticky po každém uložení kódu.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák podle postupu nasadí hotový web na hostingovou službu tak, aby byl veřejně dostupný.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák úspěšně nasadí web a doloží funkční veřejnou adresu, na které se stránka zobrazí.
+    prerekvizity:
+      - tvorba-webu-domena-a-hosting
+    souvisi:
+      - digitalni-zaklady-cloud-a-server
+      - tvorba-aplikaci-publikace-do-app-storu
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-pristupnost-a-seo
+    nazev: Přístupnost a SEO
+    tema: tvorba-webu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: Přístupnost (a11y) znamená udělat web použitelný i pro lidi s hendikepem (čtečky obrazovky, ovládání klávesnicí); SEO je péče o to, aby web našly vyhledávače. Obojí rozhoduje, kolik lidí se k obsahu vůbec dostane.
+    rvp: []
+    cile:
+      - uroven: hodnoceni
+        text: Žák posoudí přístupnost stránky pro uživatele s hendikepem a doporučí konkrétní zlepšení.
+        rocnik: 9
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč přístupnost i SEO rozhodují o tom, kolik lidí se k obsahu dostane.
+        rocnik: 8
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák u stránky ověří alespoň dva prvky přístupnosti a navrhne jejich úpravu se zdůvodněním.
+      - uroven: porozumeni
+        text: Žák uvede příklad, jak přístupnost nebo SEO ovlivní dosah obsahu k uživatelům.
+    prerekvizity:
+      - tvorba-webu-html
+    souvisi:
+      - digitalni-obcanstvi-aktivni-digitalni-obcanstvi
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-webu-ux-ui-a-design-webu
+    nazev: UX/UI a design webu
+    tema: tvorba-webu
+    oblast: informacni-systemy
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: UI je to, jak web vypadá, UX to, jak se používá. Dobrý návrh vede uživatele přirozeně k cíli — je srozumitelný, přehledný a nenutí přemýšlet, kam kliknout.
+    rvp: []
+    cile:
+      - uroven: analyza
+        text: Žák u webové stránky rozliší prvky UI (vzhled) od aspektů UX (jak se používá) a najde místa, kde návrh mate uživatele.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák zhodnotí, zda návrh stránky vede uživatele srozumitelně k cíli, a zdůvodní svůj úsudek.
+        rocnik: 9
+    kriteria:
+      - uroven: analyza
+        text: Žák rozebere stránku na prvky UI a UX a označí konkrétní matoucí místo v jejím ovládání.
+      - uroven: hodnoceni
+        text: Žák posoudí srozumitelnost cesty uživatele k cíli a podloží hodnocení konkrétním pozorováním.
+    prerekvizity:
+      - tvorba-webu-css
+    souvisi:
+      - tvorba-obsahu-vizualni-jazyk
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-co-je-aplikace
+    nazev: Co je aplikace
+    tema: tvorba-aplikaci
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: core
+    popis: Aplikace je program pro konkrétní účel — může běžet v telefonu, v prohlížeči nebo na počítači. Skládá se z části, kterou vidíš a ovládáš (frontend), a z části, která pracuje na pozadí s daty (backend).
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, že se aplikace skládá z části, kterou uživatel ovládá (frontend), a části pracující s daty na pozadí (backend).
+        rocnik: 7
+      - uroven: analyza
+        text: Žák u známé aplikace rozliší, co patří do frontendu a co do backendu.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše funkci frontendu i backendu a uvede příklad úkolu, který každá část plní.
+      - uroven: analyza
+        text: Žák u konkrétní aplikace přiřadí uvedené prvky k frontendu, nebo backendu a zdůvodní zařazení.
+    prerekvizity: []
+    souvisi:
+      - tvorba-webu-jak-funguje-web
+      - data-databaze-ucel-informacnich-systemu
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-no-code-low-code
+    nazev: No-code / low-code
+    tema: tvorba-aplikaci
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: core
+    popis: Platformy, na kterých appku poskládáš vizuálně bez psaní kódu (nebo skoro). Jsou skvělou vstupní branou — rychle vytvoříš něco funkčního a pochopíš logiku, než se pustíš do skutečného programování.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák na no-code platformě vizuálně poskládá jednoduchou funkční aplikaci podle zadání.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí, kdy je no-code řešení vhodné a kdy naráží na své hranice.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák sestaví na no-code platformě aplikaci, která splní zadanou funkci.
+      - uroven: hodnoceni
+        text: Žák uvede konkrétní situaci, v níž no-code postačí, a jinou, kde už je nedostatečný, s odůvodněním.
+    prerekvizity:
+      - tvorba-aplikaci-co-je-aplikace
+    souvisi:
+      - tvorba-aplikaci-vibecoding
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-logika-aplikace
+    nazev: Logika aplikace
+    tema: tvorba-aplikaci
+    oblast: algoritmizace
+    kompetence: kdi-vin
+    vrstva: core
+    popis: 'Srdce každé appky: co se stane, když uživatel něco udělá. Řídí ji stavy (v jakém je appka režimu), vstupy (co uživatel zadá) a akce (co se má provést) — dohromady určují, jak se aplikace chová.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák podle vzoru sestaví chování aplikace pomocí stavů, vstupů a akcí tak, aby reagovala na uživatele.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák v logice aplikace najde chybu, kvůli které se aplikace chová jinak, než má.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák nastaví reakci aplikace na zadaný vstup tak, aby proběhla správná akce podle stavu.
+      - uroven: analyza
+        text: Žák určí, ve které části logiky (stav, vstup, nebo akce) je příčina chybného chování.
+    prerekvizity:
+      - tvorba-aplikaci-co-je-aplikace
+      - programovani-podminky-v-kodu
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-vibecoding
+    nazev: Vibecoding
+    tema: tvorba-aplikaci
+    oblast: algoritmizace
+    kompetence: kdi-vin
+    vrstva: core
+    popis: 'Nový styl tvorby: popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš, než píšeš řádek po řádku. Umožní postavit reálnou věc rychle — ale bez porozumění základům snadno uvízneš, jakmile se něco rozbije.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák popisem v přirozené řeči nechá AI vytvořit funkční aplikaci a řídí její vznik dalšími pokyny.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák zhodnotí, zda AI vytvořená aplikace dělá, co má, a rozhodne, kdy je potřeba porozumět kódu pod ní.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák pomocí postupných pokynů AI dovede aplikaci do funkčního stavu podle svého záměru.
+      - uroven: hodnoceni
+        text: Žák ověří chování aplikace a zdůvodní, kde se bez porozumění základům riskuje uváznutí při chybě.
+    prerekvizity:
+      - tvorba-aplikaci-logika-aplikace
+      - umela-inteligence-prompt-a-promptova-gramotnost
+      - programovani-cteni-a-hodnoceni-ai-kodu
+    souvisi: []
+    tagy:
+      - lidský dohled a agency
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-ai-nastroje-pro-tvorbu
+    nazev: AI nástroje pro tvorbu
+    tema: tvorba-aplikaci
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: core
+    popis: Copilot, Cursor, Claude Code, Replit nebo Lovable jsou „programovací parťáci", kteří napovídají, píší i opravují kód. Nejsou náhradou porozumění — jsou to nástroje, které tě zrychlí, když víš, co chceš.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák využije AI nástroj (např. Copilot, Cursor, Replit) k napsání nebo opravě části kódu podle svého zadání.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí, zda návrh od AI nástroje odpovídá tomu, co potřebuje, a rozhodne, zda ho přijme.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák použije AI nástroj k vytvoření nebo úpravě kódu, který plní zadanou funkci.
+      - uroven: hodnoceni
+        text: Žák zdůvodní, proč navržený kód přijímá, upravuje, nebo odmítá vzhledem ke svému cíli.
+    prerekvizity:
+      - tvorba-aplikaci-vibecoding
+    souvisi:
+      - umela-inteligence-prompt-a-promptova-gramotnost
+      - programovani-cteni-a-hodnoceni-ai-kodu
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-prace-s-api-a-backendem
+    nazev: Práce s API a backendem
+    tema: tvorba-aplikaci
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Aby appka uměla víc než jen zobrazovat, propojí se přes API s dalšími službami a se serverovou částí, která pracuje s daty. Právě tady se z „hračky" stává skutečná aplikace.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák podle vzoru propojí aplikaci přes API s další službou tak, aby získala nebo odeslala data.
+        rocnik: 9
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč se z aplikace stává skutečná služba teprve propojením s API a backendem.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák zprovozní v aplikaci volání API, které vrátí nebo předá data podle zadání.
+      - uroven: porozumeni
+        text: Žák popíše na příkladu, co aplikaci přidá napojení na backend nebo externí službu.
+    prerekvizity:
+      - tvorba-aplikaci-logika-aplikace
+      - digitalni-zaklady-api
+    souvisi:
+      - digitalni-zaklady-cloud-a-server
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-databaze-a-autentizace
+    nazev: Databáze a autentizace
+    tema: tvorba-aplikaci
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'Appky si pamatují data (databáze) a musí poznat, kdo je kdo (autentizace — přihlašování). S tím přichází i odpovědnost: chránit hesla a osobní údaje uživatelů.'
+    rvp:
+      - kod: INF-INF-003-ZV9-009
+        vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: aplikace
+        text: Žák pro aplikaci vytvoří tabulku evidence dat a stanoví pravidla pro práci s jejími záznamy.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák posoudí, zda aplikace dostatečně chrání hesla a osobní údaje uživatelů.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák navrhne tabulku se smysluplnými sloupci a určí pravidla pro přidávání a úpravu záznamů.
+      - uroven: hodnoceni
+        text: Žák u aplikace zhodnotí ochranu přihlašovacích a osobních údajů a doporučí konkrétní zlepšení.
+    prerekvizity:
+      - tvorba-aplikaci-prace-s-api-a-backendem
+      - data-databaze-tabulky-a-relacni-model
+    souvisi:
+      - kyberbezpecnost-hesla-a-2fa
+    tagy:
+      - bezpečí a rizika
+      - praktická dovednost
+      - soukromí
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-zivotni-cyklus-vyvoje
+    nazev: Životní cyklus vývoje
+    tema: tvorba-aplikaci
+    oblast: informacni-systemy
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'Aplikace nevznikne jedním skokem — má cyklus: navrhnout, naprogramovat, otestovat, nasadit a vylepšovat. Patří k němu verzování, testování i sbírání zpětné vazby od uživatelů.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: 'Žák popíše fáze vývoje aplikace: návrh, programování, testování, nasazení a vylepšování.'
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák u vlastního projektu naplánuje kroky vývoje včetně testování a sběru zpětné vazby.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák seřadí fáze vývoje ve správném pořadí a u každé uvede, co v ní probíhá.
+      - uroven: aplikace
+        text: Žák rozvrhne pro svůj projekt jednotlivé fáze a zařadí do nich testování i zpětnou vazbu.
+    prerekvizity:
+      - tvorba-aplikaci-logika-aplikace
+      - programovani-verzovani-kodu
+    souvisi:
+      - programovani-ladeni-a-testovani
+      - tvorba-aplikaci-publikace-do-app-storu
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-publikace-do-app-storu
+    nazev: Publikace do app storů
+    tema: tvorba-aplikaci
+    oblast: digitalni-technologie
+    kompetence: kdi-zap
+    vrstva: navazujici
+    popis: Aby se hotová appka dostala k lidem, projde publikací — na webu je to nasazení, u mobilů obchody (App Store, Google Play) s jejich pravidly a schvalováním.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi zveřejněním webové aplikace a publikací mobilní aplikace přes obchody se schvalováním.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede, čím se liší nasazení webu od publikace do App Store nebo Google Play, včetně role schvalování.
+    prerekvizity:
+      - tvorba-aplikaci-databaze-a-autentizace
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-aplikaci-iluze-ze-to-umim
+    nazev: Iluze, že to umím
+    tema: tvorba-aplikaci
+    oblast: null
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'Když za tebe appku „poskládá" AI, snadno vznikne pocit, že to umíš — dokud se něco nerozbije a ty nevíš proč. Proto se vyplatí rozumět základům: ne abys všechno psal ručně, ale abys uměl poznat a opravit, když to selže.'
+    rvp: []
+    cile:
+      - uroven: hodnoceni
+        text: Žák zhodnotí, nakolik rozumí aplikaci, kterou za něj poskládala AI, a rozpozná falešný pocit vlastní kompetence.
+        rocnik: 9
+      - uroven: analyza
+        text: Žák u rozbité AI aplikace prozkoumá, kde selhala, a odhalí, čemu ve skutečnosti nerozuměl.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák poctivě posoudí, které části řešení chápe a které jen převzal, a zdůvodní svůj odhad.
+      - uroven: analyza
+        text: Žák najde v nefunkční aplikaci místo selhání a pojmenuje chybějící porozumění, které k němu vedlo.
+    prerekvizity:
+      - tvorba-aplikaci-vibecoding
+    souvisi:
+      - programovani-ladeni-a-testovani
+      - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+    tagy:
+      - bezpečí a rizika
+      - etika a odpovědnost
+      - lidský dohled a agency
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-vizualni-jazyk
+    nazev: Vizuální jazyk
+    tema: tvorba-obsahu
+    oblast: null
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'Základní „gramatika" obrazu: kompozice, barva, kontrast, typografie a formáty. AI ti obrázek vygeneruje, ale rozhodnout, jestli je dobrý a proč, musíš ty — a k tomu potřebuješ vkus a tenhle základ.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vlastními slovy vysvětlí, jak kompozice, barva, kontrast a typografie ovlivňují působení obrazu.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí kvalitu vygenerovaného obrázku podle kritérií vizuálního jazyka a zdůvodní, proč funguje nebo nefunguje.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na konkrétním obrázku popíše alespoň tři prvky vizuálního jazyka a uvede, jak mění vyznění.
+      - uroven: hodnoceni
+        text: Žák u předloženého obrázku uvede nejméně dvě kritéria (např. kontrast, kompozice) a podle nich doloženě zhodnotí jeho kvalitu.
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-prompt-pro-media
+    nazev: Prompt pro média
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'Kvalita generovaného obrazu, videa nebo hudby stojí a padá s tím, jak dobře je popíšeš — styl, náladu, světlo, tempo, žánr. Je to dovednost sama o sobě: naučit se „mluvit" s nástrojem tak, aby vytvořil, co máš v hlavě.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák sestaví prompt, který popisuje styl, náladu, světlo a žánr požadovaného výstupu.
+        rocnik: 7
+      - uroven: analyza
+        text: Žák rozebere, které části promptu způsobily rozdíl mezi dvěma vygenerovanými výstupy.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák napíše prompt obsahující alespoň tři popisné parametry (např. styl, světlo, tempo) a získá odpovídající výstup.
+      - uroven: analyza
+        text: Žák u dvojice výstupů rozliší, která změna v promptu vedla ke konkrétní změně obrazu.
+    prerekvizity:
+      - tvorba-obsahu-vizualni-jazyk
+      - umela-inteligence-prompt-a-promptova-gramotnost
+    souvisi:
+      - tvorba-obsahu-kontrola-nad-vysledkem
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-generativni-obraz
+    nazev: Generativní obraz
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: Nástroje jako Midjourney, Nano Banana nebo DALL·E vytvoří obrázek z textového popisu za pár vteřin. Otevírá to tvorbu i lidem, kteří neumí kreslit — s tím ale přichází i otázky autorství a etiky.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák vytvoří obrázek v generativním nástroji podle zadaného postupu a tématu.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák zhodnotí přínosy a rizika generování obrazu z pohledu autorství a etiky a zdůvodní svůj názor.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák samostatně vygeneruje obrázek odpovídající zadanému tématu a doloží použitý prompt.
+      - uroven: hodnoceni
+        text: Žák uvede alespoň jeden argument pro a jeden proti využití generativního obrazu a podepře je konkrétním příkladem.
+    prerekvizity:
+      - tvorba-obsahu-prompt-pro-media
+      - umela-inteligence-jak-funguje-generativni-model
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-etika-autorstvi-a-oznacovani
+    nazev: Etika, autorství a označování
+    tema: tvorba-obsahu
+    oblast: null
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'U generovaného obsahu je potřeba řešit: na čích dílech se model učil, komu patří výsledek a jak dát najevo, že je obsah vytvořený AI. Poctivé označení AI obsahu se stává standardem i zákonnou povinností.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč je potřeba řešit původ trénovacích dat, vlastnictví výsledku a označení AI obsahu.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí, zda je konkrétní AI obsah označen poctivě, a zdůvodní, co by bylo správné doplnit.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede alespoň dva důvody, proč se AI obsah označuje, a jeden příklad situace, kde na tom záleží.
+      - uroven: hodnoceni
+        text: Žák u předloženého příspěvku posoudí kvalitu jeho označení a doporučí konkrétní úpravu podle etických nebo zákonných pravidel.
+    prerekvizity:
+      - tvorba-obsahu-generativni-obraz
+    souvisi:
+      - umela-inteligence-hlubsi-etika-ai
+      - digitalni-obcanstvi-etika-ai-ve-skole
+    tagy:
+      - etika a odpovědnost
+      - moc a peníze
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-generativni-video
+    nazev: Generativní video
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: AI dnes vytvoří realistické video z textu nebo obrázku (Sora, Veo, Runway) i se zvukem. Je to mocný tvůrčí nástroj — a zároveň zdroj rizik, protože stejná technologie umí i přesvědčivé dezinformace a deepfakes.
+    rvp: []
+    cile:
+      - uroven: hodnoceni
+        text: Žák posoudí, zda je předložené video tvůrčím výstupem, nebo možnou dezinformací či deepfake, a zdůvodní své rozhodnutí.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák uvede alespoň dva znaky, podle kterých u videa posoudí riziko zneužití, a navrhne, jak jeho pravost ověřit.
+    prerekvizity:
+      - tvorba-obsahu-generativni-obraz
+      - umela-inteligence-deepfakes-a-synteticka-media
+    souvisi:
+      - tvorba-obsahu-strih-a-postprodukce-s-ai
+      - tvorba-obsahu-propojeni-nastroju-obraz-video-zvuk
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-generativni-hudba-a-hlas
+    nazev: Generativní hudba a hlas
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: Nástroje jako Suno nebo ElevenLabs složí celou písničku nebo napodobí hlas z krátké ukázky. Vedle tvůrčích možností to přináší i vážná rizika — zneužití cizího hlasu a otázky autorských práv.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák vytvoří krátkou skladbu nebo mluvený výstup v generativním nástroji podle zadání.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák zhodnotí rizika napodobení cizího hlasu a otázky autorských práv a zdůvodní, kdy je použití nevhodné.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák vygeneruje hudební nebo hlasový výstup odpovídající zadaným parametrům (žánr, nálada, tempo).
+      - uroven: hodnoceni
+        text: Žák popíše alespoň jednu situaci zneužití hlasu a doporučí pravidlo, které by mu předešlo.
+    prerekvizity:
+      - tvorba-obsahu-prompt-pro-media
+    souvisi:
+      - kyberbezpecnost-ai-podvody
+    tagy:
+      - moc a peníze
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-strih-a-postprodukce-s-ai
+    nazev: Střih a postprodukce s AI
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: 'AI dnes zvládne velkou část dokončovacích prací: automatické titulky, čištění zvuku, výběr nejlepších záběrů nebo úpravu videa přepisem textu (CapCut, Descript). Zrychluje to nejotravnější části tvorby.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák upraví video nebo zvuk pomocí AI funkcí (titulky, čištění zvuku, výběr záběrů) podle postupu.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák provede alespoň jednu postprodukční úpravu s AI a doloží rozdíl mezi původním a upraveným výstupem.
+    prerekvizity:
+      - tvorba-obsahu-vizualni-jazyk
+    souvisi:
+      - tvorba-obsahu-propojeni-nastroju-obraz-video-zvuk
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-kontrola-nad-vysledkem
+    nazev: Kontrola nad výsledkem
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: Vygenerovat jeden hezký obrázek je snadné; těžší je udržet stejnou postavu nebo styl napříč více obrázky a mít nad výsledkem skutečnou kontrolu. K tomu slouží referenční obrázky, dokreslování (in/out-painting) a úpravy přirozeným jazykem.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák použije referenční obrázek nebo dokreslování (in/out-painting), aby udržel stejný styl či postavu napříč obrázky.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák prozkoumá, proč se ve dvou výstupech nepodařilo udržet stejnou postavu, a najde příčinu.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří dva obrázky se zachovaným stejným prvkem pomocí reference nebo úpravy přirozeným jazykem.
+      - uroven: analyza
+        text: Žák rozliší, který krok způsobil ztrátu konzistence, a navrhne, jak výsledek napravit.
+    prerekvizity:
+      - tvorba-obsahu-generativni-obraz
+    souvisi:
+      - tvorba-aplikaci-iluze-ze-to-umim
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-puvod-obsahu-a-vodoznaky
+    nazev: Původ obsahu a vodoznaky
+    tema: tvorba-obsahu
+    oblast: null
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: Jak poznat, jestli je obsah pravý, nebo vytvořený AI? Pomáhají vodoznaky (SynthID) a metadata o původu souboru (C2PA). Důležité je vědět, že žádný jediný test není stoprocentní — ověřování původu je vrstevnaté.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak vodoznaky (SynthID) a metadata o původu (C2PA) pomáhají poznat AI obsah a proč žádný test není stoprocentní.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák prozkoumá u konkrétního souboru dostupné stopy o původu a rozliší, co lze a nelze z nich zjistit.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše alespoň dva způsoby ověřování původu obsahu a uvede, proč je ověřování vrstevnaté.
+      - uroven: analyza
+        text: Žák u předloženého souboru rozliší dostupné indicie o původu a určí, které jsou spolehlivé a které ne.
+    prerekvizity:
+      - tvorba-obsahu-etika-autorstvi-a-oznacovani
+    souvisi:
+      - digitalni-obcanstvi-rozpoznani-ai-obsahu
+    tagy:
+      - bezpečí a rizika
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: tvorba-obsahu-propojeni-nastroju-obraz-video-zvuk
+    nazev: Propojení nástrojů (obraz, video, zvuk)
+    tema: tvorba-obsahu
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: 'Velké projekty vznikají spojením několika nástrojů: z obrázku uděláš video, k němu složíš hudbu a přidáš hlas. Umět nástroje řetězit dohromady je dnes samostatná tvůrčí dovednost.'
+    rvp: []
+    cile:
+      - uroven: tvorba
+        text: Žák naplánuje a vytvoří vlastní projekt zřetězením více nástrojů (z obrázku video, k němu hudba a hlas).
+        rocnik: 9
+    kriteria:
+      - uroven: tvorba
+        text: Žák sestaví funkční řetězec alespoň tří nástrojů a odevzdá výsledný propojený výstup s popisem postupu.
+    prerekvizity:
+      - tvorba-obsahu-kontrola-nad-vysledkem
+    souvisi:
+      - tvorba-aplikaci-prace-s-api-a-backendem
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-herni-smycka-scena-a-objekty
+    nazev: Herní smyčka, scéna a objekty
+    tema: herni-vyvoj
+    oblast: algoritmizace
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'Každá hra běží v neustále se opakující smyčce: načti vstup → přepočítej svět → vykresli obraz, a to mnohokrát za vteřinu. V ní žijí objekty (sprity) rozmístěné ve scéně — postavy, překážky, sběratelné předměty.'
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše herní smyčku (vstup → přepočet světa → vykreslení) a roli objektů (spritů) ve scéně.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák v blokovém prostředí sestaví přehledný program se scénou a objekty využívající opakování a proměnné.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák vlastními slovy popíše tři fáze herní smyčky a uvede příklad objektu ve scéně.
+      - uroven: aplikace
+        text: Žák vytvoří program, v němž se objekty pohybují ve scéně v opakující se smyčce a využívá alespoň jednu proměnnou.
+    prerekvizity:
+      - informaticke-mysleni-rizeni-toku
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-vstup-hrace-stavy-a-skore
+    nazev: Vstup hráče, stavy a skóre
+    tema: herni-vyvoj
+    oblast: algoritmizace
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: Hra reaguje na ovládání (klávesy, dotyk) a přitom si pamatuje svůj stav — kolik má hráč životů, jaké je skóre, jestli běží nebo skončila. Tenhle „paměťový" základ dělá ze scény skutečnou hru.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: aplikace
+        text: Žák vytvoří program, který reaguje na ovládání hráče a pomocí proměnných a větvení sleduje životy, skóre a stav hry.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák rozebere, jak jsou ve hře propojené vstup, proměnné a změna stavu, a najde chybu v jejich logice.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák sestaví přehledný program, kde stisk klávesy mění proměnnou skóre nebo životů a větvení rozhoduje o konci hry.
+      - uroven: analyza
+        text: Žák v předloženém programu najde chybu ve sledování stavu a popíše, proč se hra chová nesprávně.
+    prerekvizity:
+      - herni-vyvoj-herni-smycka-scena-a-objekty
+      - programovani-udalosti
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-kolize-a-jednoducha-fyzika
+    nazev: Kolize a jednoduchá fyzika
+    tema: herni-vyvoj
+    oblast: algoritmizace
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'Aby hra fungovala, musí poznat, když se dva objekty dotknou (kolize) — třeba hráč sebere minci nebo narazí do zdi. K tomu patří i základní pohyb: rychlost, gravitace, odraz.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák použije detekci kolize a základní pohyb (rychlost, gravitace, odraz) v jednoduché hře.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák prozkoumá chování kolize nebo pohybu, které se chová nečekaně, a najde jeho příčinu.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří scénu, kde se objekt při dotyku s jiným zachová podle pravidla (sebere předmět, odrazí se, zastaví).
+      - uroven: analyza
+        text: Žák rozliší, zda chyba vězí v detekci kolize nebo v nastavení pohybu, a navrhne opravu.
+    prerekvizity:
+      - herni-vyvoj-herni-smycka-scena-a-objekty
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-herni-design
+    nazev: Herní design
+    tema: herni-vyvoj
+    oblast: null
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: 'Návrh toho, co dělá hru zábavnou: pravidla, obtížnost a zpětná vazba hráči. Dobrý design drží hráče v „proudu" (flow) — ani nuda z přílišné lehkosti, ani frustrace z přetížení.'
+    rvp: []
+    cile:
+      - uroven: hodnoceni
+        text: Žák posoudí, zda hra drží hráče ve flow, a zdůvodní, kde je příliš lehká nebo frustrující.
+        rocnik: 8
+      - uroven: tvorba
+        text: Žák navrhne vlastní pravidla, obtížnost a zpětnou vazbu hry tak, aby byla zábavná.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák u zahrané hry uvede alespoň dvě kritéria zábavnosti a doporučí konkrétní úpravu obtížnosti nebo zpětné vazby.
+      - uroven: tvorba
+        text: Žák zpracuje původní návrh hry s popsanými pravidly, křivkou obtížnosti a zpětnou vazbou hráči.
+    prerekvizity:
+      - herni-vyvoj-vstup-hrace-stavy-a-skore
+    souvisi:
+      - digitalni-obcanstvi-digitalni-wellbeing
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-scratch-jako-vstup
+    nazev: Scratch jako vstup
+    tema: herni-vyvoj
+    oblast: algoritmizace
+    kompetence: kdi-tdo
+    vrstva: core
+    popis: Blokové prostředí, kde první hru poskládáš z barevných bloků bez rizika překlepů. Skvěle na něm pochopíš smyčky, události, podmínky i proměnné, než přejdeš k textovému kódu.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: aplikace
+        text: Žák v prostředí Scratch vytvoří přehledný program využívající události, opakování, podmínky a proměnné.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák poskládá funkční program, který obsahuje alespoň jedno opakování, jedno větvení a jednu proměnnou.
+    prerekvizity: []
+    souvisi:
+      - programovani-blokove-vs-textove-programovani
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-lehke-enginy
+    nazev: Lehké enginy
+    tema: herni-vyvoj
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: 'Mezikrok mezi Scratchem a plnými nástroji: GDevelop (bez kódu, přes logiku událostí) nebo Roblox Studio dají skutečnou hru, kterou jde sdílet. Nižší práh, ale vážnější výsledek.'
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák sestaví hru v lehkém enginu (GDevelop, Roblox Studio) pomocí logiky událostí a sdílí ji.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří v lehkém enginu funkční hratelnou scénu s alespoň jedním pravidlem událost–akce a odevzdá odkaz ke sdílení.
+    prerekvizity:
+      - herni-vyvoj-herni-design
+    souvisi:
+      - herni-vyvoj-scratch-jako-vstup
+      - programovani-blokove-vs-textove-programovani
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-skutecne-enginy
+    nazev: Skutečné enginy
+    tema: herni-vyvoj
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: 'Profesionální nástroje s textovým kódem: Godot (jazyk GDScript, blízký Pythonu, zdarma a odlehčený) nebo Unity (C#, silné na mobilech). Umí víc, ale mají strmější křivku učení.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák porovná možnosti a náročnost skutečných enginů (Godot, Unity) s lehkými enginy a Scratchem.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede alespoň dva rozdíly mezi blokovým a textovým enginem a k oběma příklad vhodného použití.
+    prerekvizity:
+      - herni-vyvoj-lehke-enginy
+      - programovani-zaklady-objektu-oop
+    souvisi:
+      - tvorba-webu-frameworky
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-ai-generovani-assetu
+    nazev: AI generování assetů
+    tema: herni-vyvoj
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: AI dnes vytvoří herní grafiku a 3D objekty z popisu (Roblox Cube, Meshy) — místo hodin modelování napíšeš, co chceš. Snižuje to bariéru, ale těžiště se přesouvá k designu a kurátorství.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák vytvoří herní grafiku nebo 3D objekt z textového popisu v AI nástroji (Roblox Cube, Meshy) a zasadí jej do hry.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí kvalitu a vhodnost vygenerovaného assetu pro svou hru a zdůvodní, zda jej použije.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák vygeneruje asset podle popisu a doloží jeho zapojení do herní scény.
+      - uroven: hodnoceni
+        text: Žák uvede alespoň dvě kritéria (styl, rozměr, čitelnost) a podle nich rozhodne o použití assetu.
+    prerekvizity:
+      - herni-vyvoj-herni-design
+    souvisi:
+      - tvorba-obsahu-generativni-obraz
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-ai-asistenti-a-kod
+    nazev: AI asistenti a kód
+    tema: herni-vyvoj
+    oblast: digitalni-technologie
+    kompetence: kdi-tdo
+    vrstva: navazujici
+    popis: Vestavění pomocníci (Roblox Assistant, Unity Muse) i externí AI umí napsat a upravit kód hry. Práce se mění z „napiš každý řádek" na „popiš záměr a pochop či oprav, co AI vytvořila".
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák použije AI asistenta k vytvoření nebo úpravě části herního kódu podle popsaného záměru.
+        rocnik: 9
+      - uroven: analyza
+        text: Žák prozkoumá kód vytvořený AI, ověří, zda dělá zamýšlenou věc, a najde v něm chybu.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák zadá AI asistentovi srozumitelný záměr a získaný kód zapojí do funkční hry.
+      - uroven: analyza
+        text: Žák v kódu od AI najde místo, které se chová jinak, než zamýšlel, a popíše potřebnou opravu.
+    prerekvizity:
+      - herni-vyvoj-skutecne-enginy
+      - programovani-cteni-a-hodnoceni-ai-kodu
+    souvisi:
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: herni-vyvoj-publikace-hry
+    nazev: Publikace hry
+    tema: herni-vyvoj
+    oblast: digitalni-technologie
+    kompetence: kdi-zap
+    vrstva: navazujici
+    popis: Hotovou hru sdílíš s ostatními — třeba na itch.io nebo přímo v Robloxu. „Zahraj si moji hru" je silná motivace a zároveň zážitek spoluautorství a zpětné vazby od hráčů.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák zveřejní hotovou hru na platformě (itch.io, Roblox) tak, aby si ji ostatní mohli zahrát.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák vystaví funkční hru s popisem a získá k ní alespoň jednu zpětnou vazbu od hráče.
+    prerekvizity:
+      - herni-vyvoj-herni-design
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
+    nazev: Vstup–zpracování–výstup na zařízení
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: core
+    popis: 'Fyzické zařízení pracuje ve stejné smyčce jako počítač, ale „hmatatelně": senzorem něco změří (vstup), program to vyhodnotí (zpracování) a ovládne třeba LED nebo motor (výstup). Kód tu má okamžitý fyzický efekt.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše smyčku vstup → zpracování → výstup na příkladu konkrétního fyzického zařízení.
+        rocnik: 6
+      - uroven: aplikace
+        text: Žák sestaví na zařízení jednoduchý program, ve kterém senzor spustí konkrétní výstup.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák rozpozná ve fyzickém zařízení, co je vstup, co zpracování a co výstup.
+      - uroven: aplikace
+        text: Žák vytvoří program, v němž naměřená hodnota ovlivní výstup, například LED nebo motor.
+    prerekvizity: []
+    souvisi:
+      - fyzicky-computing-roboti-a-vozitka
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-senzory-a-aktuatory
+    nazev: Senzory a aktuátory
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: core
+    popis: Senzory jsou „smysly" zařízení — měří teplo, světlo, pohyb, zvuk. Aktuátory jsou jeho „svaly" — rozsvítí, zapípají, roztočí motor. Dohromady umožňují zařízení vnímat prostředí a jednat v něm.
+    rvp: []
+    cile:
+      - uroven: zapamatovani
+        text: Žák rozpozná, které součástky zařízení jsou senzory a které aktuátory.
+        rocnik: 6
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi senzorem, který vnímá prostředí, a aktuátorem, který v něm jedná.
+        rocnik: 6
+    kriteria:
+      - uroven: zapamatovani
+        text: Žák pojmenuje aspoň dva senzory a dva aktuátory.
+      - uroven: porozumeni
+        text: Žák uvede příklad, jak spolu senzor a aktuátor v jednom zařízení spolupracují.
+    prerekvizity:
+      - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
+    souvisi:
+      - umela-inteligence-pet-velkych-ideji-ai
+    tagy:
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-micro-bit
+    nazev: micro:bit
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: core
+    popis: Malá školní destička se senzory přímo na desce, ideální pro první kroky ve fyzickém computingu. Programuje se blokově (MakeCode) i textově (MicroPython), takže roste s tebou od úplných začátků.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, jaké senzory má micro:bit a jak se dá programovat.
+        rocnik: 6
+      - uroven: aplikace
+        text: Žák vytvoří na micro:bitu program využívající proměnnou, opakování nebo větvení.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák sestaví a nahraje do micro:bitu funkční program, který reaguje na vstup.
+    prerekvizity:
+      - fyzicky-computing-senzory-a-aktuatory
+      - programovani-blokove-vs-textove-programovani
+    souvisi:
+      - herni-vyvoj-scratch-jako-vstup
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-udalosti-a-rizeni-vystupu
+    nazev: Události a řízení výstupu
+    tema: fyzicky-computing
+    oblast: algoritmizace
+    kompetence: kdi-vin
+    vrstva: core
+    popis: Zařízení reaguje na podněty — stisk tlačítka, zatřesení, změnu světla — a podle nich ovládá výstupy (LED matici, piny, motory). Je to událostmi řízené programování, ale s hmatatelným výsledkem.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak zařízení reaguje na podnět a podle něj ovládá výstup.
+        rocnik: 7
+      - uroven: aplikace
+        text: Žák vytvoří program, ve kterém stisk tlačítka nebo zatřesení spustí konkrétní výstup.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše dvojici podnět → výstup na konkrétním příkladu.
+      - uroven: aplikace
+        text: Žák sestaví obsluhu události, která ovládne LED matici nebo pin zařízení.
+    prerekvizity:
+      - fyzicky-computing-micro-bit
+      - programovani-udalosti
+    souvisi:
+      - fyzicky-computing-senzory-a-aktuatory
+      - tvorba-webu-interaktivita-javascript
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-arduino-a-raspberry-pi
+    nazev: Arduino a Raspberry Pi
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'Krok dál za micro:bit: Arduino tě přiblíží skutečné elektronice (nepájivé pole, víc senzorů), Raspberry Pi je plnohodnotný malý počítač s Linuxem pro náročnější projekty.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák porovná micro:bit, Arduino a Raspberry Pi podle toho, k čemu se která deska hodí.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede aspoň jeden rozdíl mezi Arduinem a Raspberry Pi a příklad projektu pro každé.
+    prerekvizity:
+      - fyzicky-computing-micro-bit
+    souvisi:
+      - fyzicky-computing-roboti-a-vozitka
+      - fyzicky-computing-iot
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-roboti-a-vozitka
+    nazev: Roboti a vozítka
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Když se k desce přidá podvozek a motory (micro:bit + Maqueen, Lego Spike), vznikne pohyblivý robot. Sleduje čáru, vyhýbá se překážkám — a spojuje programování s pohybem v reálném světě.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: aplikace
+        text: Žák sestaví program, který robota rozjede a nechá ho reagovat na senzor, například na čáru nebo překážku.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák vytvoří program, díky němuž robot splní jednoduchý úkol, například sledování čáry nebo vyhýbání se překážce.
+    prerekvizity:
+      - fyzicky-computing-udalosti-a-rizeni-vystupu
+    souvisi:
+      - fyzicky-computing-senzory-a-aktuatory
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-iot
+    nazev: IoT
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: 'Internet věcí (IoT): senzory posílají naměřená data po síti do cloudu, kde se zobrazí na přehledu (dashboardu). Tak funguje chytrá domácnost i měření prostředí — spojení hardwaru, sítě a dat dohromady.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak v internetu věcí putují data ze senzoru přes síť do cloudu na dashboard.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše na příkladu chytré domácnosti cestu dat od senzoru až k jejich zobrazení.
+    prerekvizity:
+      - fyzicky-computing-senzory-a-aktuatory
+      - digitalni-zaklady-cloud-a-server
+    souvisi:
+      - data-databaze-vizualizace-a-volba-grafu
+      - digitalni-zaklady-kde-jsou-data-fyzicky
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-ai-primo-na-zarizeni-tinyml
+    nazev: AI přímo na zařízení (TinyML)
+    tema: fyzicky-computing
+    oblast: data-modelovani
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Strojové učení, které běží přímo na malém zařízení bez cloudu. V nástroji micro:bit CreateAI si sám nasbíráš data (třeba pohyby), natrénuješ model a nahraješ ho do desky — celý postup AI si osaháš fyzicky v ruce.
+    rvp:
+      - kod: INF-INF-001-ZV9-004
+        vystup: natrénuje model strojového učení
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše kroky, kterými na malém zařízení vznikne model strojového učení.
+        rocnik: 9
+      - uroven: aplikace
+        text: Žák natrénuje v nástroji micro:bit CreateAI jednoduchý model a nahraje ho do desky.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák nasbírá vlastní data, natrénuje model a ověří, že rozpozná zvolený vstup, například gesto.
+    prerekvizity:
+      - fyzicky-computing-micro-bit
+      - umela-inteligence-strojove-uceni-prakticky
+    souvisi:
+      - fyzicky-computing-senzory-a-aktuatory
+      - fyzicky-computing-iot
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: fyzicky-computing-komunikace-mezi-zarizenimi
+    nazev: Komunikace mezi zařízeními
+    tema: fyzicky-computing
+    oblast: digitalni-technologie
+    kompetence: kdi-vin
+    vrstva: navazujici
+    popis: Zařízení si mohou posílat data bezdrátově — přes rádio nebo Bluetooth. Díky tomu spolu můžou „mluvit" (dva micro:bity, ovladač a robot) a tvořit propojené projekty.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak si dvě zařízení posílají data bezdrátově přes rádio nebo Bluetooth.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák vytvoří program, ve kterém jedno zařízení pošle data druhému.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák sestaví dvojici programů, kde jedno zařízení ovládá nebo informuje druhé.
+    prerekvizity:
+      - fyzicky-computing-micro-bit
+    souvisi:
+      - digitalni-zaklady-internet-a-sit
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-hesla-a-2fa
+    nazev: Hesla a 2FA
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Silné a hlavně unikátní heslo ke každé službě je základ; zapamatuje ho za tebe správce hesel. Dvoufaktorové ověření (2FA) přidá druhý zámek (kód z aplikace), takže samotné uhádnuté heslo už útočníkovi nestačí.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: aplikace
+        text: Žák nastaví ke svému účtu unikátní silné heslo a zapne dvoufaktorové ověření.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí rizika zneužití účtu a zdůvodní, proč u dané služby volí správce hesel a 2FA.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák prakticky zapne 2FA a vytvoří heslo splňující zásady délky a jedinečnosti.
+      - uroven: hodnoceni
+        text: Žák u konkrétní služby zdůvodní zvolené zabezpečení odkazem na možná rizika ztráty či zneužití dat.
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - bezpečí a rizika
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-phishing-a-socialni-inzenyrstvi
+    nazev: Phishing a sociální inženýrství
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Nejčastější útok necílí na počítač, ale na člověka: podvodná zpráva tě má přimět kliknout nebo vyzradit heslo. Poznat naléhavý tón, falešný odkaz nebo „výhru" je důležitější než jakýkoli antivir.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: analyza
+        text: Žák rozpozná ve zprávě znaky phishingu a sociálního inženýrství (naléhavý tón, falešný odkaz, slib výhry).
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí důvěryhodnost přijaté zprávy a doporučí, jak na ni bezpečně reagovat.
+        rocnik: 7
+    kriteria:
+      - uroven: analyza
+        text: Žák v ukázce zprávy označí konkrétní znaky svědčící o podvodu.
+      - uroven: hodnoceni
+        text: Žák u dané zprávy rozhodne, zda jde o podvod, a své rozhodnutí zdůvodní posouzením rizika.
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-kriticke-mysleni-online
+    tagy:
+      - bezpečí a rizika
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-soukromi-a-digitalni-stopa
+    nazev: Soukromí a digitální stopa
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Vším, co online děláš, za sebou necháváš stopu — příspěvky, lajky, polohu. Vědět, co po tobě zůstává a jak to omezit (nastavení soukromí, míň sdílet), je základ ochrany sebe sama.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jaká digitální stopa po něm online zůstává a komu může sloužit.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí rizika sdílení konkrétních údajů a doporučí opatření k omezení své digitální stopy.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu popíše, jaká data vznikají při běžném používání sítě.
+      - uroven: hodnoceni
+        text: Žák u zvolené situace zhodnotí riziko a navrhne konkrétní nastavení soukromí.
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    tagy:
+      - praktická dovednost
+      - soukromí
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-bezpecne-chovani-na-sitich
+    nazev: Bezpečné chování na sítích
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Praktická pravidla každodenního bezpečí: rozmyslet, co sdílím a s kým, nastavit soukromí v aplikacích, nepřidávat neznámé. Většina problémů začíná chováním, ne technikou.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: aplikace
+        text: Žák uplatní pravidla bezpečného chování na síti — nastaví soukromí a rozvrhne, co a s kým sdílí.
+        rocnik: 7
+      - uroven: tvorba
+        text: Žák navrhne na základě posouzení rizik vlastní pravidla bezpečného chování pro svůj účet.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák v aplikaci nastaví soukromí a předvede rozhodnutí, komu obsah zpřístupní.
+      - uroven: tvorba
+        text: Žák sestaví sadu vlastních pravidel a u každého odůvodní, jaké riziko snižuje.
+    prerekvizity:
+      - kyberbezpecnost-soukromi-a-digitalni-stopa
+      - kyberbezpecnost-hesla-a-2fa
+    souvisi:
+      - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
+      - kyberbezpecnost-zakladni-hygiena
+    tagy:
+      - bezpečí a rizika
+      - praktická dovednost
+      - soukromí
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-zakladni-hygiena
+    nazev: Základní hygiena
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Návyky, které tě ochrání před většinou hrozeb: aktualizovat systém i appky, instalovat jen z ověřených zdrojů, zálohovat a zabezpečit zařízení podle toho, co ti reálně hrozí.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: aplikace
+        text: Žák provede základní zabezpečení zařízení — aktualizuje systém, instaluje z ověřených zdrojů a zálohuje data.
+        rocnik: 7
+      - uroven: tvorba
+        text: Žák navrhne způsob zabezpečení svého zařízení na základě posouzení rizik ztráty a poškození dat.
+        rocnik: 7
+    kriteria:
+      - uroven: aplikace
+        text: Žák předvede aktualizaci a zálohu a odliší ověřený zdroj instalace od neověřeného.
+      - uroven: tvorba
+        text: Žák sestaví plán zabezpečení zařízení, v němž propojí konkrétní opatření s posouzeným rizikem.
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-hesla-a-2fa
+    tagy:
+      - bezpečí a rizika
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-sifrovani-a-https
+    nazev: Šifrování a HTTPS
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: Šifrování promění data v nečitelnou změť pro každého, kdo nemá klíč. Zámeček a „https" v adrese znamená, že spojení k webu je šifrované; end-to-end šifrování (třeba v messengerech) zajistí, že zprávu přečte jen příjemce.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co znamená zámeček a „https" v adrese a k čemu slouží end-to-end šifrování.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí, zda je dané spojení bezpečné pro odeslání citlivých údajů.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše, jak šifrování chrání data před nepovolaným čtenářem.
+      - uroven: hodnoceni
+        text: Žák u konkrétního webu rozhodne o bezpečnosti spojení a rozhodnutí zdůvodní.
+    prerekvizity:
+      - kyberbezpecnost-zakladni-hygiena
+      - digitalni-zaklady-adresy-a-protokoly
+    souvisi:
+      - tvorba-webu-jak-funguje-web
+      - kyberbezpecnost-hesla-a-2fa
+    tagy:
+      - bezpečí a rizika
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-typy-utoku
+    nazev: Typy útoků
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: 'Přehled hrozeb, se kterými se lze setkat: malware (škodlivý program), ransomware (zašifruje data a žádá výkupné) a další. Vědět, jak se šíří, pomáhá se jim vyhnout.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše základní typy útoků (malware, ransomware) a způsob jejich šíření.
+        rocnik: 8
+      - uroven: analyza
+        text: Žák rozliší jednotlivé typy útoků podle jejich projevů a způsobu šíření.
+        rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: Žák u popsané situace určí typ útoku a uvede znak, podle kterého jej rozpoznal.
+    prerekvizity:
+      - kyberbezpecnost-zakladni-hygiena
+    souvisi:
+      - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
+      - kyberbezpecnost-bezpecne-chovani-na-sitich
+    tagy:
+      - bezpečí a rizika
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-ai-podvody
+    nazev: AI podvody
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: 'AI posunula podvody na novou úroveň: deepfake video, naklonovaný hlas známého člověka nebo dokonalý phishing bez chyb. Stará rada „poznáš to podle špatné češtiny" už neplatí — nová obrana je ověřit si to jinou cestou.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: analyza
+        text: Žák rozpozná znaky podvodu využívajícího AI (deepfake, naklonovaný hlas, bezchybný phishing).
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí důvěryhodnost podezřelého sdělení a doporučí ověření jinou cestou.
+        rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: Žák v ukázce pojmenuje, proč rada „poznáš to podle špatné češtiny" už neplatí.
+      - uroven: hodnoceni
+        text: Žák u konkrétního případu navrhne způsob ověření a zdůvodní, proč je nutný.
+    prerekvizity:
+      - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
+      - umela-inteligence-deepfakes-a-synteticka-media
+    souvisi:
+      - digitalni-obcanstvi-rozpoznani-ai-obsahu
+    tagy:
+      - bezpečí a rizika
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-sextortion-a-citlivy-obsah
+    nazev: Sextortion a citlivý obsah
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: Vydírání intimními fotkami — dnes i falešnými, vytvořenými AI. Mimořádně citlivé a aktuální riziko pro nezletilé; klíčové je vědět, že v tom oběť není sama a komu se svěřit, ne mlčet ze studu.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co je sextortion a proč se oběť nemá bát a má se svěřit.
+        rocnik: 8
+      - uroven: aplikace
+        text: Žák uplatní správný postup, komu se svěřit a kam se obrátit o pomoc, když je vydírán.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák u modelové situace popíše konkrétní kroky a jmenuje osobu či instituci, na kterou se obrátí.
+    prerekvizity:
+      - kyberbezpecnost-ai-podvody
+    souvisi:
+      - tvorba-obsahu-puvod-obsahu-a-vodoznaky
+    tagy:
+      - bezpečí a rizika
+      - pozornost a wellbeing
+      - praktická dovednost
+      - soukromí
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-overovani-pres-druhy-kanal
+    nazev: Ověřování přes druhý kanál
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: Když ti „kamarád" píše o peníze nebo „banka" chce heslo, ověř si to jinou cestou — zavolej, zeptej se napřímo. Zdravá skepse a zvyk ověřovat (prebunking) je nejlepší obrana proti podvodům, které vypadají dokonale.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: aplikace
+        text: Žák uplatní ověření přes druhý kanál, když ho někdo online žádá o peníze nebo heslo.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák zhodnotí důvěryhodnost žádosti a zdůvodní potřebu ji ověřit jinou cestou.
+        rocnik: 8
+    kriteria:
+      - uroven: aplikace
+        text: Žák u modelové zprávy předvede konkrétní způsob nezávislého ověření.
+    prerekvizity:
+      - kyberbezpecnost-ai-podvody
+    souvisi:
+      - digitalni-obcanstvi-dezinformace-a-manipulace
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - bezpečí a rizika
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: kyberbezpecnost-sitova-bezpecnost-a-ctf
+    nazev: Síťová bezpečnost a CTF
+    tema: kyberbezpecnost
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: 'Pro zvídavé: jak se chrání sítě a jak přemýšlí útočník. Soutěže typu CTF (Capture the Flag) učí etické hackování hravou formou — bezpečnost zevnitř, na cvičných úlohách.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak přemýšlí útočník a čemu slouží cvičné soutěže typu CTF v etickém hackování.
+        rocnik: 9
+      - uroven: aplikace
+        text: Žák vyřeší jednoduchou cvičnou úlohu CTF a uplatní přitom zásadu etického hackování.
+        rocnik: 9
+    kriteria:
+      - uroven: aplikace
+        text: Žák dokončí zadanou cvičnou úlohu a vysvětlí, proč jde o legální bezpečnostní trénink.
+    prerekvizity:
+      - kyberbezpecnost-typy-utoku
+    souvisi:
+      - kyberbezpecnost-sifrovani-a-https
+      - digitalni-zaklady-internet-a-sit
+      - digitalni-zaklady-adresy-a-protokoly
+    tagy:
+      - bezpečí a rizika
+      - etika a odpovědnost
+      - praktická dovednost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-kriticke-mysleni-online
+    nazev: Kritické myšlení online
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Zvyk se u informace zastavit dřív, než jí uvěřím nebo ji pošlu dál: kdo to tvrdí, odkud to ví, co tím sleduje. Základní dovednost, bez které se v záplavě obsahu neobejdeš.'
+    rvp: []
+    cile:
+      - uroven: analyza
+        text: Žák u informace rozebere, kdo ji tvrdí, odkud to ví a co tím sleduje.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí spolehlivost zdroje před tím, než informaci uvěří nebo ji sdílí dál.
+        rocnik: 7
+    kriteria:
+      - uroven: analyza
+        text: Žák u konkrétní zprávy odliší tvrzení, zdroj a záměr autora.
+      - uroven: hodnoceni
+        text: Žák rozhodne o důvěryhodnosti zdroje a rozhodnutí opře o konkrétní kritéria.
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-jak-funguji-algoritmy-siti
+    nazev: Jak fungují algoritmy sítí
+    tema: digitalni-obcanstvi
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Co vidíš na sociálních sítích, ti vybírá algoritmus, který chce udržet tvou pozornost co nejdéle. Vzniká tak „bublina" (vidíš jen podobné názory) a ekonomika pozornosti — a pochopit to je předpoklad, aby ses v tom uměl chovat.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak algoritmus vybírá obsah tak, aby udržel jeho pozornost, a jak vzniká „bublina".
+        rocnik: 7
+      - uroven: analyza
+        text: Žák prozkoumá svůj vlastní feed a rozliší, které signály chování ovlivnily zobrazený obsah.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák popíše vztah mezi pozorností, doporučováním a ekonomikou pozornosti.
+      - uroven: analyza
+        text: Žák na příkladu svého feedu odhalí, proč vidí právě daný obsah.
+    prerekvizity:
+      - umela-inteligence-doporucovaci-systemy
+    souvisi:
+      - digitalni-obcanstvi-digitalni-wellbeing
+      - umela-inteligence-bias-a-ferovost
+    tagy:
+      - dopad na společnost
+      - férovost a předpojatost
+      - moc a peníze
+      - pozornost a wellbeing
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-dezinformace-a-manipulace
+    nazev: Dezinformace a manipulace
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Rozpoznat obsah, který má klamat nebo tebou manipulovat — falešné zprávy, vytržené citace, hrátky s emocemi. Nejde jen o „fakt/nefakt", ale i o to, jak s tebou obsah pracuje.
+    rvp: []
+    cile:
+      - uroven: analyza
+        text: Žák rozpozná v obsahu znaky manipulace — vytržené citace, práci s emocemi, falešný kontext.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí, zda jde o dezinformaci, a své hodnocení zdůvodní ověřením zdroje.
+        rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: Žák v ukázce označí konkrétní manipulativní prvek a vysvětlí, jak působí.
+      - uroven: hodnoceni
+        text: Žák u sdělení rozhodne o jeho pravdivosti a doloží to nezávislým zdrojem.
+    prerekvizity:
+      - digitalni-obcanstvi-kriticke-mysleni-online
+    souvisi: []
+    tagy:
+      - dopad na společnost
+      - důvěra a ověřování
+      - férovost a předpojatost
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    nazev: Digitální stopa a soukromí
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Jaká data o sobě necháváš a komu vlastně slouží. Uvědomit si hodnotu svých dat je první krok k tomu s nimi zacházet vědomě, ne je rozdávat zadarmo výměnou za „bezplatné" služby.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jakou hodnotu mají jeho data a komu slouží u „bezplatných" služeb.
+        rocnik: 7
+      - uroven: hodnoceni
+        text: Žák posoudí, jaká data u dané služby sdílí, a zhodnotí, zda výměna za službu stojí za to.
+        rocnik: 7
+    kriteria:
+      - uroven: porozumeni
+        text: Žák uvede příklad, jak platforma vydělává na uživatelských datech.
+      - uroven: hodnoceni
+        text: Žák u konkrétní aplikace zhodnotí poměr mezi získanou službou a poskytnutými daty.
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - soukromí
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-digitalni-wellbeing
+    nazev: Digitální wellbeing
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Zdravý vztah k technologiím: rozpoznat, kdy tě appky táhnou k nekonečnému scrollování (závislostní design), a umět si nastavit hranice. Cílem není technologie zavrhnout, ale používat je tak, aby sloužily tobě.'
+    rvp: []
+    cile:
+      - uroven: analyza
+        text: Žák rozpozná v aplikaci prvky závislostního designu, které ho táhnou k nekonečnému scrollování.
+        rocnik: 8
+      - uroven: tvorba
+        text: Žák naplánuje si vlastní hranice používání technologií, aby mu sloužily, ne on jim.
+        rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: Žák u konkrétní aplikace pojmenuje mechanismus, který prodlužuje čas strávený uvnitř.
+      - uroven: tvorba
+        text: Žák sestaví osobní plán s konkrétními pravidly a odůvodní, jaký problém řeší.
+    prerekvizity: []
+    souvisi:
+      - umela-inteligence-doporucovaci-systemy
+    tagy:
+      - pozornost a wellbeing
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-rozumet-ai-halucinace-bias
+    nazev: Rozumět AI (halucinace, bias)
+    tema: digitalni-obcanstvi
+    oblast: data-modelovani
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: 'Občanské minimum o AI: že jazykové modely předpovídají slova (a proto halucinují), že se učí z dat (a proto mají bias) a že jejich výstup je potřeba ověřovat. Netýká se jen programátorů — týká se každého, kdo AI potkává.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč jazykové modely halucinují a proč mívají bias.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák ověří výstup AI a posoudí, zda je použitelný, nebo obsahuje chybu.
+        rocnik: 8
+    kriteria:
+      - uroven: porozumeni
+        text: Žák propojí předpovídání slov s halucinací a učení z dat se zkreslením.
+      - uroven: hodnoceni
+        text: Žák u konkrétního výstupu doloží ověření z nezávislého zdroje.
+    prerekvizity:
+      - digitalni-obcanstvi-kriticke-mysleni-online
+      - umela-inteligence-jak-funguje-generativni-model
+    souvisi:
+      - umela-inteligence-bias-a-ferovost
+      - umela-inteligence-overovani-vystupu
+    tagy:
+      - důvěra a ověřování
+      - lidský dohled a agency
+      - teoretický základ
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-rozpoznani-ai-obsahu
+    nazev: Rozpoznání AI obsahu
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-dat
+    vrstva: navazujici
+    popis: Umět odhadnout, jestli je text, obraz nebo video vytvořené AI — a vědět, že spolehlivý univerzální detektor neexistuje. Proto se víc než na „test" spoléhej na kontext a ověření zdroje.
+    rvp: []
+    cile:
+      - uroven: analyza
+        text: Žák prozkoumá text, obraz nebo video a určí znaky svědčící o tvorbě pomocí AI.
+        rocnik: 8
+      - uroven: hodnoceni
+        text: Žák posoudí původ obsahu na základě kontextu a ověření zdroje, ne pouze podle vzhledu.
+        rocnik: 8
+    kriteria:
+      - uroven: analyza
+        text: Žák u ukázky uvede konkrétní znaky naznačující původ z AI.
+      - uroven: hodnoceni
+        text: Žák zdůvodní, proč se nelze spolehnout na univerzální detektor, a jak ověří kontext.
+    prerekvizity:
+      - digitalni-obcanstvi-rozumet-ai-halucinace-bias
+      - umela-inteligence-deepfakes-a-synteticka-media
+    souvisi: []
+    tagy:
+      - důvěra a ověřování
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-etika-ai-ve-skole
+    nazev: Etika AI ve škole
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: null
+    vrstva: navazujici
+    popis: Kde je hranice mezi tím, když ti AI pomůže se učit, a když za tebe úkol prostě udělá (a připraví tě o učení). Patří sem i poctivost — přiznat, kde jsi AI použil.
+    rvp: []
+    cile:
+      - uroven: hodnoceni
+        text: Žák posoudí, kdy mu AI pomáhá se učit a kdy ho o učení připraví, a rozhodnutí zdůvodní.
+        rocnik: 9
+      - uroven: aplikace
+        text: Žák uplatní zásadu poctivosti a přizná, kde a jak AI při úkolu použil.
+        rocnik: 9
+    kriteria:
+      - uroven: hodnoceni
+        text: Žák u konkrétního úkolu určí hranici vhodného využití AI a obhájí ji.
+      - uroven: aplikace
+        text: Žák u své práce jasně vyznačí, kterou část vytvořil s pomocí AI.
+    prerekvizity:
+      - digitalni-obcanstvi-rozumet-ai-halucinace-bias
+    souvisi:
+      - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+    tagy:
+      - etika a odpovědnost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-pravo-a-etika
+    nazev: Právo a etika
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-bzk
+    vrstva: navazujici
+    popis: 'Základní pravidla digitálního světa: autorská práva (čí je co) a ochrana osobních údajů (GDPR), zvlášť u nezletilých. Vědět, co smím sdílet a co se sebou nechat dělat, je součást bezpečí.'
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí základní pravidla autorských práv a ochrany osobních údajů (GDPR) u nezletilých.
+        rocnik: 9
+      - uroven: hodnoceni
+        text: Žák posoudí, zda smí daný obsah sdílet, a rozhodnutí zdůvodní odkazem na práva.
+        rocnik: 9
+    kriteria:
+      - uroven: porozumeni
+        text: Žák na příkladu odliší, co je chráněné autorským právem a co je osobní údaj.
+      - uroven: hodnoceni
+        text: Žák u konkrétní situace rozhodne o přípustnosti sdílení a opře to o pravidlo.
+    prerekvizity:
+      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    souvisi: []
+    tagy:
+      - dopad na společnost
+      - etika a odpovědnost
+      - soukromí
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-obchodni-modely-platforem
+    nazev: Obchodní modely platforem
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: null
+    vrstva: navazujici
+    popis: Když je služba „bezplatná", obvykle platíš pozorností a daty. Pochopit, jak platformy vydělávají, vysvětlí spoustu jejich chování — proč tě chtějí udržet a proč vidíš reklamy zrovna na tohle.
+    rvp: []
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak „bezplatné" platformy vydělávají na pozornosti a datech uživatelů.
+        rocnik: 9
+      - uroven: analyza
+        text: Žák rozebere chování konkrétní platformy a odvodí, jak souvisí s jejím obchodním modelem.
+        rocnik: 9
+    kriteria:
+      - uroven: analyza
+        text: Žák u dané funkce platformy vysvětlí, jak přispívá k jejímu výdělku.
+    prerekvizity:
+      - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+    souvisi:
+      - digitalni-obcanstvi-digitalni-wellbeing
+    tagy:
+      - dopad na společnost
+      - moc a peníze
+      - pozornost a wellbeing
+      - soukromí
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-obcanstvi-aktivni-digitalni-obcanstvi
+    nazev: Aktivní digitální občanství
+    tema: digitalni-obcanstvi
+    oblast: null
+    kompetence: kdi-zap
+    vrstva: navazujici
+    popis: Být online nejen konzument, ale i tvůrce hodnotného obsahu a slušný účastník diskuse. Digitální svět spoluutváříš — tím, co sdílíš, jak se chováš a čemu dáváš prostor.
+    rvp: []
+    cile:
+      - uroven: aplikace
+        text: Žák uplatní zásady slušné diskuse a přispěje do online prostoru hodnotným obsahem.
+        rocnik: 9
+      - uroven: tvorba
+        text: Žák vytvoří vlastní hodnotný příspěvek, kterým pozitivně spoluutváří digitální prostředí.
+        rocnik: 9
+    kriteria:
+      - uroven: tvorba
+        text: Žák vytvoří původní příspěvek a doloží, čím je pro ostatní přínosný a slušný.
+    prerekvizity:
+      - digitalni-obcanstvi-kriticke-mysleni-online
+    souvisi: []
+    tagy:
+      - dopad na společnost
+      - etika a odpovědnost
+      - praktická dovednost
+    zdroj: []
+    pokryti_glitchem: []
+    stav: draft

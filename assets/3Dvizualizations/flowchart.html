@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vývojový diagram</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #flowCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="flowCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('flowCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  var YELLOW = '#ffff00';
+
+  // tvary diagramu (normalizované souřadnice 0..1)
+  var SHAPES = [
+    { id: 'start',   type: 'oval',    x: 0.46, y: 0.105, w: 0.26,  h: 0.095, label: 'Start' },
+    { id: 'oblec',   type: 'rect',    x: 0.46, y: 0.27,  w: 0.28,  h: 0.095, label: 'obleč se' },
+    { id: 'prsi',    type: 'diamond', x: 0.46, y: 0.47,  w: 0.27,  h: 0.176, label: 'Prší?' },
+    { id: 'destnik', type: 'rect',    x: 0.78, y: 0.655, w: 0.31,  h: 0.095, label: 'vezmi deštník' },
+    { id: 'skola',   type: 'rect',    x: 0.46, y: 0.845, w: 0.30,  h: 0.095, label: 'jdi do školy' }
+  ];
+
+  // šipky (lomené čáry), volitelně s popiskem větve
+  var ARROWS = [
+    { id: 'a1',   pts: [[0.46, 0.1525], [0.46, 0.2225]] },
+    { id: 'a2',   pts: [[0.46, 0.3175], [0.46, 0.382]] },
+    { id: 'a3',   pts: [[0.595, 0.47], [0.78, 0.47], [0.78, 0.6075]],
+      label: 'ano', lx: 0.6875, ly: 0.443 },
+    { id: 'a4',   pts: [[0.78, 0.7025], [0.78, 0.845], [0.615, 0.845]] },
+    { id: 'a5',   pts: [[0.46, 0.558], [0.46, 0.7975]],
+      label: 'ne', lx: 0.435, ly: 0.675, lalign: 'right' },
+    { id: 'back', pts: [[0.31, 0.845], [0.095, 0.845], [0.095, 0.105], [0.325, 0.105]],
+      dashed: true, label: 'další den', lx: 0.095, ly: 0.50, backing: true }
+  ];
+
+  // pořadí skládání diagramu
+  var BUILD_ORDER = [
+    { kind: 's', id: 'start',   dur: 0.5 },
+    { kind: 'a', id: 'a1',      dur: 0.3 },
+    { kind: 's', id: 'oblec',   dur: 0.45 },
+    { kind: 'a', id: 'a2',      dur: 0.3 },
+    { kind: 's', id: 'prsi',    dur: 0.5 },
+    { kind: 'a', id: 'a3',      dur: 0.45 },
+    { kind: 's', id: 'destnik', dur: 0.45 },
+    { kind: 'a', id: 'a4',      dur: 0.45 },
+    { kind: 'a', id: 'a5',      dur: 0.4 },
+    { kind: 's', id: 'skola',   dur: 0.45 },
+    { kind: 'a', id: 'back',    dur: 0.8 }
+  ];
+  var GAP = 0.07;
+
+  // cesty žlutého tokenu (pauza = zastávka v uzlu)
+  var SPEED = 0.42; // normalizované jednotky za sekundu
+  var PASS_ANO = [
+    { x: 0.46, y: 0.105, pause: 0.5, node: 'start' },
+    { x: 0.46, y: 0.27,  pause: 0.5, node: 'oblec' },
+    { x: 0.46, y: 0.47,  pause: 0.9, node: 'prsi', decision: 'ano' },
+    { x: 0.595, y: 0.47 },
+    { x: 0.78, y: 0.47 },
+    { x: 0.78, y: 0.655, pause: 0.5, node: 'destnik' },
+    { x: 0.78, y: 0.845 },
+    { x: 0.46, y: 0.845, pause: 0.6, node: 'skola' },
+    { x: 0.31, y: 0.845 },
+    { x: 0.095, y: 0.845 },
+    { x: 0.095, y: 0.105 },
+    { x: 0.33, y: 0.105 },
+    { x: 0.46, y: 0.105 }
+  ];
+  var PASS_NE = [
+    { x: 0.46, y: 0.105, pause: 0.5, node: 'start' },
+    { x: 0.46, y: 0.27,  pause: 0.5, node: 'oblec' },
+    { x: 0.46, y: 0.47,  pause: 0.9, node: 'prsi', decision: 'ne' },
+    { x: 0.46, y: 0.845, pause: 0.6, node: 'skola' },
+    { x: 0.31, y: 0.845 },
+    { x: 0.095, y: 0.845 },
+    { x: 0.095, y: 0.105 },
+    { x: 0.33, y: 0.105 },
+    { x: 0.46, y: 0.105 }
+  ];
+
+  function buildPass(wps){
+    var evs = [], t = 0;
+    for (var i = 0; i < wps.length; i++){
+      var w = wps[i];
+      if (w.pause){
+        evs.push({ type: 'pause', x: w.x, y: w.y, start: t, dur: w.pause, decision: w.decision, node: w.node });
+        t += w.pause;
+      }
+      if (i < wps.length - 1){
+        var n = wps[i + 1];
+        var d = Math.hypot(n.x - w.x, n.y - w.y);
+        evs.push({ type: 'move', x0: w.x, y0: w.y, x1: n.x, y1: n.y, start: t, dur: d / SPEED });
+        t += d / SPEED;
+      }
+    }
+    return { evs: evs, dur: t };
+  }
+
+  // časová osa smyčky: poskládání → průchod „ano“ → průchod „ne“ → zhasnutí
+  var buildStarts = {}, TB = 0;
+  for (var b = 0; b < BUILD_ORDER.length; b++){
+    buildStarts[BUILD_ORDER[b].id] = TB;
+    TB += BUILD_ORDER[b].dur + GAP;
+  }
+  TB += 0.4;
+  var passes = [buildPass(PASS_ANO), buildPass(PASS_NE)];
+  var FADE = 0.8;
+  var TOTAL = TB + passes[0].dur + passes[1].dur + FADE;
+
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function ease(p){ return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; }
+
+  function buildP(id, t){
+    if (t >= TB) return 1;
+    var st = buildStarts[id];
+    var dur = 0;
+    for (var i = 0; i < BUILD_ORDER.length; i++) if (BUILD_ORDER[i].id === id) dur = BUILD_ORDER[i].dur;
+    return clamp01((t - st) / dur);
+  }
+
+  function passState(pass, tl){
+    var evs = pass.evs;
+    var last = evs[evs.length - 1];
+    var pos = { x: last.x1 !== undefined ? last.x1 : last.x, y: last.y1 !== undefined ? last.y1 : last.y };
+    var activeNode = null, nodeGlow = 0;
+    for (var i = 0; i < evs.length; i++){
+      var e = evs[i];
+      if (tl < e.start + e.dur){
+        if (e.type === 'pause'){
+          pos = { x: e.x, y: e.y };
+          if (e.node){
+            // token „vklouzne“ do uzlu — obrys uzlu se žlutě rozsvítí
+            activeNode = e.node;
+            nodeGlow = Math.min(clamp01((tl - e.start) / 0.18), clamp01((e.start + e.dur - tl) / 0.18));
+          }
+        } else {
+          var p = (tl - e.start) / e.dur;
+          pos = { x: e.x0 + (e.x1 - e.x0) * p, y: e.y0 + (e.y1 - e.y0) * p };
+        }
+        break;
+      }
+    }
+    // žluté zvýraznění zvolené větve kolem rozhodnutí
+    var glow = 0, glowLabel = null;
+    for (var j = 0; j < evs.length; j++){
+      var d = evs[j];
+      if (d.type === 'pause' && d.decision){
+        glowLabel = d.decision;
+        var w0 = d.start + d.dur * 0.35, w1 = d.start + d.dur + 1.1;
+        if (tl > w0 && tl < w1){
+          glow = Math.min(clamp01((tl - w0) / 0.25), clamp01((w1 - tl) / 0.4));
+        }
+      }
+    }
+    return { pos: pos, glow: glow, glowLabel: glowLabel, activeNode: activeNode, nodeGlow: nodeGlow };
+  }
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function polyLen(pts){
+    var l = 0;
+    for (var i = 1; i < pts.length; i++) l += Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]);
+    return l;
+  }
+
+  // zkrátí lomenou čáru na zlomek délky; vrací body + směr špičky
+  function partial(pts, frac){
+    var total = polyLen(pts), target = total * clamp01(frac);
+    var out = [pts[0]], acc = 0, dir = [1, 0];
+    for (var i = 1; i < pts.length; i++){
+      var dx = pts[i][0] - pts[i-1][0], dy = pts[i][1] - pts[i-1][1];
+      var seg = Math.hypot(dx, dy);
+      if (seg > 0) dir = [dx / seg, dy / seg];
+      if (acc + seg >= target){
+        var r = (target - acc) / seg;
+        out.push([pts[i-1][0] + dx * r, pts[i-1][1] + dy * r]);
+        return { pts: out, dir: dir };
+      }
+      acc += seg;
+      out.push(pts[i]);
+    }
+    return { pts: out, dir: dir };
+  }
+
+  function shapePerimeter(s){
+    if (s.type === 'rect') return 2 * (s.w + s.h);
+    if (s.type === 'diamond') return 4 * Math.hypot(s.w / 2, s.h / 2);
+    var a = s.w / 2, bb = s.h / 2;
+    return Math.PI * (3 * (a + bb) - Math.sqrt((3 * a + bb) * (a + 3 * bb)));
+  }
+
+  function tracePath(s){
+    var x = s.x * S, y = s.y * S, hw = s.w * S / 2, hh = s.h * S / 2;
+    ctx.beginPath();
+    if (s.type === 'rect'){
+      ctx.rect(x - hw, y - hh, hw * 2, hh * 2);
+    } else if (s.type === 'diamond'){
+      ctx.moveTo(x, y - hh);
+      ctx.lineTo(x + hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x - hw, y);
+      ctx.closePath();
+    } else {
+      ctx.ellipse(x, y, hw, hh, 0, 0, Math.PI * 2);
+    }
+  }
+
+  function drawShape(s, p, alpha, glow){
+    if (p <= 0) return;
+    tracePath(s);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    var per = shapePerimeter(s) * S;
+    if (p < 1){
+      ctx.setLineDash([per, per]);
+      ctx.lineDashOffset = per * (1 - ease(p));
+    }
+    ctx.strokeStyle = 'rgba(255,255,255,' + (0.92 * alpha).toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1.5, S * 0.0055);
+    ctx.stroke();
+    if (glow > 0){
+      // uzel, který se právě vykonává
+      ctx.strokeStyle = 'rgba(255,255,0,' + glow.toFixed(3) + ')';
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    var ta = clamp01((p - 0.55) / 0.45) * alpha;
+    if (ta > 0){
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.92 * ta).toFixed(3) + ')';
+      ctx.fillText(s.label, s.x * S, s.y * S);
+    }
+  }
+
+  function drawArrowhead(x, y, dir, alpha){
+    var hs = S * 0.017;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - dir[0] * hs * 1.8 - dir[1] * hs, y - dir[1] * hs * 1.8 + dir[0] * hs);
+    ctx.lineTo(x - dir[0] * hs * 1.8 + dir[1] * hs, y - dir[1] * hs * 1.8 - dir[0] * hs);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
+    ctx.fill();
+  }
+
+  function drawArrow(a, p, alpha, glow, fs){
+    if (p <= 0) return;
+    var lineA = (a.dashed ? 0.45 : 0.7) * alpha;
+    var cut = partial(a.pts, ease(p));
+    ctx.beginPath();
+    for (var i = 0; i < cut.pts.length; i++){
+      var px = cut.pts[i][0] * S, py = cut.pts[i][1] * S;
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    if (a.dashed) ctx.setLineDash([S * 0.016, S * 0.013]);
+    ctx.strokeStyle = 'rgba(255,255,255,' + lineA.toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1.25, S * 0.0045);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    var tip = cut.pts[cut.pts.length - 1];
+    drawArrowhead(tip[0] * S, tip[1] * S, cut.dir, lineA + (a.dashed ? 0 : 0.15 * alpha));
+    if (a.label && p > 0.4){
+      var la = clamp01((p - 0.4) / 0.5) * alpha;
+      ctx.font = '500 ' + Math.round(fs * 0.92) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+      ctx.textAlign = a.lalign === 'right' ? 'right' : 'center';
+      if (a.backing){
+        var tw = ctx.measureText(a.label).width;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(a.lx * S - tw / 2 - S * 0.012, a.ly * S - fs * 0.75, tw + S * 0.024, fs * 1.5);
+      }
+      if (glow > 0){
+        ctx.fillStyle = 'rgba(255,255,0,' + (0.35 + 0.65 * glow).toFixed(3) + ')';
+      } else {
+        ctx.fillStyle = 'rgba(255,255,255,' + ((a.backing ? 0.5 : 0.75) * la).toFixed(3) + ')';
+      }
+      ctx.fillText(a.label, a.lx * S, a.ly * S);
+      ctx.textAlign = 'center';
+    }
+  }
+
+  function draw(now){
+    var t = (now / 1000) % TOTAL;
+
+    var fadeAlpha = 1;
+    var passIdx = -1, passLocal = 0;
+    if (t >= TB){
+      var tp = t - TB;
+      if (tp < passes[0].dur){ passIdx = 0; passLocal = tp; }
+      else if (tp < passes[0].dur + passes[1].dur){ passIdx = 1; passLocal = tp - passes[0].dur; }
+      else fadeAlpha = 1 - ease((tp - passes[0].dur - passes[1].dur) / FADE);
+    }
+    var ps = passIdx >= 0 ? passState(passes[passIdx], passLocal) : null;
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+    ctx.globalAlpha = fadeAlpha;
+
+    var fs = Math.max(10, S * 0.038);
+    ctx.font = '500 ' + Math.round(fs) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    for (var ai = 0; ai < ARROWS.length; ai++){
+      var a = ARROWS[ai];
+      var glow = (ps && ps.glowLabel === a.label) ? ps.glow : 0;
+      drawArrow(a, buildP(a.id, t), 1, glow, fs);
+      ctx.font = '500 ' + Math.round(fs) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+    }
+    for (var si = 0; si < SHAPES.length; si++){
+      var sh = SHAPES[si];
+      var nodeGlow = (ps && ps.activeNode === sh.id) ? ps.nodeGlow : 0;
+      drawShape(sh, buildP(sh.id, t), 1, nodeGlow);
+    }
+
+    // žlutý token putující diagramem (v uzlu se schová a uzel se rozsvítí)
+    if (ps){
+      var pop = Math.min(1, passLocal / 0.3);
+      var dotP = (1 - ps.nodeGlow) * pop;
+      if (dotP > 0.02){
+        ctx.beginPath();
+        ctx.arc(ps.pos.x * S, ps.pos.y * S, S * 0.014 * (0.35 + 0.65 * dotP), 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,0,' + dotP.toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+
+    ctx.restore();
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
