@@ -1,21 +1,99 @@
 [
   {
     "id": "welcome",
-    "type": "welcome"
-  },
-  {
-    "id": "intro",
-    "type": "intro",
+    "type": "welcome",
     "rozklik": {
       "kind": "explainer",
       "brand": "glitch",
-      "title": "Glitch je vzdělávací sociální síť",
+      "title": "Tiny Glitch je vzdělávací sociální síť",
       "paragraphs": [
-        "Když se chceš ty něco nového naučit nebo pokud chceš naučit ty někoho jiného, tak tady je tvůj prostor.",
-        "Ve feedu najdeš tzv. Glitche. Jsou to mikrotémata. Některé Glitche jsou jen malé výzvy, které můžeš plnit přímo ve feedu. Jiné můžeš rozkliknout a popovídat si o nich s chatbotem, ověřit si znalosti kvízem.",
-        "Každý Glitch můžeš navíc remixovat. To znamená, že k němu přidáš to, co víš nebo vyzkoumáš a můžeš to sdílet s ostatními, kteří na tvou práci mohou dál navázat vlastním remixem.",
-        "Můžeš také vytvořit Glitche pro kamarády, kterými se něco naučí.",
-        "Glitche se řadí do tzv. questů. Když nějaký quest dokončíš, odemkneš si další a posuneš se zase o kousek dál."
+        "Když se chceš něco nového naučit — nebo naopak něco naučit někoho jiného — tohle je tvůj prostor.",
+        "Ve feedu na tebe čekají Glitche: mikrotémata, každé jako jedna karta. Některé splníš rovnou při scrollování, jiné si rozklikneš do hloubky, popovídáš si o nich s Glitcheem a ověříš si, co už znáš. Glitche se skládají do questů, které tě krok po kroku dovedou od prvních pojmů až k vlastnímu projektu."
+      ],
+      "outro": "Rozklikni si sekce níž a mrkni, jak to tu funguje. Pak už se můžeš vrhnout do feedu.",
+      "sections": [
+        {
+          "title": "Co je Glitch",
+          "summary": "Jedno malé téma, jedna karta ve feedu. Učíš se po malých soustech, jeden Glitch po druhém; swipuješ nahoru na další kartu.",
+          "content": [
+            "Jedno malé téma — jedna karta ve feedu. Přečteš si pár vět, něco si vyzkoušíš a jdeš dál. Nemusíš hltat celou učebnici naráz; učíš se po malých soustech, jeden Glitch po druhém. Ovládá se to jako sociální síť: swipuješ nahoru na další kartu."
+          ]
+        },
+        {
+          "title": "Výzvy rovnou ve feedu",
+          "summary": "Malá rozcvička pro hlavu: vyřešíš ji přímo na kartě, hned vidíš výsledek a scrolluješ dál.",
+          "content": [
+            "Některé Glitche jsou malá rozcvička pro hlavu. Vyřešíš je přímo na kartě, hned vidíš výsledek a scrolluješ dál. Žádné rozklikávání — jen rychlé cvaknutí a jedeš."
+          ]
+        },
+        {
+          "title": "Rozklikni a povídej si",
+          "summary": "Krátký výklad + chat s průvodcem, který tě nezkouší, ale navádí; a kvíz na ověření znalostí.",
+          "content": [
+            "Jiné Glitche skrývají víc. Rozklikneš kartu, přečteš si krátký výklad a pod ním se otevře chat s průvodcem. Ten tě nezkouší — spíš se doptává a nakopne tě správným směrem, ať na to přijdeš vlastními silami. A na ověření znalostí je tu kvíz. Nejde v něm o známky, ale o to, aby ti to docvaklo."
+          ]
+        },
+        {
+          "title": "Questy",
+          "summary": "Glitche se řadí do questů. Když splníš všechny Glitche v questu, odemkne se ti poslední, projektový.",
+          "content": [
+            "Glitche se řadí do questů — tematických celků. Postupuješ jimi od úplných základů dál a když splníš všechny Glitche v questu, odemkne se ti ten poslední, projektový. Pořadí není náhodné: každý Glitch tě připraví na ten další."
+          ]
+        },
+        {
+          "title": "Projekt na konci questu",
+          "summary": "Finální Glitch, kde vše spojíš a něco postavíš; odemkne se, až projdeš přípravné Glitche.",
+          "content": [
+            "Poslední Glitch v každém questu je projekt. To je chvíle, kdy všechno, co ses cestou naučil/a, spojíš dohromady a něco vlastního postavíš. Předchozí Glitche tě na něj připraví — a jakmile je máš za sebou, projekt se ti odemkne. Je to způsob, jak sobě i ostatním ukázat, že to fakt umíš."
+          ]
+        },
+        {
+          "title": "Sdílej a navazuj",
+          "summary": "Můžeš remixovat projekty kamarádů a navázat na jejich práci.",
+          "content": [
+            "Sdílení tu neznamená „dej mi lajk“, ale „postav na tom dál“. Můžeš remixovat projekty kamarádů — vzít jejich práci jako základ a rozvést ji vlastním směrem. Linie k původnímu autorovi přitom zůstává vidět. A stejně tak ostatní můžou navázat na tebe."
+          ]
+        },
+        {
+          "title": "Vytvoř Glitch pro druhé",
+          "summary": "Můžeš sám tvořit Glitche a učit jimi kamarády. Na jakékoliv téma tě zajímá.",
+          "content": [
+            "Nemusíš být jen na té straně, která se učí. Můžeš vytvořit vlastní Glitch a něco jím naučit druhé — na jakékoli téma, které tě baví. Vysvětlit něco tak, aby to pochopil někdo další, je mimochodem jeden z nejlepších způsobů, jak si to sám/sama upevníš."
+          ]
+        },
+        {
+          "title": "Víc druhů Glitchů",
+          "summary": "Funfact, Najdi chybu, Historická osobnost, Argumentuj nebo prostě jen chvilka na oddech.",
+          "content": [
+            "Glitche nejsou jen výklad a kvíz. Potkáš třeba:",
+            "Funfact — krátký záblesk „aha, tohle jsem nevěděl/a“.",
+            "Najdi chybu — karta s tvrzením, které nesedí; tvůj úkol je odhalit, kde je zakopaný pes.",
+            "Historická osobnost — pokecáš si (skrz AI) s někým, kdo obor kdysi posouval.",
+            "Argumentuj — dostaneš tvrzení, řekneš, jestli s ním souhlasíš, a rozvedeš proč.",
+            "Chvilka na oddech — občas jen kartička na nadechnutí. Ne všechno musí být výkon.",
+            "Díky téhle pestrosti feed nesklouzne do stereotypu."
+          ]
+        },
+        {
+          "title": "Tvé projekty",
+          "summary": "To je tvůj vlastní prostor (sešit + nástěnka + dílna) s chatbotem a portfoliem, kde můžeš tvořit.",
+          "content": [
+            "Tvůj vlastní prostor — něco mezi sešitem, nástěnkou a dílnou. Ukládáš si sem Glitche, které tě chytly, stavíš kolem nich vlastní věci a máš po ruce chatbota, který ti se studiem i s projektem poradí. Zároveň je to tvoje portfolio: mapa toho, co ses naučil/a a co jsi vytvořil/a. A když tvoříte ve víc lidech, můžete mít prostor společný."
+          ]
+        },
+        {
+          "title": "Tady to funguje jinak",
+          "summary": "Feed má dno (20/den), žádné srovnávání. Jen učení, seberozvoj, relaxace a tvorba.",
+          "content": [
+            "Glitch vypadá jako sociální síť, ale schválně je postavený proti tomu, jak fungují ty běžné. Co to znamená pro tebe:",
+            "Feed má dno. Na den je 20 Glitchů a pak končí — žádný nekonečný scroll, do kterého se propadneš na hodinu.",
+            "Žádné srovnávání. Nemáme lajky ani žebříčky, s nikým nesoutěžíš a nikdo neměří, kdo je „lepší“. Statistiky vidíš jen ty a jsou o tvém pokroku.",
+            "Ty rozhoduješ. Časovače a podobné věci nenaskakují samy — zapneš si je, jen když chceš.",
+            "Klid sem patří. Občas narazíš na kartu, kde si jen zkontroluješ, jak se máš, nebo se na chvíli nadechneš.",
+            "Zkrátka jde tu o čtyři věci: učení, seberozvoj, relaxaci a tvorbu. Ne o to, abys tu strávil/a co nejvíc času, ale aby ses odsud pohnul/a dál.",
+            "Tak jdeme na to."
+          ]
+        }
       ]
     }
   },

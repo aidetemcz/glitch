@@ -140,9 +140,9 @@
         ${deco("", "top:55.6%;left:74.9%;width:12px;height:12px")}
         <span class="pixel-deco" style="top:75.9%;left:18.9%;width:12px;height:13px">${ICON.spark}</span>
         <img class="welcome-logo" src="${LOGO}" alt="Glitch">
-        <div class="card-footer">
-          <button class="welcome-login" data-welcome-login>Přihlášení Google účtem</button>
-        </div>`;
+        <h1 class="fx-block g-h1 welcome-h" style="top:60%">Vítej v Glitchi!</h1>
+        <p class="fx-block g-p welcome-sub" style="top:70%">Chceš vědět, jak to tady chodí? Klikni na šipku vpravo dole, nebo swipni dolů pro další Glitch.</p>
+        ${chevron(c)}`;
     },
 
     intro(c) {
@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=42", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=43", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -692,17 +692,8 @@
     if (c.type === "spot_the_mistake") initVizFrame(el);    // i „najdi chybu" může mít animaci místo fotky
     if (c.type === "asmr") initVizFrame(el);                // ASMR: interaktivní světelná stopa přes celou kartu
     if (c.type === "quest_intro") initQuestVideo(el);
-    // úvodní splash: ťuknutí kamkoli posune na další Glitch (swipe funguje taky)
-    if (c.type === "welcome") {
-      el.addEventListener("click", () => nextFrom(el));
-      const lg = el.querySelector("[data-welcome-login]");
-      if (lg) lg.addEventListener("click", (e) => {
-        e.stopPropagation();                     // klik na tlačítko neposune na další Glitch
-        if (typeof window.glitchOpenLogin === "function") { window.glitchOpenLogin(); return; }
-        // fallback: kdyby modál nebyl k dispozici, spusť přihlášení přímo
-        if (typeof sbSignInWithGoogle === "function") sbSignInWithGoogle().catch(() => toast("Přihlášení se nezdařilo."));
-      });
-    }
+    // úvodní karta: šipka otevře detail (řeší globální handler data-nav),
+    // swipe posune na další Glitch. Přihlášení je v profilu (spodní menu).
   }
 
   /* ---- Spolehlivé načítání animací (iframe vizualizace) ----
@@ -1108,8 +1099,28 @@
     return `<div class="rz-badges">${parts.join("")}</div>`;
   }
 
+  // šipka sekce: žluté kolečko s „>" (po rozbalení se otočí dolů)
+  const SEC_ARROW =
+    '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">' +
+    '<circle cx="12" cy="12" r="11" fill="#ffff00"/>' +
+    '<path d="M10 7.5 14.5 12 10 16.5" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
   function renderExplainer(c, r) {
     const paras = (r.paragraphs || []).map((p) => `<p class="rz-para g-p">${esc(p)}</p>`).join("");
+    const outro = r.outro ? `<p class="rz-para rz-outro g-p">${esc(r.outro)}</p>` : "";
+    const sections = (r.sections || []).map((s) => {
+      const content = (Array.isArray(s.content) ? s.content : [s.content || ""])
+        .map((p) => `<p class="rz-para g-p">${esc(p)}</p>`).join("");
+      return `<section class="rz-sec" data-rz-sec>
+        <button class="rz-sec-head" data-rz-sec-toggle>
+          <span class="rz-sec-ico">${SEC_ARROW}</span>
+          <span class="rz-sec-title g-h4">${esc(s.title)}</span>
+        </button>
+        ${s.summary ? `<p class="rz-sec-summary g-p">${esc(s.summary)}</p>` : ""}
+        <div class="rz-sec-content">${content}</div>
+      </section>`;
+    }).join("");
+    const secWrap = sections ? `<div class="rz-sections">${sections}</div>` : "";
     const brand = r.brand === "glitch"
       ? `<img class="rz-brand" src="assets/glitch-logo.svg" alt="Glitch">`
       : "";
@@ -1122,6 +1133,8 @@
         ${brand}
         <h1 class="rz-title g-h1">${esc(r.title)}</h1>
         ${paras}
+        ${outro}
+        ${secWrap}
       </div>`;
   }
 
@@ -1310,6 +1323,13 @@
 
     panel.querySelector("[data-rz-close]").addEventListener("click", closeRozklik);
     if (r.kind === "chat") initRzChat(panel, c);
+    // rozbalování sekcí (harmonika) u úvodního vysvětlení
+    panel.querySelectorAll("[data-rz-sec-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const sec = btn.closest("[data-rz-sec]");
+        if (sec) sec.classList.toggle("is-open");
+      });
+    });
   }
 
   // Skryje kartu ve feedu (po splnění), ať se v téže relaci znovu neukazuje.
