@@ -61,12 +61,11 @@
   // stav
   var rot = 0, targetRot = 0;
   var answers = new Array(N).fill(null);   // 'ano' | 'ne' | null
-  var done = false, score = 0;
+  var done = false, score = 0, doneAt = 0;
   var isDragging = false, moved = 0;
   var lastY = 0, downX = 0, downY = 0;
   var pressBtn = null, pressT = 0;
-  var hintSeen = false;
-  var btnNo = null, btnYes = null, btnAgain = null;   // aktuální obdélníky tlačítek
+  var btnNo = null, btnYes = null;   // aktuální obdélníky tlačítek
 
   function mod(i, n){ return ((i % n) + n) % n; }
   function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
@@ -129,6 +128,7 @@
       if ((answers[i] === 'ano') === WORDS[i].ml) score++;
     }
     done = true;
+    doneAt = performance.now();
     postState();
   }
 
@@ -173,7 +173,6 @@
     var p = toLocal(e);
     if (!done && inRect(p.x, p.y, btnNo)){ pressBtn = 'ne'; pressT = performance.now(); }
     else if (!done && inRect(p.x, p.y, btnYes)){ pressBtn = 'ano'; pressT = performance.now(); }
-    else if (done && inRect(p.x, p.y, btnAgain)){ pressBtn = 'again'; pressT = performance.now(); }
     else pressBtn = null;
   }
   function onMove(e){
@@ -185,7 +184,6 @@
     if (!pressBtn){
       rot -= dy / (R * S);
       targetRot = rot;
-      if (Math.abs(dy) > 1) hintSeen = true;
     }
     e.preventDefault();
   }
@@ -195,8 +193,7 @@
     frame.style.cursor = 'grab';
     var dist = Math.hypot(e.clientX - downX, e.clientY - downY);
     if (dist < 8 && pressBtn){
-      if (pressBtn === 'again') resetGame();
-      else answer(pressBtn);
+      answer(pressBtn);
     } else if (dist < 8){
       // ťuknutí na sousední nod otočí kolo na něj
       var p = toLocal(e);
@@ -309,20 +306,21 @@
       ctx.fill();
       ctx.restore();
 
-      // slovo — natočené po tečně kola, u aktivního velké
-      var fs = S * (0.036 + 0.024 * closeness);
-      ctx.save();
-      ctx.translate(np.x + S * 0.045, np.y);
-      ctx.rotate(np.a * 0.85);
-      ctx.font = fontStr(fs, isActive ? 600 : 500);
-      ctx.textAlign = 'left';
-      if (isActive){
+      // slovo je vidět jen u hlavního (středového) nodu
+      var wordA = clamp01((closeness - 0.45) / 0.4);
+      if (wordA > 0){
+        var fs = S * 0.060;
+        ctx.save();
+        ctx.translate(np.x + S * 0.045, np.y);
+        ctx.rotate(np.a * 0.85);
+        ctx.font = fontStr(fs, 600);
+        ctx.textAlign = 'left';
         ctx.shadowColor = 'rgba(255,255,255,0.55)';
         ctx.shadowBlur = 10;
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.95 * wordA).toFixed(3) + ')';
+        ctx.fillText(WORDS[i].w, 0, 0);
+        ctx.restore();
       }
-      ctx.fillStyle = 'rgba(255,255,255,' + (0.4 + 0.6 * closeness).toFixed(3) + ')';
-      ctx.fillText(WORDS[i].w, 0, 0);
-      ctx.restore();
 
       // značka odpovědi vlevo od tečky; po vyhodnocení u chyb žlutě správná
       if (answers[i] !== null){
@@ -334,19 +332,6 @@
           drawMark(mx, my, answers[i], ms, '255,255,255', 0.55);
         }
       }
-    }
-
-    // nápověda: kolem jde točit
-    if (!hintSeen && !done){
-      var hb = 0.35 + 0.2 * Math.sin(now / 400);
-      var hx = (CX + R * Math.cos(0.21)) * S, hy1 = (CY - R * Math.sin(0.21)) * S, hy2 = (CY + R * Math.sin(0.21)) * S;
-      ctx.strokeStyle = 'rgba(255,255,255,' + hb.toFixed(3) + ')';
-      ctx.lineWidth = Math.max(1.25, S * 0.004);
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(hx - S * 0.015, hy1 + S * 0.02); ctx.lineTo(hx, hy1); ctx.lineTo(hx + S * 0.015, hy1 + S * 0.02);
-      ctx.moveTo(hx - S * 0.015, hy2 - S * 0.02); ctx.lineTo(hx, hy2); ctx.lineTo(hx + S * 0.015, hy2 - S * 0.02);
-      ctx.stroke();
     }
 
     // tlačítka ✗ / ✓ pro aktivní slovo
@@ -384,43 +369,19 @@
       }
     }
 
-    // průběh / výsledek
-    ctx.textAlign = 'right';
-    if (!done){
-      ctx.font = fontStr(S * 0.036);
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      ctx.fillText(answeredCount() + ' / ' + N, S * 0.94, S * 0.075);
-      ctx.textAlign = 'left';
-      ctx.font = fontStr(S * 0.030);
-      ctx.fillStyle = 'rgba(255,255,255,0.45)';
-      ctx.fillText('patří ke strojovému učení?', S * 0.06, S * 0.075);
-      btnAgain = null;
-    } else {
-      // podložka, ať výsledek nekoliduje se slovy na kole
-      ctx.fillStyle = 'rgba(0,0,0,0.88)';
-      ctx.fillRect(S * 0.42, S * 0.02, S * 0.56, S * 0.28);
+    // výsledek: jen žluté číslo; chybné nody svítí žlutě na kole,
+    // po chvíli se hra sama vrátí na začátek
+    if (done){
+      var dp = clamp01((now - doneAt) / 400);
       ctx.save();
-      ctx.shadowColor = 'rgba(255,255,0,0.5)';
-      ctx.shadowBlur = 10;
-      ctx.font = fontStr(S * 0.052, 600);
-      ctx.fillStyle = 'rgba(255,255,0,0.95)';
-      ctx.fillText('správně: ' + score + ' / ' + N, S * 0.94, S * 0.08);
-      ctx.restore();
-      ctx.font = fontStr(S * 0.030);
-      ctx.fillStyle = 'rgba(255,255,255,0.55)';
-      ctx.fillText(score === N ? 'výborně!' : 'chyby jsou žlutě', S * 0.94, S * 0.145);
-      // tlačítko znovu
-      var gw = S * 0.19, gh = S * 0.085, gx = S * 0.75, gy = S * 0.20;
-      roundRectPath(gx, gy, gw, gh, 10);
-      var pr = pressBtn === 'again' ? 0.7 : 0.9;
-      ctx.strokeStyle = 'rgba(255,255,255,' + pr + ')';
-      ctx.lineWidth = Math.max(1.25, S * 0.0045);
-      ctx.stroke();
+      ctx.shadowColor = 'rgba(255,255,0,0.55)';
+      ctx.shadowBlur = 14;
+      ctx.font = fontStr(S * 0.085, 600);
       ctx.textAlign = 'center';
-      ctx.font = fontStr(S * 0.034);
-      ctx.fillStyle = 'rgba(255,255,255,0.85)';
-      ctx.fillText('znovu', gx + gw / 2, gy + gh / 2 + 1);
-      btnAgain = { x: gx, y: gy, w: gw, h: gh };
+      ctx.fillStyle = 'rgba(255,255,0,' + (0.95 * dp).toFixed(3) + ')';
+      ctx.fillText(score + ' / ' + N, S * 0.66, S * 0.62);
+      ctx.restore();
+      if (now - doneAt > 8000) resetGame();
     }
 
     ctx.restore();
@@ -437,7 +398,7 @@
         done: done,
         score: score,
         snapped: snapped(),
-        btnNo: btnNo, btnYes: btnYes, btnAgain: btnAgain
+        btnNo: btnNo, btnYes: btnYes
       };
     };
   }
