@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCII kočka</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #catCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="catCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('catCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  // kočka z loga Glitche (rastr 30×23, # = plný bod, díry = oči)
+  var CAT = [
+    '......................#.......',
+    '........#..........#.###......',
+    '.......##............###......',
+    '......####..........#.##......',
+    '......####..........#####.....',
+    '.....##.###.........####......',
+    '.....#############.#####......',
+    '....######################....',
+    '.....######################...',
+    '...########################...',
+    '...#######################....',
+    '....#######################...',
+    '...#########################..',
+    '..##########################..',
+    '..######...########....######.',
+    '..#####..#..######.###..###...',
+    '..####..###..#####.####.####..',
+    '.#####.#####.#####.####.####..',
+    '#.#####..##.######..##..######',
+    '#..####.....#######....#######',
+    '..###########################.',
+    '..###################.........',
+    '.....#######..................'
+  ];
+  // otazník nad hlavou
+  var QM = [
+    '.####.',
+    '##..##',
+    '....##',
+    '...##.',
+    '..##..',
+    '......',
+    '..##..'
+  ];
+
+  var CHARS = ['#', '@', '+', '*', '%', '='];
+
+  function hash(a, b){
+    var v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+    return v - Math.floor(v);
+  }
+
+  // z mřížky udělá 3D bodové mračno (deska o třech vrstvách)
+  function build(grid){
+    var h = grid.length, w = grid[0].length;
+    var pts = [];
+    for (var gy = 0; gy < h; gy++){
+      for (var gx = 0; gx < w; gx++){
+        if (grid[gy][gx] !== '#') continue;
+        for (var l = -1; l <= 1; l++){
+          pts.push({
+            x: gx - w / 2 + 0.5,
+            y: gy - h / 2 + 0.5,
+            z: l * 1.1,
+            ch: CHARS[Math.floor(hash(gx, gy) * CHARS.length)],
+            tw: hash(gy, gx) * Math.PI * 2
+          });
+        }
+      }
+    }
+    return pts;
+  }
+  var catPts = build(CAT);
+  var qmPts = build(QM);
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // vykreslí rotující objekt: vzadu pixely, vepředu ASCII znaky
+  function drawObject(pts, cell, cx, cy, angle, t){
+    var cosA = Math.cos(angle), sinA = Math.sin(angle);
+    var PD = S * 2.0;
+    var maxZ = 0;
+    var proj = [];
+    for (var i = 0; i < pts.length; i++){
+      var p = pts[i];
+      var x3 = p.x * cell, y3 = p.y * cell, z3 = p.z * cell;
+      var xr = x3 * cosA + z3 * sinA;
+      var zr = -x3 * sinA + z3 * cosA;
+      if (Math.abs(zr) > maxZ) maxZ = Math.abs(zr);
+      var pers = PD / (PD - zr);
+      proj.push({ x: cx + xr * pers, y: cy + y3 * pers, z: zr, p: p });
+    }
+    proj.sort(function(a, b){ return a.z - b.z; });
+    ctx.font = '500 ' + Math.round(cell * 1.45) + 'px ui-monospace, "SF Mono", Menlo, Consolas, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (var j = 0; j < proj.length; j++){
+      var q = proj[j];
+      var depth = maxZ > 0 ? (q.z / maxZ + 1) / 2 : 1;   // 0 vzadu … 1 vepředu
+      var a = 0.16 + 0.8 * depth * depth;
+      a *= 0.88 + 0.12 * Math.sin(t * 2.2 + q.p.tw);      // jemné mihotání
+      if (depth > 0.62){
+        ctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
+        ctx.fillText(q.p.ch, q.x, q.y);
+      } else {
+        var ps = Math.max(1, cell * 0.3);
+        ctx.fillStyle = 'rgba(255,255,255,' + (a * 0.85).toFixed(3) + ')';
+        ctx.fillRect(q.x - ps / 2, q.y - ps / 2, ps, ps);
+      }
+    }
+  }
+
+  function draw(now){
+    var t = now / 1000;
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+
+    // kočka se otáčí doprava, otazník nad hlavou v protisměru
+    drawObject(catPts, S * 0.021, S * 0.5, S * 0.615, t * 0.6, t);
+    drawObject(qmPts, S * 0.024, S * 0.5, S * 0.20 + Math.sin(t * 1.3) * S * 0.012, -t * 1.2, t);
+
+    ctx.restore();
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
