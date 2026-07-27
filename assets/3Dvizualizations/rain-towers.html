@@ -128,13 +128,13 @@
   // ---- žlutý „sníh" na horách: kandidáti bodů s výškovým prahem ----
   // čím vyšší místo, tím víc bodů má práh pod sebou → hustota roste s výškou
   var SNOW = [];
-  for (var s2 = 0; s2 < 780; s2++){
+  for (var s2 = 0; s2 < 1750; s2++){
     SNOW.push({
       u: 0.05 + hash(s2, 21) * 0.90,
       v: 0.05 + hash(s2, 22) * 0.90,
       thr: 0.34 + 0.60 * Math.pow(hash(s2, 23), 0.62),
-      sz: 0.8 + hash(s2, 24) * 1.7,
-      glow: hash(s2, 25) < 0.16,
+      sz: 0.9 + hash(s2, 24) * 2.1,
+      glow: hash(s2, 25) < 0.13,
       tw: hash(s2, 26) * Math.PI * 2,
       tws: 0.8 + hash(s2, 27) * 1.6
     });
@@ -191,7 +191,7 @@
       var th = k * dz / ampPx;
       if (th > 0.985) break;
       var zk = k * dz;
-      ctx.strokeStyle = 'rgba(255,255,255,' + (0.16 + 0.34 * (k / 14)).toFixed(3) + ')';
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.26 + 0.44 * (k / 14)).toFixed(3) + ')';
       ctx.lineWidth = 1;
       ctx.beginPath();
       for (var j3 = 0; j3 < N; j3++){
