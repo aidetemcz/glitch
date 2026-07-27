@@ -366,7 +366,7 @@
           ? `<img src="${c.image}" alt="">`
           : `<div class="asset-missing">ilustrace<br>(doplnit)</div>`;
       return `${badges(c)}
-        <div class="arg-illus" style="top:14%">${media}</div>
+        <div class="arg-illus" style="top:17%">${media}</div>
         <div class="fx-block arg-text" style="top:48%">
           <h2 class="arg-claim g-h2">${esc(c.claim)}</h2>
           <p class="arg-sub g-p">${esc(c.sub)}</p>
@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=36", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=37", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
