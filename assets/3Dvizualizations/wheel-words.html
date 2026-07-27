@@ -330,15 +330,16 @@
       var wordA = clamp01((closeness - 0.45) / 0.4);
       if (wordA > 0){
         var fs = S * 0.060;
+        var label = WORDS[i].w.charAt(0).toUpperCase() + WORDS[i].w.slice(1);
         ctx.save();
         ctx.translate(np.x + S * 0.045, np.y);
         ctx.rotate(np.a * 0.85);
-        ctx.font = fontStr(fs, 600);
+        ctx.font = fontStr(fs, 400);
         ctx.textAlign = 'left';
         ctx.shadowColor = 'rgba(255,255,255,0.55)';
         ctx.shadowBlur = 10;
         ctx.fillStyle = 'rgba(255,255,255,' + (0.95 * wordA).toFixed(3) + ')';
-        ctx.fillText(WORDS[i].w, 0, 0);
+        ctx.fillText(label, 0, 0);
         ctx.restore();
       }
 
