@@ -477,13 +477,19 @@
 
   // reakce na přihlášení (welcomeCard se doplní po sestavení)
   if (typeof sb !== "undefined" && sb && sb.auth && typeof sb.auth.onAuthStateChange === "function") {
+    // Supabase přeposílá SIGNED_IN / TOKEN_REFRESHED při KAŽDÉM návratu do okna
+    // (refokus, obnovení tokenu). Reagujeme jen na SKUTEČNOU změnu stavu
+    // přihlášení — jinak by feed při každém přepnutí okna skočil na úvodní Glitch.
+    let _prevLoggedIn = null;
     sb.auth.onAuthStateChange((_event, session) => {
       const loggedIn = !!(session && session.user);
-      // scroll na začátek jen když PRÁVĚ skrýváme úvodní kartu (skutečné přihlášení),
-      // ne při každém obnovení tokenu / návratu do okna → jinak by to skákalo na první Glitch
-      const welcomeWasVisible = welcomeCard && !welcomeCard.classList.contains("is-hidden");
+      if (loggedIn === _prevLoggedIn) return;         // stav se nezměnil → nic nedělej
+      const bylPrihlaseny = _prevLoggedIn;
+      _prevLoggedIn = loggedIn;
       applyWelcomeVisibility(loggedIn);
-      if (loggedIn && welcomeWasVisible) { try { feed.scrollTo({ top: 0 }); } catch (_) {} }
+      // scroll na začátek jen při skutečném přihlášení (odhlášen → přihlášen),
+      // ne při prvním načtení stránky ani při refokusu
+      if (loggedIn && bylPrihlaseny === false) { try { feed.scrollTo({ top: 0 }); } catch (_) {} }
     });
   }
 
@@ -572,6 +578,33 @@
     }
     return best;
   }
+
+  /* ---- Udržení pozice ve feedu při návratu do okna ----
+     scroll-snap (mandatory) občas při refokusu / přemalování okna resetuje
+     scroll na začátek → feed „skočí na úvodní Glitch". Zapamatujeme si právě
+     zobrazenou kartu a po návratu (focus / viditelnost / bfcache) ji vrátíme. */
+  let _snapIndex = 0, _snapT = null;
+  feed.addEventListener("scroll", () => {
+    clearTimeout(_snapT);
+    _snapT = setTimeout(() => { _snapIndex = currentIndex(); }, 120);
+  }, { passive: true });
+
+  function restoreSnap() {
+    if (_snapIndex <= 0) return;
+    const target = feed.children[_snapIndex];
+    if (!target || !target.offsetParent) return;      // karta zmizela / skrytá
+    if (Math.abs(feed.scrollTop - target.offsetTop) <= 4) return;   // pozice sedí
+    const prev = feed.style.scrollBehavior;
+    feed.style.scrollBehavior = "auto";
+    feed.scrollTop = target.offsetTop;
+    feed.style.scrollBehavior = prev;
+  }
+  // návrat do okna (přepnutí aplikace), přepnutí záložky i obnovení z bfcache;
+  // dvakrát — hned a po dokreslení, kdyby se scroll resetoval až s reflow iframů
+  function onRefocus() { restoreSnap(); requestAnimationFrame(restoreSnap); setTimeout(restoreSnap, 180); }
+  window.addEventListener("focus", onRefocus);
+  window.addEventListener("pageshow", onRefocus);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) onRefocus(); });
 
   /* ---- Spodní menu ---- */
   const navEl = document.getElementById("glitch-nav");
