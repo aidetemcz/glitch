@@ -72,24 +72,21 @@
       x.beginPath(); x.arc(0, 0, s / 2, 0, Math.PI * 2); x.fill();
     };
   }
+  // jen bílá (žlutá odstraněna na přání)
   var GLOWS = [], PXS = [], DOTS = [], GLYPHS = [];
-  ['rgb(255,255,255)', 'rgb(255,255,0)'].forEach(function(col){
-    GLOWS.push(makeSprite(64, 0, softGlow(col)));
-  });
-  [WHITE, YELLOW].forEach(function(col){
-    [0, 2].forEach(function(bl){
-      PXS.push(makeSprite(7, bl, square(col)));
-      DOTS.push(makeSprite(9, bl, circle(col)));
-      CHARS.forEach(function(ch){
-        GLYPHS.push(makeSprite(15, bl, glyph(col, ch)));
-      });
+  GLOWS.push(makeSprite(64, 0, softGlow('rgb(255,255,255)')));
+  [0, 2].forEach(function(bl){
+    PXS.push(makeSprite(7, bl, square(WHITE)));
+    DOTS.push(makeSprite(9, bl, circle(WHITE)));
+    CHARS.forEach(function(ch){
+      GLYPHS.push(makeSprite(15, bl, glyph(WHITE, ch)));
     });
   });
 
   // ---- částice ----
   // st: 0 = trvalá stopa, 1 = rozstřel, 2 = ťuknutí (rychlý vznik a zánik)
   var parts = [];
-  var MAX = 3600;
+  var MAX = 6500;
   function rnd(a, b){ return a + Math.random() * (b - a); }
   function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
 
@@ -98,16 +95,18 @@
                  vx: vx || 0, vy: vy || 0, ttl: ttl || 0, ttl0: ttl || 1,
                  tw: Math.random() * Math.PI * 2, tws: rnd(0.8, 2.4) });
     if (parts.length > MAX){
+      // strop: nejstarší kousek stopy jen rychleji zhasne (plynule, bez rozstřelu)
       for (var i = 0; i < parts.length; i++){
-        if (parts[i].st === 0){ parts[i].st = 1; parts[i].ttl = parts[i].ttl0 = 0.5; break; }
+        if (parts[i].st === 0){ parts[i].ttl = Math.min(parts[i].ttl, 0.3); break; }
       }
     }
   }
 
+  function trailTtl(){ return rnd(4.2, 7.0); }   // dlouhá životnost → dlouhý ohon, který plynule mizí
   function spawnTrail(x, y){
     // měkká záře jako podklad stopy (řidší a jemnější, ať vyniknou drobky)
     if (Math.random() < 0.55){
-      addPart(x + rnd(-6, 6), y + rnd(-6, 6), pick(GLOWS), rnd(0.7, 1.7) * (M / 420), rnd(0.06, 0.16), 0);
+      addPart(x + rnd(-6, 6), y + rnd(-6, 6), pick(GLOWS), rnd(0.7, 1.7) * (M / 420), rnd(0.06, 0.16), 0, 0, 0, trailTtl());
     }
     // ostré i rozmazané drobky: pixely, tečky, znaky
     var n = 2 + (Math.random() < 0.4 ? 1 : 0);
@@ -117,7 +116,7 @@
       var kind = Math.random();
       var spr = kind < 0.35 ? pick(PXS) : (kind < 0.7 ? pick(DOTS) : pick(GLYPHS));
       addPart(x + Math.cos(a) * r, y + Math.sin(a) * r, spr,
-              rnd(0.6, 1.5) * (M / 420), rnd(0.5, 1), 0);
+              rnd(0.6, 1.5) * (M / 420), rnd(0.5, 1), 0, 0, 0, trailTtl());
     }
   }
 
@@ -150,8 +149,10 @@
   }
 
   // ---- ovládání ----
+  // stopa nekreslí přímo pod prstem, ale „dojíždí" za ním (cx,cy → tx,ty) v draw() —
+  // odtud plynulost a jemné zpoždění.
   var isDown = false, drawing = false;
-  var lastX = 0, lastY = 0, downX = 0, downY = 0, downT = 0;
+  var tx = 0, ty = 0, cx = 0, cy = 0, downX = 0, downY = 0, downT = 0;
   function toLocal(e){
     var r = frame.getBoundingClientRect();
     return { x: e.clientX - r.left, y: e.clientY - r.top };
@@ -159,23 +160,15 @@
   frame.addEventListener('pointerdown', function(e){
     isDown = true; drawing = false;
     var p = toLocal(e);
-    lastX = downX = p.x; lastY = downY = p.y;
+    tx = cx = downX = p.x; ty = cy = downY = p.y;
     downT = performance.now();
     e.preventDefault();
   });
   window.addEventListener('pointermove', function(e){
     if (!isDown) return;
     var p = toLocal(e);
-    if (!drawing && Math.hypot(p.x - downX, p.y - downY) > 6) drawing = true;
-    if (drawing){
-      var dx = p.x - lastX, dy = p.y - lastY;
-      var d = Math.hypot(dx, dy);
-      var step = Math.max(3, M * 0.011);
-      for (var s = 0; s < d; s += step){
-        spawnTrail(lastX + dx * (s / d), lastY + dy * (s / d));
-      }
-      lastX = p.x; lastY = p.y;
-    }
+    tx = p.x; ty = p.y;                                  // jen cíl; stopu vykreslí draw()
+    if (!drawing && Math.hypot(tx - downX, ty - downY) > 6) drawing = true;
     e.preventDefault();
   }, { passive: false });
   window.addEventListener('pointerup', function(e){
@@ -205,6 +198,20 @@
     var dt = Math.min(0.05, t - lastT || 0.016);
     lastT = t;
 
+    // stopa plynule dojíždí za prstem (zpoždění) a vykresluje se podél té dráhy
+    if (drawing){
+      var pcx = cx, pcy = cy;
+      var ease = 1 - Math.pow(0.0015, dt);            // menší číslo = větší zpoždění
+      cx += (tx - cx) * ease;
+      cy += (ty - cy) * ease;
+      var ddx = cx - pcx, ddy = cy - pcy;
+      var dd = Math.hypot(ddx, ddy);
+      var step = Math.max(2.5, M * 0.010);
+      for (var sd = 0; sd < dd; sd += step){
+        spawnTrail(pcx + ddx * (sd / dd), pcy + ddy * (sd / dd));
+      }
+    }
+
     ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 1;
     ctx.fillStyle = '#000';
@@ -215,7 +222,10 @@
       var p = parts[i];
       var a = p.a;
       if (p.st === 0){
-        a *= 0.82 + 0.18 * Math.sin(t * p.tws + p.tw);   // jemné dýchání stopy
+        p.ttl -= dt;
+        if (p.ttl <= 0){ parts.splice(i, 1); continue; }
+        var f = p.ttl / p.ttl0;                          // dlouho jasná, na konci plynule zhasne
+        a *= Math.min(1, f * 1.5) * (0.85 + 0.15 * Math.sin(t * p.tws + p.tw));
       } else {
         p.x += p.vx * dt;
         p.y += p.vy * dt;

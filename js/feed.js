@@ -382,8 +382,8 @@
       // (světelná stopa) přes celou plochu karty. Bez počítadla, bez dokončení
       // (jako dech/nálada — může se objevit klidně znovu).
       return `${badges(c)}
-        <h3 class="fx-block g-h3 asmr-txt" style="top:13%">${esc(c.title)}</h3>
-        <p class="fx-block g-p asmr-txt" style="top:18.5%">${esc(c.help || "")}</p>
+        <h1 class="fx-block g-h1 asmr-txt" style="top:13%">${esc(c.title)}</h1>
+        <p class="fx-block g-p asmr-txt" style="top:20.5%">${esc(c.help || "")}</p>
         <div class="asmr-viz"><iframe class="viz-frame asmr-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>`;
     },
 
@@ -522,7 +522,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=37", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=38", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
