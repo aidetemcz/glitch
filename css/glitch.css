@@ -141,6 +141,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .badge.topic { background: var(--c-yellow); color: #1a1a1a; }
 /* typ Glitche: černá výplň, žlutá outline, žlutý text */
 .badge.type { background: var(--c-black); color: var(--c-yellow); box-shadow: inset 0 0 0 calc(1.5 * var(--u)) var(--c-yellow); }
+/* u rychlých výzev (růžový podklad): bez výplně, černá outline, černý text (dle Figmy) */
+.card--pink .badge.type { background: transparent; color: #1a1a1a; box-shadow: inset 0 0 0 calc(1 * var(--u)) #1a1a1a; }
 /* kdo vytvořil: bílá výplň, šedý text */
 .badge.creator { background: var(--c-white); color: var(--c-grey-50, #747474); }
 
