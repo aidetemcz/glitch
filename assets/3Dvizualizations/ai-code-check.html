@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Najdi chybu — kód od AI</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #acCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="acCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('acCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  // řádky „kódu“ — jeden (BAD) má od začátku nenápadnou vadu
+  var BAD = 6;
+  var CODE = [
+    { indent: 0, kw: 0.055, len: 0.30 },
+    { indent: 1, kw: 0,     len: 0.24 },
+    { indent: 1, kw: 0,     len: 0.34 },
+    { indent: 2, kw: 0.05,  len: 0.20 },
+    { indent: 1, kw: 0,     len: 0.28 },
+    { indent: 0, kw: 0.055, len: 0.32 },
+    { indent: 1, kw: 0.05,  len: 0.30 },   // vadný řádek
+    { indent: 2, kw: 0,     len: 0.18 },
+    { indent: 1, kw: 0,     len: 0.26 },
+    { indent: 0, kw: 0,     len: 0.22 }
+  ];
+  var N = CODE.length;
+  var CX0 = 0.10, INDENT = 0.035, ROWH = 0.033, CY0 = 0.145;
+  function lineY(i){ return CY0 + i * ROWH; }
+  var APP = { x: 0.33, y: 0.53, w: 0.34, h: 0.34 };
+
+  // časová osa smyčky
+  var segs = [], T = 0;
+  function seg(type, dur){ segs.push({ type: type, start: T, dur: dur }); T += dur; }
+  seg('gen', 2.0);      // AI rychle napíše kód
+  seg('select', 0.7);   // výběr bloku
+  seg('copy', 0.8);     // zkopírování do appky
+  seg('run', 1.5);      // appka spokojeně běží
+  seg('glitch', 0.7);   // škobrtnutí
+  seg('pause', 0.4);
+  seg('scan', 2.4);     // žlutá lupa hledá
+  seg('reveal', 0.9);   // vadný řádek + otevřený zámek
+  seg('checks', 1.0);   // fajfky ostatním, křížek vadnému
+  seg('hold', 1.8);
+  seg('fade', 0.7);
+  var TOTAL = T;
+  var ORDER = segs.map(function(s){ return s.type; });
+
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function smooth(p){ return p * p * (3 - 2 * p); }
+  function ease(p){ return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; }
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  // jeden řádek kódu; vadný má mezeru a uskočený segment
+  function drawLine(i, reveal, yellowP, gapExtra, alphaMul){
+    if (reveal <= 0) return;
+    var c = CODE[i];
+    var x = (CX0 + c.indent * INDENT) * S;
+    var y = lineY(i) * S;
+    var bh = Math.max(2, S * 0.009);
+    var baseA = (i % 3 === 0 ? 0.62 : 0.5) * alphaMul;
+    function bar(bx, bw, dy, a){
+      if (bw <= 0) return;
+      ctx.fillStyle = 'rgba(255,255,255,' + (a * (1 - yellowP)).toFixed(3) + ')';
+      ctx.fillRect(bx, y - bh / 2 + dy, bw, bh);
+      if (yellowP > 0){
+        ctx.fillStyle = 'rgba(255,255,0,' + (Math.min(1, a + 0.3) * yellowP).toFixed(3) + ')';
+        ctx.fillRect(bx, y - bh / 2 + dy, bw, bh);
+      }
+    }
+    var kwW = c.kw * S * reveal;
+    if (c.kw > 0){ bar(x, kwW, 0, 0.85 * alphaMul); x += kwW + S * 0.012; }
+    var restW = c.len * S * reveal;
+    if (i === BAD){
+      var s1 = restW * 0.55;
+      var gap = S * (0.007 + gapExtra);
+      bar(x, s1, 0, baseA);
+      bar(x + s1 + gap, Math.max(0, restW - s1 - gap), S * 0.004 + gapExtra * S * 0.25, baseA * 0.85);
+    } else {
+      bar(x, restW, 0, baseA);
+    }
+    return x + restW;
+  }
+
+  function roundRectPath(x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function draw(now){
+    var t = (now / 1000) % TOTAL;
+    var sg = segs[segs.length - 1];
+    for (var si = 0; si < segs.length; si++){
+      if (t < segs[si].start + segs[si].dur){ sg = segs[si]; break; }
+    }
+    var local = (t - sg.start) / sg.dur;
+    var oi = ORDER.indexOf(sg.type);
+    function after(name){ return oi > ORDER.indexOf(name); }
+    function at(name){ return sg.type === name; }
+
+    var fadeA = at('fade') ? 1 - ease(local) : 1;
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+    ctx.globalAlpha = fadeA;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    // --- kód od AI ---
+    var shown = at('gen') ? N * smooth(local) : (after('gen') ? N : 0);
+    var revealP = at('reveal') ? ease(local) : (after('reveal') ? 1 : 0);
+    for (var i = 0; i < N; i++){
+      var rev = clamp01(shown - i);
+      drawLine(i, rev, i === BAD ? revealP : 0, i === BAD ? revealP * 0.008 : 0, 1);
+      if (rev > 0 && rev < 1 && at('gen')){
+        var c = CODE[i];
+        var tipX = (CX0 + c.indent * INDENT + (c.kw > 0 ? c.kw + 0.012 : 0) + c.len * rev) * S;
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.fillRect(tipX + 2, lineY(i) * S - S * 0.011, S * 0.007, S * 0.022);
+      }
+    }
+
+    // --- výběr bloku (čárkovaný rámeček) ---
+    if (at('select') || at('copy')){
+      var selA = at('select') ? ease(clamp01(local * 2)) : 1 - ease(local);
+      var sx = 0.075 * S, sy = 0.122 * S, sw = 0.525 * S, sh = 0.35 * S;
+      ctx.setLineDash([S * 0.016, S * 0.012]);
+      ctx.lineDashOffset = -(t * S * 0.05);
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.6 * selA).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(1, S * 0.0035);
+      ctx.strokeRect(sx, sy, sw, sh);
+      ctx.setLineDash([]);
+    }
+
+    // --- letící kopie bloku ---
+    if (at('copy')){
+      var cp = ease(local);
+      var fromX = 0.34, fromY = 0.30, toX = APP.x + APP.w / 2, toY = APP.y + APP.h * 0.42;
+      var gx = fromX + (toX - fromX) * cp;
+      var gy = fromY + (toY - fromY) * cp;
+      var gs = 1 - 0.62 * cp;
+      var ga = 0.85 - 0.45 * cp;
+      ctx.save();
+      ctx.translate(gx * S, gy * S);
+      ctx.scale(gs, gs);
+      for (var gi = 0; gi < N; gi++){
+        var gc = CODE[gi];
+        var lx = (CX0 + gc.indent * INDENT - 0.34) * S;
+        var ly = (lineY(gi) - 0.30) * S;
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.5 * ga).toFixed(3) + ')';
+        ctx.fillRect(lx, ly, (gc.len + gc.kw) * S, Math.max(1.5, S * 0.008));
+      }
+      ctx.restore();
+    }
+
+    // --- okno appky ---
+    if (after('select')){
+      var outlineP = at('copy') ? clamp01(local / 0.4) : 1;
+      var dimApp = after('glitch') ? 0.45 : 1;
+      var jx = 0, tearY = -1;
+      if (at('glitch')){
+        var env = (local > 0.1 && local < 0.3) || (local > 0.45 && local < 0.6) || (local > 0.75 && local < 0.85) ? 1 : 0;
+        jx = env * Math.sin(local * 140) * S * 0.012;
+        if (env) tearY = APP.y * S + APP.h * S * (0.3 + 0.4 * Math.abs(Math.sin(local * 53)));
+      }
+      ctx.save();
+      ctx.translate(jx, 0);
+      var ax = APP.x * S, ay = APP.y * S, aw = APP.w * S, ah = APP.h * S;
+      roundRectPath(ax, ay, aw, ah, 8);
+      ctx.fillStyle = '#000';
+      ctx.fill();
+      var per = 2 * (aw + ah);
+      if (outlineP < 1){
+        ctx.setLineDash([per, per]);
+        ctx.lineDashOffset = per * (1 - outlineP);
+      }
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.9 * dimApp).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(1.5, S * 0.0055);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // UI appky
+      var uiA = at('run') ? clamp01(local * 3) : (after('run') ? 1 : 0);
+      if (uiA > 0){
+        var flick = at('glitch') && jx !== 0 ? (Math.sin(local * 160) > 0 ? 1 : 0.15) : 1;
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.7 * uiA * dimApp).toFixed(3) + ')';
+        ctx.fillRect(ax + aw * 0.12, ay + ah * 0.15, aw * 0.5, Math.max(2, S * 0.009));
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.4 * uiA * dimApp * flick).toFixed(3) + ')';
+        ctx.fillRect(ax + aw * 0.12, ay + ah * 0.32, aw * 0.76, Math.max(2, S * 0.007));
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.4 * uiA * dimApp).toFixed(3) + ')';
+        ctx.fillRect(ax + aw * 0.12, ay + ah * 0.43, aw * 0.6, Math.max(2, S * 0.007));
+        // tlačítko: při běhu pulzuje, po pádu dostane křížek
+        var br = aw * 0.09;
+        var bx2 = ax + aw * 0.5, by2 = ay + ah * 0.72;
+        var pulse = at('run') ? 1 + 0.08 * Math.sin(local * Math.PI * 4) : 1;
+        ctx.beginPath();
+        ctx.arc(bx2, by2, br * pulse, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,255,255,' + (0.8 * uiA * dimApp).toFixed(3) + ')';
+        ctx.lineWidth = Math.max(1.25, S * 0.004);
+        ctx.stroke();
+        if (after('glitch')){
+          var ks = br * 0.5;
+          ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+          ctx.lineWidth = Math.max(1.5, S * 0.005);
+          ctx.beginPath();
+          ctx.moveTo(bx2 - ks, by2 - ks); ctx.lineTo(bx2 + ks, by2 + ks);
+          ctx.moveTo(bx2 + ks, by2 - ks); ctx.lineTo(bx2 - ks, by2 + ks);
+          ctx.stroke();
+        }
+      }
+      // „roztržení“ při glitchi
+      if (tearY > 0){
+        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(ax - S * 0.01, tearY);
+        ctx.lineTo(ax + aw + S * 0.01, tearY);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // --- žlutá lupa hledá chybu ---
+    if (at('scan') || at('reveal')){
+      var badY = lineY(BAD);
+      var lp = at('scan') ? ease(local) : 1;
+      var lyy = (0.115 + (badY - 0.115) * lp) * S;
+      var lxx = 0.34 * S;
+      var lr = S * 0.036;
+      var la = at('reveal') ? 1 - ease(local) * 0.4 : clamp01(local * 4);
+      ctx.beginPath();
+      ctx.arc(lxx, lyy, lr, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,0,' + (0.9 * la).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(1.5, S * 0.005);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(lxx + lr * 0.72, lyy + lr * 0.72);
+      ctx.lineTo(lxx + lr * 1.45, lyy + lr * 1.45);
+      ctx.strokeStyle = 'rgba(255,255,0,' + (0.9 * la).toFixed(3) + ')';
+      ctx.stroke();
+    }
+
+    // --- otevřený zámek u vadného řádku ---
+    if (revealP > 0){
+      var pz = revealP;
+      var zx = 0.585 * S, zy = lineY(BAD) * S;
+      var bw2 = S * 0.030, bh2 = S * 0.024;
+      ctx.globalAlpha = fadeA * pz;
+      ctx.strokeStyle = 'rgba(255,255,0,0.95)';
+      ctx.lineWidth = Math.max(1.5, S * 0.005);
+      ctx.strokeRect(zx - bw2 / 2, zy - bh2 * 0.1, bw2, bh2);
+      // třmen se otevře doprava nahoru
+      var openA = -Math.PI * 0.55 * ease(pz);
+      ctx.save();
+      ctx.translate(zx - bw2 / 2 + S * 0.004, zy - bh2 * 0.1);
+      ctx.rotate(openA);
+      ctx.beginPath();
+      ctx.arc(bw2 / 2 - S * 0.004, 0, bw2 / 2 - S * 0.004, Math.PI, 0);
+      ctx.stroke();
+      ctx.restore();
+      ctx.globalAlpha = fadeA;
+    }
+
+    // --- kontrola: fajfky a křížek ---
+    if (at('checks') || after('checks')){
+      var cp2 = at('checks') ? local : 1;
+      for (var mi = 0; mi < N; mi++){
+        var ap = clamp01((cp2 * 1.4 - mi * 0.09) / 0.25);
+        if (ap <= 0) continue;
+        var mx = 0.058 * S, my = lineY(mi) * S;
+        var ms = S * 0.011;
+        if (mi === BAD){
+          ctx.strokeStyle = 'rgba(255,255,0,' + (0.95 * ap).toFixed(3) + ')';
+          ctx.lineWidth = Math.max(1.5, S * 0.005);
+          ctx.beginPath();
+          ctx.moveTo(mx - ms, my - ms); ctx.lineTo(mx + ms, my + ms);
+          ctx.moveTo(mx + ms, my - ms); ctx.lineTo(mx - ms, my + ms);
+          ctx.stroke();
+        } else {
+          ctx.strokeStyle = 'rgba(255,255,255,' + (0.65 * ap).toFixed(3) + ')';
+          ctx.lineWidth = Math.max(1.25, S * 0.0045);
+          ctx.beginPath();
+          ctx.moveTo(mx - ms, my);
+          ctx.lineTo(mx - ms * 0.25, my + ms * 0.7);
+          ctx.lineTo(mx + ms, my - ms * 0.7);
+          ctx.stroke();
+        }
+      }
+    }
+
+    ctx.restore();
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
