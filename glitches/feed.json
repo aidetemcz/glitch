@@ -267,6 +267,20 @@
     "topic": "Algoritmus"
   },
   {
+    "id": "aktivita-kolo-strojove-uceni",
+    "type": "attention_game",
+    "category": "Aktivita",
+    "title": "Roztoč kolo a vyber slova strojového učení.",
+    "help": "Otáčej kolem tažením. U každého slova rozhodni, jestli patří ke strojovému učení — ťukni na ANO, nebo NE. Projdi všech 15 slov.",
+    "countLabel": "Zodpovězeno",
+    "countInit": "0/15",
+    "ns": "wheelwords",
+    "timer": false,
+    "viz": "assets/3Dvizualizations/wheel-words.html?v=1",
+    "topic": "Strojové učení",
+    "concept_id": "umela-inteligence-ai-se-uci-z-dat"
+  },
+  {
     "id": "algoritmus-hra-zivota",
     "type": "algorithm_demo",
     "chapterNo": 5,

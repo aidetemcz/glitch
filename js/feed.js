@@ -483,7 +483,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=30", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=31", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -719,22 +719,32 @@
     // po načtení iframu si vyžádáme aktuální skóre (u koule s dírami celkový počet)
     if (iframe) iframe.addEventListener("load", () => post("sync"));
 
-    // příjem skóre z koule (hit = zásahy, found = potvrzená slova)
+    // příjem skóre z aktivity. Různé hry posílají různá pole a různě signalizují
+    // konec:
+    //   • koule (díry / slova): posílá jen "score" průběžně (hit / found), hotovo
+    //     = nasbíral vše (n >= total);
+    //   • kolo slov: posílá "progress" (answered) během hry a "score" (correct)
+    //     až po zodpovězení všech → samotná zpráva "score" znamená konec.
     let hotovo = false;
+    let prubezna = false;               // viděli jsme "progress" → hra hlásí konec zvlášť
     window.addEventListener("message", (ev) => {
       if (iframe && ev.source !== iframe.contentWindow) return;
       const d = ev.data || {};
-      if (d.ns !== NS || d.type !== "score") return;
-      const n = (d.hit != null) ? d.hit : d.found;
-      if (countEl) countEl.textContent = n + "/" + d.total;
+      if (d.ns !== NS) return;
+      if (d.type !== "score" && d.type !== "progress") return;
+      const n = [d.hit, d.found, d.correct, d.answered].find((v) => v != null);
+      if (countEl && n != null && d.total != null) countEl.textContent = n + "/" + d.total;
 
-      // splněno = nasbíral vše (všechna slova / všechny díry). Učební aktivita se
-      // zaznamená stejně jako rychlá výzva (localStorage + Supabase progress) a
-      // doporučovač ji pak z feedu vyfiltruje, takže se přestane objevovat.
-      // Wellbeingové aktivity (c.replayable, např. koule) se ZÁMĚRNĚ nezaznamenávají
-      // — mají se objevovat klidně občas znovu.
-      if (!hotovo && !c.replayable && d.total > 0 && n >= d.total && c && c.id) {
+      if (d.type === "progress") { prubezna = true; return; }
+
+      // splněno: hra hlásící průběh (kolo) je hotová samotnou zprávou "score";
+      // hra počítající průběžně (koule) až po dosažení total. Wellbeingové aktivity
+      // (c.replayable) se ZÁMĚRNĚ nezaznamenávají — mají se občas objevovat znovu.
+      const dokonceno = prubezna || (d.total > 0 && n != null && n >= d.total);
+      if (!hotovo && !c.replayable && dokonceno && c && c.id) {
         hotovo = true;
+        // u kola ukážeme počítadlo jako „vše zodpovězeno" (total/total)
+        if (prubezna && countEl && d.total != null) countEl.textContent = d.total + "/" + d.total;
         if (typeof window.markGlitchDone === "function") {
           window.markGlitchDone(c.id, { typ: c.type, correct: true });
         }
