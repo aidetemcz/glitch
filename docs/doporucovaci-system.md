@@ -96,6 +96,8 @@ Uživatel vidí **editovatelný model svých preferencí** (které fasety mu sed
 | **attention_game** | zvládnutí aktivity (v relaci) | při zahrání |
 | **breathing** | využití zklidnění | při zahrání |
 
+> Do rodiny wellbeing typů patří i **asmr** (zklidnění) a **inspirace** (tvůrčí nakopnutí + založení projektu). Ty samy o sobě **neměří signál**, ale řazení s nimi počítá jako s wellbeing prvky feedu (`WELLBEING_TYPES` v `js/recommender.js`).
+
 > Všechna emoční data žijí jen v **24hodinové relaci** a pak se mažou (princip 11) — slouží k úpravě dnešního feedu, ne jako trvalý štítek.
 
 ### Pravidlo přizpůsobení

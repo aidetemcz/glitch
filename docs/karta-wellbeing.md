@@ -2,7 +2,7 @@
 
 _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na příkladu „Jak se teď cítíš?". Návrh k připomínkám. Vytvořeno: 2026-07-23._
 
-**Jak číst tenhle soubor.** Wellbeing nejsou znalostní Glitche — jsou to **interaktivní denní selectory a krátké hry**, které jsou pevnou součástí feedu (ne přeskočitelný bonus). Nemají chatbota ani fork. Mají tři podtypy: **mood_selector**, **breathing** a **attention_game**. Odpadají proto sekce o výukovém kontraktu a kontextu pro bota; klíčové je, co se měří, kam se to ukládá a jak dlouho.
+**Jak číst tenhle soubor.** Wellbeing nejsou znalostní Glitche — jsou to **interaktivní denní selectory a krátké hry**, které jsou pevnou součástí feedu (ne přeskočitelný bonus). Mají několik podtypů: **mood_selector**, **breathing**, **attention_game** a **asmr** — ty nemají chatbota ani fork; klíčové je, co se měří, kam se to ukládá a jak dlouho. Samostatně stojí typ **[Inspirace](./karta-inspirace.md)** — do feedu vstupuje také jako wellbeing, ale narozdíl od ostatních **má rozklik i chatbota** (a místo forku z něj vzniká projekt).
 
 **Interakce:** Rozklik ⭘ někdy · Chatbot ❌ · Fork ❌
 **Datový soubor:** [`../glitches/wellbeing/`](../glitches/wellbeing)

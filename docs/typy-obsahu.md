@@ -50,6 +50,9 @@ Obsah se dělí do **7 typů** (= složky v `glitches/`). Legenda: **Rozklik** =
 | 5 | Najdi chybu | [`najdi-chybu/`](../glitches/najdi-chybu) | [karta](./karta-najdi-chybu.md) | ano | ano | ano |
 | 6 | Historická osobnost | [`historicka-osobnost/`](../glitches/historicka-osobnost) | [karta](./karta-historicka-osobnost.md) | ano | ano | ano |
 | 7 | Argumentuj | [`argument/`](../glitches/argument) | [karta](./karta-argument.md) | ano | ano | ne |
+| 8 | Inspirace | `feed.json` (`inspirace`) | [karta](./karta-inspirace.md) | ano | ano | ne¹ |
+
+> ¹ Inspirace nemá fork — místo něj z konverzace vzniká **projekt** (sekce Tvé projekty). Je to wellbeing typ s chatbotem: do feedu vstupuje jako wellbeing, ale na rozdíl od mood/dýchání má rozklik i konverzaci.
 
 > **Návrh karty** = šablona sekcí + konkrétní příklad daného typu (podklad pro redakci i AI asistenta při tvorbě Glitchů).
 > **Systémové karty** (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace, nemají složku.

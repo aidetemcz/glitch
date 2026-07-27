@@ -21,6 +21,7 @@ async function gptChat(messages, opts) {
       zak: opts.zak,                 // profil žáka (co už zvládl); názvy dohledá server
       model: opts.model,             // volitelně "gpt-4o" (jinak gpt-4o-mini)
       temperature: opts.temperature, // volitelně
+      quiz: opts.quiz,               // false = nikdy neposílat kvíz (např. Inspirace)
     }),
   });
   const data = await res.json().catch(() => ({}));

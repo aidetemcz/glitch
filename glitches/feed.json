@@ -124,6 +124,23 @@
     "viz": "assets/3Dvizualizations/asmrtrail.html?v=3"
   },
   {
+    "id": "inspirace-nocni-hory",
+    "type": "inspirace",
+    "category": "Inspirace",
+    "topic": "Data",
+    "trust": "core",
+    "title": "Noční hory",
+    "body": "I takhle může vypadat vizualizace dat. Vytvořili jsme ji jednoduše pomocí Vibe Codingu. Můžeš to zkusit také, Glitchee ti pomůže. Napiš mu nápady, jaká data chceš vizualizovat a vytvoří ti projekt.",
+    "viz": "assets/3Dvizualizations/nigth-mountains.html?v=1",
+    "rozklik": {
+      "kind": "chat",
+      "persona": "glitchee",
+      "pretest": false,
+      "cil": "Pomoct žákovi vymyslet konkrétní nápad na vizualizaci dat a založit mu k tomu projekt.",
+      "zadani": "Tohle je wellbeing Glitch typu Inspirace — ne výuka, ale tvůrčí nakopnutí. Na kartě žák viděl ukázkovou vizualizaci dat („Noční hory“, vytvořenou vibecodingem) a napsal ti svoje první nápady, co by chtěl vizualizovat. Není to téma ke zkoušení — neděláš kvíz ani nehodnotíš. Bav se s žákem přátelsky a stručně (2–3 věty na zprávu, jedna otázka) o tom, jaká KONKRÉTNÍ data by chtěl zobrazit a jakou formou (graf, mapa, 3D scéna…). Pomoz mu nápad zúžit na něco uchopitelného. Po 2–4 výměnách, až budete mít konkrétní nápad, se ho zeptej, jestli mu z toho máš založit projekt, kde bude moct dál pracovat (najde ho v sekci Tvé projekty). Když žák souhlasí, odpověz krátkým potvrzením a na úplný konec zprávy přidej blok (žák ho neuvidí, slouží aplikaci k založení projektu):\n```projekt\n{\"nazev\": \"krátký výstižný název\", \"popis\": \"1–2 věty, co projekt bude vizualizovat a z jakých dat\"}\n```\nBlok pošli jen JEDNOU a jen když žák jasně souhlasil. Když žák nesouhlasí nebo chce ještě přemýšlet, projekt nezakládej a pokračuj v povídání."
+    }
+  },
+  {
     "id": "vibecoding-co-je",
     "type": "quest_intro",
     "trust": "Core",

@@ -412,6 +412,20 @@
         <h2 class="fx-block g-h2" style="top:22.1%">${esc(c.title)}</h2>
         <p class="fx-block letgo-text g-p" style="top:29.1%">${esc(c.body)}</p>
         <img class="letgo-img" src="${c.image || "assets/img/time-to-let-go-cat.jpg"}" alt="">`;
+    },
+
+    inspirace(c) {
+      // Wellbeing „Inspirace": nadpis + text nahoře, ukázková vizualizace přes
+      // celou plochu a dole vstupní pole. Žák napíše nápady → otevře se detail
+      // (chat s Glitchee o tom, co vizualizovat, a případné založení projektu).
+      return `${badges(c)}
+        <h2 class="fx-block g-h2 insp-txt" style="top:9%">${esc(c.title)}</h2>
+        <p class="fx-block g-p insp-txt" style="top:16%">${esc(c.body || "")}</p>
+        <div class="insp-viz"><iframe class="viz-frame insp-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>
+        <form class="insp-form" data-insp-form>
+          <input class="insp-input" type="text" placeholder="Začni psát…" aria-label="Napiš své nápady na vizualizaci" autocomplete="off">
+          <button class="insp-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>
+        </form>`;
     }
   };
 
@@ -462,7 +476,7 @@
   const BG = {
     welcome: "yellow", intro: "white", argument: "black", mood_selector: "white", daily_summary: "white",
     breathing: "black", attention_game: "black", algorithm_demo: "black", time_to_let_go: "black",
-    asmr: "black",
+    asmr: "black", inspirace: "black",
     quick_challenge: "pink", spot_the_mistake: "black", fun_fact: "black",
     historicka_osobnost: "black", quest_intro: "image"
   };
@@ -524,7 +538,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=45", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=46", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;
@@ -751,9 +765,26 @@
     if (c.type === "fun_fact") initVizFrame(el);            // fun fact může mít animaci (viz) místo obrázku
     if (c.type === "spot_the_mistake") initVizFrame(el);    // i „najdi chybu" může mít animaci místo fotky
     if (c.type === "asmr") initVizFrame(el);                // ASMR: interaktivní světelná stopa přes celou kartu
+    if (c.type === "inspirace") { initVizFrame(el); initInspirace(el, c); }
     if (c.type === "quest_intro") initQuestVideo(el);
     // úvodní karta: šipka otevře detail (řeší globální handler data-nav),
     // swipe posune na další Glitch. Přihlášení je v profilu (spodní menu).
+  }
+
+  // Inspirace: vstupní pole na kartě → po odeslání otevři detail (chat) a pošli
+  // zadaný text jako první zprávu žáka (viz seed v initRzChat).
+  function initInspirace(el, c) {
+    const form = el.querySelector("[data-insp-form]");
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const field = form.querySelector(".insp-input");
+      const text = ((field && field.value) || "").trim();
+      if (!text) return;
+      c._seed = text;                 // první zpráva žáka do chatu
+      if (field) field.value = "";
+      openRozklik(c);
+    });
   }
 
   /* ---- Spolehlivé načítání animací (iframe vizualizace) ----
@@ -1544,6 +1575,18 @@
      pak pošleme botovi zpátky jako zprávu, aby na něj mohl navázat. */
   const KVIZ_RE = /```kviz\s*([\s\S]*?)```/i;
 
+  /* ---- Projekt z chatu (Inspirace) ----
+     Bot ukončí zprávu blokem ```projekt {"nazev":…,"popis":…}``` = pokyn aplikaci
+     založit projekt. Blok z textu vyjmeme (žák ho nevidí) a předáme dál. */
+  const PROJEKT_RE = /```projekt\s*([\s\S]*?)```/i;
+  function extractProjekt(text) {
+    const m = PROJEKT_RE.exec(text || "");
+    if (!m) return { text: text, projekt: null };
+    let projekt = {};
+    try { projekt = JSON.parse(m[1].trim()) || {}; } catch (_) { projekt = {}; }
+    return { text: (text.slice(0, m.index) + text.slice(m.index + m[0].length)).trim(), projekt: projekt };
+  }
+
   function extractKviz(text) {
     const m = KVIZ_RE.exec(text || "");
     if (!m) return { text: text, kviz: null };
@@ -1652,13 +1695,19 @@
           persona: personaOf(card),
           context: buildGlitchContext(card),
           zak: buildZakProfil(),
-          temperature: opts.temperature || 0.3
+          temperature: opts.temperature || 0.3,
+          // Inspirace není o zkoušení — místo kvízu vzniká projekt.
+          quiz: card.type === "inspirace" ? false : undefined
         });
         typing.remove();
         history.push({ role: "assistant", content: reply });
 
-        const parsed = extractKviz(reply);
+        // Inspirace: bot může ukončit zprávu blokem ```projekt {…}``` = pokyn
+        // aplikaci založit projekt. Ten se do vlákna nevypisuje.
+        const parsedP = extractProjekt(reply);
+        const parsed = extractKviz(parsedP.text);
         if (parsed.text) rzAppendBot(thread, parsed.text, ava);
+        if (parsedP.projekt && card.type === "inspirace") zalozProjekt(parsedP.projekt);
         if (parsed.kviz) {
           // odpověď z kvízu pošleme botovi zpět (neviditelně), ať na ni naváže
           // Kvíz sám o sobě Glitch NEuzavírá — po odpovědi se pošle hodnocení
@@ -1763,7 +1812,49 @@
       }));
     } else {
       form.classList.remove("is-hidden");
-      if (history.length === 0) greet(argOpening(card) || mistakeOpening(card));
+      if (history.length === 0) {
+        // Inspirace: žák napsal nápady na kartě → pošli je jako první zprávu.
+        if (card.type === "inspirace" && card._seed) {
+          const seed = card._seed; card._seed = null;
+          ask(seed);
+        } else {
+          greet(argOpening(card) || mistakeOpening(card));
+        }
+      }
+    }
+
+    // Inspirace: založení projektu z pokynu bota (```projekt {nazev, popis}```).
+    let projektHotovo = false;
+    function zalozProjekt(p) {
+      if (projektHotovo) return;
+      projektHotovo = true;
+      let created = null;
+      try {
+        if (typeof window.createProject === "function") {
+          created = window.createProject({
+            glitch_id: (card.id || "inspirace") + "-" + Date.now().toString(36),
+            quest_topic: card.topic || "Data",
+            title: (p && p.nazev) || card.title || "Vizualizace dat",
+            brief: (p && p.popis) || ""
+          });
+        }
+      } catch (_) {}
+      const box = document.createElement("div");
+      box.className = "rz-hotovo";
+      box.innerHTML =
+        `<p class="rz-hotovo-text g-p">Založil jsem ti projekt „${esc((p && p.nazev) || "Vizualizace dat")}“.</p>` +
+        `<p class="rz-hotovo-sub g-p-s">Najdeš ho v profilu v sekci Tvé projekty, kde na něm můžeš dál pracovat.</p>` +
+        `<div class="rz-hotovo-akce">` +
+        `<button class="rz-hotovo-btn is-primary" data-insp-open>Otevřít Tvé projekty</button>` +
+        `<button class="rz-hotovo-btn" data-rz-feed>Přejít na Glitchfeed</button></div>`;
+      box.querySelector("[data-insp-open]").addEventListener("click", () => {
+        closeRozklik();
+        if (typeof window.glitchOpenProfile === "function") window.glitchOpenProfile("board");
+      });
+      box.querySelector("[data-rz-feed]").addEventListener("click", closeRozklik);
+      thread.appendChild(box);
+      form.classList.add("is-hidden");
+      scrollDown();
     }
 
     // U Argumentuj persona zahájí podle zvoleného postoje (souhlas / nesouhlas).

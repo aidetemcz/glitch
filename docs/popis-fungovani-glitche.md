@@ -48,6 +48,8 @@ Obsah se dělí do typů (= složky v glitches/):
 4.  **Fun fact** — rozklikávací zajímavost bez úkolu, pro zpestření.
 5.  **Najdi chybu** — rozklikávací Glitch pro kritické myšlení a prebunking; dítě odhalí chybné tvrzení.
 6.  **Historická osobnost** — seznámení s osobností oboru + konverzace s AI personou.
+7.  **Argumentuj** — rozklikávací Glitch, kde dítě obhajuje postoj v debatě s AI personou (argumentační partner).
+8.  **Inspirace** — wellbeing typ s chatbotem: ukázková vizualizace dat + vstupní pole; z konverzace s Glitchee vzniká projekt (Tvé projekty).
 
 Systémové karty (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace a nemají složku.
 

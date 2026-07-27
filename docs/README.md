@@ -12,8 +12,8 @@ Kanonická dokumentace projektu — **zdroj pravdy je tady na GitHubu**. Dřív 
 
 ## Obsah a karty
 
-- [`typy-obsahu.md`](./typy-obsahu.md) — přehled 7 typů obsahu (Basic Glitch, Rychlá výzva, Wellbeing, Fun fact, Najdi chybu, Historická osobnost, Argumentuj), stavy důvěry, relace, source of truth.
-- **Návrhy karet** — šablona sekcí + konkrétní příklad pro každý typ: [`karta-basic-glitch.md`](./karta-basic-glitch.md), [`karta-rychla-vyzva.md`](./karta-rychla-vyzva.md), [`karta-wellbeing.md`](./karta-wellbeing.md), [`karta-funfact.md`](./karta-funfact.md), [`karta-najdi-chybu.md`](./karta-najdi-chybu.md), [`karta-historicka-osobnost.md`](./karta-historicka-osobnost.md), [`karta-argument.md`](./karta-argument.md).
+- [`typy-obsahu.md`](./typy-obsahu.md) — přehled typů obsahu (Basic Glitch, Rychlá výzva, Wellbeing, Fun fact, Najdi chybu, Historická osobnost, Argumentuj, Inspirace), stavy důvěry, relace, source of truth.
+- **Návrhy karet** — šablona sekcí + konkrétní příklad pro každý typ: [`karta-basic-glitch.md`](./karta-basic-glitch.md), [`karta-rychla-vyzva.md`](./karta-rychla-vyzva.md), [`karta-wellbeing.md`](./karta-wellbeing.md), [`karta-funfact.md`](./karta-funfact.md), [`karta-najdi-chybu.md`](./karta-najdi-chybu.md), [`karta-historicka-osobnost.md`](./karta-historicka-osobnost.md), [`karta-argument.md`](./karta-argument.md), [`karta-inspirace.md`](./karta-inspirace.md).
 - [`napady-argumentuj.md`](./napady-argumentuj.md) — zásobník tvrzení pro typ Argumentuj.
 
 ## Doporučování a data
