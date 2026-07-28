@@ -117,7 +117,7 @@
     { id: "saved", label: "Tvé uložené Glitche", empty: "Nic uloženého. Glitche, které si uložíš, najdeš tady." }
   ];
 
-  let state = { tab: "quests", savedSub: "posts" };
+  let state = { tab: "quests", savedSub: "posts", peopleView: null };
 
   /* ---------- mapa znalostí (Glitchboard) ----------
      Kostra mapy (témata → koncepty) se načítá z knowledge-map/map-index.json;
@@ -497,6 +497,7 @@
   }
 
   function contentHtml() {
+    if (state.peopleView) return peopleContentHtml(state.peopleView);
     if (state.tab === "search") {
       return '<h2 class="pf-section-title pf-section-title--flush">Co všechno na Glitchi najdeš</h2>' +
         '<div class="pf-search-wrap" data-pf-search-body>' + searchHtml() + '</div>';
@@ -552,6 +553,7 @@
     currentUser = u;
     close();
     state.tab = VALID_TABS[tab] ? tab : "search";   // výchozí zobrazení = lupa (Co všechno na Glitchi najdeš)
+    state.peopleView = null;                          // seznam sledování se otevírá až klikem na statistiky
     const el = document.createElement("section");
     el.id = "glitch-profile";
     el.innerHTML = render(u);
@@ -586,6 +588,7 @@
     hydrateQuests();                 // po přepnutí dotáhni obsah tabu, pokud ještě není
     hydrateProjects();
     hydrateSearch();
+    hydratePeople();                 // seznam sledování (když je aktivní)
   }
 
   function toastPf(msg) {
@@ -655,40 +658,29 @@
 
   function regEnt(ent) { _entReg[ent.id] = ent; return ent; }
 
-  function openPeople(kind) {
+  // Seznam sledování je součást profilu (zůstávají hlavička i taby profilu),
+  // ne samostatný overlay. Renderuje se do obsahu profilu (contentHtml).
+  function peopleContentHtml(kind) {
     const title = kind === "followers" ? "Tvoji sledující" : "Sleduješ";
-    const ov = document.createElement("div");
-    ov.className = "pf-people-overlay"; ov.id = "pf-people-overlay";
-    ov.innerHTML =
-      '<div class="pf-people-panel">' +
-        '<header class="pf-people-bar">' +
-          '<button class="pf-people-back" data-people-close aria-label="Zpět"><img src="assets/ui/more-button.svg" alt=""></button>' +
-          '<h2 class="pf-people-title g-h4">' + esc(title) + '</h2>' +
-        '</header>' +
-        '<div class="pf-search-bar"><div class="pf-search-field">' +
-          '<input class="pf-search-input" data-people-search placeholder="Najdi uživatele…" autocomplete="off">' +
-          '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button>' +
-        '</div></div>' +
-        '<div class="pf-people-body" data-people-body><div class="pf-empty">Načítám…</div></div>' +
-      '</div>';
-    document.body.appendChild(ov);
-    document.body.classList.add("rz-lock");
-    wirePeople(ov, kind);
-    loadPeople(ov, kind);
+    return '<h2 class="pf-section-title pf-section-title--flush">' + esc(title) + '</h2>' +
+      '<div class="pf-search-bar"><div class="pf-search-field">' +
+        '<input class="pf-search-input" data-people-search placeholder="Začni vyhledávat…" autocomplete="off">' +
+        '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button>' +
+      '</div></div>' +
+      '<div class="pf-people-list" data-people-body><div class="pf-empty">Načítám…</div></div>';
   }
 
-  function closePeople() {
-    const e = document.getElementById("pf-people-overlay"); if (e) e.remove();
-    if (!document.getElementById("pf-public-overlay")) document.body.classList.remove("rz-lock");
-  }
-
-  function loadPeople(ov, kind) {
-    const body = ov.querySelector("[data-people-body]");
+  function hydratePeople() {
+    const kind = state.peopleView;
+    if (!kind) return;
+    const cur = document.getElementById("glitch-profile"); if (!cur) return;
+    const body = cur.querySelector("[data-people-body]"); if (!body) return;
     const idsP = (typeof sbFollowingIds === "function") ? sbFollowingIds() : Promise.resolve([]);
     const listP = kind === "followers"
       ? ((typeof sbListFollowers === "function") ? sbListFollowers() : Promise.resolve([]))
       : ((typeof sbListFollowing === "function") ? sbListFollowing() : Promise.resolve([]));
     Promise.all([idsP, listP]).then(([ids, list]) => {
+      if (state.peopleView !== kind) return;
       _followingSet = new Set(ids || []);
       renderPeopleList(body, kind, list || []);
     }).catch(() => renderPeopleList(body, kind, []));
@@ -717,53 +709,7 @@
     }).join("");
   }
 
-  function wirePeople(ov, kind) {
-    // vyhledávání uživatelů (debounce)
-    let t = null;
-    ov.addEventListener("input", (e) => {
-      if (!e.target.matches("[data-people-search]")) return;
-      const q = e.target.value.trim();
-      clearTimeout(t);
-      const body = ov.querySelector("[data-people-body]");
-      if (!q) { loadPeople(ov, kind); return; }
-      t = setTimeout(() => {
-        if (typeof sbSearchUsers !== "function") return;
-        sbSearchUsers(q).then((r) => renderPeopleSearch(body, r || [])).catch(() => renderPeopleSearch(body, []));
-      }, 250);
-    });
-
-    ov.addEventListener("click", (e) => {
-      if (e.target === ov || e.target.closest("[data-people-close]")) { closePeople(); return; }
-      const msg = e.target.closest("[data-people-msg]");
-      if (msg) { e.stopPropagation(); startChat(_entReg[msg.dataset.peopleMsg]); return; }
-      const fol = e.target.closest("[data-people-follow]");
-      if (fol) {
-        e.stopPropagation();
-        const id = fol.dataset.peopleFollow;
-        if (typeof sbFollow === "function") sbFollow(id).then(() => {
-          _followingSet.add(id);
-          const a = ACT_UNFOLLOW(id);
-          fol.outerHTML = '<button class="pf-people-act ' + a.cls + '" ' + a.attr + '>' + a.label + '</button>';
-          const p = document.getElementById("glitch-profile"); if (p) refreshFollowCounts(p);
-        });
-        return;
-      }
-      const unf = e.target.closest("[data-people-unfollow]");
-      if (unf) {
-        e.stopPropagation();
-        const id = unf.dataset.peopleUnfollow;
-        if (typeof sbUnfollow === "function") sbUnfollow(id).then(() => {
-          _followingSet.delete(id);
-          const a = ACT_FOLLOW(id);
-          unf.outerHTML = '<button class="pf-people-act ' + a.cls + '" ' + a.attr + '>' + a.label + '</button>';
-          const p = document.getElementById("glitch-profile"); if (p) refreshFollowCounts(p);
-        });
-        return;
-      }
-      const row = e.target.closest("[data-people-open]");
-      if (row) { openPublicProfile(_entReg[row.dataset.peopleOpen]); return; }
-    });
-  }
+  let _peopleSearchT = null;    // debounce vyhledávání v seznamu sledování
 
   // Chat: zatím „jen tak" jen s Glitcheem; přímé zprávy mezi lidmi se připravují.
   function startChat(ent) {
@@ -841,6 +787,19 @@
   window.glitchOpenPublicGlitchee = () => openPublicProfile(GLITCHEE);
 
   function wire(el) {
+    // vyhledávání uživatelů v seznamu sledování (kohokoli v DB)
+    el.addEventListener("input", (e) => {
+      if (!e.target || !e.target.matches("[data-people-search]")) return;
+      const q = e.target.value.trim();
+      const body = el.querySelector("[data-people-body]");
+      clearTimeout(_peopleSearchT);
+      if (!q) { hydratePeople(); return; }
+      _peopleSearchT = setTimeout(() => {
+        if (typeof sbSearchUsers !== "function") { renderPeopleSearch(body, []); return; }
+        sbSearchUsers(q).then((r) => renderPeopleSearch(body, r || [])).catch(() => renderPeopleSearch(body, []));
+      }, 250);
+    });
+
     // vyhledávání KONKRÉTNÍCH Glitchů: filtruje položky, rozbalí témata se shodou
     el.addEventListener("input", (e) => {
       if (!e.target || !e.target.matches("[data-pf-search]")) return;
@@ -867,9 +826,9 @@
       });
     });
 
-    // taby
+    // taby (přepnutí tabu opustí seznam sledování)
     el.querySelectorAll(".pf-tab").forEach((b) => b.addEventListener("click", () => {
-      state.tab = b.dataset.tab; rerenderContent(el);
+      state.peopleView = null; state.tab = b.dataset.tab; rerenderContent(el);
     }));
 
     // přepínače a osobní údaje (delegace, protože se překreslují)
@@ -913,9 +872,37 @@
         else if (act === "contact") { location.href = "mailto:aplikace@aidetem.cz"; }
         return;
       }
-      // hlavička: klik na „sleduji" / „sledujících" → seznam sledování
+      // hlavička: klik na „sleduji" / „sledujících" → seznam sledování v profilu
       const peopleStat = e.target.closest("[data-people]");
-      if (peopleStat) { openPeople(peopleStat.dataset.people); return; }
+      if (peopleStat) { state.peopleView = peopleStat.dataset.people; rerenderContent(el); return; }
+
+      // seznam sledování: poslat zprávu / sledovat / odsledovat / otevřít profil
+      const pMsg = e.target.closest("[data-people-msg]");
+      if (pMsg) { startChat(_entReg[pMsg.dataset.peopleMsg]); return; }
+      const pFol = e.target.closest("[data-people-follow]");
+      if (pFol) {
+        const id = pFol.dataset.peopleFollow;
+        if (typeof sbFollow === "function") sbFollow(id).then(() => {
+          _followingSet.add(id);
+          const a = ACT_UNFOLLOW(id);
+          pFol.outerHTML = '<button class="pf-people-act ' + a.cls + '" ' + a.attr + '>' + a.label + '</button>';
+          refreshFollowCounts(el);
+        });
+        return;
+      }
+      const pUnf = e.target.closest("[data-people-unfollow]");
+      if (pUnf) {
+        const id = pUnf.dataset.peopleUnfollow;
+        if (typeof sbUnfollow === "function") sbUnfollow(id).then(() => {
+          _followingSet.delete(id);
+          const a = ACT_FOLLOW(id);
+          pUnf.outerHTML = '<button class="pf-people-act ' + a.cls + '" ' + a.attr + '>' + a.label + '</button>';
+          refreshFollowCounts(el);
+        });
+        return;
+      }
+      const pOpen = e.target.closest("[data-people-open]");
+      if (pOpen) { openPublicProfile(_entReg[pOpen.dataset.peopleOpen]); return; }
 
       // klik jinam zavře otevřené ⋮ menu (a pokračuje dál)
       const pop = el.querySelector("[data-pf-menu-pop]");

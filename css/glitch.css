@@ -1439,22 +1439,23 @@ body.rz-lock { overflow: hidden; }
 .pf-stat { background: transparent; border: 0; cursor: pointer; }
 button.pf-stat:active b { color: var(--c-grey-50); }
 
-/* Overlay seznamu lidí i veřejného profilu — nad profilem, končí nad menu. */
-.pf-people-overlay, .pf-public-overlay {
+/* Veřejný profil (jiný uživatel / Glitchee) — celoobrazovkový overlay nad
+   profilem, končí nad menu. Seznam sledování NENÍ overlay (viz níž). */
+.pf-public-overlay {
   position: fixed; top: 0; left: 0; right: 0;
   bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
   z-index: 62; background: rgba(0,0,0,0.35);
 }
-.pf-people-panel, .pf-public-panel {
+.pf-public-panel {
   position: relative; width: 100%; max-width: var(--feed-max); height: 100%;
   margin: 0 auto; background: var(--c-white); color: var(--c-black);
   display: flex; flex-direction: column;
   overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
   --pf-gutter: calc(24 * var(--u));
 }
-.pf-people-panel::-webkit-scrollbar, .pf-public-panel::-webkit-scrollbar { display: none; }
+.pf-public-panel::-webkit-scrollbar { display: none; }
 
-/* horní lišta: zpět (vlevo), titulek / ⋮ menu */
+/* horní lišta veřejného profilu: zpět (vlevo) + ⋮ menu (vpravo) */
 .pf-people-bar {
   flex: 0 0 auto; position: sticky; top: 0; z-index: 3;
   display: flex; align-items: center; gap: calc(12 * var(--u));
@@ -1464,12 +1465,12 @@ button.pf-stat:active b { color: var(--c-grey-50); }
 .pf-people-back { flex: 0 0 auto; display: grid; place-items: center; width: calc(30 * var(--u)); transition: transform .12s ease; }
 .pf-people-back img { width: calc(26 * var(--u)); height: auto; }
 .pf-people-back:active { transform: scale(.92); }
-.pf-people-title { margin: 0; color: var(--c-black); }
 /* v lište veřejného profilu je ⋮ menu vpravo (statické, ne absolutní) */
 .pf-public-panel .pf-people-bar .pf-menu { position: static; margin-left: auto; }
 
-/* seznam řádků uživatelů */
-.pf-people-body { flex: 1 1 auto; padding: calc(6 * var(--u)) var(--pf-gutter) calc(28 * var(--u)); }
+/* Seznam sledování je součástí profilu (žádný overlay) — renderuje se do obsahu,
+   hlavička i taby profilu zůstávají nad ním. */
+.pf-people-list { padding: calc(4 * var(--u)) 0 calc(20 * var(--u)); }
 .pf-people-row {
   display: flex; align-items: center; gap: calc(12 * var(--u));
   padding: calc(12 * var(--u)) 0; cursor: pointer;
@@ -1484,16 +1485,18 @@ button.pf-stat:active b { color: var(--c-grey-50); }
 .pf-people-meta { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: calc(1 * var(--u)); }
 .pf-people-name { font-size: calc(16 * var(--u)); font-weight: 700; color: var(--c-black); letter-spacing: var(--tracking); }
 .pf-people-handle { font-size: calc(13 * var(--u)); color: var(--c-grey-50); }
+/* akční tlačítka = standardní Glitch tlačítka (1,5px černá outline, radius 8u) */
 .pf-people-act {
   flex: 0 0 auto; white-space: nowrap; cursor: pointer;
-  padding: calc(8 * var(--u)) calc(14 * var(--u)); border-radius: calc(20 * var(--u));
-  font-family: var(--font); font-size: calc(13 * var(--u)); letter-spacing: var(--tracking);
-  border: 2px solid var(--c-black);
+  padding: calc(9 * var(--u)) calc(15 * var(--u)); border-radius: calc(8 * var(--u));
+  font-family: var(--font); font-size: calc(14 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  border: 1.5px solid var(--c-black); color: var(--c-black);
+  transition: opacity .12s ease;
 }
-.pf-people-act.is-follow { background: var(--c-yellow); color: var(--c-black); }
-.pf-people-act.is-unfollow { background: var(--c-white); color: var(--c-black); }
-.pf-people-act.is-msg { background: var(--c-black); color: var(--c-white); }
-.pf-people-act:active { transform: scale(.96); }
+.pf-people-act.is-msg { background: var(--c-yellow); }        /* Poslat zprávu = primární žluté */
+.pf-people-act.is-unfollow { background: transparent; }        /* Přestat sledovat = outline */
+.pf-people-act.is-follow { background: var(--c-grey-10); }      /* Začít sledovat = šedé */
+.pf-people-act:active { opacity: .7; }
 
 /* veřejný profil */
 .pf-public-body { flex: 1 1 auto; padding: 0 var(--pf-gutter) calc(120 * var(--u)); }
