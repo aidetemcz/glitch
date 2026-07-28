@@ -1020,10 +1020,14 @@ button.km-cell:active { transform: scale(.9); }
 .pf-menu-item:active { background: var(--c-grey-10); }
 
 /* Lupa (výpis obsahu po tématech) */
+/* Vyhledávací pole lupy — žlutý pruh přes CELOU šířku (dle návrhu), s mezerou
+   od šedé čáry nad ním. Vnitřní odsazení = okraj profilu, ať vstupní pole
+   lícuje s ostatním obsahem. */
 .pf-search-bar {
-  display: flex; align-items: center; gap: calc(8 * var(--u));
-  background: var(--c-yellow); border-radius: calc(8 * var(--u));
-  padding: calc(12 * var(--u)); margin: 0 0 calc(22 * var(--u));   /* respektuje okraj profilu */
+  display: flex; align-items: center; gap: calc(10 * var(--u));
+  background: var(--c-yellow);
+  padding: calc(14 * var(--u)) var(--pf-gutter);
+  margin: calc(14 * var(--u)) calc(-1 * var(--pf-gutter)) calc(24 * var(--u));
 }
 .pf-search-input {
   flex: 1 1 auto; min-width: 0; height: calc(42 * var(--u));
@@ -1032,15 +1036,8 @@ button.km-cell:active { transform: scale(.9); }
   font-family: var(--font); font-size: calc(15 * var(--u)); letter-spacing: var(--tracking);
 }
 .pf-search-input::placeholder { color: var(--c-grey-50); }
-.pf-search-btn {
-  flex: 0 0 auto; width: calc(42 * var(--u)); height: calc(42 * var(--u)); display: grid; place-items: center;
-  background: var(--c-yellow); border: 2px solid var(--c-black); border-radius: calc(6 * var(--u));
-}
-.pf-search-ic {
-  width: calc(20 * var(--u)); height: calc(20 * var(--u)); background: var(--c-black);
-  -webkit-mask: url('../assets/ui/search-icon.svg') center/contain no-repeat;
-  mask: url('../assets/ui/search-icon.svg') center/contain no-repeat;
-}
+.pf-search-btn { flex: 0 0 auto; width: calc(42 * var(--u)); height: calc(42 * var(--u)); display: block; }
+.pf-search-btn img { width: 100%; height: 100%; display: block; }
 .pf-topic { display: block; width: 100%; text-align: left; padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
 .pf-topics .pf-topic:last-child { border-bottom: 0; }
 .pf-topic-head { display: flex; align-items: center; gap: calc(10 * var(--u)); margin-bottom: calc(8 * var(--u)); }

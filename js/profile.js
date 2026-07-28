@@ -334,12 +334,11 @@
       .filter((s) => s.basic || s.supp)
       .sort((a, b) => (b.basic + b.supp) - (a.basic + a.supp));
   }
-  const SEARCH_ICO = '<span class="pf-search-ic" style="-webkit-mask-image:url(\'assets/ui/search-icon.svg\');mask-image:url(\'assets/ui/search-icon.svg\')"></span>';
   const TOPIC_ARROW = '<span class="pf-topic-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>';
   function searchHtml() {
     const bar = '<div class="pf-search-bar">' +
       '<input class="pf-search-input" data-pf-search placeholder="Začni vyhledávat…" autocomplete="off">' +
-      '<button class="pf-search-btn" type="button" aria-label="Hledat">' + SEARCH_ICO + '</button></div>';
+      '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button></div>';
     if (!catalogData) return bar + '<div class="pf-empty">Načítám obsah…</div>';
     const stats = topicStats(catalogData);
     if (!stats.length) return bar + '<div class="pf-empty">Zatím tu není žádný vzdělávací obsah.</div>';
@@ -377,6 +376,13 @@
   }
 
   /* ---------- render ---------- */
+  // placeholder mizí, jakmile je vyplněný aspoň jeden zájem (ať pole není přeplněné)
+  const interestPlaceholder = () => getInterests().length ? "" : "Napiš svůj zájem a dej Enter…";
+  function refreshInterests(el) {
+    const box = el.querySelector("[data-pf-chips]"); if (box) box.innerHTML = chipsHtml();
+    const inp = el.querySelector("[data-pf-interest-input]"); if (inp) inp.placeholder = interestPlaceholder();
+  }
+
   function chipsHtml() {
     return getInterests().map((name, i) =>
       '<span class="pf-chip">' + esc(name) +
@@ -402,7 +408,7 @@
         '<div class="pf-interests">' +
           '<button class="pf-interests-add" data-pf-interest-add type="button" aria-label="Přidat zájem"><img src="assets/ui/Plus.svg" alt=""></button>' +
           '<div class="pf-chips" data-pf-chips>' + chipsHtml() + '</div>' +
-          '<input class="pf-interest-input" data-pf-interest-input placeholder="Napiš svůj zájem a dej Enter…">' +
+          '<input class="pf-interest-input" data-pf-interest-input placeholder="' + interestPlaceholder() + '">' +
         '</div>' +
       '</div>';
   }
@@ -748,7 +754,7 @@
       if (rm) {
         const i = Number(rm.dataset.remove);
         const arr = getInterests(); arr.splice(i, 1); setInterests(arr);
-        const box = el.querySelector("[data-pf-chips]"); if (box) box.innerHTML = chipsHtml();
+        refreshInterests(el);
       }
     });
 
@@ -761,7 +767,7 @@
           const arr = getInterests();
           if (!arr.includes(v)) { arr.push(v); setInterests(arr); }
           inp.value = "";
-          const box = el.querySelector("[data-pf-chips]"); if (box) box.innerHTML = chipsHtml();
+          refreshInterests(el);
         }
       }
     });
