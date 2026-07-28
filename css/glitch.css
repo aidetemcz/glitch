@@ -1031,16 +1031,6 @@ button.km-cell:active { transform: scale(.9); }
 }
 /* nadpis nad lupou: bez spodní mezery, ať žlutý pruh lícuje se šedou čárou */
 .pf-section-title--flush { margin-bottom: 0; }
-
-/* Šedivé dělící čáry mají jasný okraj (nejdou až do krajů) — obsah zůstává na
-   okraji profilu, čára je zatažená dovnitř o --pf-gutter. */
-.pf-tabs, .pf-section-title, .pf-set-group, .pf-subtabs, .pf-topic { position: relative; border-bottom: 0; }
-.pf-tabs::after, .pf-section-title::after, .pf-subtabs::after,
-.pf-set-group:not(:last-child)::after,
-.pf-topics .pf-topic:not(:last-child)::after {
-  content: ""; position: absolute; left: var(--pf-gutter); right: var(--pf-gutter);
-  bottom: 0; height: 1px; background: var(--c-grey-15);
-}
 /* bílé pole s lupou UVNITŘ (dle návrhu) */
 .pf-search-field {
   flex: 1 1 auto; display: flex; align-items: center; gap: calc(8 * var(--u));
@@ -1397,3 +1387,18 @@ body.rz-lock { overflow: hidden; }
   display: grid; place-items: center; transition: transform .12s ease;
 }
 .rz-send:active { transform: scale(.92); }
+
+/* ==========================================================================
+   Profil — dělící čáry přes celou šířku (až do krajů), jedna čára (ne dvě).
+   Umístěno na konci: přebije border-bottom z dřívějších pravidel, takže
+   nevzniká dvojitá čára. Obsah drží okraj profilu, čára jde přes celý panel.
+   ========================================================================== */
+.pf-tabs, .pf-section-title, .pf-set-group, .pf-subtabs, .pf-topic {
+  position: relative; border-bottom: 0;
+}
+.pf-tabs::after, .pf-section-title::after, .pf-subtabs::after,
+.pf-set-group:not(:last-child)::after,
+.pf-topics .pf-topic:not(:last-child)::after {
+  content: ""; position: absolute; bottom: 0; height: 1px; background: var(--c-grey-15);
+  left: calc(-1 * var(--pf-gutter)); right: calc(-1 * var(--pf-gutter));   /* přes celý panel */
+}
