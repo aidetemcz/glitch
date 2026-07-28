@@ -708,6 +708,21 @@ body.glitch-night .card .badges { display: none; }
 }
 .glitch-toast.show { opacity: 1; }
 
+/* Banner filtrovaného feedu (téma z lupy) — nahoře, klik = zpět na plný feed */
+.topic-banner {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 30;
+  width: 100%; max-width: var(--feed-max); box-sizing: border-box;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(10 * var(--u)) calc(20 * var(--u));
+  background: var(--c-yellow); color: var(--c-black); cursor: pointer;
+  font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
+  box-shadow: 0 calc(2 * var(--u)) calc(10 * var(--u)) rgba(0,0,0,.25);
+}
+.topic-banner[hidden] { display: none; }
+.topic-banner-label { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); }
+.topic-banner-label img { width: calc(16 * var(--u)); height: calc(16 * var(--u)); }
+.topic-banner-back { font-weight: 500; }
+
 /* ---------- Přihlášení (Supabase + Google) ---------- */
 
 /* Modály přihlášení/odhlášení (dle Figmy): žlutá karta na tmavém závoji */

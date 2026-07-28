@@ -492,6 +492,12 @@
   let _catalog = null;
   function buildCards(catalog) {
     const ordered = (typeof window.serazFeed === "function") ? window.serazFeed(catalog) : catalog;
+    _topicMode = null; hideTopicBanner();
+    renderList(ordered);
+  }
+
+  // Vykreslení konkrétního (už seřazeného) seznamu karet do feedu.
+  function renderList(ordered) {
     // Noční zámek = jediná karta „Je čas vypnout screen!" → celoobrazovkově,
     // bez štítků a bez spodního menu (viz .glitch-night v CSS).
     const nightlock = ordered.length === 1 && ordered[0] && ordered[0].type === "time_to_let_go";
@@ -515,6 +521,63 @@
     welcomeCard = feed.querySelector('[data-type="welcome"]');
     if (typeof sbCurrentUser !== "undefined" && sbCurrentUser) applyWelcomeVisibility(true);
   }
+
+  /* ---- Feed filtrovaný na jedno téma (z lupy v profilu) ----
+     Základní Glitche (quest_intro) v pořadí kapitol, mezi ně se prokládají
+     doplňkové Glitche stejného konceptu (max 2), zbytek se přidá za ně.
+     Čistě wellbeing/systémové karty se sem neberou. */
+  let _topicMode = null;
+  const TOPIC_FEED_SKIP = new Set(["mood_selector", "breathing", "daily_summary", "welcome", "time_to_let_go"]);
+  const isBasicCard = (c) => c && (c.type === "quest_intro" || c.chapterNo != null);
+  function interleaveTopic(cards) {
+    const basics = cards.filter(isBasicCard).sort((a, b) => Number(a.chapterNo || 0) - Number(b.chapterNo || 0));
+    const supp = cards.filter((c) => !isBasicCard(c));
+    if (!basics.length) return supp;
+    const used = new Set();
+    const out = [];
+    basics.forEach((b) => {
+      out.push(b);
+      let cnt = 0;
+      supp.forEach((s) => {
+        if (used.has(s) || cnt >= 2) return;
+        if (s.concept_id && b.concept_id && s.concept_id === b.concept_id) { out.push(s); used.add(s); cnt++; }
+      });
+    });
+    supp.forEach((s) => { if (!used.has(s)) out.push(s); });   // zbytek doplňkových za páteř
+    return out;
+  }
+  function openTopicFeed(topic) {
+    if (!_catalog || !topic) return;
+    const cards = _catalog.filter((c) => c && c.topic === topic && !TOPIC_FEED_SKIP.has(c.type));
+    if (!cards.length) return;
+    _topicMode = topic;
+    renderList(interleaveTopic(cards));
+    showTopicBanner(topic);
+    if (typeof window.glitchCloseProfile === "function") window.glitchCloseProfile();
+    try { feed.scrollTo({ top: 0 }); } catch (_) {}
+  }
+  function exitTopicFeed() {
+    if (!_catalog) return;
+    buildCards(_catalog);
+    try { feed.scrollTo({ top: 0 }); } catch (_) {}
+  }
+  function showTopicBanner(topic) {
+    let b = document.getElementById("topic-banner");
+    if (!b) {
+      b = document.createElement("div"); b.id = "topic-banner"; b.className = "topic-banner";
+      document.body.appendChild(b);
+      b.addEventListener("click", exitTopicFeed);
+    }
+    b.innerHTML = '<span class="topic-banner-label"><img src="assets/ui/search-icon.svg" alt="">' + esc(topic) +
+      '</span><span class="topic-banner-back">Zpět na feed ✕</span>';
+    b.hidden = false;
+    document.body.classList.add("has-topic-banner");
+  }
+  function hideTopicBanner() {
+    const b = document.getElementById("topic-banner"); if (b) b.hidden = true;
+    document.body.classList.remove("has-topic-banner");
+  }
+  window.glitchOpenTopicFeed = openTopicFeed;
 
   // reakce na přihlášení (welcomeCard se doplní po sestavení)
   if (typeof sb !== "undefined" && sb && sb.auth && typeof sb.auth.onAuthStateChange === "function") {
@@ -655,7 +718,7 @@
       // je-li otevřený rozklik, klik do menu ho nejdřív zavře (menu je vidět i v rozkliku)
       if (_rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
       if (tab === "profile") return;                 // přihlášení řeší auth.js
-      if (tab === "feed") { scrollToIndex(0); setActiveTab(item); return; }
+      if (tab === "feed") { if (_topicMode) exitTopicFeed(); else scrollToIndex(0); setActiveTab(item); return; }
       // Questy a Projekty otevřou profil na příslušném tabu
       if (tab === "questy" && typeof window.glitchOpenProfile === "function") { window.glitchOpenProfile("quests"); return; }
       if (tab === "projekty" && typeof window.glitchOpenProfile === "function") { window.glitchOpenProfile("board"); return; }
@@ -733,6 +796,8 @@
   }
   // volá auth.js po přihlášení přes Google (nedokončené nahlášení)
   window.glitchOpenReportModal = openReportModal;
+  // obecné nahlášení (z ⋮ menu v profilu)
+  window.glitchReportFlow = reportFlow;
 
   /* ==========================================================================
      Interakce jednotlivých karet
