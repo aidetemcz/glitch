@@ -298,6 +298,25 @@ async function sbFollowingIds() {
   } catch (_) { return []; }
 }
 
+// ── LOGY CHATŮ (jen pro testování) ───────────
+// Uloží/aktualizuje celou konverzaci (jeden řádek na session). Jen přihlášený
+// uživatel (RLS: vlastní user_id). Řádky se po 7 dnech mažou cronem. Tiše degraduje.
+async function sbLogChat(sessionId, info) {
+  if (!sb || !sbCurrentUser || !sessionId) return;
+  info = info || {};
+  try {
+    await sb.from('chat_logs').upsert({
+      session_id: sessionId,
+      user_id: sbCurrentUser.id,
+      kind: info.kind || 'free',
+      persona: info.persona || null,
+      glitch_id: info.glitchId || null,
+      messages: info.messages || [],
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'session_id' });
+  } catch (_) {}
+}
+
 // ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
 // Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
 // přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.

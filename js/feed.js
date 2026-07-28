@@ -1576,12 +1576,22 @@
     initFreeChat(panel, { persona: persona, ava: ava, greeting: entity.greeting });
   }
 
+  // Id session pro logy chatu (jedna konverzace = jeden řádek, průběžně přepisovaný).
+  function newSessionId() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (_) {}
+    return "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+  }
+  function logChat(sessionId, info) {
+    try { if (typeof sbLogChat === "function") sbLogChat(sessionId, info); } catch (_) {}
+  }
+
   function initFreeChat(panel, o) {
     const form = panel.querySelector("[data-rz-form]");
     const thread = panel.querySelector("[data-rz-thread]");
     if (!form || !thread) return;
     const ava = o.ava || DEFAULT_AVA;
     const history = [];
+    const sessionId = newSessionId();
     const field = form.querySelector(".rz-input-field");
     const sendBtn = form.querySelector(".rz-send");
     const scrollDown = () => panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
@@ -1618,6 +1628,7 @@
       } finally {
         field.disabled = false; if (sendBtn) sendBtn.disabled = false;
         scrollDown();
+        logChat(sessionId, { kind: "free", persona: o.persona, messages: history });   // log (jen pro testování)
       }
     }
 
@@ -1875,6 +1886,7 @@
     const scrollDown = () => panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
     const field = form.querySelector(".rz-input-field");
     const sendBtn = form.querySelector(".rz-send");
+    const sessionId = newSessionId();   // log konverzace (jen pro testování)
 
     // Jedno místo pro dotaz na bota: pošle historii, vykreslí odpověď a případný kvíz.
     // `silent` = zpráva se do vlákna nezobrazí (úvodní pobídka, výsledek kvízu).
@@ -1932,6 +1944,7 @@
       } finally {
         field.disabled = false; if (sendBtn) sendBtn.disabled = false;
         scrollDown();
+        logChat(sessionId, { kind: "glitch", persona: personaOf(card), glitchId: card && card.id, messages: history });
       }
     }
 
