@@ -137,6 +137,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-radius: calc(5 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; line-height: 1;
   letter-spacing: var(--tracking); white-space: nowrap;
 }
+/* aktivní štítky = tlačítka (klik → filtrovaný feed); reset UA vzhledu */
+button.badge { border: 0; cursor: pointer; font-family: var(--font); -webkit-appearance: none; appearance: none; transition: transform .1s ease; }
+button.badge:active { transform: scale(.93); }
 /* téma: žlutá výplň, černý text */
 .badge.topic { background: var(--c-yellow); color: #1a1a1a; }
 /* typ Glitche: černá výplň, žlutá outline, žlutý text */

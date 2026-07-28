@@ -114,11 +114,12 @@
   // Basic Glitch (quest) nemá typ; historická osobnost nemá téma → render dle toho, co je.
   // Shrnutí (a jiné systémové karty) nemají štítek autora — jen typ.
   const NO_CREATOR = new Set(["daily_summary"]);
+  // Štítky jsou aktivní: klik → feed filtrovaný dle tématu / typu / autora.
   const badges = (c) => {
     const parts = [];
-    if (c.topic) parts.push(`<span class="badge topic">${esc(c.topic)}</span>`);
-    if (c.category) parts.push(`<span class="badge type">${esc(c.category)}</span>`);
-    if (!NO_CREATOR.has(c.type)) parts.push(`<span class="badge creator">${esc(trustLabel(c.trust))}</span>`);
+    if (c.topic) parts.push(`<button class="badge topic" data-facet="topic" data-facet-val="${esc(c.topic)}">${esc(c.topic)}</button>`);
+    if (c.category) parts.push(`<button class="badge type" data-facet="type" data-facet-val="${esc(c.category)}">${esc(c.category)}</button>`);
+    if (!NO_CREATOR.has(c.type)) { const cr = trustLabel(c.trust); parts.push(`<button class="badge creator" data-facet="creator" data-facet-val="${esc(cr)}">${esc(cr)}</button>`); }
     return `<div class="badges">${parts.join("")}</div>`;
   };
   // Žlutá šipka vpravo dole: rozklikne detail (má-li ho karta), jinak posune na další Glitch.
@@ -552,13 +553,26 @@
     supp.forEach((s) => { if (!used.has(s)) out.push(s); });   // zbytek doplňkových za páteř
     return out;
   }
-  function openTopicFeed(topic) {
-    if (!_catalog || !topic) return;
-    const cards = _catalog.filter((c) => c && c.topic === topic && !TOPIC_FEED_SKIP.has(c.type));
-    if (!cards.length) return;
-    _topicMode = topic;
-    renderList(interleaveTopic(cards));
-    showTopicBanner(topic);
+  function openTopicFeed(topic) { openFacetFeed("topic", topic); }
+
+  // Obecný filtrovaný feed dle štítku: kind = topic | type | creator.
+  // Téma prokládá páteř základních Glitchů doplňkovými; typ/autor jen filtruje.
+  function openFacetFeed(kind, value) {
+    if (!_catalog || !value) return;
+    let cards;
+    if (kind === "topic") {
+      cards = _catalog.filter((c) => c && c.topic === value && !TOPIC_FEED_SKIP.has(c.type));
+      if (!cards.length) return;
+      cards = interleaveTopic(cards);
+    } else if (kind === "type") {
+      cards = _catalog.filter((c) => c && c.category === value && !TOPIC_FEED_SKIP.has(c.type));
+    } else if (kind === "creator") {
+      cards = _catalog.filter((c) => c && !NO_CREATOR.has(c.type) && trustLabel(c.trust) === value && !TOPIC_FEED_SKIP.has(c.type));
+    } else { return; }
+    if (!cards || !cards.length) return;
+    _topicMode = { kind: kind, value: value };
+    renderList(cards);
+    showFacetBanner(kind, value);
     if (typeof window.glitchCloseProfile === "function") window.glitchCloseProfile();
     try { feed.scrollTo({ top: 0 }); } catch (_) {}
   }
@@ -567,14 +581,15 @@
     buildCards(_catalog);
     try { feed.scrollTo({ top: 0 }); } catch (_) {}
   }
-  function showTopicBanner(topic) {
+  function showFacetBanner(kind, value) {
+    const prefix = kind === "type" ? "Typ: " : kind === "creator" ? "Od: " : "";
     let b = document.getElementById("topic-banner");
     if (!b) {
       b = document.createElement("div"); b.id = "topic-banner"; b.className = "topic-banner";
       document.body.appendChild(b);
       b.addEventListener("click", exitTopicFeed);
     }
-    b.innerHTML = '<span class="topic-banner-label"><img src="assets/ui/search-icon.svg" alt="">' + esc(topic) +
+    b.innerHTML = '<span class="topic-banner-label"><img src="assets/ui/search-icon.svg" alt="">' + esc(prefix + value) +
       '</span><span class="topic-banner-back">Zpět na feed ✕</span>';
     b.hidden = false;
     document.body.classList.add("has-topic-banner");
@@ -584,6 +599,7 @@
     document.body.classList.remove("has-topic-banner");
   }
   window.glitchOpenTopicFeed = openTopicFeed;
+  window.glitchOpenFacetFeed = openFacetFeed;
 
   // reakce na přihlášení (welcomeCard se doplní po sestavení)
   if (typeof sb !== "undefined" && sb && sb.auth && typeof sb.auth.onAuthStateChange === "function") {
@@ -638,6 +654,9 @@
   }
 
   feed.addEventListener("click", (e) => {
+    // aktivní štítek → filtrovaný feed (téma / typ / autor)
+    const fb = e.target.closest("[data-facet]");
+    if (fb) { closeCardMenus(); openFacetFeed(fb.dataset.facet, fb.dataset.facetVal); return; }
     // menu Glitche (tři tečky) — otevři/zavři, případně proveď akci
     const mItem = e.target.closest(".card-menu-item");
     if (mItem) {
