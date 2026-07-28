@@ -1527,6 +1527,30 @@
     if (c && c.rozklik) openRozklik(c);
   };
 
+  // Přejde na ÚVODNÍ kartu Glitche ve feedu (ne do rozkliku/detailu) — volá quest.
+  // Když karta ve feedu je, odscrolluje na ni; když ne (dokončená → odfiltrovaná
+  // doporučovačem), vloží ji nahoru a odscrolluje.
+  window.glitchGoToCard = function (id) {
+    if (!id) return;
+    if (typeof window.glitchCloseProfile === "function") window.glitchCloseProfile();
+    if (_topicMode) exitTopicFeed();
+    for (let i = 0; i < feed.children.length; i++) {
+      const el = feed.children[i];
+      const d = _cardData[el.dataset.index];
+      if (d && d.id === id) { el.classList.remove("is-hidden"); el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    }
+    const c = (_catalog || []).find((x) => x && x.id === id);
+    if (!c) return;
+    const idx = _cardData.length; _cardData.push(c);
+    const el = document.createElement("section");
+    el.className = "card card--" + (BG[c.type] || "dark");
+    el.dataset.index = idx; el.dataset.type = c.type;
+    el.innerHTML = (RENDER[c.type] || (() => `<div class="card-body">${esc(c.type)}</div>`))(c);
+    feed.insertBefore(el, feed.firstChild);
+    initCard(el, c);
+    el.scrollIntoView({ behavior: "auto", block: "start" });
+  };
+
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && _rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
   });

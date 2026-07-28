@@ -706,7 +706,8 @@
           if (typeof window.glitchOpenProfile === "function") window.glitchOpenProfile("board");
           return;
         }
-        if (node.dataset.gid && typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(node.dataset.gid);
+        // proklik z questu jde na ÚVODNÍ kartu Glitche ve feedu, ne do detailu
+        if (node.dataset.gid && typeof window.glitchGoToCard === "function") window.glitchGoToCard(node.dataset.gid);
         return;
       }
       // klik na tečku → ukaž její tooltip (a zavři ostatní); klik jinam → zavři všechny
