@@ -322,18 +322,21 @@
     "Matematika": "Základy, které se ti hodí napříč informatikou.",
     "Digitální občanství": "Jak se v online světě pohybovat bezpečně a s rozmyslem."
   };
-  function topicStats(cards) {
+  const glitchTitle = (c) => c.title || (c.rozklik && c.rozklik.title) || c.claim || c.question || c.id;
+  // Per téma: seznam základních (quest_intro, dle kapitol) a doplňkových Glitchů.
+  function topicList(cards) {
     const by = {};
     (cards || []).forEach((c) => {
       if (!c || !c.topic) return;
-      const o = by[c.topic] || (by[c.topic] = { basic: 0, supp: 0 });
-      if (isBasicType(c)) o.basic++;
-      else if (SUPP_TYPES.has(c.type)) o.supp++;
+      const o = by[c.topic] || (by[c.topic] = { basic: [], supp: [] });
+      const item = { id: c.id, title: glitchTitle(c), ch: (c.chapterNo != null ? Number(c.chapterNo) : 999) };
+      if (isBasicType(c)) o.basic.push(item);
+      else if (SUPP_TYPES.has(c.type)) o.supp.push(item);
     });
-    return Object.keys(by).map((t) => ({ topic: t, basic: by[t].basic, supp: by[t].supp, quests: by[t].basic ? 1 : 0 }))
-      // jen obsahově pokrytá témata = mají aspoň jeden základní Glitch (quest)
-      .filter((s) => s.basic > 0)
-      .sort((a, b) => (b.basic + b.supp) - (a.basic + a.supp));
+    return Object.keys(by)
+      .filter((t) => by[t].basic.length > 0)            // jen obsahově pokrytá témata
+      .map((t) => ({ topic: t, basic: by[t].basic.sort((a, b) => a.ch - b.ch), supp: by[t].supp }))
+      .sort((a, b) => (b.basic.length + b.supp.length) - (a.basic.length + a.supp.length));
   }
   const TOPIC_ARROW = '<span class="pf-topic-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>';
   function searchHtml() {
@@ -342,18 +345,26 @@
       '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button>' +
       '</div></div>';
     if (!catalogData) return bar + '<div class="pf-empty">Načítám obsah…</div>';
-    const stats = topicStats(catalogData);
-    if (!stats.length) return bar + '<div class="pf-empty">Zatím tu není žádný vzdělávací obsah.</div>';
-    const rows = stats.map((s) => {
-      const desc = TOPIC_DESC[s.topic] || "";
-      return '<button class="pf-topic" data-topic="' + esc(s.topic) + '" type="button">' +
-        '<div class="pf-topic-head">' + TOPIC_ARROW + '<span class="pf-topic-name g-h4">' + esc(s.topic) + '</span></div>' +
-        (desc ? '<p class="pf-topic-desc g-p">' + esc(desc) + '</p>' : '') +
-        '<div class="pf-topic-pills">' +
-          '<span class="pf-pill">Questů: ' + s.quests + '</span>' +
-          '<span class="pf-pill">Základních Glitchů: ' + s.basic + '</span>' +
-          '<span class="pf-pill">Doplňkových: ' + s.supp + '</span></div>' +
-      '</button>';
+    const topics = topicList(catalogData);
+    if (!topics.length) return bar + '<div class="pf-empty">Zatím tu není žádný vzdělávací obsah.</div>';
+    const glItem = (g, cls) => '<button class="' + cls + '" data-gid="' + esc(g.id) + '" type="button">' + esc(g.title) + '</button>';
+    const rows = topics.map((t) => {
+      const desc = TOPIC_DESC[t.topic] || "";
+      const basics = t.basic.map((g) => glItem(g, "pf-glitch-card")).join("");
+      const supps = t.supp.map((g) => glItem(g, "pf-glitch-item")).join("");
+      return '<section class="pf-topic-sec" data-topic-sec data-topic="' + esc(t.topic) + '">' +
+        '<button class="pf-topic-head" data-topic-toggle type="button">' + TOPIC_ARROW +
+          '<span class="pf-topic-name g-h4">' + esc(t.topic) + '</span></button>' +
+        '<div class="pf-topic-body">' +
+          (desc ? '<p class="pf-topic-desc g-p">' + esc(desc) + '</p>' : '') +
+          '<div class="pf-topic-pills">' +
+            '<span class="pf-pill">Questů: ' + (t.basic.length ? 1 : 0) + '</span>' +
+            '<span class="pf-pill">Základních Glitchů: ' + t.basic.length + '</span>' +
+            '<span class="pf-pill">Doplňkových: ' + t.supp.length + '</span></div>' +
+          (basics ? '<div class="pf-glitch-group"><div class="pf-glitch-h">Základní Glitche</div><div class="pf-glitch-basics">' + basics + '</div></div>' : '') +
+          (supps ? '<div class="pf-glitch-group"><div class="pf-glitch-h">Doplňkové Glitche</div><div class="pf-glitch-supps">' + supps + '</div></div>' : '') +
+        '</div>' +
+      '</section>';
     }).join("");
     return bar + '<div class="pf-topics" data-pf-topics>' + rows + '</div>';
   }
@@ -609,14 +620,29 @@
   }
 
   function wire(el) {
-    // živé filtrování témat v lupě
+    // vyhledávání KONKRÉTNÍCH Glitchů: filtruje položky, rozbalí témata se shodou
     el.addEventListener("input", (e) => {
       if (!e.target || !e.target.matches("[data-pf-search]")) return;
       const q = e.target.value.trim().toLowerCase();
-      el.querySelectorAll(".pf-topic").forEach((row) => {
-        const name = (row.querySelector(".pf-topic-name") || {}).textContent || "";
-        const desc = (row.querySelector(".pf-topic-desc") || {}).textContent || "";
-        row.style.display = (!q || (name + " " + desc).toLowerCase().indexOf(q) >= 0) ? "" : "none";
+      el.querySelectorAll(".pf-topic-sec").forEach((sec) => {
+        if (!q) {                                   // prázdné → vše zpět, sbaleno
+          sec.style.display = ""; sec.classList.remove("is-open");
+          sec.querySelectorAll(".pf-glitch-group, .pf-glitch-card, .pf-glitch-item").forEach((x) => { x.style.display = ""; });
+          return;
+        }
+        const topicMatch = ((sec.querySelector(".pf-topic-name") || {}).textContent || "").toLowerCase().indexOf(q) >= 0;
+        let any = false;
+        sec.querySelectorAll(".pf-glitch-card, .pf-glitch-item").forEach((g) => {
+          const show = topicMatch || g.textContent.toLowerCase().indexOf(q) >= 0;
+          g.style.display = show ? "" : "none"; if (show) any = true;
+        });
+        sec.querySelectorAll(".pf-glitch-group").forEach((grp) => {
+          const vis = [].some.call(grp.querySelectorAll(".pf-glitch-card, .pf-glitch-item"), (g) => g.style.display !== "none");
+          grp.style.display = vis ? "" : "none";
+        });
+        const match = topicMatch || any;
+        sec.style.display = match ? "" : "none";
+        sec.classList.toggle("is-open", match);      // shodu rozbal
       });
     });
 
@@ -670,9 +696,12 @@
       const pop = el.querySelector("[data-pf-menu-pop]");
       if (pop && !pop.hidden && !e.target.closest("[data-pf-menu]")) pop.hidden = true;
 
-      // lupa: klik na téma → filtrovaný feed
-      const topicBtn = e.target.closest("[data-topic]");
-      if (topicBtn) { if (typeof window.glitchOpenTopicFeed === "function") window.glitchOpenTopicFeed(topicBtn.dataset.topic); return; }
+      // lupa: rozbalení / sbalení tématu (rozjíždítko)
+      const tToggle = e.target.closest("[data-topic-toggle]");
+      if (tToggle) { const sec = tToggle.closest("[data-topic-sec]"); if (sec) sec.classList.toggle("is-open"); return; }
+      // lupa: klik na konkrétní Glitch → jeho úvodní karta ve feedu
+      const lupaG = e.target.closest(".pf-glitch-card, .pf-glitch-item");
+      if (lupaG) { if (typeof window.glitchGoToCard === "function") window.glitchGoToCard(lupaG.dataset.gid); return; }
 
       // saved: přepnutí podzáložky Glitchposty / Uložené
       const sub = e.target.closest("[data-savedsub]");

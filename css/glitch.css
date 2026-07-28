@@ -1051,14 +1051,37 @@ button.km-cell:active { transform: scale(.9); }
 .pf-search-input::placeholder { color: var(--c-grey-50); }
 .pf-search-btn { flex: 0 0 auto; width: calc(34 * var(--u)); height: calc(34 * var(--u)); display: block; }
 .pf-search-btn img { width: 100%; height: 100%; display: block; }
-.pf-topic { display: block; width: 100%; text-align: left; padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
-.pf-topics .pf-topic:last-child { border-bottom: 0; }
-.pf-topic-head { display: flex; align-items: center; gap: calc(10 * var(--u)); margin-bottom: calc(8 * var(--u)); }
-.pf-topic-arrow { flex: 0 0 auto; width: calc(22 * var(--u)); height: calc(22 * var(--u)); display: grid; place-items: center; }
+/* téma jako rozjíždítko (accordion) — po rozkliku ukáže konkrétní Glitche */
+.pf-topic-sec { position: relative; }
+.pf-topic-head {
+  display: flex; align-items: center; gap: calc(10 * var(--u));
+  width: 100%; text-align: left; padding: calc(18 * var(--u)) 0; cursor: pointer;
+}
+.pf-topic-arrow { flex: 0 0 auto; width: calc(22 * var(--u)); height: calc(22 * var(--u)); display: grid; place-items: center; transition: transform .18s ease; }
 .pf-topic-arrow img { width: 100%; height: 100%; }
+.pf-topic-sec.is-open .pf-topic-arrow { transform: rotate(90deg); }
 .pf-topic-name { color: var(--c-black); }
+.pf-topic-body { display: none; padding-bottom: calc(18 * var(--u)); }
+.pf-topic-sec.is-open .pf-topic-body { display: block; }
 .pf-topic-desc { color: var(--c-black); margin: 0 0 calc(12 * var(--u)); }
 .pf-topic-pills { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)); }
+.pf-glitch-group { margin-top: calc(18 * var(--u)); }
+.pf-glitch-h { color: var(--c-grey-50); font-size: calc(15 * var(--u)); margin-bottom: calc(10 * var(--u)); letter-spacing: var(--tracking); }
+.pf-glitch-basics { display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
+.pf-glitch-card {
+  display: block; width: 100%; text-align: left;
+  border: 1px solid var(--c-grey-15); border-radius: calc(8 * var(--u));
+  padding: calc(14 * var(--u)) calc(16 * var(--u));
+  font-size: calc(15 * var(--u)); color: var(--c-black); letter-spacing: var(--tracking);
+  background: #fff; transition: border-color .12s ease;
+}
+.pf-glitch-card:active { border-color: var(--c-black); }
+.pf-glitch-supps { display: flex; flex-direction: column; gap: calc(6 * var(--u)); }
+.pf-glitch-item {
+  display: block; width: 100%; text-align: left; padding: calc(5 * var(--u)) 0;
+  font-size: calc(15 * var(--u)); color: var(--c-black); letter-spacing: var(--tracking);
+}
+.pf-glitch-item::before { content: "+ "; color: var(--c-grey-50); }
 .pf-pill {
   background: var(--c-grey-10); color: var(--c-grey-50);
   font-size: calc(13 * var(--u)); letter-spacing: var(--tracking);
@@ -1401,12 +1424,12 @@ body.rz-lock { overflow: hidden; }
    Umístěno na konci: přebije border-bottom z dřívějších pravidel, takže
    nevzniká dvojitá čára. Obsah drží okraj profilu, čára jde přes celý panel.
    ========================================================================== */
-.pf-tabs, .pf-section-title, .pf-set-group, .pf-subtabs, .pf-topic {
+.pf-tabs, .pf-section-title, .pf-set-group, .pf-subtabs, .pf-topic-sec {
   position: relative; border-bottom: 0;
 }
 .pf-tabs::after, .pf-section-title::after, .pf-subtabs::after,
 .pf-set-group:not(:last-child)::after,
-.pf-topics .pf-topic:not(:last-child)::after {
+.pf-topics .pf-topic-sec:not(:last-child)::after {
   content: ""; position: absolute; bottom: 0; height: 1px; background: var(--c-grey-15);
   left: calc(-1 * var(--pf-gutter)); right: calc(-1 * var(--pf-gutter));   /* přes celý panel */
 }
