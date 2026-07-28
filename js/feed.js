@@ -1549,12 +1549,13 @@
   function openFreeChat(entity) {
     entity = entity || {};
     const name = entity.name || "Glitchee";
-    const persona = entity.persona || DEFAULT_PERSONA;
+    const persona = entity.persona || "glitchee-chat";
     const ava = entity.avatar || DEFAULT_AVA;
     const disclaimer = entity.disclaimer || (name + " je chatbot, nemá emoce a může dělat chyby.");
     const ov = ensureRzOverlay();
     const panel = ov.querySelector(".rz-panel");
     panel.className = "rz-panel rz-panel--chat rz-panel--free";
+    // disclaimer je POD polem pro psaní (dle návrhu)
     panel.innerHTML = `
       <header class="rz-bar">
         <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
@@ -1563,11 +1564,11 @@
       <div class="rz-body rz-body--chat">
         <div class="rz-thread" data-rz-thread></div>
       </div>
-      <p class="rz-disclaimer g-p-s">${esc(disclaimer)}</p>
       <form class="rz-input" data-rz-form>
         <input class="rz-input-field" type="text" placeholder="Začni psát…" aria-label="Napiš zprávu" autocomplete="off">
         <button class="rz-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>
-      </form>`;
+      </form>
+      <p class="rz-disclaimer g-p-s">${esc(disclaimer)}</p>`;
     panel.scrollTop = 0;
     ov.classList.add("is-open");
     document.body.classList.add("rz-lock");
@@ -1604,7 +1605,7 @@
       scrollDown();
       try {
         if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
-        const reply = await window.gptChat(history, { persona: o.persona, quiz: false, temperature: 0.5 });
+        const reply = await window.gptChat(history, { persona: o.persona, freechat: true, temperature: 0.5 });
         typing.remove();
         history.push({ role: "assistant", content: reply });
         if (reply) rzAppendBot(thread, reply, ava);

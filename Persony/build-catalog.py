@@ -16,6 +16,7 @@ HERE = Path(__file__).parent
 # id → soubor. id se ukládá do karty Glitche (pole "persona") a vybírá se v editoru.
 IDS = {
     "glitchee": "glitchee-basic-glitch.md",
+    "glitchee-chat": "glitchee-chat.md",
     "planovani": "01_chatbot-pro-planovani.md",
     "co-kdyby": "02_co-kdyby.md",
     "opakovaci-partak": "03_opakovaci-partak.md",

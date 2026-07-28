@@ -624,7 +624,7 @@
      Chatovat „jen tak" jde zatím jen s Glitcheem; přímé zprávy mezi lidmi se
      teprve připravují. ========================================================================== */
   const GLITCHEE = {
-    id: "glitchee", name: "Glitchee", handle: "@glitchee", builtin: true, persona: "glitchee",
+    id: "glitchee", name: "Glitchee", handle: "@glitchee", builtin: true, persona: "glitchee-chat",
     avatar: "assets/ui/avatar-icon.png",
     bio: "Tvůj parťák na Glitchi. Poradí ti s informatikou, daty i umělou inteligencí — a popovídá si s tebou o čemkoli."
   };
@@ -689,12 +689,12 @@
   function renderPeopleList(body, kind, list) {
     if (!body) return;
     regEnt(GLITCHEE);
-    let html = peopleRow(GLITCHEE, ACT_MSG(GLITCHEE.id));   // Glitchee vždy nahoře
+    // Glitchee (chattelný) vždy nahoře. U skutečných uživatelů se zprávy zatím
+    // neposílají — tlačítko odráží jen stav sledování (sledovat / odsledovat).
+    let html = peopleRow(GLITCHEE, ACT_MSG(GLITCHEE.id));
     html += (list || []).map((p) => {
       const ent = regEnt(entOf(p));
-      const action = kind === "followers"
-        ? (_followingSet.has(ent.id) ? ACT_MSG(ent.id) : ACT_FOLLOW(ent.id))   // vzájemné → zpráva
-        : ACT_UNFOLLOW(ent.id);                                                // koho sleduju → odsledovat
+      const action = _followingSet.has(ent.id) ? ACT_UNFOLLOW(ent.id) : ACT_FOLLOW(ent.id);
       return peopleRow(ent, action);
     }).join("");
     body.innerHTML = html;
@@ -711,22 +711,40 @@
 
   let _peopleSearchT = null;    // debounce vyhledávání v seznamu sledování
 
-  // Chat: zatím „jen tak" jen s Glitcheem; přímé zprávy mezi lidmi se připravují.
+  // Chat „jen tak" je zatím jen s Glitcheem. Kdyby byl otevřený veřejný profil,
+  // nejdřív ho zavři — chat je overlay se stejnou/nižší vrstvou a jinak by naskočil
+  // pod ním (a appka by vypadala zaseknutě).
   function startChat(ent) {
-    if (!ent) return;
-    if (ent.builtin && typeof window.glitchChatWith === "function") {
-      window.glitchChatWith({ name: ent.name, persona: ent.persona || "glitchee", avatar: ent.avatar });
-    } else {
-      toastPf("Přímé zprávy mezi uživateli se teprve připravují.");
-    }
+    if (!ent || !ent.builtin) return;
+    if (typeof window.glitchChatWith !== "function") return;
+    closePublicProfile();
+    window.glitchChatWith({ name: ent.name, persona: ent.persona || "glitchee-chat", avatar: ent.avatar });
   }
 
   /* ---------- Veřejný profil (Glitchee i skuteční uživatelé) ---------- */
+  // Glitcheeho posty = obsahové Glitche (má je „na starost" Glitch). U skutečných
+  // uživatelů zatím žádné (Glitchposty přijdou s funkcí zveřejňování).
+  function glitcheePosts(cards) {
+    return (cards || [])
+      .filter((c) => c && c.id && (isBasicType(c) || SUPP_TYPES.has(c.type)))
+      .map((c) => ({ id: c.id, title: glitchTitle(c) }));
+  }
+  function postsListHtml(posts) {
+    if (!posts.length) return '<div class="pf-empty">Zatím tu nic není.</div>';
+    return '<div class="pf-people-list">' + posts.map((p) =>
+      '<button class="pf-post-row" data-post-gid="' + esc(p.id) + '" type="button">' +
+        '<span class="pf-post-title">' + esc(p.title) + '</span>' +
+        '<span class="pf-post-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>' +
+      '</button>').join("") + '</div>';
+  }
+
   function openPublicProfile(ent) {
     if (!ent) return;
     regEnt(ent);
     const isG = !!ent.builtin;
-    const postsTitle = isG ? "Glitcheeho posty" : (ent.name + "ovy posty");
+    // skloňování řešíme jednoduše: u Glitcheeho „Glitcheeho posty", jinak
+    // „Glitchposty uživatele @handle" (žádné lámané tvary jmen)
+    const postsTitle = isG ? "Glitcheeho posty" : ("Glitchposty uživatele " + ent.handle);
     const ov = document.createElement("div");
     ov.className = "pf-public-overlay"; ov.id = "pf-public-overlay";
     ov.innerHTML =
@@ -748,16 +766,21 @@
             (ent.bio ? '<p class="pf-public-bio g-p">' + esc(ent.bio) + '</p>' : '') +
           '</div>' +
           '<h3 class="pf-section-title pf-public-posts-title">' + esc(postsTitle) + '</h3>' +
-          '<div class="pf-empty">' + (isG
-            ? 'Glitchee zatím nic nezveřejnil — ale rád si s tebou popovídá. Ťukni na tlačítko dole.'
-            : 'Tady se objeví Glitchposty tohoto uživatele.') + '</div>' +
+          '<div class="pf-public-posts" data-public-posts>' + (isG
+            ? '<div class="pf-empty">Načítám…</div>'
+            : '<div class="pf-empty">Tady se objeví Glitchposty tohoto uživatele.</div>') + '</div>' +
         '</div>' +
-        '<button class="pf-public-chat" data-public-chat type="button">' +
-          '<img src="assets/ui/avatar-icon.png" alt=""><span>Napsat</span></button>' +
+        (isG ? '<button class="pf-public-chat" data-public-chat type="button">' +
+          '<img src="' + esc(ent.avatar) + '" alt=""><span>Napsat</span></button>' : '') +
       '</div>';
     document.body.appendChild(ov);
     document.body.classList.add("rz-lock");
     wirePublicProfile(ov, ent);
+    // Glitcheeho posty dotáhni z katalogu
+    if (isG) loadCatalog().then((cards) => {
+      const box = ov.querySelector("[data-public-posts]");
+      if (box && document.getElementById("pf-public-overlay") === ov) box.innerHTML = postsListHtml(glitcheePosts(cards));
+    }).catch(() => {});
   }
 
   function closePublicProfile() {
@@ -779,6 +802,12 @@
         return;
       }
       if (e.target.closest("[data-public-chat]")) { startChat(ent); return; }
+      const post = e.target.closest("[data-post-gid]");
+      if (post) {
+        closePublicProfile();
+        if (typeof window.glitchGoToCard === "function") window.glitchGoToCard(post.dataset.postGid);
+        return;
+      }
       const pop = ov.querySelector("[data-public-menu-pop]");
       if (pop && !pop.hidden && !e.target.closest("[data-public-menu]")) pop.hidden = true;
     });

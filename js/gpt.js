@@ -22,6 +22,7 @@ async function gptChat(messages, opts) {
       model: opts.model,             // volitelně "gpt-4o" (jinak gpt-4o-mini)
       temperature: opts.temperature, // volitelně
       quiz: opts.quiz,               // false = nikdy neposílat kvíz (např. Inspirace)
+      freechat: opts.freechat,       // true = volný chat mimo Glitch (bez pravidel/kvízu)
     }),
   });
   const data = await res.json().catch(() => ({}));

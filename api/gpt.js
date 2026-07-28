@@ -131,10 +131,18 @@ function osobniRadky(zak) {
   return radky;
 }
 
-function buildSystemPrompt(personaId, ctx, quizNow, zak) {
+function buildSystemPrompt(personaId, ctx, quizNow, zak, freechat) {
   const persona = PERSONAS.get(personaId) || PERSONAS.get(CATALOG.default);
   const parts = [];
   if (persona && persona.prompt) parts.push(persona.prompt);
+  // Volný chat (z profilu / seznamu sledování): žádný konkrétní Glitch, tedy
+  // žádná glitch-specifická pravidla, žádné ZADÁNÍ, žádný kvíz. Jen persona +
+  // (volitelně) osobní údaje uživatele, ať přizpůsobí jazyk.
+  if (freechat) {
+    const osobni = osobniRadky(zak);
+    if (osobni.length) parts.push("### O UŽIVATELI (jen pro tebe — sám od sebe to nezmiňuj)\n\n" + osobni.join("\n"));
+    return parts.join("\n\n---\n\n");
+  }
   parts.push(PLATFORM_RULES);
   const block = contextBlock(ctx);
   if (block) {
@@ -346,14 +354,18 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Konverzace je prázdná." });
     }
 
+    // Volný chat (mimo konkrétní Glitch) — bez kvízu a bez glitch-pravidel.
+    const freechat = body.freechat === true;
+
     // Rozhodnutí o kvízu (levná pravidla + případně malý „rozhodčí" model).
     // body.quiz === true → žák si o kvíz řekl sám, ptát se rozhodčího netřeba.
-    const quizNow = body.quiz === false ? false
+    const quizNow = freechat ? false
+      : body.quiz === false ? false
       : body.quiz === true ? true
       : await shouldQuiz(key, convo, body.context);
 
     const messages = [
-      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow, body.zak) },
+      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow, body.zak, freechat) },
       ...convo
     ];
 
