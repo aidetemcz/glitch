@@ -821,16 +821,24 @@ body.glitch-night .card .badges { display: none; }
 /* ==========================================================================
    Uživatelský profil (celoobrazovkový panel, světlý)
    ========================================================================== */
+/* Profil je flex-sourozenec navigace (stejně jako feed) — ne fixed overlay.
+   Díky tomu je spodní menu při scrollu stabilní (na mobilu neposkakuje) a
+   zarovnané, protože sdílí stejný layout jako feed. Feed se schová (viz níže). */
 #glitch-profile {
-  position: fixed; inset: 0; z-index: 35;
+  flex: 1 1 auto; min-height: 0; width: 100%; z-index: 35;
   background: var(--c-app); color: var(--c-black);   /* tmavé okolí jako feed */
   overflow-y: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+#glitch-profile::-webkit-scrollbar { display: none; }
+body.has-profile #glitch-feed { display: none; }     /* profil nahrazuje feed */
 .pf-wrap {
+  /* Jeden okraj profilu pro VŠECHNY prvky. Chceš-li ho změnit, stačí tady. */
+  --pf-gutter: calc(24 * var(--u));
   position: relative;
   max-width: var(--feed-max); margin: 0 auto; min-height: 100%;
   background: #fff;                                   /* světlý obsah profilu na tmavém pozadí */
-  padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(96 * var(--u));
+  padding: calc(28 * var(--u)) var(--pf-gutter) calc(96 * var(--u));
 }
 
 /* hlavička */
@@ -989,8 +997,8 @@ button.km-cell:active { transform: scale(.9); }
 .pf-proj-brief { color: var(--c-grey-50); margin-bottom: calc(12 * var(--u)); }
 .pf-proj-pills { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)); }
 
-/* ⋮ menu profilu (vpravo nahoře) */
-.pf-menu { position: absolute; top: calc(18 * var(--u)); right: calc(18 * var(--u)); z-index: 8; }
+/* ⋮ menu profilu (vpravo nahoře) — zarovnané na stejný okraj jako obsah */
+.pf-menu { position: absolute; top: calc(18 * var(--u)); right: var(--pf-gutter); z-index: 8; }
 .pf-menu-btn { display: grid; place-items: center; width: calc(30 * var(--u)); height: calc(28 * var(--u)); }
 .pf-menu-ic {
   width: calc(5 * var(--u)); height: calc(21 * var(--u)); background: var(--c-black);
@@ -1014,8 +1022,8 @@ button.km-cell:active { transform: scale(.9); }
 /* Lupa (výpis obsahu po tématech) */
 .pf-search-bar {
   display: flex; align-items: center; gap: calc(8 * var(--u));
-  background: var(--c-yellow); padding: calc(14 * var(--u)) calc(16 * var(--u));
-  margin: 0 calc(-24 * var(--u)) calc(22 * var(--u));   /* full-bleed přes padding wrapu */
+  background: var(--c-yellow); border-radius: calc(8 * var(--u));
+  padding: calc(12 * var(--u)); margin: 0 0 calc(22 * var(--u));   /* respektuje okraj profilu */
 }
 .pf-search-input {
   flex: 1 1 auto; min-width: 0; height: calc(42 * var(--u));

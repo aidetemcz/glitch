@@ -530,7 +530,10 @@
   }
 
   /* ---------- otevření / zavření / wiring ---------- */
-  function close() { const e = document.getElementById("glitch-profile"); if (e) e.remove(); }
+  function close() {
+    const e = document.getElementById("glitch-profile"); if (e) e.remove();
+    document.body.classList.remove("has-profile");
+  }
 
   const VALID_TABS = { search: 1, quests: 1, board: 1, saved: 1, settings: 1 };
   function open(tab) {
@@ -541,7 +544,11 @@
     const el = document.createElement("section");
     el.id = "glitch-profile";
     el.innerHTML = render(u);
-    document.body.appendChild(el);
+    // vlož PŘED spodní menu, ať je profil flex-sourozenec navigace (stabilní menu)
+    const nav = document.getElementById("glitch-nav");
+    if (nav && nav.parentNode) nav.parentNode.insertBefore(el, nav);
+    else document.body.appendChild(el);
+    document.body.classList.add("has-profile");
     wire(el);
     hydrateQuests();                 // Tvé questy
     hydrateProjects();               // Tvé projekty
