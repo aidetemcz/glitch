@@ -1777,3 +1777,32 @@ button.pf-stat:active b { color: var(--c-grey-50); }
 .pj-thread { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: calc(10 * var(--u)) var(--pj-gutter) calc(12 * var(--u)); gap: calc(13 * var(--u)); scrollbar-width: none; }
 .pj-thread::-webkit-scrollbar { display: none; }
 .pj-input-bar { position: static; }
+
+/* pracovna → Sdílení a spolupráce: přizvání + spolupracovníci */
+.pj-collabs { display: flex; flex-direction: column; }
+.pj-invite-bar { background: transparent; padding: 0; margin: 0 0 calc(8 * var(--u)); }
+.pj-invite-results { display: flex; flex-direction: column; }
+.pj-invite-add { flex: 0 0 auto; width: calc(34 * var(--u)); height: calc(34 * var(--u)); cursor: pointer; background: transparent; transition: transform .12s ease; }
+.pj-invite-add img { width: 100%; height: 100%; display: block; }
+.pj-invite-add:active { transform: scale(.9); }
+
+/* 1:1 zprávy (DM) */
+.dm-overlay {
+  position: fixed; top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 68; background: rgba(0,0,0,0.35);
+}
+.dm-panel {
+  position: relative; width: 100%; max-width: var(--feed-max); height: 100%;
+  margin: 0 auto; background: var(--c-white); color: var(--c-black);
+  display: flex; flex-direction: column; --pf-gutter: calc(24 * var(--u));
+}
+.dm-bar { align-items: center; }
+.dm-ava { flex: 0 0 auto; width: calc(38 * var(--u)); height: calc(38 * var(--u)); border-radius: 50%; overflow: hidden; background: var(--c-yellow); border: 2px solid var(--c-black); }
+.dm-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dm-who { display: flex; flex-direction: column; line-height: 1.1; }
+.dm-name { font-weight: 700; font-size: calc(16 * var(--u)); letter-spacing: var(--tracking); }
+.dm-handle { font-size: calc(12 * var(--u)); color: var(--c-grey-50); }
+.dm-thread { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: calc(16 * var(--u)) var(--pf-gutter) calc(12 * var(--u)); gap: calc(13 * var(--u)); scrollbar-width: none; }
+.dm-thread::-webkit-scrollbar { display: none; }
+.dm-input { position: static; }

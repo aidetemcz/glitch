@@ -744,6 +744,7 @@
       // zavře jakýkoli otevřený celoobrazovkový overlay, ať se cíl neotevře „za ním"
       if (_rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
       if (tab !== "create" && typeof window.glitchCloseCreate === "function") window.glitchCloseCreate();
+      if (typeof window.glitchCloseDM === "function") window.glitchCloseDM();
       if (typeof window.glitchCloseProject === "function") window.glitchCloseProject();
       if (tab === "profile") return;                 // přihlášení řeší auth.js
       if (tab === "feed") { if (_topicMode) exitTopicFeed(); else scrollToIndex(0); setActiveTab(item); return; }

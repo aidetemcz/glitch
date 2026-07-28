@@ -83,7 +83,7 @@
     const b = bodyEl();
     if (tab === "plan") b.innerHTML = planHtml();
     else if (tab === "zdroje") b.innerHTML = zdrojeHtml();
-    else if (tab === "sdileni") b.innerHTML = sdileniHtml();
+    else if (tab === "sdileni") { b.innerHTML = sdileniHtml(); hydrateCollabs(); }
     else if (tab === "chat") { b.innerHTML = chatHtml(); startChat(); }
     b.scrollTop = 0;
   }
@@ -144,20 +144,68 @@
     '</div>';
   }
 
-  /* ---------- tab: Sdílení a spolupráce (sólo verze) ---------- */
+  /* ---------- tab: Sdílení a spolupráce ---------- */
+  const entOf = (p) => {
+    const name = p.full_name || p.nickname || "Uživatel";
+    return { id: p.id, name: name, handle: "@" + (p.nickname || slug(name) || "uzivatel"),
+      avatar: p.avatar || "assets/ui/avatar-icon.png" };
+  };
+  function slug(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  }
+  const _collabReg = {};   // id → entita (pro otevření DM)
+  const collabRow = (ent) =>
+    '<div class="pf-people-row" data-collab-id="' + esc(ent.id) + '">' +
+      '<span class="pf-people-ava"><img src="' + esc(ent.avatar) + '" alt="" referrerpolicy="no-referrer"></span>' +
+      '<span class="pf-people-meta"><span class="pf-people-name">' + esc(ent.name) + '</span>' +
+        '<span class="pf-people-handle">' + esc(ent.handle) + '</span></span>' +
+      '<button class="pf-people-act is-msg" data-collab-msg="' + esc(ent.id) + '">Poslat zprávu</button>' +
+    '</div>';
+
   function sdileniHtml() {
     return '<div class="pj-scroll">' +
       '<h2 class="pj-title g-h3">Spolupráce a sdílení</h2>' +
       '<p class="pj-lead g-p">Přizvi do projektu své kamarády*ky. Můžete spolupracovat! Nastav si také sdílení projektu.</p>' +
       '<h3 class="pj-h">S kým na projektu spolupracuješ</h3>' +
-      '<div class="pf-empty" style="text-align:left;padding:calc(10 * var(--u)) 0">Zatím na projektu pracuješ sám*a.</div>' +
+      '<div class="pj-collabs" data-pj-collabs><div class="pf-empty" style="text-align:left;padding:calc(6 * var(--u)) 0">Načítám…</div></div>' +
       '<h3 class="pj-h">Přizvat další</h3>' +
-      '<button class="pj-soon" data-pj-soon type="button">Přizvat spolupracovníky — připravuje se</button>' +
+      '<div class="pf-search-bar pj-invite-bar"><div class="pf-search-field">' +
+        '<input class="pf-search-input" data-pj-invite-search placeholder="Najdi uživatele…" autocomplete="off">' +
+        '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button>' +
+      '</div></div>' +
+      '<div class="pj-invite-results" data-pj-invite-results></div>' +
       '<h3 class="pj-h" style="margin-top:calc(24 * var(--u))">Sdílení projektu</h3>' +
       '<label class="pj-row"><span class="pj-row-label">' + (pj.shared ? "Tento projekt je veřejný" : "Tento projekt je soukromý") + '</span>' +
         '<span class="pf-toggle"><input type="checkbox" data-pj-shared' + (pj.shared ? "" : " checked") + '><span class="pf-knob"></span></span></label>' +
       '<p class="pj-hint g-p-s">Soukromý projekt vidíš jen ty (a přizvaní spolupracovníci). Veřejný se objeví na tvém profilu.</p>' +
     '</div>';
+  }
+  function hydrateCollabs() {
+    const o = document.getElementById("glitch-project"); if (!o) return;
+    const box = o.querySelector("[data-pj-collabs]"); if (!box) return;
+    if (typeof sbListCollaborators !== "function") { box.innerHTML = '<div class="pf-empty" style="text-align:left">Zatím na projektu pracuješ sám*a.</div>'; return; }
+    sbListCollaborators(pj.glitch_id).then((rows) => {
+      const cur = document.getElementById("glitch-project"); if (!cur || tab !== "sdileni") return;
+      const b = cur.querySelector("[data-pj-collabs]"); if (!b) return;
+      if (!rows || !rows.length) { b.innerHTML = '<div class="pf-empty" style="text-align:left;padding:calc(6 * var(--u)) 0">Zatím na projektu pracuješ sám*a.</div>'; return; }
+      b.innerHTML = rows.map((p) => { const e = entOf(p); _collabReg[e.id] = e; return collabRow(e); }).join("");
+    }).catch(() => {});
+  }
+  let inviteT = null;
+  function renderInviteResults(results) {
+    const o = document.getElementById("glitch-project"); if (!o) return;
+    const box = o.querySelector("[data-pj-invite-results]"); if (!box) return;
+    if (!results.length) { box.innerHTML = '<div class="pf-empty" style="text-align:left;padding:calc(6 * var(--u)) 0">Nikdo takový tu není.</div>'; return; }
+    box.innerHTML = results.map((p) => {
+      const e = entOf(p); _collabReg[e.id] = e;
+      return '<div class="pf-people-row">' +
+        '<span class="pf-people-ava"><img src="' + esc(e.avatar) + '" alt="" referrerpolicy="no-referrer"></span>' +
+        '<span class="pf-people-meta"><span class="pf-people-name">' + esc(e.name) + '</span>' +
+          '<span class="pf-people-handle">' + esc(e.handle) + '</span></span>' +
+        '<button class="pj-invite-add" data-pj-invite="' + esc(e.id) + '" type="button" aria-label="Přizvat"><img src="assets/ui/Plus.svg" alt=""></button>' +
+      '</div>';
+    }).join("");
   }
 
   /* ---------- tab: Chat s Glitcheem ---------- */
@@ -271,11 +319,36 @@
     const imgDel = e.target.closest("[data-pj-img-del]");
     if (imgDel) { pj.resources.images.splice(+imgDel.dataset.pjImgDel, 1); save(); render(); return; }
 
-    // sdílení
-    if (e.target.closest("[data-pj-soon]")) { if (typeof window.glitchToast === "function") window.glitchToast("Přizvání spolupracovníků se připravuje."); return; }
+    // spolupráce: napsat zprávu spolupracovníkovi
+    const cMsg = e.target.closest("[data-collab-msg]");
+    if (cMsg) { const ent = _collabReg[cMsg.dataset.collabMsg]; if (ent && typeof window.glitchOpenDM === "function") window.glitchOpenDM(ent); return; }
+    // spolupráce: přizvat uživatele
+    const inv = e.target.closest("[data-pj-invite]");
+    if (inv) {
+      const id = inv.dataset.pjInvite;
+      if (typeof sbAddCollaborator === "function") sbAddCollaborator(pj.glitch_id, id).then(() => {
+        if (typeof window.glitchToast === "function") window.glitchToast("Spolupracovník přizván.");
+        const o = document.getElementById("glitch-project");
+        const inp = o && o.querySelector("[data-pj-invite-search]"); if (inp) inp.value = "";
+        const box = o && o.querySelector("[data-pj-invite-results]"); if (box) box.innerHTML = "";
+        hydrateCollabs();
+      });
+      return;
+    }
   }
   function onInput(e) {
     const t = e.target;
+    if (t.matches("[data-pj-invite-search]")) {
+      const q = t.value.trim(); clearTimeout(inviteT);
+      const o = document.getElementById("glitch-project");
+      const box = o && o.querySelector("[data-pj-invite-results]");
+      if (!q) { if (box) box.innerHTML = ""; return; }
+      inviteT = setTimeout(() => {
+        if (typeof sbSearchUsers !== "function") { renderInviteResults([]); return; }
+        sbSearchUsers(q).then((r) => renderInviteResults(r || [])).catch(() => renderInviteResults([]));
+      }, 250);
+      return;
+    }
     if (t.matches("[data-pj-title]")) { pj.title = t.value; saveDebounced(); return; }
     if (t.matches("[data-pj-what]")) { pj.plan.what = t.value; saveDebounced(); return; }
     if (t.matches("[data-pj-why]")) { pj.plan.why = t.value; saveDebounced(); return; }

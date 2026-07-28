@@ -376,6 +376,70 @@ async function sbDeleteGlitchpost(id) {
   try { await sb.from('glitchposts').delete().eq('id', id).eq('user_id', sbCurrentUser.id); } catch (_) {}
 }
 
+// ── SPOLUPRÁCE NA PROJEKTU ───────────────────
+// Projekt = (owner_id, glitch_id). Přizvat/odebrat může jen vlastník.
+async function sbAddCollaborator(glitchId, collaboratorId) {
+  if (!sb || !sbCurrentUser || !glitchId || !collaboratorId) return { ok: false };
+  try {
+    const { error } = await sb.from('project_collaborators').upsert(
+      { owner_id: sbCurrentUser.id, glitch_id: glitchId, collaborator_id: collaboratorId },
+      { onConflict: 'owner_id,glitch_id,collaborator_id', ignoreDuplicates: true });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+async function sbRemoveCollaborator(glitchId, collaboratorId) {
+  if (!sb || !sbCurrentUser || !glitchId || !collaboratorId) return;
+  try {
+    await sb.from('project_collaborators').delete()
+      .eq('owner_id', sbCurrentUser.id).eq('glitch_id', glitchId).eq('collaborator_id', collaboratorId);
+  } catch (_) {}
+}
+async function sbListCollaborators(glitchId) {
+  if (!sb || !sbCurrentUser || !glitchId) return [];
+  try {
+    const { data } = await sb.from('project_collaborators').select('collaborator_id')
+      .eq('owner_id', sbCurrentUser.id).eq('glitch_id', glitchId);
+    const ids = (data || []).map((r) => r.collaborator_id);
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// ── 1:1 ZPRÁVY (realtime) ────────────────────
+async function sbSendMessage(recipientId, body) {
+  if (!sb || !sbCurrentUser || !recipientId || !body) return { ok: false };
+  try {
+    const { error } = await sb.from('messages').insert({
+      sender_id: sbCurrentUser.id, recipient_id: recipientId, body: String(body).slice(0, 4000)
+    });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+async function sbListMessages(otherId) {
+  if (!sb || !sbCurrentUser || !otherId) return [];
+  const me = sbCurrentUser.id;
+  try {
+    const { data } = await sb.from('messages').select('id, sender_id, recipient_id, body, created_at')
+      .or('and(sender_id.eq.' + me + ',recipient_id.eq.' + otherId + '),and(sender_id.eq.' + otherId + ',recipient_id.eq.' + me + ')')
+      .order('created_at', { ascending: true }).limit(200);
+    return data || [];
+  } catch (_) { return []; }
+}
+// Přihlásí se k živým příchozím zprávám od `otherId`. cb(msg) na každou novou.
+// Vrací funkci pro odhlášení (nebo no-op).
+function sbSubscribeMessages(otherId, cb) {
+  if (!sb || !sbCurrentUser || !otherId || typeof cb !== 'function') return function () {};
+  try {
+    const ch = sb.channel('dm-' + otherId + '-' + Date.now())
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'messages', filter: 'recipient_id=eq.' + sbCurrentUser.id },
+        (payload) => { const m = payload && payload.new; if (m && m.sender_id === otherId) cb(m); })
+      .subscribe();
+    return function () { try { sb.removeChannel(ch); } catch (_) {} };
+  } catch (_) { return function () {}; }
+}
+
 // ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
 // Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
 // přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.
