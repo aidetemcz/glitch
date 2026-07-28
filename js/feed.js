@@ -204,7 +204,9 @@
       const poster = c.video ? c.video.replace(/\/([^/]+)\.mp4(\?.*)?$/, "/posters/$1.jpg") : "";
       const bg = c.video
         ? `<video class="quest-video" muted loop playsinline preload="none" data-poster="${poster}" data-video-src="${c.video}"></video>`
-        : `<div class="quest-bg"></div>`;
+        : c.image
+          ? `<div class="quest-bg" style="background-image:url('${c.image}');background-size:cover;background-position:center"></div>`
+          : `<div class="quest-bg"></div>`;
       return `${bg}${badges(c)}
         <div class="fx-block quest-text reserve-chevron anchor-bottom">
           ${chapter(c.chapterNo)}
@@ -421,7 +423,11 @@
       return `${badges(c)}
         <h2 class="fx-block g-h2 insp-txt" style="top:12.5%">${esc(c.title)}</h2>
         <p class="fx-block g-p insp-txt" style="top:19%">${esc(c.body || "")}</p>
-        <div class="insp-viz"><iframe class="viz-frame insp-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe></div>
+        <div class="insp-viz">${c.viz
+          ? `<iframe class="viz-frame insp-frame" data-viz-src="${c.viz}" title="${esc(c.title)}"></iframe>`
+          : c.image
+            ? `<img class="insp-img" src="${c.image}" alt="" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">`
+            : ""}</div>
         <form class="insp-form" data-insp-form>
           <input class="insp-input" type="text" placeholder="Začni psát…" aria-label="Napiš své nápady na vizualizaci" autocomplete="off">
           <button class="insp-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>

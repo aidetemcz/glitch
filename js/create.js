@@ -67,12 +67,12 @@
     const topic = g.tema || "";
     const img = images && images[0] ? images[0] : undefined;
     if (g.typ === "vyzva") {
+      // Výzva nemá obrázek ve vizuálu — kartu stavíme bez něj.
       const moz = Array.isArray(g.moznosti) ? g.moznosti : [];
       return {
         id: id, type: "quick_challenge", topic: topic, category: "Výzva", trust: "community",
         question: g.otazka || g.nadpis || "", taskText: g.text || "",
-        answers: moz.map((m) => ({ label: String((m && m.text) || ""), correct: !!(m && m.spravne) })),
-        image: img
+        answers: moz.map((m) => ({ label: String((m && m.text) || ""), correct: !!(m && m.spravne) }))
       };
     }
     if (g.typ === "inspirace") {
@@ -155,23 +155,33 @@
       '<textarea class="cr-textarea" data-cr-popis placeholder="Začni psát…">' + esc(st.popis) + '</textarea>' +
       '</div>' + nextBtn("Další krok", !st.popis.trim());
   }
+  // Obrázek má vizuál jen Basic Glitch a Inspirace; Výzva obrázek nemá.
+  const allowsImage = (typ) => typ === "basic" || typ === "inspirace";
   function step3() {
-    let boxes = "";
-    for (let i = 0; i < 2; i++) {
-      if (st.images[i]) {
-        boxes += '<div class="cr-imgbox has-img"><img src="' + st.images[i] + '" alt="">' +
-          '<button class="cr-thumb-del" data-cr-img-del="' + i + '" type="button" aria-label="Odebrat">×</button></div>';
-      } else {
-        boxes += '<button class="cr-imgbox" data-cr-img-add type="button">' +
-          '<span class="cr-imgbox-plus"><img src="assets/ui/Plus.svg" alt="Přidat obrázek"></span></button>';
+    let imgBlock = "";
+    if (allowsImage(st.typ)) {
+      let boxes = "";
+      for (let i = 0; i < 2; i++) {
+        if (st.images[i]) {
+          boxes += '<div class="cr-imgbox has-img"><img src="' + st.images[i] + '" alt="">' +
+            '<button class="cr-thumb-del" data-cr-img-del="' + i + '" type="button" aria-label="Odebrat">×</button></div>';
+        } else {
+          boxes += '<button class="cr-imgbox" data-cr-img-add type="button">' +
+            '<span class="cr-imgbox-plus"><img src="assets/ui/Plus.svg" alt="Přidat obrázek"></span></button>';
+        }
       }
+      imgBlock =
+        '<p class="cr-label g-p">Sem můžeš přidat obrázky (max. 2):</p>' +
+        '<div class="cr-imgs">' + boxes + '</div>' +
+        '<input type="file" accept="image/*" class="cr-file" data-cr-file hidden>';
     }
+    const sub = allowsImage(st.typ)
+      ? "Může to být odkaz na webovou stránku nebo obrázek. Obrázky jsou pro Glitch nejlepší čtvercové."
+      : "Může to být odkaz na webovou stránku, který k tématu máš.";
     return '<div class="cr-scroll">' +
       '<h1 class="cr-h1 g-h4">Máš k tomu nějaké zdroje?</h1>' +
-      '<p class="cr-sub g-p">Může to být odkaz na webovou stránku nebo obrázek. Obrázky jsou pro Glitch nejlepší čtvercové.</p>' +
-      '<p class="cr-label g-p">Sem můžeš přidat obrázky (max. 2):</p>' +
-      '<div class="cr-imgs">' + boxes + '</div>' +
-      '<input type="file" accept="image/*" class="cr-file" data-cr-file hidden>' +
+      '<p class="cr-sub g-p">' + sub + '</p>' +
+      imgBlock +
       '<p class="cr-label g-p">Sem můžeš vložit adresy webových stránek:</p>' +
       '<input class="cr-url" data-cr-url="0" value="' + esc(st.urls[0]) + '" placeholder="https://…" autocomplete="off">' +
       '<input class="cr-url" data-cr-url="1" value="' + esc(st.urls[1]) + '" placeholder="https://…" autocomplete="off">' +
@@ -362,6 +372,7 @@
     const typ = e.target.closest("[data-cr-typ]");
     if (typ) {
       st.typ = typ.dataset.crTyp;
+      if (!allowsImage(st.typ)) st.images = [];        // Výzva → žádné obrázky
       body().querySelectorAll("[data-cr-typ]").forEach((b) => b.classList.toggle("is-sel", b === typ));
       const n = body().querySelector("[data-cr-next]"); if (n) n.disabled = false;
       return;
