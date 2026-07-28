@@ -950,6 +950,8 @@ button.km-cell:active { transform: scale(.9); }
 
 /* Tvé questy — dráhy postupu (uzly = kapitoly; splněné žlutě, aktuální žlutě, zbytek černě).
    Rozestup teček je FIXNÍ (dráha má max 10 uzlů), takže délka čáry roste s počtem kapitol. */
+/* první quest trochu odsazený od šedé dělící čáry nad ním */
+.q-wrap { padding-top: calc(12 * var(--u)); }
 .q-quest { margin-bottom: calc(40 * var(--u)); }
 .q-quest:last-child { margin-bottom: calc(8 * var(--u)); }
 .q-name { font-size: calc(17 * var(--u)); font-weight: 700; letter-spacing: var(--tracking); margin-bottom: calc(16 * var(--u)); }
@@ -977,6 +979,10 @@ button.km-cell:active { transform: scale(.9); }
 }
 .q-node:hover .q-tip, .q-node.is-open .q-tip { display: block; }
 .q-node--r .q-tip { left: auto; right: 0; }
+/* zamčený Glitch: šedivý tooltip (není proklikávací) */
+.q-node.is-locked .q-tip {
+  background: var(--c-grey-10); border-color: var(--c-grey-15); color: var(--c-grey-50); cursor: default;
+}
 /* projektový uzel (poslední, aplikační): větší; odemčený žlutý, zamčený = ikona zámku */
 .q-node--project { width: calc(26 * var(--u)); height: calc(26 * var(--u)); background: var(--c-yellow); border: calc(2 * var(--u)) solid var(--c-black); }
 .q-node--project.is-locked { background: none; border: none; }
