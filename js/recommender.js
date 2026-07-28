@@ -115,6 +115,7 @@
 
     // 1) tvrdé filtry
     let pool = rankable.filter((c) => {
+      if (c.type === "mood_selector") return false;           // rozpoznávání emocí zakázáno (AI Act) — natrvalo pryč
       if (c.project) return false;                            // aplikační (projektový) Glitch není ve feedu
       if (c.type === "time_to_let_go") return false;          // zamykací obrazovka jen v noci (viz výše)
       if (c.topic) { const t = norm(c.topic); if (notintSet.has(t) && !jeZajem(t)) return false; }  // „nezajímá mě"

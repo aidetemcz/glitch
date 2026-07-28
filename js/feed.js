@@ -31,10 +31,6 @@
 
     { type: "intro" },
 
-    { type: "mood_selector", category: "Wellbeing", trust: "Core",
-      title: "Jak se teď cítíš?",
-      body: "Umísti potažením černou tečku na správné místo v diagramu. My podle toho upravíme Glitche, které se ti dnes zobrazí." },
-
     { type: "breathing", category: "Wellbeing",
       title: "Dechové cvičení",
       body: "Rovnoměrné vědomé dýchání ti může pomoci zlepšit soustředění.",
@@ -623,7 +619,7 @@
   (async function loadAndBuild() {
     let catalog = CARDS;
     try {
-      const res = await fetch("glitches/feed.json?v=46", { cache: "no-cache" });
+      const res = await fetch("glitches/feed.json?v=47", { cache: "no-cache" });
       if (res.ok) catalog = await res.json();
     } catch (_) {}
     _catalog = catalog;

@@ -204,7 +204,7 @@
   function loadQuests() {
     if (questsData) return Promise.resolve(questsData);
     if (questsPromise) return questsPromise;
-    questsPromise = fetch("glitches/feed.json?v=46")
+    questsPromise = fetch("glitches/feed.json?v=47")
       .then((r) => (r.ok ? r.json() : null))
       .then((cards) => { questsData = buildQuests(cards); return questsData; })
       .catch(() => { questsData = []; return questsData; });
@@ -331,7 +331,7 @@
   function loadCatalog() {
     if (catalogData) return Promise.resolve(catalogData);
     if (catalogPromise) return catalogPromise;
-    catalogPromise = fetch("glitches/feed.json?v=46")
+    catalogPromise = fetch("glitches/feed.json?v=47")
       .then((r) => (r.ok ? r.json() : []))
       .then((cards) => { catalogData = cards || []; return catalogData; })
       .catch(() => { catalogData = []; return catalogData; });
@@ -524,7 +524,6 @@
         toggleRow("odkoho_generovany", "Generovaný AI") +
       '</div>' +
       '<div class="pf-set-group"><h3>Wellbeing</h3>' +
-        toggleRow("mood_checkin", "Denní mood check-in") +
         toggleRow("notifikace", "Notifikace") +
       '</div>' +
       '<div class="pf-set-group"><h3>Postup</h3>' +
