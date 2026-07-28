@@ -258,14 +258,23 @@
     if (!list.length) {
       return '<div class="pf-empty">Zatím tu nic není — až dojdeš na konec questu, můžeš si poslední Glitch forknout do projektu a rozpracovat ho tady.</div>';
     }
+    const resCount = (p) => (typeof window.resourceCount === "function") ? window.resourceCount(p)
+      : ((p.resources && p.resources.length) || 0);
+    const progress = (p) => (typeof window.stepsProgress === "function") ? window.stepsProgress(p) : { done: 0, total: 0 };
     return '<div class="pf-projects">' + list.map((p) => {
-      const res = (p.resources && p.resources.length) || 0;
-      // „Konverzací" a „Splněno" zatím netrackujeme — doplní se s návrhem pracovny projektu.
+      const pr = progress(p);
+      // stavový štítek je první: hotový projekt = „Dokončeno" (žlutý), jinak „Splněno X/Y" (šedý)
+      const statusPill = p.done
+        ? '<span class="pf-pill pf-pill--done">Dokončeno</span>'
+        : '<span class="pf-pill pf-pill--status">Splněno: ' + pr.done + '/' + pr.total + '</span>';
       return '<button class="pf-proj" data-proj="' + esc(p.id) + '" type="button">' +
         '<span class="pf-proj-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>' +
         '<div class="pf-proj-title g-h4">' + esc(p.title || "Projekt") + '</div>' +
         (p.brief ? '<div class="pf-proj-brief g-p">' + esc(p.brief) + '</div>' : '') +
-        '<div class="pf-proj-pills"><span class="pf-pill">Zdrojů: ' + res + '</span></div>' +
+        '<div class="pf-proj-pills">' + statusPill +
+          '<span class="pf-pill">Zdrojů: ' + resCount(p) + '</span>' +
+          '<span class="pf-pill">Konverzací: ' + (p.msgCount || 0) + '</span>' +
+        '</div>' +
       '</button>';
     }).join("") + '</div>';
   }
@@ -1002,7 +1011,8 @@
       const savedCard = e.target.closest("[data-saved]");
       if (savedCard) { if (typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(savedCard.dataset.saved); return; }
       // projekt: pracovna se připravuje
-      if (e.target.closest("[data-proj]")) { toastPf("Pracovna projektu se připravuje."); return; }
+      const projCard = e.target.closest("[data-proj]");
+      if (projCard) { if (typeof window.glitchOpenProject === "function") window.glitchOpenProject(projCard.dataset.proj); return; }
 
       // dráhy questů: klik na žlutý tooltip → otevři vyhodnocení / Glitch
       const tip = e.target.closest(".q-tip");
@@ -1104,5 +1114,10 @@
 
   window.glitchOpenProfile = open;
   window.glitchCloseProfile = close;
+  // překreslí kartičky projektů (volá pracovna po změně dat projektu)
+  window.glitchRefreshProjects = function () {
+    const cur = document.getElementById("glitch-profile");
+    if (cur && state.tab === "board" && !state.peopleView) hydrateProjects();
+  };
   window.glitchSettings = getSettings;   // čte feed (gating obsahu dle nastavení)
 })();

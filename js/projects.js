@@ -25,7 +25,10 @@
       quest_topic: info.quest_topic || "",
       title: info.title || "Projekt",
       brief: info.brief || "",
-      resources: [], notes: "", photos: [], shared: false,
+      // pracovna: plán, zdroje, počítadla, stav
+      plan: { start: "", steps: [], deadline: "" },
+      resources: { notes: [], links: [], images: [] },
+      msgCount: 0, done: false, shared: false,
       kdy: new Date().toISOString()
     };
     all.unshift(p);
@@ -34,6 +37,31 @@
     try { if (typeof sbLogEvent === "function") sbLogEvent("project", p.glitch_id, { quest_topic: p.quest_topic || null }); } catch (_) {}
     try { window.dispatchEvent(new CustomEvent("project:created", { detail: p })); } catch (_) {}
     return p;
+  }
+
+  // Sloučí opravu do projektu (lokálně + Supabase). Vrací aktualizovaný projekt.
+  function updateProject(id, patch) {
+    const all = readAll();
+    const p = all.find((x) => x.id === id);
+    if (!p) return null;
+    Object.assign(p, patch || {});
+    writeAll(all);
+    try { if (typeof sbUpdateProject === "function") sbUpdateProject(p); } catch (_) {}
+    try { window.dispatchEvent(new CustomEvent("project:changed", { detail: p })); } catch (_) {}
+    return p;
+  }
+
+  // Počet zdrojů = neprázdné poznámky + odkazy + obrázky.
+  function resourceCount(p) {
+    const r = (p && p.resources) || {};
+    const n = (r.notes || []).filter((x) => String(x || "").trim()).length;
+    const l = (r.links || []).filter((x) => String(x || "").trim()).length;
+    const i = (r.images || []).length;
+    return n + l + i;
+  }
+  function stepsProgress(p) {
+    const steps = (p && p.plan && p.plan.steps) || [];
+    return { done: steps.filter((s) => s && s.done).length, total: steps.length };
   }
 
   const listProjects = () => readAll();
@@ -50,6 +78,9 @@
   }
 
   window.createProject = createProject;
+  window.updateProject = updateProject;
+  window.resourceCount = resourceCount;
+  window.stepsProgress = stepsProgress;
   window.listProjects = listProjects;
   window.getProject = getProject;
   window.projectForGlitch = projectForGlitch;

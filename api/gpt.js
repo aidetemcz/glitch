@@ -131,7 +131,34 @@ function osobniRadky(zak) {
   return radky;
 }
 
-function buildSystemPrompt(personaId, ctx, quizNow, zak, freechat) {
+// Kontext projektu (pracovna) → blok PROJEKT pro personu glitchee-projekt.
+function projektBlock(pr) {
+  if (!pr || typeof pr !== "object") return "";
+  const L = (label, val) => {
+    if (val == null) return "";
+    const s = String(val).trim().slice(0, MAX_CHARS);
+    return s ? label + ": " + s + "\n" : "";
+  };
+  const steps = Array.isArray(pr.kroky) ? pr.kroky : [];
+  const stepLines = steps.map((s) => "  - [" + (s && s.done ? "hotovo" : "nehotovo") + "] " + String((s && s.text) || "").slice(0, 300)).filter((x) => x.trim().length > 12).join("\n");
+  const notes = (Array.isArray(pr.poznamky) ? pr.poznamky : []).filter(Boolean).map((n) => "  - " + String(n).slice(0, 300)).join("\n");
+  const links = (Array.isArray(pr.odkazy) ? pr.odkazy : []).filter(Boolean).map((n) => "  - " + String(n).slice(0, 300)).join("\n");
+  const body =
+    L("Název projektu", pr.nazev) +
+    L("Vznikl z Glitche / tématu", pr.glitch) +
+    L("Čím žák začne", pr.start) +
+    (stepLines ? "Kroky plánu:\n" + stepLines + "\n" : "") +
+    L("Termín dokončení", pr.termin) +
+    (notes ? "Poznámky:\n" + notes + "\n" : "") +
+    (links ? "Odkazy:\n" + links + "\n" : "") +
+    (pr.obrazky ? L("Přiložené obrázky", String(pr.obrazky) + " ks") : "");
+  const s = body.trim();
+  if (!s) return "";
+  return "### PROJEKT (kontext pracovny — jen pro tebe, sám od sebe to nevypisuj)\n\n" + s +
+    "\n\nNa tohle navazuj: pomáhej žákovi posunout tenhle projekt dál.";
+}
+
+function buildSystemPrompt(personaId, ctx, quizNow, zak, freechat, project) {
   const persona = PERSONAS.get(personaId) || PERSONAS.get(CATALOG.default);
   const parts = [];
   if (persona && persona.prompt) parts.push(persona.prompt);
@@ -139,6 +166,9 @@ function buildSystemPrompt(personaId, ctx, quizNow, zak, freechat) {
   // žádná glitch-specifická pravidla, žádné ZADÁNÍ, žádný kvíz. Jen persona +
   // (volitelně) osobní údaje uživatele, ať přizpůsobí jazyk.
   if (freechat) {
+    // volitelný kontext projektu (pracovna): plán, zdroje, z jakého Glitche vznikl
+    const pb = projektBlock(project);
+    if (pb) parts.push(pb);
     const osobni = osobniRadky(zak);
     const zb = zakBlock(zak);
     if (osobni.length || zb) {
@@ -393,7 +423,7 @@ module.exports = async function handler(req, res) {
     }
 
     const messages = [
-      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow, body.zak, freechat) },
+      { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow, body.zak, freechat, body.project) },
       ...chat
     ];
 

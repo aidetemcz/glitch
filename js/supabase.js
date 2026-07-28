@@ -175,6 +175,26 @@ async function sbCreateProject(p) {
   } catch (_) {}
 }
 
+// Uloží data pracovny projektu (plán, zdroje, stav). Klíč je glitch_id (1 na uživatele+glitch).
+async function sbUpdateProject(p) {
+  if (!sb || !sbCurrentUser || !p || !p.glitch_id) return;
+  try {
+    await sb.from('projects').upsert({
+      user_id: sbCurrentUser.id,
+      glitch_id: p.glitch_id,
+      quest_topic: p.quest_topic || null,
+      title: p.title || null,
+      brief: p.brief || null,
+      plan: p.plan || {},
+      resources: p.resources || {},
+      msg_count: p.msgCount || 0,
+      done: !!p.done,
+      shared: !!p.shared,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,glitch_id' });
+  } catch (_) {}
+}
+
 async function sbRemoveProject(glitchId) {
   if (!sb || !sbCurrentUser || !glitchId) return;
   try { await sb.from('projects').delete().eq('user_id', sbCurrentUser.id).eq('glitch_id', glitchId); } catch (_) {}
