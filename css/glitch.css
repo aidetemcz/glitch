@@ -1066,8 +1066,9 @@ button.km-cell:active { transform: scale(.9); }
 }
 
 /* Saved: submenu Glitchposty / Uložené + seskupené karty */
-.pf-subtabs { display: flex; gap: calc(28 * var(--u)); justify-content: center; border-bottom: 1px solid var(--c-grey-15); margin-bottom: calc(20 * var(--u)); }
-.pf-subtab { position: relative; padding: calc(2 * var(--u)) 0 calc(12 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); color: var(--c-grey-50); }
+/* stejný odstup jako sekční nadpisy v ostatních tabech (padding 16u, margin-bottom 18u) */
+.pf-subtabs { display: flex; gap: calc(28 * var(--u)); justify-content: center; border-bottom: 1px solid var(--c-grey-15); margin-bottom: calc(18 * var(--u)); }
+.pf-subtab { position: relative; padding: calc(16 * var(--u)) 0; font-size: calc(15 * var(--u)); font-weight: 600; letter-spacing: var(--tracking); color: var(--c-grey-50); }
 .pf-subtab.is-active { color: var(--c-black); }
 .pf-subtab.is-active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-black); }
 .pf-saved-group { margin-bottom: calc(22 * var(--u)); }
