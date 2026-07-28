@@ -1431,3 +1431,107 @@ body.rz-lock { overflow: hidden; }
   content: ""; position: absolute; bottom: 0; height: 1px; background: var(--c-grey-15);
   left: calc(-1 * var(--pf-gutter)); right: calc(-1 * var(--pf-gutter));   /* přes celý panel */
 }
+
+/* ==========================================================================
+   Sledování (following / followers) + veřejný profil
+   ========================================================================== */
+/* hlavičkové statistiky jsou teď tlačítka (sleduji / sledujících) */
+.pf-stat { background: transparent; border: 0; cursor: pointer; }
+button.pf-stat:active b { color: var(--c-grey-50); }
+
+/* Overlay seznamu lidí i veřejného profilu — nad profilem, končí nad menu. */
+.pf-people-overlay, .pf-public-overlay {
+  position: fixed; top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 62; background: rgba(0,0,0,0.35);
+}
+.pf-people-panel, .pf-public-panel {
+  position: relative; width: 100%; max-width: var(--feed-max); height: 100%;
+  margin: 0 auto; background: var(--c-white); color: var(--c-black);
+  display: flex; flex-direction: column;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  --pf-gutter: calc(24 * var(--u));
+}
+.pf-people-panel::-webkit-scrollbar, .pf-public-panel::-webkit-scrollbar { display: none; }
+
+/* horní lišta: zpět (vlevo), titulek / ⋮ menu */
+.pf-people-bar {
+  flex: 0 0 auto; position: sticky; top: 0; z-index: 3;
+  display: flex; align-items: center; gap: calc(12 * var(--u));
+  padding: calc(22 * var(--u)) var(--pf-gutter) calc(12 * var(--u));
+  background: var(--c-white);
+}
+.pf-people-back { flex: 0 0 auto; display: grid; place-items: center; width: calc(30 * var(--u)); transition: transform .12s ease; }
+.pf-people-back img { width: calc(26 * var(--u)); height: auto; }
+.pf-people-back:active { transform: scale(.92); }
+.pf-people-title { margin: 0; color: var(--c-black); }
+/* v lište veřejného profilu je ⋮ menu vpravo (statické, ne absolutní) */
+.pf-public-panel .pf-people-bar .pf-menu { position: static; margin-left: auto; }
+
+/* seznam řádků uživatelů */
+.pf-people-body { flex: 1 1 auto; padding: calc(6 * var(--u)) var(--pf-gutter) calc(28 * var(--u)); }
+.pf-people-row {
+  display: flex; align-items: center; gap: calc(12 * var(--u));
+  padding: calc(12 * var(--u)) 0; cursor: pointer;
+  border-bottom: 1px solid var(--c-grey-15);
+}
+.pf-people-ava {
+  flex: 0 0 auto; width: calc(46 * var(--u)); height: calc(46 * var(--u));
+  border-radius: 50%; overflow: hidden; background: var(--c-yellow);
+  border: 2px solid var(--c-black);
+}
+.pf-people-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf-people-meta { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: calc(1 * var(--u)); }
+.pf-people-name { font-size: calc(16 * var(--u)); font-weight: 700; color: var(--c-black); letter-spacing: var(--tracking); }
+.pf-people-handle { font-size: calc(13 * var(--u)); color: var(--c-grey-50); }
+.pf-people-act {
+  flex: 0 0 auto; white-space: nowrap; cursor: pointer;
+  padding: calc(8 * var(--u)) calc(14 * var(--u)); border-radius: calc(20 * var(--u));
+  font-family: var(--font); font-size: calc(13 * var(--u)); letter-spacing: var(--tracking);
+  border: 2px solid var(--c-black);
+}
+.pf-people-act.is-follow { background: var(--c-yellow); color: var(--c-black); }
+.pf-people-act.is-unfollow { background: var(--c-white); color: var(--c-black); }
+.pf-people-act.is-msg { background: var(--c-black); color: var(--c-white); }
+.pf-people-act:active { transform: scale(.96); }
+
+/* veřejný profil */
+.pf-public-body { flex: 1 1 auto; padding: 0 var(--pf-gutter) calc(120 * var(--u)); }
+.pf-public-head { text-align: center; padding: calc(10 * var(--u)) 0 calc(24 * var(--u)); }
+.pf-public-ava {
+  display: inline-block; width: calc(96 * var(--u)); height: calc(96 * var(--u));
+  border-radius: 50%; overflow: hidden; background: var(--c-yellow);
+  border: 2px solid var(--c-black); margin-bottom: calc(12 * var(--u));
+}
+.pf-public-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf-public-name {
+  display: flex; align-items: center; justify-content: center; gap: calc(8 * var(--u));
+  font-size: calc(22 * var(--u)); font-weight: 700; color: var(--c-black);
+}
+.pf-public-badge {
+  font-size: calc(12 * var(--u)); font-weight: 700; color: var(--c-black);
+  background: var(--c-yellow); border: 1.5px solid var(--c-black);
+  border-radius: calc(20 * var(--u)); padding: calc(2 * var(--u)) calc(9 * var(--u));
+}
+.pf-public-handle { font-size: calc(14 * var(--u)); color: var(--c-grey-50); margin-top: calc(3 * var(--u)); }
+.pf-public-bio { color: var(--c-black); margin: calc(14 * var(--u)) auto 0; max-width: 34ch; }
+.pf-public-posts-title { margin-top: calc(8 * var(--u)); }
+
+/* plovoucí tlačítko chatu */
+.pf-public-chat {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: calc(24 * var(--u) + env(safe-area-inset-bottom, 0px));
+  display: inline-flex; align-items: center; gap: calc(9 * var(--u));
+  padding: calc(12 * var(--u)) calc(22 * var(--u)); border-radius: calc(30 * var(--u));
+  background: var(--c-yellow); border: 2px solid var(--c-black); color: var(--c-black);
+  font-family: var(--font); font-size: calc(16 * var(--u)); font-weight: 700; letter-spacing: var(--tracking);
+  box-shadow: 0 calc(6 * var(--u)) calc(18 * var(--u)) rgba(0,0,0,.28); cursor: pointer;
+}
+.pf-public-chat img { width: calc(26 * var(--u)); height: calc(26 * var(--u)); border-radius: 50%; }
+.pf-public-chat:active { transform: translateX(-50%) scale(.96); }
+
+/* disclaimer nad polem pro psaní ve volném chatu */
+.rz-disclaimer {
+  flex: 0 0 auto; text-align: center; color: var(--c-grey-50);
+  padding: calc(6 * var(--u)) calc(28 * var(--u)) 0; margin: 0;
+}

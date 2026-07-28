@@ -1542,6 +1542,98 @@
     _openCardId = null;
   }
 
+  /* ---- Volný chat (veřejný profil / seznamy sledování) ----
+     Stejný overlay jako rozklik, ale bez pre-testu, kvízu a vyhodnocení — jen
+     svobodná konverzace s personou (výchozí Glitchee). Kvíz je vypnutý (quiz:false),
+     takže server nic nezkouší; nahoře je disclaimer, že jde o chatbota. */
+  function openFreeChat(entity) {
+    entity = entity || {};
+    const name = entity.name || "Glitchee";
+    const persona = entity.persona || DEFAULT_PERSONA;
+    const ava = entity.avatar || DEFAULT_AVA;
+    const disclaimer = entity.disclaimer || (name + " je chatbot, nemá emoce a může dělat chyby.");
+    const ov = ensureRzOverlay();
+    const panel = ov.querySelector(".rz-panel");
+    panel.className = "rz-panel rz-panel--chat rz-panel--free";
+    panel.innerHTML = `
+      <header class="rz-bar">
+        <button class="rz-close" data-rz-close aria-label="Zavřít"><img src="assets/ui/more-button.svg" alt=""></button>
+        <div class="rz-badges"><span class="rz-badge">Chat</span><span class="rz-badge">${esc(name)}</span></div>
+      </header>
+      <div class="rz-body rz-body--chat">
+        <div class="rz-thread" data-rz-thread></div>
+      </div>
+      <p class="rz-disclaimer g-p-s">${esc(disclaimer)}</p>
+      <form class="rz-input" data-rz-form>
+        <input class="rz-input-field" type="text" placeholder="Začni psát…" aria-label="Napiš zprávu" autocomplete="off">
+        <button class="rz-send" type="submit" aria-label="Odeslat">${SEND_ICO}</button>
+      </form>`;
+    panel.scrollTop = 0;
+    ov.classList.add("is-open");
+    document.body.classList.add("rz-lock");
+    panel.querySelector("[data-rz-close]").addEventListener("click", closeRozklik);
+    initFreeChat(panel, { persona: persona, ava: ava, greeting: entity.greeting });
+  }
+
+  function initFreeChat(panel, o) {
+    const form = panel.querySelector("[data-rz-form]");
+    const thread = panel.querySelector("[data-rz-thread]");
+    if (!form || !thread) return;
+    const ava = o.ava || DEFAULT_AVA;
+    const history = [];
+    const field = form.querySelector(".rz-input-field");
+    const sendBtn = form.querySelector(".rz-send");
+    const scrollDown = () => panel.scrollTo({ top: panel.scrollHeight, behavior: "smooth" });
+
+    async function ask(text, opts) {
+      opts = opts || {};
+      if (text) {
+        history.push({ role: "user", content: text });
+        if (!opts.silent) {
+          const um = document.createElement("div");
+          um.className = "rz-msg rz-msg--user";
+          um.innerHTML = `<div class="rz-bubble"></div><span class="rz-ava rz-ava--user"></span>`;
+          um.querySelector(".rz-bubble").textContent = text;
+          thread.appendChild(um);
+        }
+        scrollDown();
+      }
+      field.disabled = true; if (sendBtn) sendBtn.disabled = true;
+      const typing = rzAppendBot(thread, "…", ava);
+      typing.classList.add("rz-typing");
+      scrollDown();
+      try {
+        if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
+        const reply = await window.gptChat(history, { persona: o.persona, quiz: false, temperature: 0.5 });
+        typing.remove();
+        history.push({ role: "assistant", content: reply });
+        if (reply) rzAppendBot(thread, reply, ava);
+      } catch (err) {
+        typing.remove();
+        rzAppendBot(thread, "Teď se mi nepovedlo odpovědět. Zkus to prosím za chvilku.", ava);
+      } finally {
+        field.disabled = false; if (sendBtn) sendBtn.disabled = false;
+        scrollDown();
+      }
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = (field.value || "").trim();
+      if (!text) return;
+      field.value = "";
+      ask(text).then(() => field.focus());
+    });
+
+    // úvodní pozdrav (neviditelná pobídka → bot zahájí)
+    ask(o.greeting ||
+      "(Uživatel právě otevřel volný chat s tebou ze svého profilu. Není to konkrétní Glitch, " +
+      "ale obecný chat. Krátce a přátelsky ho pozdrav, řekni, že se tě může zeptat na cokoliv " +
+      "kolem informatiky, dat, AI nebo Glitche, a polož jednu otevřenou otázku, s čím může začít.)",
+      { silent: true });
+  }
+  window.glitchChatWith = openFreeChat;
+
   // Otevře rozklik konkrétního Glitche podle id (volá profil — dráhy questů).
   // U splněného ukáže vyhodnocení, u nesplněného konverzaci. Overlay je nad profilem.
   window.glitchOpenGlitch = function (id) {

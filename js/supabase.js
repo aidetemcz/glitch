@@ -226,6 +226,78 @@ async function sbLogEvent(eventType, glitchId, meta) {
   } catch (_) {}
 }
 
+// ── SLEDOVÁNÍ (following / followers) ────────
+// Glitchee (vestavěný průvodce) NENÍ v DB — vzájemné sledování řeší klient.
+// Tyhle funkce pracují jen se skutečnými uživateli (tabulka follows + profiles).
+
+// Ořeže vstup pro PostgREST or()/ilike (znaky, které by rozbily filtr).
+function _sbSafeTerm(q) { return String(q || '').replace(/[,%()*]/g, ' ').trim(); }
+
+async function sbSearchUsers(q) {
+  if (!sb) return [];
+  const term = _sbSafeTerm(q);
+  try {
+    let query = sb.from('profiles').select('id, nickname, full_name, vek, avatar').limit(20);
+    if (term) query = query.or('nickname.ilike.%' + term + '%,full_name.ilike.%' + term + '%');
+    const { data } = await query;
+    let rows = data || [];
+    if (sbCurrentUser) rows = rows.filter((r) => r.id !== sbCurrentUser.id);
+    return rows;
+  } catch (_) { return []; }
+}
+
+async function sbFollow(userId) {
+  if (!sb || !sbCurrentUser || !userId) return { ok: false };
+  try {
+    const { error } = await sb.from('follows').upsert(
+      { follower_id: sbCurrentUser.id, following_id: userId },
+      { onConflict: 'follower_id,following_id', ignoreDuplicates: true });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+
+async function sbUnfollow(userId) {
+  if (!sb || !sbCurrentUser || !userId) return { ok: false };
+  try {
+    const { error } = await sb.from('follows').delete()
+      .eq('follower_id', sbCurrentUser.id).eq('following_id', userId);
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+
+// Profily, které přihlášený uživatel sleduje.
+async function sbListFollowing() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('follows').select('following_id').eq('follower_id', sbCurrentUser.id);
+    const ids = (data || []).map((r) => r.following_id);
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// Profily, které sledují přihlášeného uživatele.
+async function sbListFollowers() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('follows').select('follower_id').eq('following_id', sbCurrentUser.id);
+    const ids = (data || []).map((r) => r.follower_id);
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// Množina id, které přihlášený sleduje (pro tlačítka Sleduješ / Začít sledovat).
+async function sbFollowingIds() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('follows').select('following_id').eq('follower_id', sbCurrentUser.id);
+    return (data || []).map((r) => r.following_id);
+  } catch (_) { return []; }
+}
+
 // ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
 // Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
 // přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.
