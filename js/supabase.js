@@ -406,6 +406,50 @@ async function sbListCollaborators(glitchId) {
   } catch (_) { return []; }
 }
 
+// Projekty, do kterých jsem přizvaný jako spolupracovník (sdílené se mnou).
+// Vrací řádky projektu vlastníka + info o vlastníkovi (_owner).
+async function sbListSharedProjects() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data: pc } = await sb.from('project_collaborators').select('owner_id, glitch_id')
+      .eq('collaborator_id', sbCurrentUser.id);
+    if (!pc || !pc.length) return [];
+    const ors = pc.map((r) => 'and(user_id.eq.' + r.owner_id + ',glitch_id.eq.' + r.glitch_id + ')').join(',');
+    const { data } = await sb.from('projects').select('*').or(ors);
+    const rows = data || [];
+    const ownerIds = Array.from(new Set(rows.map((p) => p.user_id)));
+    const owners = {};
+    if (ownerIds.length) {
+      const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, avatar').in('id', ownerIds);
+      (profs || []).forEach((p) => { owners[p.id] = p; });
+    }
+    return rows.map((p) => Object.assign({}, p, { _owner: owners[p.user_id] || null }));
+  } catch (_) { return []; }
+}
+
+// Úprava projektu, který se mnou někdo sdílí (píšu do řádku vlastníka; RLS
+// „Projects collaborator update" to povolí). Nikdy nezakládá nový řádek.
+async function sbUpdateSharedProject(ownerId, glitchId, fields) {
+  if (!sb || !sbCurrentUser || !ownerId || !glitchId) return;
+  try {
+    await sb.from('projects').update(Object.assign({}, fields, { updated_at: new Date().toISOString() }))
+      .eq('user_id', ownerId).eq('glitch_id', glitchId);
+  } catch (_) {}
+}
+
+// Spolupracovníci na sdíleném projektu (vidí je i přizvaný člen — RLS "PC members read").
+async function sbListProjectMembers(ownerId, glitchId) {
+  if (!sb || !ownerId || !glitchId) return [];
+  try {
+    const { data } = await sb.from('project_collaborators').select('collaborator_id')
+      .eq('owner_id', ownerId).eq('glitch_id', glitchId);
+    const ids = (data || []).map((r) => r.collaborator_id).filter((id) => id !== (sbCurrentUser && sbCurrentUser.id));
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
 // ── 1:1 ZPRÁVY (realtime) ────────────────────
 async function sbSendMessage(recipientId, body) {
   if (!sb || !sbCurrentUser || !recipientId || !body) return { ok: false };

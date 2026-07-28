@@ -38,13 +38,34 @@
 
   function save(patch) {
     if (patch) Object.assign(pj, patch);
-    if (typeof window.updateProject === "function") window.updateProject(pj.id, pj);
+    if (pj._shared) {
+      // sdílený projekt → zapiš do řádku vlastníka (nikoli lokálně)
+      if (typeof sbUpdateSharedProject === "function") sbUpdateSharedProject(pj.owner_id, pj.glitch_id, {
+        plan: pj.plan, resources: pj.resources, msg_count: pj.msgCount, done: pj.done, title: pj.title
+      });
+    } else if (typeof window.updateProject === "function") {
+      window.updateProject(pj.id, pj);
+    }
   }
   function saveDebounced() { clearTimeout(saveT); saveT = setTimeout(() => save(), 450); }
 
   /* ---------- overlay ---------- */
-  function open(id) {
-    const p = (typeof window.getProject === "function") ? window.getProject(id) : null;
+  // Namapuje řádek sdíleného projektu ze Supabase na lokální tvar pracovny.
+  function mapShared(row) {
+    return {
+      id: "shared-" + row.glitch_id, glitch_id: row.glitch_id, quest_topic: row.quest_topic || "",
+      title: row.title || "Projekt", brief: row.brief || "",
+      plan: row.plan || {}, resources: row.resources || {},
+      msgCount: row.msg_count || 0, done: !!row.done, shared: !!row.shared,
+      _shared: true, owner_id: row.user_id, _owner: row._owner || null
+    };
+  }
+
+  function open(arg) {
+    // arg = lokální id (vlastní projekt) NEBO řádek sdíleného projektu (objekt)
+    let p = null;
+    if (arg && typeof arg === "object") p = mapShared(arg);
+    else if (typeof window.getProject === "function") p = window.getProject(arg);
     if (!p) return;
     pj = normalize(p); tab = "plan";
     close();
@@ -164,6 +185,15 @@
     '</div>';
 
   function sdileniHtml() {
+    // Sdílený projekt (jsem spolupracovník, ne vlastník) — jen členové + zprávy.
+    if (pj._shared) {
+      return '<div class="pj-scroll">' +
+        '<h2 class="pj-title g-h3">Spolupráce a sdílení</h2>' +
+        '<p class="pj-lead g-p">Na tomhle projektu spolupracuješ s ostatními. Plán i zdroje upravujete společně.</p>' +
+        '<h3 class="pj-h">Členové projektu</h3>' +
+        '<div class="pj-collabs" data-pj-collabs><div class="pf-empty" style="text-align:left;padding:calc(6 * var(--u)) 0">Načítám…</div></div>' +
+      '</div>';
+    }
     return '<div class="pj-scroll">' +
       '<h2 class="pj-title g-h3">Spolupráce a sdílení</h2>' +
       '<p class="pj-lead g-p">Přizvi do projektu své kamarády*ky. Můžete spolupracovat! Nastav si také sdílení projektu.</p>' +
@@ -181,16 +211,26 @@
       '<p class="pj-hint g-p-s">Soukromý projekt vidíš jen ty (a přizvaní spolupracovníci). Veřejný se objeví na tvém profilu.</p>' +
     '</div>';
   }
+  function renderMembers(rows) {
+    const cur = document.getElementById("glitch-project"); if (!cur || tab !== "sdileni") return;
+    const b = cur.querySelector("[data-pj-collabs]"); if (!b) return;
+    if (!rows || !rows.length) { b.innerHTML = '<div class="pf-empty" style="text-align:left;padding:calc(6 * var(--u)) 0">' + (pj._shared ? "Zatím tu nejsou další členové." : "Zatím na projektu pracuješ sám*a.") + '</div>'; return; }
+    b.innerHTML = rows.map((e) => { _collabReg[e.id] = e; return collabRow(e); }).join("");
+  }
   function hydrateCollabs() {
     const o = document.getElementById("glitch-project"); if (!o) return;
     const box = o.querySelector("[data-pj-collabs]"); if (!box) return;
-    if (typeof sbListCollaborators !== "function") { box.innerHTML = '<div class="pf-empty" style="text-align:left">Zatím na projektu pracuješ sám*a.</div>'; return; }
-    sbListCollaborators(pj.glitch_id).then((rows) => {
-      const cur = document.getElementById("glitch-project"); if (!cur || tab !== "sdileni") return;
-      const b = cur.querySelector("[data-pj-collabs]"); if (!b) return;
-      if (!rows || !rows.length) { b.innerHTML = '<div class="pf-empty" style="text-align:left;padding:calc(6 * var(--u)) 0">Zatím na projektu pracuješ sám*a.</div>'; return; }
-      b.innerHTML = rows.map((p) => { const e = entOf(p); _collabReg[e.id] = e; return collabRow(e); }).join("");
-    }).catch(() => {});
+    if (pj._shared) {
+      // vlastník + ostatní členové (kromě mě)
+      const owner = pj._owner ? [entOf(pj._owner)] : [];
+      if (typeof sbListProjectMembers !== "function") { renderMembers(owner); return; }
+      sbListProjectMembers(pj.owner_id, pj.glitch_id).then((rows) => {
+        renderMembers(owner.concat((rows || []).map(entOf)));
+      }).catch(() => renderMembers(owner));
+      return;
+    }
+    if (typeof sbListCollaborators !== "function") { renderMembers([]); return; }
+    sbListCollaborators(pj.glitch_id).then((rows) => renderMembers((rows || []).map(entOf))).catch(() => renderMembers([]));
   }
   let inviteT = null;
   function renderInviteResults(results) {

@@ -1806,3 +1806,8 @@ button.pf-stat:active b { color: var(--c-grey-50); }
 .dm-thread { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: calc(16 * var(--u)) var(--pf-gutter) calc(12 * var(--u)); gap: calc(13 * var(--u)); scrollbar-width: none; }
 .dm-thread::-webkit-scrollbar { display: none; }
 .dm-input { position: static; }
+
+/* projekty sdílené se mnou (spolupráce) */
+.pf-shared-head { margin: calc(22 * var(--u)) 0 calc(10 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 700; color: var(--c-grey-50); letter-spacing: var(--tracking); text-transform: uppercase; }
+.pf-proj--shared .pf-proj-shared-tag { display: inline-block; font-size: calc(12 * var(--u)); font-weight: 700; color: var(--c-black);
+  background: var(--c-yellow); border: 1.5px solid var(--c-black); border-radius: calc(20 * var(--u)); padding: calc(2 * var(--u)) calc(9 * var(--u)); margin-bottom: calc(8 * var(--u)); }

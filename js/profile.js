@@ -293,12 +293,34 @@
     ).join("") + '</div>';
   }
 
+  let _sharedProjects = {};   // glitch_id → řádek sdíleného projektu (pro otevření)
+  function sharedProjectCard(row) {
+    const owner = row._owner || {};
+    const ownerName = owner.full_name || owner.nickname || "někoho";
+    return '<button class="pf-proj pf-proj--shared" data-shared-proj="' + esc(row.glitch_id) + '" type="button">' +
+      '<span class="pf-proj-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>' +
+      '<span class="pf-proj-shared-tag">Sdílený · ' + esc(ownerName) + '</span>' +
+      '<div class="pf-proj-title g-h4">' + esc(row.title || "Projekt") + '</div>' +
+      (row.brief ? '<div class="pf-proj-brief g-p">' + esc(row.brief) + '</div>' : '') +
+    '</button>';
+  }
   function hydrateProjects() {
     if (state.tab !== "board") return;
     const cur = document.getElementById("glitch-profile");
     if (!cur) return;
     const box = cur.querySelector("[data-pf-projects]");
     if (box) box.innerHTML = projectsHtml();
+    // projekty sdílené se mnou (jsem spolupracovník) — dotáhni a připoj
+    if (typeof sbListSharedProjects === "function") sbListSharedProjects().then((rows) => {
+      if (state.tab !== "board") return;
+      const b = document.getElementById("glitch-profile");
+      const wrap = b && b.querySelector("[data-pf-projects]");
+      if (!wrap || !rows || !rows.length) return;
+      _sharedProjects = {}; rows.forEach((r) => { _sharedProjects[r.glitch_id] = r; });
+      const container = wrap.querySelector(".pf-projects") || wrap;
+      container.insertAdjacentHTML("beforeend",
+        '<div class="pf-shared-head">Sdílené se mnou</div>' + rows.map(sharedProjectCard).join(""));
+    }).catch(() => {});
   }
 
   /* ---------- Lupa: výpis vzdělávacího obsahu po tématech ----------
@@ -1011,6 +1033,12 @@
       const savedCard = e.target.closest("[data-saved]");
       if (savedCard) { if (typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(savedCard.dataset.saved); return; }
       // projekt: pracovna se připravuje
+      const sharedCard = e.target.closest("[data-shared-proj]");
+      if (sharedCard) {
+        const row = _sharedProjects[sharedCard.dataset.sharedProj];
+        if (row && typeof window.glitchOpenProject === "function") window.glitchOpenProject(row);
+        return;
+      }
       const projCard = e.target.closest("[data-proj]");
       if (projCard) { if (typeof window.glitchOpenProject === "function") window.glitchOpenProject(projCard.dataset.proj); return; }
 
