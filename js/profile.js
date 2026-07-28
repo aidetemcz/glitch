@@ -1089,13 +1089,15 @@
       }
     });
 
-    // ťuknutí na jinou položku menu zavře profil
+    // ťuknutí na jinou položku menu zavře profil — kromě questů a projektů, které
+    // jen přepnou tab profilu (řídí feed.js), a profilu samotného.
     const nav = document.getElementById("glitch-nav");
     if (nav && !nav.__pfClose) {
       nav.__pfClose = true;
+      const KEEP = { profile: 1, questy: 1, projekty: 1 };
       nav.addEventListener("click", (e) => {
         const it = e.target.closest(".nav-item");
-        if (it && it.dataset.tab !== "profile") close();
+        if (it && !KEEP[it.dataset.tab]) close();
       });
     }
   }
