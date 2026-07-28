@@ -87,6 +87,7 @@
 
   /* ---------- ikony tabů (SVG z assets/ui, přebarvené přes CSS mask = currentColor) ---------- */
   const TAB_ICON = {
+    search: "search-icon.svg",
     quests: "questy.icon.svg",
     board: "quests-boards-icon.svg",
     saved: "saved-icon.svg",
@@ -116,7 +117,7 @@
     { id: "saved", label: "Tvé uložené Glitche", empty: "Nic uloženého. Glitche, které si uložíš, najdeš tady." }
   ];
 
-  let state = { tab: "quests" };
+  let state = { tab: "quests", savedSub: "posts" };
 
   /* ---------- mapa znalostí (Glitchboard) ----------
      Kostra mapy (témata → koncepty) se načítá z knowledge-map/map-index.json;
@@ -257,25 +258,34 @@
     if (!list.length) {
       return '<div class="pf-empty">Zatím tu nic není — až dojdeš na konec questu, můžeš si poslední Glitch forknout do projektu a rozpracovat ho tady.</div>';
     }
-    return '<div class="pf-projects">' + list.map((p) =>
-      '<div class="pf-proj" data-proj="' + esc(p.id) + '">' +
-        '<div class="pf-proj-top"><span class="pf-proj-tag">Projekt</span>' +
-        (p.quest_topic ? '<span class="pf-proj-topic">' + esc(p.quest_topic) + '</span>' : '') + '</div>' +
-        '<div class="pf-proj-title">' + esc(p.title || "Projekt") + '</div>' +
-        (p.brief ? '<div class="pf-proj-brief">' + esc(p.brief) + '</div>' : '') +
-      '</div>'
-    ).join("") + '</div>';
+    return '<div class="pf-projects">' + list.map((p) => {
+      const res = (p.resources && p.resources.length) || 0;
+      // „Konverzací" a „Splněno" zatím netrackujeme — doplní se s návrhem pracovny projektu.
+      return '<button class="pf-proj" data-proj="' + esc(p.id) + '" type="button">' +
+        '<span class="pf-proj-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>' +
+        '<div class="pf-proj-title g-h4">' + esc(p.title || "Projekt") + '</div>' +
+        (p.brief ? '<div class="pf-proj-brief g-p">' + esc(p.brief) + '</div>' : '') +
+        '<div class="pf-proj-pills"><span class="pf-pill">Zdrojů: ' + res + '</span></div>' +
+      '</button>';
+    }).join("") + '</div>';
   }
-  /* ---------- Tvé uložené Glitche ---------- */
+  /* ---------- Tvé uložené Glitche (seskupené podle tématu) ---------- */
+  const GLITCH_MARK = '<span class="pf-saved-ic"><img src="assets/glitch-logo.svg" alt=""></span>';
   function savedHtml() {
     const list = (typeof window.listSaved === "function") ? window.listSaved() : [];
     if (!list.length) return '<div class="pf-empty">Nic uloženého. Glitche, které si uložíš přes menu (tři tečky), najdeš tady.</div>';
-    return '<div class="pf-projects">' + list.map((s) =>
-      '<div class="pf-proj" data-saved="' + esc(s.id) + '">' +
-        (s.topic ? '<div class="pf-proj-top"><span class="pf-proj-topic">' + esc(s.topic) + '</span></div>' : '') +
-        '<div class="pf-proj-title">' + esc(s.title || s.id) + '</div>' +
+    const groups = {};
+    list.forEach((s) => { const t = s.topic || "Ostatní"; (groups[t] = groups[t] || []).push(s); });
+    return Object.keys(groups).map((t) =>
+      '<div class="pf-saved-group">' +
+        '<div class="pf-saved-head">' + TOPIC_ARROW + '<span class="pf-saved-topic g-h4">' + esc(t) + '</span></div>' +
+        groups[t].map((s) =>
+          '<button class="pf-saved-card" data-saved="' + esc(s.id) + '" type="button">' +
+            '<span class="pf-saved-title">' + esc(s.title || s.id) + '</span>' + GLITCH_MARK +
+          '</button>'
+        ).join("") +
       '</div>'
-    ).join("") + '</div>';
+    ).join("");
   }
 
   function hydrateProjects() {
@@ -284,6 +294,86 @@
     if (!cur) return;
     const box = cur.querySelector("[data-pf-projects]");
     if (box) box.innerHTML = projectsHtml();
+  }
+
+  /* ---------- Lupa: výpis vzdělávacího obsahu po tématech ----------
+     Počty se odvozují z feed.json: Základní = quest_intro (Basic Glitch),
+     Doplňkové = ostatní učební typy (Výzvy, Argumentuj, Aktivity, Najdi chybu…),
+     Questů = 1 na téma, které má základní Glitche. */
+  let catalogData = null, catalogPromise = null;
+  function loadCatalog() {
+    if (catalogData) return Promise.resolve(catalogData);
+    if (catalogPromise) return catalogPromise;
+    catalogPromise = fetch("glitches/feed.json?v=46")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((cards) => { catalogData = cards || []; return catalogData; })
+      .catch(() => { catalogData = []; return catalogData; });
+    return catalogPromise;
+  }
+  const isBasicType = (c) => c && (c.type === "quest_intro" || c.chapterNo != null);
+  const SUPP_TYPES = new Set(["quick_challenge", "argument", "spot_the_mistake", "fun_fact",
+    "attention_game", "asmr", "inspirace", "historicka_osobnost", "algorithm_demo"]);
+  const TOPIC_DESC = {
+    "Vibe Coding": "Programování pomocí přirozeného jazyka, které ti umožní tvorbu aplikací.",
+    "Algoritmus": "Algoritmus je přesný postup, kterým můžeme dávat instrukce počítači.",
+    "Data": "Jak se data sbírají, ukládají a čtou — a jak z nich udělat vizualizaci.",
+    "Umělá inteligence": "Jak fungují systémy, které se učí z dat a rozhodují se.",
+    "Strojové učení": "Jak se počítač učí ze zkušenosti místo pevných pravidel.",
+    "Matematika": "Základy, které se ti hodí napříč informatikou.",
+    "Digitální občanství": "Jak se v online světě pohybovat bezpečně a s rozmyslem."
+  };
+  function topicStats(cards) {
+    const by = {};
+    (cards || []).forEach((c) => {
+      if (!c || !c.topic) return;
+      const o = by[c.topic] || (by[c.topic] = { basic: 0, supp: 0 });
+      if (isBasicType(c)) o.basic++;
+      else if (SUPP_TYPES.has(c.type)) o.supp++;
+    });
+    return Object.keys(by).map((t) => ({ topic: t, basic: by[t].basic, supp: by[t].supp, quests: by[t].basic ? 1 : 0 }))
+      .filter((s) => s.basic || s.supp)
+      .sort((a, b) => (b.basic + b.supp) - (a.basic + a.supp));
+  }
+  const SEARCH_ICO = '<span class="pf-search-ic" style="-webkit-mask-image:url(\'assets/ui/search-icon.svg\');mask-image:url(\'assets/ui/search-icon.svg\')"></span>';
+  const TOPIC_ARROW = '<span class="pf-topic-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>';
+  function searchHtml() {
+    const bar = '<div class="pf-search-bar">' +
+      '<input class="pf-search-input" data-pf-search placeholder="Začni vyhledávat…" autocomplete="off">' +
+      '<button class="pf-search-btn" type="button" aria-label="Hledat">' + SEARCH_ICO + '</button></div>';
+    if (!catalogData) return bar + '<div class="pf-empty">Načítám obsah…</div>';
+    const stats = topicStats(catalogData);
+    if (!stats.length) return bar + '<div class="pf-empty">Zatím tu není žádný vzdělávací obsah.</div>';
+    const rows = stats.map((s) => {
+      const desc = TOPIC_DESC[s.topic] || "";
+      return '<button class="pf-topic" data-topic="' + esc(s.topic) + '" type="button">' +
+        '<div class="pf-topic-head">' + TOPIC_ARROW + '<span class="pf-topic-name g-h4">' + esc(s.topic) + '</span></div>' +
+        (desc ? '<p class="pf-topic-desc g-p">' + esc(desc) + '</p>' : '') +
+        '<div class="pf-topic-pills">' +
+          '<span class="pf-pill">Questů: ' + s.quests + '</span>' +
+          '<span class="pf-pill">Základních Glitchů: ' + s.basic + '</span>' +
+          '<span class="pf-pill">Doplňkových: ' + s.supp + '</span></div>' +
+      '</button>';
+    }).join("");
+    return bar + '<div class="pf-topics" data-pf-topics>' + rows + '</div>';
+  }
+  function hydrateSearch() {
+    if (state.tab !== "search") return;
+    loadCatalog().then(() => {
+      const cur = document.getElementById("glitch-profile");
+      if (!cur || state.tab !== "search") return;
+      const box = cur.querySelector("[data-pf-search-body]");
+      if (box) box.innerHTML = searchHtml();
+    });
+  }
+
+  /* ---------- Saved: submenu Glitchposty / Uložené ---------- */
+  function savedSubbar() {
+    const item = (id, label) => '<button class="pf-subtab' + (state.savedSub === id ? " is-active" : "") +
+      '" data-savedsub="' + id + '">' + label + '</button>';
+    return '<div class="pf-subtabs">' + item("posts", "Tvé Glitchposty") + item("saved", "Uložené Glitche") + '</div>';
+  }
+  function glitchpostyHtml() {
+    return '<div class="pf-empty">Zatím jsi nic nezveřejnil*a. Až vytvoříš Glitchpost přes tlačítko „+" dole, objeví se tady.</div>';
   }
 
   /* ---------- render ---------- */
@@ -317,10 +407,10 @@
       '</div>';
   }
 
+  const TAB_ORDER = ["search", "quests", "board", "saved", "settings"];
   function tabsBar() {
-    const all = TABS.concat([{ id: "settings" }]);
-    return '<div class="pf-tabs">' + all.map((t) =>
-      '<button class="pf-tab' + (t.id === state.tab ? ' is-active' : '') + '" data-tab="' + t.id + '">' + tabIcon(t.id) + '</button>'
+    return '<div class="pf-tabs">' + TAB_ORDER.map((id) =>
+      '<button class="pf-tab' + (id === state.tab ? ' is-active' : '') + '" data-tab="' + id + '">' + tabIcon(id) + '</button>'
     ).join("") + '</div>';
   }
 
@@ -396,6 +486,10 @@
   }
 
   function contentHtml() {
+    if (state.tab === "search") {
+      return '<h2 class="pf-section-title">Co všechno na Glitchi najdeš</h2>' +
+        '<div class="pf-search-wrap" data-pf-search-body>' + searchHtml() + '</div>';
+    }
     if (state.tab === "settings") {
       return '<h2 class="pf-section-title">Tvá nastavení</h2>' + settingsHtml();
     }
@@ -410,22 +504,35 @@
         '<div class="pf-proj-wrap" data-pf-projects>' + projectsHtml() + '</div>';
     }
     if (state.tab === "saved") {
-      return '<h2 class="pf-section-title">Tvé uložené Glitche</h2>' + savedHtml();
+      return savedSubbar() +
+        '<div class="pf-saved-wrap" data-pf-saved>' +
+        (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml()) + '</div>';
     }
-    const t = TABS.find((x) => x.id === state.tab) || TABS[0];
-    return '<h2 class="pf-section-title">' + esc(t.label) + '</h2>' +
-      '<div class="pf-empty">' + esc(t.empty) + '</div>';
+    return '<div class="pf-empty">Zatím tu nic není.</div>';
+  }
+
+  function profileMenu() {
+    const item = (act, label) => '<button class="pf-menu-item" data-pf-menu-act="' + act + '">' + label + '</button>';
+    return '<div class="pf-menu" data-pf-menu>' +
+      '<button class="pf-menu-btn" data-pf-menu-btn type="button" aria-label="Menu profilu"><span class="pf-menu-ic"></span></button>' +
+      '<div class="pf-menu-pop" data-pf-menu-pop hidden>' +
+        item("oglitchi", "O Glitchi") +
+        item("stats", "Tvé statistiky") +
+        item("report", "Nahlásit nevhodný obsah") +
+        item("terms", "Podmínky užívání") +
+        item("contact", "Kontaktuj tvůrce") +
+      '</div></div>';
   }
 
   function render(u) {
-    return '<div class="pf-wrap">' + header(u) + tabsBar() +
+    return '<div class="pf-wrap">' + profileMenu() + header(u) + tabsBar() +
       '<div class="pf-content" data-pf-content>' + contentHtml() + '</div></div>';
   }
 
   /* ---------- otevření / zavření / wiring ---------- */
   function close() { const e = document.getElementById("glitch-profile"); if (e) e.remove(); }
 
-  const VALID_TABS = { quests: 1, board: 1, saved: 1, settings: 1 };
+  const VALID_TABS = { search: 1, quests: 1, board: 1, saved: 1, settings: 1 };
   function open(tab) {
     const u = (typeof sbCurrentUser !== "undefined") ? sbCurrentUser : null;
     currentUser = u;
@@ -438,6 +545,7 @@
     wire(el);
     hydrateQuests();                 // Tvé questy
     hydrateProjects();               // Tvé projekty
+    hydrateSearch();                 // Lupa (výpis obsahu po tématech)
     // (mapa znalostí je zatím bez místa v UI — kód ponechán pro budoucí použití)
 
     // načíst nastavení z DB (mezi zařízeními) a sloučit; když není, zůstane localStorage
@@ -458,9 +566,46 @@
     if (c) c.innerHTML = contentHtml();
     hydrateQuests();                 // po přepnutí dotáhni obsah tabu, pokud ještě není
     hydrateProjects();
+    hydrateSearch();
+  }
+
+  function toastPf(msg) {
+    let t = document.getElementById("glitch-toast");
+    if (!t) { t = document.createElement("div"); t.id = "glitch-toast"; t.className = "glitch-toast"; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastPf._t); toastPf._t = setTimeout(() => t.classList.remove("show"), 1600);
+  }
+
+  /* „Tvé statistiky" (z ⋮ menu) — overlay s mapou znalostí (heatmapa konceptů). */
+  function openStats() {
+    const ov = document.createElement("div");
+    ov.className = "pf-stats-overlay"; ov.id = "pf-stats-overlay";
+    ov.innerHTML = '<div class="pf-stats-modal">' +
+      '<button class="pf-stats-close" data-pf-stats-close aria-label="Zavřít"><img src="assets/ui/Exit.svg" alt=""></button>' +
+      '<h2 class="pf-stats-title g-h4">Tvé statistiky</h2>' +
+      '<div class="pf-stats-body" data-pf-stats-body>' +
+      (mapIndex ? knowledgeMapHtml() : '<div class="pf-empty">Načítám…</div>') + '</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener("click", (e) => {
+      if (e.target === ov || e.target.closest("[data-pf-stats-close]")) { ov.remove(); return; }
+      const cell = e.target.closest(".km-cell[data-km-name]");
+      if (cell) { const cap = ov.querySelector("[data-km-cap]"); if (cap) cap.textContent = cell.dataset.kmName + " — " + cell.dataset.kmLv; }
+    });
+    if (!mapIndex) loadMapIndex().then(() => { const b = ov.querySelector("[data-pf-stats-body]"); if (b) b.innerHTML = knowledgeMapHtml(); });
   }
 
   function wire(el) {
+    // živé filtrování témat v lupě
+    el.addEventListener("input", (e) => {
+      if (!e.target || !e.target.matches("[data-pf-search]")) return;
+      const q = e.target.value.trim().toLowerCase();
+      el.querySelectorAll(".pf-topic").forEach((row) => {
+        const name = (row.querySelector(".pf-topic-name") || {}).textContent || "";
+        const desc = (row.querySelector(".pf-topic-desc") || {}).textContent || "";
+        row.style.display = (!q || (name + " " + desc).toLowerCase().indexOf(q) >= 0) ? "" : "none";
+      });
+    });
+
     // taby
     el.querySelectorAll(".pf-tab").forEach((b) => b.addEventListener("click", () => {
       state.tab = b.dataset.tab; rerenderContent(el);
@@ -491,6 +636,45 @@
 
     // odhlášení
     el.addEventListener("click", async (e) => {
+      // ⋮ menu profilu — otevři/zavři
+      if (e.target.closest("[data-pf-menu-btn]")) {
+        const pop = el.querySelector("[data-pf-menu-pop]"); if (pop) pop.hidden = !pop.hidden;
+        return;
+      }
+      const mAct = e.target.closest("[data-pf-menu-act]");
+      if (mAct) {
+        const pop = el.querySelector("[data-pf-menu-pop]"); if (pop) pop.hidden = true;
+        const act = mAct.dataset.pfMenuAct;
+        if (act === "oglitchi") { if (typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch("welcome"); }
+        else if (act === "stats") { openStats(); }
+        else if (act === "report") { if (typeof window.glitchReportFlow === "function") window.glitchReportFlow({ id: "obecny-podnet", type: "obecne", topic: "" }); }
+        else if (act === "terms") { toastPf("Podmínky užívání se připravují."); }
+        else if (act === "contact") { location.href = "mailto:aplikace@aidetem.cz"; }
+        return;
+      }
+      // klik jinam zavře otevřené ⋮ menu (a pokračuje dál)
+      const pop = el.querySelector("[data-pf-menu-pop]");
+      if (pop && !pop.hidden && !e.target.closest("[data-pf-menu]")) pop.hidden = true;
+
+      // lupa: klik na téma → filtrovaný feed
+      const topicBtn = e.target.closest("[data-topic]");
+      if (topicBtn) { if (typeof window.glitchOpenTopicFeed === "function") window.glitchOpenTopicFeed(topicBtn.dataset.topic); return; }
+
+      // saved: přepnutí podzáložky Glitchposty / Uložené
+      const sub = e.target.closest("[data-savedsub]");
+      if (sub) {
+        state.savedSub = sub.dataset.savedsub;
+        el.querySelectorAll("[data-savedsub]").forEach((b) => b.classList.toggle("is-active", b.dataset.savedsub === state.savedSub));
+        const box = el.querySelector("[data-pf-saved]");
+        if (box) box.innerHTML = (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml());
+        return;
+      }
+      // saved: klik na uloženou kartu → otevři Glitch
+      const savedCard = e.target.closest("[data-saved]");
+      if (savedCard) { if (typeof window.glitchOpenGlitch === "function") window.glitchOpenGlitch(savedCard.dataset.saved); return; }
+      // projekt: pracovna se připravuje
+      if (e.target.closest("[data-proj]")) { toastPf("Pracovna projektu se připravuje."); return; }
+
       // dráhy questů: klik na žlutý tooltip → otevři vyhodnocení / Glitch
       const tip = e.target.closest(".q-tip");
       if (tip) {
