@@ -443,7 +443,6 @@
           '<div class="pf-input-wrap">' +
             '<span class="pf-input-at">@</span>' +
             '<input class="pf-input" data-pf-nickname value="' + esc(nick) + '" maxlength="24" autocomplete="off" spellcheck="false">' +
-            '<span class="pf-input-edit">' + PENCIL + '</span>' +
           '</div>' +
         '</div>' +
         '<div class="pf-field">' +
