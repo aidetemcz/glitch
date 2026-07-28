@@ -23,6 +23,7 @@ async function gptChat(messages, opts) {
       temperature: opts.temperature, // volitelně
       quiz: opts.quiz,               // false = nikdy neposílat kvíz (např. Inspirace)
       freechat: opts.freechat,       // true = volný chat mimo Glitch (bez pravidel/kvízu)
+      images: opts.images,           // vision: pole URL / data:image (napojí se na poslední zprávu)
     }),
   });
   const data = await res.json().catch(() => ({}));

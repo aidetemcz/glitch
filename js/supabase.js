@@ -317,6 +317,45 @@ async function sbLogChat(sessionId, info) {
   } catch (_) {}
 }
 
+// ── GLITCHPOSTY (uživatelem vytvořené Glitche) ──
+// Uloží/aktualizuje Glitchpost (celá karta v jsonb). Jen přihlášený (RLS: vlastní
+// user_id). Čtení je veřejné pro přihlášené (veřejné profily). Tiše degraduje.
+async function sbSaveGlitchpost(post) {
+  if (!sb || !sbCurrentUser || !post || !post.id) return { ok: false, reason: 'auth' };
+  try {
+    const { error } = await sb.from('glitchposts').upsert({
+      id: post.id,
+      user_id: sbCurrentUser.id,
+      glitch_type: post.card && post.card.type || null,
+      topic: post.card && post.card.topic || null,
+      title: post.title || (post.card && (post.card.title || post.card.question || post.card.claim)) || null,
+      card: post.card || {},
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'id' });
+    return { ok: !error, reason: error ? 'db' : null };
+  } catch (_) { return { ok: false, reason: 'db' }; }
+}
+async function sbListGlitchposts() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('glitchposts').select('*')
+      .eq('user_id', sbCurrentUser.id).order('created_at', { ascending: false });
+    return data || [];
+  } catch (_) { return []; }
+}
+async function sbListGlitchpostsByUser(userId) {
+  if (!sb || !userId) return [];
+  try {
+    const { data } = await sb.from('glitchposts').select('*')
+      .eq('user_id', userId).order('created_at', { ascending: false });
+    return data || [];
+  } catch (_) { return []; }
+}
+async function sbDeleteGlitchpost(id) {
+  if (!sb || !sbCurrentUser || !id) return;
+  try { await sb.from('glitchposts').delete().eq('id', id).eq('user_id', sbCurrentUser.id); } catch (_) {}
+}
+
 // ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
 // Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
 // přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.

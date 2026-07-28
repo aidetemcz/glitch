@@ -371,14 +371,35 @@ module.exports = async function handler(req, res) {
       : body.quiz === true ? true
       : await shouldQuiz(key, convo, body.context);
 
+    // Obrázky (vision): povolíme http(s) i data:image URL, max 2. Když jsou,
+    // napojíme je na poslední uživatelskou zprávu a použijeme model s viděním.
+    const images = Array.isArray(body.images)
+      ? body.images.filter((u) => typeof u === "string" && /^(https?:|data:image\/)/i.test(u)).slice(0, 2)
+      : [];
+    const useModel = images.length ? "gpt-4o" : model;
+
+    let chat = convo;
+    if (images.length) {
+      chat = convo.slice();
+      for (let i = chat.length - 1; i >= 0; i--) {
+        if (chat[i].role === "user") {
+          chat[i] = { role: "user", content: [
+            { type: "text", text: chat[i].content },
+            ...images.map((u) => ({ type: "image_url", image_url: { url: u } }))
+          ] };
+          break;
+        }
+      }
+    }
+
     const messages = [
       { role: "system", content: buildSystemPrompt(body.persona, body.context, quizNow, body.zak, freechat) },
-      ...convo
+      ...chat
     ];
 
     // odpověď bota a kvíz se generují souběžně (kvíz zvlášť, viz generateQuiz)
     const [main, kviz] = await Promise.all([
-      callOpenAI(key, { model, messages, temperature, max_tokens: MAX_TOKENS }),
+      callOpenAI(key, { model: useModel, messages, temperature, max_tokens: MAX_TOKENS }),
       quizNow ? generateQuiz(key, convo, body.context) : Promise.resolve(null)
     ]);
 

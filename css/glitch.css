@@ -1553,3 +1553,132 @@ button.pf-stat:active b { color: var(--c-grey-50); }
   padding: 0 calc(28 * var(--u)) calc(16 * var(--u) + env(safe-area-inset-bottom, 0px));
   margin: 0; background: var(--c-white);
 }
+
+/* ==========================================================================
+   Tvorba nového Glitche (tlačítko + ve spodním menu)
+   ========================================================================== */
+.cr-overlay {
+  position: fixed; top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 64; background: rgba(0,0,0,0.35);
+}
+.cr-panel {
+  position: relative; width: 100%; max-width: var(--feed-max); height: 100%;
+  margin: 0 auto; background: var(--c-white); color: var(--c-black);
+  display: flex; flex-direction: column;
+  --cr-gutter: calc(24 * var(--u));
+}
+/* horní lišta: logo (zavřít) · krok · „Nový Glitch" */
+.cr-bar {
+  flex: 0 0 auto; display: flex; align-items: center; gap: calc(12 * var(--u));
+  padding: calc(20 * var(--u)) var(--cr-gutter) calc(14 * var(--u));
+}
+.cr-logo { flex: 0 0 auto; width: calc(40 * var(--u)); height: calc(40 * var(--u));
+  background: var(--c-yellow); border-radius: calc(8 * var(--u)); display: grid; place-items: center; cursor: pointer; }
+.cr-logo img { width: calc(26 * var(--u)); height: calc(26 * var(--u)); }
+.cr-step { flex: 0 0 auto; font-size: calc(14 * var(--u)); font-weight: 700; color: var(--c-white);
+  background: var(--c-black); border-radius: calc(7 * var(--u)); padding: calc(5 * var(--u)) calc(11 * var(--u)); letter-spacing: var(--tracking); }
+.cr-spacer { flex: 1 1 auto; }
+.cr-tag { flex: 0 0 auto; font-size: calc(14 * var(--u)); font-weight: 600; color: var(--c-black);
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u)); padding: calc(6 * var(--u)) calc(12 * var(--u)); letter-spacing: var(--tracking); }
+
+.cr-body { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.cr-scroll { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: calc(14 * var(--u)) var(--cr-gutter) calc(20 * var(--u)); scrollbar-width: none; }
+.cr-scroll::-webkit-scrollbar { display: none; }
+.cr-h1 { margin: 0 0 calc(12 * var(--u)); color: var(--c-black); }
+.cr-lead { margin: 0 0 calc(28 * var(--u)); color: var(--c-black); }
+.cr-h2 { margin: 0 0 calc(4 * var(--u)); color: var(--c-black); }
+.cr-sub { margin: 0 0 calc(16 * var(--u)); color: var(--c-black); }
+.cr-label { margin: calc(20 * var(--u)) 0 calc(12 * var(--u)); color: var(--c-black); }
+
+/* volby typu (krok 1) */
+.cr-opts { display: flex; flex-direction: column; gap: calc(12 * var(--u)); }
+.cr-opt {
+  width: 100%; text-align: left; cursor: pointer;
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: calc(14 * var(--u)) calc(16 * var(--u)); background: var(--c-white);
+  font-family: var(--font); font-size: calc(15 * var(--u)); color: var(--c-black); letter-spacing: var(--tracking);
+  transition: background .12s ease;
+}
+.cr-opt.is-sel { background: var(--c-yellow); }
+
+/* „Další krok" */
+.cr-footer { flex: 0 0 auto; padding: calc(14 * var(--u)) var(--cr-gutter) calc(24 * var(--u)); }
+.cr-next {
+  cursor: pointer; background: var(--c-yellow); border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: calc(12 * var(--u)) calc(26 * var(--u)); font-family: var(--font); font-size: calc(16 * var(--u));
+  font-weight: 600; color: var(--c-black); letter-spacing: var(--tracking); transition: opacity .12s ease;
+}
+.cr-next:active { opacity: .7; }
+.cr-next:disabled { opacity: .4; pointer-events: none; }
+
+/* popis (krok 2) */
+.cr-textarea {
+  width: 100%; min-height: calc(360 * var(--u)); resize: none;
+  border: 1.5px solid var(--c-black); border-radius: calc(10 * var(--u));
+  padding: calc(14 * var(--u)); background: var(--c-white); color: var(--c-black);
+  font-family: var(--font); font-size: calc(16 * var(--u)); letter-spacing: var(--tracking); outline: none;
+}
+.cr-textarea::placeholder { color: var(--c-grey-50); }
+
+/* zdroje (krok 3) */
+.cr-imgs { display: flex; flex-direction: column; gap: calc(12 * var(--u)); }
+.cr-imgbox {
+  position: relative; width: 100%; height: calc(54 * var(--u)); cursor: pointer;
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u)); background: var(--c-white);
+  display: flex; align-items: center; justify-content: flex-end; padding: 0 calc(10 * var(--u)); overflow: hidden;
+}
+.cr-imgbox.has-img { justify-content: center; padding: 0; }
+.cr-imgbox.has-img img { width: 100%; height: 100%; object-fit: cover; }
+.cr-imgbox-plus { width: calc(34 * var(--u)); height: calc(34 * var(--u)); border-radius: 50%;
+  background: var(--c-yellow); border: 2px solid var(--c-black); display: grid; place-items: center; }
+.cr-imgbox-plus img { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
+.cr-thumb-del { position: absolute; top: calc(5 * var(--u)); right: calc(6 * var(--u));
+  width: calc(22 * var(--u)); height: calc(22 * var(--u)); border-radius: 50%;
+  background: var(--c-black); color: var(--c-white); font-size: calc(15 * var(--u)); line-height: 1; cursor: pointer; }
+.cr-url {
+  width: 100%; height: calc(52 * var(--u)); margin-bottom: calc(12 * var(--u));
+  border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u)); padding: 0 calc(14 * var(--u));
+  background: var(--c-white); color: var(--c-black); font-family: var(--font); font-size: calc(15 * var(--u));
+  letter-spacing: var(--tracking); outline: none;
+}
+.cr-url::placeholder { color: var(--c-grey-50); }
+
+/* chat se Stavitelem (krok 4) */
+.cr-chat { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: calc(20 * var(--u)) var(--cr-gutter) calc(16 * var(--u)); scrollbar-width: none; }
+.cr-chat::-webkit-scrollbar { display: none; }
+.cr-thread { display: flex; flex-direction: column; gap: calc(13 * var(--u)); }
+.cr-input { position: static; }
+
+/* náhled + schválení (krok 5) */
+.cr-preview-overlay {
+  position: fixed; top: 0; left: 0; right: 0;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+  z-index: 66; background: rgba(0,0,0,0.5);
+}
+.cr-preview-panel {
+  position: relative; width: 100%; max-width: var(--feed-max); height: 100%; margin: 0 auto;
+  background: var(--c-white); display: flex; flex-direction: column;
+}
+/* žlutý pruh s tlačítky Upravit / Schválit */
+.cr-approve {
+  flex: 0 0 auto; display: flex; align-items: center; gap: calc(12 * var(--u));
+  background: var(--c-yellow); padding: calc(12 * var(--u)) calc(18 * var(--u));
+}
+.cr-approve-label { flex: 1 1 auto; color: var(--c-black); font-weight: 600; }
+.cr-approve-btns { flex: 0 0 auto; display: flex; gap: calc(10 * var(--u)); }
+.cr-approve-close { flex: 0 0 auto; width: calc(22 * var(--u)); }
+.cr-approve-close img { width: 100%; height: auto; }
+.cr-btn {
+  cursor: pointer; border: 1.5px solid var(--c-black); border-radius: calc(8 * var(--u));
+  padding: calc(9 * var(--u)) calc(16 * var(--u)); font-family: var(--font); font-size: calc(15 * var(--u));
+  font-weight: 600; color: var(--c-black); letter-spacing: var(--tracking); transition: opacity .12s ease;
+}
+.cr-btn:active { opacity: .7; }
+.cr-btn--edit { background: var(--c-white); }
+.cr-btn--ok { background: var(--c-black); color: var(--c-white); }
+/* pódium náhledu — karta se vykreslí v přirozené velikosti a scrolluje */
+.cr-preview-stage { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--c-black); }
+.cr-preview-stage .card { min-height: 100%; }

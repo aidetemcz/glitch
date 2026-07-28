@@ -722,7 +722,8 @@
       // Questy a Projekty otevřou profil na příslušném tabu
       if (tab === "questy" && typeof window.glitchOpenProfile === "function") { window.glitchOpenProfile("quests"); return; }
       if (tab === "projekty" && typeof window.glitchOpenProfile === "function") { window.glitchOpenProfile("board"); return; }
-      toast("Připravujeme 🚧");                        // tvořit zatím není
+      if (tab === "create" && typeof window.glitchOpenCreate === "function") { window.glitchOpenCreate(); return; }
+      toast("Připravujeme 🚧");
     });
   }
   function setActiveTab(item) {
@@ -735,6 +736,7 @@
     el.textContent = msg; el.classList.add("show");
     clearTimeout(_toastTimer); _toastTimer = setTimeout(() => el.classList.remove("show"), 1600);
   }
+  window.glitchToast = toast;
 
   /* ---- Nahlášení nevhodného obsahu ----
      Tok: klik na „Nahlásit" → přihlášený uživatel dostane modál s důvodem,
@@ -823,7 +825,7 @@
   let _viewObserver = null;
   const _viewed = new Set();
   function initCardView(el, c) {
-    if (!c || !c.id || typeof sbLogEvent !== "function" || !("IntersectionObserver" in window)) return;
+    if (!c || c._preview || !c.id || typeof sbLogEvent !== "function" || !("IntersectionObserver" in window)) return;
     if (!_viewObserver) {
       _viewObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
@@ -1656,6 +1658,25 @@
     const c = _cardData.find((x) => x && x.id === id);
     if (c && c.rozklik) openRozklik(c);
   };
+
+  // Náhled libovolné karty (mimo feed) — pro tvorbu Glitche i pro Glitchposty.
+  // Vrátí plně inicializovaný element karty; kartu zaregistruje do _cardData,
+  // aby fungoval proklik šipkou (rozklik). `card._preview` vypne logování zobrazení.
+  window.glitchPreviewCard = function (card) {
+    if (!card) return null;
+    card._preview = true;
+    const idx = _cardData.length;
+    _cardData.push(card);
+    const el = document.createElement("section");
+    el.className = "card card--" + (BG[card.type] || "dark");
+    el.dataset.index = idx;
+    el.dataset.type = card.type;
+    el.innerHTML = (RENDER[card.type] || ((c) => `<div class="card-body">${esc(c.type)}</div>`))(card);
+    initCard(el, card);
+    return el;
+  };
+  // Otevře rozklik konkrétní karty (objekt, ne id) — používá náhled tvorby.
+  window.glitchOpenRozklik = function (card) { if (card && card.rozklik) openRozklik(card); };
 
   // Přejde na ÚVODNÍ kartu Glitche ve feedu (ne do rozkliku/detailu) — volá quest.
   // Když karta ve feedu je, odscrolluje na ni; když ne (dokončená → odfiltrovaná

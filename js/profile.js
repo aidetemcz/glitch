@@ -381,7 +381,14 @@
     return '<div class="pf-subtabs">' + item("posts", "Tvé Glitchposty") + item("saved", "Uložené Glitche") + '</div>';
   }
   function glitchpostyHtml() {
-    return '<div class="pf-empty">Zatím jsi nic nezveřejnil*a. Až vytvoříš Glitchpost přes tlačítko „+" dole, objeví se tady.</div>';
+    const list = (typeof window.listGlitchposts === "function") ? window.listGlitchposts() : [];
+    if (!list.length) return '<div class="pf-empty">Zatím jsi nic nezveřejnil*a. Až vytvoříš Glitchpost přes tlačítko „+" dole, objeví se tady.</div>';
+    return '<div class="pf-saved-list">' + list.map((p) =>
+      '<button class="pf-post-row" data-glitchpost="' + esc(p.id) + '" type="button">' +
+        '<span class="pf-post-title">' + esc(p.title || "Glitch") + '</span>' +
+        '<span class="pf-post-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>' +
+      '</button>'
+    ).join("") + '</div>';
   }
 
   /* ---------- render ---------- */
@@ -780,12 +787,24 @@
     document.body.appendChild(ov);
     document.body.classList.add("rz-lock");
     wirePublicProfile(ov, ent);
-    // Glitcheeho posty dotáhni z katalogu
+    // Glitcheeho posty dotáhni z katalogu; u skutečného uživatele jeho Glitchposty
     if (isG) loadCatalog().then((cards) => {
       const box = ov.querySelector("[data-public-posts]");
       if (box && document.getElementById("pf-public-overlay") === ov) box.innerHTML = postsListHtml(glitcheePosts(cards));
     }).catch(() => {});
+    else if (typeof sbListGlitchpostsByUser === "function") sbListGlitchpostsByUser(ent.id).then((rows) => {
+      const box = ov.querySelector("[data-public-posts]");
+      if (!box || document.getElementById("pf-public-overlay") !== ov) return;
+      const posts = (rows || []).map((r) => ({ id: r.id, title: r.title || "Glitch", _card: r.card }));
+      if (!posts.length) { box.innerHTML = '<div class="pf-empty">Tady se objeví Glitchposty tohoto uživatele.</div>'; return; }
+      _pubPostCards = {}; posts.forEach((p) => { _pubPostCards[p.id] = p._card; });
+      box.innerHTML = '<div class="pf-people-list">' + posts.map((p) =>
+        '<button class="pf-post-row" data-pub-post="' + esc(p.id) + '" type="button">' +
+          '<span class="pf-post-title">' + esc(p.title) + '</span>' +
+          '<span class="pf-post-arrow"><img src="assets/ui/open-icon.svg" alt=""></span></button>').join("") + '</div>';
+    }).catch(() => {});
   }
+  let _pubPostCards = {};
 
   function closePublicProfile() {
     const e = document.getElementById("pf-public-overlay"); if (e) e.remove();
@@ -806,6 +825,12 @@
         return;
       }
       if (e.target.closest("[data-public-chat]")) { startChat(ent); return; }
+      const pubPost = e.target.closest("[data-pub-post]");
+      if (pubPost) {
+        const card = _pubPostCards[pubPost.dataset.pubPost];
+        if (card && typeof window.glitchOpenGlitchpost === "function") window.glitchOpenGlitchpost(card);
+        return;
+      }
       const post = e.target.closest("[data-post-gid]");
       if (post) {
         closePublicProfile();
@@ -955,6 +980,14 @@
         el.querySelectorAll("[data-savedsub]").forEach((b) => b.classList.toggle("is-active", b.dataset.savedsub === state.savedSub));
         const box = el.querySelector("[data-pf-saved]");
         if (box) box.innerHTML = (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml());
+        return;
+      }
+      // Glitchpost (Tvé Glitchposty) → otevři náhled karty
+      const gp = e.target.closest("[data-glitchpost]");
+      if (gp) {
+        const list = (typeof window.listGlitchposts === "function") ? window.listGlitchposts() : [];
+        const post = list.find((p) => p.id === gp.dataset.glitchpost);
+        if (post && typeof window.glitchOpenGlitchpost === "function") window.glitchOpenGlitchpost(post.card);
         return;
       }
       // saved: křížek → odeber z uložených a překresli seznam
