@@ -1027,8 +1027,10 @@ button.km-cell:active { transform: scale(.9); }
   display: flex; align-items: center; gap: calc(10 * var(--u));
   background: var(--c-yellow);
   padding: calc(14 * var(--u)) var(--pf-gutter);
-  margin: calc(14 * var(--u)) calc(-1 * var(--pf-gutter)) calc(24 * var(--u));
+  margin: 0 calc(-1 * var(--pf-gutter)) calc(24 * var(--u));   /* nahoře nalepený na šedou čáru */
 }
+/* nadpis nad lupou: bez spodní mezery, ať žlutý pruh lícuje se šedou čárou */
+.pf-section-title--flush { margin-bottom: 0; }
 .pf-search-input {
   flex: 1 1 auto; min-width: 0; height: calc(42 * var(--u));
   border: 2px solid var(--c-black); border-radius: calc(6 * var(--u)); padding: 0 calc(14 * var(--u));

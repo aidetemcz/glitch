@@ -331,7 +331,8 @@
       else if (SUPP_TYPES.has(c.type)) o.supp++;
     });
     return Object.keys(by).map((t) => ({ topic: t, basic: by[t].basic, supp: by[t].supp, quests: by[t].basic ? 1 : 0 }))
-      .filter((s) => s.basic || s.supp)
+      // jen obsahově pokrytá témata = mají aspoň jeden základní Glitch (quest)
+      .filter((s) => s.basic > 0)
       .sort((a, b) => (b.basic + b.supp) - (a.basic + a.supp));
   }
   const TOPIC_ARROW = '<span class="pf-topic-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>';
@@ -493,7 +494,7 @@
 
   function contentHtml() {
     if (state.tab === "search") {
-      return '<h2 class="pf-section-title">Co všechno na Glitchi najdeš</h2>' +
+      return '<h2 class="pf-section-title pf-section-title--flush">Co všechno na Glitchi najdeš</h2>' +
         '<div class="pf-search-wrap" data-pf-search-body>' + searchHtml() + '</div>';
     }
     if (state.tab === "settings") {
