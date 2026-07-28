@@ -167,7 +167,7 @@
             '<button class="cr-thumb-del" data-cr-img-del="' + i + '" type="button" aria-label="Odebrat">×</button></div>';
         } else {
           boxes += '<button class="cr-imgbox" data-cr-img-add type="button">' +
-            '<span class="cr-imgbox-plus"><img src="assets/ui/Plus.svg" alt="Přidat obrázek"></span></button>';
+            '<img class="cr-plus-img" src="assets/ui/Plus.svg" alt="Přidat obrázek"></button>';
         }
       }
       imgBlock =

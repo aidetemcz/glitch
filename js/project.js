@@ -27,10 +27,9 @@
   let saveT = null;
 
   function normalize(p) {
-    if (!p.plan || Array.isArray(p.plan) || typeof p.plan !== "object") p.plan = { start: "", steps: [], deadline: "" };
+    if (!p.plan || Array.isArray(p.plan) || typeof p.plan !== "object") p.plan = {};
     if (!Array.isArray(p.plan.steps)) p.plan.steps = [];
-    if (p.plan.start == null) p.plan.start = "";
-    if (p.plan.deadline == null) p.plan.deadline = "";
+    ["what", "why", "who", "start", "deadline"].forEach((k) => { if (p.plan[k] == null) p.plan[k] = ""; });
     if (!p.resources || Array.isArray(p.resources) || typeof p.resources !== "object") p.resources = { notes: [], links: [], images: [] };
     ["notes", "links", "images"].forEach((k) => { if (!Array.isArray(p.resources[k])) p.resources[k] = []; });
     if (typeof p.msgCount !== "number") p.msgCount = 0;
@@ -99,12 +98,22 @@
       '</div>').join("");
     return '<div class="pj-scroll">' +
       (pj.done ? '<div class="pj-done-banner">Projekt je dokončený 🎉</div>' : '') +
+      '<h2 class="pj-title g-h3">Projektový plán</h2>' +
+      '<p class="pj-lead g-p">Vítej ve tvém projektu ' + esc(pj.title || "projekt") + '! Začni tím, že vyplníš projektový plán.</p>' +
+      '<h3 class="pj-h">Název tvého projektu</h3>' +
+      '<input class="pj-input" data-pj-title value="' + esc(pj.title || "") + '" placeholder="Název projektu…">' +
+      '<h3 class="pj-h">Co chci vytvořit</h3>' +
+      '<textarea class="pj-textarea" data-pj-what placeholder="Popiš, co chceš vytvořit…">' + esc(pj.plan.what) + '</textarea>' +
+      '<h3 class="pj-h">Proč / k čemu to bude</h3>' +
+      '<textarea class="pj-textarea" data-pj-why placeholder="K čemu to bude dobré…">' + esc(pj.plan.why) + '</textarea>' +
+      '<h3 class="pj-h">Komu to bude sloužit</h3>' +
+      '<input class="pj-input" data-pj-who value="' + esc(pj.plan.who) + '" placeholder="Pro koho to je…">' +
       '<h3 class="pj-h">Čím začnu</h3>' +
       '<input class="pj-input" data-pj-start value="' + esc(pj.plan.start) + '" placeholder="Napiš, čím začneš…">' +
       '<div class="pj-steps-head"><h3 class="pj-h">Další kroky</h3><span class="pj-steps-hint">Hotovo</span></div>' +
       '<div class="pj-steps" data-pj-steps>' + stepRows + '</div>' +
-      '<button class="pj-add" data-pj-add-step type="button"><span class="pj-add-ic"><img src="assets/ui/Plus.svg" alt=""></span>Přidat další krok</button>' +
-      '<h3 class="pj-h" style="margin-top:calc(24 * var(--u))">Termín dokončení</h3>' +
+      '<button class="pj-add" data-pj-add-step type="button"><img class="pj-add-ic" src="assets/ui/Plus.svg" alt="">Přidat další krok</button>' +
+      '<h3 class="pj-h">Termín dokončení</h3>' +
       '<input class="pj-input" data-pj-deadline value="' + esc(pj.plan.deadline) + '" placeholder="Např. do konce měsíce…">' +
       '<div class="pj-plan-cta">' +
         '<button class="pj-finish" data-pj-finish type="button">' + (pj.done ? "Označit jako nedokončený" : "Dokončit projekt") + '</button>' +
@@ -119,16 +128,17 @@
     const imgs = pj.resources.images.map((src, i) =>
       '<div class="pj-img has-img"><img src="' + src + '" alt=""><button class="pj-img-del" data-pj-img-del="' + i + '" type="button" aria-label="Odebrat">×</button></div>').join("");
     return '<div class="pj-scroll">' +
+      '<h2 class="pj-title g-h3">Zdroje</h2>' +
       '<p class="pj-lead g-p">Sem si můžeš přidávat různé odkazy, obrázky, psát poznámky…</p>' +
       '<h3 class="pj-h">Poznámky</h3>' +
       '<div class="pj-reslist" data-pj-reslist="notes">' + listInputs(pj.resources.notes.length ? pj.resources.notes : [""], "notes", "Poznámka…") + '</div>' +
-      '<button class="pj-add" data-pj-add-res="notes" type="button"><span class="pj-add-ic"><img src="assets/ui/Plus.svg" alt=""></span>Přidat další poznámku</button>' +
+      '<button class="pj-add" data-pj-add-res="notes" type="button"><img class="pj-add-ic" src="assets/ui/Plus.svg" alt="">Přidat další poznámku</button>' +
       '<h3 class="pj-h">Odkazy</h3>' +
       '<div class="pj-reslist" data-pj-reslist="links">' + listInputs(pj.resources.links.length ? pj.resources.links : [""], "links", "https://…") + '</div>' +
-      '<button class="pj-add" data-pj-add-res="links" type="button"><span class="pj-add-ic"><img src="assets/ui/Plus.svg" alt=""></span>Přidat další odkaz</button>' +
+      '<button class="pj-add" data-pj-add-res="links" type="button"><img class="pj-add-ic" src="assets/ui/Plus.svg" alt="">Přidat další odkaz</button>' +
       '<h3 class="pj-h">Obrázky</h3>' +
       '<div class="pj-imgs">' + imgs +
-        '<button class="pj-img pj-img-add" data-pj-img-add type="button"><span class="pj-imgbox-plus"><img src="assets/ui/Plus.svg" alt=""></span></button>' +
+        '<button class="pj-img pj-img-add" data-pj-img-add type="button"><img class="pj-plus-img" src="assets/ui/Plus.svg" alt=""></button>' +
       '</div>' +
       '<input type="file" accept="image/*" class="pj-file" data-pj-file hidden>' +
     '</div>';
@@ -177,6 +187,7 @@
   function projectContext() {
     return {
       nazev: pj.title, glitch: pj.quest_topic,
+      co: pj.plan.what, proc: pj.plan.why, komu: pj.plan.who,
       start: pj.plan.start,
       kroky: pj.plan.steps.map((s) => ({ text: s.text, done: !!s.done })),
       termin: pj.plan.deadline,
@@ -265,6 +276,10 @@
   }
   function onInput(e) {
     const t = e.target;
+    if (t.matches("[data-pj-title]")) { pj.title = t.value; saveDebounced(); return; }
+    if (t.matches("[data-pj-what]")) { pj.plan.what = t.value; saveDebounced(); return; }
+    if (t.matches("[data-pj-why]")) { pj.plan.why = t.value; saveDebounced(); return; }
+    if (t.matches("[data-pj-who]")) { pj.plan.who = t.value; saveDebounced(); return; }
     if (t.matches("[data-pj-start]")) { pj.plan.start = t.value; saveDebounced(); return; }
     if (t.matches("[data-pj-deadline]")) { pj.plan.deadline = t.value; saveDebounced(); return; }
     if (t.matches("[data-pj-step]")) { pj.plan.steps[+t.dataset.pjStep].text = t.value; saveDebounced(); return; }

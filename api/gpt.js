@@ -146,6 +146,9 @@ function projektBlock(pr) {
   const body =
     L("Název projektu", pr.nazev) +
     L("Vznikl z Glitche / tématu", pr.glitch) +
+    L("Co chce vytvořit", pr.co) +
+    L("Proč / k čemu to bude", pr.proc) +
+    L("Komu to bude sloužit", pr.komu) +
     L("Čím žák začne", pr.start) +
     (stepLines ? "Kroky plánu:\n" + stepLines + "\n" : "") +
     L("Termín dokončení", pr.termin) +
