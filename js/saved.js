@@ -21,6 +21,7 @@
     all.unshift({ id: info.id, topic: info.topic || "", title: info.title || "", type: info.type || "", kdy: new Date().toISOString() });
     writeSaved(all);
     try { if (typeof sbSaveSaved === "function") sbSaveSaved(info); } catch (_) {}
+    try { if (typeof sbLogEvent === "function") sbLogEvent("save", info.id, { topic: info.topic || null }); } catch (_) {}
     try { window.dispatchEvent(new CustomEvent("saved:changed")); } catch (_) {}
     return all;
   }

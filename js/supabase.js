@@ -211,6 +211,21 @@ async function sbMarkNotInterested(topic) {
   } catch (_) {}
 }
 
+// ── STATISTIKY: události Glitchů ─────────────
+// Zapíše událost (view | interact | complete | save | project) do glitch_events.
+// Jen přihlášený uživatel (RLS: insert jen vlastní user_id). Tiše degraduje.
+async function sbLogEvent(eventType, glitchId, meta) {
+  if (!sb || !sbCurrentUser || !eventType || !glitchId) return;
+  try {
+    await sb.from('glitch_events').insert({
+      user_id: sbCurrentUser.id,
+      glitch_id: glitchId,
+      event_type: eventType,
+      meta: meta || {}
+    });
+  } catch (_) {}
+}
+
 // ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
 // Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
 // přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.

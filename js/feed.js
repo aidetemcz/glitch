@@ -818,7 +818,28 @@
     feed.querySelectorAll(".card-menu-pop:not([hidden])").forEach((p) => { p.hidden = true; });
   }
 
+  // Statistika zobrazení: každou kartu zaloguj jednou za relaci, když je aspoň
+  // z 60 % vidět. Jen přihlášený uživatel (sbLogEvent tiše degraduje).
+  let _viewObserver = null;
+  const _viewed = new Set();
+  function initCardView(el, c) {
+    if (!c || !c.id || typeof sbLogEvent !== "function" || !("IntersectionObserver" in window)) return;
+    if (!_viewObserver) {
+      _viewObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const id = e.target.dataset.gid;
+          if (id && !_viewed.has(id)) { _viewed.add(id); sbLogEvent("view", id); }
+          _viewObserver.unobserve(e.target);
+        });
+      }, { root: feed, threshold: 0.6 });
+    }
+    el.dataset.gid = c.id;
+    _viewObserver.observe(el);
+  }
+
   function initCard(el, c) {
+    initCardView(el, c);
     if (!MENU_SKIP.has(c.type)) el.insertAdjacentHTML("beforeend", cardMenu());
     if (c.type === "breathing") initBreathing(el, c);
     if (c.type === "mood_selector") initMood(el);
@@ -1199,6 +1220,7 @@
       if (answered) return;
       answered = true;
       const correct = opt.dataset.correct === "true";
+      try { if (c && c.id && typeof sbLogEvent === "function") sbLogEvent("interact", c.id, { kind: "kviz", correct: correct }); } catch (_) {}
       // Rychlá výzva nemá konverzaci — hotová je správnou odpovědí.
       // Při špatné se nezavírá: dostane druhou šanci o kus dál ve feedu.
       if (c && c.id) {
@@ -1453,6 +1475,7 @@
   function openRozklik(c) {
     if (!c || !c.rozklik) return;
     _openCardId = c.id || null;
+    try { if (c.id && typeof sbLogEvent === "function") sbLogEvent("interact", c.id, { kind: "rozklik" }); } catch (_) {}
     const r = c.rozklik;
     const ov = ensureRzOverlay();
     const panel = ov.querySelector(".rz-panel");

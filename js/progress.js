@@ -35,6 +35,12 @@
     try {
       if (typeof sbSaveGlitchDone === "function") sbSaveGlitchDone(id, !!(info && info.correct));
     } catch (_) {}
+    // statistika: splnění (u kvízu correct, u konverzačního úroveň)
+    try {
+      if (typeof sbLogEvent === "function") sbLogEvent("complete", id, {
+        correct: !!(info && info.correct), uroven: (info && info.uroven) || null, typ: (info && info.typ) || null
+      });
+    } catch (_) {}
 
     // ať na to může reagovat UI (např. přepočítat shrnutí)
     try { window.dispatchEvent(new CustomEvent("glitch:done", { detail: { id: id, zaznam: zaznam } })); } catch (_) {}

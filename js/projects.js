@@ -31,6 +31,7 @@
     all.unshift(p);
     writeAll(all);
     try { if (typeof sbCreateProject === "function") sbCreateProject(p); } catch (_) {}
+    try { if (typeof sbLogEvent === "function") sbLogEvent("project", p.glitch_id, { quest_topic: p.quest_topic || null }); } catch (_) {}
     try { window.dispatchEvent(new CustomEvent("project:created", { detail: p })); } catch (_) {}
     return p;
   }
