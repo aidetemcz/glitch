@@ -1096,15 +1096,18 @@ button.km-cell:active { transform: scale(.9); }
 .pf-subtab.is-active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-black); }
 .pf-saved-list { display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
 .pf-saved-card {
-  display: flex; align-items: center; justify-content: space-between; gap: calc(10 * var(--u));
-  width: 100%; text-align: left;
+  display: flex; align-items: center; gap: calc(10 * var(--u));
   border: 1px solid var(--c-grey-15); border-radius: calc(8 * var(--u));
-  padding: calc(13 * var(--u)) calc(15 * var(--u));
   transition: border-color .12s ease; background: #fff;
 }
 .pf-saved-card:active { border-color: var(--c-black); }
+/* název = otevře Glitch (roztažený na celou šířku vlevo) */
+.pf-saved-open { flex: 1 1 auto; min-width: 0; text-align: left; padding: calc(13 * var(--u)) 0 calc(13 * var(--u)) calc(15 * var(--u)); cursor: pointer; }
 .pf-saved-title { font-size: calc(15 * var(--u)); color: var(--c-black); letter-spacing: var(--tracking); }
-.pf-saved-ic { flex: 0 0 auto; width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
+/* křížek = odebere z uložených */
+.pf-saved-del { flex: 0 0 auto; padding: calc(13 * var(--u)) calc(15 * var(--u)); cursor: pointer; transition: transform .12s ease; }
+.pf-saved-del:active { transform: scale(.88); }
+.pf-saved-ic { display: block; width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
 .pf-saved-ic img { width: 100%; height: 100%; }
 
 /* Overlay „Tvé statistiky" (mapa znalostí) */
@@ -1529,16 +1532,18 @@ button.pf-stat:active b { color: var(--c-grey-50); }
 .pf-post-arrow img { width: 100%; height: 100%; }
 
 /* plovoucí tlačítko chatu */
+/* tlačítko chatu — standardní žluté tlačítko (radius 8u, 1,5px outline),
+   ukotvené dole nad menu; je sourozencem panelu, takže se scrollem nejezdí */
 .pf-public-chat {
   position: absolute; left: 50%; transform: translateX(-50%);
-  bottom: calc(24 * var(--u) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(24 * var(--u) + env(safe-area-inset-bottom, 0px)); z-index: 4;
   display: inline-flex; align-items: center; gap: calc(9 * var(--u));
-  padding: calc(12 * var(--u)) calc(22 * var(--u)); border-radius: calc(30 * var(--u));
-  background: var(--c-yellow); border: 2px solid var(--c-black); color: var(--c-black);
-  font-family: var(--font); font-size: calc(16 * var(--u)); font-weight: 700; letter-spacing: var(--tracking);
+  padding: calc(11 * var(--u)) calc(20 * var(--u)); border-radius: calc(8 * var(--u));
+  background: var(--c-yellow); border: 1.5px solid var(--c-black); color: var(--c-black);
+  font-family: var(--font); font-size: calc(16 * var(--u)); font-weight: 600; letter-spacing: var(--tracking);
   box-shadow: 0 calc(6 * var(--u)) calc(18 * var(--u)) rgba(0,0,0,.28); cursor: pointer;
 }
-.pf-public-chat img { width: calc(26 * var(--u)); height: calc(26 * var(--u)); border-radius: 50%; }
+.pf-public-chat img { width: calc(24 * var(--u)); height: calc(24 * var(--u)); border-radius: 50%; }
 .pf-public-chat:active { transform: translateX(-50%) scale(.96); }
 
 /* disclaimer POD polem pro psaní ve volném chatu */

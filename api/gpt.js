@@ -140,7 +140,14 @@ function buildSystemPrompt(personaId, ctx, quizNow, zak, freechat) {
   // (volitelně) osobní údaje uživatele, ať přizpůsobí jazyk.
   if (freechat) {
     const osobni = osobniRadky(zak);
-    if (osobni.length) parts.push("### O UŽIVATELI (jen pro tebe — sám od sebe to nezmiňuj)\n\n" + osobni.join("\n"));
+    const zb = zakBlock(zak);
+    if (osobni.length || zb) {
+      let s = "### O UŽIVATELI (jen pro tebe — sám od sebe to nevypisuj)\n\n";
+      if (osobni.length) s += osobni.join("\n") + "\n\n";
+      if (zb) s += "Koncepty, které už uživatel v Glitchi zvládl (a na jaké úrovni):\n\n" + zb +
+        "\n\nNa tohle můžeš navázat („to už znáš z…\"), ale neber to jako jistotu a nezkoušej ho z toho.";
+      parts.push(s.trim());
+    }
     return parts.join("\n\n---\n\n");
   }
   parts.push(PLATFORM_RULES);

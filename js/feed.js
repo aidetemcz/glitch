@@ -1605,7 +1605,10 @@
       scrollDown();
       try {
         if (typeof window.gptChat !== "function") throw new Error("no-endpoint");
-        const reply = await window.gptChat(history, { persona: o.persona, freechat: true, temperature: 0.5 });
+        const reply = await window.gptChat(history, {
+          persona: o.persona, freechat: true, temperature: 0.5,
+          zak: buildZakProfil()   // věk, rod, zvládnuté koncepty → Glitchee ví, s kým mluví
+        });
         typing.remove();
         history.push({ role: "assistant", content: reply });
         if (reply) rzAppendBot(thread, reply, ava);

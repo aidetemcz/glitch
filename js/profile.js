@@ -270,14 +270,17 @@
     }).join("") + '</div>';
   }
   /* ---------- Tvé uložené Glitche (plochý seznam) ---------- */
+  // Řádek = kartička s názvem (otevře Glitch) + křížek (odebere z uložených).
   const GLITCH_MARK = '<span class="pf-saved-ic"><img src="assets/ui/exit-small-icon.svg" alt=""></span>';
   function savedHtml() {
     const list = (typeof window.listSaved === "function") ? window.listSaved() : [];
     if (!list.length) return '<div class="pf-empty">Nic uloženého. Glitche, které si uložíš přes menu (tři tečky), najdeš tady.</div>';
     return '<div class="pf-saved-list">' + list.map((s) =>
-      '<button class="pf-saved-card" data-saved="' + esc(s.id) + '" type="button">' +
-        '<span class="pf-saved-title">' + esc(s.title || s.id) + '</span>' + GLITCH_MARK +
-      '</button>'
+      '<div class="pf-saved-card">' +
+        '<button class="pf-saved-open" data-saved="' + esc(s.id) + '" type="button">' +
+          '<span class="pf-saved-title">' + esc(s.title || s.id) + '</span></button>' +
+        '<button class="pf-saved-del" data-saved-remove="' + esc(s.id) + '" type="button" aria-label="Odebrat z uložených">' + GLITCH_MARK + '</button>' +
+      '</div>'
     ).join("") + '</div>';
   }
 
@@ -770,9 +773,10 @@
             ? '<div class="pf-empty">Načítám…</div>'
             : '<div class="pf-empty">Tady se objeví Glitchposty tohoto uživatele.</div>') + '</div>' +
         '</div>' +
-        (isG ? '<button class="pf-public-chat" data-public-chat type="button">' +
-          '<img src="' + esc(ent.avatar) + '" alt=""><span>Napsat</span></button>' : '') +
-      '</div>';
+      '</div>' +
+      // tlačítko chatu je SOUROZENEC panelu (ne uvnitř scrollu), aby drželo dole
+      (isG ? '<button class="pf-public-chat" data-public-chat type="button">' +
+        '<img src="' + esc(ent.avatar) + '" alt=""><span>Napsat</span></button>' : '');
     document.body.appendChild(ov);
     document.body.classList.add("rz-lock");
     wirePublicProfile(ov, ent);
@@ -949,6 +953,14 @@
       if (sub) {
         state.savedSub = sub.dataset.savedsub;
         el.querySelectorAll("[data-savedsub]").forEach((b) => b.classList.toggle("is-active", b.dataset.savedsub === state.savedSub));
+        const box = el.querySelector("[data-pf-saved]");
+        if (box) box.innerHTML = (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml());
+        return;
+      }
+      // saved: křížek → odeber z uložených a překresli seznam
+      const savedDel = e.target.closest("[data-saved-remove]");
+      if (savedDel) {
+        if (typeof window.unsaveGlitch === "function") window.unsaveGlitch(savedDel.dataset.savedRemove);
         const box = el.querySelector("[data-pf-saved]");
         if (box) box.innerHTML = (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml());
         return;
