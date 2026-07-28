@@ -269,23 +269,16 @@
       '</button>';
     }).join("") + '</div>';
   }
-  /* ---------- Tvé uložené Glitche (seskupené podle tématu) ---------- */
+  /* ---------- Tvé uložené Glitche (plochý seznam) ---------- */
   const GLITCH_MARK = '<span class="pf-saved-ic"><img src="assets/glitch-logo.svg" alt=""></span>';
   function savedHtml() {
     const list = (typeof window.listSaved === "function") ? window.listSaved() : [];
     if (!list.length) return '<div class="pf-empty">Nic uloženého. Glitche, které si uložíš přes menu (tři tečky), najdeš tady.</div>';
-    const groups = {};
-    list.forEach((s) => { const t = s.topic || "Ostatní"; (groups[t] = groups[t] || []).push(s); });
-    return Object.keys(groups).map((t) =>
-      '<div class="pf-saved-group">' +
-        '<div class="pf-saved-head">' + TOPIC_ARROW + '<span class="pf-saved-topic g-h4">' + esc(t) + '</span></div>' +
-        groups[t].map((s) =>
-          '<button class="pf-saved-card" data-saved="' + esc(s.id) + '" type="button">' +
-            '<span class="pf-saved-title">' + esc(s.title || s.id) + '</span>' + GLITCH_MARK +
-          '</button>'
-        ).join("") +
-      '</div>'
-    ).join("");
+    return '<div class="pf-saved-list">' + list.map((s) =>
+      '<button class="pf-saved-card" data-saved="' + esc(s.id) + '" type="button">' +
+        '<span class="pf-saved-title">' + esc(s.title || s.id) + '</span>' + GLITCH_MARK +
+      '</button>'
+    ).join("") + '</div>';
   }
 
   function hydrateProjects() {
