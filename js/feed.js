@@ -740,8 +740,11 @@
       const item = e.target.closest(".nav-item");
       if (!item) return;
       const tab = item.dataset.tab;
-      // je-li otevřený rozklik, klik do menu ho nejdřív zavře (menu je vidět i v rozkliku)
+      // menu je vidět i přes rozklik / tvorbu / pracovnu — klik do menu nejdřív
+      // zavře jakýkoli otevřený celoobrazovkový overlay, ať se cíl neotevře „za ním"
       if (_rzOverlay && _rzOverlay.classList.contains("is-open")) closeRozklik();
+      if (tab !== "create" && typeof window.glitchCloseCreate === "function") window.glitchCloseCreate();
+      if (typeof window.glitchCloseProject === "function") window.glitchCloseProject();
       if (tab === "profile") return;                 // přihlášení řeší auth.js
       if (tab === "feed") { if (_topicMode) exitTopicFeed(); else scrollToIndex(0); setActiveTab(item); return; }
       // Questy a Projekty otevřou profil na příslušném tabu
