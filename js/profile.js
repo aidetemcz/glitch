@@ -337,9 +337,10 @@
   }
   const TOPIC_ARROW = '<span class="pf-topic-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>';
   function searchHtml() {
-    const bar = '<div class="pf-search-bar">' +
+    const bar = '<div class="pf-search-bar"><div class="pf-search-field">' +
       '<input class="pf-search-input" data-pf-search placeholder="Začni vyhledávat…" autocomplete="off">' +
-      '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button></div>';
+      '<button class="pf-search-btn" type="button" aria-label="Hledat"><img src="assets/ui/search-icon-box.svg" alt=""></button>' +
+      '</div></div>';
     if (!catalogData) return bar + '<div class="pf-empty">Načítám obsah…</div>';
     const stats = topicStats(catalogData);
     if (!stats.length) return bar + '<div class="pf-empty">Zatím tu není žádný vzdělávací obsah.</div>';
@@ -547,7 +548,7 @@
     const u = (typeof sbCurrentUser !== "undefined") ? sbCurrentUser : null;
     currentUser = u;
     close();
-    state.tab = VALID_TABS[tab] ? tab : "quests";
+    state.tab = VALID_TABS[tab] ? tab : "search";   // výchozí zobrazení = lupa (Co všechno na Glitchi najdeš)
     const el = document.createElement("section");
     el.id = "glitch-profile";
     el.innerHTML = render(u);

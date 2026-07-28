@@ -1031,14 +1031,29 @@ button.km-cell:active { transform: scale(.9); }
 }
 /* nadpis nad lupou: bez spodní mezery, ať žlutý pruh lícuje se šedou čárou */
 .pf-section-title--flush { margin-bottom: 0; }
+
+/* Šedivé dělící čáry mají jasný okraj (nejdou až do krajů) — obsah zůstává na
+   okraji profilu, čára je zatažená dovnitř o --pf-gutter. */
+.pf-tabs, .pf-section-title, .pf-set-group, .pf-subtabs, .pf-topic { position: relative; border-bottom: 0; }
+.pf-tabs::after, .pf-section-title::after, .pf-subtabs::after,
+.pf-set-group:not(:last-child)::after,
+.pf-topics .pf-topic:not(:last-child)::after {
+  content: ""; position: absolute; left: var(--pf-gutter); right: var(--pf-gutter);
+  bottom: 0; height: 1px; background: var(--c-grey-15);
+}
+/* bílé pole s lupou UVNITŘ (dle návrhu) */
+.pf-search-field {
+  flex: 1 1 auto; display: flex; align-items: center; gap: calc(8 * var(--u));
+  background: #fff; border: 2px solid var(--c-black); border-radius: calc(6 * var(--u));
+  padding: calc(5 * var(--u)) calc(6 * var(--u)) calc(5 * var(--u)) calc(14 * var(--u));
+}
 .pf-search-input {
-  flex: 1 1 auto; min-width: 0; height: calc(42 * var(--u));
-  border: 2px solid var(--c-black); border-radius: calc(6 * var(--u)); padding: 0 calc(14 * var(--u));
-  background: #fff; color: var(--c-black); outline: none;
+  flex: 1 1 auto; min-width: 0; height: calc(34 * var(--u)); border: 0; background: transparent;
+  color: var(--c-black); outline: none;
   font-family: var(--font); font-size: calc(15 * var(--u)); letter-spacing: var(--tracking);
 }
 .pf-search-input::placeholder { color: var(--c-grey-50); }
-.pf-search-btn { flex: 0 0 auto; width: calc(42 * var(--u)); height: calc(42 * var(--u)); display: block; }
+.pf-search-btn { flex: 0 0 auto; width: calc(34 * var(--u)); height: calc(34 * var(--u)); display: block; }
 .pf-search-btn img { width: 100%; height: 100%; display: block; }
 .pf-topic { display: block; width: 100%; text-align: left; padding: calc(18 * var(--u)) 0; border-bottom: 1px solid var(--c-grey-15); }
 .pf-topics .pf-topic:last-child { border-bottom: 0; }
