@@ -279,8 +279,15 @@
     }).join("") + '</div>';
   }
   /* ---------- Tvé uložené Glitche (plochý seznam) ---------- */
-  // Řádek = kartička s názvem (otevře Glitch) + křížek (odebere z uložených).
-  const GLITCH_MARK = '<span class="pf-saved-ic"><img src="assets/ui/exit-small-icon.svg" alt=""></span>';
+  // Řádek = kartička s názvem (otevře Glitch) + ⋮ menu vpravo (Smazat / Odebrat).
+  // items = [{ label, attr }] — attr nese data-atribut akce (řeší delegace v wire).
+  function rowMenu(items) {
+    return '<div class="pf-row-menu" data-row-menu>' +
+      '<button class="pf-row-menu-btn" data-row-menu-btn type="button" aria-label="Možnosti"><span class="pf-menu-ic"></span></button>' +
+      '<div class="pf-row-menu-pop" data-row-menu-pop hidden>' +
+        items.map((it) => '<button class="pf-menu-item" ' + it.attr + '>' + esc(it.label) + '</button>').join("") +
+      '</div></div>';
+  }
   function savedHtml() {
     const list = (typeof window.listSaved === "function") ? window.listSaved() : [];
     if (!list.length) return '<div class="pf-empty">Nic uloženého. Glitche, které si uložíš přes menu (tři tečky), najdeš tady.</div>';
@@ -288,7 +295,7 @@
       '<div class="pf-saved-card">' +
         '<button class="pf-saved-open" data-saved="' + esc(s.id) + '" type="button">' +
           '<span class="pf-saved-title">' + esc(s.title || s.id) + '</span></button>' +
-        '<button class="pf-saved-del" data-saved-remove="' + esc(s.id) + '" type="button" aria-label="Odebrat z uložených">' + GLITCH_MARK + '</button>' +
+        rowMenu([{ label: "Odebrat z uložených", attr: 'data-saved-remove="' + esc(s.id) + '"' }]) +
       '</div>'
     ).join("") + '</div>';
   }
@@ -414,12 +421,12 @@
   function glitchpostyHtml() {
     const list = (typeof window.listGlitchposts === "function") ? window.listGlitchposts() : [];
     if (!list.length) return '<div class="pf-empty">Zatím jsi nic nezveřejnil*a. Až vytvoříš Glitchpost přes tlačítko „+" dole, objeví se tady.</div>';
-    // klik na text/řádek otevře Glitch ve feedu; křížek vpravo ho smaže
+    // klik na text/řádek otevře Glitch ve feedu; ⋮ menu vpravo → Smazat Glitch
     return '<div class="pf-saved-list">' + list.map((p) =>
       '<div class="pf-saved-card">' +
         '<button class="pf-saved-open" data-glitchpost="' + esc(p.id) + '" type="button">' +
           '<span class="pf-saved-title">' + esc(p.title || "Glitch") + '</span></button>' +
-        '<button class="pf-saved-del" data-glitchpost-del="' + esc(p.id) + '" type="button" aria-label="Smazat Glitch">' + GLITCH_MARK + '</button>' +
+        rowMenu([{ label: "Smazat Glitch", attr: 'data-glitchpost-del="' + esc(p.id) + '"' }]) +
       '</div>'
     ).join("") + '</div>';
   }
@@ -946,6 +953,18 @@
 
     // odhlášení
     el.addEventListener("click", async (e) => {
+      // ⋮ menu u řádku (Glitchpost / uložené) — otevři/zavři, ostatní zavři
+      const rowBtn = e.target.closest("[data-row-menu-btn]");
+      if (rowBtn) {
+        const pop = rowBtn.parentElement.querySelector("[data-row-menu-pop]");
+        const willOpen = pop && pop.hidden;
+        el.querySelectorAll("[data-row-menu-pop]").forEach((x) => { x.hidden = true; });
+        if (pop) pop.hidden = !willOpen;
+        return;
+      }
+      // klik jinam než do řádkového menu → zavři otevřená řádková menu
+      if (!e.target.closest("[data-row-menu]")) el.querySelectorAll("[data-row-menu-pop]").forEach((x) => { x.hidden = true; });
+
       // ⋮ menu profilu — otevři/zavři
       if (e.target.closest("[data-pf-menu-btn]")) {
         const pop = el.querySelector("[data-pf-menu-pop]"); if (pop) pop.hidden = !pop.hidden;

@@ -1811,3 +1811,15 @@ button.pf-stat:active b { color: var(--c-grey-50); }
 .pf-shared-head { margin: calc(22 * var(--u)) 0 calc(10 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 700; color: var(--c-grey-50); letter-spacing: var(--tracking); text-transform: uppercase; }
 .pf-proj--shared .pf-proj-shared-tag { display: inline-block; font-size: calc(12 * var(--u)); font-weight: 700; color: var(--c-black);
   background: var(--c-yellow); border: 1.5px solid var(--c-black); border-radius: calc(20 * var(--u)); padding: calc(2 * var(--u)) calc(9 * var(--u)); margin-bottom: calc(8 * var(--u)); }
+
+/* ⋮ menu u řádku (Tvé Glitchposty / Uložené) — místo křížku */
+.pf-row-menu { position: relative; flex: 0 0 auto; }
+.pf-row-menu-btn { display: grid; place-items: center; padding: calc(13 * var(--u)) calc(15 * var(--u)); cursor: pointer; }
+.pf-row-menu-btn .pf-menu-ic { width: calc(5 * var(--u)); height: calc(20 * var(--u)); }
+.pf-row-menu-pop {
+  position: absolute; top: calc(46 * var(--u)); right: calc(8 * var(--u)); z-index: 12;
+  background: #fff; border-radius: calc(10 * var(--u)); padding: calc(6 * var(--u)); min-width: calc(180 * var(--u));
+  box-shadow: 0 calc(6 * var(--u)) calc(22 * var(--u)) rgba(0,0,0,.28);
+}
+.pf-row-menu-pop[hidden] { display: none; }
+.pf-row-menu-pop .pf-menu-item { text-align: left; }
