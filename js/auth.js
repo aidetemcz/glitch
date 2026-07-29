@@ -111,6 +111,8 @@
     // návrat z Google OAuth + obnova relace (obojí bezpečně degraduje, když Supabase není)
     try { if (typeof sbHandleOAuthCallback === "function") await sbHandleOAuthCallback(); } catch (_) {}
     try { if (typeof sbInit === "function") await sbInit(); } catch (_) {}
+    // po přihlášení hned dotáhni uživatelské Glitchposty do feedu
+    try { if (typeof window.glitchReloadUserGlitches === "function") window.glitchReloadUserGlitches(); } catch (_) {}
     mountButton();
     // Nahlašování: uživatel klikl „Nahlásit", nebyl přihlášen → přihlásil se přes
     // Google (redirect). Po návratu hned otevři modál pro nahlášení tam, kde skončil.

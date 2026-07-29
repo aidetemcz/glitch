@@ -414,11 +414,13 @@
   function glitchpostyHtml() {
     const list = (typeof window.listGlitchposts === "function") ? window.listGlitchposts() : [];
     if (!list.length) return '<div class="pf-empty">Zatím jsi nic nezveřejnil*a. Až vytvoříš Glitchpost přes tlačítko „+" dole, objeví se tady.</div>';
+    // klik na text/řádek otevře Glitch ve feedu; křížek vpravo ho smaže
     return '<div class="pf-saved-list">' + list.map((p) =>
-      '<button class="pf-post-row" data-glitchpost="' + esc(p.id) + '" type="button">' +
-        '<span class="pf-post-title">' + esc(p.title || "Glitch") + '</span>' +
-        '<span class="pf-post-arrow"><img src="assets/ui/open-icon.svg" alt=""></span>' +
-      '</button>'
+      '<div class="pf-saved-card">' +
+        '<button class="pf-saved-open" data-glitchpost="' + esc(p.id) + '" type="button">' +
+          '<span class="pf-saved-title">' + esc(p.title || "Glitch") + '</span></button>' +
+        '<button class="pf-saved-del" data-glitchpost-del="' + esc(p.id) + '" type="button" aria-label="Smazat Glitch">' + GLITCH_MARK + '</button>' +
+      '</div>'
     ).join("") + '</div>';
   }
 
@@ -1012,12 +1014,21 @@
         if (box) box.innerHTML = (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml());
         return;
       }
-      // Glitchpost (Tvé Glitchposty) → otevři náhled karty
+      // Glitchpost: křížek → smaž a překresli seznam
+      const gpDel = e.target.closest("[data-glitchpost-del]");
+      if (gpDel) {
+        if (typeof window.removeGlitchpost === "function") window.removeGlitchpost(gpDel.dataset.glitchpostDel);
+        const box = el.querySelector("[data-pf-saved]");
+        if (box) box.innerHTML = (state.savedSub === "posts" ? glitchpostyHtml() : savedHtml());
+        toastPf("Glitch smazán.");
+        return;
+      }
+      // Glitchpost: klik na text → otevři Glitch normálně ve feedu
       const gp = e.target.closest("[data-glitchpost]");
       if (gp) {
         const list = (typeof window.listGlitchposts === "function") ? window.listGlitchposts() : [];
         const post = list.find((p) => p.id === gp.dataset.glitchpost);
-        if (post && typeof window.glitchOpenGlitchpost === "function") window.glitchOpenGlitchpost(post.card);
+        if (post && typeof window.glitchOpenUserGlitch === "function") window.glitchOpenUserGlitch(post.card);
         return;
       }
       // saved: křížek → odeber z uložených a překresli seznam

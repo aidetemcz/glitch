@@ -493,11 +493,43 @@
   // Sestavení karet z katalogu, seřazené doporučovačem (js/recommender.js)
   let _cardData = [];
   let _catalog = null;
+  let _userGlitches = [];   // uživatelské Glitche (Glitchposty) — karty z DB
+
+  // Glitche uživatele se ukazují ve feedu jen když má „Můj obsah vidí komunita"
+  const userGlitchesPublic = () => {
+    try { return !window.glitchSettings || window.glitchSettings().soukromi_glitchfeed !== false; }
+    catch (_) { return true; }
+  };
   function buildCards(catalog) {
-    const ordered = (typeof window.serazFeed === "function") ? window.serazFeed(catalog) : catalog;
+    const ordered = (typeof window.serazFeed === "function") ? window.serazFeed(catalog) : catalog.slice();
     _topicMode = null; hideTopicBanner();
-    renderList(ordered);
+    // veřejné uživatelské Glitche připoj do feedu (za doporučený obsah)
+    renderList(userGlitchesPublic() ? ordered.concat(_userGlitches) : ordered);
   }
+
+  // Načte uživatelské Glitchposty z DB a přerenderuje feed. Dokud nedoběhne
+  // přihlášení, zkouší to znovu (auth se rozjede až po načtení feedu).
+  async function loadUserGlitches(_tries) {
+    _tries = _tries || 0;
+    if (typeof sbCurrentUser === "undefined" || !sbCurrentUser) {
+      if (_tries < 8) setTimeout(() => loadUserGlitches(_tries + 1), 1000);
+      return;
+    }
+    if (typeof sbListGlitchposts !== "function") return;
+    try {
+      const rows = await sbListGlitchposts();
+      _userGlitches = (rows || []).map((r) => r && r.card).filter((c) => c && c.id);
+      if (_catalog && !_topicMode) buildCards(_catalog);
+    } catch (_) {}
+  }
+  window.glitchReloadUserGlitches = function () { loadUserGlitches(0); };
+  window.addEventListener("glitchposts:changed", function () { loadUserGlitches(0); });
+  // otevře uživatelský Glitch (Glitchpost) ve feedu — zaregistruje kartu, ať ji GoToCard najde
+  window.glitchOpenUserGlitch = function (card) {
+    if (!card || !card.id) return;
+    if (!_userGlitches.find((x) => x && x.id === card.id)) _userGlitches.push(card);
+    if (typeof window.glitchGoToCard === "function") window.glitchGoToCard(card.id);
+  };
 
   // Vykreslení konkrétního (už seřazeného) seznamu karet do feedu.
   function renderList(ordered) {
@@ -624,6 +656,7 @@
     } catch (_) {}
     _catalog = catalog;
     buildCards(catalog);
+    loadUserGlitches();                 // připoj uživatelské Glitchposty (až doběhne auth)
   })();
 
   // Noční zámek se má aktivovat i bez reloadu — každou minutu zkontroluj, jestli
@@ -1715,7 +1748,7 @@
       const d = _cardData[el.dataset.index];
       if (d && d.id === id) { el.classList.remove("is-hidden"); el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
     }
-    const c = (_catalog || []).find((x) => x && x.id === id);
+    const c = (_catalog || []).find((x) => x && x.id === id) || _userGlitches.find((x) => x && x.id === id);
     if (!c) return;
     const idx = _cardData.length; _cardData.push(c);
     const el = document.createElement("section");

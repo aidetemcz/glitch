@@ -31,8 +31,14 @@
     const all = readGp().filter((p) => p.id !== post.id);
     all.unshift(post);
     writeGp(all.slice(0, 100));
+    try { window.dispatchEvent(new CustomEvent("glitchposts:changed")); } catch (_) {}
   }
   window.listGlitchposts = () => readGp();
+  window.removeGlitchpost = function (id) {
+    writeGp(readGp().filter((p) => p.id !== id));
+    try { if (typeof sbDeleteGlitchpost === "function") sbDeleteGlitchpost(id); } catch (_) {}
+    try { window.dispatchEvent(new CustomEvent("glitchposts:changed")); } catch (_) {}
+  };
 
   /* ---------- obrázky ---------- */
   function readImageScaled(file, cb) {
