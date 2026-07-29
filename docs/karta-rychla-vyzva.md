@@ -130,7 +130,7 @@ celou šířku; jinak kompaktní tlačítka na střed (mřížka/řada/sloupec d
 | **kognitivní náročnost** | aplikovat *(revidovaná Bloomova taxonomie)* |
 | **energetická náročnost** | nízká |
 | **typ zátěže** | rozcvička |
-| **vhodné při náladě** | kdykoli; vhodné i při nižší energii/soustředění jako lehké „nabuzení" mezi delšími Glitchi |
+| **vhodné do tempa (focus)** | kdykoli; vhodné i při nižší energii/soustředění jako lehké „nabuzení" mezi delšími Glitchi |
 | signál dokončení | správná odpověď = hotovo; špatná = **druhá šance** (karta se ve feedu vrátí později, nezavírá se) |
 | fork | `false` |
 | poznámka | Rychlá výzva je rozcvička, ne zkoušení — slouží k rozproudění pozornosti mezi delšími Glitchi. |

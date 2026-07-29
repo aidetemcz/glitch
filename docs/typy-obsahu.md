@@ -8,10 +8,10 @@ Glitch = jedna celoobrazovková karta ve vertikálně swipovaném feedu. Každý
 
 ## Nepřekročitelné zásady
 
-- **Denní limit 20 Glitchů** — po kartě Shrnutí feed končí, žádný nekonečný scroll.
+- **Denní limit 20 Glitchů** — po kartě Shrnutí feed končí, žádný nekonečný scroll. _(V prototypu je limit `DAILY_CAP=20` dočasně vypnutý — `DAILY_CAP_ENABLED=false` v `js/recommender.js` — kvůli testování.)_
 - **Časovače jsou vždy opt-in**, nikdy automatické.
 - **Žádné veřejné srovnávání** (lajky, žebříčky) — statistiky jsou jen osobní.
-- **Wellbeing karty** (mood, dýchání) jsou součást feedu, ne přeskočitelný bonus.
+- **Wellbeing karty** (dýchání, hra na pozornost, ASMR) jsou součást feedu, ne přeskočitelný bonus. _(Mood/„jak se cítíš" odstraněn — AI Act.)_
 
 ## Stav důvěry (Trust State)
 
@@ -35,7 +35,7 @@ Každá karta Glitche obsahuje v metainfo **source of truth** — texty s ověř
 
 ## Relace
 
-Základní relace je **24 hodin**. To je doba, kdy má Glitch uložená citlivá data (o náladě, soustředění, pozornosti) o uživatelském chování — a pak je maže. Data s výsledky žáků nejsou považována za citlivá; slouží k formativnímu hodnocení posunu uživatele a jdou do uživatelského profilu jak v Glitch, tak v Tiny (pokud je uživatel na obou platformách).
+Základní relace je **24 hodin**. To je doba, kdy má Glitch uložená behaviorální data o chování (dokončené aktivity, **focus signál**) — a pak je maže. ⚠️ **Emoce se nezaznamenávají vůbec** (AI Act zakazuje rozpoznávání emocí). Data s výsledky žáků nejsou považována za citlivá; slouží k formativnímu hodnocení posunu uživatele a jdou do uživatelského profilu jak v Glitch, tak v Tiny (pokud je uživatel na obou platformách).
 
 ## Typy obsahu
 
@@ -52,7 +52,7 @@ Obsah se dělí do **7 typů** (= složky v `glitches/`). Legenda: **Rozklik** =
 | 7 | Argumentuj | [`argument/`](../glitches/argument) | [karta](./karta-argument.md) | ano | ano | ne |
 | 8 | Inspirace | `feed.json` (`inspirace`) | [karta](./karta-inspirace.md) | ano | ano | ne¹ |
 
-> ¹ Inspirace nemá fork — místo něj z konverzace vzniká **projekt** (sekce Tvé projekty). Je to wellbeing typ s chatbotem: do feedu vstupuje jako wellbeing, ale na rozdíl od mood/dýchání má rozklik i konverzaci.
+> ¹ Inspirace nemá fork — místo něj z konverzace vzniká **projekt** (sekce Tvé projekty). Je to wellbeing typ s chatbotem: do feedu vstupuje jako wellbeing, ale na rozdíl od dýchání/pozornostních aktivit má rozklik i konverzaci.
 
 > **Návrh karty** = šablona sekcí + konkrétní příklad daného typu (podklad pro redakci i AI asistenta při tvorbě Glitchů).
 > **Systémové karty** (Welcome, Shrnutí) nejsou obsah — jsou součást aplikace, nemají složku.
@@ -105,13 +105,15 @@ Nerozklikávací kognitivní rozcvička. Dítě splní výzvu přímo na kartě,
 
 ### 3. Wellbeing
 
-Interaktivní karty — denní selectory a krátké hry. Součást feedu. Bez chatbota.
+Interaktivní karty — krátké relaxační a pozornostní aktivity. Součást feedu. Bez chatbota.
 
-- **Mood_selector** — denní check-in: dítě potažením umístí tečku do diagramu (osy ENERGIE × SOUSTŘEDĚNÍ). Hodnota personalizuje výběr Glitchů pro daný den.
 - **Breathing** — dechové cvičení: nastavitelný počet cyklů, animované fáze nádech / zadrž / výdech.
-- **Attention_game** — aktivita: interaktivní 3D objekt, opt-in časovač.
+- **Attention_game** — hra na pozornost (kolo slov / 3D objekt), opt-in časovač.
+- **ASMR** — zklidňující světelná stopa přes celou kartu.
 
-Zásady: časovače opt-in, žádné srovnávání, emoční data jen po dobu 24hodinové relace.
+> ⚠️ **AI Act — `mood_selector` odstraněn.** Karta „Jak se teď cítíš" (odhad energie × soustředění) **byla odebrána**: rozpoznávání/odhad emocí je zakázané. Nic v appce emoce nesnímá. Do budoucna se počítá jen s **behaviorálním „focus" signálem** — odvozeným z toho, že žák **splnil** wellbeing/pozornostní aktivitu (dech, hra na pozornost), ne z toho, jak se cítí.
+
+Zásady: časovače opt-in, žádné srovnávání, žádné rozpoznávání emocí; behaviorální focus signál je efemérní (jen dnešní feed).
 
 ### 4. Fun fact
 
@@ -140,7 +142,7 @@ Každý návrh karty (bez ohledu na typ) obsahuje kromě `verze` také:
 - **Fasety** (sekce 0.2) — jak je podání vyrobené (svět příkladu, hloubka, vizualita, formalismus, délka, žánr, jazyk, nosiče); slouží doporučování i budoucímu generování,
 - **metadata pro doporučování** (sekce 5) — **obtížnost** a **kognitivní náročnost** (v úrovních revidované Bloomovy taxonomie), typ zátěže, trust state. Obtížnost i náročnost **nejsou dané typem** — volí se u konkrétního Glitche (i Fun fact může nést náročný obsah).
 
-Jak se z těchto polí (a z wellbeing signálů) vybírá feed, popisuje **[`doporucovaci-system.md`](./doporucovaci-system.md)**.
+Jak se z těchto polí (a z behaviorálního focus signálu) vybírá feed, popisuje **[`doporucovaci-system.md`](./doporucovaci-system.md)**.
 
 ## Formát souborů (společné)
 

@@ -35,7 +35,7 @@ Hlavní feed, kde se Glitche zobrazují. Řídí se několika nepřekročitelný
   - **Denní limit 20 Glitchů.** Po kartě Shrnutí feed pro daný den končí. Žádný nekonečný scroll — dokončení dne je událost, ne díra bez dna. Po dokončení relace 20 Glitchů s uživatel může vátit k těm, které viděl a vybrat si zpětně, že některé splní.
   - **Časovače jsou vždy opt-in.** Dítě si je může zapnout, nikdy nenaskočí samy.
   - **Žádné srovnávání mezi uživateli.** Statistiky jsou pouze osobní; žádné lajky ani žebříčky.
-  - **Wellbeing karty jsou součást feedu, ne přeskočitelný bonus.** Denní check-in nálady (mood selector) a krátká cvičení jsou přímo ve feedu; hodnota nálady navíc personalizuje výběr Glitchů pro daný den.
+  - **Wellbeing karty jsou součást feedu, ne přeskočitelný bonus.** Krátká cvičení (dýchání, pozornostní hra, ASMR) jsou přímo ve feedu. ⚠️ **Rozpoznávání emocí je zakázané (AI Act)** — původní „mood selector" (check-in nálady) byl **odstraněn**; Glitch nezjišťuje náladu. Do doporučování vstupuje jen **behaviorální focus signál** (splnil / nesplnil aktivitu), viz [`doporucovaci-system.md`](./doporucovaci-system.md).
 
 Poznámka k paradigmatu: p-book nechává čtenáře volit mezi čtyřmi způsoby konzumace (příběhové questy, karusely, doporučovaný feed, mapa) a přepínat mezi nimi. Glitch se u své primární plochy vědomě rozhodl pro **jeden ohraničený, klidný feed**. Ostatní paradigmata (mapa Questů, příběhová sekvence, hry) jsou možné rozšíření, ne výchozí stav.
 
@@ -44,7 +44,7 @@ Obsah se dělí do typů (= složky v glitches/):
 
 1.  **Basic Glitch** — jádro vzdělávacího obsahu; nejuniverzálnější typ, unese znalostní výklad i aplikační tvorbu („postav to"). Rozklik, chatbot, fork.
 2.  **Rychlá výzva** — nerozklikávací kognitivní rozcvička; dítě splní výzvu přímo na kartě a scrolluje dál.
-3.  **Wellbeing** — interaktivní karty (mood check-in, dýchání, aktivita); součást feedu.
+3.  **Wellbeing** — interaktivní karty (dýchání, pozornostní hra, ASMR); součást feedu. *(Mood check-in odstraněn — AI Act zakazuje rozpoznávání emocí.)*
 4.  **Fun fact** — rozklikávací zajímavost bez úkolu, pro zpestření.
 5.  **Najdi chybu** — rozklikávací Glitch pro kritické myšlení a prebunking; dítě odhalí chybné tvrzení.
 6.  **Historická osobnost** — seznámení s osobností oboru + konverzace s AI personou.
@@ -91,7 +91,8 @@ Redakce je poptávkově řízená — kurátorství jako služba, ne jako rozvrh
 ## Wellbeing, soukromí a bezpečí
 Primární uživatelé jsou nezletilí, takže bezpečí má přednost před zapojením.
 
-  - **Relace 24 hodin.** Citlivá data o chování (nálada, soustředění, pozornost) má Glitch uložená jen po dobu relace, pak je maže. Data s výsledky žáků citlivá nejsou — slouží formativnímu hodnocení posunu a jdou do profilu v Glitch i Tiny (pokud má uživatel účet také v Tiny).
+  - **Žádné rozpoznávání emocí (AI Act).** Glitch nezjišťuje ani neodvozuje náladu žáka. Původní mood check-in byl odstraněn. Do doporučování jde jen **behaviorální focus signál** (dokončení relaxační / pozornostní aktivity — fakt „splněno", ne emoční stav).
+  - **Relace 24 hodin.** Behaviorální data o chování (dokončené aktivity, focus signál) má Glitch uložená jen po dobu relace, pak je maže. Data s výsledky žáků citlivá nejsou — slouží formativnímu hodnocení posunu a jdou do profilu v Glitch i Tiny (pokud má uživatel účet také v Tiny).
   - **Editovatelný profil (open learner model).** Odvozený preferenční profil se ukazuje srozumitelně, dá se přímo upravit a explicitní volba vždy přebije odvozenou.
   - **Viditelnost boardů ve třech úrovních, default soukromý.** Soukromý / veřejný ve třídě (garantovaný učitelem) / veřejný úplně. Nejvyšší soukromí je výchozí stav (age-appropriate design, GDPR); veřejnost je vědomá akce.
   - **Postupné odemykání, ne za body.** Plná veřejnost se odemyká postupně podle bezpečného chování v čase (model trust levels z Discourse) a prochází garantem a moderací (automatický filtr + lidská moderace + krátká, dětmi srozumitelná pravidla + možnost nahlásit).

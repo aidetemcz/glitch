@@ -135,7 +135,7 @@ Přehled toho, co uživateli sedí (→ fasetové afinity) — a je **editovatel
 Naučené i zvolené preference uživatele na úrovni → faset (např. „má radši obrázky a kratší texty"). Explicitní volba přebíjí to, co se systém odhadl z chování.
 
 **Signál (implicitní / explicitní)**
-Vstup pro doporučování. **Explicitní** = uživatel si aktivně zvolí. **Implicitní** = odvozené z chování (doba čtení, co dokončil, → mood). Implicitní signály jsou slabé a přebíjí je explicitní volba.
+Vstup pro doporučování. **Explicitní** = uživatel si aktivně zvolí. **Implicitní** = odvozené z chování (doba čtení, co dokončil, → focus). Implicitní signály jsou slabé a přebíjí je explicitní volba. ⚠️ Nikdy se neodvozuje **emoce** (AI Act).
 
 **Cache**
 Dočasně uložený výsledek, aby se nemusel počítat/generovat znovu. U Glitche: vygenerované podání se uloží podle → fasetového vektoru a poslouží všem se stejnými preferencemi.
@@ -164,13 +164,16 @@ Odstupňování cílů a kritérií podle úrovně (ne podle ročníku) — aby 
 
 ---
 
-## 6. Wellbeing a signály o stavu
+## 6. Wellbeing a focus signál
 
 **Wellbeing**
-Karty pečující o vnitřní nastavení dítěte (pozornost, klid, energie). U Glitche jsou **přímo součástí feedu**, ne bonus — a zároveň dávají → signál doporučování.
+Karty pečující o vnitřní nastavení dítěte (pozornost, klid). U Glitche jsou **přímo součástí feedu**, ne bonus — a zároveň dávají → focus signál doporučování.
 
-**Mood selector**
-Denní „check-in": dítě potažením umístí tečku do diagramu **energie × soustředění**. Podle toho se upraví obtížnost dnešního feedu.
+**Focus signál** *(dřív „mood")*
+**Behaviorální** signál pro doporučování: fakt, že dítě **dokončilo** relaxační nebo pozornostní aktivitu (dýchání, hra na pozornost). ⚠️ **Není to rozpoznávání emocí** — AI Act (čl. 5) odvozování nálady zakazuje, takže se náladová hodnota **neměří**. Signál je čistě „splněno / nesplněno" a slouží k jemné úpravě tempa feedu (future-facing).
+
+**Mood selector** *(odstraněno — AI Act)*
+Původní denní „check-in" (tečka v diagramu energie × soustředění) je **trvale odstraněn**. Odvozování emocí ve vzdělávacím kontextu zakazuje AI Act; nahrazuje ho behaviorální → focus signál.
 
 **Breathing (dechové cvičení)**
 Krátká řízená dechová aktivita pro zklidnění (nádech / výdech).
@@ -178,11 +181,14 @@ Krátká řízená dechová aktivita pro zklidnění (nádech / výdech).
 **Attention game (aktivita)**
 Interaktivní 3D hra pro „usazení" pozornosti; volitelný časovač.
 
+**ASMR**
+Krátká zklidňující zvuková / vizuální smyčka bez cíle a skóre.
+
 **Relace (session)**
-Časové okno, po které si systém drží citlivá data o uživateli. Základní relace = **24 hodin**, pak se emoční data mažou.
+Časové okno, po které si systém drží citlivá data o uživateli. Základní relace = **24 hodin**, pak se behaviorální data o chování mažou.
 
 **Efemérní data**
-Data, která nejsou trvalá — žijí jen po dobu → relace (24 h) a pak se automaticky smažou. Týká se emočních dat (nálada, pozornost, frustrace). Nikdy netvoří trvalý štítek.
+Data, která nejsou trvalá — žijí jen po dobu → relace (24 h) a pak se automaticky smažou. Týká se behaviorálních dat o chování (dokončené aktivity, focus signál). Nikdy netvoří trvalý štítek; emoce se nezaznamenávají vůbec.
 
 **Důkaz o učení**
 To, co se z Glitche ukládá trvale do profilu (a případně posílá do → Tiny): **zvládnuté koncepty, úroveň kompetence, dokončení** — tedy pokrok, ne nálada ani názor na citlivé téma.
@@ -238,7 +244,7 @@ Zpracovanost záznamu v mapě: rozpracovaný, nebo hotový.
 ## 8. Role uživatelů
 
 **Žák**
-Prochází feed, plní questy, ukládá si pokrok a náladu, může přidat komunitní Glitch.
+Prochází feed, plní questy, ukládá si pokrok, může přidat komunitní Glitch.
 
 **Učitel**
 Vidí své žáky/třídu a jejich → důkaz o učení (ne emoční data), zadává questy, může přidat Glitch.

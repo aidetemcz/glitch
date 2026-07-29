@@ -144,7 +144,7 @@ Dítě si může Najdi chybu forknout a rozvést — např. najít vlastní „s
 | **kognitivní náročnost** | analyzovat *(revidovaná Bloomova taxonomie — rozliš pravdu od chyby)* |
 | **energetická náročnost** | střední |
 | **typ zátěže** | soustředění (kritické čtení) |
-| **vhodné při náladě** | spíš vyšší soustředění; při únavě odložit na později |
+| **vhodné do tempa (focus)** | spíš vyšší soustředění; při únavě odložit na později |
 | signál dokončení | označení v kvízu + přečtení vysvětlení |
 | fork | `true` (volitelný) |
 | vazby | koncept z mapy: `umela-inteligence-doporucovaci-systemy` |

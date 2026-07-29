@@ -1,8 +1,10 @@
-# Karta — Wellbeing
+# Karta — Wellbeing / Focus
 
-_Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na příkladu „Jak se teď cítíš?". Návrh k připomínkám. Vytvořeno: 2026-07-23._
+_Šablona sekcí Glitchů typu **Wellbeing** (dýchání / pozornost / ASMR) na příkladu „Dechové cvičení". Návrh k připomínkám. Vytvořeno: 2026-07-23. Aktualizováno: 2026-07-29 (odstranění mood_selectoru kvůli AI Actu, přejmenování signálu na **focus**)._
 
-**Jak číst tenhle soubor.** Wellbeing nejsou znalostní Glitche — jsou to **interaktivní denní selectory a krátké hry**, které jsou pevnou součástí feedu (ne přeskočitelný bonus). Mají několik podtypů: **mood_selector**, **breathing**, **attention_game** a **asmr** — ty nemají chatbota ani fork; klíčové je, co se měří, kam se to ukládá a jak dlouho. Samostatně stojí typ **[Inspirace](./karta-inspirace.md)** — do feedu vstupuje také jako wellbeing, ale narozdíl od ostatních **má rozklik i chatbota** (a místo forku z něj vzniká projekt).
+> ⚠️ **AI Act — rozpoznávání emocí je zakázáno.** Původní podtyp **`mood_selector`** („Jak se teď cítíš?", diagram energie × soustředění) je **trvale odstraněn** — ve vzdělávacím kontextu spadá pod zákaz systémů odvozujících emoce (AI Act, čl. 5). Glitch **nezjišťuje ani neodhaduje náladu**. Signál pro doporučování je nově čistě **behaviorální** (viz níže) a jmenuje se **focus**.
+
+**Jak číst tenhle soubor.** Wellbeing nejsou znalostní Glitche — jsou to **krátké interaktivní hry a relaxační aktivity**, které jsou pevnou součástí feedu (ne přeskočitelný bonus). Mají několik podtypů: **breathing**, **attention_game** a **asmr** — ty nemají chatbota ani fork; klíčové je, co se měří, kam se to ukládá a jak dlouho. Samostatně stojí typ **[Inspirace](./karta-inspirace.md)** — do feedu vstupuje také jako wellbeing, ale narozdíl od ostatních **má rozklik i chatbota** (a místo forku z něj vzniká projekt).
 
 **Interakce:** Rozklik ⭘ někdy · Chatbot ❌ · Fork ❌
 **Datový soubor:** [`../glitches/wellbeing/`](../glitches/wellbeing)
@@ -13,10 +15,10 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 
 | pole | hodnota |
 | ----- | ----- |
-| id | `mood-selector` |
-| název | Jak se teď cítíš? |
+| id | `dychani-01` |
+| název | Dechové cvičení |
 | typ | `wellbeing` |
-| podtyp | `mood_selector` *(mood_selector · breathing · attention_game)* |
+| podtyp | `breathing` *(breathing · attention_game · asmr)* |
 | verze | 1.0 |
 | autor | redakce AI dětem |
 | datum vytvoření | 2026-07-23 |
@@ -27,12 +29,12 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 
 ## 0.1 Mapa konceptů
 
-*Wellbeing karty **nemají napojení na koncept** — nejsou znalostní obsah, ale péče o vnitřní nastavení (princip 9 doporučovacího systému). Do doporučování ale vstupují jako **zdroj signálu** (viz sekce 5 a [`doporucovaci-system.md`](./doporucovaci-system.md)).*
+*Wellbeing karty **nemají napojení na koncept** — nejsou znalostní obsah, ale péče o vnitřní nastavení (princip 9 doporučovacího systému). Do doporučování ale vstupují jako **zdroj focus signálu** — a to **jen behaviorálně** (splnil / nesplnil aktivitu), nikdy jako odhad emoce (viz sekce 5 a [`doporucovaci-system.md`](./doporucovaci-system.md)).*
 
 | pole | hodnota |
 | ----- | ----- |
 | koncept | — *(bez napojení; wellbeing, ne znalostní obsah)* |
-| role v doporučování | **zdroj signálu** (mood / pozornost) pro úpravu obtížnosti feedu |
+| role v doporučování | **zdroj focus signálu** (dokončení relaxační / pozornostní aktivity) pro jemnou úpravu tempa feedu |
 
 ---
 
@@ -53,35 +55,35 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 
 *Wellbeing karty pečují o vnitřní nastavení dítěte — ne o znalosti. Nemají „správný výsledek". Řídí se přísnějšími pravidly na data.*
 
-- **Účel:** krátký check-in nebo zklidnění mezi znalostními Glitchi; u mood navíc **personalizace** dnešního výběru.
+- **Účel:** krátké zklidnění nebo protažení pozornosti mezi znalostními Glitchi.
 - **Nepřekročitelné zásady:**
+  - **Žádné rozpoznávání emocí** (AI Act). Karta nikdy nezjišťuje, jak se dítě cítí. Měří se jen **fakt, že aktivitu udělalo** (behaviorální signál), ne jeho emoční stav.
   - **Časovače vždy opt-in** (týká se attention_game) — nikdy automaticky.
   - **Žádné srovnávání** — hodnota je jen osobní, nikdy se nezobrazuje vůči ostatním.
-  - **Emoční data jen po dobu 24hodinové relace**, pak se mažou. Neukládají se jako trvalý signál pro doporučování.
+  - **Data o dokončení jsou neutrální** — ukládá se jen „splněno / nesplněno" jako behaviorální focus signál, ne obsah prožitku.
 
 ---
 
 ## 2 Podtypy a jejich karta
 
-### 2.1 `mood_selector` — denní check-in *(příklad)*
-
-- **Štítek:** `Wellbeing`. **Titulek:** „Jak se teď cítíš?"
-- **Text:** „Umísti potažením černou tečku na správné místo v diagramu. My podle toho upravíme Glitche, které se ti dnes zobrazí."
-- **Interakce:** dítě potažením umístí tečku do diagramu s osami **SOUSTŘEDĚNÍ** (x, 0–100) × **ENERGIE** (y, 0–100), potvrdí tlačítkem.
-- **Kam se ukládá:** dvojice `(x, y)` → `mood`; hodnota personalizuje výběr Glitchů pro daný den (efemérní, 24 h).
-
-### 2.2 `breathing` — dechové cvičení
+### 2.1 `breathing` — dechové cvičení *(příklad)*
 
 - **Štítek:** `Wellbeing`. **Titulek:** „Dechové cvičení."
 - **Text:** krátké vysvětlení, proč vědomé dýchání pomáhá soustředění.
 - **Interakce:** nastavitelný počet cyklů; animované fáze **nádech / výdech** (bez zádrže), počítadlo uvnitř kolečka, fáze pojmenovaná v patičce. Tlačítko Začít → Pozastavit.
-- **Kam se ukládá:** nic citlivého; případně jen „dokončeno" jako neutrální signál.
+- **Kam se ukládá:** nic citlivého; jen „dokončeno" jako neutrální **focus signál**.
 
-### 2.3 `attention_game` — aktivita
+### 2.2 `attention_game` — aktivita na pozornost
 
 - **Štítek:** `Aktivita`. **Titulek + pokyn.**
 - **Interakce:** interaktivní 3D objekt (drátěná koule s dírami); dítě otáčí tažením a ťuká na díry vpředu. **Opt-in časovač** jako „ukrajující" kolečko.
-- **Kam se ukládá:** počet zásahů jen jako osobní zpětná vazba v relaci; žádné srovnávání.
+- **Kam se ukládá:** počet zásahů jen jako osobní zpětná vazba v relaci; „dokončeno" jako **focus signál**; žádné srovnávání.
+
+### 2.3 `asmr` — zklidňující zvuk / vizuál
+
+- **Štítek:** `Wellbeing`. **Titulek + krátký pokyn.**
+- **Interakce:** přehrání krátké zklidňující smyčky (zvuk / vizuál) bez cíle a bez skóre.
+- **Kam se ukládá:** nic citlivého; případně jen „přehráno / dokončeno" jako neutrální focus signál.
 
 ---
 
@@ -89,21 +91,22 @@ _Šablona sekcí Glitchů typu **Wellbeing** (mood / dýchání / pozornost) na 
 
 | pole | hodnota |
 | ----- | ----- |
-| fasety | podtyp: mood_selector · délka: mikro · umístění: kdekoli ve feedu |
+| fasety | podtyp: breathing · délka: mikro · umístění: kdekoli ve feedu |
 | **obtížnost** | `1` — lehká (bez znalostní zátěže) |
 | **kognitivní náročnost** | — *(neaplikuje se; wellbeing není znalostní obsah)* |
 | **energetická náročnost** | nízká |
-| **typ zátěže** | relaxace (breathing) · soustředění (attention_game) |
-| **role ve stavu uživatele** | mood_selector **měří** stav (energie × soustředění); attention_game a breathing se **servírují při únavě/roztěkanosti** |
-| signál dokončení | mood: umístění a potvrzení tečky · breathing: dokončení cyklů · attention: ukončení hry |
-| vliv na doporučování | **jen mood** upravuje výběr Glitchů pro daný den (viz [`doporucovaci-system.md`](./doporucovaci-system.md)); ostatní podtypy neupravují |
+| **typ zátěže** | relaxace (breathing · asmr) · soustředění (attention_game) |
+| **role ve stavu uživatele** | breathing / asmr / attention_game se **servírují jako oddech**; jejich **dokončení** je behaviorální **focus signál** (ne měření emoce) |
+| signál dokončení | breathing: dokončení cyklů · attention: ukončení hry · asmr: přehrání |
+| vliv na doporučování | **focus signál** (splněná relaxační / pozornostní aktivita) může jemně upravit tempo feedu — future-facing, až bude aktivit více; **žádný odhad nálady** |
 | fork | `false` |
 
 ---
 
 ## 6 Bezpečnost, soukromí a relace
 
-- **Emoční data (mood, frustrace, pozornost) jsou citlivá** → žijí jen v 24hodinové relaci, pak se mažou. Nepropisují se do trvalého profilu ani se neposílají jako hodnocení.
-- **Žádné srovnávání, žádné žebříčky, žádné veřejné sdílení** nálady ani výsledku hry.
+- **Žádné rozpoznávání emocí** (AI Act, čl. 5) — karta nikdy nezjišťuje ani neodvozuje náladu. Odstraněn podtyp `mood_selector`.
+- **Ukládá se jen behaviorální fakt** („dokončeno") — ne obsah prožitku. I ten žije jen v relaci a nepropisuje se do trvalého profilu jako hodnocení.
+- **Žádné srovnávání, žádné žebříčky, žádné veřejné sdílení** výsledku hry.
 - **Časovač u aktivity je opt-in** — časový tlak se nikdy nevytváří sám.
-- Wellbeing karta se **nedá „propadnout"** — neexistuje špatný výsledek, jen check-in.
+- Wellbeing karta se **nedá „propadnout"** — neexistuje špatný výsledek, jen krátký oddech.

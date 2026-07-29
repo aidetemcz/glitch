@@ -15,14 +15,14 @@ Recombee / server-side (paper p-book) je **výhled** — produkční engine, kte
 ```mermaid
 flowchart LR
   A[Katalog Glitchů<br/>metadata + fasety] --> C[Skórování<br/>filtry + váhy]
-  B[Signály<br/>mood · progres · události] --> C
+  B[Signály<br/>focus · progres · události] --> C
   S[Nastavení z profilu<br/>filtry a preference] --> C
   C --> D[Feed<br/>seřazený, denní strop 20]
   D -->|interakce| B
 ```
 
 1. **Katalog** — co všechno existuje (Glitche + jejich metadata pro řazení).
-2. **Signály** — co o uživateli víme (nálada, pokrok, chování).
+2. **Signály** — co o uživateli víme (**behaviorální focus** = dokončené aktivity, pokrok, chování). ⚠️ **Žádné rozpoznávání emocí** (AI Act) — mood/nálada se **neměří**.
 3. **Skórování** — tvrdé filtry + měkké váhy → pořadí.
 4. **Feed** — výsledný seřazený proud s denním stropem.
 
@@ -37,7 +37,7 @@ Nahradit pevné `CARDS` **manifestem** `glitches/feed.json`, který feed načít
 | `id`, `type`, `category` | identita a typ karty |
 | `concept_id`, `prerekvizity` | řazení dle mapy konceptů (nezobrazit pokročilé před základy) |
 | `trust_state` | filtr „Od koho vidím obsah" (Core/Fork/Komunita/Generovaný) |
-| `obtiznost`, `kognitivni_narocnost` | párování s náladou |
+| `obtiznost`, `kognitivni_narocnost` | párování s tempem (behaviorální focus) |
 | `typ_zateze`, `delka` | vyváženost feedu |
 | `facets` | preference uživatele (vizualita, délka, svět…) |
 | `wellbeing` (bool) | wellbeing karty pro proložení |
@@ -53,10 +53,10 @@ Co logovat (většina tabulek už existuje z migrace A–E):
 | --- | --- | --- |
 | zobrazení / otevření / dokončení / kvíz | `activity_log` (události) | částečně (`sbTrackEvent`) |
 | dokončení Glitche + úroveň | `progress` | ano (`sbSaveGlitchDone`) |
-| nálada (energie × soustředění) | `wellbeing_signals` (24 h) | ano (`sbSaveMood`, dnes `mood_entries`) |
+| focus (dokončení relaxační / pozornostní aktivity) | `focus_signals` (24 h) | ⚠️ výhled — mood_selector odstraněn (AI Act), signál je nově čistě behaviorální; dead kód `sbSaveMood`/`mood_entries` k odstranění |
 | fasetové preference | `facet_affinities` / `profiles.settings` | částečně (nastavení) |
 
-Zásady: emoční data **jen 24 h**; do profilu jde **důkaz o učení**, ne nálada (viz principy).
+Zásady: **žádné rozpoznávání emocí** (AI Act) — focus = jen behaviorální fakt „splněno"; do profilu jde **důkaz o učení**, ne nálada (viz principy).
 
 ## 3. Skórovací funkce v1
 
@@ -67,14 +67,14 @@ Zásady: emoční data **jen 24 h**; do profilu jde **důkaz o učení**, ne ná
 - **Už dokončené** Glitche pryč (nebo dozadu).
 - **Prerekvizity** — nezobrazit koncept, jehož předpoklady nejsou splněné.
 - **„Od koho vidím obsah"** — odfiltruj podle přepínačů (Core/Komunita/Generovaný).
-- **Wellbeing gating** — když má uživatel vypnutý mood check-in / časovače, ty karty/prvky vynech (už hotovo pro mood a časovače).
+- **Wellbeing gating** — když má uživatel vypnuté časovače, ty prvky vynech. *(mood_selector úplně odstraněn — AI Act, nezobrazuje se vůbec.)*
 
 ### 3.2 Měkké skóre (pořadí zbytku)
 Součet vážených složek, každá vysvětlitelná:
 
 | složka | pravidlo |
 | --- | --- |
-| **Shoda s náladou** | obtížnost vs. `(energie, soustředění)` — unavený → jednodušší + víc wellbeing; nabitý → složitější/tvůrčí (tabulka v `doporucovaci-system.md`) |
+| **Shoda s tempem (focus)** | obtížnost vs. **behaviorální focus** (dokončil-li relaxační / pozornostní aktivity) — po oddechu → možné složitější; jinak proložit lehčím + wellbeing. ⚠️ **Nikdy z odhadu emoce** (AI Act); future-facing, až bude aktivit víc |
 | **Fasetová shoda** | podání blízké preferencím (vizualita, délka…) z `facet_affinities` + togglů (měkké postrčení, ne filtr) |
 | **Zájmy** | témata z chips (profil) nahoru |
 | **Novost / rozmanitost** | nestřídat pořád stejný typ; neopakovat téma za sebou |
@@ -83,24 +83,24 @@ Součet vážených složek, každá vysvětlitelná:
 
 ### 3.3 Skládání feedu
 - Nezačínat nejtěžším Glitchem; „rozehřát" (rozcvička / lehčí).
-- Wellbeing (mood/dýchání/pozornost) proložit, ne na jednu hromadu.
+- Wellbeing (dýchání/pozornost/ASMR) proložit, ne na jednu hromadu.
 - Po 20 → karta **Shrnutí**.
 
 ## 4. Napojení nastavení (už teď)
 
 Nastavení z profilu (`profiles.settings` / localStorage) vstupují do skórování:
-- **filtry:** „Od koho vidím obsah", mood check-in, časovače.
+- **filtry:** „Od koho vidím obsah", časovače. *(mood check-in odstraněn — AI Act.)*
 - **váhy:** „Mám raději delší texty", „Lépe se učím pomocí obrázků" → fasetové preference. „Obsah dle mých interakcí" → zapnout/vypnout implicitní učení.
 
 ## Fáze implementace
 
 1. ✅ **Manifest katalogu** `glitches/feed.json` + feed čte data-driven (fallback = vestavěný `CARDS`). *(Pozor: `glitches/_archiv/index.json` je stará struktura misí (archiv).)*
-2. ✅ **Skórovací modul** `js/recommender.js` — čistá funkce `serazFeed(cards, ctx)`: tvrdé filtry (denní strop, „od koho vidím obsah", mood check-in, dokončené) + řazení dle nálady (obtížnost). Bez nálady zachová původní pořadí (nedestruktivní).
-3. **Sběr signálů** — dopojit události (view/open/complete) a načíst mood/progres z DB (teď čte mood/progres z localStorage).
+2. ✅ **Skórovací modul** `js/recommender.js` — čistá funkce `serazFeed(cards, ctx)`: tvrdé filtry (denní strop, „od koho vidím obsah", dokončené; navíc tvrdě odfiltruje `mood_selector` — AI Act) + řazení dle obtížnosti. Bez signálu focus zachová původní pořadí (nedestruktivní).
+3. **Sběr signálů** — dopojit události (view/open/complete) a načíst focus/progres z DB (teď čte progres z localStorage).
 4. **Měkké váhy** — fasety, zájmy (chips), rozmanitost, návaznost questu.
 5. **Transparentnost** — „proč vidím tohle" (malé vysvětlení u karty). *(výhled)*
 
-**Stav: kroky 1–2 hotové a nasazené.** Feed je data-driven a doporučovač aplikuje tvrdé filtry + řazení dle nálady.
+**Stav: kroky 1–2 hotové a nasazené.** Feed je data-driven a doporučovač aplikuje tvrdé filtry + řazení dle obtížnosti.
 
 > v1 běží celý v prohlížeči, je deterministický a **vysvětlitelný** — u dětského vzdělávacího obsahu výhoda (dá se odůvodnit, proč se co ukázalo).
 
@@ -115,6 +115,6 @@ Až bude obsahu a uživatelů dost:
 
 ## Vztah k ostatním dokumentům
 
-- [`doporucovaci-system.md`](./doporucovaci-system.md) — principy, model, wellbeing → obtížnost, fasety.
+- [`doporucovaci-system.md`](./doporucovaci-system.md) — principy, model, focus → tempo, fasety.
 - [`databaze-navrh.md`](./databaze-navrh.md) — tabulky signálů a preferencí.
 - [`typy-obsahu.md`](./typy-obsahu.md) + `karta-*.md` — metadata, která katalog nese.

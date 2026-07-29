@@ -112,7 +112,7 @@ Dítě si může rozhovor forknout a rozvést — např. sepsat, co ho na Turing
 | **kognitivní náročnost** | porozumět *(revidovaná Bloomova taxonomie; v dialogu se posouvá k „analyzovat")* |
 | **energetická náročnost** | střední (aktivní konverzace) |
 | **typ zátěže** | soustředění (rozhovor) |
-| **vhodné při náladě** | spíš vyšší energie; roztěkanému uživateli nabídnout až po zklidnění |
+| **vhodné do tempa (focus)** | spíš vyšší energie; roztěkanému uživateli nabídnout až po zklidnění |
 | signál dokončení | proběhlá konverzace s personou |
 | fork | `true` (volitelný) |
 | vazby | koncept z mapy: `umela-inteligence-co-je-a-co-neni-ai` |

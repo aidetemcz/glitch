@@ -84,34 +84,34 @@ Uživatel vidí **editovatelný model svých preferencí** (které fasety mu sed
 
 ---
 
-## Wellbeing signály → co se servíruje
+## Focus signál → co se servíruje
 
-**Tohle je jádro toho, čím se Glitch liší** (princip 9): wellbeing není jen obsah, ale i **vstup pro doporučování**. Měřiče nálady a pozornosti dávají systému obraz o aktuálním stavu uživatele a ten podle nich upravuje **obtížnost a typ** servírovaných Glitchů.
+**Tohle je jádro toho, čím se Glitch liší** (princip 9): wellbeing není jen obsah, ale i **vstup pro doporučování**. Systém ale **nerozpoznává emoce** (to zakazuje AI Act). Místo toho pracuje s **behaviorálním „focus" signálem** — odvozeným z toho, **co žák ve feedu udělal**, ne z odhadu, jak se cítí.
 
-### Zdroje signálu
+> ⚠️ **AI Act:** Karta „Jak se teď cítíš" (mood check-in, odhad energie/nálady) byla **odstraněna** — rozpoznávání/odhad emocí je zakázané. Nic v doporučování nevychází z emocí. `focus` je čistě behaviorální (splnil / nesplnil aktivitu).
 
-| zdroj | co měří | perioda |
+### Zdroje focus signálu (behaviorální)
+
+| zdroj | co značí (chování, ne emoce) | perioda |
 | --- | --- | --- |
-| **mood_selector** | energie (0–100) × soustředění (0–100) | denní check-in |
-| **attention_game** | zvládnutí aktivity (v relaci) | při zahrání |
-| **breathing** | využití zklidnění | při zahrání |
+| **breathing** (dechové cvičení) | žák si dal zklidnění | při splnění |
+| **attention_game** (hra na pozornost / kolo slov) | žák se „rozehřál" / usadil pozornost | při splnění |
+| _(budoucí relaxační / pozornostní aktivity)_ | další zklidnění / soustředění | při splnění |
 
 > Do rodiny wellbeing typů patří i **asmr** (zklidnění) a **inspirace** (tvůrčí nakopnutí + založení projektu). Ty samy o sobě **neměří signál**, ale řazení s nimi počítá jako s wellbeing prvky feedu (`WELLBEING_TYPES` v `js/recommender.js`).
 
-> Všechna emoční data žijí jen v **24hodinové relaci** a pak se mažou (princip 11) — slouží k úpravě dnešního feedu, ne jako trvalý štítek.
+> Focus je **efemérní** — platí jen pro dnešní feed (princip 11), nikdy netvoří trvalý štítek a **neagreguje se do profilu**. Je to zamýšlené hlavně **do budoucna**, až bude relaxačních a pozornostních aktivit víc; při testování uvidíme, jak se chytnou.
 
 ### Pravidlo přizpůsobení
 
-Dvojice `(energie, soustředění)` z mood check-inu určuje profil dnešního feedu:
+Signál je binární/měkký podle **splněných** wellbeing aktivit, ne podle odhadu stavu:
 
-| stav uživatele | co systém servíruje |
+| chování žáka | co systém servíruje |
 | --- | --- |
-| **nízká energie + nízké soustředění** (unavený, nepozorný) | jednodušší, kratší Glitche (znalostní); víc **wellbeing** a **aktivit**; méně tvůrčích úkolů |
-| **vysoká energie + vysoké soustředění** (nabitý, soustředěný) | složitější, aplikační a **tvůrčí** Glitche (fork, „postav to"); delší podání |
-| **vysoká energie + nízké soustředění** (roztěkaný) | krátké aktivní úkoly + aktivita pro „usazení"; pak přidat obtížnost |
-| **nízká energie + vysoké soustředění** (klidný, ale bez šťávy) | střední obtížnost, spíš čtení/pozorování než náročná tvorba; nabídnout zklidňující tempo |
+| **splnil zklidnění / pozornostní aktivitu** (focus „ready") | může nabídnout náročnější, aplikační a **tvůrčí** Glitche (fork, „postav to"); delší podání |
+| **bez wellbeing aktivity / hodně za sebou náročných Glitchů** | proloží kratší **znalostní** Glitche a nabídne **wellbeing/aktivitu** pro usazení; méně tvůrčích úkolů v řadě |
 
-Tím se naplňuje princip 5: **kvalita času = pokrok přiměřený stavu**, ne co nejdelší setrvání.
+Tím se naplňuje princip 5: **kvalita času = pokrok přiměřený tempu**, ne co nejdelší setrvání. (V prototypu je focus zatím koncept — feed řadí `js/recommender.js`, mood se nikde nepočítá.)
 
 ---
 
@@ -121,7 +121,7 @@ Aby doporučovač mohl párovat obsah se stavem uživatele, každá karta v sekc
 
 | pole | hodnoty | k čemu |
 | --- | --- | --- |
-| **obtížnost** | `1` lehká · `2` střední · `3` těžká (pro cílovou skupinu) | párování s mood stavem; **volí se u každého Glitche zvlášť** |
+| **obtížnost** | `1` lehká · `2` střední · `3` těžká (pro cílovou skupinu) | párování s focus signálem; **volí se u každého Glitche zvlášť** |
 | **kognitivní náročnost** | úroveň **revidované Bloomovy taxonomie**: zapamatovat · porozumět · aplikovat · analyzovat · hodnotit · vytvořit | jakou myšlenkovou operaci Glitch vyžaduje |
 | **typ zátěže** | soustředění · kreativita · relaxace · rozcvička | vyváženost feedu |
 | **délka** | mikro · krátká · standard · deep | čtenářský závazek |
@@ -153,14 +153,14 @@ Každá karta Glitche má vlastní **tabulku faset** (sekce 0.2) s konkrétními
 ## Smyčka signálů (jak se profil učí)
 
 ```
-uživatel  ──čte · steeruje · mood · hra pozornosti · kvíz · konverzace──►  signály
+uživatel  ──čte · steeruje · dech/pozornostní aktivita (focus) · kvíz · konverzace──►  signály
    ▲                                                                          │
    │                                                                          ▼
 feed na míru  ◄──  doporučovač (parametry + AI moderace + zdroj pravdy)  ◄──  profil žáka
 ```
 
 - **Implicitní signály:** dokončená úroveň, zvládnutý koncept, volba faset, honest miss.
-- **Wellbeing signály:** mood, pozornost (jen v relaci).
+- **Focus signál:** splněné wellbeing / pozornostní aktivity (dech, hra na pozornost) — behaviorální, jen v relaci; **žádné rozpoznávání emocí**.
 - **Kvalita konverzace:** formativní vyhodnocení chatu (dal důvod ✓, uvedl příklad ✓, zvážil protiargument ✓…) — **posuzuje samostatný hodnoticí AI asistent** (viz níže), ne tutor sám.
 
 ### Proč samostatný hodnoticí asistent
@@ -190,7 +190,7 @@ _Semi-technicky, pro budoucí uvažování — ne pro současnou implementaci._
 **Jak systém zjistí preference (tvůj příklad „obrázky vs. text, jak dlouho vydrží u čtení"):** dvěma cestami, které se sbíhají do jednoho **profilu fasetových afinit**:
 
 - **explicitně** — uživatel si zvolí (editovatelný model preferencí). Tvůj nápad na Glitch, který se zeptá / vysleduje, jestli má radši obrázky nebo text, je přesně tahle explicitní cesta.
-- **implicitně** — z chování: doba čtení, které podání dokončil, co přeskočil, výsledek aktivity, mood. (Pozor: chování ≠ trvalá pravda o dítěti — implicitní signály jsou slabé a přebíjí je explicitní volba.)
+- **implicitně** — z chování: doba čtení, které podání dokončil, co přeskočil, výsledek aktivity, focus (splnil dech / hru na pozornost). (Pozor: chování ≠ trvalá pravda o dítěti — implicitní signály jsou slabé a přebíjí je explicitní volba. Emoce se **nesnímají**.)
 
 Z profilu afinit pak plyne **cílový fasetový vektor**, a ten se buď **najde** v katalogu, nebo (u mezery) **dogeneruje** přes bránu.
 
@@ -200,7 +200,7 @@ Z profilu afinit pak plyne **cílový fasetový vektor**, a ten se buď **najde*
 
 ## Bezpečnost a soukromí signálů (princip 11)
 
-- **Emoční data** (mood, frustrace, pozornost) žijí jen v 24h relaci, pak se mažou; nikdy netvoří trvalý štítek.
+- **Focus signál** (splněné wellbeing/pozornostní aktivity) žije jen v 24h relaci, pak se maže; nikdy netvoří trvalý štítek. **Emoce se nerozpoznávají** (AI Act).
 - **Do profilu / do Tiny jde důkaz o učení** (zvládnuté koncepty, kvalita argumentace, dokončení), **ne** citlivé názory ani nálady.
 - **Uživatel volí viditelnost** svého obsahu; sdílení vyžaduje souhlas (výchozí anonymně).
 - Žádné veřejné metriky → žádný tlak.
@@ -209,4 +209,4 @@ Z profilu afinit pak plyne **cílový fasetový vektor**, a ten se buď **najde*
 
 ## Další krok: struktura databáze
 
-Až bude tenhle model odsouhlasený, navrhneme **strukturu databáze** — jak se signály (mood, pozornost, dokončení, kvalita konverzace, honest miss) a metadata karet ukládají tak, aby si z nich doporučovač mohl brát informace. Návrh: [`databaze-navrh.md`](./databaze-navrh.md).
+Až bude tenhle model odsouhlasený, navrhneme **strukturu databáze** — jak se signály (focus, dokončení, kvalita konverzace, honest miss) a metadata karet ukládají tak, aby si z nich doporučovač mohl brát informace. Návrh: [`databaze-navrh.md`](./databaze-navrh.md).

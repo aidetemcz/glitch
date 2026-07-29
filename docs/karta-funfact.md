@@ -124,7 +124,7 @@ Fun fact **může** mít fork (na rozdíl od Rychlé výzvy): dítě si fakt „
 | **kognitivní náročnost** | porozumět *(revidovaná Bloomova taxonomie; u náročnějšího faktu klidně výš)* |
 | **energetická náročnost** | nízká |
 | **typ zátěže** | odlehčení (čtení pro radost) |
-| **vhodné při náladě** | i při únavě/nižším soustředění — lehký oddechový Glitch mezi náročnějšími |
+| **vhodné do tempa (focus)** | i při únavě/nižším soustředění — lehký oddechový Glitch mezi náročnějšími |
 | signál dokončení | rozklik (přečtení) · volitelně konverzace |
 | fork | `true` (volitelný) |
 | vazby | koncept z mapy: `programovani-ladeni-a-testovani` |

@@ -9,8 +9,8 @@ Navazuje na [`doporucovaci-system.md`](./doporucovaci-system.md), [`typy-obsahu.
 ## Vůdčí zásady (jak se principy promítají do schématu)
 
 1. **Zdroj pravdy zůstává git.** `core` obsah (koncepty, kanonické Glitche) žije dál v MD/YAML v repu. DB drží **signály, preference, komunitní a generovaný obsah** a **metadata pro řazení**. (Dle p-book: „git remaining the canonical home of core content".)
-2. **Emoční data jsou efemérní.** Mood, pozornost, frustrace → jen **24 h**, pak se mažou automaticky. Nikdy netvoří trvalý štítek.
-3. **Do profilu jde důkaz o učení, ne názor ani nálada.** Zvládnuté koncepty a kvalita argumentace ano; postoj na citlivé téma ne.
+2. **Žádné rozpoznávání emocí (AI Act).** Emoce/náladu **nesnímáme ani neodhadujeme**. Používá se jen **behaviorální focus signál** (splnil dech / hru na pozornost) — efemérní na **24 h**, pak se maže. Nikdy netvoří trvalý štítek.
+3. **Do profilu jde důkaz o učení, ne názor ani nálada.** Zvládnuté koncepty a kvalita argumentace ano; postoj na citlivé téma ani emoce ne.
 4. **Soukromí jako výchozí stav.** Osobní signály **nejsou veřejně čitelné** (RLS: vidí je jen jejich vlastník a případně učitel dané třídy). Žádné veřejné lajky/žebříčky → v DB pro ně není místo.
 5. **Trust ladder je stav položky.** `draft → komunita → fork → core` (+ `generovany`, + `ghost` pro navržené koncepty); mění se jen kurátorským krokem. (Štítky dle [slovníčku](./slovnicek.md): Core / Fork / Komunita / Generovaný / Draft / Ghost.)
 
@@ -27,7 +27,7 @@ erDiagram
     profiles ||--o{ progress : "má"
     profiles ||--o{ concept_mastery : "má"
     profiles ||--o{ conversation_evaluations : "má"
-    profiles ||--o{ wellbeing_signals : "má (24h)"
+    profiles ||--o{ focus_signals : "má (24h, behaviorální)"
     profiles ||--o{ facet_affinities : "má"
     concepts ||--o{ glitches : "je podán jako"
     glitches ||--o{ events : "cíl"
@@ -95,7 +95,7 @@ Jádro katalogu. `core` řádky se generují z MD v gitu; `community`/`generated
 | **`facets`** | jsonb | fasetový vektor (svět, hloubka, vizualita, formalismus, žánr, jazyk, nosiče) — GIN index |
 | `fork_allowed` | bool | |
 
-> **Proč `facets` jako jsonb:** doporučovač i generování pracují s celým fasetovým vektorem; jsonb + GIN index umožní dotaz „najdi podání konceptu X s `vizualita=visual-first, delka=tl;dr`". Klíčové osy (obtížnost, Bloom) jsou vlastní sloupce kvůli rychlému párování s mood stavem.
+> **Proč `facets` jako jsonb:** doporučovač i generování pracují s celým fasetovým vektorem; jsonb + GIN index umožní dotaz „najdi podání konceptu X s `vizualita=visual-first, delka=tl;dr`". Klíčové osy (obtížnost, Bloom) jsou vlastní sloupce kvůli rychlému párování s obtížností feedu.
 
 ### `glitch_concepts` *(M:N, volitelné)*
 Jedno podání může sloužit více konceptům: `glitch_id`, `concept_id`, `covers` (jsonb — které povinné body pokrývá).
@@ -151,21 +151,24 @@ Formativní vyhodnocení chatu — **strukturované signály, ne přepis, ne ná
 
 ---
 
-## D. Wellbeing signály (efemérní, 24 h)
+## D. Focus signál (efemérní, 24 h) — behaviorální, ne emoční
 
-### `wellbeing_signals`
+> ⚠️ **AI Act:** Původní `mood` (odhad energie/nálady, karta „Jak se teď cítíš") je **odstraněný** — rozpoznávání/odhad emocí je zakázané. Focus je **behaviorální**: odvozuje se jen z toho, že žák **splnil** wellbeing/pozornostní aktivitu (dech, hra na pozornost), ne z odhadu, jak se cítí.
+
+### `focus_signals`
 | sloupec | typ | popis |
 | --- | --- | --- |
 | `id` | uuid PK | |
 | `user_id` | uuid FK | |
-| `kind` | enum `mood\|attention\|breathing` | |
-| `energy`, `focus` | smallint 0–100 | u mood |
-| `value` | jsonb | u ostatních (skóre hry…) |
+| `kind` | enum `breathing\|attention\|…` | která aktivita (žádné `mood`) |
+| `value` | jsonb | detail (skóre hry, počet cyklů dechu…) — **nikdy emoce** |
 | `session_id` | uuid | |
 | `created_at` | timestamptz | |
 | `expires_at` | timestamptz | `created_at + 24h` |
 
-> **Automatické mazání** naplánovanou úlohou (`pg_cron`: `delete from wellbeing_signals where expires_at < now()`). Tyto signály **upravují jen dnešní feed** (obtížnost, poměr wellbeing/her), nikdy se neagregují do profilu. Nahrazuje dnešní `mood_entries`.
+> **Automatické mazání** naplánovanou úlohou (`pg_cron`: `delete from focus_signals where expires_at < now()`). Tyto signály **upravují jen dnešní feed** (poměr wellbeing/aktivit), nikdy se neagregují do profilu. Je to koncept **do budoucna**, až bude relaxačních/pozornostních aktivit víc.
+>
+> **Pozn. k implementaci:** v prototypu `focus_signals` zatím **není** postavené a doporučovač focus nepočítá (mood byl odstraněn). Stará tabulka `mood_entries` je mrtvá (už se do ní nepíše) — k odstranění.
 
 ---
 
@@ -238,7 +241,7 @@ Exportní plocha „důkaz o učení" = `concept_mastery` + `conversation_evalua
 | --- | --- | --- |
 | `profiles` | vlastník | vlastník |
 | `events`, `progress`, `concept_mastery`, `conversation_evaluations` | **jen vlastník** *(učitelský pohled přijde přes Tiny)* | vlastník (systém) |
-| `wellbeing_signals` | **jen vlastník** | vlastník; mazání cron |
+| `focus_signals` | **jen vlastník** | vlastník; mazání cron |
 | `facet_affinities` | vlastník | vlastník |
 | `glitches` (core/fork/komunita) | všichni (dle `visibility`) | autor / editor |
 | `glitches` (private) | jen autor | autor |
@@ -281,8 +284,34 @@ Skupiny A–E jsou hotové v [`../setup-glitch-core.sql`](../setup-glitch-core.s
 **Praktické odchylky oproti návrhu výše** (a proč):
 - **„Enumy" jako text + CHECK**, ne pg `enum` — snazší pozdější rozšíření hodnot (bez `ALTER TYPE`).
 - **`activity_log` = log událostí** (role `events` z návrhu) — rozšířeno o `glitch_id`, `session_id`, ať se nerozbije to, co appka už zapisuje. Nová paralelní tabulka `events` se nezakládá.
-- **`wellbeing_signals`** je nový cíl pro mood/pozornost; staré `mood_entries` se **nemažou** (bez ztráty dat), appka se přepne později.
+- **`focus_signals`** (behaviorální) je zamýšlený cíl pro splněné wellbeing/pozornostní aktivity; **`mood_entries` je mrtvá** (mood odstraněn kvůli AI Act) a je k odstranění.
 - **RLS zpřísněno:** `progress` (dřív „Anyone can read") a `activity_log` (dřív „Admins can read all using true") čte nyní **jen vlastník**.
 - **24h mazání wellbeingu** přes `pg_cron` — v souboru jako komentář (nutno zapnout rozšíření a založit plán jednou ručně).
 
 Skupina F (generování/cache) a stará komunita se **nepřenášejí**.
+
+---
+
+## Stav v prototypu (co je reálně postavené)
+
+Tenhle dokument je **návrh**. Během stavby prototypu (červenec 2026) vznikly tyto tabulky (migrace v [`../migrations/`](../migrations/)) — berte je jako **skutečný stav**, návrh výše jako cílovou vizi:
+
+| tabulka | k čemu | migrace |
+| --- | --- | --- |
+| `profiles` | uživatel (+ `vek`, `gender`, `nickname`, `avatar`, `settings` jsonb) | profil-vek |
+| `progress` | dokončení Glitche + výsledek kvízu | core |
+| `concept_mastery` | zvládnuté koncepty (mapa znalostí) | core |
+| `projects` | pracovna projektu (+ `plan`, `resources` jsonb, `msg_count`, `done`, `shared`) | projekty (+ pracovna) |
+| `project_collaborators` | přizvaní spolupracovníci na projektu | spoluprace-zpravy |
+| `messages` | 1:1 zprávy mezi uživateli (realtime) | spoluprace-zpravy |
+| `saved_glitches` | uložené Glitche | saved-signaly |
+| `topic_signals` | „nezajímá mě" (téma) | saved-signaly |
+| `glitch_events` | statistiky (view/interact/complete/save/project) + pohled `glitch_stats` | glitch-events |
+| `glitchposts` | Glitche vytvořené uživatelem (celá karta v `card` jsonb) | glitchposty |
+| `content_reports` | nahlášení nevhodného obsahu | nahlaseni-obsahu |
+| `follows` | sledující / sledovaní | sledovani |
+| `chat_logs` | logy chatů (jen pro testování, mažou se po 7 dnech) | chat-logy |
+| `activity_log` | obecný log událostí | core |
+| `mood_entries` | **mrtvá** (mood odstraněn kvůli AI Act) — k odstranění | core |
+
+Co z návrhu **ještě není** (cílová vize): `concepts`/`glitches` katalog v DB (obsah zatím v `glitches/feed.json`), `facet_affinities`, `generated_cache`, `honest_misses`, role/třídy (čekají na Tiny), `focus_signals`.

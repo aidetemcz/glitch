@@ -254,7 +254,7 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 | **kognitivní náročnost** | analyzovat *(revidovaná Bloomova taxonomie)* |
 | **energetická náročnost** | střední |
 | **typ zátěže** | soustředění (pozorování + výklad) |
-| **vhodné při náladě** | spíš vyšší soustředění; při únavě servírovat kratší znalostní Glitch místo tohoto |
+| **vhodné do tempa (focus)** | spíš vyšší soustředění; při únavě servírovat kratší znalostní Glitch místo tohoto |
 | prerekvizity | `programovani-podminky-v-kodu`, `programovani-cykly-v-kodu` |
 | navazuje | `informaticke-mysleni-modelovani-a-simulace` → aplikační Glitche questu |
 | signál dokončení | jednoduchá: kvíz \+ vysvětlení · střední: dopočet \+ srovnání · master: forknutelný artefakt |

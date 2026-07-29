@@ -126,7 +126,7 @@ Dítě: *zaujalo jasný postoj* · *dalo aspoň jeden vlastní důvod* (ne „pr
 | **kognitivní náročnost** | hodnotit *(revidovaná Bloomova taxonomie — obhajoba a zvažování postoje)* |
 | **energetická náročnost** | vysoká (aktivní obhajoba postoje) |
 | **typ zátěže** | soustředění + kreativita (formulace argumentů) |
-| **vhodné při náladě** | vyšší energie i soustředění; unavenému/roztěkanému neservírovat — odložit na „nabitý" stav |
+| **vhodné do tempa (focus)** | vyšší energie i soustředění; unavenému/roztěkanému neservírovat — odložit na „nabitý" stav |
 | signál dokončení | absolvovaná argumentační smyčka (postoj → důvod → reakce na protiargument) |
 | fork | `false` |
 | vazby | koncept z mapy: `digitalni-obcanstvi-digitalni-stopa-a-soukromi` |

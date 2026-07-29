@@ -30,7 +30,7 @@ _Šablona sekcí Glitche typu **Inspirace** na příkladu „Noční hory". Náv
 
 ## 0.1 Mapa konceptů
 
-*Inspirace **nemá napojení na konkrétní koncept** — není to znalostní obsah, ale tvůrčí a wellbeing prvek (jako mood / dýchání). Do doporučování vstupuje jako wellbeing typ (viz [`doporucovaci-system.md`](./doporucovaci-system.md), `WELLBEING_TYPES`).*
+*Inspirace **nemá napojení na konkrétní koncept** — není to znalostní obsah, ale tvůrčí a wellbeing prvek (jako dýchání / pozornostní hra). Do doporučování vstupuje jako wellbeing typ (viz [`doporucovaci-system.md`](./doporucovaci-system.md), `WELLBEING_TYPES`).*
 
 ---
 

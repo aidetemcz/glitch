@@ -69,7 +69,7 @@ Referenční pozice hlavních prvků (px od horního okraje karty). Slouží pro
 
 - **About Glitch:** logo skupina `y=159` (v=227), nadpis „Vítej…" `y=586`, text `y=646`, chevron `y=732`.
 - **Argumentuj:** tvrzení `y=216` (30/600, š=330), podtext `y=350` (16/400, š=295), tlačítka `y=643`.
-- **Mood Selector:** nadpis `y=118`, text `y=176`, diagram střed ~`y=452`.
+- ~~**Mood Selector:** nadpis `y=118`, text `y=176`, diagram střed ~`y=452`.~~ *(odstraněno — AI Act zakazuje rozpoznávání emocí; karta se ve feedu nezobrazuje)*
 - **Vibe Coding (Quest):** kapitola `y=532`, nadpis `y=585`, text `y=646`, chevron `y=732`.
 - **Fun fact:** nadpis `y=436`, text `y=516`, obrázek `y=95` (320×293).
 - **Najdi chybu:** tvrzení `y=526`, kontext `y=636`, obrázek `y=95` (318×381).
