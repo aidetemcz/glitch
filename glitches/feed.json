@@ -909,6 +909,57 @@
     }
   },
   {
+    "id": "algo-hra-sekvence",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 1,
+    "title": "Naveď robota (1/3)",
+    "body": "Robot udělá přesně to, co mu poskládáš — krok za krokem. Poskládej kroky ve správném pořadí a doveď ho ke hvězdě. Zvládneš cestu na první pokus?",
+    "viz": "assets/3Dvizualizations/algo-hra-1-sekvence.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "Hra 1/3",
+      "title": "Sekvence — kroky v pořadí",
+      "intro": "Právě jsi napsal(a) program: seznam kroků, které se provedou přesně v tom pořadí, jak jdou za sebou. Když prohodíš dva kroky, robot dojde jinam. Tomu se říká sekvence — základ každého algoritmu."
+    }
+  },
+  {
+    "id": "algo-hra-cyklus",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "concept_id": "programovani-cykly-v-kodu",
+    "obtiznost": 2,
+    "title": "Nech to opakovat počítač (2/3)",
+    "body": "Stejný robot, ale cesta je dlouhá a pořád stejná. Ťukat ▶ pětkrát je otrava — dej krok do smyčky a nastav, kolikrát se má zopakovat. Uvidíš, jak se smyčka rozbalí na jednotlivé kroky.",
+    "viz": "assets/3Dvizualizations/algo-hra-2-cyklus.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "Hra 2/3",
+      "title": "Cyklus — opakuj místo psaní",
+      "intro": "Cyklus (smyčka) nechá počítač zopakovat krok N-krát, místo abys ho psal(a) pořád dokola. Jedna smyčka „opakuj 5× ▶“ nahradí pět kroků. Čím delší cesta, tím víc práce ti smyčka ušetří."
+    }
+  },
+  {
+    "id": "algo-hra-ladeni",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "concept_id": "programovani-ladeni-a-testovani",
+    "obtiznost": 2,
+    "title": "Najdi chybu v programu (3/3)",
+    "body": "Program je skoro hotový, ale robot narazí do zdi. Spusť ho, podívej se, u kterého kroku to selže, a oprav pořadí kroků. Přesně tohle dělají programátoři — říká se tomu ladění.",
+    "viz": "assets/3Dvizualizations/algo-hra-3-ladeni.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "Hra 3/3",
+      "title": "Ladění — přečti a oprav",
+      "intro": "Ladění (debugging) je hledání a oprava chyb v programu. Nejdřív program spustíš a sleduješ, kde se chová jinak, než čekáš — pak najdeš chybný krok a spravíš ho. Chyba v kódu není selhání, ale běžná součást programování."
+    }
+  },
+  {
     "id": "algoritmus-puleni-v-milionu",
     "type": "fun_fact",
     "category": "Fun fact",
