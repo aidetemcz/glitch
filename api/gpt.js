@@ -241,14 +241,36 @@ function stripKoncovaOtazka(text) {
   return out && !out.endsWith("?") ? out : "Pojď si to rychle ověřit.";
 }
 
+// Novější modely (GPT-5+) odmítají některé parametry, které starší modely braly
+// (např. vlastní `temperature` — povolují jen výchozí). Když na to API upozorní,
+// parametr si zapamatujeme a příště ho rovnou vynecháme, ať se požadavek neopakuje
+// pořád dvakrát. (Přejmenování max_tokens → max_completion_tokens řešíme u zdroje.)
+const DROP_PARAMS = new Set();
+
 async function callOpenAI(key, payload) {
-  const r = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify(payload),
-  });
-  const data = await r.json();
-  return { ok: r.ok, status: r.status, data };
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const body = Object.assign({}, payload);
+    DROP_PARAMS.forEach((p) => { delete body[p]; });
+    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify(body),
+    });
+    const data = await r.json();
+    if (r.ok) return { ok: true, status: r.status, data };
+    // 400 kvůli nepodporovanému parametru → zjisti který, zapamatuj a zkus znovu bez něj
+    const msg = (data && data.error && data.error.message) || "";
+    const m = msg.match(/Unsupported parameter: '([^']+)'/i)
+           || msg.match(/Unsupported value: '([^']+)'/i)
+           || (/temperature/i.test(msg) ? [null, "temperature"] : null);
+    const param = m && m[1];
+    if (param && (param in payload) && !DROP_PARAMS.has(param)) {
+      DROP_PARAMS.add(param);
+      continue;
+    }
+    return { ok: false, status: r.status, data };
+  }
+  return { ok: false, status: 400, data: { error: { message: "Model odmítl parametry požadavku." } } };
 }
 
 /* Vygeneruje kvíz samostatným voláním v JSON režimu.
@@ -270,7 +292,7 @@ async function generateQuiz(key, convo, ctx) {
     const { ok, data } = await callOpenAI(key, {
       model: MODEL_HELPER,
       temperature: 0.3,
-      max_tokens: 400,
+      max_completion_tokens: 400,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content:
@@ -346,7 +368,7 @@ async function shouldQuiz(key, convo, ctx) {
     const { ok, data } = await callOpenAI(key, {
       model: MODEL_HELPER,
       temperature: 0,
-      max_tokens: 3,
+      max_completion_tokens: 16,
       messages: [
         { role: "system", content:
           "Jsi hodnotitel výukového rozhovoru. Na základě přepisu rozhodni, jestli je vhodná chvíle " +
@@ -438,7 +460,7 @@ module.exports = async function handler(req, res) {
 
     // odpověď bota a kvíz se generují souběžně (kvíz zvlášť, viz generateQuiz)
     const [main, kviz] = await Promise.all([
-      callOpenAI(key, { model: useModel, messages, temperature, max_tokens: MAX_TOKENS }),
+      callOpenAI(key, { model: useModel, messages, temperature, max_completion_tokens: MAX_TOKENS }),
       quizNow ? generateQuiz(key, convo, body.context) : Promise.resolve(null)
     ]);
 
