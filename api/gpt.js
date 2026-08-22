@@ -28,7 +28,13 @@ const UROVEN_LABEL = {
   tvorba: "tvorba",
 };
 
-const ALLOWED_MODELS = new Set(["gpt-4o-mini", "gpt-4o"]);
+// Modely jdou přenastavit přes Vercel env proměnné BEZ zásahu do kódu — důležité,
+// když OpenAI starší model ukončí (deprecated). Stačí ve Vercelu nastavit
+// OPENAI_MODEL (např. na aktuální model účtu) a redeploynout.
+const MODEL_MAIN = process.env.OPENAI_MODEL || "gpt-4o-mini";        // hlavní konverzace
+const MODEL_VISION = process.env.OPENAI_MODEL_VISION || "gpt-4o";    // když jsou obrázky
+const MODEL_HELPER = process.env.OPENAI_MODEL_HELPER || MODEL_MAIN;  // kvíz + rozhodčí (levný)
+const ALLOWED_MODELS = new Set([MODEL_MAIN, MODEL_VISION, MODEL_HELPER, "gpt-4o-mini", "gpt-4o"]);
 const MAX_TOKENS = 800;        // strop odpovědi, ať se nedá utéct s náklady
 const MAX_MESSAGES = 40;       // strop délky konverzace
 const MAX_CHARS = 4000;        // strop délky jedné zprávy
@@ -262,7 +268,7 @@ async function generateQuiz(key, convo, ctx) {
     .join("\n");
   try {
     const { ok, data } = await callOpenAI(key, {
-      model: "gpt-4o-mini",
+      model: MODEL_HELPER,
       temperature: 0.3,
       max_tokens: 400,
       response_format: { type: "json_object" },
@@ -338,7 +344,7 @@ async function shouldQuiz(key, convo, ctx) {
     .join("\n");
   try {
     const { ok, data } = await callOpenAI(key, {
-      model: "gpt-4o-mini",
+      model: MODEL_HELPER,
       temperature: 0,
       max_tokens: 3,
       messages: [
@@ -376,7 +382,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = req.body || {};
-    const model = ALLOWED_MODELS.has(body.model) ? body.model : "gpt-4o-mini";
+    const model = ALLOWED_MODELS.has(body.model) ? body.model : MODEL_MAIN;
     const temperature = typeof body.temperature === "number" ? body.temperature : 0.3;
 
     if (!Array.isArray(body.messages) || body.messages.length === 0) {
@@ -409,7 +415,7 @@ module.exports = async function handler(req, res) {
     const images = Array.isArray(body.images)
       ? body.images.filter((u) => typeof u === "string" && /^(https?:|data:image\/)/i.test(u)).slice(0, 2)
       : [];
-    const useModel = images.length ? "gpt-4o" : model;
+    const useModel = images.length ? MODEL_VISION : model;
 
     let chat = convo;
     if (images.length) {
