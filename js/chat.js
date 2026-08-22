@@ -1,4 +1,7 @@
-// Jednotné volání GPT z frontendu přes vlastní backend (/api/gpt).
+// Jednotné volání chatbota z frontendu přes vlastní backend (/api/chat).
+// Pozn.: soubor se ZÁMĚRNĚ nejmenuje gpt.js a endpoint není /api/gpt —
+// „gpt.js" je název Googlího reklamního skriptu (Google Publisher Tag), takže
+// ho blokovače reklam (uBlock, AdBlock…) plošně blokují. Neutrální název projde.
 // Klíč je jen na serveru — tady se s ním nikdy nepracuje.
 //
 // Systémový prompt (persona + bezpečnostní pravidla) se skládá na SERVERU.
@@ -11,7 +14,7 @@
 //   );
 async function gptChat(messages, opts) {
   opts = opts || {};
-  const res = await fetch("/api/gpt", {
+  const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -1,5 +1,5 @@
 // Serverová proxy k OpenAI. Klíč zůstává na serveru (Vercel env: OPENAI_API_KEY)
-// a do prohlížeče se nikdy nepošle. Frontend volá POST /api/gpt.
+// a do prohlížeče se nikdy nepošle. Frontend volá POST /api/chat (název pryč od „gpt" kvůli blokovačům reklam).
 //
 // Systémový prompt (persona) se skládá TADY na serveru — ne v prohlížeči.
 // Důvod: persony obsahují bezpečnostní pravidla pro práci s dětmi a ta nesmí jít

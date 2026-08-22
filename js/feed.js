@@ -1684,7 +1684,7 @@
         if (reply) rzAppendBot(thread, reply, ava);
       } catch (err) {
         typing.remove();
-        console.error("[Glitch chat] volání /api/gpt selhalo:", (err && err.message) || err);
+        console.error("[Glitch chat] volání /api/chat selhalo:", (err && err.message) || err);
         rzAppendBot(thread, "Teď se mi nepovedlo odpovědět. Zkus to prosím za chvilku.", ava);
       } finally {
         field.disabled = false; if (sendBtn) sendBtn.disabled = false;
@@ -2019,7 +2019,7 @@
         }
       } catch (err) {
         typing.remove();
-        console.error("[Glitch chat] volání /api/gpt selhalo:", (err && err.message) || err);
+        console.error("[Glitch chat] volání /api/chat selhalo:", (err && err.message) || err);
         const fb = opts.fallback || "Teď se mi nepovedlo odpovědět. Zkus to prosím za chvilku.";
         rzAppendBot(thread, fb, ava);
       } finally {
