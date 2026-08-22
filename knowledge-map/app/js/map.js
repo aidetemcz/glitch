@@ -92,6 +92,7 @@
 
   let DATA = null, cy = null, viewMode = "tema", conceptById = {}, pinned = null;
   let revSouvisi = {}, revPrereq = {};   // reverzní indexy (obousměrné čtení hran v panelu)
+  let drillId = null;                     // hloubkové ponoření: id konceptu, do kterého jsme „zanořeni"
 
   /* ---------- Admin editor (bez backendu) ----------
      Přihlášení je jen klientská závora (skrývá editační UI), ne bezpečnost:
@@ -269,7 +270,25 @@
         { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
         { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
-        { selector: ".filtered", style: { "display": "none" } }
+        { selector: ".filtered", style: { "display": "none" } },
+        /* hloubkové ponoření — mikrokoncepty pod konceptem */
+        { selector: "node[type='microparent']", style: {
+          "shape": "ellipse", "background-color": "#ffff00", "color": "#0a0a0c",
+          "width": 128, "height": 128, "label": "data(label)", "text-wrap": "wrap",
+          "text-max-width": "104px", "text-valign": "center", "text-halign": "center",
+          "line-height": LINEH, "font-size": "13px", "font-weight": "600", "border-width": 0
+        }},
+        { selector: "node[type='micro']", style: {
+          "shape": "round-rectangle", "background-color": "#0a0a0c", "color": "#ffffff",
+          "border-color": "#ffff00", "border-width": 1.5, "width": 108, "height": 60,
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "94px",
+          "text-valign": "center", "text-halign": "center", "line-height": LINEH, "font-size": "11px"
+        }},
+        { selector: "node[type='micro']:selected", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
+        { selector: "edge[etype='microedge']", style: {
+          "line-color": "rgba(255,255,0,0.5)", "width": 1.6, "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,0,0.65)", "arrow-scale": 0.85
+        }}
       ]
     });
     window.__cy = cy;
@@ -317,8 +336,18 @@
       render(b.dataset.view);
     }));
 
+    /* breadcrumb pro hloubkové ponoření (překryv nad grafem) */
+    const drillbar = document.createElement("div");
+    drillbar.id = "km-drillbar"; drillbar.className = "km-drillbar hidden";
+    drillbar.innerHTML = '<button data-act="drill-out" type="button">‹ Zpět na mapu</button><span class="km-drill-title"></span>';
+    document.getElementById("cy").appendChild(drillbar);
+    drillbar.querySelector("[data-act='drill-out']").addEventListener("click", drillOut);
+
     /* interakce grafu */
-    cy.on("tap", "node", (evt) => openDetail(evt.target));
+    cy.on("tap", "node", (evt) => {
+      if (evt.target.data("type") === "micro") { openMicroDetail(evt.target.data("_m")); return; }
+      openDetail(evt.target);
+    });
     cy.on("tap", (evt) => {
       if (evt.target !== cy) return;               // klik do prázdna
       if (editing) return;                          // rozdělaná úprava se klikem do plochy neztratí
@@ -343,6 +372,8 @@
   /* ---------- Vykreslení režimu ---------- */
   function render(mode) {
     viewMode = mode;
+    drillId = null;                       // přepnutí pohledu vynoří z hloubky
+    const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
     closeDetail();
     cy.elements().remove();
     cy.add(buildElements(mode));
@@ -511,6 +542,13 @@
     else if (act === "add-prereq") addLinkChip("prereq");
     else if (act === "add-souvisi") addLinkChip("souvisi");
     else if (act === "del-chip") { const ch = b.closest(".ed-chip"); if (ch) ch.remove(); }
+    else if (act === "dive") drillInto(id);
+    else if (act === "drill-out") drillOut();
+    else if (act === "micro-open") openMicroDetail(findMicro(b.dataset.micro));
+    else if (act === "micro-add") openAddMicro(id);
+    else if (act === "micro-cancel") openDetail(cy.getElementById(id));
+    else if (act === "micro-save") saveNewMicro(id);
+    else if (act === "del-micro") deleteMicro(b.dataset.micro);
     else if (act === "add-cile") document.getElementById("ed-cile").insertAdjacentHTML("beforeend", cileRow({}));
     else if (act === "add-krit") document.getElementById("ed-kriteria").insertAdjacentHTML("beforeend", kritRow({}));
     else if (act === "del-row") { const r = b.closest(".ed-row"); if (r) r.remove(); }
@@ -852,6 +890,7 @@
       </div>
       ${authed ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
       <p class="d-desc">${esc(typo(c.popis))}</p>
+      ${microSection(c)}
       <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
@@ -861,6 +900,121 @@
       <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(souvisiIds)}</div></div>
       <div class="d-section"><h3>Tagy</h3><div class="d-tags">${tags}</div></div>
       <div class="d-section"><h3>Zdroj</h3>${zdroj}</div>`;
+  }
+
+  /* ---------- Mikrokoncepty + hloubkové ponoření ---------- */
+  const findMicro = (id) => {
+    for (const c of DATA.concepts) { const m = (c._micros || []).find((x) => x.id === id); if (m) return m; }
+    return null;
+  };
+
+  function microSection(c) {
+    const micros = c._micros || [];
+    const list = micros.length
+      ? micros.map((m) =>
+          '<div class="mc-row"><button class="d-link mc-open" data-act="micro-open" data-micro="' + esc(m.id) + '">' +
+          esc(m.nazev || m.id) + '</button>' +
+          (authed ? '<button class="mc-del" data-act="del-micro" data-micro="' + esc(m.id) + '" title="Smazat">✕</button>' : "") +
+          '</div>').join("")
+      : '<span class="d-empty">zatím žádné mikrokoncepty</span>';
+    const dive = micros.length ? '<button class="km-primary" data-act="dive" data-id="' + esc(c.id) + '">🔬 Ponořit se (' + micros.length + ')</button>' : "";
+    const add = authed ? '<button class="d-link" data-act="micro-add" data-id="' + esc(c.id) + '">➕ Přidat mikrokoncept</button>' : "";
+    return '<div class="d-section"><h3>Mikrokoncepty</h3>' + list +
+      ((dive || add) ? '<div class="d-links" style="margin-top:8px">' + dive + add + '</div>' : "") + '</div>';
+  }
+
+  function openMicroDetail(m) {
+    if (!m) return;
+    editing = false;
+    const cil = (m.cile || []).length ? goals(m.cile) : '<span class="d-empty">—</span>';
+    detailBody.innerHTML =
+      '<span class="d-badge" style="background:#ffff00;color:#000000">Mikrokoncept</span>' +
+      '<h2 class="d-title">' + esc(m.nazev || m.id) + '</h2>' +
+      '<p class="d-desc">' + esc(typo(m.popis || "")) + '</p>' +
+      '<div class="d-section"><h3>Cíl</h3>' + cil + '</div>' +
+      (authed ? '<div class="d-links"><button class="d-link km-danger" data-act="del-micro" data-micro="' + esc(m.id) + '">Smazat mikrokoncept</button></div>' : "");
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
+  function openAddMicro(parentId) {
+    const c = conceptById[parentId]; if (!c) return;
+    editing = true; pinned = null; clearNb();
+    detailBody.innerHTML =
+      '<span class="d-badge" style="background:#ffff00;color:#000000">Nový mikrokoncept</span>' +
+      '<p class="d-desc">Pod koncept <strong>' + esc(c.nazev) + '</strong></p>' +
+      '<div class="ed-field"><label>Název *</label><input id="mc-nazev" placeholder="např. Nekonečný cyklus"></div>' +
+      '<div class="ed-field"><label>Popis</label><textarea id="mc-popis" rows="4" placeholder="Co mikrokoncept je…"></textarea></div>' +
+      '<div class="ed-field"><label>Cíl (nepovinné)</label><textarea id="mc-cil" rows="2" placeholder="Co se žák naučí"></textarea></div>' +
+      '<div class="ed-actions">' +
+      '<button class="reset-btn" data-act="micro-cancel" data-id="' + esc(parentId) + '">Zrušit</button>' +
+      '<button class="km-primary" data-act="micro-save" data-id="' + esc(parentId) + '">Vytvořit mikrokoncept</button></div>';
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
+  function saveNewMicro(parentId) {
+    const c = conceptById[parentId]; if (!c) return;
+    const nazev = (document.getElementById("mc-nazev").value || "").trim();
+    if (!nazev) { alert("Doplň název mikrokonceptu."); return; }
+    const s = slug(nazev); if (!s) { alert("Název musí obsahovat písmena nebo číslice."); return; }
+    const existing = c._micros || [];
+    let id = parentId + "--" + s;
+    if (existing.some((m) => m.id === id)) { let i = 2; while (existing.some((m) => m.id === id + "-" + i)) i++; id = id + "-" + i; }
+    const data = { nazev: nazev, popis: (document.getElementById("mc-popis").value || "").trim() };
+    const cilText = (document.getElementById("mc-cil").value || "").trim();
+    if (cilText) data.cile = [{ uroven: "porozumeni", text: cilText }];
+    const ord = existing.length;
+    const m = Object.assign({ id: id, parent_id: parentId, ord: ord }, data);
+    if (supabaseOk && window.KM) {
+      window.KM.saveMicro(adminSecret, id, parentId, data, ord)
+        .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+    }
+    (c._micros = c._micros || []).push(m);
+    editing = false;
+    if (drillId === parentId) drillInto(parentId);
+    else openDetail(cy.getElementById(parentId));
+  }
+
+  function deleteMicro(microId) {
+    let parent = null;
+    DATA.concepts.forEach((c) => { if ((c._micros || []).some((m) => m.id === microId)) parent = c; });
+    if (!parent) return;
+    if (!confirm("Opravdu smazat tenhle mikrokoncept?")) return;
+    parent._micros = (parent._micros || []).filter((m) => m.id !== microId);
+    if (supabaseOk && window.KM) {
+      window.KM.deleteMicro(adminSecret, microId).catch((e) => alert("Smazání selhalo: " + ((e && e.message) || e)));
+    }
+    if (drillId === parent.id) drillInto(parent.id);
+    else openDetail(cy.getElementById(parent.id));
+  }
+
+  // „Ponoření" do konceptu: graf ukáže rodičovský koncept + jeho mikrokoncepty.
+  function drillInto(conceptId) {
+    const c = conceptById[conceptId]; if (!c) return;
+    drillId = conceptId; closeDetail();
+    cy.elements().remove();
+    const micros = c._micros || [];
+    const els = [{ data: { id: "mp", type: "microparent", label: c.nazev, _c: c } }];
+    micros.forEach((m) => {
+      els.push({ data: { id: "m-" + m.id, type: "micro", label: m.nazev || m.id, _m: m } });
+      els.push({ data: { id: "me-" + m.id, source: "mp", target: "m-" + m.id, etype: "microedge" } });
+    });
+    cy.add(els);
+    cy.getElementById("mp").position({ x: 0, y: 0 });
+    const R = Math.max(200, micros.length * 34);
+    micros.forEach((m, i) => {
+      const ang = (2 * Math.PI * i / Math.max(1, micros.length)) - Math.PI / 2;
+      cy.getElementById("m-" + m.id).position({ x: Math.cos(ang) * R, y: Math.sin(ang) * R });
+    });
+    try { if (window.__drawHulls) window.__drawHulls(); } catch (_) {}
+    cy.fit(cy.nodes(), 70);
+    const bar = document.getElementById("km-drillbar");
+    if (bar) { bar.classList.remove("hidden"); bar.querySelector(".km-drill-title").textContent = "🔬 " + c.nazev; }
+  }
+
+  function drillOut() {
+    drillId = null;
+    const bar = document.getElementById("km-drillbar"); if (bar) bar.classList.add("hidden");
+    render(viewMode);
   }
 
   /* ---------- Organické obrysy clusterů (canvas overlay) ---------- */
