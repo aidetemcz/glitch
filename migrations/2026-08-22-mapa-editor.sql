@@ -71,7 +71,7 @@ create or replace function public.km_check_secret(p_secret text)
 returns boolean language sql immutable
 set search_path = public, extensions as $$
   select encode(digest(coalesce(p_secret,''), 'sha256'), 'hex')
-       = '72b092cfd13cf63679289efe7bf7ea5266dd3cd28e7ab49e439a1e885471b1d8'
+       = 'f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e'
 $$;
 
 -- ---- RPC zápisy (jediná cesta, jak něco změnit) ---------------------------
