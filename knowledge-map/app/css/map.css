@@ -146,6 +146,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .ed-check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--c-grey-15);
   margin: 6px 0 4px; cursor: pointer; }
 .ed-check input { width: 16px; height: 16px; accent-color: var(--c-yellow); }
+/* přidání konceptu — pickery prerekvizit / souvisí */
+.ed-pick { display: flex; gap: 8px; align-items: center; }
+.ed-pick input { flex: 1 1 auto; }
+.ed-pick .d-link { flex: 0 0 auto; white-space: nowrap; }
+.ed-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ed-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--c-white, #fff);
+  border: 1px solid var(--c-line); border-radius: 999px; padding: 4px 6px 4px 10px; background: rgba(255,255,255,0.04); }
+.ed-chip-x { width: 18px; height: 18px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.1);
+  color: inherit; font-size: 11px; line-height: 1; cursor: pointer; }
+.ed-chip-x:hover { background: var(--c-red, #ff5252); color: #fff; }
 
 /* Mobil */
 @media (max-width: 720px) {

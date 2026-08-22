@@ -102,10 +102,12 @@
   const ADMIN_USER = "aidetem";
   const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
   const EDITS_KEY = "km-edits-v1";
+  const NEW_KEY = "km-new-v1";
   const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav"];
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
+  let adminSecret = sessionStorage.getItem("km-secret") || "";   // plaintext hesla pro RPC (klientská závora)
   let editing = false;
   const loadEdits = () => { try { return JSON.parse(localStorage.getItem(EDITS_KEY) || "{}"); } catch (_) { return {}; } };
   const saveEdits = (o) => { try { localStorage.setItem(EDITS_KEY, JSON.stringify(o)); } catch (_) {} };
@@ -115,10 +117,47 @@
   }
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/Informatika/knowledge-map.yaml?v=14")
-    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
-    .then((txt) => init(jsyaml.load(txt)))
-    .catch((e) => setStatus("Chyba načítání dat: " + e.message));
+  // Základ = YAML z repa. Nad něj se (když je dostupné) navrství živá vrstva
+  // ze Supabase: úpravy stávajících konceptů, nové koncepty a mikrokoncepty.
+  let supabaseOk = false;
+  (async function boot() {
+    try {
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=14")
+        .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
+      const data = jsyaml.load(txt);
+      try {
+        if (window.KM) {
+          const ov = await window.KM.loadOverlay();
+          if (!ov.offline) { supabaseOk = true; mergeOverlay(data, ov); }
+        }
+      } catch (_) { /* offline → jen základ */ }
+      init(data);
+    } catch (e) { setStatus("Chyba načítání dat: " + e.message); }
+  })();
+
+  const slug = (s) => String(s == null ? "" : s).toLowerCase().normalize("NFD")
+    .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+
+  function normalizeConcept(c) {
+    c.vrstva = c.vrstva === "core" ? "core" : "navazujici";
+    c.tagy = c.tagy || []; c.prerekvizity = c.prerekvizity || []; c.souvisi = c.souvisi || [];
+    c.cile = c.cile || []; c.kriteria = c.kriteria || []; c.rvp = c.rvp || [];
+    c.pokryti_glitchem = c.pokryti_glitchem || [];
+    if (!("oblast" in c)) c.oblast = null;
+    if (!("kompetence" in c)) c.kompetence = null;
+    if (!c.stav) c.stav = "hotovo";
+    return c;
+  }
+
+  // Navrství Supabase překryv na základní data (in-place).
+  function mergeOverlay(data, ov) {
+    data.concepts.forEach((c) => { if (ov.overrides[c.id]) Object.assign(c, ov.overrides[c.id]); });
+    const have = new Set(data.concepts.map((c) => c.id));
+    ov.news.forEach((n) => { if (n && n.id && !have.has(n.id)) { data.concepts.push(normalizeConcept(n)); have.add(n.id); } });
+    const byId = {}; data.concepts.forEach((c) => byId[c.id] = c);
+    ov.micros.forEach((m) => { const p = byId[m.parent_id]; if (p) (p._micros = p._micros || []).push(m); });
+    data._micros = ov.micros;
+  }
 
   /* ---------- Seskupení ---------- */
   function groupDefs(mode) {
@@ -181,9 +220,16 @@
   function init(data) {
     DATA = data; window.__data = data;
     data.concepts.forEach((c) => conceptById[c.id] = c);
-    /* lokální úpravy z editoru (localStorage) přetáhnout přes načtená data */
-    const overlay = loadEdits();
-    data.concepts.forEach((c) => { if (overlay[c.id]) Object.assign(c, overlay[c.id]); });
+    /* offline záloha: lokální úpravy i nové koncepty (localStorage) jen když Supabase není */
+    if (!supabaseOk) {
+      const overlay = loadEdits();
+      data.concepts.forEach((c) => { if (overlay[c.id]) Object.assign(c, overlay[c.id]); });
+      try {
+        JSON.parse(localStorage.getItem(NEW_KEY) || "[]").forEach((n) => {
+          if (n && n.id && !conceptById[n.id]) { normalizeConcept(n); data.concepts.push(n); conceptById[n.id] = n; }
+        });
+      } catch (_) {}
+    }
     /* reverzní indexy hran (panel čte souvisí i „je prerekvizitou pro" obousměrně) */
     revSouvisi = {}; revPrereq = {};
     data.concepts.forEach((c) => {
@@ -431,16 +477,19 @@
     if (!authed) {
       return `<div class="d-section km-admin"><button class="d-link" data-act="login">🔒 Admin — přihlásit se</button></div>`;
     }
-    const n = Object.keys(loadEdits()).length;
+    const status = supabaseOk
+      ? `Změny se ukládají <strong>živě do Supabase</strong> (uvidí je všichni).`
+      : `⚠️ <strong>Supabase je teď nedostupné</strong> — změny se uloží jen lokálně do tohoto prohlížeče.`;
     return `<div class="d-section km-admin">
       <h3>Admin</h3>
-      <p class="d-desc" style="margin-bottom:10px">Jsi přihlášen. Klikni na koncept v mapě a uprav ho. Uložení se zapíše do tohoto prohlížeče${n ? ` — <strong>lokálně upraveno: ${n}</strong>` : ""}.</p>
-      <div class="d-links">
-        <button class="km-primary" data-act="export">⬇ Stáhnout data (YAML)</button>
-        <button class="d-link" data-act="logout">Odhlásit</button>
+      <p class="d-desc" style="margin-bottom:10px">Jsi přihlášen. Klikni na koncept a uprav ho, nebo přidej nový. ${status}</p>
+      <div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>
+      <div class="d-links" style="margin-top:8px">
+        <button class="km-primary" data-act="export">⬇ Export YAML</button>
+        <button class="km-primary" data-act="export-json">⬇ Export concepts.json</button>
       </div>
-      ${n ? `<div class="d-links" style="margin-top:8px"><button class="d-link km-danger" data-act="discard">Zahodit lokální úpravy (${n})</button></div>` : ""}
-      <p class="d-empty" style="margin-top:10px">Změny jsou zatím jen v tvém prohlížeči. Aby se objevily online pro všechny, stáhni YAML a pošli mi ho (nebo commitni do repa).</p>
+      <div class="d-links" style="margin-top:8px"><button class="d-link" data-act="logout">Odhlásit</button></div>
+      <p class="d-empty" style="margin-top:10px">Export vygeneruje soubory ke commitu na GitHub — YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee.</p>
     </div>`;
   }
 
@@ -449,12 +498,19 @@
     if (!b) return;
     const act = b.dataset.act, id = b.dataset.id;
     if (act === "login") openLogin();
-    else if (act === "logout") { authed = false; sessionStorage.removeItem("km-auth"); openAbout(); }
+    else if (act === "logout") { authed = false; adminSecret = ""; sessionStorage.removeItem("km-auth"); sessionStorage.removeItem("km-secret"); openAbout(); }
     else if (act === "export") exportYAML();
+    else if (act === "export-json") exportConceptsJson();
     else if (act === "discard") discardEdits();
     else if (act === "edit") openEditor(id);
     else if (act === "edit-cancel") openDetail(cy.getElementById(id));
     else if (act === "edit-save") saveEditor(id);
+    else if (act === "add-concept") openAddConcept();
+    else if (act === "add-cancel") openAbout();
+    else if (act === "add-save") saveNewConcept();
+    else if (act === "add-prereq") addLinkChip("prereq");
+    else if (act === "add-souvisi") addLinkChip("souvisi");
+    else if (act === "del-chip") { const ch = b.closest(".ed-chip"); if (ch) ch.remove(); }
     else if (act === "add-cile") document.getElementById("ed-cile").insertAdjacentHTML("beforeend", cileRow({}));
     else if (act === "add-krit") document.getElementById("ed-kriteria").insertAdjacentHTML("beforeend", kritRow({}));
     else if (act === "del-row") { const r = b.closest(".ed-row"); if (r) r.remove(); }
@@ -495,7 +551,8 @@
     const u = document.getElementById("km-user").value.trim();
     const p = document.getElementById("km-pass").value;
     if (u === ADMIN_USER && (await sha256hex(p)) === ADMIN_HASH) {
-      authed = true; sessionStorage.setItem("km-auth", "1");
+      authed = true; adminSecret = p;
+      sessionStorage.setItem("km-auth", "1"); sessionStorage.setItem("km-secret", p);
       closeLogin(); openAbout();
     } else {
       document.getElementById("km-err").textContent = "Špatný login nebo heslo.";
@@ -547,10 +604,14 @@
       ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
     if (document.getElementById("ed-hotovo").checked) c.stav = "hotovo";
 
-    /* zapsat do localStorage overlaye */
-    const ov = loadEdits();
-    ov[id] = {}; EDITABLE.forEach((k) => ov[id][k] = c[k]);
-    saveEdits(ov);
+    /* uložit — Supabase (živě pro všechny), jinak lokálně jako záloha */
+    const patch = {}; EDITABLE.forEach((k) => patch[k] = c[k]);
+    if (supabaseOk && window.KM) {
+      window.KM.saveOverride(adminSecret, id, patch)
+        .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+    } else {
+      const ov = loadEdits(); ov[id] = patch; saveEdits(ov);
+    }
 
     /* aktualizovat uzel v grafu bez plného překreslení */
     const n = cy.getElementById(id);
@@ -566,16 +627,121 @@
     openDetail(n);
   }
 
+  function download(name, text, mime) {
+    const blob = new Blob([text], { type: (mime || "text/plain") + ";charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
   function exportYAML() {
     try {
-      const yaml = jsyaml.dump(DATA, { lineWidth: 1000, noRefs: true, sortKeys: false });
-      const blob = new Blob([yaml], { type: "text/yaml;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = "knowledge-map.yaml";
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      // vyhoď přechodná pole (začínají „_", např. _micros) — do YAML nepatří
+      const clean = JSON.parse(JSON.stringify(DATA, (k, v) => (k.charAt(0) === "_" ? undefined : v)));
+      download("knowledge-map.yaml", jsyaml.dump(clean, { lineWidth: 1000, noRefs: true, sortKeys: false }), "text/yaml");
     } catch (e) { alert("Export selhal: " + e.message); }
+  }
+
+  // concepts.json = mapa id → { nazev, popis, cile, kriteria } (čte ji i chatbot)
+  function exportConceptsJson() {
+    try {
+      const out = {};
+      DATA.concepts.forEach((c) => { out[c.id] = { nazev: c.nazev, popis: c.popis || "", cile: c.cile || [], kriteria: c.kriteria || [] }; });
+      download("concepts.json", JSON.stringify(out, null, 1), "application/json");
+    } catch (e) { alert("Export selhal: " + e.message); }
+  }
+
+  /* ---------- Přidání nového konceptu ---------- */
+  const nameToId = (name) => {
+    const n = (name || "").trim().toLowerCase();
+    const hit = DATA.concepts.find((c) => (c.nazev || "").trim().toLowerCase() === n);
+    return hit ? hit.id : null;
+  };
+  function addLinkChip(kind) {
+    const input = document.getElementById(kind === "prereq" ? "add-prereq-input" : "add-souvisi-input");
+    const cont = document.getElementById(kind === "prereq" ? "add-prereq" : "add-souvisi");
+    if (!input || !cont) return;
+    const id = nameToId(input.value);
+    if (!id) { input.focus(); input.select(); return; }
+    if (cont.querySelector('[data-id="' + id + '"]')) { input.value = ""; return; }
+    const c = conceptById[id];
+    cont.insertAdjacentHTML("beforeend",
+      '<span class="ed-chip" data-id="' + esc(id) + '">' + esc(c ? c.nazev : id) +
+      '<button class="ed-chip-x" data-act="del-chip" aria-label="Odebrat">✕</button></span>');
+    input.value = ""; input.focus();
+  }
+
+  function openAddConcept() {
+    editing = true; pinned = null; if (typeof clearNb === "function") clearNb();
+    const opt = (v, l, sel) => '<option value="' + esc(v) + '"' + (sel ? " selected" : "") + '>' + esc(l) + '</option>';
+    const temaOpts = (DATA.temata || []).map((t) => opt(t.id, t.nazev)).join("");
+    const oblastOpts = opt("", "— průřezový (bez okruhu RVP)") + (DATA.areas || []).map((a) => opt(a.id, a.nazev)).join("");
+    const kompOpts = opt("", "— nezařazeno") + (DATA.kompetence || []).map((k) => opt(k.id, k.nazev)).join("");
+    const dataList = '<datalist id="km-concept-list">' + DATA.concepts.map((c) => '<option value="' + esc(c.nazev) + '">').join("") + '</datalist>';
+    detailBody.innerHTML = `
+      <span class="d-badge" style="background:#ffff00;color:#000000">Nový koncept</span>
+      <div class="ed-field"><label>Název *</label><input id="add-nazev" placeholder="např. Rekurze"></div>
+      <div class="ed-field"><label>Téma *</label><select id="add-tema">${temaOpts}</select></div>
+      <div class="ed-field"><label>Oblast RVP</label><select id="add-oblast">${oblastOpts}</select></div>
+      <div class="ed-field"><label>Digitální kompetence</label><select id="add-kompetence">${kompOpts}</select></div>
+      <div class="ed-field"><label>Vrstva</label><select id="add-vrstva"><option value="core">Core koncept</option><option value="navazujici" selected>Navazující</option></select></div>
+      <div class="ed-field"><label>Popis</label><textarea id="add-popis" rows="4" placeholder="Co koncept je…"></textarea></div>
+      <div class="ed-field"><label>Vzdělávací cíle</label><div id="ed-cile"></div><button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
+      <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria"></div><button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>
+      <div class="ed-field"><label>Prerekvizity (co má předcházet)</label>
+        <div class="ed-pick"><input id="add-prereq-input" list="km-concept-list" placeholder="hledej koncept…"><button class="d-link" data-act="add-prereq">+ přidat</button></div>
+        <div id="add-prereq" class="ed-chips"></div></div>
+      <div class="ed-field"><label>Souvisí s</label>
+        <div class="ed-pick"><input id="add-souvisi-input" list="km-concept-list" placeholder="hledej koncept…"><button class="d-link" data-act="add-souvisi">+ přidat</button></div>
+        <div id="add-souvisi" class="ed-chips"></div></div>
+      ${dataList}
+      <div class="ed-actions">
+        <button class="reset-btn" data-act="add-cancel">Zrušit</button>
+        <button class="km-primary" data-act="add-save">Vytvořit koncept</button>
+      </div>`;
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
+  function saveNewConcept() {
+    const nazev = (document.getElementById("add-nazev").value || "").trim();
+    const tema = document.getElementById("add-tema").value;
+    if (!nazev) { alert("Doplň název konceptu."); return; }
+    if (!tema) { alert("Vyber téma."); return; }
+    let id = tema + "-" + slug(nazev);
+    if (!slug(nazev)) { alert("Název musí obsahovat písmena nebo číslice."); return; }
+    if (conceptById[id]) { let i = 2; while (conceptById[id + "-" + i]) i++; id = id + "-" + i; }
+    const rows = (sel) => [...document.querySelectorAll(sel + " .ed-row")];
+    const cile = rows("#ed-cile").map((r) => {
+      const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
+      const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
+      return o;
+    }).filter((o) => o.text);
+    const kriteria = rows("#ed-kriteria").map((r) =>
+      ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    const chips = (sel) => [...document.querySelectorAll(sel + " .ed-chip")].map((ch) => ch.dataset.id);
+    const c = normalizeConcept({
+      id, nazev, tema,
+      oblast: document.getElementById("add-oblast").value || null,
+      kompetence: document.getElementById("add-kompetence").value || null,
+      vrstva: document.getElementById("add-vrstva").value,
+      popis: (document.getElementById("add-popis").value || "").trim(),
+      cile, kriteria,
+      prerekvizity: chips("#add-prereq"), souvisi: chips("#add-souvisi"),
+      stav: "hotovo"
+    });
+    if (supabaseOk && window.KM) {
+      window.KM.addConcept(adminSecret, id, c).catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+    } else {
+      try { const nw = JSON.parse(localStorage.getItem(NEW_KEY) || "[]"); nw.push(c); localStorage.setItem(NEW_KEY, JSON.stringify(nw)); } catch (_) {}
+    }
+    DATA.concepts.push(c); conceptById[id] = c;
+    (c.souvisi || []).forEach((s) => (revSouvisi[s] = revSouvisi[s] || []).push(id));
+    (c.prerekvizity || []).forEach((p) => (revPrereq[p] = revPrereq[p] || []).push(id));
+    editing = false;
+    render(viewMode);
+    focusNode(id);
   }
 
   /* zahodit lokální (localStorage) úpravy a načíst čistá data ze serveru */
