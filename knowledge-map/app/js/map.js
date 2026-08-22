@@ -100,7 +100,7 @@
      nasazená data to nemá vliv. Uložení = localStorage (přežije refresh v
      tomto prohlížeči) + export YAML k commitu do repa. */
   const ADMIN_USER = "aidetem";
-  const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
+  const ADMIN_HASH = "72b092cfd13cf63679289efe7bf7ea5266dd3cd28e7ab49e439a1e885471b1d8";
   const EDITS_KEY = "km-edits-v1";
   const NEW_KEY = "km-new-v1";
   const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav"];

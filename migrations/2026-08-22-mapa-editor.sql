@@ -68,7 +68,7 @@ create policy km_mic_read on public.km_microkoncepty     for select to anon, aut
 create or replace function public.km_check_secret(p_secret text)
 returns boolean language sql immutable as $$
   select encode(digest(coalesce(p_secret,''), 'sha256'), 'hex')
-       = 'f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e'
+       = '72b092cfd13cf63679289efe7bf7ea5266dd3cd28e7ab49e439a1e885471b1d8'
 $$;
 
 -- ---- RPC zápisy (jediná cesta, jak něco změnit) ---------------------------
