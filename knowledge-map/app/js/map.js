@@ -104,7 +104,7 @@
   const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
   const EDITS_KEY = "km-edits-v1";
   const NEW_KEY = "km-new-v1";
-  const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav"];
+  const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav", "prerekvizity", "souvisi"];
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
@@ -138,6 +138,14 @@
 
   const slug = (s) => String(s == null ? "" : s).toLowerCase().normalize("NFD")
     .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+
+  function buildRevIndexes() {
+    revSouvisi = {}; revPrereq = {};
+    (DATA ? DATA.concepts : []).forEach((c) => {
+      (c.souvisi || []).forEach((s) => (revSouvisi[s] = revSouvisi[s] || []).push(c.id));
+      (c.prerekvizity || []).forEach((p) => (revPrereq[p] = revPrereq[p] || []).push(c.id));
+    });
+  }
 
   function normalizeConcept(c) {
     c.vrstva = c.vrstva === "core" ? "core" : "navazujici";
@@ -232,11 +240,7 @@
       } catch (_) {}
     }
     /* reverzní indexy hran (panel čte souvisí i „je prerekvizitou pro" obousměrně) */
-    revSouvisi = {}; revPrereq = {};
-    data.concepts.forEach((c) => {
-      (c.souvisi || []).forEach((s) => (revSouvisi[s] = revSouvisi[s] || []).push(c.id));
-      (c.prerekvizity || []).forEach((p) => (revPrereq[p] = revPrereq[p] || []).push(c.id));
-    });
+    buildRevIndexes();
 
     cy = cytoscape({
       container: document.getElementById("cy"),
@@ -546,6 +550,7 @@
     else if (act === "drill-out") drillOut();
     else if (act === "micro-open") openMicroDetail(findMicro(b.dataset.micro));
     else if (act === "micro-add") openAddMicro(id);
+    else if (act === "edit-then-micro") { saveEditor(id); openAddMicro(id); }   // ulož koncept, pak přidej mikrokoncept
     else if (act === "micro-cancel") openDetail(cy.getElementById(id));
     else if (act === "micro-save") saveNewMicro(id);
     else if (act === "del-micro") deleteMicro(b.dataset.micro);
@@ -603,6 +608,20 @@
   const cileRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<input class="ed-roc" type="number" min="1" max="9" placeholder="roč." value="${it.rocnik != null ? esc(it.rocnik) : ""}"><button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text cíle">${esc(it.text || "")}</textarea></div>`;
   const kritRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text kritéria">${esc(it.text || "")}</textarea></div>`;
 
+  // chip pro vybraný koncept (prerekvizita / souvisí), datalist všech konceptů a picker
+  const chipHtml = (id) => { const c = conceptById[id]; return '<span class="ed-chip" data-id="' + esc(id) + '">' + esc(c ? c.nazev : id) + '<button class="ed-chip-x" data-act="del-chip" aria-label="Odebrat">✕</button></span>'; };
+  const dataListHtml = () => '<datalist id="km-concept-list">' + DATA.concepts.map((c) => '<option value="' + esc(c.nazev) + '">').join("") + '</datalist>';
+  const linkPicker = (label, kind, ids) =>
+    '<div class="ed-field"><label>' + label + '</label>' +
+    '<div class="ed-pick"><input id="add-' + kind + '-input" list="km-concept-list" placeholder="hledej koncept…"><button class="d-link" data-act="add-' + kind + '">+ přidat</button></div>' +
+    '<div id="add-' + kind + '" class="ed-chips">' + (ids || []).map(chipHtml).join("") + '</div></div>';
+  const microEditList = (c) => {
+    const micros = c._micros || [];
+    return micros.length
+      ? micros.map((m) => '<div class="mc-row"><span class="mc-name">' + esc(m.nazev || m.id) + '</span><button class="mc-del" data-act="del-micro" data-micro="' + esc(m.id) + '" title="Smazat">✕</button></div>').join("")
+      : '<span class="d-empty">zatím žádné</span>';
+  };
+
   function openEditor(id) {
     const c = conceptById[id];
     if (!c) return;
@@ -619,6 +638,11 @@
         <button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
       <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria">${(c.kriteria || []).map(kritRow).join("")}</div>
         <button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>
+      ${linkPicker("Prerekvizity (co má předcházet)", "prereq", c.prerekvizity)}
+      ${linkPicker("Souvisí s", "souvisi", c.souvisi)}
+      <div class="ed-field"><label>Mikrokoncepty</label>${microEditList(c)}
+        <button class="d-link ed-add" data-act="edit-then-micro" data-id="${esc(id)}">➕ Přidat mikrokoncept</button></div>
+      ${dataListHtml()}
       <label class="ed-check"><input type="checkbox" id="ed-hotovo" checked> Označit jako <strong>hotovo</strong></label>
       <div class="ed-actions">
         <button class="reset-btn" data-act="edit-cancel" data-id="${esc(id)}">Zrušit</button>
@@ -640,6 +664,12 @@
     }).filter((o) => o.text);
     c.kriteria = [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) =>
       ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    // vazby: jen na existující koncepty (bez visících odkazů a bez odkazu na sebe)
+    const validIds = new Set(DATA.concepts.map((x) => x.id));
+    const readLinks = (sel) => [...new Set([...document.querySelectorAll(sel + " .ed-chip")].map((ch) => ch.dataset.id))]
+      .filter((x) => x && x !== id && validIds.has(x));
+    c.prerekvizity = readLinks("#add-prereq");
+    c.souvisi = readLinks("#add-souvisi");
     if (document.getElementById("ed-hotovo").checked) c.stav = "hotovo";
 
     /* uložit — Supabase (živě pro všechny), jinak lokálně jako záloha */
@@ -651,18 +681,12 @@
       const ov = loadEdits(); ov[id] = patch; saveEdits(ov);
     }
 
-    /* aktualizovat uzel v grafu bez plného překreslení */
-    const n = cy.getElementById(id);
-    if (n && n.nonempty()) {
-      const sz = n.data("size"), fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
-      n.data({
-        label: wrapLabel(c.nazev, '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif', textw * 0.95, false),
-        fontsize: fs, textw: textw, vrstva: c.vrstva, stav: c.stav, _c: c
-      });
-    }
+    /* vazby se mohly změnit → přepočítej reverzní indexy a překresli graf (hrany) */
+    buildRevIndexes();
     editing = false;
-    applyFilters();
-    openDetail(n);
+    render(viewMode);
+    const n = cy.getElementById(id);
+    if (n && n.nonempty()) openDetail(n);
   }
 
   function download(name, text, mime) {

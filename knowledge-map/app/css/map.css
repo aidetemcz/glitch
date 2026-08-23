@@ -160,6 +160,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mc-row { display: flex; align-items: center; gap: 8px; }
 .mc-row + .mc-row { margin-top: 4px; }
 .mc-row .mc-open { flex: 1 1 auto; text-align: left; }
+.mc-row .mc-name { flex: 1 1 auto; font-size: 13px; color: var(--c-white, #fff); }
 .mc-del { flex: 0 0 auto; width: 24px; height: 24px; border: 1px solid var(--c-line); border-radius: 7px;
   color: var(--c-grey-50); font-size: 12px; background: transparent; cursor: pointer; }
 .mc-del:hover { border-color: var(--c-red, #ff5252); color: var(--c-red, #ff5252); }
