@@ -1121,7 +1121,7 @@
      Koncepty leží v rovině (z=0), mikrokoncepty na vrstvě pod rodičem (z<0).
      Táhnutím se scéna otáčí, kolečkem přibližuje; klik otevře detail. */
   let view3d = false, cvs3d = null, ctx3d = null, raf3d = null, drag3d = null;
-  let cam3d = { rotX: -0.75, rotY: 0.5, zoom: 1 };
+  let cam3d = { rotX: -0.75, rotY: 0.5, zoom: 0.62 };
   let nodes3d = [], edges3d = [];
 
   function build3D() {
@@ -1131,16 +1131,17 @@
       const n = cy.getElementById(c.id);
       const pos = (n && n.nonempty()) ? n.position() : { x: 0, y: 0 };
       const deg = (n && n.nonempty()) ? (n.data("size") || 40) : 40;
-      const node = { id: c.id, kind: "concept", x: pos.x, y: pos.y, z: 0, r: Math.max(10, deg * 0.28), label: c.nazev, core: c.vrstva === "core", _c: c };
+      const node = { id: c.id, kind: "concept", x: pos.x, y: pos.y, z: 0, r: Math.max(9, deg * 0.2), label: c.nazev, core: c.vrstva === "core", _c: c };
       nodes3d.push(node); byId[c.id] = node;
     });
     const xs = nodes3d.map((n) => n.x), ys = nodes3d.map((n) => n.y);
     const cxm = (Math.min(...xs) + Math.max(...xs)) / 2, cym = (Math.min(...ys) + Math.max(...ys)) / 2;
     let maxR = 1;
     nodes3d.forEach((n) => { n.x -= cxm; n.y -= cym; maxR = Math.max(maxR, Math.hypot(n.x, n.y)); });
-    const sc = 320 / maxR;
+    // rozprostři koncepty dál od sebe (bubliny se nepřekrývají; malé popisky se pak vejdou)
+    const sc = 560 / maxR;
     nodes3d.forEach((n) => { n.x *= sc; n.y *= sc; });
-    const DEPTH = 210;
+    const DEPTH = 260;
     DATA.concepts.forEach((c) => {
       const micros = c._micros || []; if (!micros.length) return;
       const parent = byId[c.id];
@@ -1161,6 +1162,21 @@
     const y2 = y1 * cosX - z1 * sinX, z2 = y1 * sinX + z1 * cosX, x2 = x1;
     const CAM = 900, f = CAM / (CAM - z2), s = Math.min(w, h) / 760 * cam3d.zoom;
     return { sx: w / 2 + x2 * s * f, sy: h / 2 + y2 * s * f, depth: z2, f: f * s };
+  }
+
+  // Zalomení popisku do max 2 řádků, které se vejdou do šířky maxW (font už nastaven).
+  function wrap2(text, maxW) {
+    const words = String(text).split(/\s+/); let l1 = "", l2 = "", i = 0;
+    for (; i < words.length; i++) { const t = l1 ? l1 + " " + words[i] : words[i]; if (l1 && ctx3d.measureText(t).width > maxW) break; l1 = t; }
+    for (; i < words.length; i++) { const t = l2 ? l2 + " " + words[i] : words[i]; if (l2 && ctx3d.measureText(t).width > maxW) { l2 += "…"; return [l1, l2]; } l2 = t; }
+    return l2 ? [l1, l2] : [l1];
+  }
+  function labelInCircle(text, cx, cy, r, color) {
+    const fs = Math.max(6.5, Math.min(12, r * 0.42));
+    ctx3d.font = fs + "px Inter, sans-serif";
+    ctx3d.fillStyle = color; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
+    const lines = wrap2(text, r * 1.75), lh = fs * 1.06, sy = cy - (lines.length - 1) * lh / 2;
+    lines.forEach((ln, i) => ctx3d.fillText(ln, cx, sy + i * lh));
   }
 
   function roundRect3D(x, y, w, h, r) {
@@ -1187,16 +1203,11 @@
         ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
         ctx3d.fillStyle = n.core ? "#ffffff" : "#141416"; ctx3d.fill();
         if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
-        if (r > 15 && p.f > 0.75) {
-          ctx3d.fillStyle = n.core ? "#0a0a0c" : "#e8e8e8";
-          ctx3d.font = Math.max(9, Math.min(12, r * 0.7)) + "px Inter, sans-serif";
-          ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
-          ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy);
-        }
+        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#0a0a0c" : "#e8e8e8");
       } else {
         const s = r * 1.5; ctx3d.fillStyle = "#141416"; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
         roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
-        if (p.f > 0.8) {
+        if (p.f > 0.5) {
           ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
           ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy + r + 7);
         }
