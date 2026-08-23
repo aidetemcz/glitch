@@ -108,7 +108,9 @@
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
-  let adminSecret = sessionStorage.getItem("km-secret") || "";   // plaintext hesla pro RPC (klientská závora)
+  let adminSecret = sessionStorage.getItem("km-secret") || "";   // plaintext hesla pro RPC
+  let adminLogin = sessionStorage.getItem("km-login") || "";     // e-mail nebo „aidetem"
+  let adminRole = sessionStorage.getItem("km-role") || "";       // 'admin' | 'editor'
   let editing = false;
   const loadEdits = () => { try { return JSON.parse(localStorage.getItem(EDITS_KEY) || "{}"); } catch (_) { return {}; } };
   const saveEdits = (o) => { try { localStorage.setItem(EDITS_KEY, JSON.stringify(o)); } catch (_) {} };
@@ -519,16 +521,62 @@
       ? `Změny se ukládají <strong>živě do Supabase</strong> (uvidí je všichni).`
       : `⚠️ <strong>Supabase je teď nedostupné</strong> — změny se uloží jen lokálně do tohoto prohlížeče.`;
     return `<div class="d-section km-admin">
-      <h3>Admin</h3>
-      <p class="d-desc" style="margin-bottom:10px">Jsi přihlášen. Klikni na koncept a uprav ho, nebo přidej nový. ${status}</p>
+      <h3>Editor</h3>
+      <p class="d-desc" style="margin-bottom:10px">Přihlášen*a jako <strong>${esc(adminLogin || "?")}</strong>${adminRole === "admin" ? " (admin)" : ""}. Klikni na koncept a uprav ho, nebo přidej nový. ${status}</p>
       <div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>
       <div class="d-links" style="margin-top:8px">
         <button class="km-primary" data-act="export">⬇ Export YAML</button>
         <button class="km-primary" data-act="export-json">⬇ Export concepts.json</button>
       </div>
+      ${adminRole === "admin" ? '<div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="editors">👥 Uživatelé</button></div>' : ""}
       <div class="d-links" style="margin-top:8px"><button class="d-link" data-act="logout">Odhlásit</button></div>
       <p class="d-empty" style="margin-top:10px">Export vygeneruje soubory ke commitu na GitHub — YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee.</p>
     </div>`;
+  }
+
+  /* ---------- Správa editorů (jen admin) ---------- */
+  async function openEditors() {
+    editing = false;
+    const badge = '<span class="d-badge" style="background:#ffff00;color:#000000">Uživatelé</span>';
+    detailBody.innerHTML = badge + '<p class="d-desc">Načítám…</p>';
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+    let list = [];
+    try { list = (await window.KM.listEditors(adminLogin, adminSecret)) || []; }
+    catch (e) {
+      detailBody.innerHTML = badge + '<p class="d-desc km-danger">' + esc((e && e.message) || "Nepodařilo se načíst.") + '</p>' +
+        '<div class="ed-actions"><button class="reset-btn" data-act="editors-back">Zpět</button></div>';
+      return;
+    }
+    const rows = list.length
+      ? list.map((u) => '<div class="mc-row"><span class="mc-name">' + esc(u.name || u.email) + ' · ' + esc(u.email) + (u.role === "admin" ? ' · admin' : '') + '</span>' +
+          '<button class="mc-del" data-act="editor-del" data-email="' + esc(u.email) + '" title="Smazat">✕</button></div>').join("")
+      : '<span class="d-empty">zatím žádní další editoři</span>';
+    detailBody.innerHTML = badge +
+      '<p class="d-desc">Přidej garanta/konzultanta na e-mail a zadej mu heslo — přihlásí se pak e-mailem + tímhle heslem. Stejným formulářem heslo i změníš.</p>' +
+      '<div class="d-section"><h3>Editoři</h3>' + rows + '</div>' +
+      '<div class="d-section"><h3>Přidat / změnit heslo</h3>' +
+      '<div class="ed-field"><label>E-mail *</label><input id="ed-email" type="email" placeholder="jmeno@domena.cz" autocomplete="off"></div>' +
+      '<div class="ed-field"><label>Jméno</label><input id="ed-name" placeholder="Jméno Příjmení" autocomplete="off"></div>' +
+      '<div class="ed-field"><label>Heslo *</label><input id="ed-pass" placeholder="min. 6 znaků" autocomplete="off"></div>' +
+      '<div class="ed-field"><label>Role</label><select id="ed-role"><option value="editor">Editor</option><option value="admin">Admin</option></select></div>' +
+      '<div class="ed-actions"><button class="reset-btn" data-act="editors-back">Zpět</button><button class="km-primary" data-act="editor-add">Uložit uživatele</button></div></div>';
+  }
+
+  async function addEditorSubmit() {
+    const email = (document.getElementById("ed-email").value || "").trim();
+    const name = (document.getElementById("ed-name").value || "").trim();
+    const pass = document.getElementById("ed-pass").value || "";
+    const role = document.getElementById("ed-role").value;
+    if (!email || email.indexOf("@") < 0) { alert("Zadej platný e-mail."); return; }
+    if (pass.length < 6) { alert("Heslo musí mít aspoň 6 znaků."); return; }
+    try { await window.KM.addEditor(adminLogin, adminSecret, email, pass, name, role); openEditors(); }
+    catch (e) { alert("Uložení selhalo: " + ((e && e.message) || e)); }
+  }
+
+  function removeEditorAct(email) {
+    if (!email || !confirm("Opravdu smazat uživatele " + email + "?")) return;
+    window.KM.removeEditor(adminLogin, adminSecret, email).then(openEditors)
+      .catch((e) => alert("Smazání selhalo: " + ((e && e.message) || e)));
   }
 
   function onPanelAction(e) {
@@ -536,7 +584,11 @@
     if (!b) return;
     const act = b.dataset.act, id = b.dataset.id;
     if (act === "login") openLogin();
-    else if (act === "logout") { authed = false; adminSecret = ""; sessionStorage.removeItem("km-auth"); sessionStorage.removeItem("km-secret"); openAbout(); }
+    else if (act === "logout") { authed = false; adminSecret = ""; adminLogin = ""; adminRole = ""; ["km-auth","km-secret","km-login","km-role"].forEach((k) => sessionStorage.removeItem(k)); openAbout(); }
+    else if (act === "editors") openEditors();
+    else if (act === "editor-add") addEditorSubmit();
+    else if (act === "editor-del") removeEditorAct(b.dataset.email);
+    else if (act === "editors-back") openAbout();
     else if (act === "export") exportYAML();
     else if (act === "export-json") exportConceptsJson();
     else if (act === "discard") discardEdits();
@@ -571,8 +623,8 @@
     const d = document.createElement("div");
     d.id = "km-login"; d.className = "km-modal hidden";
     d.innerHTML = `<div class="km-card">
-      <h3>Přihlášení — admin</h3>
-      <label>Login</label><input id="km-user" autocomplete="username" spellcheck="false">
+      <h3>Přihlášení do editoru</h3>
+      <label>E-mail (nebo aidetem)</label><input id="km-user" autocomplete="username" spellcheck="false" placeholder="jmeno@domena.cz">
       <label>Heslo</label><input id="km-pass" type="password" autocomplete="current-password">
       <div class="km-err" id="km-err"></div>
       <div class="km-actions">
@@ -599,13 +651,17 @@
   async function submitLogin() {
     const u = document.getElementById("km-user").value.trim();
     const p = document.getElementById("km-pass").value;
-    if (u === ADMIN_USER && (await sha256hex(p)) === ADMIN_HASH) {
-      authed = true; adminSecret = p;
+    const err = document.getElementById("km-err");
+    err.textContent = "Přihlašuji…";
+    try {
+      if (!window.KM) throw new Error("Server (Supabase) není dostupný.");
+      const res = await window.KM.login(u, p);
+      if (!res || !res.ok) { err.textContent = "Špatný login nebo heslo."; return; }
+      authed = true; adminLogin = res.login || u; adminSecret = p; adminRole = res.role || "editor";
       sessionStorage.setItem("km-auth", "1"); sessionStorage.setItem("km-secret", p);
+      sessionStorage.setItem("km-login", adminLogin); sessionStorage.setItem("km-role", adminRole);
       closeLogin(); openAbout();
-    } else {
-      document.getElementById("km-err").textContent = "Špatný login nebo heslo.";
-    }
+    } catch (e) { err.textContent = (e && e.message) || "Přihlášení selhalo."; }
   }
 
   /* editační formulář */
@@ -681,7 +737,7 @@
     /* uložit — Supabase (živě pro všechny), jinak lokálně jako záloha */
     const patch = {}; EDITABLE.forEach((k) => patch[k] = c[k]);
     if (supabaseOk && window.KM) {
-      window.KM.saveOverride(adminSecret, id, patch)
+      window.KM.saveOverride(adminLogin, adminSecret, id, patch)
         .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
     } else {
       const ov = loadEdits(); ov[id] = patch; saveEdits(ov);
@@ -800,7 +856,7 @@
       stav: "hotovo"
     });
     if (supabaseOk && window.KM) {
-      window.KM.addConcept(adminSecret, id, c).catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+      window.KM.addConcept(adminLogin, adminSecret, id, c).catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
     } else {
       try { const nw = JSON.parse(localStorage.getItem(NEW_KEY) || "[]"); nw.push(c); localStorage.setItem(NEW_KEY, JSON.stringify(nw)); } catch (_) {}
     }
@@ -1041,7 +1097,7 @@
     if (existing.some((m) => m.id === id)) { let i = 2; while (existing.some((m) => m.id === id + "-" + i)) i++; id = id + "-" + i; }
     const ord = existing.length;
     if (supabaseOk && window.KM) {
-      window.KM.saveMicro(adminSecret, id, parentId, form, ord)
+      window.KM.saveMicro(adminLogin, adminSecret, id, parentId, form, ord)
         .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
     }
     const m = Object.assign({ id: id, parent_id: parentId, ord: ord }, form);
@@ -1058,7 +1114,7 @@
     if (!form.nazev) { alert("Doplň název mikrokonceptu."); return; }
     Object.assign(m, form);   // id / parent_id / ord zůstávají
     if (supabaseOk && window.KM) {
-      window.KM.saveMicro(adminSecret, m.id, m.parent_id, form, m.ord || 0)
+      window.KM.saveMicro(adminLogin, adminSecret, m.id, m.parent_id, form, m.ord || 0)
         .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
     }
     editing = false;
@@ -1073,7 +1129,7 @@
     if (!confirm("Opravdu smazat tenhle mikrokoncept?")) return;
     parent._micros = (parent._micros || []).filter((m) => m.id !== microId);
     if (supabaseOk && window.KM) {
-      window.KM.deleteMicro(adminSecret, microId).catch((e) => alert("Smazání selhalo: " + ((e && e.message) || e)));
+      window.KM.deleteMicro(adminLogin, adminSecret, microId).catch((e) => alert("Smazání selhalo: " + ((e && e.message) || e)));
     }
     if (drillId === parent.id) drillInto(parent.id);
     else openDetail(cy.getElementById(parent.id));

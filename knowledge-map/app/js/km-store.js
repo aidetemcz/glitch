@@ -35,6 +35,20 @@
     });
   }
 
+  // RPC, které vrací data (JSON) — pro přihlášení a seznam editorů.
+  function rpcJson(fn, body) {
+    return fetch(URL + "/rest/v1/rpc/" + fn, {
+      method: "POST",
+      headers: { "apikey": ANON, "Authorization": "Bearer " + ANON, "Content-Type": "application/json" },
+      body: JSON.stringify(body || {})
+    }).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (d) {
+        if (!r.ok) throw new Error((d && (d.message || d.error || d.hint)) || ("HTTP " + r.status));
+        return d;
+      });
+    });
+  }
+
   // Načte celou překryvovou vrstvu naráz. Když je Supabase nedostupné,
   // vrátí prázdno + offline:true (mapa pak jede jen ze základního YAML).
   function loadOverlay() {
@@ -58,11 +72,18 @@
   window.KM = {
     online: true,
     loadOverlay: loadOverlay,
-    saveOverride: function (secret, id, patch) { return rpc("km_save_override", { p_secret: secret, p_id: id, p_patch: patch }); },
-    deleteOverride: function (secret, id) { return rpc("km_delete_override", { p_secret: secret, p_id: id }); },
-    addConcept: function (secret, id, data) { return rpc("km_add_concept", { p_secret: secret, p_id: id, p_data: data }); },
-    deleteConcept: function (secret, id) { return rpc("km_delete_concept", { p_secret: secret, p_id: id }); },
-    saveMicro: function (secret, id, parent, data, ord) { return rpc("km_save_micro", { p_secret: secret, p_id: id, p_parent: parent, p_data: data, p_ord: ord || 0 }); },
-    deleteMicro: function (secret, id) { return rpc("km_delete_micro", { p_secret: secret, p_id: id }); }
+    // přihlášení (e-mail nebo aidetem) → { ok, role, name, login }
+    login: function (login, secret) { return rpcJson("km_login", { p_login: login, p_secret: secret }); },
+    // správa editorů (jen admin)
+    listEditors: function (login, secret) { return rpcJson("km_list_editors", { p_admin_login: login, p_admin_secret: secret }); },
+    addEditor: function (login, secret, email, password, name, role) { return rpc("km_add_editor", { p_admin_login: login, p_admin_secret: secret, p_email: email, p_password: password, p_name: name || "", p_role: role || "editor" }); },
+    removeEditor: function (login, secret, email) { return rpc("km_remove_editor", { p_admin_login: login, p_admin_secret: secret, p_email: email }); },
+    // zápisy — posílají i p_login (kdo edituje)
+    saveOverride: function (login, secret, id, patch) { return rpc("km_save_override", { p_login: login, p_secret: secret, p_id: id, p_patch: patch }); },
+    deleteOverride: function (login, secret, id) { return rpc("km_delete_override", { p_login: login, p_secret: secret, p_id: id }); },
+    addConcept: function (login, secret, id, data) { return rpc("km_add_concept", { p_login: login, p_secret: secret, p_id: id, p_data: data }); },
+    deleteConcept: function (login, secret, id) { return rpc("km_delete_concept", { p_login: login, p_secret: secret, p_id: id }); },
+    saveMicro: function (login, secret, id, parent, data, ord) { return rpc("km_save_micro", { p_login: login, p_secret: secret, p_id: id, p_parent: parent, p_data: data, p_ord: ord || 0 }); },
+    deleteMicro: function (login, secret, id) { return rpc("km_delete_micro", { p_login: login, p_secret: secret, p_id: id }); }
   };
 })();
