@@ -553,6 +553,9 @@
     else if (act === "edit-then-micro") { saveEditor(id); openAddMicro(id); }   // ulož koncept, pak přidej mikrokoncept
     else if (act === "micro-cancel") openDetail(cy.getElementById(id));
     else if (act === "micro-save") saveNewMicro(id);
+    else if (act === "micro-edit") openEditMicro(b.dataset.micro);
+    else if (act === "micro-edit-save") saveEditMicro(b.dataset.micro);
+    else if (act === "micro-edit-cancel") openMicroDetail(findMicro(b.dataset.micro));
     else if (act === "del-micro") deleteMicro(b.dataset.micro);
     else if (act === "add-cile") document.getElementById("ed-cile").insertAdjacentHTML("beforeend", cileRow({}));
     else if (act === "add-krit") document.getElementById("ed-kriteria").insertAdjacentHTML("beforeend", kritRow({}));
@@ -947,15 +950,53 @@
       ((dive || add) ? '<div class="d-links" style="margin-top:8px">' + dive + add + '</div>' : "") + '</div>';
   }
 
+  // Mikrokoncept má stejný obsah jako koncept: název, vrstva, popis, cíle,
+  // kritéria (gradované). Data se ukládají do km_microkoncepty.data (jsonb).
+  const microFormHtml = (m) => {
+    m = m || {};
+    return '' +
+      '<div class="ed-field"><label>Název *</label><input id="mc-nazev" value="' + esc(m.nazev || "") + '" placeholder="např. Nekonečný cyklus"></div>' +
+      '<div class="ed-field"><label>Vrstva</label><select id="mc-vrstva">' +
+        '<option value="core"' + (m.vrstva === "core" ? " selected" : "") + '>Core</option>' +
+        '<option value="navazujici"' + (m.vrstva !== "core" ? " selected" : "") + '>Navazující</option></select></div>' +
+      '<div class="ed-field"><label>Popis</label><textarea id="mc-popis" rows="4" placeholder="Co mikrokoncept je…">' + esc(m.popis || "") + '</textarea></div>' +
+      '<div class="ed-field"><label>Vzdělávací cíle</label><div id="ed-cile">' + (m.cile || []).map(cileRow).join("") + '</div>' +
+        '<button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>' +
+      '<div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria">' + (m.kriteria || []).map(kritRow).join("") + '</div>' +
+        '<button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>';
+  };
+  function readMicroForm() {
+    const cile = [...document.querySelectorAll("#ed-cile .ed-row")].map((r) => {
+      const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
+      const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
+      return o;
+    }).filter((o) => o.text);
+    const kriteria = [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) =>
+      ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    return {
+      nazev: (document.getElementById("mc-nazev").value || "").trim(),
+      vrstva: document.getElementById("mc-vrstva").value,
+      popis: (document.getElementById("mc-popis").value || "").trim(),
+      cile: cile, kriteria: kriteria
+    };
+  }
+
   function openMicroDetail(m) {
     if (!m) return;
     editing = false;
+    const parent = conceptById[m.parent_id];
     const cil = (m.cile || []).length ? goals(m.cile) : '<span class="d-empty">—</span>';
+    const krit = (m.kriteria || []).length ? goals(m.kriteria) : '<span class="d-empty">—</span>';
     detailBody.innerHTML =
       '<span class="d-badge" style="background:#ffff00;color:#000000">Mikrokoncept</span>' +
       '<h2 class="d-title">' + esc(m.nazev || m.id) + '</h2>' +
+      '<div class="d-meta">' +
+        '<span class="d-pill ' + (m.vrstva === "core" ? "core" : "") + '">' + esc(VRSTVA[m.vrstva] || "Navazující") + '</span>' +
+        (parent ? '<span class="d-pill">pod: ' + esc(parent.nazev) + '</span>' : "") + '</div>' +
+      (authed ? '<button class="km-primary km-editbtn" data-act="micro-edit" data-micro="' + esc(m.id) + '">✎ Upravit mikrokoncept</button>' : "") +
       '<p class="d-desc">' + esc(typo(m.popis || "")) + '</p>' +
-      '<div class="d-section"><h3>Cíl</h3>' + cil + '</div>' +
+      '<div class="d-section"><h3>Vzdělávací cíle</h3>' + cil + '</div>' +
+      '<div class="d-section"><h3>Kritéria hodnocení</h3>' + krit + '</div>' +
       (authed ? '<div class="d-links"><button class="d-link km-danger" data-act="del-micro" data-micro="' + esc(m.id) + '">Smazat mikrokoncept</button></div>' : "");
     detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
@@ -966,36 +1007,60 @@
     detailBody.innerHTML =
       '<span class="d-badge" style="background:#ffff00;color:#000000">Nový mikrokoncept</span>' +
       '<p class="d-desc">Pod koncept <strong>' + esc(c.nazev) + '</strong></p>' +
-      '<div class="ed-field"><label>Název *</label><input id="mc-nazev" placeholder="např. Nekonečný cyklus"></div>' +
-      '<div class="ed-field"><label>Popis</label><textarea id="mc-popis" rows="4" placeholder="Co mikrokoncept je…"></textarea></div>' +
-      '<div class="ed-field"><label>Cíl (nepovinné)</label><textarea id="mc-cil" rows="2" placeholder="Co se žák naučí"></textarea></div>' +
+      microFormHtml({}) +
       '<div class="ed-actions">' +
       '<button class="reset-btn" data-act="micro-cancel" data-id="' + esc(parentId) + '">Zrušit</button>' +
       '<button class="km-primary" data-act="micro-save" data-id="' + esc(parentId) + '">Vytvořit mikrokoncept</button></div>';
     detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
 
+  function openEditMicro(microId) {
+    const m = findMicro(microId); if (!m) return;
+    const parent = conceptById[m.parent_id];
+    editing = true; pinned = null; clearNb();
+    detailBody.innerHTML =
+      '<span class="d-badge" style="background:#ffff00;color:#000000">Úprava mikrokonceptu</span>' +
+      (parent ? '<p class="d-desc">Pod koncept <strong>' + esc(parent.nazev) + '</strong></p>' : "") +
+      microFormHtml(m) +
+      '<div class="ed-actions">' +
+      '<button class="reset-btn" data-act="micro-edit-cancel" data-micro="' + esc(m.id) + '">Zrušit</button>' +
+      '<button class="km-primary" data-act="micro-edit-save" data-micro="' + esc(m.id) + '">Uložit</button></div>';
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
   function saveNewMicro(parentId) {
     const c = conceptById[parentId]; if (!c) return;
-    const nazev = (document.getElementById("mc-nazev").value || "").trim();
-    if (!nazev) { alert("Doplň název mikrokonceptu."); return; }
-    const s = slug(nazev); if (!s) { alert("Název musí obsahovat písmena nebo číslice."); return; }
+    const form = readMicroForm();
+    if (!form.nazev) { alert("Doplň název mikrokonceptu."); return; }
+    const s = slug(form.nazev); if (!s) { alert("Název musí obsahovat písmena nebo číslice."); return; }
     const existing = c._micros || [];
     let id = parentId + "--" + s;
     if (existing.some((m) => m.id === id)) { let i = 2; while (existing.some((m) => m.id === id + "-" + i)) i++; id = id + "-" + i; }
-    const data = { nazev: nazev, popis: (document.getElementById("mc-popis").value || "").trim() };
-    const cilText = (document.getElementById("mc-cil").value || "").trim();
-    if (cilText) data.cile = [{ uroven: "porozumeni", text: cilText }];
     const ord = existing.length;
-    const m = Object.assign({ id: id, parent_id: parentId, ord: ord }, data);
     if (supabaseOk && window.KM) {
-      window.KM.saveMicro(adminSecret, id, parentId, data, ord)
+      window.KM.saveMicro(adminSecret, id, parentId, form, ord)
         .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
     }
+    const m = Object.assign({ id: id, parent_id: parentId, ord: ord }, form);
     (c._micros = c._micros || []).push(m);
     editing = false;
     if (drillId === parentId) drillInto(parentId);
     else openDetail(cy.getElementById(parentId));
+  }
+
+  function saveEditMicro(microId) {
+    const m = findMicro(microId); if (!m) return;
+    const parent = conceptById[m.parent_id];
+    const form = readMicroForm();
+    if (!form.nazev) { alert("Doplň název mikrokonceptu."); return; }
+    Object.assign(m, form);   // id / parent_id / ord zůstávají
+    if (supabaseOk && window.KM) {
+      window.KM.saveMicro(adminSecret, m.id, m.parent_id, form, m.ord || 0)
+        .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+    }
+    editing = false;
+    if (parent && drillId === parent.id) drillInto(parent.id);
+    openMicroDetail(m);
   }
 
   function deleteMicro(microId) {
