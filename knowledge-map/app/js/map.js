@@ -333,11 +333,14 @@
     /* delegované akce v pravém panelu (admin/editor) */
     detailBody.addEventListener("click", onPanelAction);
 
-    /* přepínač zobrazení */
+    /* přepínač zobrazení (+ 3D pohled) */
     document.querySelectorAll(".vt-btn").forEach((b) => b.addEventListener("click", () => {
-      if (b.dataset.view === viewMode) return;
+      const v = b.dataset.view;
       document.querySelectorAll(".vt-btn").forEach((x) => x.classList.toggle("active", x === b));
-      render(b.dataset.view);
+      if (v === "3d") { enter3D(); return; }
+      const was3d = view3d;
+      if (was3d) exit3D();
+      if (v !== viewMode) render(v);
     }));
 
     /* breadcrumb pro hloubkové ponoření (překryv nad grafem) */
@@ -1104,6 +1107,171 @@
     drillId = null;
     const bar = document.getElementById("km-drillbar"); if (bar) bar.classList.add("hidden");
     render(viewMode);
+  }
+
+  // Detail konceptu bez manipulace s grafem (pro 3D pohled).
+  function showConceptPanel(c) {
+    editing = false;
+    detailBody.innerHTML = conceptHtml(c);
+    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
+  /* ---------- 3D pohled (vlastní projekce, bez knihovny) ----------
+     Koncepty leží v rovině (z=0), mikrokoncepty na vrstvě pod rodičem (z<0).
+     Táhnutím se scéna otáčí, kolečkem přibližuje; klik otevře detail. */
+  let view3d = false, cvs3d = null, ctx3d = null, raf3d = null, drag3d = null;
+  let cam3d = { rotX: -0.75, rotY: 0.5, zoom: 1 };
+  let nodes3d = [], edges3d = [];
+
+  function build3D() {
+    nodes3d = []; edges3d = [];
+    const byId = {};
+    DATA.concepts.forEach((c) => {
+      const n = cy.getElementById(c.id);
+      const pos = (n && n.nonempty()) ? n.position() : { x: 0, y: 0 };
+      const deg = (n && n.nonempty()) ? (n.data("size") || 40) : 40;
+      const node = { id: c.id, kind: "concept", x: pos.x, y: pos.y, z: 0, r: Math.max(10, deg * 0.28), label: c.nazev, core: c.vrstva === "core", _c: c };
+      nodes3d.push(node); byId[c.id] = node;
+    });
+    const xs = nodes3d.map((n) => n.x), ys = nodes3d.map((n) => n.y);
+    const cxm = (Math.min(...xs) + Math.max(...xs)) / 2, cym = (Math.min(...ys) + Math.max(...ys)) / 2;
+    let maxR = 1;
+    nodes3d.forEach((n) => { n.x -= cxm; n.y -= cym; maxR = Math.max(maxR, Math.hypot(n.x, n.y)); });
+    const sc = 320 / maxR;
+    nodes3d.forEach((n) => { n.x *= sc; n.y *= sc; });
+    const DEPTH = 210;
+    DATA.concepts.forEach((c) => {
+      const micros = c._micros || []; if (!micros.length) return;
+      const parent = byId[c.id];
+      micros.forEach((m, i) => {
+        const ang = 2 * Math.PI * i / micros.length, rr = 24 + micros.length * 2;
+        const node = { id: "m-" + m.id, kind: "micro", x: parent.x + Math.cos(ang) * rr, y: parent.y + Math.sin(ang) * rr, z: -DEPTH, r: 8, label: m.nazev || m.id, _m: m };
+        nodes3d.push(node); edges3d.push({ a: parent, b: node, kind: "strut" });
+      });
+    });
+    DATA.concepts.forEach((c) => {
+      (c.prerekvizity || []).forEach((p) => { if (byId[p] && byId[c.id]) edges3d.push({ a: byId[p], b: byId[c.id], kind: "prereq" }); });
+    });
+  }
+
+  function project3D(n, w, h) {
+    const cosY = Math.cos(cam3d.rotY), sinY = Math.sin(cam3d.rotY), cosX = Math.cos(cam3d.rotX), sinX = Math.sin(cam3d.rotX);
+    const x1 = n.x * cosY + n.z * sinY, z1 = -n.x * sinY + n.z * cosY, y1 = n.y;
+    const y2 = y1 * cosX - z1 * sinX, z2 = y1 * sinX + z1 * cosX, x2 = x1;
+    const CAM = 900, f = CAM / (CAM - z2), s = Math.min(w, h) / 760 * cam3d.zoom;
+    return { sx: w / 2 + x2 * s * f, sy: h / 2 + y2 * s * f, depth: z2, f: f * s };
+  }
+
+  function roundRect3D(x, y, w, h, r) {
+    ctx3d.beginPath();
+    ctx3d.moveTo(x + r, y); ctx3d.arcTo(x + w, y, x + w, y + h, r); ctx3d.arcTo(x + w, y + h, x, y + h, r);
+    ctx3d.arcTo(x, y + h, x, y, r); ctx3d.arcTo(x, y, x + w, y, r); ctx3d.closePath();
+  }
+
+  function draw3D() {
+    if (!view3d || !ctx3d) return;
+    const w = cvs3d.width, h = cvs3d.height;
+    ctx3d.fillStyle = "#0a0a0c"; ctx3d.fillRect(0, 0, w, h);
+    nodes3d.forEach((n) => { n._p = project3D(n, w, h); });
+    edges3d.forEach((e) => {
+      const A = e.a._p, B = e.b._p;
+      ctx3d.beginPath(); ctx3d.moveTo(A.sx, A.sy); ctx3d.lineTo(B.sx, B.sy);
+      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(255,255,0,0.5)"; ctx3d.lineWidth = 1.3; }
+      else { ctx3d.strokeStyle = "rgba(255,255,255,0.07)"; ctx3d.lineWidth = 0.8; }
+      ctx3d.stroke();
+    });
+    nodes3d.slice().sort((a, b) => a._p.depth - b._p.depth).forEach((n) => {
+      const p = n._p, r = Math.max(2, n.r * p.f);
+      if (n.kind === "concept") {
+        ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
+        ctx3d.fillStyle = n.core ? "#ffffff" : "#141416"; ctx3d.fill();
+        if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
+        if (r > 15 && p.f > 0.75) {
+          ctx3d.fillStyle = n.core ? "#0a0a0c" : "#e8e8e8";
+          ctx3d.font = Math.max(9, Math.min(12, r * 0.7)) + "px Inter, sans-serif";
+          ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
+          ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy);
+        }
+      } else {
+        const s = r * 1.5; ctx3d.fillStyle = "#141416"; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
+        roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
+        if (p.f > 0.8) {
+          ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
+          ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy + r + 7);
+        }
+      }
+    });
+  }
+
+  function loop3D() { if (!view3d) return; draw3D(); raf3d = requestAnimationFrame(loop3D); }
+
+  function resize3D() {
+    if (!cvs3d) return;
+    const rect = document.getElementById("cy").getBoundingClientRect();
+    cvs3d.style.position = "fixed";
+    cvs3d.style.left = rect.left + "px"; cvs3d.style.top = rect.top + "px";
+    cvs3d.width = Math.max(100, Math.round(rect.width)); cvs3d.height = Math.max(100, Math.round(rect.height));
+    cvs3d.style.width = rect.width + "px"; cvs3d.style.height = rect.height + "px";
+  }
+
+  function pick3D(clientX, clientY) {
+    const rect = cvs3d.getBoundingClientRect();
+    const mx = clientX - rect.left, my = clientY - rect.top;
+    let hit = null, hitDepth = -Infinity;
+    nodes3d.forEach((n) => {
+      const p = n._p; if (!p) return;
+      const r = Math.max(6, n.r * p.f) + 4;
+      if (Math.hypot(mx - p.sx, my - p.sy) <= r && p.depth > hitDepth) { hit = n; hitDepth = p.depth; }
+    });
+    if (!hit) return;
+    if (hit.kind === "concept") showConceptPanel(hit._c); else openMicroDetail(hit._m);
+  }
+
+  function attach3DEvents() {
+    const down = (x, y) => { drag3d = { x: x, y: y, ox: x, oy: y, moved: false }; };
+    const move = (x, y) => {
+      if (!drag3d) return;
+      const dx = x - drag3d.x, dy = y - drag3d.y;
+      if (Math.abs(x - drag3d.ox) + Math.abs(y - drag3d.oy) > 4) drag3d.moved = true;
+      cam3d.rotY += dx * 0.008; cam3d.rotX += dy * 0.008;
+      cam3d.rotX = Math.max(-1.4, Math.min(1.4, cam3d.rotX));
+      drag3d.x = x; drag3d.y = y;
+    };
+    cvs3d.addEventListener("mousedown", (e) => down(e.clientX, e.clientY));
+    window.addEventListener("mousemove", (e) => move(e.clientX, e.clientY));
+    window.addEventListener("mouseup", (e) => { if (view3d && drag3d && !drag3d.moved) pick3D(e.clientX, e.clientY); drag3d = null; });
+    cvs3d.addEventListener("wheel", (e) => { e.preventDefault(); cam3d.zoom *= (e.deltaY < 0 ? 1.1 : 0.9); cam3d.zoom = Math.max(0.3, Math.min(4, cam3d.zoom)); }, { passive: false });
+    cvs3d.addEventListener("touchstart", (e) => { const t = e.touches[0]; down(t.clientX, t.clientY); }, { passive: true });
+    cvs3d.addEventListener("touchmove", (e) => { const t = e.touches[0]; move(t.clientX, t.clientY); }, { passive: true });
+    cvs3d.addEventListener("touchend", (e) => { if (view3d && drag3d && !drag3d.moved) { const t = (e.changedTouches && e.changedTouches[0]); if (t) pick3D(t.clientX, t.clientY); } drag3d = null; });
+    window.addEventListener("resize", () => { if (view3d) resize3D(); });
+  }
+
+  function enter3D() {
+    if (view3d) return;
+    view3d = true; drillId = null;
+    const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
+    closeDetail();
+    document.getElementById("cy").style.visibility = "hidden";
+    if (!cvs3d) {
+      cvs3d = document.createElement("canvas"); cvs3d.id = "cy3d"; cvs3d.className = "cy3d";
+      document.getElementById("app").appendChild(cvs3d);
+      ctx3d = cvs3d.getContext("2d");
+      attach3DEvents();
+    }
+    cvs3d.style.display = "block";
+    resize3D(); build3D(); loop3D();
+    window.__km3d = { nodes: () => nodes3d, pick: pick3D };   // testovací/ladicí hook
+    setStatus("3D pohled — táhni pro otočení, kolečkem přiblížíš, klik otevře detail");
+  }
+
+  function exit3D() {
+    view3d = false;
+    if (raf3d) cancelAnimationFrame(raf3d);
+    if (cvs3d) cvs3d.style.display = "none";
+    document.getElementById("cy").style.visibility = "visible";
+    setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " témat · " + DATA.areas.length + " okruhů RVP");
   }
 
   /* ---------- Organické obrysy clusterů (canvas overlay) ---------- */

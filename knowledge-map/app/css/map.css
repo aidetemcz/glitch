@@ -170,6 +170,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .km-drillbar.hidden { display: none; }
 .km-drillbar button { background: transparent; border: 0; color: var(--c-yellow); font-weight: 600; font-size: 14px; cursor: pointer; }
 .km-drill-title { color: var(--c-white, #fff); font-size: 14px; font-weight: 600; }
+.cy3d { z-index: 4; cursor: grab; touch-action: none; background: #0a0a0c; }
+.cy3d:active { cursor: grabbing; }
 
 /* Mobil */
 @media (max-width: 720px) {
