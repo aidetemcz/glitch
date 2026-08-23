@@ -1,0 +1,1311 @@
+[
+  {
+    "id": "welcome",
+    "type": "welcome",
+    "rozklik": {
+      "kind": "explainer",
+      "badge": "O Glitchi",
+      "title": "Tiny Glitch je vzdělávací sociální síť",
+      "paragraphs": [
+        "Když se chceš něco nového naučit — nebo naopak něco naučit někoho jiného — tohle je tvůj prostor.",
+        "Ve feedu na tebe čekají Glitche: mikrotémata, každé jako jedna karta. Některé splníš rovnou při scrollování, jiné si rozklikneš do hloubky, popovídáš si o nich s Glitcheem a ověříš si, co už znáš. Glitche se skládají do questů, které tě krok po kroku dovedou od prvních pojmů až k vlastnímu projektu."
+      ],
+      "outro": "Rozklikni si sekce níž a mrkni, jak to tu funguje. Pak už se můžeš vrhnout do feedu.",
+      "sections": [
+        {
+          "title": "Co je Glitch",
+          "summary": "Jedno malé téma, jedna karta ve feedu. Učíš se po malých soustech, jeden Glitch po druhém; swipuješ nahoru na další kartu.",
+          "content": [
+            "Jedno malé téma — jedna karta ve feedu. Přečteš si pár vět, něco si vyzkoušíš a jdeš dál. Nemusíš hltat celou učebnici naráz; učíš se po malých soustech, jeden Glitch po druhém. Ovládá se to jako sociální síť: swipuješ nahoru na další kartu."
+          ]
+        },
+        {
+          "title": "Výzvy rovnou ve feedu",
+          "summary": "Malá rozcvička pro hlavu: vyřešíš ji přímo na kartě, hned vidíš výsledek a scrolluješ dál.",
+          "content": [
+            "Některé Glitche jsou malá rozcvička pro hlavu. Vyřešíš je přímo na kartě, hned vidíš výsledek a scrolluješ dál. Žádné rozklikávání — jen rychlé cvaknutí a jedeš."
+          ]
+        },
+        {
+          "title": "Rozklikni a povídej si",
+          "summary": "Krátký výklad + chat s průvodcem, který tě nezkouší, ale navádí; a kvíz na ověření znalostí.",
+          "content": [
+            "Jiné Glitche skrývají víc. Rozklikneš kartu, přečteš si krátký výklad a pod ním se otevře chat s průvodcem. Ten tě nezkouší — spíš se doptává a nakopne tě správným směrem, ať na to přijdeš vlastními silami. A na ověření znalostí je tu kvíz. Nejde v něm o známky, ale o to, aby ti to docvaklo."
+          ]
+        },
+        {
+          "title": "Questy",
+          "summary": "Glitche se řadí do questů. Když splníš všechny Glitche v questu, odemkne se ti poslední, projektový.",
+          "content": [
+            "Glitche se řadí do questů — tematických celků. Postupuješ jimi od úplných základů dál a když splníš všechny Glitche v questu, odemkne se ti ten poslední, projektový. Pořadí není náhodné: každý Glitch tě připraví na ten další."
+          ]
+        },
+        {
+          "title": "Projekt na konci questu",
+          "summary": "Finální Glitch, kde vše spojíš a něco postavíš; odemkne se, až projdeš přípravné Glitche.",
+          "content": [
+            "Poslední Glitch v každém questu je projekt. To je chvíle, kdy všechno, co ses cestou naučil/a, spojíš dohromady a něco vlastního postavíš. Předchozí Glitche tě na něj připraví — a jakmile je máš za sebou, projekt se ti odemkne. Je to způsob, jak sobě i ostatním ukázat, že to fakt umíš."
+          ]
+        },
+        {
+          "title": "Sdílej a navazuj",
+          "summary": "Můžeš remixovat projekty kamarádů a navázat na jejich práci.",
+          "content": [
+            "Sdílení tu neznamená „dej mi lajk“, ale „postav na tom dál“. Můžeš remixovat projekty kamarádů — vzít jejich práci jako základ a rozvést ji vlastním směrem. Linie k původnímu autorovi přitom zůstává vidět. A stejně tak ostatní můžou navázat na tebe."
+          ]
+        },
+        {
+          "title": "Vytvoř Glitch pro druhé",
+          "summary": "Můžeš sám tvořit Glitche a učit jimi kamarády. Na jakékoliv téma tě zajímá.",
+          "content": [
+            "Nemusíš být jen na té straně, která se učí. Můžeš vytvořit vlastní Glitch a něco jím naučit druhé — na jakékoli téma, které tě baví. Vysvětlit něco tak, aby to pochopil někdo další, je mimochodem jeden z nejlepších způsobů, jak si to sám/sama upevníš."
+          ]
+        },
+        {
+          "title": "Víc druhů Glitchů",
+          "summary": "Funfact, Najdi chybu, Historická osobnost, Argumentuj nebo prostě jen chvilka na oddech.",
+          "content": [
+            "Glitche nejsou jen výklad a kvíz. Potkáš třeba:",
+            "Funfact — krátký záblesk „aha, tohle jsem nevěděl/a“.",
+            "Najdi chybu — karta s tvrzením, které nesedí; tvůj úkol je odhalit, kde je zakopaný pes.",
+            "Historická osobnost — pokecáš si (skrz AI) s někým, kdo obor kdysi posouval.",
+            "Argumentuj — dostaneš tvrzení, řekneš, jestli s ním souhlasíš, a rozvedeš proč.",
+            "Chvilka na oddech — občas jen kartička na nadechnutí. Ne všechno musí být výkon.",
+            "Díky téhle pestrosti feed nesklouzne do stereotypu."
+          ]
+        },
+        {
+          "title": "Tvé projekty",
+          "summary": "To je tvůj vlastní prostor (sešit + nástěnka + dílna) s chatbotem a portfoliem, kde můžeš tvořit.",
+          "content": [
+            "Tvůj vlastní prostor — něco mezi sešitem, nástěnkou a dílnou. Ukládáš si sem Glitche, které tě chytly, stavíš kolem nich vlastní věci a máš po ruce chatbota, který ti se studiem i s projektem poradí. Zároveň je to tvoje portfolio: mapa toho, co ses naučil/a a co jsi vytvořil/a. A když tvoříte ve víc lidech, můžete mít prostor společný."
+          ]
+        },
+        {
+          "title": "Tady to funguje jinak",
+          "summary": "Feed má dno (20/den), žádné srovnávání. Jen učení, seberozvoj, relaxace a tvorba.",
+          "content": [
+            "Glitch vypadá jako sociální síť, ale schválně je postavený proti tomu, jak fungují ty běžné. Co to znamená pro tebe:",
+            "Feed má dno. Na den je 20 Glitchů a pak končí — žádný nekonečný scroll, do kterého se propadneš na hodinu.",
+            "Žádné srovnávání. Nemáme lajky ani žebříčky, s nikým nesoutěžíš a nikdo neměří, kdo je „lepší“. Statistiky vidíš jen ty a jsou o tvém pokroku.",
+            "Ty rozhoduješ. Časovače a podobné věci nenaskakují samy — zapneš si je, jen když chceš.",
+            "Klid sem patří. Občas narazíš na kartu, kde si jen zkontroluješ, jak se máš, nebo se na chvíli nadechneš.",
+            "Zkrátka jde tu o čtyři věci: učení, seberozvoj, relaxaci a tvorbu. Ne o to, abys tu strávil/a co nejvíc času, ale aby ses odsud pohnul/a dál.",
+            "Tak jdeme na to."
+          ]
+        }
+      ],
+      "login": true
+    }
+  },
+  {
+    "id": "wellbeing-dech",
+    "type": "breathing",
+    "category": "Wellbeing",
+    "title": "Dechové cvičení",
+    "body": "Rovnoměrné vědomé dýchání ti může pomoci zlepšit soustředění.",
+    "cycles": 7
+  },
+  {
+    "id": "wellbeing-asmr",
+    "type": "asmr",
+    "category": "Wellbeing",
+    "trust": "Core",
+    "title": "ASMR time!",
+    "help": "Nakresli tahem bariéru, a ťuknutím mimo ji rozstřel.",
+    "viz": "assets/3Dvizualizations/asmrtrail.html?v=3"
+  },
+  {
+    "id": "inspirace-nocni-hory",
+    "type": "inspirace",
+    "category": "Inspirace",
+    "topic": "Data",
+    "trust": "core",
+    "title": "Noční hory",
+    "body": "I takhle může vypadat vizualizace dat. Vytvořili jsme ji jednoduše pomocí Vibe Codingu. Můžeš to zkusit také, Glitchee ti pomůže. Napiš mu nápady, jaká data chceš vizualizovat a vytvoří ti projekt.",
+    "viz": "assets/3Dvizualizations/nigth-mountains.html?v=1",
+    "rozklik": {
+      "kind": "chat",
+      "persona": "glitchee",
+      "pretest": false,
+      "cil": "Pomoct žákovi vymyslet konkrétní nápad na vizualizaci dat a založit mu k tomu projekt.",
+      "zadani": "Tohle je wellbeing Glitch typu Inspirace — ne výuka, ale tvůrčí nakopnutí. Na kartě žák viděl ukázkovou vizualizaci dat („Noční hory“, vytvořenou vibecodingem) a napsal ti svoje první nápady, co by chtěl vizualizovat. Není to téma ke zkoušení — neděláš kvíz ani nehodnotíš. Bav se s žákem přátelsky a stručně (2–3 věty na zprávu, jedna otázka) o tom, jaká KONKRÉTNÍ data by chtěl zobrazit a jakou formou (graf, mapa, 3D scéna…). Pomoz mu nápad zúžit na něco uchopitelného. Po 2–4 výměnách, až budete mít konkrétní nápad, se ho zeptej, jestli mu z toho máš založit projekt, kde bude moct dál pracovat (najde ho v sekci Tvé projekty). Když žák souhlasí, odpověz krátkým potvrzením a na úplný konec zprávy přidej blok (žák ho neuvidí, slouží aplikaci k založení projektu):\n```projekt\n{\"nazev\": \"krátký výstižný název\", \"popis\": \"1–2 věty, co projekt bude vizualizovat a z jakých dat\"}\n```\nBlok pošli jen JEDNOU a jen když žák jasně souhlasil. Když žák nesouhlasí nebo chce ještě přemýšlet, projekt nezakládej a pokračuj v povídání."
+    }
+  },
+  {
+    "id": "vibecoding-co-je",
+    "type": "quest_intro",
+    "trust": "Core",
+    "chapterNo": 1,
+    "concept_id": "tvorba-aplikaci-vibecoding",
+    "obtiznost": 1,
+    "title": "Co je vibe coding?",
+    "body": "Řekneš přirozenou řečí, co chceš — a AI napíše kód. Ty ho spíš řídíš a hodnotíš, než píšeš řádek po řádku. Zjisti, jak to celé funguje.",
+    "video": "assets/videos/vibe-coding_01.mp4?v=2",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "1/6",
+      "title": "Co je Vibe Coding",
+      "intro": "Vibe Coding je programování v přirozeném jazyce. Místo psaní kódu popíšeš vlastními slovy, co chceš, a umělá inteligence kód napíše za tebe."
+    }
+  },
+  {
+    "id": "vibecoding-bez-kodu",
+    "type": "quest_intro",
+    "trust": "Core",
+    "chapterNo": 2,
+    "concept_id": "tvorba-aplikaci-no-code-low-code",
+    "obtiznost": 1,
+    "title": "Programovat bez psaní kódu?",
+    "body": "No-code nástroje i vibe coding tě nechají postavit funkční appku, aniž bys psal řádek po řádku. Kde je to skvělé a kde to naráží na hranice?",
+    "video": "assets/videos/vibe-coding_02.mp4?v=2",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "2/6",
+      "title": "Programovat bez psaní kódu?",
+      "intro": "No-code a low-code nástroje tě nechají appku poskládat vizuálně, skoro bez psaní kódu. Jsou rychlá vstupní brána — něco funkčního postavíš hned, ale u složitějších věcí narazíš na hranice."
+    }
+  },
+  {
+    "id": "vibecoding-prvni-prompt",
+    "type": "quest_intro",
+    "trust": "Core",
+    "chapterNo": 3,
+    "concept_id": "umela-inteligence-prompt-a-promptova-gramotnost",
+    "obtiznost": 2,
+    "title": "Napiš svůj první prompt",
+    "body": "Prompt není kouzelné zaklínadlo, ale dialog. Čím jasněji popíšeš cíl, kontext a formát, tím lepší výsledek. Zkus sestavit prompt, kterému AI rozumí.",
+    "video": "assets/videos/vibe-coding_03.mp4?v=2",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "3/6",
+      "title": "Napiš svůj první prompt",
+      "intro": "Prompt je zadání, kterým úkoluješ AI. Není to kouzelné zaklínadlo, ale spíš dialog — čím jasněji popíšeš cíl, kontext a formát, tím lepší výsledek dostaneš."
+    }
+  },
+  {
+    "id": "vibecoding-lepsi-prompt",
+    "type": "quest_intro",
+    "trust": "Core",
+    "chapterNo": 4,
+    "concept_id": "umela-inteligence-prompt-a-promptova-gramotnost",
+    "obtiznost": 2,
+    "title": "Proč jeden prompt vyhraje?",
+    "body": "Dva prompty, dva úplně jiné výsledky. Porovnej je a odhal, čím to je — a co dělá ze zadání dobré zadání.",
+    "video": "assets/videos/vibe-coding_04.mp4?v=2",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "4/6",
+      "title": "Proč jeden prompt vyhraje?",
+      "intro": "Dva prompty na totéž můžou dopadnout úplně jinak. Rozdíl dělá, jak přesně popíšeš, co chceš — cíl, kontext, formát a upřesňování za pochodu."
+    }
+  },
+  {
+    "id": "vibecoding-je-vystup-dobry",
+    "type": "quest_intro",
+    "trust": "Core",
+    "chapterNo": 5,
+    "concept_id": "umela-inteligence-overovani-vystupu",
+    "obtiznost": 2,
+    "title": "Je výstup AI dobrý?",
+    "body": "AI se plete sebejistě — její výstup je návrh, ne pravda. Nauč se poznat možnou halucinaci a ověřit ji z druhého, důvěryhodného zdroje.",
+    "video": "assets/videos/vibe-coding_05.mp4?v=2",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "5/6",
+      "title": "Je výstup AI dobrý?",
+      "intro": "AI se plete sebejistě, takže její výstup je návrh, ne pravda. Umět poznat možnou halucinaci a ověřit ji z druhého, důvěryhodného zdroje je základní dovednost."
+    }
+  },
+  {
+    "id": "vibecoding-postav-si",
+    "type": "quest_intro",
+    "trust": "Core",
+    "chapterNo": 6,
+    "concept_id": "tvorba-aplikaci-vibecoding",
+    "obtiznost": 3,
+    "title": "Postav si vlastní appku",
+    "body": "Čas postavit něco vlastního. Zvládneš appku nejen vytvořit, ale i pochopit natolik, abys ji uměl opravit, když se něco rozbije?",
+    "video": "assets/videos/vibe-coding_06.mp4?v=2",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "6/6",
+      "title": "Postav si vlastní appku",
+      "intro": "Ve vibecodingu popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš. Postavíš reálnou věc rychle — ale bez porozumění základům snadno uvízneš, když se něco rozbije."
+    },
+    "project": true,
+    "projectTitle": "Postav si vlastní appku",
+    "projectBrief": "Vyber si nápad na jednoduchou appku a postav ji pomocí vibecodingu. Rozepiš si prompty, sestav appku po částech a průběžně ověřuj, jestli výstup sedí. Ukládej si sem odkazy, poznámky a screenshoty a poraď se s Glitcheem."
+  },
+  {
+    "id": "data-co-je-datova-gramotnost",
+    "type": "quest_intro",
+    "topic": "Data",
+    "chapterNo": 1,
+    "trust": "Core",
+    "concept_id": "data-databaze-datova-gramotnost",
+    "title": "Co je datová gramotnost?",
+    "body": "Data jsou všude — ale umět je přečíst a nenechat se jimi obelhat je dovednost. Nauč se ptát na správné otázky.",
+    "video": "assets/videos/data_01.mp4",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "1/6",
+      "title": "Co je datová gramotnost?",
+      "intro": "Datová gramotnost je schopnost data přečíst, pochopit a kriticky posoudit — ne s nimi jen technicky pracovat."
+    }
+  },
+  {
+    "id": "matematika-nasobeni-310x15",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Generováno",
+    "obtiznost": 1,
+    "question": "310 × 15 = ?",
+    "sub": "Zvládneš spočítat do časového limitu?",
+    "cols": 2,
+    "answers": [
+      {
+        "label": "4 650",
+        "correct": true
+      },
+      {
+        "label": "4 350",
+        "correct": false
+      },
+      {
+        "label": "4 750",
+        "correct": false
+      },
+      {
+        "label": "3 950",
+        "correct": false
+      }
+    ],
+    "topic": "Matematika",
+    "questionStyle": "h1"
+  },
+  {
+    "id": "obrazec-trojuhelniky",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Generováno",
+    "obtiznost": 1,
+    "question": "Kolik trojúhelníků je v obrazci?",
+    "questionStyle": "h3",
+    "cols": 3,
+    "answers": [
+      {
+        "label": "9",
+        "correct": false
+      },
+      {
+        "label": "10",
+        "correct": false
+      },
+      {
+        "label": "11",
+        "correct": true
+      }
+    ],
+    "topic": "Matematika",
+    "sub": "Počítej i ty, které vzniknou překrytím čar.",
+    "figure": "triangles"
+  },
+  {
+    "id": "matematika-topinky",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "topic": "Matematika",
+    "trust": "Generováno",
+    "question": "Jedna topinka se smaží deset minut, tedy pět minut z každé strany. Na pánev se vejdou dvě topinky vedle sebe.",
+    "sub": "Za jak dlouho nejrychleji osmažíš na jedné pánvi tři topinky?",
+    "cols": 1,
+    "answers": [
+      {
+        "label": "10 minut",
+        "correct": false
+      },
+      {
+        "label": "15 minut",
+        "correct": true
+      },
+      {
+        "label": "20 minut",
+        "correct": false
+      }
+    ],
+    "questionStyle": "h3"
+  },
+  {
+    "id": "hra-na-pozornost-koule",
+    "type": "attention_game",
+    "category": "Aktivita",
+    "title": "Kolik zvládneš označit děr?",
+    "viz": "assets/3Dvizualizations/sphere-holes.html?v=5",
+    "replayable": true
+  },
+  {
+    "id": "aktivita-slova-algoritmus",
+    "type": "attention_game",
+    "category": "Aktivita",
+    "title": "Najdi 3 slova týkající se algoritmu.",
+    "help": "Tažením otáčej koulí. Ťukni na bod a přečti si slovo. Pokud patří k algoritmu, ťukni na něj ještě jednou a tím ho potvrdíš. Najdi všechna tři.",
+    "countLabel": "Potvrzená slova",
+    "countInit": "0/3",
+    "ns": "wordsphere",
+    "timer": false,
+    "viz": "assets/3Dvizualizations/sphere-words.html?v=4",
+    "topic": "Algoritmus"
+  },
+  {
+    "id": "aktivita-kolo-strojove-uceni",
+    "type": "attention_game",
+    "category": "Aktivita",
+    "title": "Roztoč kolo a vyber slova strojového učení.",
+    "help": "Otáčej kolem tažením. U každého slova rozhodni, jestli patří ke strojovému učení — ťukni na ANO, nebo NE. Projdi všech 15 slov.",
+    "counters": [
+      {
+        "label": "Zodpovězeno správně",
+        "init": "0",
+        "field": "correct"
+      },
+      {
+        "label": "Zodpovězeno špatně",
+        "init": "0",
+        "field": "wrong"
+      }
+    ],
+    "ns": "wheelwords",
+    "timer": false,
+    "viz": "assets/3Dvizualizations/wheel-words.html?v=3",
+    "topic": "Strojové učení",
+    "concept_id": "umela-inteligence-ai-se-uci-z-dat"
+  },
+  {
+    "id": "algoritmus-hra-zivota",
+    "type": "algorithm_demo",
+    "chapterNo": 5,
+    "obtiznost": 2,
+    "title": "Hra života",
+    "body": "Hra života je ukázka algoritmu s pár jednoduchými pravidly. Ta určují, které buňky přežijí, které zaniknou a kde vznikne nová. Dokážeš pravidla popsat?",
+    "viz": "assets/3Dvizualizations/game-of-life.html?v=4",
+    "topic": "Algoritmus",
+    "concept_id": "informaticke-mysleni-modelovani-a-simulace",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "5/5",
+      "title": "Hra života",
+      "intro": "Hra života je mřížka buněk, které žijí nebo umírají podle čtyř jednoduchých pravidel „když–tak\", opakovaných v krocích. Nikdo neřídí celek, a přesto vznikají putující a blikající vzory — tomu se říká emergence."
+    },
+    "project": true,
+    "projectTitle": "Vytvoř svůj algoritmus",
+    "projectBrief": "Vymysli si problém a napiš na něj vlastní algoritmus, ve kterém použiješ podmínky (když–tak) i cyklus (opakování). Postup zapiš pseudokódem nebo nakresli jako vývojový diagram. Ukládej si sem zdroje a poraď se s Glitcheem."
+  },
+  {
+    "id": "funfact-bug-mura",
+    "type": "fun_fact",
+    "category": "Fun fact",
+    "obtiznost": 1,
+    "title": "První počítačový bug byla můra.",
+    "body": "Slovem bug označovali technici drobné závady už za Edisona. Ale když v roce 1947 kvůli můře, která vlétla dovnitř, přestal fungovat počítač Harvard Mark II, termín se ujal i u počítačů. Chybám dodnes říkáme bugy a jejich opravování debugging (doslova odhmyzení).",
+    "topic": "Algoritmus",
+    "image": "assets/img/funfact-bug-moth.png",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Ahoj, chceš se na něco ohledně prvního počítačového bugu zeptat?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "najdi-chybu-perceptron",
+    "type": "spot_the_mistake",
+    "category": "Najdi chybu",
+    "obtiznost": 2,
+    "claim": "Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott!",
+    "context": "Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců.",
+    "topic": "Umělá inteligence",
+    "image": "assets/img/mistake-gott-perceptron.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák odhalí faktickou chybu v autorství a vysvětlí, kdo Perceptron skutečně vytvořil.",
+      "zadani": "Text na kartě: „Šokující! Autorem první neuronové sítě byl český zpěvák Karel Gott! Síť se jmenovala Perceptron. Měla jediný neuron a sloužila k rozpoznávání jednoduchých obrazců.“ CHYBY (klíč, žákovi neprozrazuj): 1) Perceptron nevytvořil Karel Gott — to byl zpěvák, s neuronovými sítěmi nemá nic společného. Skutečným autorem byl americký psycholog Frank Rosenblatt (1958). Zbytek textu je správně: síť se opravdu jmenovala Perceptron, měla jeden neuron a rozpoznávala jednoduché obrazce — na to žáka nenaváděj jako na chybu.",
+      "intro": "Ten text na kartě zní sebejistě, ale něco v něm vážně nesedí. Vidíš, co je špatně?"
+    }
+  },
+  {
+    "id": "argument-nemam-co-skryvat",
+    "type": "argument",
+    "category": "Argumentuj",
+    "trust": "Core",
+    "concept_id": "digitalni-obcanstvi-digitalni-stopa-a-soukromi",
+    "obtiznost": 3,
+    "claim": "Nemám co skrývat, tak je mi jedno, kolik dat o mně aplikace sbírají.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=4",
+    "topic": "Digitální občanství",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Je to skutečně tak? Jak moc důležité jsou pro algoritmy informace o nás? Co z nich firmy získávají — a co z toho máme my?"
+    }
+  },
+  {
+    "id": "argument-scroll-vlastni-vule",
+    "type": "argument",
+    "category": "Argumentuj",
+    "trust": "Core",
+    "concept_id": "umela-inteligence-doporucovaci-systemy",
+    "obtiznost": 3,
+    "claim": "Kolik času proscrolluju, je jen na mojí vůli. Algoritmus za to nemůže.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=4",
+    "topic": "Umělá inteligence",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Fakt za to může jen tvoje vůle? Jak jsou aplikace navržené, aby tě udržely u obrazovky? A kde končí tvoje volba a začíná jejich design?"
+    }
+  },
+  {
+    "id": "argument-algoritmus-spravedlivejsi",
+    "type": "argument",
+    "category": "Argumentuj",
+    "trust": "Core",
+    "concept_id": "umela-inteligence-bias-a-ferovost",
+    "obtiznost": 3,
+    "claim": "Spravedlivěji rozhodne algoritmus než člověk.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=4",
+    "topic": "Umělá inteligence",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Opravdu je algoritmus spravedlivější? Podle čeho se rozhoduje? A co když se naučí z dat, která spravedlivá nebyla?"
+    }
+  },
+  {
+    "id": "argument-ai-obrazek-moje-dilo",
+    "type": "argument",
+    "category": "Argumentuj",
+    "trust": "Core",
+    "concept_id": "umela-inteligence-kdy-ai-ne-pouzit-a-disclosure",
+    "obtiznost": 3,
+    "claim": "Když AI vytvoří obrázek podle mého promptu, je to moje dílo.",
+    "sub": "Vyber, jak to vnímáš a dokaž chatbotovi, že máš pravdu.",
+    "viz": "assets/3Dvizualizations/asciicat.html?v=4",
+    "topic": "Umělá inteligence",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "intro": "Je to opravdu tvoje dílo? Co jsi vytvořil ty a co model? A z čeho vlastně AI ten obrázek složila?"
+    }
+  },
+  {
+    "id": "puvod-pojmu-vibecoding",
+    "type": "fun_fact",
+    "category": "Fun fact",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding",
+    "obtiznost": 1,
+    "title": "Slovo „vibecoding“ je nejspíš mladší než tvoje bota.",
+    "body": "Pojmenoval ho začátkem roku 2025 vědec Andrej Karpathy — a za pár měsíců ho používal skoro celý internet.",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Ahoj, chceš vědět, odkud se vzalo slovo vibecoding a co vlastně znamená?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ada-lovelace-prvni-algoritmus",
+    "type": "fun_fact",
+    "category": "Fun fact",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 1,
+    "title": "První algoritmus vznikl skoro 100 let před prvním počítačem.",
+    "body": "V roce 1843 napsala Ada Lovelace postup pro stroj, který ještě ani neexistoval.",
+    "topic": "Algoritmus",
+    "image": "assets/img/ada-lovelace.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Ahoj, zajímá tě, jak mohl vzniknout algoritmus dřív, než existoval počítač, na kterém by běžel?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "vibecoding-co-je-vibecoding",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding",
+    "obtiznost": 1,
+    "layout": "text",
+    "cols": 1,
+    "question": "Co je vibecoding?",
+    "sub": "Který popis vibecodingu sedí nejlíp?",
+    "answers": [
+      {
+        "label": "Popíšeš přirozenou řečí, co chceš, AI napíše kód a ty ho spíš řídíš a hodnotíš.",
+        "correct": true
+      },
+      {
+        "label": "Programování poslepu, úplně bez plánu.",
+        "correct": false
+      },
+      {
+        "label": "Hraní počítačových her o programování.",
+        "correct": false
+      },
+      {
+        "label": "Ruční psaní kódu řádek po řádku bez jakékoli pomoci.",
+        "correct": false
+      }
+    ],
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "taskText": "Kamarádka ti říká: „Napsala jsem počítači obyčejnou češtinou, co chci, a on mi appku vytvořil.“"
+  },
+  {
+    "id": "vibecoding-nejlepsi-prompt",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding",
+    "obtiznost": 2,
+    "layout": "text",
+    "cols": 1,
+    "question": "Napiš dobrý prompt",
+    "answers": [
+      {
+        "label": "„Udělej appku.“",
+        "correct": false
+      },
+      {
+        "label": "„Udělej appku na kapesné: zadám příjmy a výdaje, ukaž mi zůstatek a graf za měsíc. Jednoduchý vzhled, česky.“",
+        "correct": true
+      },
+      {
+        "label": "„Něco s penězi, ať je to hezký.“",
+        "correct": false
+      },
+      {
+        "label": "„Naprogramuj to nejlíp, jak umíš.“",
+        "correct": false
+      }
+    ],
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "Který prompt zafunguje nejlíp?",
+    "taskText": "Chceš si vytvořit appku na kapesné."
+  },
+  {
+    "id": "vibecoding-appka-spadla",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "programovani-ladeni-a-testovani",
+    "obtiznost": 2,
+    "layout": "text",
+    "cols": 1,
+    "question": "Appka spadla",
+    "answers": [
+      {
+        "label": "Přečtu si chybovou hlášku — často říká, kde a co se pokazilo.",
+        "correct": true
+      },
+      {
+        "label": "Smažu všechno a začnu úplně od začátku.",
+        "correct": false
+      },
+      {
+        "label": "Napíšu AI jen „nefunguje to, oprav to“ bez dalších detailů.",
+        "correct": false
+      },
+      {
+        "label": "Budu appku spouštět pořád dokola a doufat, že se spraví sama.",
+        "correct": false
+      }
+    ],
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "AI appku vytvořila, ale spadla s touhle hláškou. Co uděláš nejdřív?",
+    "code": "Chyba: nelze načíst „zustatek“\n  z undefined\n  → App.js, řádek 42"
+  },
+  {
+    "id": "vibecoding-frontend-backend",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-co-je-aplikace",
+    "obtiznost": 2,
+    "layout": "text",
+    "cols": 1,
+    "question": "Frontend, nebo backend?",
+    "answers": [
+      {
+        "label": "Barva tlačítka a rozložení na obrazovce.",
+        "correct": false
+      },
+      {
+        "label": "Uložení tvého účtu a hesla na serveru a jejich ověření při přihlášení.",
+        "correct": true
+      },
+      {
+        "label": "Animace, když najedeš myší na obrázek.",
+        "correct": false
+      },
+      {
+        "label": "Písmo a velikost nadpisu.",
+        "correct": false
+      }
+    ],
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "Co z nabídky patří do backendu?",
+    "taskText": "Appka má frontend (co vidíš) a backend (co běží na pozadí s daty)."
+  },
+  {
+    "id": "vibecoding-kdy-nocode",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-no-code-low-code",
+    "obtiznost": 2,
+    "layout": "text",
+    "cols": 1,
+    "question": "Kdy zvolit no-code?",
+    "answers": [
+      {
+        "label": "Když chci rychle vyzkoušet nápad a mít brzy něco funkčního.",
+        "correct": true
+      },
+      {
+        "label": "Nikdy — bez psaní kódu nevznikne nic pořádného.",
+        "correct": false
+      },
+      {
+        "label": "Jen když už umím dokonale programovat.",
+        "correct": false
+      },
+      {
+        "label": "Když chci, aby appka byla schválně složitá.",
+        "correct": false
+      }
+    ],
+    "topic": "Vibe Coding",
+    "questionStyle": "h3",
+    "sub": "Kdy je no-code dobrá volba?",
+    "taskText": "No-code znamená skládat appku z hotových bloků, bez psaní kódu."
+  },
+  {
+    "id": "vibecoding-uz-nemusis-rozumet",
+    "type": "spot_the_mistake",
+    "category": "Najdi chybu",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-iluze-ze-to-umim",
+    "obtiznost": 2,
+    "claim": "Vibecoding znamená, že appku udělá AI za tebe — takže už nemusíš ničemu rozumět.",
+    "context": "Zní to lákavě. Rozklikni a najdi, co na tom nesedí.",
+    "viz": "assets/3Dvizualizations/vibecoding.html?v=1",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák rozpozná, že i při vibecodingu je porozumění pořád potřeba.",
+      "zadani": "Text na kartě: „Vibecoding znamená, že appku udělá AI za tebe — takže už nemusíš ničemu rozumět.“ CHYBA (klíč, žákovi neprozrazuj): Zavádějící je část „už nemusíš ničemu rozumět“. I když kód píše AI, musíš rozumět tomu, co vlastně chceš (zadat úkol), umět výsledek zkontrolovat, otestovat a opravit, když AI udělá chybu. Bez porozumění nepoznáš, že appka dělá něco špatně nebo nebezpečně. Sám pojem vibecoding (že appku pomáhá tvořit AI) je v pořádku — chyba je v tom závěru „nemusíš rozumět“.",
+      "intro": "Zní to lákavě, co? Ale jedna část toho tvrzení nesedí. Vidíš která?"
+    }
+  },
+  {
+    "id": "vibecoding-ai-kod-je-vzdy-spravny",
+    "type": "spot_the_mistake",
+    "category": "Najdi chybu",
+    "trust": "Core",
+    "concept_id": "programovani-cteni-a-hodnoceni-ai-kodu",
+    "obtiznost": 2,
+    "claim": "Co ti AI vygeneruje jako kód, je vždycky správné a bezpečné — stačí zkopírovat.",
+    "context": "Vážně vždycky? Rozklikni a najdi, co na tom nesedí.",
+    "viz": "assets/3Dvizualizations/ai-code-check.html?v=1",
+    "topic": "Vibe Coding",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák pochopí, že kód od AI se musí ověřovat, ne slepě kopírovat.",
+      "zadani": "Text na kartě: „Co ti AI vygeneruje jako kód, je vždycky správné a bezpečné — stačí zkopírovat.“ CHYBA (klíč, žákovi neprozrazuj): Kód od AI NENÍ vždycky správný ani bezpečný. AI se plete (halucinuje), může použít zastaralé postupy nebo do kódu zanést bezpečnostní díry. Kód se musí přečíst, otestovat a ověřit, ne slepě zkopírovat. Klíčová slova „vždycky“ a „stačí zkopírovat“ jsou právě to, co je špatně.",
+      "intro": "Vážně vždycky správné a bezpečné? Zamysli se — co na tom tvrzení nesedí?"
+    }
+  },
+  {
+    "id": "andrej-karpathy",
+    "type": "historicka_osobnost",
+    "category": "Osobnost oboru",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-vibecoding",
+    "obtiznost": 2,
+    "title": "Andrej Karpathy",
+    "body": "Vědec, který dal „vibecodingu“ jméno. Spoluzakládal OpenAI, vedl AI za autopilotem v Tesle a hlavně rád učí, jak dnešní AI vlastně funguje. Zeptej se ho, jak přemýšlet o tvorbě s AI.",
+    "image": "assets/img/andrej-karpathy.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Andrej Karpathy",
+      "cil": "Žák pochopí, co je vibecoding a že kód od AI je potřeba řídit a ověřovat, ne slepě zkopírovat.",
+      "intro": "Ahoj, jsem Andrej Karpathy. Pomáhal jsem rozjíždět OpenAI, vedl jsem AI za autopilotem v Tesle a slovo „vibecoding“ jsem vlastně pojmenoval já. Nejradši ale lidem vysvětluju, jak dnešní AI uvnitř funguje.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Chceš vědět, co vibecoding vlastně je, nebo jak přemýšlet o tom, kdy se na kód od AI dá spolehnout a kdy ne?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "grace-hopper",
+    "type": "historicka_osobnost",
+    "category": "Historická osobnost",
+    "trust": "Core",
+    "concept_id": "tvorba-aplikaci-no-code-low-code",
+    "obtiznost": 2,
+    "title": "Grace Hopper",
+    "body": "Programátorka a námořní admirálka, která věřila, že počítač má rozumět člověku — ne naopak. Vytvořila jeden z prvních překladačů, díky kterým nemusíme mluvit jen v jedničkách a nulách. Zeptej se jí.",
+    "image": "assets/img/grace-hopper.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Grace Hopper",
+      "cil": "Žák pochopí, proč vznikly nástroje, které přibližují programování lidské řeči (abstrakce nad kódem).",
+      "intro": "Ahoj, jsem Grace Hopper. Byla jsem programátorka a taky admirálka námořnictva a nesnášela jsem větu „takhle se to dělalo vždycky“. Věřila jsem, že počítač má rozumět člověku, ne naopak — tak jsem pomohla vymyslet jeden z prvních překladačů.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Zajímá tě, jak jsem přesvědčila lidi, že se dá programovat skoro lidskou řečí, nebo co je to vlastně ten překladač?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "edsger-dijkstra",
+    "type": "historicka_osobnost",
+    "category": "Historická osobnost",
+    "trust": "Core",
+    "concept_id": "programovani-ladeni-a-testovani",
+    "obtiznost": 2,
+    "title": "Edsger Dijkstra",
+    "body": "Informatik, který tvrdil, že program se má hlavně chápat — ne jen spustit a doufat. Proslul větou, že testování ukáže, že chyby jsou, ale nikdy že nejsou. Zeptej se ho, proč na porozumění záleží.",
+    "image": "assets/img/edsger-dijkstra.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Edsger Dijkstra",
+      "cil": "Žák pochopí, proč je důležité programu rozumět a ověřovat ho, ne jen spustit a doufat.",
+      "intro": "Ahoj, jsem Edsger Dijkstra. Byl jsem informatik a hrozně mě trápilo, když někdo napsal program a jen doufal, že funguje. Proslul jsem větou, že testování ukáže, že chyby jsou — ale nikdy že nejsou.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Chceš, abych ti vysvětlil, proč programu nestačí jen věřit, nebo jak poznám, že mu doopravdy rozumím?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "algoritmus-co-je-algoritmus",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "chapterNo": 1,
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 1,
+    "title": "Robot bere všechno doslova",
+    "body": "Tenhle robot udělá přesně to, co mu napíšeš — a ani o chlup víc. Podle přesných kroků nakreslí čtverec pokaždé stejně. Dokázal bys mu dát návod, který nejde splést?",
+    "viz": "assets/3Dvizualizations/algorithm-steps.html?v=3",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "1/5",
+      "title": "Co je algoritmus?",
+      "intro": "Algoritmus je přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku."
+    }
+  },
+  {
+    "id": "algoritmus-pseudokod-a-diagramy",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "chapterNo": 2,
+    "concept_id": "informaticke-mysleni-pseudokod-a-vyvojove-diagramy",
+    "obtiznost": 2,
+    "title": "Nakresli postup",
+    "body": "Než něco naprogramuješ, můžeš postup nejdřív nakreslit — jako mapku se šipkami, kterou pochopí každý. Zvládneš přečíst, kudy se postup vydá, když prší?",
+    "viz": "assets/3Dvizualizations/flowchart.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "2/5",
+      "title": "Nakresli postup",
+      "intro": "Pseudokód a vývojové diagramy jsou způsoby, jak zapsat postup srozumitelně pro člověka, než ho napíšeš v programovacím jazyce. Pseudokód je „kód napůl česky\", diagram totéž nakreslené jako schéma se šipkami."
+    }
+  },
+  {
+    "id": "algoritmus-podminky-kdyz-tak",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "chapterNo": 3,
+    "concept_id": "programovani-podminky-v-kodu",
+    "obtiznost": 2,
+    "title": "Program se rozhoduje sám",
+    "body": "Jak appka pozná, kdy ukázat „Výhra“ a kdy „Hraj dál“? Nemá to napsané pro každý případ zvlášť — použije podmínku. Zvládneš říct, co se stane při skóre přesně 100?",
+    "viz": "assets/3Dvizualizations/if-else.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "3/5",
+      "title": "Program se rozhoduje sám",
+      "intro": "Podmínka je větvení: „když platí něco, udělej tohle, jinak tamto\" (if/else). Díky ní se program rozhoduje sám — třeba ukáže „výhra\", jen když skóre překročí cíl."
+    }
+  },
+  {
+    "id": "algoritmus-cykly-opakovani",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "chapterNo": 4,
+    "concept_id": "programovani-cykly-v-kodu",
+    "obtiznost": 2,
+    "title": "Nech to udělat počítač",
+    "body": "Musíš napsat „ahoj“ stokrát pod sebe. Napíšeš to stokrát ručně? Nebo počítači řekneš „opakuj 100×“? Právě od toho je cyklus. Spočítáš, co vypíše ten dole?",
+    "viz": "assets/3Dvizualizations/loop.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "4/5",
+      "title": "Nech to udělat počítač",
+      "intro": "Cyklus nechá počítač opakovat kroky, místo abys je psal pořád dokola. Cyklus for opakuje danou-krát, while opakuje, dokud něco platí — třeba dokud hráč neprohraje."
+    }
+  },
+  {
+    "id": "algo-hra-sekvence",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 1,
+    "title": "Naveď robota (1/3)",
+    "body": "Robot udělá přesně to, co mu poskládáš — krok za krokem. Poskládej kroky ve správném pořadí a doveď ho ke hvězdě. Zvládneš cestu na první pokus?",
+    "viz": "assets/3Dvizualizations/algo-hra-1-sekvence.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "Hra 1/3",
+      "title": "Sekvence — kroky v pořadí",
+      "intro": "Právě jsi napsal(a) program: seznam kroků, které se provedou přesně v tom pořadí, jak jdou za sebou. Když prohodíš dva kroky, robot dojde jinam. Tomu se říká sekvence — základ každého algoritmu."
+    }
+  },
+  {
+    "id": "algo-hra-cyklus",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "concept_id": "programovani-cykly-v-kodu",
+    "obtiznost": 2,
+    "title": "Nech to opakovat počítač (2/3)",
+    "body": "Stejný robot, ale cesta je dlouhá a pořád stejná. Ťukat ▶ pětkrát je otrava — dej krok do smyčky a nastav, kolikrát se má zopakovat. Uvidíš, jak se smyčka rozbalí na jednotlivé kroky.",
+    "viz": "assets/3Dvizualizations/algo-hra-2-cyklus.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "Hra 2/3",
+      "title": "Cyklus — opakuj místo psaní",
+      "intro": "Cyklus (smyčka) nechá počítač zopakovat krok N-krát, místo abys ho psal(a) pořád dokola. Jedna smyčka „opakuj 5× ▶“ nahradí pět kroků. Čím delší cesta, tím víc práce ti smyčka ušetří."
+    }
+  },
+  {
+    "id": "algo-hra-ladeni",
+    "type": "algorithm_demo",
+    "trust": "Core",
+    "concept_id": "programovani-ladeni-a-testovani",
+    "obtiznost": 2,
+    "title": "Najdi chybu v programu (3/3)",
+    "body": "Program je skoro hotový, ale robot narazí do zdi. Spusť ho, podívej se, u kterého kroku to selže, a oprav pořadí kroků. Přesně tohle dělají programátoři — říká se tomu ladění.",
+    "viz": "assets/3Dvizualizations/algo-hra-3-ladeni.html?v=1",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "chapter": "Hra 3/3",
+      "title": "Ladění — přečti a oprav",
+      "intro": "Ladění (debugging) je hledání a oprava chyb v programu. Nejdřív program spustíš a sleduješ, kde se chová jinak, než čekáš — pak najdeš chybný krok a spravíš ho. Chyba v kódu není selhání, ale běžná součást programování."
+    }
+  },
+  {
+    "id": "algoritmus-puleni-v-milionu",
+    "type": "fun_fact",
+    "category": "Fun fact",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-zakladni-algoritmy",
+    "obtiznost": 1,
+    "title": "V milionu seřazených jmen najdeš to pravé za ~20 kroků.",
+    "body": "Trik se jmenuje půlení — pokaždé zahodíš půlku, která tě nezajímá.",
+    "topic": "Algoritmus",
+    "viz": "assets/3Dvizualizations/binary-search.html?v=1",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Ahoj, chceš zjistit, jak se v milionu jmen najde to pravé za pouhých ~20 kroků?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "algoritmus-eukliduv-algoritmus",
+    "type": "fun_fact",
+    "category": "Fun fact",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 1,
+    "title": "Nejstarší algoritmus, co pořád používáme, má přes 2000 let.",
+    "body": "Sepsal ho Euklides zhruba 300 let před naším letopočtem — a běží i v dnešních počítačích.",
+    "image": "assets/img/euklides.jpg",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Ahoj, chceš vědět, proč se nejstarší algoritmus používá i po víc než 2000 letech?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "algoritmus-jen-pro-pocitace",
+    "type": "spot_the_mistake",
+    "category": "Najdi chybu",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 2,
+    "claim": "Algoritmus je složitá věc, která existuje jen uvnitř počítačů.",
+    "context": "Vážně jen tam? Rozklikni a najdi, co na tom nesedí.",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák pochopí, že algoritmus je obecný postup a nemusí být složitý ani vázaný na počítač.",
+      "zadani": "Text na kartě: „Algoritmus je složitá věc, která existuje jen uvnitř počítačů.“ CHYBY (klíč, žákovi neprozrazuj): 1) „Jen uvnitř počítačů“ — algoritmus je obecný postup krok za krokem, jak něco udělat; existuje i mimo počítače (recept na vaření, návod na složení nábytku, postup ranního vstávání). 2) „Složitá věc“ — algoritmus nemusí být složitý, může mít jen pár jednoduchých kroků. Obě slova („složitá“ i „jen uvnitř počítačů“) jsou chybná.",
+      "intro": "Vážně jen v počítačích a vážně vždycky složité? Co v tom tvrzení nesedí?"
+    }
+  },
+  {
+    "id": "algoritmus-na-rychlosti-nezalezi",
+    "type": "spot_the_mistake",
+    "category": "Najdi chybu",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-efektivita-reseni",
+    "obtiznost": 2,
+    "claim": "Hlavně že algoritmus vyjde. Na tom, jak dlouho to trvá, vůbec nezáleží.",
+    "context": "Fakt vůbec? Rozklikni a najdi, co na tom nesedí.",
+    "topic": "Algoritmus",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "detektiv-chyb",
+      "cil": "Žák pochopí, že na efektivitě (rychlosti) algoritmu záleží.",
+      "zadani": "Text na kartě: „Hlavně že algoritmus vyjde. Na tom, jak dlouho to trvá, vůbec nezáleží.“ CHYBA (klíč, žákovi neprozrazuj): Na rychlosti (efektivitě) algoritmu záleží hodně. Dva algoritmy můžou dát stejný výsledek, ale jeden ho spočítá za zlomek vteřiny a druhý za roky. U velkého množství dat je pomalý algoritmus prakticky nepoužitelný — proto se u algoritmů řeší časová složitost. Chybná je část „vůbec nezáleží“.",
+      "intro": "Fakt vůbec nezáleží? Zkus přijít na to, proč tohle tvrzení nesedí."
+    }
+  },
+  {
+    "id": "al-chwarizmi",
+    "type": "historicka_osobnost",
+    "category": "Historická osobnost",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 2,
+    "title": "Muhammad al-Chwárizmí",
+    "body": "Matematik z doby před více než 1200 lety, po kterém se jmenuje slovo algoritmus. Sepisoval jasné postupy, jak krok za krokem vyřešit úlohu. Zeptej se ho, odkud se algoritmy vzaly.",
+    "image": "assets/img/muhammad-al-chwarizmi.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Muhammad al-Chwárizmí",
+      "cil": "Žák pochopí, co je algoritmus — jednoznačný postup krok za krokem, který vede ke stejnému výsledku.",
+      "intro": "Ahoj, jsem Muhammad al-Chwárizmí. Žil jsem před více než 1200 lety v Bagdádu a sepisoval jsem jasné postupy, jak krok za krokem vyřešit úlohu. Z mého jména později vzniklo slovo, které dnes znáš — algoritmus.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Zajímá tě, odkud se vzaly algoritmy, nebo jak vypadal takový postup, když ještě žádné počítače nebyly?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "katherine-johnson",
+    "type": "historicka_osobnost",
+    "category": "Historická osobnost",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-zakladni-algoritmy",
+    "obtiznost": 2,
+    "title": "Katherine Johnson",
+    "body": "Matematička z NASA, která krok za krokem počítala dráhy prvních letů do vesmíru — tak přesně, že jí astronaut věřil víc než počítači. Zeptej se jí, proč na každém kroku záleží.",
+    "image": "assets/img/katherine-johnson.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "Katherine Johnson",
+      "cil": "Žák pochopí, že u algoritmu záleží na správném pořadí a přesnosti každého kroku.",
+      "intro": "Ahoj, jsem Katherine Johnson. Počítala jsem v NASA dráhy prvních letů do vesmíru — ručně, krok za krokem. Když měl člověk poprvé obletět Zemi, chtěl, abych čísla z počítače přepočítala já, protože mi věřil víc.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Chceš vědět, proč u výpočtu záleží na každém jednom kroku, nebo jak se dá spočítat cesta až do vesmíru?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "george-boole",
+    "type": "historicka_osobnost",
+    "category": "Historická osobnost",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-logika-a-booleovske-vyrazy",
+    "obtiznost": 2,
+    "title": "George Boole",
+    "body": "Matematik, který proměnil „pravdu“ a „nepravdu“ v počty. Bez jeho nápadu by dnešní programy neuměly rozhodovat „když tohle, tak tamto“. Zeptej se ho, jak z logiky udělal matematiku.",
+    "image": "assets/img/george-boole.jpg",
+    "rozklik": {
+      "kind": "chat",
+      "pretest": false,
+      "persona": "historicka-postava",
+      "title": "George Boole",
+      "cil": "Žák pochopí základ booleovské logiky — rozhodování z hodnot pravda/nepravda (a operací AND/OR/NOT).",
+      "intro": "Ahoj, jsem George Boole. Byl jsem matematik a napadlo mě něco zvláštního: co kdyby se s „pravdou“ a „nepravdou“ dalo počítat jako s čísly? Z toho vznikla logika, díky které dnešní stroje umí rozhodovat „když tohle, tak tamto“.",
+      "messages": [
+        {
+          "from": "bot",
+          "text": "Zajímá tě, jak jsem z logiky udělal matematiku, nebo jak se dvěma hodnotami — pravda a nepravda — dá rozhodovat cokoli?"
+        }
+      ]
+    }
+  },
+  {
+    "id": "algoritmus-rv-co-je-algoritmus",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 1,
+    "layout": "text",
+    "cols": 1,
+    "question": "Co je algoritmus?",
+    "answers": [
+      {
+        "label": "Přesný návod krok za krokem, jak něco vyřešit.",
+        "correct": true
+      },
+      {
+        "label": "Program napsaný v nějakém programovacím jazyce.",
+        "correct": false
+      },
+      {
+        "label": "Chytrý počítač, který sám rozhoduje.",
+        "correct": false
+      },
+      {
+        "label": "Náhodný nápad, jak něco udělat.",
+        "correct": false
+      }
+    ],
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Co nejlíp vystihuje, co je algoritmus?",
+    "taskText": "Ráno: vstát → vyčistit zuby → obléknout se → nasnídat se → vyrazit do školy."
+  },
+  {
+    "id": "algoritmus-jednoznacnost",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-algoritmus",
+    "obtiznost": 2,
+    "layout": "text",
+    "cols": 1,
+    "question": "Který postup je algoritmus?",
+    "answers": [
+      {
+        "label": "„Dej sáček do hrnku, zalij 250 ml vroucí vody, počkej 3 minuty, sáček vyndej.“",
+        "correct": true
+      },
+      {
+        "label": "„Uvař čaj nějak dobře.“",
+        "correct": false
+      },
+      {
+        "label": "„Přidej vodu, dokud to nebude tak akorát.“",
+        "correct": false
+      },
+      {
+        "label": "„Zkoušej to, dokud ti to nevyjde.“",
+        "correct": false
+      }
+    ],
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Který z postupů je opravdový algoritmus?",
+    "taskText": "Algoritmus musí být jednoznačný — každý podle něj dojde ke stejnému výsledku."
+  },
+  {
+    "id": "algoritmus-co-udela-cyklus",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-rizeni-toku",
+    "obtiznost": 2,
+    "cols": 2,
+    "question": "Co program vypíše?",
+    "answers": [
+      {
+        "label": "2",
+        "correct": false
+      },
+      {
+        "label": "3",
+        "correct": false
+      },
+      {
+        "label": "6",
+        "correct": true
+      },
+      {
+        "label": "5",
+        "correct": false
+      }
+    ],
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Projdi cyklus krok po kroku. Co se nakonec vypíše?",
+    "code": "počet = 0\nopakuj 3×:\n    počet = počet + 2\nvypiš počet"
+  },
+  {
+    "id": "algoritmus-podminka-konec-hry",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-logika-a-booleovske-vyrazy",
+    "obtiznost": 2,
+    "layout": "text",
+    "cols": 1,
+    "question": "Kdy hráč ve hře skutečně skončí?",
+    "answers": [
+      {
+        "label": "Když má hráč 0 životů a zároveň ještě zbývá čas.",
+        "correct": true
+      },
+      {
+        "label": "Když má hráč 0 životů nebo když došel čas.",
+        "correct": false
+      },
+      {
+        "label": "Když hráči došel čas.",
+        "correct": false
+      },
+      {
+        "label": "Vždycky na konci hry.",
+        "correct": false
+      }
+    ],
+    "topic": "Algoritmus",
+    "sub": "Kdy se konec hry opravdu zobrazí?",
+    "questionStyle": "h3",
+    "code": "když (životy = 0)\na zároveň (čas > 0):\n    zobraz „Konec hry“"
+  },
+  {
+    "id": "algoritmus-dekompozice",
+    "type": "quick_challenge",
+    "category": "Rychlá výzva",
+    "trust": "Core",
+    "concept_id": "informaticke-mysleni-dekompozice",
+    "obtiznost": 1,
+    "layout": "text",
+    "cols": 1,
+    "question": "Naplánuj školní výlet",
+    "answers": [
+      {
+        "label": "Rozdělím úkol na menší části (doprava, ubytování, program) a řeším je po jedné.",
+        "correct": true
+      },
+      {
+        "label": "Udělám všechno najednou, ať je to rychle z krku.",
+        "correct": false
+      },
+      {
+        "label": "Počkám, až mě napadne celé řešení naráz.",
+        "correct": false
+      },
+      {
+        "label": "Vzdám to, je to moc velké.",
+        "correct": false
+      }
+    ],
+    "topic": "Algoritmus",
+    "questionStyle": "h3",
+    "sub": "Jak se do toho nejlíp pustíš?",
+    "taskText": "Máš naplánovat školní výlet — dopravu, ubytování i program."
+  },
+  {
+    "id": "shrnuti-dne",
+    "type": "daily_summary",
+    "category": "Shrnutí",
+    "stats": [
+      {
+        "label": "Vyřešených Glitchů",
+        "value": 2
+      },
+      {
+        "label": "Splněných Questů",
+        "value": 0
+      },
+      {
+        "label": "Zvládnutých výzev",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "wellbeing-cas-vypnout",
+    "type": "time_to_let_go",
+    "category": "Wellbeing",
+    "trust": "Core",
+    "title": "Je čas vypnout screen!",
+    "body": "Glitch není dostupný od 22:00 do 6:00 hodin. Je to proto, že je čas někdy odpočívat.",
+    "image": "assets/img/time-to-let-go-cat.jpg"
+  }
+]

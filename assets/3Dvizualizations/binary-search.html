@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Půlení — hledání v seřazeném</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: 100vh;
+    aspect-ratio: 1 / 1;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #bsCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="bsCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('bsCanvas');
+  var ctx = canvas.getContext('2d');
+  var S = 0;
+
+  var TARGET = 'Nela';
+  var N_STEPS = 20;
+
+  // kolik jmen zbývá po každém půlení: 1 000 000 → … → 1
+  var counts = [1000000];
+  for (var c = 0; c < N_STEPS; c++) counts.push(Math.round(counts[c] / 2));
+  function fmt(n){
+    var s = String(n), out = '';
+    for (var i = 0; i < s.length; i++){
+      if (i > 0 && (s.length - i) % 3 === 0) out += ' ';
+      out += s[i];
+    }
+    return out;
+  }
+
+  // kterou polovinu si po porovnání necháme (L = levou, R = pravou)
+  var KEEP = ['R','L','L','R','R','L','R','L','L','R','R','L','R','R','L','L','R','L','R','R'];
+
+  // časová osa
+  var INTRO = 1.0, FINAL = 2.4, FADE = 0.7;
+  function stepDur(k){ return k < 3 ? 1.35 : (k < 18 ? 0.78 : 1.2); }
+  var segs = [], T = 0;
+  function seg(type, k, dur){ segs.push({ type: type, k: k, start: T, dur: dur }); T += dur; }
+  seg('intro', -1, INTRO);
+  for (var k = 0; k < N_STEPS; k++) seg('step', k, stepDur(k));
+  seg('final', -1, FINAL);
+  seg('fade', -1, FADE);
+  var TOTAL = T;
+
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function ease(p){ return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; }
+  function hash(i, lvl){
+    var v = Math.sin(i * 127.1 + lvl * 311.7) * 43758.5453;
+    return v - Math.floor(v);
+  }
+
+  function setup(){
+    var w = frame.clientWidth;
+    var h = frame.clientHeight;
+    S = Math.min(w, h);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function fontStr(size, weight){
+    return (weight || 500) + ' ' + Math.round(size) + 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  }
+
+  // svislé čárky = jména; při malém počtu přesně tolik čárek, kolik jmen zbývá
+  function drawTicks(lvl, w0, w1, alphaMul, dimHalf, dimMul, x0, W, cy, hh){
+    var count = counts[lvl];
+    var n = count <= 61 ? count : Math.floor(W / 9);
+    for (var i = 0; i < n; i++){
+      var u = (i + 0.5) / n;
+      var su = (u - w0) / (w1 - w0);
+      if (su < -0.02 || su > 1.02) continue;
+      var a = (0.4 + 0.4 * hash(i * 2 + 1, lvl)) * alphaMul;
+      if (dimHalf === 'L' && u < 0.5) a *= dimMul;
+      if (dimHalf === 'R' && u >= 0.5) a *= dimMul;
+      if (a <= 0.01) continue;
+      var f = 0.55 + 0.45 * hash(i, lvl);
+      var x = x0 + su * W;
+      ctx.beginPath();
+      ctx.moveTo(x, cy - hh * f);
+      ctx.lineTo(x, cy + hh * f);
+      ctx.strokeStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  function draw(now){
+    var t = (now / 1000) % TOTAL;
+    var sg = segs[segs.length - 1];
+    for (var si = 0; si < segs.length; si++){
+      if (t < segs[si].start + segs[si].dur){ sg = segs[si]; break; }
+    }
+    var local = (t - sg.start) / sg.dur;
+
+    var introA = sg.type === 'intro' ? ease(local) : 1;
+    var fadeA = sg.type === 'fade' ? 1 - ease(local) : 1;
+
+    // fáze uvnitř kroku: ukázat střed → porovnat a ztlumit půlku → zoom
+    var lvl = 0, markA = 0, dimP = 0, zoomP = 0, keep = null, stepNo = 0;
+    if (sg.type === 'step'){
+      lvl = sg.k;
+      keep = KEEP[sg.k];
+      stepNo = sg.k + 1;
+      if (local < 0.3){ markA = clamp01(local / 0.18); }
+      else if (local < 0.6){ markA = 1; dimP = clamp01((local - 0.3) / 0.22); }
+      else { markA = clamp01(1 - (local - 0.6) / 0.15); dimP = 1; zoomP = ease((local - 0.6) / 0.4); }
+    } else if (sg.type === 'final' || sg.type === 'fade'){
+      lvl = N_STEPS; stepNo = N_STEPS;
+    } else {
+      lvl = 0;
+    }
+
+    var w = frame.clientWidth, h = frame.clientHeight;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+    ctx.save();
+    ctx.translate((w - S) / 2, (h - S) / 2);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.globalAlpha = fadeA;
+
+    var x0 = S * 0.08, W = S * 0.84;
+    var cy = S * 0.52, hh = S * 0.048;
+
+    // zadání: hledám: Nela (cíl žlutě — to je klíčový prvek)
+    var fs1 = Math.max(11, S * 0.045);
+    ctx.font = fontStr(fs1);
+    var wA = ctx.measureText('hledám: ').width;
+    var wB = ctx.measureText(TARGET).width;
+    var cxx = S * 0.5 - (wA + wB) / 2;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.85 * introA).toFixed(3) + ')';
+    ctx.fillText('hledám: ', cxx, S * 0.09);
+    ctx.fillStyle = 'rgba(255,255,0,' + introA.toFixed(3) + ')';
+    ctx.fillText(TARGET, cxx + wA, S * 0.09);
+    ctx.textAlign = 'center';
+
+    // počítadlo kroků
+    ctx.font = fontStr(Math.max(10, S * 0.038));
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.55 * introA).toFixed(3) + ')';
+    ctx.fillText(sg.type === 'intro' ? 'seřazená jména' : 'krok ' + stepNo + ' / ' + N_STEPS, S * 0.5, S * 0.165);
+
+    // základní linka pod čárkami
+    ctx.beginPath();
+    ctx.moveTo(x0, cy);
+    ctx.lineTo(x0 + W, cy);
+    ctx.strokeStyle = 'rgba(255,255,255,' + (0.22 * introA).toFixed(3) + ')';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // čárky aktuální úrovně (+ zoom do ponechané poloviny)
+    if (sg.type === 'final' || sg.type === 'fade'){
+      // zbývá jediné jméno — to pravé, žlutě
+      var fp = sg.type === 'final' ? clamp01(local * 3) : 1;
+      var pulse = sg.type === 'final' ? (local * FINAL) : 1;
+      ctx.beginPath();
+      ctx.arc(S * 0.5, cy, S * 0.013 * (0.5 + 0.5 * fp), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,0,' + fp.toFixed(3) + ')';
+      ctx.fill();
+      var ringR = S * (0.02 + 0.03 * ((pulse % 1.2) / 1.2));
+      ctx.beginPath();
+      ctx.arc(S * 0.5, cy, ringR, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,0,' + (0.6 * (1 - (pulse % 1.2) / 1.2) * fp).toFixed(3) + ')';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.font = fontStr(Math.max(12, S * 0.052), 600);
+      ctx.fillStyle = 'rgba(255,255,0,' + fp.toFixed(3) + ')';
+      ctx.fillText(TARGET, S * 0.5, cy - S * 0.10);
+    } else {
+      var w0 = 0, w1 = 1;
+      if (zoomP > 0){
+        if (keep === 'R'){ w0 = 0.5 * zoomP; } else { w1 = 1 - 0.5 * zoomP; }
+      }
+      var dimMul = 1 - 0.82 * dimP;
+      var oldA = zoomP < 0.6 ? 1 : 1 - (zoomP - 0.6) / 0.4;
+      drawTicks(lvl, w0, w1, introA * oldA, dimP > 0 ? keep === 'R' ? 'L' : 'R' : null, dimMul, x0, W, cy, hh);
+      if (zoomP > 0.85){
+        drawTicks(lvl + 1, 0, 1, (zoomP - 0.85) / 0.15, null, 1, x0, W, cy, hh);
+      }
+
+      // ukazatel středu
+      if (markA > 0){
+        var mx = S * 0.5;
+        ctx.beginPath();
+        ctx.moveTo(mx, cy - hh - S * 0.028);
+        ctx.lineTo(mx, cy + hh + S * 0.015);
+        ctx.strokeStyle = 'rgba(255,255,255,' + (0.9 * markA).toFixed(3) + ')';
+        ctx.lineWidth = Math.max(1.25, S * 0.004);
+        ctx.stroke();
+        var ts = S * 0.013;
+        ctx.beginPath();
+        ctx.moveTo(mx, cy - hh - S * 0.02);
+        ctx.lineTo(mx - ts, cy - hh - S * 0.02 - ts * 1.4);
+        ctx.lineTo(mx + ts, cy - hh - S * 0.02 - ts * 1.4);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.9 * markA).toFixed(3) + ')';
+        ctx.fill();
+      }
+
+      // šipka: tudy pokračujeme
+      if (dimP > 0 && zoomP < 0.5){
+        var aa = Math.min(dimP, 1 - zoomP * 2) * markA;
+        var dirx = keep === 'R' ? 1 : -1;
+        var ax = S * 0.5 + dirx * S * 0.06;
+        var as = S * 0.014;
+        ctx.beginPath();
+        ctx.moveTo(ax + dirx * as * 1.6, cy);
+        ctx.lineTo(ax - dirx * as * 0.4, cy - as);
+        ctx.lineTo(ax - dirx * as * 0.4, cy + as);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.85 * aa).toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+
+    // kolik jmen zbývá
+    var shownLvl = zoomP > 0.5 ? lvl + 1 : lvl;
+    if (sg.type === 'final' || sg.type === 'fade') shownLvl = N_STEPS;
+    var popC = zoomP > 0.5 ? clamp01((zoomP - 0.5) / 0.3) : 1;
+    ctx.font = fontStr(Math.max(11, S * 0.042 * (1 + 0.1 * (1 - popC))));
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.75 * introA).toFixed(3) + ')';
+    ctx.fillText('zbývá: ' + fmt(counts[shownLvl]), S * 0.5, S * 0.80);
+
+    ctx.restore();
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
