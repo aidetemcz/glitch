@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Déšť nad vrstevnicemi</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #frame {
+    width: 100%;
+    max-width: min(100vw, 50vh);
+    aspect-ratio: 1 / 2;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  #rainCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="rainCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('rainCanvas');
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0;
+
+  function hash(a, b){
+    var v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+    return v - Math.floor(v);
+  }
+  function clamp01(v){ return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function easeInOut(p){ return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+
+  // ---- tři statická prostorová pole; jejich váhy se pomalu přelévají,
+  // takže se terén organicky vlní jako v předloze ----
+  var N = 46;
+  var SZ = (N + 1) * (N + 1);
+  var F1 = new Float32Array(SZ), F2 = new Float32Array(SZ), F3 = new Float32Array(SZ);
+  var MASK = new Float32Array(SZ);
+  var base = new Float32Array(SZ);
+  (function(){
+    for (var j = 0; j <= N; j++){
+      for (var i = 0; i <= N; i++){
+        var u = i / N, v = j / N;
+        var x = u * 6.2, y = v * 6.2;
+        var idx = j * (N + 1) + i;
+        F1[idx] = 0.5 + 0.5 * Math.sin(x * 1.0 + y * 0.6 + 1.2) * Math.cos(x * 0.5 - y * 0.8 + 0.7);
+        F2[idx] = 0.5 + 0.5 * Math.sin(x * 2.1 - y * 1.4 + 3.9) * Math.cos(x * 1.1 + y * 1.7 + 1.8);
+        F3[idx] = 0.5 + 0.5 * Math.sin(x * 3.3 + y * 2.6 + 0.4) * Math.cos(x * 1.9 - y * 2.2 + 2.6);
+        var d = Math.hypot(u - 0.5, v - 0.5) * 2;
+        MASK[idx] = clamp01(1.18 - 1.35 * d * d);
+      }
+    }
+  })();
+  function updateField(t){
+    var w1 = 0.45 + 0.25 * Math.sin(Math.PI * 2 * t / 16 + 0.5);
+    var w2 = 0.40 + 0.28 * Math.sin(Math.PI * 2 * t / 11 + 2.3);
+    var w3 = 0.30 + 0.24 * Math.sin(Math.PI * 2 * t / 13.5 + 4.4);
+    var ws = w1 + w2 + w3;
+    for (var k = 0; k < SZ; k++){
+      base[k] = Math.pow(clamp01(((w1 * F1[k] + w2 * F2[k] + w3 * F3[k]) / ws) * MASK[k] * 1.45), 1.25);
+    }
+  }
+  function B(i, j){ return base[j * (N + 1) + i]; }
+
+  // ---- jemně se snášející bílé body ----
+  var FLAKES = [];
+  for (var r = 0; r < 85; r++){
+    FLAKES.push({
+      x: hash(r, 1), off: hash(r, 2),
+      speed: 0.045 + hash(r, 3) * 0.075,      // pomalé snášení
+      sz: 1 + hash(r, 4) * 2.2,               // průměr 1–3 px
+      glow: hash(r, 6) < 0.3,
+      swA: 0.004 + hash(r, 7) * 0.008,        // jemné vlnění do stran
+      swF: 0.25 + hash(r, 8) * 0.45,
+      swP: hash(r, 9) * Math.PI * 2,
+      a: 0.5 + hash(r, 5) * 0.5
+    });
+  }
+  // sprity bodu: [úroveň rozmazání][plain|glow]
+  var DOT_SPRITES = [];
+  (function(){
+    var blurs = [0, 1.1, 2.2, 3.6];
+    for (var bi = 0; bi < blurs.length; bi++){
+      var pair = [];
+      for (var gi = 0; gi < 2; gi++){
+        var c = document.createElement('canvas');
+        c.width = c.height = 32;
+        var x = c.getContext('2d');
+        if (blurs[bi]) x.filter = 'blur(' + blurs[bi] + 'px)';
+        if (gi === 1){
+          var g = x.createRadialGradient(16, 16, 0, 16, 16, 12);
+          g.addColorStop(0, 'rgba(255,255,255,0.9)');
+          g.addColorStop(0.35, 'rgba(255,255,255,0.35)');
+          g.addColorStop(1, 'rgba(255,255,255,0)');
+          x.fillStyle = g;
+          x.beginPath(); x.arc(16, 16, 12, 0, Math.PI * 2); x.fill();
+        }
+        x.fillStyle = '#fff';
+        x.beginPath(); x.arc(16, 16, 3, 0, Math.PI * 2); x.fill();
+        pair.push(c);
+      }
+      DOT_SPRITES.push(pair);
+    }
+  })();
+  // žlutá zář pro část bodů na horách
+  var YGLOW = (function(){
+    var c = document.createElement('canvas');
+    c.width = c.height = 32;
+    var x = c.getContext('2d');
+    var g = x.createRadialGradient(16, 16, 0, 16, 16, 13);
+    g.addColorStop(0, 'rgba(255,255,0,0.95)');
+    g.addColorStop(0.35, 'rgba(255,255,0,0.35)');
+    g.addColorStop(1, 'rgba(255,255,0,0)');
+    x.fillStyle = g;
+    x.beginPath(); x.arc(16, 16, 13, 0, Math.PI * 2); x.fill();
+    return c;
+  })();
+
+  // ---- žlutý „sníh" na horách: kandidáti bodů s výškovým prahem ----
+  // čím vyšší místo, tím víc bodů má práh pod sebou → hustota roste s výškou
+  var SNOW = [];
+  for (var s2 = 0; s2 < 1750; s2++){
+    SNOW.push({
+      u: 0.05 + hash(s2, 21) * 0.90,
+      v: 0.05 + hash(s2, 22) * 0.90,
+      thr: 0.34 + 0.60 * Math.pow(hash(s2, 23), 0.62),
+      sz: 0.9 + hash(s2, 24) * 2.1,
+      glow: hash(s2, 25) < 0.13,
+      tw: hash(s2, 26) * Math.PI * 2,
+      tws: 0.8 + hash(s2, 27) * 1.6
+    });
+  }
+  // bilineární vzorek pole v libovolném bodě
+  function sample(u, v){
+    var fx = u * N, fy = v * N;
+    var i0 = Math.max(0, Math.min(N - 1, Math.floor(fx)));
+    var j0 = Math.max(0, Math.min(N - 1, Math.floor(fy)));
+    var rx = fx - i0, ry = fy - j0;
+    return B(i0, j0) * (1 - rx) * (1 - ry) + B(i0 + 1, j0) * rx * (1 - ry) +
+           B(i0, j0 + 1) * (1 - rx) * ry + B(i0 + 1, j0 + 1) * rx * ry;
+  }
+
+  function setup(){
+    W = frame.clientWidth;
+    H = frame.clientHeight;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw(now){
+    var t = now / 1000;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    // terén se pomalu organicky přelévá (žádné intervaly, jen klid)
+    updateField(t);
+    var ampPx = H * 0.17 * (0.92 + 0.08 * Math.sin(Math.PI * 2 * t / 19));
+
+    // izometrická projekce podstavy
+    var IX = W * 0.46, IY = W * 0.23;
+    var baseY = H - H * 0.03 - IY;
+    function projX(u, v){ return W / 2 + (u - v) * IX; }
+    function projY(u, v, z){ return baseY + (u + v - 1) * IY - z; }
+
+    // obrys podstavy
+    ctx.strokeStyle = 'rgba(255,255,255,0.20)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(projX(0, 0), projY(0, 0, 0));
+    ctx.lineTo(projX(1, 0), projY(1, 0, 0));
+    ctx.lineTo(projX(1, 1), projY(1, 1, 0));
+    ctx.lineTo(projX(0, 1), projY(0, 1, 0));
+    ctx.closePath();
+    ctx.stroke();
+
+    // ---- organické vrstevnice (marching squares nad polem výšek) ----
+    var dz = H * 0.0125;
+    var K = Math.floor(ampPx / dz);
+    for (var k = 1; k <= K; k++){
+      var th = k * dz / ampPx;
+      if (th > 0.985) break;
+      var zk = k * dz;
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.26 + 0.44 * (k / 14)).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var j3 = 0; j3 < N; j3++){
+        for (var i3 = 0; i3 < N; i3++){
+          var a = B(i3, j3), b2 = B(i3 + 1, j3), c2 = B(i3 + 1, j3 + 1), d2 = B(i3, j3 + 1);
+          var m = (a > th ? 8 : 0) | (b2 > th ? 4 : 0) | (c2 > th ? 2 : 0) | (d2 > th ? 1 : 0);
+          if (m === 0 || m === 15) continue;
+          // body na hranách buňky (lineární interpolace)
+          var pts = [];
+          function edge(v1, v2, x1, y1, x2, y2){
+            var f = (th - v1) / (v2 - v1);
+            pts.push([(x1 + (x2 - x1) * f) / N, (y1 + (y2 - y1) * f) / N]);
+          }
+          if ((a > th) !== (b2 > th)) edge(a, b2, i3, j3, i3 + 1, j3);
+          if ((b2 > th) !== (c2 > th)) edge(b2, c2, i3 + 1, j3, i3 + 1, j3 + 1);
+          if ((c2 > th) !== (d2 > th)) edge(c2, d2, i3 + 1, j3 + 1, i3, j3 + 1);
+          if ((d2 > th) !== (a > th)) edge(d2, a, i3, j3 + 1, i3, j3);
+          if (pts.length >= 2){
+            ctx.moveTo(projX(pts[0][0], pts[0][1]), projY(pts[0][0], pts[0][1], zk));
+            ctx.lineTo(projX(pts[1][0], pts[1][1]), projY(pts[1][0], pts[1][1], zk));
+            if (pts.length === 4){
+              ctx.moveTo(projX(pts[2][0], pts[2][1]), projY(pts[2][0], pts[2][1], zk));
+              ctx.lineTo(projX(pts[3][0], pts[3][1]), projY(pts[3][0], pts[3][1], zk));
+            }
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    // ---- žlutý sníh na horách: jemné body, hustší s výškou ----
+    for (var sn = 0; sn < SNOW.length; sn++){
+      var fl = SNOW[sn];
+      var vv = sample(fl.u, fl.v);
+      var vis = clamp01((vv - fl.thr) / 0.06);        // měkké objevování s morfem terénu
+      if (vis <= 0.02) continue;
+      var sx = projX(fl.u, fl.v);
+      var sy = projY(fl.u, fl.v, vv * ampPx);
+      var al = vis * (0.55 + 0.45 * Math.sin(t * fl.tws + fl.tw) * 0.5 + 0.225);
+      if (fl.glow){
+        var gs = fl.sz * 7;
+        ctx.globalAlpha = al * 0.9;
+        ctx.drawImage(YGLOW, sx - gs / 2, sy - gs / 2, gs, gs);
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.fillStyle = 'rgba(255,255,0,' + Math.min(1, al).toFixed(3) + ')';
+        ctx.fillRect(sx - fl.sz / 2, sy - fl.sz / 2, fl.sz, fl.sz);
+      }
+    }
+
+    // ---- jemně se snášející bílé body: nahoře rozmazané, dole ostré ----
+    var topY = -0.05;
+    var botY = 0.62;
+    for (var di2 = 0; di2 < FLAKES.length; di2++){
+      var dr = FLAKES[di2];
+      var cycle = (dr.off + t * dr.speed) % 1;
+      var yn = topY + cycle * (botY - topY + 0.08);
+      if (yn > botY + 0.02) continue;
+      var y = yn * H;
+      var x2 = (dr.x + dr.swA * Math.sin(t * dr.swF * Math.PI * 2 + dr.swP)) * W;
+      var pr = clamp01((yn - topY) / (botY - topY));
+      var lvl = (1 - pr) * (DOT_SPRITES.length - 1);
+      var i0 = Math.floor(lvl), fr2 = lvl - i0;
+      var la = dr.a * (0.3 + 0.7 * pr);
+      la *= clamp01((botY + 0.02 - yn) / 0.05);
+      if (la <= 0.01) continue;
+      var gi2 = dr.glow ? 1 : 0;
+      var dd = dr.sz * (32 / 6);                       // sprite má jádro ~6 px
+      ctx.globalAlpha = la * (1 - fr2);
+      ctx.drawImage(DOT_SPRITES[i0][gi2], x2 - dd / 2, y - dd / 2, dd, dd);
+      if (fr2 > 0.01 && i0 + 1 < DOT_SPRITES.length){
+        ctx.globalAlpha = la * fr2;
+        ctx.drawImage(DOT_SPRITES[i0 + 1][gi2], x2 - dd / 2, y - dd / 2, dd, dd);
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

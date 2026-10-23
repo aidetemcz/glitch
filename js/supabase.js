@@ -100,6 +100,7 @@ async function sbCreateProfile(userId) {
     full_name: local.fullName || null,
     gender: local.gender || null,
     learning_style: local.learningStyle || null,
+    vek: local.age || null,
   }, { onConflict: 'id', ignoreDuplicates: true });
 }
 
@@ -108,7 +109,38 @@ async function sbSaveProfile(fields) {
   await sb.from('profiles').upsert({ id: sbCurrentUser.id, ...fields });
 }
 
+// ── NASTAVENÍ (profiles.settings jsonb) ──────
+async function sbSaveSettings(settings) {
+  if (!sb || !sbCurrentUser) return { ok: false };
+  try {
+    const { error } = await sb.from('profiles').upsert(
+      { id: sbCurrentUser.id, settings }, { onConflict: 'id' });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+
+async function sbLoadSettings() {
+  if (!sb || !sbCurrentUser) return null;
+  try {
+    const { data, error } = await sb.from('profiles')
+      .select('settings').eq('id', sbCurrentUser.id).single();
+    if (error) return null;
+    return (data && data.settings) || null;
+  } catch (_) { return null; }
+}
+
 // ── PROGRESS ─────────────────────────────────
+
+// Úroveň zvládnutí konceptu (žákova knowledge map). Ukládá se nejvyšší dosažená.
+async function sbSaveMastery(conceptId, uroven) {
+  if (!sb || !sbCurrentUser || !conceptId || !uroven) return;
+  await sb.from('concept_mastery').upsert({
+    user_id: sbCurrentUser.id,
+    concept_id: conceptId,
+    uroven: uroven,
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,concept_id' });
+}
 
 async function sbSaveGlitchDone(glitchId, correct) {
   if (!sb || !sbCurrentUser) return;
@@ -124,6 +156,381 @@ async function sbSaveGlitchDone(glitchId, correct) {
 async function sbResetProgress() {
   if (!sb || !sbCurrentUser) return;
   await sb.from('progress').delete().eq('user_id', sbCurrentUser.id);
+}
+
+// ── PROJEKTY ─────────────────────────────────
+// Založí / aktualizuje projekt (jeden na uživatele+glitch). Tiše degraduje.
+async function sbCreateProject(p) {
+  if (!sb || !sbCurrentUser || !p || !p.glitch_id) return;
+  try {
+    await sb.from('projects').upsert({
+      user_id: sbCurrentUser.id,
+      glitch_id: p.glitch_id,
+      quest_topic: p.quest_topic || null,
+      title: p.title || null,
+      brief: p.brief || null,
+      shared: !!p.shared,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,glitch_id' });
+  } catch (_) {}
+}
+
+// Uloží data pracovny projektu (plán, zdroje, stav). Klíč je glitch_id (1 na uživatele+glitch).
+async function sbUpdateProject(p) {
+  if (!sb || !sbCurrentUser || !p || !p.glitch_id) return;
+  try {
+    await sb.from('projects').upsert({
+      user_id: sbCurrentUser.id,
+      glitch_id: p.glitch_id,
+      quest_topic: p.quest_topic || null,
+      title: p.title || null,
+      brief: p.brief || null,
+      plan: p.plan || {},
+      resources: p.resources || {},
+      msg_count: p.msgCount || 0,
+      done: !!p.done,
+      shared: !!p.shared,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,glitch_id' });
+  } catch (_) {}
+}
+
+async function sbRemoveProject(glitchId) {
+  if (!sb || !sbCurrentUser || !glitchId) return;
+  try { await sb.from('projects').delete().eq('user_id', sbCurrentUser.id).eq('glitch_id', glitchId); } catch (_) {}
+}
+
+async function sbListProjects() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('projects').select('*').eq('user_id', sbCurrentUser.id).order('created_at', { ascending: false });
+    return data || [];
+  } catch (_) { return []; }
+}
+
+// ── MENU GLITCHE: uložené + „nezajímá" ───────
+async function sbSaveSaved(info) {
+  if (!sb || !sbCurrentUser || !info || !info.id) return;
+  try {
+    await sb.from('saved_glitches').upsert({
+      user_id: sbCurrentUser.id, glitch_id: info.id,
+      topic: info.topic || null, title: info.title || null, glitch_type: info.type || null
+    }, { onConflict: 'user_id,glitch_id' });
+  } catch (_) {}
+}
+async function sbUnsaveSaved(id) {
+  if (!sb || !sbCurrentUser || !id) return;
+  try { await sb.from('saved_glitches').delete().eq('user_id', sbCurrentUser.id).eq('glitch_id', id); } catch (_) {}
+}
+async function sbMarkNotInterested(topic) {
+  if (!sb || !sbCurrentUser || !topic) return;
+  try {
+    await sb.from('topic_signals').upsert({
+      user_id: sbCurrentUser.id, topic: topic, signal: 'not_interested'
+    }, { onConflict: 'user_id,topic' });
+  } catch (_) {}
+}
+
+// ── STATISTIKY: události Glitchů ─────────────
+// Zapíše událost (view | interact | complete | save | project) do glitch_events.
+// Jen přihlášený uživatel (RLS: insert jen vlastní user_id). Tiše degraduje.
+async function sbLogEvent(eventType, glitchId, meta) {
+  if (!sb || !sbCurrentUser || !eventType || !glitchId) return;
+  try {
+    await sb.from('glitch_events').insert({
+      user_id: sbCurrentUser.id,
+      glitch_id: glitchId,
+      event_type: eventType,
+      meta: meta || {}
+    });
+  } catch (_) {}
+}
+
+// ── SLEDOVÁNÍ (following / followers) ────────
+// Glitchee (vestavěný průvodce) NENÍ v DB — vzájemné sledování řeší klient.
+// Tyhle funkce pracují jen se skutečnými uživateli (tabulka follows + profiles).
+
+// Ořeže vstup pro PostgREST or()/ilike (znaky, které by rozbily filtr).
+function _sbSafeTerm(q) { return String(q || '').replace(/[,%()*]/g, ' ').trim(); }
+
+async function sbSearchUsers(q) {
+  if (!sb) return [];
+  const term = _sbSafeTerm(q);
+  try {
+    let query = sb.from('profiles').select('id, nickname, full_name, vek, avatar').limit(20);
+    if (term) query = query.or('nickname.ilike.%' + term + '%,full_name.ilike.%' + term + '%');
+    const { data } = await query;
+    let rows = data || [];
+    if (sbCurrentUser) rows = rows.filter((r) => r.id !== sbCurrentUser.id);
+    return rows;
+  } catch (_) { return []; }
+}
+
+async function sbFollow(userId) {
+  if (!sb || !sbCurrentUser || !userId) return { ok: false };
+  try {
+    const { error } = await sb.from('follows').upsert(
+      { follower_id: sbCurrentUser.id, following_id: userId },
+      { onConflict: 'follower_id,following_id', ignoreDuplicates: true });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+
+async function sbUnfollow(userId) {
+  if (!sb || !sbCurrentUser || !userId) return { ok: false };
+  try {
+    const { error } = await sb.from('follows').delete()
+      .eq('follower_id', sbCurrentUser.id).eq('following_id', userId);
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+
+// Profily, které přihlášený uživatel sleduje.
+async function sbListFollowing() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('follows').select('following_id').eq('follower_id', sbCurrentUser.id);
+    const ids = (data || []).map((r) => r.following_id);
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// Profily, které sledují přihlášeného uživatele.
+async function sbListFollowers() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('follows').select('follower_id').eq('following_id', sbCurrentUser.id);
+    const ids = (data || []).map((r) => r.follower_id);
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// Množina id, které přihlášený sleduje (pro tlačítka Sleduješ / Začít sledovat).
+async function sbFollowingIds() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('follows').select('following_id').eq('follower_id', sbCurrentUser.id);
+    return (data || []).map((r) => r.following_id);
+  } catch (_) { return []; }
+}
+
+// ── LOGY CHATŮ (jen pro testování) ───────────
+// Uloží/aktualizuje celou konverzaci (jeden řádek na session). Jen přihlášený
+// uživatel (RLS: vlastní user_id). Řádky se po 7 dnech mažou cronem. Tiše degraduje.
+async function sbLogChat(sessionId, info) {
+  if (!sb || !sbCurrentUser || !sessionId) return;
+  info = info || {};
+  try {
+    await sb.from('chat_logs').upsert({
+      session_id: sessionId,
+      user_id: sbCurrentUser.id,
+      kind: info.kind || 'free',
+      persona: info.persona || null,
+      glitch_id: info.glitchId || null,
+      messages: info.messages || [],
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'session_id' });
+  } catch (_) {}
+}
+
+// ── GLITCHPOSTY (uživatelem vytvořené Glitche) ──
+// Uloží/aktualizuje Glitchpost (celá karta v jsonb). Jen přihlášený (RLS: vlastní
+// user_id). Čtení je veřejné pro přihlášené (veřejné profily). Tiše degraduje.
+async function sbSaveGlitchpost(post) {
+  if (!sb || !sbCurrentUser || !post || !post.id) return { ok: false, reason: 'auth' };
+  try {
+    const { error } = await sb.from('glitchposts').upsert({
+      id: post.id,
+      user_id: sbCurrentUser.id,
+      glitch_type: post.card && post.card.type || null,
+      topic: post.card && post.card.topic || null,
+      title: post.title || (post.card && (post.card.title || post.card.question || post.card.claim)) || null,
+      card: post.card || {},
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'id' });
+    return { ok: !error, reason: error ? 'db' : null };
+  } catch (_) { return { ok: false, reason: 'db' }; }
+}
+async function sbListGlitchposts() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data } = await sb.from('glitchposts').select('*')
+      .eq('user_id', sbCurrentUser.id).order('created_at', { ascending: false });
+    return data || [];
+  } catch (_) { return []; }
+}
+async function sbListGlitchpostsByUser(userId) {
+  if (!sb || !userId) return [];
+  try {
+    const { data } = await sb.from('glitchposts').select('*')
+      .eq('user_id', userId).order('created_at', { ascending: false });
+    return data || [];
+  } catch (_) { return []; }
+}
+async function sbDeleteGlitchpost(id) {
+  if (!sb || !sbCurrentUser || !id) return;
+  try { await sb.from('glitchposts').delete().eq('id', id).eq('user_id', sbCurrentUser.id); } catch (_) {}
+}
+
+// ── SPOLUPRÁCE NA PROJEKTU ───────────────────
+// Projekt = (owner_id, glitch_id). Přizvat/odebrat může jen vlastník.
+async function sbAddCollaborator(glitchId, collaboratorId) {
+  if (!sb || !sbCurrentUser || !glitchId || !collaboratorId) return { ok: false };
+  try {
+    const { error } = await sb.from('project_collaborators').upsert(
+      { owner_id: sbCurrentUser.id, glitch_id: glitchId, collaborator_id: collaboratorId },
+      { onConflict: 'owner_id,glitch_id,collaborator_id', ignoreDuplicates: true });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+async function sbRemoveCollaborator(glitchId, collaboratorId) {
+  if (!sb || !sbCurrentUser || !glitchId || !collaboratorId) return;
+  try {
+    await sb.from('project_collaborators').delete()
+      .eq('owner_id', sbCurrentUser.id).eq('glitch_id', glitchId).eq('collaborator_id', collaboratorId);
+  } catch (_) {}
+}
+async function sbListCollaborators(glitchId) {
+  if (!sb || !sbCurrentUser || !glitchId) return [];
+  try {
+    const { data } = await sb.from('project_collaborators').select('collaborator_id')
+      .eq('owner_id', sbCurrentUser.id).eq('glitch_id', glitchId);
+    const ids = (data || []).map((r) => r.collaborator_id);
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// Projekty, do kterých jsem přizvaný jako spolupracovník (sdílené se mnou).
+// Vrací řádky projektu vlastníka + info o vlastníkovi (_owner).
+async function sbListSharedProjects() {
+  if (!sb || !sbCurrentUser) return [];
+  try {
+    const { data: pc } = await sb.from('project_collaborators').select('owner_id, glitch_id')
+      .eq('collaborator_id', sbCurrentUser.id);
+    if (!pc || !pc.length) return [];
+    const ors = pc.map((r) => 'and(user_id.eq.' + r.owner_id + ',glitch_id.eq.' + r.glitch_id + ')').join(',');
+    const { data } = await sb.from('projects').select('*').or(ors);
+    const rows = data || [];
+    const ownerIds = Array.from(new Set(rows.map((p) => p.user_id)));
+    const owners = {};
+    if (ownerIds.length) {
+      const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, avatar').in('id', ownerIds);
+      (profs || []).forEach((p) => { owners[p.id] = p; });
+    }
+    return rows.map((p) => Object.assign({}, p, { _owner: owners[p.user_id] || null }));
+  } catch (_) { return []; }
+}
+
+// Úprava projektu, který se mnou někdo sdílí (píšu do řádku vlastníka; RLS
+// „Projects collaborator update" to povolí). Nikdy nezakládá nový řádek.
+async function sbUpdateSharedProject(ownerId, glitchId, fields) {
+  if (!sb || !sbCurrentUser || !ownerId || !glitchId) return;
+  try {
+    await sb.from('projects').update(Object.assign({}, fields, { updated_at: new Date().toISOString() }))
+      .eq('user_id', ownerId).eq('glitch_id', glitchId);
+  } catch (_) {}
+}
+
+// Spolupracovníci na sdíleném projektu (vidí je i přizvaný člen — RLS "PC members read").
+async function sbListProjectMembers(ownerId, glitchId) {
+  if (!sb || !ownerId || !glitchId) return [];
+  try {
+    const { data } = await sb.from('project_collaborators').select('collaborator_id')
+      .eq('owner_id', ownerId).eq('glitch_id', glitchId);
+    const ids = (data || []).map((r) => r.collaborator_id).filter((id) => id !== (sbCurrentUser && sbCurrentUser.id));
+    if (!ids.length) return [];
+    const { data: profs } = await sb.from('profiles').select('id, nickname, full_name, vek, avatar').in('id', ids);
+    return profs || [];
+  } catch (_) { return []; }
+}
+
+// ── 1:1 ZPRÁVY (realtime) ────────────────────
+async function sbSendMessage(recipientId, body) {
+  if (!sb || !sbCurrentUser || !recipientId || !body) return { ok: false };
+  try {
+    const { error } = await sb.from('messages').insert({
+      sender_id: sbCurrentUser.id, recipient_id: recipientId, body: String(body).slice(0, 4000)
+    });
+    return { ok: !error };
+  } catch (_) { return { ok: false }; }
+}
+async function sbListMessages(otherId) {
+  if (!sb || !sbCurrentUser || !otherId) return [];
+  const me = sbCurrentUser.id;
+  try {
+    const { data } = await sb.from('messages').select('id, sender_id, recipient_id, body, created_at')
+      .or('and(sender_id.eq.' + me + ',recipient_id.eq.' + otherId + '),and(sender_id.eq.' + otherId + ',recipient_id.eq.' + me + ')')
+      .order('created_at', { ascending: true }).limit(200);
+    return data || [];
+  } catch (_) { return []; }
+}
+// Přihlásí se k živým příchozím zprávám od `otherId`. cb(msg) na každou novou.
+// Vrací funkci pro odhlášení (nebo no-op).
+function sbSubscribeMessages(otherId, cb) {
+  if (!sb || !sbCurrentUser || !otherId || typeof cb !== 'function') return function () {};
+  try {
+    const ch = sb.channel('dm-' + otherId + '-' + Date.now())
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'messages', filter: 'recipient_id=eq.' + sbCurrentUser.id },
+        (payload) => { const m = payload && payload.new; if (m && m.sender_id === otherId) cb(m); })
+      .subscribe();
+    return function () { try { sb.removeChannel(ch); } catch (_) {} };
+  } catch (_) { return function () {}; }
+}
+
+// ── NAHLÁŠENÍ NEVHODNÉHO OBSAHU ──────────────
+// Zapíše nahlášení Glitche do tabulky content_reports. Nahlašovat může jen
+// přihlášený uživatel (RLS: insert jen na vlastní user_id). Vrací {ok, reason}.
+async function sbReportGlitch(info, reason) {
+  if (!sb || !sbCurrentUser) return { ok: false, reason: 'auth' };
+  if (!info || !info.id) return { ok: false, reason: 'input' };
+  try {
+    const { error } = await sb.from('content_reports').insert({
+      user_id: sbCurrentUser.id,
+      glitch_id: info.id,
+      glitch_type: info.type || null,
+      topic: info.topic || null,
+      reason: (reason || '').trim().slice(0, 2000) || null
+    });
+    return { ok: !error, reason: error ? 'db' : null };
+  } catch (_) { return { ok: false, reason: 'db' }; }
+}
+
+// ── MOOD ─────────────────────────────────────
+// Uloží náladu (focus/energy 0–100). Vždy lokálně; při přihlášení i do DB.
+// Primárně do dedikované tabulky `mood_entries`, sekundárně do `activity_log`.
+async function sbSaveMood(focus, energy) {
+  const entry = { focus, energy, ts: Date.now() };
+  try {
+    localStorage.setItem('tg_mood_last', JSON.stringify(entry));
+    const hist = JSON.parse(localStorage.getItem('tg_mood_history') || '[]');
+    hist.push(entry);
+    localStorage.setItem('tg_mood_history', JSON.stringify(hist.slice(-200)));
+  } catch (_) {}
+
+  if (!sb || !sbCurrentUser) return { ok: false, reason: 'auth' };
+
+  let dbOk = false;
+  // 1) dedikovaná tabulka mood_entries (pokud existuje)
+  try {
+    const { error } = await sb.from('mood_entries').insert({
+      user_id: sbCurrentUser.id, focus, energy
+    });
+    if (!error) dbOk = true;
+  } catch (_) {}
+  // 2) obecný activity_log (funguje, pokud tabulka existuje; jinak tiše degraduje)
+  try {
+    await sbTrackEvent('mood', { focus, energy });
+    if (_activityLogAvailable) dbOk = true;
+  } catch (_) {}
+
+  return { ok: dbOk, reason: dbOk ? null : 'db' };
 }
 
 // ── SYNC ─────────────────────────────────────
@@ -188,6 +595,7 @@ async function sbMergeToLocal(userId) {
       fullName: profile.full_name || user.fullName,
       gender: profile.gender || user.gender,
       learningStyle: profile.learning_style || user.learningStyle,
+      age: profile.vek || user.age,
     }));
   }
 }

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hra 2 — Opakování (cyklus)</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  #frame {
+    width: 100%; height: 100%; background: #000;
+    border: 1px solid #fff; border-radius: 10px; overflow: hidden;
+    display: flex; flex-direction: column; padding: 3.5%;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    color: #fff; letter-spacing: -0.02em; user-select: none;
+  }
+  .hint { font-size: 12px; line-height: 1.25; color: #d0d0d0; margin: 0 0 2% 0; min-height: 44px; }
+  .hint b { color: #ffff00; font-weight: 600; }
+  .grid-wrap { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; margin-bottom: 2%; }
+  .grid { display: grid; gap: 4px; width: 100%; }
+  .cell { aspect-ratio: 1/1; border: 1px solid #333; border-radius: 6px; background: #0d0d0d;
+          display: flex; align-items: center; justify-content: center; position: relative; }
+  .cell.goal { border-color: #ffff00; }
+  .cell.win { background: #ffff00; }
+  .tok { font-size: 20px; line-height: 1; }
+  /* smyčka */
+  .loop { border: 1px solid #ffff00; border-radius: 8px; padding: 6px; margin-bottom: 2%; }
+  .loop-top { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #ffff00; font-weight: 600; }
+  .cnt { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .cnt button { width: 24px; height: 24px; font-size: 16px; padding: 0; }
+  .cnt span { min-width: 16px; text-align: center; font-size: 14px; color: #fff; }
+  .body { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; min-height: 28px; margin-top: 5px;
+          padding: 3px; border: 1px dashed #333; border-radius: 6px; }
+  .body:empty::before { content: "tělo smyčky — přidej krok ↓"; color: #555; font-size: 11px; }
+  .chip { font-size: 15px; width: 24px; height: 24px; border-radius: 6px; border: 1px solid #ffff00;
+          background: #1a1a00; color: #fff; display: flex; align-items: center; justify-content: center; }
+  .unroll { font-size: 11px; color: #888; margin: 3px 0 0; min-height: 15px; }
+  .unroll b { color: #ffff00; font-weight: 600; letter-spacing: 1px; }
+  .pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  button { font-family: inherit; font-size: 17px; color: #fff; background: #111; border: 1px solid #444;
+           border-radius: 8px; padding: 7px 0; cursor: pointer; }
+  button:active { background: #ffff00; color: #000; border-color: #ffff00; }
+  button:disabled { opacity: .4; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
+  .go { border-color: #ffff00; font-size: 13px; font-weight: 600; }
+  .clr { font-size: 13px; }
+  .msg { text-align: center; font-size: 12px; min-height: 16px; margin-top: 4px; font-weight: 600; }
+  .msg.ok { color: #ffff00; }
+  .msg.bad { color: #ff6a6a; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <p class="hint">Ťukat <b>▶</b> pětkrát je zdlouhavé. Dej krok do <b>smyčky 🔁</b> a nastav, kolikrát se má opakovat. Počítač to zopakuje za tebe.</p>
+  <div class="grid-wrap"><div class="grid" id="grid"></div></div>
+  <div class="loop">
+    <div class="loop-top">🔁 Opakuj
+      <span class="cnt"><button id="dec">−</button><span id="n">2</span>×<button id="inc">+</button></span>
+    </div>
+    <div class="body" id="body"></div>
+    <p class="unroll" id="unroll"></p>
+  </div>
+  <div class="pad">
+    <button data-mv="up">▲</button><button data-mv="down">▼</button>
+    <button data-mv="left">◀</button><button data-mv="right">▶</button>
+  </div>
+  <div class="row">
+    <button class="clr" id="clr">Znovu</button>
+    <button class="go" id="go">Spusť ▶</button>
+  </div>
+  <div class="msg" id="msg"></div>
+</div>
+<script>
+(function(){
+  var COLS = 6, ROWS = 1;
+  var START = { x:0, y:0 }, GOAL = { x:5, y:0 };
+  var MOVES = { up:{dx:0,dy:-1,g:"▲"}, down:{dx:0,dy:1,g:"▼"}, left:{dx:-1,dy:0,g:"◀"}, right:{dx:1,dy:0,g:"▶"} };
+  var body = [], count = 2, running = false, robot = { x:START.x, y:START.y };
+
+  var grid = document.getElementById("grid");
+  var bodyEl = document.getElementById("body");
+  var unroll = document.getElementById("unroll");
+  var nEl = document.getElementById("n");
+  var msg = document.getElementById("msg");
+  grid.style.gridTemplateColumns = "repeat(" + COLS + ", 1fr)";
+
+  function expand(){ var p=[]; for (var r=0;r<count;r++){ body.forEach(function(m){ p.push(m); }); } return p; }
+  function drawGrid(win){
+    grid.innerHTML = "";
+    for (var x=0; x<COLS; x++){
+      var c = document.createElement("div"); c.className = "cell";
+      if (x===GOAL.x) c.className += " goal";
+      if (win && x===robot.x) c.className += " win";
+      var t = (x===robot.x) ? "🤖" : (x===GOAL.x ? "⭐" : "");
+      if (t) c.innerHTML = '<span class="tok">' + t + '</span>';
+      grid.appendChild(c);
+    }
+  }
+  function drawBody(){
+    bodyEl.innerHTML = "";
+    body.forEach(function(mv, i){
+      var b = document.createElement("button");
+      b.className = "chip"; b.textContent = MOVES[mv].g; b.title = "Odebrat";
+      b.onclick = function(){ if (running) return; body.splice(i,1); drawBody(); };
+      bodyEl.appendChild(b);
+    });
+    var ex = expand();
+    unroll.innerHTML = ex.length ? "rozbalí se na: <b>" + ex.map(function(m){return MOVES[m].g;}).join(" ") + "</b> (" + ex.length + " kroků)" : "";
+  }
+  function setMsg(t, cls){ msg.textContent = t || ""; msg.className = "msg" + (cls ? " " + cls : ""); }
+
+  document.querySelectorAll("[data-mv]").forEach(function(btn){
+    btn.onclick = function(){ if (running) return; if (body.length>=4) return; body.push(btn.dataset.mv); drawBody(); setMsg(""); };
+  });
+  document.getElementById("inc").onclick = function(){ if (running) return; if (count<8){ count++; nEl.textContent=count; drawBody(); } };
+  document.getElementById("dec").onclick = function(){ if (running) return; if (count>1){ count--; nEl.textContent=count; drawBody(); } };
+  document.getElementById("clr").onclick = function(){ if (running) return; body=[]; count=2; nEl.textContent=count; robot={x:START.x,y:START.y}; drawBody(); drawGrid(); setMsg(""); };
+
+  document.getElementById("go").onclick = function(){
+    if (running) return;
+    var prog = expand(); if (!prog.length) return;
+    running = true; robot = { x:START.x, y:START.y }; drawGrid(); setMsg("");
+    var i = 0;
+    var t = setInterval(function(){
+      if (i >= prog.length){
+        clearInterval(t); running = false;
+        if (robot.x===GOAL.x){ drawGrid(true); setMsg("Cíl! 🎉 Jedna smyčka nahradí spoustu kroků.", "ok"); }
+        else setMsg("Ještě ne. Zkus jiný počet opakování.", "bad");
+        return;
+      }
+      var m = MOVES[prog[i]]; i++;
+      var nx = robot.x + m.dx, ny = robot.y + m.dy;
+      if (nx<0 || nx>=COLS || ny<0 || ny>=ROWS){
+        clearInterval(t); running = false; setMsg("Ups, mimo mřížku! Uber opakování.", "bad"); return;
+      }
+      robot.x = nx; robot.y = ny; drawGrid();
+    }, 380);
+  };
+
+  drawGrid(); drawBody();
+})();
+</script>
+</body>
+</html>

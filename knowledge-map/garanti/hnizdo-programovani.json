@@ -1,0 +1,625 @@
+[
+ {
+  "title": "PROGRAM",
+  "ucivo": [
+   "Program je zápis příkazů algoritmu v programovacím jazyce tak, aby je mohl počítač vykonat. Při běhu programu počítač vykonává zapsané příkazy. Program může přijímat vstupy, zpracovávat je a vytvářet výstupy."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí vztah mezi algoritmem a programem a chápe, že program je zápisem příkazů algoritmu v programovacím jazyce."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák z chování jednoduchého programu určí, jakou úlohu program plní."
+   }
+  ],
+  "kriteria": [
+   "Žák vysvětlí rozdíl mezi algoritmem a programem.",
+   "Žák chápe, že příkazy algoritmu musí být pro počítač zapsány v programovacím jazyce.",
+   "Žák rozlišuje program jako zápis od jeho vykonávání – běhu programu.",
+   "Žák na základě chování jednoduchého programu popíše jeho účel."
+  ],
+  "duraz": [
+   "Algoritmus a program nejsou synonyma. Algoritmus popisuje postup řešení; program je jeho zápisem v programovacím jazyce určeným k vykonání počítačem."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "základní vztah algoritmu a jeho implementace jako programu."
+   }
+  ]
+ },
+ {
+  "title": "ZÁPIS PROGRAMU",
+  "ucivo": [
+   "Program zapisujeme v programovacím jazyce. Zápis programu označujeme jako kód programu. Existují různé programovací jazyky, které se liší způsobem zápisu i tím, pro jaké účely jsou vhodné. Každý programovací jazyk má pravidla, podle kterých se kód programu zapisuje. Pravidla určující správný zápis označujeme jako syntaxi. Pokud nejsou pravidla zápisu dodržena, počítač nedokáže kód programu správně zpracovat."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že program se zapisuje v programovacím jazyce a že různé programovací jazyky se mohou lišit způsobem zápisu a být vhodné pro různé účely."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že každý programovací jazyk má pravidla zápisu – syntaxi – která je nutné dodržovat, aby mohl být program vykonán."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák vyhledá v dostupné nápovědě informace o správném zápisu v používaném programovacím jazyce."
+   }
+  ],
+  "kriteria": [
+   "Žák vysvětlí, co označujeme jako kód programu.",
+   "Žák uvede příklady různých programovacích jazyků a chápe, že se mohou lišit způsobem zápisu a vhodností pro různé účely.",
+   "Žák vysvětlí, proč je při zápisu programu nutné dodržovat syntaktická pravidla.",
+   "Žák ví, kde může vyhledat pravidla používaného programovacího jazyka.",
+   "Žák v nápovědě vyhledá informaci potřebnou ke správnému zápisu konkrétní části kódu programu."
+  ],
+  "duraz": [
+   "Není cílem učit definici syntaxe ani podrobně porovnávat programovací jazyky. Podstatné je, aby žák chápal, že programovací jazyk má přesně stanovená pravidla zápisu, která při tvorbě kódu programu musí respektovat. Pojem syntaxe slouží k pojmenování těchto pravidel.",
+   "Žák se nemusí pravidla zápisu učit zpaměti. Důležité je, aby věděl, kde potřebné informace najít a jak s nápovědou pracovat."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "tvorba programu v programovacím jazyce."
+   }
+  ]
+ },
+ {
+  "title": "SEKVENCE PŘÍKAZŮ",
+  "ucivo": [
+   "Sekvence je posloupnost příkazů, které se vykonávají v pořadí, v jakém jsou zapsány. Počítač toto pořadí svévolně nemění ani tehdy, když by pro dosažení výsledku bylo možné některé příkazy provést v jiném pořadí. Další příkaz se začne vykonávat až po dokončení předchozího. To platí i tehdy, když vykonávání příkazu trvá delší dobu nebo je jeho součástí čekání po stanovenou dobu."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že příkazy v sekvenci se vykonávají postupně v pořadí určeném zápisem programu a že další příkaz následuje až po dokončení předchozího."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák sleduje vykonávání sekvence příkazů přesně v pořadí, v jakém jsou příkazy zapsány."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák posoudí, jak změna pořadí příkazů ovlivní průběh nebo výsledek programu."
+   }
+  ],
+  "kriteria": [
+   "Žák z kódu programu určí pořadí, ve kterém se příkazy vykonají.",
+   "Žák při určování průběhu programu zohlední, že další příkaz začne až po dokončení předchozího, a to i tehdy, když jeho vykonávání určitou dobu trvá.",
+   "Žák posoudí, zda změna pořadí příkazů ovlivní výsledek programu, avšak ví, že příkazy se vždy vykonávají v zapsaném pořadí a program toto pořadí svévolně nemění."
+  ],
+  "duraz": [
+   "Počítač nevykonává příkazy v pořadí, které se mu „zdá vhodné“. Pořadí je určeno kódem programu, a to i tehdy, když by jiné pořadí vedlo ke stejnému výsledku.",
+   "Tento model popisuje vykonávání příkazů v jedné sekvenci. Program může mít více částí, které se vykonávají současně. Pak nelze obecně určit vzájemné pořadí příkazů z různých současně vykonávaných částí pouze podle jejich zápisu v kódu programu."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "metodická podpora výslovně pracuje s programem s více kroky a se správným pořadím kroků."
+   }
+  ]
+ },
+ {
+  "title": "PODPROGRAM (BEZ PARAMETRŮ)",
+  "ucivo": [
+   "Podprogram je pojmenovaná část kódu programu, která obsahuje příkazy pro určitou ucelenou činnost.",
+   "Název podprogramu by měl vystihovat jeho činnost, aby bylo možné poznat, co má program v daném místě udělat, aniž bychom museli zkoumat příkazy uvnitř podprogramu. Podprogram lze volat z různých míst programu. Pomocí podprogramů můžeme program rozdělit na menší, srozumitelně pojmenované části a stejný kód nemusíme zapisovat na více místech.",
+   "Použití podprogramů zvyšuje čitelnost kódu programu a usnadňuje jeho úpravy. Pokud je potřeba danou činnost změnit, upravíme podprogram na jednom místě a změna se projeví při všech jeho voláních."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe vztah mezi definicí podprogramu a jeho voláním a určí, které příkazy se při volání podprogramu vykonají."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí účel podprogramu – co podprogram dělá – bez popisu jednotlivých příkazů, kterými je činnost realizována."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe význam vhodného pojmenování podprogramů pro členění a čitelnost kódu programu."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák použije vytvořený podprogram na vhodných místech programu."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák rozpozná části kódu programu, které je vhodné vyčlenit do samostatného podprogramu, a určí jejich společný účel."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák rozdělí program na vhodné podprogramy pro jednotlivé ucelené činnosti a pojmenuje je tak, aby jejich názvy vystihovaly jejich účel."
+   }
+  ],
+  "kriteria": [
+   "Žák v kódu programu rozliší definici podprogramu a jeho volání.",
+   "Žák určí, které příkazy se při volání podprogramu vykonají a kde bude program po jeho dokončení pokračovat.",
+   "Žák vlastními slovy popíše, co podprogram dělá, aniž by pouze převyprávěl jednotlivé příkazy jeho definice.",
+   "Žák podle účelu podprogramu navrhne výstižný název.",
+   "Žák rozpozná části kódu programu, které je vhodné vyčlenit do podprogramu, a nahradí je jeho voláním.",
+   "Žák vysvětlí, proč vhodné použití a pojmenování podprogramů zvyšuje čitelnost a usnadňuje úpravy kódu programu.",
+   "Žák při změně požadované činnosti upraví její definici v podprogramu, místo aby prováděl stejnou změnu na všech místech jeho použití."
+  ],
+  "duraz": [
+   "Podprogram představuje ucelenou činnost, kterou můžeme pojmenovat a používat jako celek. Při čtení programu proto nemusíme pokaždé sledovat, jak je tato činnost provedena; pro pochopení struktury programu často stačí vědět, co daný podprogram dělá.",
+   "Podprogramy tak neslouží jen ke zkrácení kódu programu. Umožňují program rozčlenit na smysluplné části, zpřehlednit jej a usnadnit jeho pozdější změny."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "metodická podpora výslovně uvádí podprogramy, opakované využívání hotových částí kódu a vhodné pojmenování podprogramů."
+   }
+  ]
+ },
+ {
+  "title": "OPAKOVÁNÍ S PEVNÝM POČTEM OPAKOVÁNÍ",
+  "ucivo": [
+   "Pokud se má určitá činnost provést vícekrát, lze použít cyklus. Příkazy, které se v cyklu vykonávají, tvoří tělo cyklu.",
+   "U opakování s pevným počtem je počet opakování určen před zahájením vykonávání cyklu. Při každém průchodu cyklem se vykoná celé jeho tělo.",
+   "Použití cyklu umožňuje zapsat opakující se činnost pouze jednou místo vícenásobného zápisu stejných nebo odpovídajících příkazů."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, která část kódu programu tvoří tělo cyklu, a rozumí tomu, co určuje počet jeho vykonání."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák určí průběh programu obsahujícího cyklus s pevným počtem opakování."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák v zadání rozpozná činnost, která se má vícekrát provést a je vhodné ji řešit pomocí cyklu."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák vytvoří cyklus s vhodným tělem a počtem opakování."
+   }
+  ],
+  "kriteria": [
+   "Žák z kódu programu určí tělo cyklu a počet jeho vykonání.",
+   "Žák určí pořadí vykonávání příkazů v programu obsahujícím cyklus.",
+   "Žák v zadání rozpozná činnost, kterou je vhodné řešit pomocí cyklu, a určí příkazy tvořící jeho tělo.",
+   "Žák upraví uspořádání příkazů tak, aby bylo možné vhodnou část kódu programu nahradit cyklem.",
+   "Žák vytvoří cyklus s takovým počtem opakování, aby program dosáhl požadovaného výsledku."
+  ],
+  "duraz": [
+   "Opakující se činnost nemusí být v již zapsaném kódu programu na první pohled patrná. Vhodné použití cyklu vychází především z rozpoznání struktury řešeného problému, nikoli jen z hledání několikrát za sebou zapsaných stejných příkazů.",
+   "Při návrhu programu může být potřeba příkazy vhodně uspořádat, aby činnost, která se má provádět vícekrát, tvořila souvislé tělo cyklu."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "opakování je přímo součástí závazného OVU; metodika explicitně uvádí opakování s pevným počtem."
+   }
+  ]
+ },
+ {
+  "title": "PODMÍNĚNÝ PŘÍKAZ",
+  "ucivo": [
+   "Podmíněný příkaz umožňuje řídit průběh programu podle podmínky. Podmínka může být splněna, nebo nesplněna. Výsledek podmínky rozhoduje o tom, které příkazy se vykonají.",
+   "Podmíněný příkaz může obsahovat příkazy pouze pro případ, kdy je podmínka splněna. Pokud podmínka splněna není, tyto příkazy se přeskočí a program pokračuje za podmíněným příkazem.",
+   "Podmíněný příkaz může také obsahovat dvě větve. Jedna se vykoná při splnění podmínky, druhá při jejím nesplnění. Po dokončení zvolené větve program pokračuje za podmíněným příkazem."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že výsledek podmínky rozhoduje o tom, které příkazy se vykonají. Chápe také, že nesplnění podmínky samo o sobě neznamená ukončení programu."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák pro konkrétní situaci vyhodnotí podmínku a určí další průběh programu."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák určí chování programu pro oba možné výsledky podmínky a ověří, jak podmíněný příkaz zachází se všemi situacemi, které mohou nastat."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák vytvoří podmíněný příkaz odpovídající požadovanému chování programu."
+   }
+  ],
+  "kriteria": [
+   "Žák pro konkrétní situaci určí, zda je podmínka splněna.",
+   "Žák podle výsledku podmínky určí, které příkazy se vykonají, které se přeskočí a kde bude program pokračovat.",
+   "Žák rozliší podmíněný příkaz s jednou větví a podmíněný příkaz se dvěma větvemi a vhodně je použije.",
+   "Žák vytvoří podmínku a podmíněný příkaz odpovídající požadovanému chování programu.",
+   "Žák ověří, že podmíněný příkaz správně zachází se všemi možnými případy, včetně hraničních hodnot."
+  ],
+  "duraz": [
+   "Pokud podmíněný příkaz nemá větev pro nesplněnou podmínku, nesplnění podmínky neznamená ukončení programu. Program pouze přeskočí příkazy určené pro splněnou podmínku a pokračuje dál."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "závazné OVU výslovně požaduje větvení programu."
+   }
+  ]
+ },
+ {
+  "title": "CYKLUS S PODMÍNKOU",
+  "ucivo": [
+   "Cyklus s podmínkou umožňuje opakovaně vykonávat tělo cyklu podle výsledku podmínky. Počet opakování není předem určen. Závisí na hodnotách, které se v průběhu programu mění a ovlivňují výsledek podmínky.",
+   "Podmínka se vyhodnocuje vždy na stejném místě cyklu. Změna hodnot během vykonávání těla cyklu sama o sobě neznamená, že se podmínka hned znovu vyhodnotí."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že podmínka řídí vykonávání cyklu a že počet vykonání těla cyklu nemusí být předem znám."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že o průběhu cyklu rozhoduje výsledek podmínky v okamžiku jejího vyhodnocení."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák určí průběh programu obsahujícího cyklus s podmínkou."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák sleduje změny hodnot ovlivňujících podmínku a určí, jak se projeví při dalším vyhodnocení podmínky."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák vytvoří cyklus s podmínkou pro situaci, ve které počet vykonání těla cyklu není předem znám."
+   }
+  ],
+  "kriteria": [
+   "Žák v kódu programu určí tělo cyklu a podmínku, která cyklus řídí.",
+   "Žák pro konkrétní hodnoty vyhodnotí podmínku a určí další průběh cyklu.",
+   "Žák určí, kdy se podmínka vyhodnocuje, a podle výsledku podmínky v tomto okamžiku určí, jak bude cyklus pokračovat.",
+   "Žák rozpozná situaci, kdy se tělo cyklu neprovede ani jednou.",
+   "Žák rozliší situace vhodné pro cyklus s pevným počtem opakování a pro cyklus s podmínkou.",
+   "Žák vytvoří cyklus s podmínkou odpovídající zadané situaci.",
+   "Žák rozpozná případ, kdy cyklus nemusí skončit."
+  ],
+  "duraz": [
+   "Změna hodnoty během vykonávání těla cyklu neznamená okamžité nové vyhodnocení podmínky. O průběhu cyklu rozhoduje výsledek podmínky v okamžiku jejího vyhodnocení."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "metodická podpora výslovně požaduje různé formy opakování, zejména opakování s pevným počtem a opakování s ukončovací podmínkou."
+   }
+  ]
+ },
+ {
+  "title": "PROMĚNNÁ",
+  "ucivo": [
+   "Proměnná umožňuje v programu uchovávat hodnotu pod určitým názvem. V jednom okamžiku má proměnná právě jednu hodnotu. Při přiřazení nové hodnoty se předchozí hodnota nahradí a již není v proměnné dostupná.",
+   "Název proměnné by měl vystihovat význam hodnoty, kterou v ní chceme uchovávat. Vhodné pojmenování zvyšuje čitelnost kódu programu, ale neurčuje hodnotu proměnné. Hodnota se změní pouze tehdy, když program vykoná příkaz, který ji nastaví nebo změní.",
+   "Hodnoty mohou být různých typů, například číslo nebo text. Typ hodnoty ovlivňuje, jaké operace lze s hodnotou provádět."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe rozdíl mezi názvem proměnné a její aktuální hodnotou. Chápe, že název vyjadřuje význam proměnné, ale nezajišťuje, že její hodnota bude tomuto významu odpovídat nebo se podle něj automaticky aktualizovat."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že proměnná má v jednom okamžiku právě jednu hodnotu. Při nastavení nové hodnoty se předchozí hodnota nahradí."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák pomocí příkazů nastaví, použije a změní hodnotu proměnné."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák podle vykonávaných příkazů sleduje změny hodnoty proměnné a určí její hodnotu v konkrétním okamžiku."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák použije vhodně pojmenovanou proměnnou k uchování hodnoty potřebné při běhu programu."
+   }
+  ],
+  "kriteria": [
+   "Žák z kódu programu určí aktuální hodnotu proměnné.",
+   "Žák pomocí příkazů nastaví počáteční hodnotu proměnné a podle potřeby ji během programu mění.",
+   "Žák použije hodnotu proměnné v dalších příkazech nebo podmínkách.",
+   "Žák pojmenuje proměnnou tak, aby název vystihoval význam uchovávané hodnoty a zvyšoval čitelnost kódu programu.",
+   "Žák rozlišuje alespoň číselné a textové hodnoty a pracuje s nimi odpovídajícím způsobem."
+  ],
+  "duraz": [
+   "Název proměnné neurčuje její hodnotu ani nezajišťuje její automatickou aktualizaci. Například proměnná pojmenovaná `pocetBodu` nebude sama sledovat počet získaných bodů. Kód programu musí zajistit, aby byla její hodnota ve správných okamžicích nastavena nebo změněna."
+  ],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "proměnné jsou přímo součástí závazného OVU. Metodika dále požaduje nastavení počátečních hodnot, průběžné změny a využívání hodnot proměnných."
+   }
+  ]
+ },
+ {
+  "title": "VSTUP A VÝSTUP",
+  "ucivo": [
+   "Program může během svého běhu přijímat vstupy a vytvářet výstupy. Vstupem získává informace z okolí, například hodnotu zadanou uživatelem, stisknutí klávesy, kliknutí myší nebo údaj ze senzoru.",
+   "Výstupem program předává informace nebo se jinak projevuje navenek. Výstupem může být například text, obrázek, zvuk, změna zobrazení nebo činnost připojeného zařízení.",
+   "Vstupy a výstupy mohou nastávat opakovaně v různých okamžicích běhu programu."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe vstup jako způsob, kterým program získává informace z okolí, a výstup jako způsob, kterým program předává informace nebo se projevuje navenek."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák použije vhodný způsob získání vstupu a vytvoření výstupu."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák v programu rozpozná vstupy a výstupy a určí, jak ovlivňují jeho průběh a chování."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne a vytvoří program, který vhodně pracuje se vstupy a výstupy."
+   }
+  ],
+  "kriteria": [
+   "Žák u programu určí jeho vstupy a výstupy.",
+   "Žák rozpozná různé způsoby vstupu a výstupu.",
+   "Žák určí, jak konkrétní vstup ovlivní další průběh programu.",
+   "Žák použije vhodný vstup a výstup vzhledem k účelu programu.",
+   "Žák vytvoří program, který během svého běhu přijímá vstupy a vytváří odpovídající výstupy."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "vstupy a výstupy nejsou samostatně vyjmenovány v závazné větě OVU, ale metodická podpora s jejich formulováním při analýze programovací úlohy explicitně pracuje."
+   }
+  ]
+ },
+ {
+  "title": "UŽIVATELSKÉ ROZHRANÍ",
+  "ucivo": [
+   "Uživatelské rozhraní je způsob, kterým uživatel komunikuje s programem. Umožňuje uživateli zadávat vstupy, ovládat program a získávat jeho výstupy. Při návrhu uživatelského rozhraní je důležité dívat se na program z pohledu jeho uživatele.",
+   "Uživatelské rozhraní lze pro stejný program navrhnout různými způsoby. Jednotlivé varianty mohou mít různé výhody a nevýhody. Při návrhu uživatelského rozhraní je třeba zohlednit různé skupiny uživatelů a jejich potřeby.",
+   "Uživatelské rozhraní by mělo být navrženo tak, aby uživatel poznal, co může udělat, jak to má udělat a co se po jeho akci stalo. Program by měl uživateli poskytovat srozumitelnou zpětnou vazbu a vhodně reagovat i na neočekávané nebo méně obvyklé vstupy.",
+   "Při návrhu programu je třeba uvažovat také o tom, jaké důsledky může mít jeho použití pro uživatele, včetně použití, které neodpovídá původnímu účelu programu."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe uživatelské rozhraní jako způsob komunikace mezi uživatelem a programem. Chápe, že při jeho návrhu je potřeba uvažovat z pohledu uživatele."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák porovná různé možnosti uživatelského rozhraní a pojmenuje jejich výhody a nevýhody s ohledem na způsob použití programu a jeho uživatele."
+   },
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák posoudí uživatelské rozhraní z pohledu uživatele, zohlední cílovou skupinu uživatelů a možné důsledky použití programu a zdůvodní, v čem jsou různé možnosti řešení vhodné nebo nevhodné."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne a vytvoří jednoduché uživatelské rozhraní odpovídající účelu programu a cílové skupině uživatelů."
+   }
+  ],
+  "kriteria": [
+   "Žák v programu rozpozná prvky, kterými uživatel zadává vstupy a ovládá program, a prvky, kterými program poskytuje výstupy.",
+   "Žák diskutuje různé možnosti uživatelského rozhraní, pojmenuje jejich výhody a nevýhody a posoudí jejich vhodnost pro různé skupiny uživatelů.",
+   "Žák navrhne rozhraní, ze kterého je zřejmé, jak lze program ovládat.",
+   "Žák zajistí, aby program poskytoval uživateli srozumitelnou zpětnou vazbu na jeho akce.",
+   "Žák zohlední neočekávané nebo méně obvyklé vstupy uživatele.",
+   "Žák uvede možné důsledky použití svého programu pro uživatele, včetně důsledků použití, které neodpovídá původnímu účelu programu.",
+   "Žák nechá své uživatelské rozhraní vyzkoušet jiným vhodným uživatelem, vyhodnotí průběh testování a podle výsledku rozhraní upraví."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "metodická podpora požaduje uživatelsky přívětivé programy a zvažování dopadů programů na jejich uživatele."
+   },
+   {
+    "kod": "INF-INF-002-ZV9-008",
+    "poznamka": "metodika požaduje testování prototypů s uživateli za účelem ověřování a zlepšování použitelnosti."
+   }
+  ]
+ },
+ {
+  "title": "OVĚŘOVÁNÍ",
+  "ucivo": [
+   "Při tvorbě programu průběžně ověřujeme, zda program funguje podle očekávání. Program je vhodné vytvářet po menších částech a jejich funkčnost ověřovat dříve, než přidáme další části.",
+   "Průběžné ověřování usnadňuje odhalení problémů. Pokud se chyba projeví po malé změně programu, je snazší určit, která změna ji způsobila."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe význam průběžného ověřování při tvorbě programu."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák při tvorbě programu průběžně spouští a ověřuje vytvořené části."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák porovná očekávané a skutečné chování programu a rozpozná, že program nefunguje podle očekávání."
+   }
+  ],
+  "kriteria": [
+   "Žák vytváří program po menších částech a průběžně ověřuje jejich funkčnost.",
+   "Žák před spuštěním programu nebo jeho části určí, jaké chování očekává, a porovná je se skutečným chováním.",
+   "Žák při zjištění neočekávaného chování hledá, ve které části programu problém vznikl."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-008",
+    "poznamka": "přímá vazba na závazný požadavek průběžně ověřovat správnost vytvářeného postupu."
+   }
+  ]
+ },
+ {
+  "title": "TESTOVÁNÍ",
+  "ucivo": [
+   "Testování je záměrné ověřování programu pomocí vhodně zvolených testů. Pro každý test předem určíme vstup nebo situaci a očekávaný výsledek či chování programu. Očekávaný výsledek potom porovnáme se skutečným.",
+   "Jeden úspěšný test nestačí. Volíme různé testy tak, aby zahrnovaly běžné, hraniční i méně obvyklé situace. Vhodný výběr testů zvyšuje šanci, že chyby odhalíme.",
+   "Ani důkladné testování však nezaručuje odhalení všech chyb. Program může obsahovat chybu, která se projeví v situaci, kterou jsme při testování nevyzkoušeli."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe účel testování a rozumí tomu, že úspěšné provedení zvolených testů nezaručuje, že program neobsahuje chybu."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák provede test a porovná očekávaný výsledek nebo chování programu se skutečným."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák volí různé testy tak, aby ověřil běžné, hraniční i méně obvyklé situace, které mohou při používání programu nastat."
+   },
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák posoudí, zda zvolená sada testů dostatečně pokrývá různé podstatné situace, a uvědomuje si její omezení."
+   }
+  ],
+  "kriteria": [
+   "Žák pro test určí vstup nebo situaci a očekávaný výsledek či chování programu.",
+   "Žák provede test a porovná očekávaný výsledek se skutečným.",
+   "Žák zvolí testy zahrnující běžné, hraniční a méně obvyklé situace.",
+   "Žák posoudí, zda zvolená sada testů pokrývá různé podstatné situace, které mohou nastat.",
+   "Žák vysvětlí, proč ani úspěšné provedení všech zvolených testů nezaručuje, že program neobsahuje chybu."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-008",
+    "poznamka": "přímá vazba na „zkouší program“. Metodika dále explicitně uvádí testování s různými vstupy včetně neobvyklých a nesprávných."
+   }
+  ]
+ },
+ {
+  "title": "LADĚNÍ",
+  "ucivo": [
+   "Pokud se program nechová podle očekávání, hledáme příčinu problému a opravujeme ji. Tento postup označujeme jako ladění.",
+   "Příčina problému může být v jiné části programu, než kde se problém projeví. Při ladění proto nestačí odstranit pouze viditelný projev problému. Je potřeba najít jeho příčinu a opravit ji.",
+   "Při ladění můžeme sledovat vykonávání programu krok po kroku, hodnoty proměnných nebo si nechat zobrazovat pomocné informace – ladicí výstupy. Porovnáváme přitom skutečný průběh programu s tím, co jsme očekávali.",
+   "Po provedení opravy je potřeba program znovu důkladně otestovat. Nestačí zopakovat pouze test, který chybu odhalil. Provedená oprava mohla ovlivnit i jiné části programu."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že příčina problému může být v jiné části programu, než kde se problém projeví, a že při ladění je potřeba příčinu problému najít a opravit."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák používá jednoduché postupy ladění ke sledování průběhu programu."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák sleduje průběh programu, porovnává jej s očekávaným průběhem a na základě zjištěných rozdílů hledá příčinu problému."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák nalezenou chybu opraví a následně program znovu otestuje."
+   }
+  ],
+  "kriteria": [
+   "Žák sleduje průběh programu, porovnává jej s očekávaným průběhem a hledá příčinu problému, která může být jinde než jeho projev.",
+   "Žák při hledání chyby použije vhodný způsob ladění, například krokování, sledování hodnot proměnných nebo ladicí výstupy.",
+   "Žák nalezenou příčinu problému opraví.",
+   "Žák po opravě program znovu otestuje různými testy, aby ověřil nejen odstranění nalezené chyby, ale i to, zda oprava nezpůsobila problém jinde."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-008",
+    "poznamka": "přímá vazba na „opravuje chyby“. Metodická podpora požaduje systematické hledání chybných míst, jejich opravu a přepracování částí programu; uvádí také krokování programu."
+   }
+  ]
+ },
+ {
+  "title": "KOMENTÁŘE",
+  "ucivo": [
+   "Komentáře jsou části kódu programu určené pro člověka, který kód čte. Počítač je při vykonávání programu ignoruje.",
+   "Komentáře pomáhají čtenáři rychle se orientovat v kódu programu a pochopit účel jeho jednotlivých částí, aniž by musel zkoumat příkaz po příkazu. Pomáhají nejen jiným čtenářům, ale také samotnému autorovi při práci s vlastním kódem, například při jeho úpravách nebo hledání chyby.",
+   "Komentář může vysvětlovat například účel části programu, důvod zvoleného řešení nebo skutečnost, která není z kódu programu snadno patrná. Není potřeba komentovat každý příkaz.",
+   "Komentářů by mělo být tolik a měly by být tak podrobné, aby usnadňovaly orientaci v kódu programu. Příliš mnoho zbytečných nebo příliš podrobných komentářů může naopak čitelnost zhoršit.",
+   "Komentáře společně s vhodnými názvy proměnných a podprogramů zvyšují čitelnost kódu programu a usnadňují jeho další úpravy."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že komentáře pomáhají čtenáři rychle se orientovat v kódu programu a pochopit účel jeho částí."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že není potřeba komentovat každý příkaz a že množství a podrobnost komentářů je třeba volit s ohledem na jejich účel."
+   },
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák posoudí, kde komentář pomáhá pochopení a orientaci v kódu programu a kde je naopak zbytečný nebo příliš podrobný."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák vhodně komentuje kód programu tak, aby komentáře usnadňovaly jeho čtení a orientaci v něm."
+   }
+  ],
+  "kriteria": [
+   "Žák vysvětlí, pro koho a proč jsou komentáře v kódu programu určeny.",
+   "Žák rozliší užitečný komentář od komentáře, který pouze opakuje zřejmý význam příkazu.",
+   "Žák komentuje kód tak, aby se v něm čtenář snadno orientoval a rozpoznal účel jednotlivých částí. Komentářem vysvětlí také to, co není z kódu snadno patrné.",
+   "Žák posoudí, zda jsou komentáře přiměřeně časté a podrobné a skutečně usnadňují orientaci v kódu programu.",
+   "Žák nepoužívá komentáře jako náhradu za srozumitelné pojmenování proměnných a podprogramů."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-007",
+    "poznamka": "přímá vazba na požadavek vytvářet přehledný program; metodika explicitně uvádí komentáře, vhodná pojmenování a snadno čitelný kód."
+   }
+  ]
+ },
+ {
+  "title": "EFEKTIVITA",
+  "ucivo": [
+   "Stejnou úlohu lze často naprogramovat různými způsoby. Jednotlivá řešení mohou vést ke stejnému výsledku, ale lišit se například množstvím vykonávaných činností, složitostí, čitelností nebo snadností dalších úprav.",
+   "Jedním z hledisek efektivity je množství činností, které program vykoná, aby dosáhl požadovaného výsledku. Dvě řešení mohou vést ke stejnému výsledku, ale jedno může například provést méně příkazů, použít kratší cestu k cíli nebo se vyhnout činnostem, které pro dosažení výsledku nejsou potřeba.",
+   "Délka kódu programu sama o sobě neurčuje jeho efektivitu. Kratší zápis nemusí znamenat, že program při svém běhu vykoná méně činností.",
+   "Při posuzování řešení zohledňujeme také čitelnost kódu programu a snadnost jeho dalších úprav. Jednodušší a přehlednější řešení se obvykle snáze kontroluje, upravuje a opravuje.",
+   "Neexistuje vždy jedno nejlepší řešení. Při porovnávání různých řešení záleží na účelu programu a na tom, co je v dané situaci důležité."
+  ],
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že stejnou úlohu lze naprogramovat různými způsoby a že řešení se mohou lišit svou efektivitou a dalšími vlastnostmi."
+   },
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe rozdíl mezi délkou kódu programu a množstvím činností, které program při svém běhu skutečně vykoná."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák porovná různá řešení stejné úlohy a rozpozná rozdíly v množství vykonávaných činností, čitelnosti a snadnosti dalších úprav."
+   },
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák posoudí výhody a nevýhody různých řešení a zdůvodní, které vlastnosti řešení jsou v dané situaci důležité."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák upraví řešení tak, aby odstranil zbytečné činnosti nebo zbytečně složitý zápis a zachoval jeho srozumitelnost."
+   }
+  ],
+  "kriteria": [
+   "Žák porovná dvě řešení stejné úlohy a pojmenuje jejich podstatné rozdíly.",
+   "Žák porovná řešení podle množství činností, které program při svém běhu vykoná, například podle počtu vykonaných příkazů nebo délky cesty k cíli.",
+   "Žák v programu rozpozná činnosti, které nejsou pro dosažení požadovaného výsledku potřeba, a navrhne jejich odstranění.",
+   "Žák rozlišuje mezi délkou zápisu kódu programu a množstvím vykonávaných činností.",
+   "Žák při posuzování řešení zohlední také čitelnost kódu programu a snadnost jeho dalších úprav.",
+   "Žák porovná výhody a nevýhody různých řešení a svou volbu vzhledem k dané situaci zdůvodní."
+  ],
+  "duraz": [],
+  "rvp": [
+   {
+    "kod": "INF-INF-002-ZV9-008",
+    "poznamka": "závazný OVU přímo požaduje, aby žák posoudil efektivitu postupu a programu. Metodika pracuje s hodnocením efektivity, hledáním vylepšení a porovnáváním různých řešení."
+   }
+  ]
+ }
+]
