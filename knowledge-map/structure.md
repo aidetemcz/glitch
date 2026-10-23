@@ -54,8 +54,9 @@ Zdroj pravdy: **`app/data/Informatika/knowledge-map.yaml`**. Dva typy záznamů 
 | `vrstva` | `core` \| `navazujici` | pozice v hierarchii |
 | `popis` | text | co koncept je |
 | `cile` | seznam | vzdělávací cíle gradované podle úrovně: `{ uroven, text, orientacne_rocnik? }` |
-| `kriteria` | seznam | kritéria hodnocení, stejná gradace: `{ uroven, text, orientacne_rocnik? }` |
-| `rvp` | seznam | napojení na RVP: `{ kod, vystup }` — kód i **znění** očekávaného výstupu |
+| `kriteria` | seznam | kritéria hodnocení, stejná gradace: `{ uroven?, text, orientacne_rocnik? }` — úroveň je volitelná (garanti kritéria podle úrovní nedělí) |
+| `duraz` | text | „Důraz" od garanta: na co si dát pozor, typické miskoncepce (volitelné) |
+| `rvp` | seznam | napojení na RVP: `{ kod, vystup, poznamka? }` — kód, **znění** očekávaného výstupu a případná poznámka garanta k vazbě |
 | `zdroj` | seznam | grounding: odkaz na `main-sources` + strana (dohledatelnost) |
 | `tagy` | seznam | průřezová témata / podobnost (filtrování) |
 | `prerekvizity` | seznam id | koncepty, které musí předcházet |
@@ -152,3 +153,13 @@ concepts:
 ## Zdroje
 
 `main-sources/` — RVP (revidované 2024), Marzano-Kendall (Nová taxonomie vzdělávacích cílů) pro gradaci cílů/kritérií, CS učebnice, kognitivní studie. Slouží k tvorbě obsahu, **nedeployují se**.
+
+## Podklady od garantů (`garanti/`)
+
+Výstupy garantů se do mapy převádějí reprodukovatelně:
+
+- `garanti/parse_hnizdo_pdf.py` — z PDF exportu karet (Google Docs → PDF, `pdftotext -bbox-layout`) vytáhne karty do JSON,
+- `garanti/hnizdo-programovani.json` — rozparsované karty hnízda Programování,
+- `garanti/apply_hnizdo_programovani.py` — aplikuje karty a vazby ze schémat do `knowledge-map.yaml` (idempotentní); pak `python3 knowledge-map/build-concepts.py`.
+
+Pozn.: `knowledge-map.yaml` je od editoru a garantských podkladů zdrojem pravdy sám o sobě — `build_map.py` je historický generátor verze 0.12 a jeho spuštění by tyto úpravy přepsalo.

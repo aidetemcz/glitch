@@ -104,7 +104,7 @@
   const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
   const EDITS_KEY = "km-edits-v1";
   const NEW_KEY = "km-new-v1";
-  const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav", "prerekvizity", "souvisi"];
+  const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "duraz", "stav", "prerekvizity", "souvisi"];
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
@@ -125,7 +125,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=14")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=15")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -670,10 +670,17 @@
   }
 
   /* editační formulář */
-  const levelSelect = (sel) => `<select class="ed-lvl">${
+  // allowEmpty: kritéria můžou být i bez úrovně (garanti je podle úrovní nedělí)
+  const levelSelect = (sel, allowEmpty) => `<select class="ed-lvl">${
+    (allowEmpty ? `<option value=""${sel ? "" : " selected"}>— bez úrovně —</option>` : "") +
     BLOOM.map(([v, l]) => `<option value="${v}"${v === sel ? " selected" : ""}>${l}</option>`).join("")}</select>`;
   const cileRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<input class="ed-roc" type="number" min="1" max="9" placeholder="roč." value="${it.rocnik != null ? esc(it.rocnik) : ""}"><button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text cíle">${esc(it.text || "")}</textarea></div>`;
-  const kritRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text kritéria">${esc(it.text || "")}</textarea></div>`;
+  const kritRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven, true)}<button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text kritéria">${esc(it.text || "")}</textarea></div>`;
+  const readKriteria = () => [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) => {
+    const o = { text: r.querySelector(".ed-text").value.trim() };
+    const lvl = r.querySelector(".ed-lvl").value; if (lvl) o.uroven = lvl;
+    return o;
+  }).filter((o) => o.text);
 
   // chip pro vybraný koncept (prerekvizita / souvisí), datalist všech konceptů a picker
   const chipHtml = (id) => { const c = conceptById[id]; return '<span class="ed-chip" data-id="' + esc(id) + '">' + esc(c ? c.nazev : id) + '<button class="ed-chip-x" data-act="del-chip" aria-label="Odebrat">✕</button></span>'; };
@@ -705,6 +712,7 @@
         <button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
       <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria">${(c.kriteria || []).map(kritRow).join("")}</div>
         <button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>
+      <div class="ed-field"><label>Důraz (na co si dát pozor, časté omyly)</label><textarea id="ed-duraz" rows="4">${esc(c.duraz || "")}</textarea></div>
       ${linkPicker("Prerekvizity (co má předcházet)", "prereq", c.prerekvizity)}
       ${linkPicker("Souvisí s", "souvisi", c.souvisi)}
       <div class="ed-field"><label>Mikrokoncepty</label>${microEditList(c)}
@@ -729,8 +737,8 @@
       const roc = r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
       return o;
     }).filter((o) => o.text);
-    c.kriteria = [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) =>
-      ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    c.kriteria = readKriteria();
+    c.duraz = document.getElementById("ed-duraz").value.trim();
     // vazby: jen na existující koncepty (bez visících odkazů a bez odkazu na sebe)
     const validIds = new Set(DATA.concepts.map((x) => x.id));
     const readLinks = (sel) => [...new Set([...document.querySelectorAll(sel + " .ed-chip")].map((ch) => ch.dataset.id))]
@@ -847,8 +855,7 @@
       const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
       return o;
     }).filter((o) => o.text);
-    const kriteria = rows("#ed-kriteria").map((r) =>
-      ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    const kriteria = readKriteria();
     const chips = (sel) => [...document.querySelectorAll(sel + " .ed-chip")].map((ch) => ch.dataset.id);
     const c = normalizeConcept({
       id, nazev, tema,
@@ -959,7 +966,8 @@
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
-      ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(typo(r.vystup))}</div>`).join("")
+      ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${r.vystup ? esc(typo(r.vystup)) : '<span class="d-empty">znění výstupu doplnit</span>'}` +
+          (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`).join("")
       : '<span class="d-empty">—</span>';
     const kdi = komp
       ? `<div class="d-rvp"><span class="kod">${esc(komp.kod)}</span><strong>${esc(komp.nazev)}</strong><br>${esc(typo(komp.vystup))}</div>`
@@ -980,10 +988,11 @@
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
       ${authed ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
-      <p class="d-desc">${esc(typo(c.popis))}</p>
+      ${paras(c.popis)}
       ${microSection(c)}
       <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
+      ${c.duraz ? `<div class="d-section d-duraz"><h3>Důraz</h3>${paras(c.duraz)}</div>` : ""}
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
       <div class="d-section"><h3>Digitální kompetence</h3>${kdi}</div>
       <div class="d-section"><h3>Prerekvizity</h3><div class="d-links">${links(c.prerekvizity)}</div></div>
@@ -1035,8 +1044,7 @@
       const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
       return o;
     }).filter((o) => o.text);
-    const kriteria = [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) =>
-      ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
+    const kriteria = readKriteria();
     return {
       nazev: (document.getElementById("mc-nazev").value || "").trim(),
       vrstva: document.getElementById("mc-vrstva").value,

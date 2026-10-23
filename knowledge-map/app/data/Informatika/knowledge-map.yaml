@@ -815,169 +815,238 @@ concepts:
     pokryti_glitchem: []
     stav: draft
   - id: programovani-promenne-a-datove-typy
-    nazev: Proměnné a datové typy
+    nazev: Proměnná
     tema: programovani
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: Proměnná je pojmenovaná „krabička", do které si program ukládá hodnotu, aby s ní mohl dál pracovat (třeba skore = 0). Typ určuje, co je uvnitř — číslo, text, nebo pravda/nepravda — a co se s tím dá dělat.
+    popis: |-
+      Proměnná umožňuje v programu uchovávat hodnotu pod určitým názvem. V jednom okamžiku má proměnná právě jednu hodnotu. Při přiřazení nové hodnoty se předchozí hodnota nahradí a již není v proměnné dostupná.
+
+      Název proměnné by měl vystihovat význam hodnoty, kterou v ní chceme uchovávat. Vhodné pojmenování zvyšuje čitelnost kódu programu, ale neurčuje hodnotu proměnné. Hodnota se změní pouze tehdy, když program vykoná příkaz, který ji nastaví nebo změní.
+
+      Hodnoty mohou být různých typů, například číslo nebo text. Typ hodnoty ovlivňuje, jaké operace lze s hodnotou provádět.
     rvp:
       - kod: INF-INF-002-ZV9-007
         vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: proměnné jsou přímo součástí závazného OVU. Metodika dále požaduje nastavení počátečních hodnot, průběžné změny a využívání hodnot proměnných.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, k čemu v programu slouží proměnná a čím se od ní liší datový typ.
-        rocnik: 7
-      - uroven: aplikace
-        text: Žák použije v programu proměnnou k uložení a průběžné změně hodnoty, například skóre.
-        rocnik: 7
-    kriteria:
+        text: Žák chápe rozdíl mezi názvem proměnné a její aktuální hodnotou. Chápe, že název vyjadřuje význam proměnné, ale nezajišťuje, že její hodnota bude tomuto významu odpovídat nebo se podle něj automaticky aktualizovat.
       - uroven: porozumeni
-        text: Žák popíše na příkladu, jakou hodnotu proměnná uchovává a jakého je typu (číslo, text, pravda/nepravda).
+        text: Žák chápe, že proměnná má v jednom okamžiku právě jednu hodnotu. Při nastavení nové hodnoty se předchozí hodnota nahradí.
       - uroven: aplikace
-        text: Žák vytvoří proměnnou, přiřadí jí hodnotu a během běhu programu ji správně změní.
-    prerekvizity: []
+        text: Žák pomocí příkazů nastaví, použije a změní hodnotu proměnné.
+      - uroven: analyza
+        text: Žák podle vykonávaných příkazů sleduje změny hodnoty proměnné a určí její hodnotu v konkrétním okamžiku.
+      - uroven: tvorba
+        text: Žák použije vhodně pojmenovanou proměnnou k uchování hodnoty potřebné při běhu programu.
+    kriteria:
+      - text: Žák z kódu programu určí aktuální hodnotu proměnné.
+      - text: Žák pomocí příkazů nastaví počáteční hodnotu proměnné a podle potřeby ji během programu mění.
+      - text: Žák použije hodnotu proměnné v dalších příkazech nebo podmínkách.
+      - text: Žák pojmenuje proměnnou tak, aby název vystihoval význam uchovávané hodnoty a zvyšoval čitelnost kódu programu.
+      - text: Žák rozlišuje alespoň číselné a textové hodnoty a pracuje s nimi odpovídajícím způsobem.
+    duraz: Název proměnné neurčuje její hodnotu ani nezajišťuje její automatickou aktualizaci. Například proměnná pojmenovaná `pocetBodu` nebude sama sledovat počet získaných bodů. Kód programu musí zajistit, aby byla její hodnota ve správných okamžicích nastavena nebo změněna.
+    prerekvizity:
+      - programovani-cyklus-s-podminkou
     souvisi:
       - herni-vyvoj-vstup-hrace-stavy-a-skore
     tagy:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: programovani-podminky-v-kodu
-    nazev: Podmínky v kódu
+    nazev: Podmíněný příkaz
     tema: programovani
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: 'Zápis větvení: „když platí podmínka, udělej tohle, jinak tamto" (if/else). Díky němu se program rozhoduje sám — třeba zobrazí „výhra", jen když skóre překročí cíl.'
+    popis: |-
+      Podmíněný příkaz umožňuje řídit průběh programu podle podmínky. Podmínka může být splněna, nebo nesplněna. Výsledek podmínky rozhoduje o tom, které příkazy se vykonají.
+
+      Podmíněný příkaz může obsahovat příkazy pouze pro případ, kdy je podmínka splněna. Pokud podmínka splněna není, tyto příkazy se přeskočí a program pokračuje za podmíněným příkazem.
+
+      Podmíněný příkaz může také obsahovat dvě větve. Jedna se vykoná při splnění podmínky, druhá při jejím nesplnění. Po dokončení zvolené větve program pokračuje za podmíněným příkazem.
     rvp:
       - kod: INF-INF-002-ZV9-007
         vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: závazné OVU výslovně požaduje větvení programu.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, jak se program pomocí konstrukce if/else rozhoduje mezi dvěma větvemi.
-        rocnik: 7
+        text: Žák chápe, že výsledek podmínky rozhoduje o tom, které příkazy se vykonají. Chápe také, že nesplnění podmínky samo o sobě neznamená ukončení programu.
       - uroven: aplikace
-        text: Žák použije větvení if/else tak, aby program reagoval různě podle splnění podmínky.
-        rocnik: 7
+        text: Žák pro konkrétní situaci vyhodnotí podmínku a určí další průběh programu.
+      - uroven: analyza
+        text: Žák určí chování programu pro oba možné výsledky podmínky a ověří, jak podmíněný příkaz zachází se všemi situacemi, které mohou nastat.
+      - uroven: tvorba
+        text: Žák vytvoří podmíněný příkaz odpovídající požadovanému chování programu.
     kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, kdy se vykoná větev if a kdy větev else.
-      - uroven: aplikace
-        text: Žák sestaví podmínku, která podle hodnoty proměnné zobrazí správný výsledek.
+      - text: Žák pro konkrétní situaci určí, zda je podmínka splněna.
+      - text: Žák podle výsledku podmínky určí, které příkazy se vykonají, které se přeskočí a kde bude program pokračovat.
+      - text: Žák rozliší podmíněný příkaz s jednou větví a podmíněný příkaz se dvěma větvemi a vhodně je použije.
+      - text: Žák vytvoří podmínku a podmíněný příkaz odpovídající požadovanému chování programu.
+      - text: Žák ověří, že podmíněný příkaz správně zachází se všemi možnými případy, včetně hraničních hodnot.
+    duraz: Pokud podmíněný příkaz nemá větev pro nesplněnou podmínku, nesplnění podmínky neznamená ukončení programu. Program pouze přeskočí příkazy určené pro splněnou podmínku a pokračuje dál.
     prerekvizity:
-      - programovani-promenne-a-datove-typy
-      - informaticke-mysleni-logika-a-booleovske-vyrazy
+      - programovani-cykly-v-kodu
     souvisi:
       - informaticke-mysleni-rizeni-toku
+      - informaticke-mysleni-logika-a-booleovske-vyrazy
     tagy:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: programovani-cykly-v-kodu
-    nazev: Cykly v kódu
+    nazev: Opakování s pevným počtem opakování
     tema: programovani
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: Způsob, jak nechat počítač opakovat kroky, místo abys je psal pořád dokola. Cyklus for opakuje danou-krát, cyklus while opakuje, dokud něco platí — třeba dokud hráč neprohraje.
+    popis: |-
+      Pokud se má určitá činnost provést vícekrát, lze použít cyklus. Příkazy, které se v cyklu vykonávají, tvoří tělo cyklu.
+
+      U opakování s pevným počtem je počet opakování určen před zahájením vykonávání cyklu. Při každém průchodu cyklem se vykoná celé jeho tělo.
+
+      Použití cyklu umožňuje zapsat opakující se činnost pouze jednou místo vícenásobného zápisu stejných nebo odpovídajících příkazů.
     rvp:
       - kod: INF-INF-002-ZV9-007
         vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: opakování je přímo součástí závazného OVU; metodika explicitně uvádí opakování s pevným počtem.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí rozdíl mezi cyklem for a cyklem while.
-        rocnik: 7
+        text: Žák chápe, která část kódu programu tvoří tělo cyklu, a rozumí tomu, co určuje počet jeho vykonání.
       - uroven: aplikace
-        text: Žák použije cyklus k opakování kroků místo jejich ručního psaní.
-        rocnik: 7
+        text: Žák určí průběh programu obsahujícího cyklus s pevným počtem opakování.
+      - uroven: analyza
+        text: Žák v zadání rozpozná činnost, která se má vícekrát provést a je vhodné ji řešit pomocí cyklu.
+      - uroven: tvorba
+        text: Žák vytvoří cyklus s vhodným tělem a počtem opakování.
     kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, co určuje počet opakování u cyklu for a co u cyklu while.
-      - uroven: aplikace
-        text: Žák sestaví cyklus, který zopakuje danou akci požadovaný početkrát.
+      - text: Žák z kódu programu určí tělo cyklu a počet jeho vykonání.
+      - text: Žák určí pořadí vykonávání příkazů v programu obsahujícím cyklus.
+      - text: Žák v zadání rozpozná činnost, kterou je vhodné řešit pomocí cyklu, a určí příkazy tvořící jeho tělo.
+      - text: Žák upraví uspořádání příkazů tak, aby bylo možné vhodnou část kódu programu nahradit cyklem.
+      - text: Žák vytvoří cyklus s takovým počtem opakování, aby program dosáhl požadovaného výsledku.
+    duraz: |-
+      Opakující se činnost nemusí být v již zapsaném kódu programu na první pohled patrná. Vhodné použití cyklu vychází především z rozpoznání struktury řešeného problému, nikoli jen z hledání několikrát za sebou zapsaných stejných příkazů.
+
+      Při návrhu programu může být potřeba příkazy vhodně uspořádat, aby činnost, která se má provádět vícekrát, tvořila souvislé tělo cyklu.
     prerekvizity:
-      - programovani-promenne-a-datove-typy
-      - informaticke-mysleni-rizeni-toku
+      - programovani-funkce-a-procedury
     souvisi:
       - herni-vyvoj-herni-smycka-scena-a-objekty
       - informaticke-mysleni-zakladni-algoritmy
+      - informaticke-mysleni-rizeni-toku
     tagy:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: programovani-funkce-a-procedury
-    nazev: Funkce a procedury
+    nazev: Podprogram (bez parametrů)
     tema: programovani
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: Pojmenovaný, znovupoužitelný kousek kódu, který napíšeš jednou a pak už jen „zavoláš", kdykoli ho potřebuješ. Můžeš mu předat vstupy (parametry) a dostat zpět výsledek — tím se kód zkrátí a zpřehlední.
+    popis: |-
+      Podprogram je pojmenovaná část kódu programu, která obsahuje příkazy pro určitou ucelenou činnost.
+
+      Název podprogramu by měl vystihovat jeho činnost, aby bylo možné poznat, co má program v daném místě udělat, aniž bychom museli zkoumat příkazy uvnitř podprogramu. Podprogram lze volat z různých míst programu. Pomocí podprogramů můžeme program rozdělit na menší, srozumitelně pojmenované části a stejný kód nemusíme zapisovat na více místech.
+
+      Použití podprogramů zvyšuje čitelnost kódu programu a usnadňuje jeho úpravy. Pokud je potřeba danou činnost změnit, upravíme podprogram na jednom místě a změna se projeví při všech jeho voláních.
     rvp:
-      - kod: INF-INF-002-ZV9-006
-        vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: metodická podpora výslovně uvádí podprogramy, opakované využívání hotových částí kódu a vhodné pojmenování podprogramů.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, proč se opakující se kód vyplatí uložit do pojmenované funkce.
-        rocnik: 8
-      - uroven: aplikace
-        text: Žák vytvoří vlastní funkci s parametrem a zavolá ji na více místech programu.
-        rocnik: 8
-    kriteria:
+        text: Žák chápe vztah mezi definicí podprogramu a jeho voláním a určí, které příkazy se při volání podprogramu vykonají.
       - uroven: porozumeni
-        text: Žák popíše, co je vstup (parametr) a co výstup funkce.
+        text: Žák vysvětlí účel podprogramu – co podprogram dělá – bez popisu jednotlivých příkazů, kterými je činnost realizována.
+      - uroven: porozumeni
+        text: Žák chápe význam vhodného pojmenování podprogramů pro členění a čitelnost kódu programu.
       - uroven: aplikace
-        text: Žák sestaví funkci, předá jí vstup a použije její výsledek ve svém programu.
+        text: Žák použije vytvořený podprogram na vhodných místech programu.
+      - uroven: analyza
+        text: Žák rozpozná části kódu programu, které je vhodné vyčlenit do samostatného podprogramu, a určí jejich společný účel.
+      - uroven: tvorba
+        text: Žák rozdělí program na vhodné podprogramy pro jednotlivé ucelené činnosti a pojmenuje je tak, aby jejich názvy vystihovaly jejich účel.
+    kriteria:
+      - text: Žák v kódu programu rozliší definici podprogramu a jeho volání.
+      - text: Žák určí, které příkazy se při volání podprogramu vykonají a kde bude program po jeho dokončení pokračovat.
+      - text: Žák vlastními slovy popíše, co podprogram dělá, aniž by pouze převyprávěl jednotlivé příkazy jeho definice.
+      - text: Žák podle účelu podprogramu navrhne výstižný název.
+      - text: Žák rozpozná části kódu programu, které je vhodné vyčlenit do podprogramu, a nahradí je jeho voláním.
+      - text: Žák vysvětlí, proč vhodné použití a pojmenování podprogramů zvyšuje čitelnost a usnadňuje úpravy kódu programu.
+      - text: Žák při změně požadované činnosti upraví její definici v podprogramu, místo aby prováděl stejnou změnu na všech místech jeho použití.
+    duraz: |-
+      Podprogram představuje ucelenou činnost, kterou můžeme pojmenovat a používat jako celek. Při čtení programu proto nemusíme pokaždé sledovat, jak je tato činnost provedena; pro pochopení struktury programu často stačí vědět, co daný podprogram dělá.
+
+      Podprogramy tak neslouží jen ke zkrácení kódu programu. Umožňují program rozčlenit na smysluplné části, zpřehlednit jej a usnadnit jeho pozdější změny.
     prerekvizity:
-      - programovani-promenne-a-datove-typy
-      - informaticke-mysleni-dekompozice
+      - programovani-sekvence-prikazu
     souvisi:
       - informaticke-mysleni-zakladni-algoritmy
+      - informaticke-mysleni-dekompozice
     tagy:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: programovani-ladeni-a-testovani
-    nazev: Ladění a testování
+    nazev: Ladění
     tema: programovani
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: Ladění (debugging) je hledání a oprava chyb; testování je ověřování, že program dělá to, co má, i v neobvyklých případech. Chyby k programování patří — dovednost je umět je systematicky najít, ne se jim vyhnout.
+    popis: |-
+      Pokud se program nechová podle očekávání, hledáme příčinu problému a opravujeme ji. Tento postup označujeme jako ladění.
+
+      Příčina problému může být v jiné části programu, než kde se problém projeví. Při ladění proto nestačí odstranit pouze viditelný projev problému. Je potřeba najít jeho příčinu a opravit ji.
+
+      Při ladění můžeme sledovat vykonávání programu krok po kroku, hodnoty proměnných nebo si nechat zobrazovat pomocné informace – ladicí výstupy. Porovnáváme přitom skutečný průběh programu s tím, co jsme očekávali.
+
+      Po provedení opravy je potřeba program znovu důkladně otestovat. Nestačí zopakovat pouze test, který chybu odhalil. Provedená oprava mohla ovlivnit i jiné části programu.
     rvp:
-      - kod: INF-INF-002-ZV9-005
-        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+      - kod: INF-INF-002-ZV9-008
+        vystup: ''
+        poznamka: přímá vazba na „opravuje chyby“. Metodická podpora požaduje systematické hledání chybných míst, jejich opravu a přepracování částí programu; uvádí také krokování programu.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí rozdíl mezi laděním, tedy hledáním chyb, a testováním, tedy ověřováním funkčnosti.
-        rocnik: 8
+        text: Žák chápe, že příčina problému může být v jiné části programu, než kde se problém projeví, a že při ladění je potřeba příčinu problému najít a opravit.
+      - uroven: aplikace
+        text: Žák používá jednoduché postupy ladění ke sledování průběhu programu.
       - uroven: analyza
-        text: Žák najde v nefunkčním programu příčinu chyby a odliší ji od jejího příznaku.
-        rocnik: 8
+        text: Žák sleduje průběh programu, porovnává jej s očekávaným průběhem a na základě zjištěných rozdílů hledá příčinu problému.
+      - uroven: tvorba
+        text: Žák nalezenou chybu opraví a následně program znovu otestuje.
     kriteria:
-      - uroven: porozumeni
-        text: Žák popíše na příkladu, co se při ladění a co při testování programu dělá.
-      - uroven: analyza
-        text: Žák určí konkrétní krok programu, ve kterém chyba vzniká, a zdůvodní proč.
+      - text: Žák sleduje průběh programu, porovnává jej s očekávaným průběhem a hledá příčinu problému, která může být jinde než jeho projev.
+      - text: Žák při hledání chyby použije vhodný způsob ladění, například krokování, sledování hodnot proměnných nebo ladicí výstupy.
+      - text: Žák nalezenou příčinu problému opraví.
+      - text: Žák po opravě program znovu otestuje různými testy, aby ověřil nejen odstranění nalezené chyby, ale i to, zda oprava nezpůsobila problém jinde.
     prerekvizity:
-      - programovani-podminky-v-kodu
-      - programovani-cykly-v-kodu
+      - programovani-testovani
     souvisi:
       - informaticke-mysleni-hodnoceni-a-analyza-chyb
     tagy:
       - praktická dovednost
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: programovani-blokove-vs-textove-programovani
     nazev: Blokové vs. textové programování
     tema: programovani
@@ -1173,6 +1242,411 @@ concepts:
     zdroj: []
     pokryti_glitchem: []
     stav: draft
+  - id: programovani-program
+    nazev: Program
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Program je zápis příkazů algoritmu v programovacím jazyce tak, aby je mohl počítač vykonat. Při běhu programu počítač vykonává zapsané příkazy. Program může přijímat vstupy, zpracovávat je a vytvářet výstupy.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: základní vztah algoritmu a jeho implementace jako programu.
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí vztah mezi algoritmem a programem a chápe, že program je zápisem příkazů algoritmu v programovacím jazyce.
+      - uroven: analyza
+        text: Žák z chování jednoduchého programu určí, jakou úlohu program plní.
+    kriteria:
+      - text: Žák vysvětlí rozdíl mezi algoritmem a programem.
+      - text: Žák chápe, že příkazy algoritmu musí být pro počítač zapsány v programovacím jazyce.
+      - text: Žák rozlišuje program jako zápis od jeho vykonávání – běhu programu.
+      - text: Žák na základě chování jednoduchého programu popíše jeho účel.
+    duraz: Algoritmus a program nejsou synonyma. Algoritmus popisuje postup řešení; program je jeho zápisem v programovacím jazyce určeným k vykonání počítačem.
+    prerekvizity: []
+    souvisi:
+      - informaticke-mysleni-algoritmus
+    tagy:
+      - teoretický základ
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-zapis-programu
+    nazev: Zápis programu
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Program zapisujeme v programovacím jazyce. Zápis programu označujeme jako kód programu. Existují různé programovací jazyky, které se liší způsobem zápisu i tím, pro jaké účely jsou vhodné. Každý programovací jazyk má pravidla, podle kterých se kód programu zapisuje. Pravidla určující správný zápis označujeme jako syntaxi. Pokud nejsou pravidla zápisu dodržena, počítač nedokáže kód programu správně zpracovat.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: tvorba programu v programovacím jazyce.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že program se zapisuje v programovacím jazyce a že různé programovací jazyky se mohou lišit způsobem zápisu a být vhodné pro různé účely.
+      - uroven: porozumeni
+        text: Žák chápe, že každý programovací jazyk má pravidla zápisu – syntaxi – která je nutné dodržovat, aby mohl být program vykonán.
+      - uroven: aplikace
+        text: Žák vyhledá v dostupné nápovědě informace o správném zápisu v používaném programovacím jazyce.
+    kriteria:
+      - text: Žák vysvětlí, co označujeme jako kód programu.
+      - text: Žák uvede příklady různých programovacích jazyků a chápe, že se mohou lišit způsobem zápisu a vhodností pro různé účely.
+      - text: Žák vysvětlí, proč je při zápisu programu nutné dodržovat syntaktická pravidla.
+      - text: Žák ví, kde může vyhledat pravidla používaného programovacího jazyka.
+      - text: Žák v nápovědě vyhledá informaci potřebnou ke správnému zápisu konkrétní části kódu programu.
+    duraz: |-
+      Není cílem učit definici syntaxe ani podrobně porovnávat programovací jazyky. Podstatné je, aby žák chápal, že programovací jazyk má přesně stanovená pravidla zápisu, která při tvorbě kódu programu musí respektovat. Pojem syntaxe slouží k pojmenování těchto pravidel.
+
+      Žák se nemusí pravidla zápisu učit zpaměti. Důležité je, aby věděl, kde potřebné informace najít a jak s nápovědou pracovat.
+    prerekvizity:
+      - programovani-program
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-sekvence-prikazu
+    nazev: Sekvence příkazů
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Sekvence je posloupnost příkazů, které se vykonávají v pořadí, v jakém jsou zapsány. Počítač toto pořadí svévolně nemění ani tehdy, když by pro dosažení výsledku bylo možné některé příkazy provést v jiném pořadí. Další příkaz se začne vykonávat až po dokončení předchozího. To platí i tehdy, když vykonávání příkazu trvá delší dobu nebo je jeho součástí čekání po stanovenou dobu.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: metodická podpora výslovně pracuje s programem s více kroky a se správným pořadím kroků.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že příkazy v sekvenci se vykonávají postupně v pořadí určeném zápisem programu a že další příkaz následuje až po dokončení předchozího.
+      - uroven: aplikace
+        text: Žák sleduje vykonávání sekvence příkazů přesně v pořadí, v jakém jsou příkazy zapsány.
+      - uroven: analyza
+        text: Žák posoudí, jak změna pořadí příkazů ovlivní průběh nebo výsledek programu.
+    kriteria:
+      - text: Žák z kódu programu určí pořadí, ve kterém se příkazy vykonají.
+      - text: Žák při určování průběhu programu zohlední, že další příkaz začne až po dokončení předchozího, a to i tehdy, když jeho vykonávání určitou dobu trvá.
+      - text: Žák posoudí, zda změna pořadí příkazů ovlivní výsledek programu, avšak ví, že příkazy se vždy vykonávají v zapsaném pořadí a program toto pořadí svévolně nemění.
+    duraz: |-
+      Počítač nevykonává příkazy v pořadí, které se mu „zdá vhodné“. Pořadí je určeno kódem programu, a to i tehdy, když by jiné pořadí vedlo ke stejnému výsledku.
+
+      Tento model popisuje vykonávání příkazů v jedné sekvenci. Program může mít více částí, které se vykonávají současně. Pak nelze obecně určit vzájemné pořadí příkazů z různých současně vykonávaných částí pouze podle jejich zápisu v kódu programu.
+    prerekvizity:
+      - programovani-zapis-programu
+    souvisi:
+      - informaticke-mysleni-rizeni-toku
+    tagy:
+      - teoretický základ
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-cyklus-s-podminkou
+    nazev: Cyklus s podmínkou
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: |-
+      Cyklus s podmínkou umožňuje opakovaně vykonávat tělo cyklu podle výsledku podmínky. Počet opakování není předem určen. Závisí na hodnotách, které se v průběhu programu mění a ovlivňují výsledek podmínky.
+
+      Podmínka se vyhodnocuje vždy na stejném místě cyklu. Změna hodnot během vykonávání těla cyklu sama o sobě neznamená, že se podmínka hned znovu vyhodnotí.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: metodická podpora výslovně požaduje různé formy opakování, zejména opakování s pevným počtem a opakování s ukončovací podmínkou.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že podmínka řídí vykonávání cyklu a že počet vykonání těla cyklu nemusí být předem znám.
+      - uroven: porozumeni
+        text: Žák chápe, že o průběhu cyklu rozhoduje výsledek podmínky v okamžiku jejího vyhodnocení.
+      - uroven: aplikace
+        text: Žák určí průběh programu obsahujícího cyklus s podmínkou.
+      - uroven: analyza
+        text: Žák sleduje změny hodnot ovlivňujících podmínku a určí, jak se projeví při dalším vyhodnocení podmínky.
+      - uroven: tvorba
+        text: Žák vytvoří cyklus s podmínkou pro situaci, ve které počet vykonání těla cyklu není předem znám.
+    kriteria:
+      - text: Žák v kódu programu určí tělo cyklu a podmínku, která cyklus řídí.
+      - text: Žák pro konkrétní hodnoty vyhodnotí podmínku a určí další průběh cyklu.
+      - text: Žák určí, kdy se podmínka vyhodnocuje, a podle výsledku podmínky v tomto okamžiku určí, jak bude cyklus pokračovat.
+      - text: Žák rozpozná situaci, kdy se tělo cyklu neprovede ani jednou.
+      - text: Žák rozliší situace vhodné pro cyklus s pevným počtem opakování a pro cyklus s podmínkou.
+      - text: Žák vytvoří cyklus s podmínkou odpovídající zadané situaci.
+      - text: Žák rozpozná případ, kdy cyklus nemusí skončit.
+    duraz: Změna hodnoty během vykonávání těla cyklu neznamená okamžité nové vyhodnocení podmínky. O průběhu cyklu rozhoduje výsledek podmínky v okamžiku jejího vyhodnocení.
+    prerekvizity:
+      - programovani-podminky-v-kodu
+    souvisi:
+      - informaticke-mysleni-rizeni-toku
+    tagy:
+      - teoretický základ
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-vstup-a-vystup
+    nazev: Vstup a výstup
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: |-
+      Program může během svého běhu přijímat vstupy a vytvářet výstupy. Vstupem získává informace z okolí, například hodnotu zadanou uživatelem, stisknutí klávesy, kliknutí myší nebo údaj ze senzoru.
+
+      Výstupem program předává informace nebo se jinak projevuje navenek. Výstupem může být například text, obrázek, zvuk, změna zobrazení nebo činnost připojeného zařízení.
+
+      Vstupy a výstupy mohou nastávat opakovaně v různých okamžicích běhu programu.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: vstupy a výstupy nejsou samostatně vyjmenovány v závazné větě OVU, ale metodická podpora s jejich formulováním při analýze programovací úlohy explicitně pracuje.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe vstup jako způsob, kterým program získává informace z okolí, a výstup jako způsob, kterým program předává informace nebo se projevuje navenek.
+      - uroven: aplikace
+        text: Žák použije vhodný způsob získání vstupu a vytvoření výstupu.
+      - uroven: analyza
+        text: Žák v programu rozpozná vstupy a výstupy a určí, jak ovlivňují jeho průběh a chování.
+      - uroven: tvorba
+        text: Žák navrhne a vytvoří program, který vhodně pracuje se vstupy a výstupy.
+    kriteria:
+      - text: Žák u programu určí jeho vstupy a výstupy.
+      - text: Žák rozpozná různé způsoby vstupu a výstupu.
+      - text: Žák určí, jak konkrétní vstup ovlivní další průběh programu.
+      - text: Žák použije vhodný vstup a výstup vzhledem k účelu programu.
+      - text: Žák vytvoří program, který během svého běhu přijímá vstupy a vytváří odpovídající výstupy.
+    prerekvizity:
+      - programovani-program
+    souvisi:
+      - informaticke-mysleni-algoritmus
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-uzivatelske-rozhrani
+    nazev: Uživatelské rozhraní
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: |-
+      Uživatelské rozhraní je způsob, kterým uživatel komunikuje s programem. Umožňuje uživateli zadávat vstupy, ovládat program a získávat jeho výstupy. Při návrhu uživatelského rozhraní je důležité dívat se na program z pohledu jeho uživatele.
+
+      Uživatelské rozhraní lze pro stejný program navrhnout různými způsoby. Jednotlivé varianty mohou mít různé výhody a nevýhody. Při návrhu uživatelského rozhraní je třeba zohlednit různé skupiny uživatelů a jejich potřeby.
+
+      Uživatelské rozhraní by mělo být navrženo tak, aby uživatel poznal, co může udělat, jak to má udělat a co se po jeho akci stalo. Program by měl uživateli poskytovat srozumitelnou zpětnou vazbu a vhodně reagovat i na neočekávané nebo méně obvyklé vstupy.
+
+      Při návrhu programu je třeba uvažovat také o tom, jaké důsledky může mít jeho použití pro uživatele, včetně použití, které neodpovídá původnímu účelu programu.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: metodická podpora požaduje uživatelsky přívětivé programy a zvažování dopadů programů na jejich uživatele.
+      - kod: INF-INF-002-ZV9-008
+        vystup: ''
+        poznamka: metodika požaduje testování prototypů s uživateli za účelem ověřování a zlepšování použitelnosti.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe uživatelské rozhraní jako způsob komunikace mezi uživatelem a programem. Chápe, že při jeho návrhu je potřeba uvažovat z pohledu uživatele.
+      - uroven: analyza
+        text: Žák porovná různé možnosti uživatelského rozhraní a pojmenuje jejich výhody a nevýhody s ohledem na způsob použití programu a jeho uživatele.
+      - uroven: hodnoceni
+        text: Žák posoudí uživatelské rozhraní z pohledu uživatele, zohlední cílovou skupinu uživatelů a možné důsledky použití programu a zdůvodní, v čem jsou různé možnosti řešení vhodné nebo nevhodné.
+      - uroven: tvorba
+        text: Žák navrhne a vytvoří jednoduché uživatelské rozhraní odpovídající účelu programu a cílové skupině uživatelů.
+    kriteria:
+      - text: Žák v programu rozpozná prvky, kterými uživatel zadává vstupy a ovládá program, a prvky, kterými program poskytuje výstupy.
+      - text: Žák diskutuje různé možnosti uživatelského rozhraní, pojmenuje jejich výhody a nevýhody a posoudí jejich vhodnost pro různé skupiny uživatelů.
+      - text: Žák navrhne rozhraní, ze kterého je zřejmé, jak lze program ovládat.
+      - text: Žák zajistí, aby program poskytoval uživateli srozumitelnou zpětnou vazbu na jeho akce.
+      - text: Žák zohlední neočekávané nebo méně obvyklé vstupy uživatele.
+      - text: Žák uvede možné důsledky použití svého programu pro uživatele, včetně důsledků použití, které neodpovídá původnímu účelu programu.
+      - text: Žák nechá své uživatelské rozhraní vyzkoušet jiným vhodným uživatelem, vyhodnotí průběh testování a podle výsledku rozhraní upraví.
+    prerekvizity:
+      - programovani-vstup-a-vystup
+    souvisi:
+      - data-databaze-ucel-informacnich-systemu
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-overovani
+    nazev: Ověřování
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: |-
+      Při tvorbě programu průběžně ověřujeme, zda program funguje podle očekávání. Program je vhodné vytvářet po menších částech a jejich funkčnost ověřovat dříve, než přidáme další části.
+
+      Průběžné ověřování usnadňuje odhalení problémů. Pokud se chyba projeví po malé změně programu, je snazší určit, která změna ji způsobila.
+    rvp:
+      - kod: INF-INF-002-ZV9-008
+        vystup: ''
+        poznamka: přímá vazba na závazný požadavek průběžně ověřovat správnost vytvářeného postupu.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe význam průběžného ověřování při tvorbě programu.
+      - uroven: aplikace
+        text: Žák při tvorbě programu průběžně spouští a ověřuje vytvořené části.
+      - uroven: analyza
+        text: Žák porovná očekávané a skutečné chování programu a rozpozná, že program nefunguje podle očekávání.
+    kriteria:
+      - text: Žák vytváří program po menších částech a průběžně ověřuje jejich funkčnost.
+      - text: Žák před spuštěním programu nebo jeho části určí, jaké chování očekává, a porovná je se skutečným chováním.
+      - text: Žák při zjištění neočekávaného chování hledá, ve které části programu problém vznikl.
+    prerekvizity:
+      - programovani-program
+    souvisi:
+      - informaticke-mysleni-hodnoceni-a-analyza-chyb
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-testovani
+    nazev: Testování
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: |-
+      Testování je záměrné ověřování programu pomocí vhodně zvolených testů. Pro každý test předem určíme vstup nebo situaci a očekávaný výsledek či chování programu. Očekávaný výsledek potom porovnáme se skutečným.
+
+      Jeden úspěšný test nestačí. Volíme různé testy tak, aby zahrnovaly běžné, hraniční i méně obvyklé situace. Vhodný výběr testů zvyšuje šanci, že chyby odhalíme.
+
+      Ani důkladné testování však nezaručuje odhalení všech chyb. Program může obsahovat chybu, která se projeví v situaci, kterou jsme při testování nevyzkoušeli.
+    rvp:
+      - kod: INF-INF-002-ZV9-008
+        vystup: ''
+        poznamka: přímá vazba na „zkouší program“. Metodika dále explicitně uvádí testování s různými vstupy včetně neobvyklých a nesprávných.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe účel testování a rozumí tomu, že úspěšné provedení zvolených testů nezaručuje, že program neobsahuje chybu.
+      - uroven: aplikace
+        text: Žák provede test a porovná očekávaný výsledek nebo chování programu se skutečným.
+      - uroven: analyza
+        text: Žák volí různé testy tak, aby ověřil běžné, hraniční i méně obvyklé situace, které mohou při používání programu nastat.
+      - uroven: hodnoceni
+        text: Žák posoudí, zda zvolená sada testů dostatečně pokrývá různé podstatné situace, a uvědomuje si její omezení.
+    kriteria:
+      - text: Žák pro test určí vstup nebo situaci a očekávaný výsledek či chování programu.
+      - text: Žák provede test a porovná očekávaný výsledek se skutečným.
+      - text: Žák zvolí testy zahrnující běžné, hraniční a méně obvyklé situace.
+      - text: Žák posoudí, zda zvolená sada testů pokrývá různé podstatné situace, které mohou nastat.
+      - text: Žák vysvětlí, proč ani úspěšné provedení všech zvolených testů nezaručuje, že program neobsahuje chybu.
+    prerekvizity:
+      - programovani-uzivatelske-rozhrani
+      - programovani-overovani
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-komentare
+    nazev: Komentáře
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: |-
+      Komentáře jsou části kódu programu určené pro člověka, který kód čte. Počítač je při vykonávání programu ignoruje.
+
+      Komentáře pomáhají čtenáři rychle se orientovat v kódu programu a pochopit účel jeho jednotlivých částí, aniž by musel zkoumat příkaz po příkazu. Pomáhají nejen jiným čtenářům, ale také samotnému autorovi při práci s vlastním kódem, například při jeho úpravách nebo hledání chyby.
+
+      Komentář může vysvětlovat například účel části programu, důvod zvoleného řešení nebo skutečnost, která není z kódu programu snadno patrná. Není potřeba komentovat každý příkaz.
+
+      Komentářů by mělo být tolik a měly by být tak podrobné, aby usnadňovaly orientaci v kódu programu. Příliš mnoho zbytečných nebo příliš podrobných komentářů může naopak čitelnost zhoršit.
+
+      Komentáře společně s vhodnými názvy proměnných a podprogramů zvyšují čitelnost kódu programu a usnadňují jeho další úpravy.
+    rvp:
+      - kod: INF-INF-002-ZV9-007
+        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+        poznamka: přímá vazba na požadavek vytvářet přehledný program; metodika explicitně uvádí komentáře, vhodná pojmenování a snadno čitelný kód.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že komentáře pomáhají čtenáři rychle se orientovat v kódu programu a pochopit účel jeho částí.
+      - uroven: porozumeni
+        text: Žák chápe, že není potřeba komentovat každý příkaz a že množství a podrobnost komentářů je třeba volit s ohledem na jejich účel.
+      - uroven: hodnoceni
+        text: Žák posoudí, kde komentář pomáhá pochopení a orientaci v kódu programu a kde je naopak zbytečný nebo příliš podrobný.
+      - uroven: tvorba
+        text: Žák vhodně komentuje kód programu tak, aby komentáře usnadňovaly jeho čtení a orientaci v něm.
+    kriteria:
+      - text: Žák vysvětlí, pro koho a proč jsou komentáře v kódu programu určeny.
+      - text: Žák rozliší užitečný komentář od komentáře, který pouze opakuje zřejmý význam příkazu.
+      - text: Žák komentuje kód tak, aby se v něm čtenář snadno orientoval a rozpoznal účel jednotlivých částí. Komentářem vysvětlí také to, co není z kódu snadno patrné.
+      - text: Žák posoudí, zda jsou komentáře přiměřeně časté a podrobné a skutečně usnadňují orientaci v kódu programu.
+      - text: Žák nepoužívá komentáře jako náhradu za srozumitelné pojmenování proměnných a podprogramů.
+    prerekvizity:
+      - programovani-overovani
+    souvisi: []
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: programovani-efektivita
+    nazev: Efektivita
+    tema: programovani
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: navazujici
+    popis: |-
+      Stejnou úlohu lze často naprogramovat různými způsoby. Jednotlivá řešení mohou vést ke stejnému výsledku, ale lišit se například množstvím vykonávaných činností, složitostí, čitelností nebo snadností dalších úprav.
+
+      Jedním z hledisek efektivity je množství činností, které program vykoná, aby dosáhl požadovaného výsledku. Dvě řešení mohou vést ke stejnému výsledku, ale jedno může například provést méně příkazů, použít kratší cestu k cíli nebo se vyhnout činnostem, které pro dosažení výsledku nejsou potřeba.
+
+      Délka kódu programu sama o sobě neurčuje jeho efektivitu. Kratší zápis nemusí znamenat, že program při svém běhu vykoná méně činností.
+
+      Při posuzování řešení zohledňujeme také čitelnost kódu programu a snadnost jeho dalších úprav. Jednodušší a přehlednější řešení se obvykle snáze kontroluje, upravuje a opravuje.
+
+      Neexistuje vždy jedno nejlepší řešení. Při porovnávání různých řešení záleží na účelu programu a na tom, co je v dané situaci důležité.
+    rvp:
+      - kod: INF-INF-002-ZV9-008
+        vystup: ''
+        poznamka: závazný OVU přímo požaduje, aby žák posoudil efektivitu postupu a programu. Metodika pracuje s hodnocením efektivity, hledáním vylepšení a porovnáváním různých řešení.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že stejnou úlohu lze naprogramovat různými způsoby a že řešení se mohou lišit svou efektivitou a dalšími vlastnostmi.
+      - uroven: porozumeni
+        text: Žák chápe rozdíl mezi délkou kódu programu a množstvím činností, které program při svém běhu skutečně vykoná.
+      - uroven: analyza
+        text: Žák porovná různá řešení stejné úlohy a rozpozná rozdíly v množství vykonávaných činností, čitelnosti a snadnosti dalších úprav.
+      - uroven: hodnoceni
+        text: Žák posoudí výhody a nevýhody různých řešení a zdůvodní, které vlastnosti řešení jsou v dané situaci důležité.
+      - uroven: tvorba
+        text: Žák upraví řešení tak, aby odstranil zbytečné činnosti nebo zbytečně složitý zápis a zachoval jeho srozumitelnost.
+    kriteria:
+      - text: Žák porovná dvě řešení stejné úlohy a pojmenuje jejich podstatné rozdíly.
+      - text: Žák porovná řešení podle množství činností, které program při svém běhu vykoná, například podle počtu vykonaných příkazů nebo délky cesty k cíli.
+      - text: Žák v programu rozpozná činnosti, které nejsou pro dosažení požadovaného výsledku potřeba, a navrhne jejich odstranění.
+      - text: Žák rozlišuje mezi délkou zápisu kódu programu a množstvím vykonávaných činností.
+      - text: Žák při posuzování řešení zohlední také čitelnost kódu programu a snadnost jeho dalších úprav.
+      - text: Žák porovná výhody a nevýhody různých řešení a svou volbu vzhledem k dané situaci zdůvodní.
+    prerekvizity:
+      - programovani-overovani
+    souvisi:
+      - informaticke-mysleni-efektivita-reseni
+    tagy:
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Hnízdo Programování (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
   - id: umela-inteligence-co-je-a-co-neni-ai
     nazev: Co je a co není AI
     tema: umela-inteligence

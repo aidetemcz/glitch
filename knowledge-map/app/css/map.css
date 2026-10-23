@@ -91,6 +91,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .d-goal p { font-size: 14px; line-height: 1.6; margin-top: 3px; }
 .d-rvp { font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
 .d-rvp .kod { display: inline-block; font-weight: 600; background: var(--c-dark); border: 1px solid var(--c-line); border-radius: 5px; padding: 1px 7px; margin-right: 6px; }
+.d-rvp-note { font-size: 13px; color: var(--c-grey-50); margin-top: 4px; }
+.d-duraz { border-left: 2px solid var(--c-yellow); padding-left: 12px; }
 .d-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .d-tag { font-size: 12px; padding: 4px 9px; border-radius: 20px; background: var(--c-dark); border: 1px solid var(--c-line); color: var(--c-grey-15); }
 .d-links { display: flex; flex-wrap: wrap; gap: 6px; }

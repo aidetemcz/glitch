@@ -33,7 +33,8 @@ function kriteriaText(conceptId) {
   const c = CONCEPTS[conceptId];
   if (!c) return null;
   const cile = (c.cile || []).map((x) => `- [${x.uroven}] ${x.text}`).join("\n");
-  const krit = (c.kriteria || []).map((x, i) => `K${i + 1} [${x.uroven}] ${x.text}`).join("\n");
+  // kritéria od garantů nemusí mít úroveň → bez závorky (jinak by v promptu bylo „[null]")
+  const krit = (c.kriteria || []).map((x, i) => `K${i + 1} ${x.uroven ? "[" + x.uroven + "] " : ""}${x.text}`).join("\n");
   return { nazev: c.nazev, cile: cile, kriteria: krit, pocet: (c.kriteria || []).length };
 }
 
