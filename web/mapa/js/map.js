@@ -115,7 +115,7 @@
   }
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/Informatika/knowledge-map.yaml?v=16")
+  fetch("data/Informatika/knowledge-map.yaml?v=17")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
@@ -664,7 +664,7 @@
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
-      ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${esc(typo(r.vystup))}</div>`).join("")
+      ? c.rvp.map((r) => `<div class="d-rvp">${r.kod ? `<span class="kod">${esc(r.kod)}</span>` : ""}${esc(typo(r.vystup || r.poznamka || ""))}</div>`).join("")
       : '<span class="d-empty">—</span>';
     const kdi = komp
       ? `<div class="d-rvp"><span class="kod">${esc(komp.kod)}</span><strong>${esc(komp.nazev)}</strong><br>${esc(typo(komp.vystup))}</div>`

@@ -27,7 +27,7 @@ _Glitch typu **Historická osobnost** (persona) pro kapitolu Algoritmus. Vytvoř
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-zakladni-algoritmy` |
+| koncept | `informaticke-mysleni-algoritmus` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení a algoritmizace |
 | vrstva | navazující |
@@ -110,7 +110,7 @@ Dítě si může rozhovor forknout a rozvést — např. popsat, kde v běžném
 | **vhodné při náladě** | spíš vyšší energie; roztěkanému uživateli nabídnout po zklidnění |
 | signál dokončení | proběhlá konverzace s personou |
 | fork | `true` (volitelný) |
-| vazby | koncept z mapy: `informaticke-mysleni-zakladni-algoritmy` |
+| vazby | koncept z mapy: `informaticke-mysleni-algoritmus` |
 
 ---
 

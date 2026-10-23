@@ -215,227 +215,591 @@
    }
   ]
  },
- "informaticke-mysleni-dekompozice": {
-  "nazev": "Dekompozice",
-  "popis": "Rozložení velkého, nepřehledného úkolu na menší kousky, které se dají řešit po jednom. Když plánuješ školní výlet, taky ho rozdělíš na dopravu, ubytování a program — v informatice se to samé dělá s problémy i s programy.",
+ "informaticke-mysleni-problemova-situace": {
+  "nazev": "Problémová situace",
+  "popis": "Problémová situace je stav, který potřebujeme změnit nebo vyřešit. Nemusí být na první pohled zřejmé, co přesně je třeba řešit ani jakého výsledku chceme dosáhnout.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vysvětlí, proč se velký úkol snáz řeší, když ho rozloží na menší části."
+    "text": "Žák chápe rozdíl mezi problémovou situací a již přesně formulovanou úlohou."
    },
    {
-    "uroven": "aplikace",
-    "text": "Žák rozdělí zadaný složitější úkol na jednotlivě řešitelné části."
+    "uroven": "analyza",
+    "text": "Žák v problémové situaci rozpozná, co je potřeba vyjasnit, než začne hledat řešení."
    }
   ],
   "kriteria": [
    {
-    "uroven": "aplikace",
-    "text": "Žák u zadaného problému vypíše dílčí části, které jde řešit samostatně."
+    "uroven": null,
+    "text": "Žák rozpozná, že problémová situace nemusí obsahovat hotové zadání."
+   },
+   {
+    "uroven": null,
+    "text": "Žák pojmenuje, co je potřeba o situaci zjistit nebo vyjasnit před hledáním řešení."
+   }
+  ]
+ },
+ "informaticke-mysleni-analyza-problemu": {
+  "nazev": "Analýza problému",
+  "popis": "Z problémové situace vytváříme jasné zadání úlohy: určujeme, co máme řešit, čeho chceme dosáhnout, co máme k dispozici a jaké podmínky a omezení musí řešení splňovat.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že před hledáním řešení je potřeba problémovou situaci analyzovat a vyjasnit zadání úlohy."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák z problémové situace vymezí úlohu, kterou je třeba řešit, a určí její cíl, známé skutečnosti, podmínky a omezení."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák zformuluje z problémové situace srozumitelné zadání úlohy."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák určí, co je třeba vyřešit a jakého výsledku má být dosaženo."
+   },
+   {
+    "uroven": null,
+    "text": "Žák určí dostupné informace, podmínky a omezení."
+   },
+   {
+    "uroven": null,
+    "text": "Žák vytvoří zadání, podle kterého lze začít hledat řešení."
    }
   ]
  },
  "informaticke-mysleni-abstrakce": {
   "nazev": "Abstrakce",
-  "popis": "Schopnost odfiltrovat nepodstatné detaily a soustředit se jen na to, co je pro řešení důležité. Mapa metra je skvělá abstrakce: neukazuje skutečné vzdálenosti ani ulice, jen to, jak na sebe stanice navazují — přesně to, co potřebuješ.",
+  "popis": "Při řešení problému se soustředíme na podstatné informace a vlastnosti. Podrobnosti, které řešení neovlivňují, můžeme zanedbat.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vysvětlí na příkladu (mapa metra), co znamená abstrakce jako vynechání nepodstatných detailů."
+    "text": "Žák chápe, že pro řešení problému není nutné pracovat se všemi informacemi o problémové situaci."
    },
    {
-    "uroven": "aplikace",
-    "text": "Žák u zadaného problému vybere, které informace jsou pro řešení podstatné a které lze vynechat."
+    "uroven": "analyza",
+    "text": "Žák rozliší informace a vlastnosti podstatné pro řešení od těch, které lze zanedbat."
    }
   ],
   "kriteria": [
    {
-    "uroven": "aplikace",
-    "text": "Žák u zadané úlohy oddělí podstatné údaje od nepodstatných a svůj výběr krátce doloží."
+    "uroven": null,
+    "text": "Žák vybere informace potřebné pro řešení."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozpozná informace, které řešení neovlivňují."
+   },
+   {
+    "uroven": null,
+    "text": "Žák zdůvodní, proč lze určitou informaci při řešení zanedbat."
    }
   ]
  },
- "informaticke-mysleni-rozpoznavani-vzoru": {
-  "nazev": "Rozpoznávání vzorů",
-  "popis": "Všímání si opakování a pravidelností, které řešení zjednoduší. Když zjistíš, že se v úloze pořád vrací stejný krok, můžeš ho vyřešit jednou a použít znovu — místo abys vymýšlel pokaždé znovu od začátku.",
+ "informaticke-mysleni-dekompozice": {
+  "nazev": "Dekompozice problému",
+  "popis": "Složitější problém lze rozdělit na menší dílčí úlohy. Dílčí úlohy mohou být vzájemně závislé a vyžadovat určité pořadí řešení, nebo mohou být nezávislé a řešitelné současně.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vlastními slovy vysvětlí, jak všímání si opakování zjednoduší řešení úlohy."
+    "text": "Žák chápe, že rozdělení problému na dílčí úlohy usnadňuje jeho řešení a že mezi dílčími úlohami mohou existovat závislosti."
    },
    {
     "uroven": "analyza",
-    "text": "Žák v zadané úloze najde opakující se krok nebo vzor."
+    "text": "Žák rozpozná dílčí úlohy a jejich vzájemné závislosti."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák rozdělí problém na menší řešitelné části a navrhne vhodné pořadí jejich řešení; rozpozná části, které lze řešit nezávisle nebo současně."
    }
   ],
   "kriteria": [
    {
+    "uroven": null,
+    "text": "Žák rozdělí problém na smysluplné dílčí úlohy."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozpozná, které dílčí úlohy závisejí na výsledku jiných."
+   },
+   {
+    "uroven": null,
+    "text": "Žák určí pořadí tam, kde je pořadí řešení nutné."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozpozná dílčí úlohy, které lze řešit nezávisle nebo současně."
+   },
+   {
+    "uroven": null,
+    "text": "Žák propojí výsledky dílčích úloh do řešení původního problému."
+   }
+  ]
+ },
+ "informaticke-mysleni-navrh-reseni": {
+  "nazev": "Návrh řešení",
+  "popis": "Na základě zadání a analýzy problému hledáme způsob, jak dosáhnout požadovaného výsledku. Jeden problém může mít více možných řešení.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák při hledání řešení využívá známé postupy a předchozí zkušenosti."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne řešení, které odpovídá zadání a respektuje stanovené podmínky a omezení."
+   },
+   {
     "uroven": "analyza",
-    "text": "Žák v předložené posloupnosti nebo úloze označí prvek, který se opakuje."
+    "text": "Žák porovná různé návrhy řešení téhož problému."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák navrhne alespoň jeden způsob řešení."
+   },
+   {
+    "uroven": null,
+    "text": "Navržené řešení odpovídá zadání, podmínkám a omezením."
+   },
+   {
+    "uroven": null,
+    "text": "Žák dokáže hledat a porovnat více možných řešení."
+   }
+  ]
+ },
+ "informaticke-mysleni-efektivita-reseni": {
+  "nazev": "Efektivita",
+  "popis": "Efektivitu lze posuzovat na různých úrovních. Při návrhu řešení porovnáváme různé způsoby řešení problému. U algoritmu porovnáváme různé algoritmy řešící stejnou úlohu podle času, počtu kroků nebo dalších potřebných zdrojů.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že problém může mít více správných řešení a stejné řešení může být realizováno různě efektivními algoritmy."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák porovná různá řešení nebo algoritmy podle vhodně zvoleného kritéria efektivity."
+   },
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák podle stanoveného kritéria vybere efektivnější řešení nebo algoritmus a svou volbu zdůvodní."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák rozlišuje efektivitu návrhu řešení a efektivitu algoritmu."
+   },
+   {
+    "uroven": null,
+    "text": "Žák stanoví nebo použije vhodné kritérium pro porovnání."
+   },
+   {
+    "uroven": null,
+    "text": "Žák porovná dvě řešení nebo dva algoritmy podle stejného kritéria."
+   },
+   {
+    "uroven": null,
+    "text": "Žák svou volbu efektivnější varianty zdůvodní."
    }
   ]
  },
  "informaticke-mysleni-algoritmus": {
   "nazev": "Algoritmus",
-  "popis": "Přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku.",
+  "popis": "Přesně popsaný postup řešení problému. Algoritmus tvoří kroky, které lze podle daných pravidel provést. Pro jeden problém mohou existovat různé algoritmy.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vysvětlí, čím se vyznačuje dobrý algoritmus, a proč musí být jednoznačný."
+    "text": "Žák vysvětlí, co je algoritmus, a z popsaného algoritmu určí, jaký problém řeší."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák porovná různé algoritmy řešící stejný problém."
    },
    {
     "uroven": "tvorba",
-    "text": "Žák navrhne vlastní algoritmus krok za krokem pro řešení zadané úlohy."
+    "text": "Žák navrhne algoritmus pro řešení konkrétního zadaného problému."
    }
   ],
   "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák přesně vykoná zadaný algoritmus a dodrží jeho kroky bez vlastních úprav."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozpozná různé algoritmy řešící tentýž problém a popíše jejich rozdíly."
+   },
+   {
+    "uroven": null,
+    "text": "Žák sestaví postup vedoucí k řešení konkrétního zadaného problému."
+   }
+  ]
+ },
+ "informaticke-mysleni-posloupnost-kroku": {
+  "nazev": "Posloupnost kroků",
+  "popis": "Algoritmus se vykonává krok po kroku v určeném pořadí. Další krok začíná až po dokončení předchozího; vykonavatel pořadí kroků nevolí ani nemění.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že algoritmus se vykonává postupně, krok za krokem, v předepsaném pořadí."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák vykoná zadaný algoritmus přesně v určeném pořadí a každý krok dokončí před zahájením dalšího."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák posoudí, jak změna pořadí kroků ovlivní průběh nebo výsledek algoritmu."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák při vykonávání algoritmu dodržuje pořadí kroků."
+   },
+   {
+    "uroven": null,
+    "text": "Žák nepřeskakuje kroky ani jejich pořadí svévolně nemění."
+   },
+   {
+    "uroven": null,
+    "text": "Žák dokončí aktuální krok před přechodem k následujícímu."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozpozná situaci, kdy změna pořadí kroků změní výsledek."
+   }
+  ]
+ },
+ "informaticke-mysleni-rozhodovani": {
+  "nazev": "Rozhodování",
+  "popis": "V posloupnosti kroků může být podmínka, jejíž splnění určuje další postup. Algoritmus musí určovat, co se má dít při splnění i nesplnění podmínky.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že další postup může záviset na tom, zda je podmínka splněna, nebo není."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák správně vykoná algoritmus obsahující podmínku a pokračuje podle jejího výsledku."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák pro oba možné výsledky podmínky určí, jak bude vykonávání algoritmu pokračovat."
+   },
    {
     "uroven": "tvorba",
-    "text": "Žák sestaví postup, podle kterého kdokoli dojde ke stejnému výsledku, a kroky seřadí jednoznačně."
-   }
-  ]
- },
- "informaticke-mysleni-rizeni-toku": {
-  "nazev": "Řízení toku",
-  "popis": "Tři způsoby, jak řídit pořadí kroků: sekvence (dělej popořadě), větvení („když platí tohle, udělej tamto\") a opakování (dělej dokola, dokud něco platí). Z těchhle tří stavebních kamenů se dá poskládat každý program.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí rozdíl mezi sekvencí, větvením a opakováním a uvede příklad každého."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák v blokovém prostředí použije větvení a opakování k sestavení funkčního programu."
+    "text": "Žák navrhne postup s podmínkou tak, aby bylo určeno pokračování při jejím splnění i nesplnění."
    }
   ],
   "kriteria": [
    {
-    "uroven": "porozumeni",
-    "text": "Žák u ukázky kódu určí, kde jde o sekvenci, kde o větvení a kde o opakování."
+    "uroven": null,
+    "text": "Žák při vykonávání vyhodnotí, zda je podmínka splněna."
    },
    {
-    "uroven": "aplikace",
-    "text": "Žák odevzdá funkční program, který obsahuje alespoň jedno větvení a jedno opakování."
+    "uroven": null,
+    "text": "Podle výsledku podmínky pokračuje odpovídajícím způsobem."
+   },
+   {
+    "uroven": null,
+    "text": "Nesplnění podmínky nepovažuje automaticky za konec algoritmu."
+   },
+   {
+    "uroven": null,
+    "text": "Při tvorbě algoritmu určí, co následuje při splnění i nesplnění podmínky."
    }
   ]
  },
- "informaticke-mysleni-pseudokod-a-vyvojove-diagramy": {
-  "nazev": "Pseudokód a vývojové diagramy",
-  "popis": "Způsoby, jak zapsat postup srozumitelně pro člověka ještě předtím, než ho napíšeš v konkrétním programovacím jazyce. Pseudokód je „kód napůl česky\", vývojový diagram totéž nakreslené jako schéma se šipkami.",
+ "informaticke-mysleni-opakovani": {
+  "nazev": "Opakování",
+  "popis": "Některé kroky nebo jejich posloupnost lze vykonávat opakovaně. Počet opakování může být předem určen nebo může záviset na splnění podmínky.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák po přečtení pseudokódu nebo vývojového diagramu vysvětlí, co daný postup dělá."
+    "text": "Žák chápe opakování jako způsob opakovaného vykonávání stejné části algoritmu."
    },
    {
     "uroven": "aplikace",
-    "text": "Žák zapíše jednoduchý postup jako pseudokód nebo vývojový diagram."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák u předloženého diagramu popíše celý postup a určí problém, který řeší."
-   }
-  ]
- },
- "informaticke-mysleni-logika-a-booleovske-vyrazy": {
-  "nazev": "Logika a booleovské výrazy",
-  "popis": "Rozhodování v programech stojí na výrocích, které jsou buď pravda, nebo nepravda („má hráč míň než nula životů?\"). Ty se spojují spojkami A ZÁROVEŇ (AND), NEBO (OR) a NE (NOT) do složitějších podmínek.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí význam spojek A ZÁROVEŇ, NEBO a NE na konkrétní podmínce."
+    "text": "Žák správně vykoná algoritmus obsahující opakování."
    },
-   {
-    "uroven": "aplikace",
-    "text": "Žák sestaví složenou podmínku pomocí spojek AND, OR a NOT pro zadanou situaci."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "aplikace",
-    "text": "Žák pro zadané pravidlo zapíše správnou složenou podmínku a určí, kdy je pravdivá."
-   }
-  ]
- },
- "informaticke-mysleni-modelovani-a-simulace": {
-  "nazev": "Modelování a simulace",
-  "popis": "Model je zjednodušený obraz skutečnosti — třeba graf, schéma nebo tabulka — který zachytí to podstatné a zbytek vynechá. Na modelu jde situaci pochopit nebo „přehrát\" dopředu (simulovat), aniž bys ji musel zkoušet naostro.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, co je model a proč zachycuje jen to podstatné."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák zadanou situaci znázorní modelem, například grafem nebo schématem."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "aplikace",
-    "text": "Žák vytvoří graf nebo schéma, které zachytí podstatné prvky zadané situace."
-   }
-  ]
- },
- "informaticke-mysleni-efektivita-reseni": {
-  "nazev": "Efektivita řešení",
-  "popis": "Stejný problém jde vyřešit mnoha způsoby, ale ne všechny stojí stejně — liší se počtem kroků, časem nebo pamětí. Rozpoznat, které řešení je „levnější\", začne být důležité, jakmile přibude dat nebo uživatelů.",
-  "cile": [
    {
     "uroven": "analyza",
-    "text": "Žák porovná dvě řešení stejné úlohy a rozliší, které vyžaduje méně kroků."
+    "text": "Žák určí, která část algoritmu se opakuje a co určuje počet nebo ukončení opakování."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák při návrhu algoritmu použije opakování místo opakovaného zápisu stejných kroků."
    }
   ],
   "kriteria": [
    {
-    "uroven": "analyza",
-    "text": "Žák u dvou postupů spočítá nebo odhadne počet kroků a označí úspornější z nich."
+    "uroven": null,
+    "text": "Žák správně vykoná opakovanou část algoritmu."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozpozná část postupu vhodnou k vyjádření opakováním."
+   },
+   {
+    "uroven": null,
+    "text": "Žák určí, co řídí počet nebo ukončení opakování."
+   },
+   {
+    "uroven": null,
+    "text": "Žák nahradí opakující se zápis kroků vhodným opakováním."
    }
   ]
  },
- "informaticke-mysleni-zakladni-algoritmy": {
-  "nazev": "Základní algoritmy",
-  "popis": "Osvědčené postupy, které se používají pořád dokola, hlavně hledání (najdi prvek v seznamu) a řazení (seřaď podle velikosti). Jsou to takové „klasické recepty\" informatiky, které stojí za to znát.",
+ "informaticke-mysleni-elementarnost-kroku": {
+  "nazev": "Elementárnost kroku",
+  "popis": "Krok algoritmu musí být dostatečně jednoduchý pro jeho vykonavatele, nikoli pro autora algoritmu. Co je elementární krok, závisí na schopnostech a znalostech vykonavatele.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák po přečtení kroků vyhledávacího nebo řadicího algoritmu vysvětlí, co dělá a jaký problém řeší."
+    "text": "Žák chápe, že různí vykonavatelé mohou potřebovat tentýž postup rozdělit na různě podrobné kroky."
    },
    {
-    "uroven": "aplikace",
-    "text": "Žák podle postupu vyhledávání najde prvek v zadaném seznamu."
+    "uroven": "analyza",
+    "text": "Žák posoudí, zda je daný krok pro konkrétního vykonavatele elementární."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák rozloží příliš složitý krok na jednodušší kroky, které daný vykonavatel dokáže provést."
    }
   ],
   "kriteria": [
    {
+    "uroven": null,
+    "text": "Žák rozpozná krok, který daný vykonavatel nedokáže přímo provést."
+   },
+   {
+    "uroven": null,
+    "text": "Žák jej rozloží na jednodušší kroky odpovídající schopnostem vykonavatele."
+   },
+   {
+    "uroven": null,
+    "text": "Žák při změně vykonavatele přizpůsobí podrobnost postupu."
+   }
+  ]
+ },
+ "informaticke-mysleni-vlastnosti-algoritmu": {
+  "nazev": "Vlastnosti algoritmu",
+  "popis": "Aby byl postup algoritmem, musí splňovat určité vlastnosti.",
+  "cile": [
+   {
     "uroven": "porozumeni",
-    "text": "Žák u předloženého algoritmu popíše celý postup a určí, zda jde o hledání, nebo řazení."
+    "text": "Žák chápe, proč musí algoritmus splňovat určité vlastnosti a jaký mají tyto vlastnosti význam."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák u konkrétního postupu posoudí, zda splňuje požadované vlastnosti algoritmu, a rozpozná důsledky jejich nesplnění."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák rozpozná postup, který nesplňuje některou z požadovaných vlastností algoritmu."
+   },
+   {
+    "uroven": null,
+    "text": "Své rozhodnutí zdůvodní odkazem na konkrétní nesplněnou vlastnost."
+   }
+  ]
+ },
+ "informaticke-mysleni-jednoznacnost": {
+  "nazev": "Jednoznačnost",
+  "popis": "Každý krok algoritmu musí být pro jeho vykonavatele srozumitelný a jednoznačně proveditelný. Stejný postup proto může být pro různé vykonavatele popsán různě podrobně.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že jednoznačnost algoritmu závisí na tom, kdo jej vykonává a jakým pokynům rozumí."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák posoudí, zda je popis algoritmu pro daného vykonavatele dostatečně jednoznačný."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák rozpozná pokyn, který daný vykonavatel nedokáže jednoznačně provést."
+   },
+   {
+    "uroven": null,
+    "text": "Žák posoudí vhodnou míru podrobnosti algoritmu vzhledem k jeho vykonavateli."
+   },
+   {
+    "uroven": null,
+    "text": "Žák upraví popis postupu pro vykonavatele s jinými znalostmi nebo schopnostmi."
+   }
+  ]
+ },
+ "informaticke-mysleni-konecnost": {
+  "nazev": "Konečnost",
+  "popis": "Algoritmus řešící úlohu musí po konečném počtu kroků dospět k výsledku. Proces, který má běžet stále, musí mít definovaný způsob, jak jej ukončit.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe význam konečnosti a rozlišuje mezi algoritmem, který má dospět k výsledku, a procesem, který má záměrně běžet stále."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák u konkrétního postupu posoudí, zda a jak skončí, případně jak lze ukončit trvale běžící proces."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák určí, zda a za jakých podmínek postup skončí."
+   },
+   {
+    "uroven": null,
+    "text": "Rozpozná nežádoucí nekonečné opakování."
+   },
+   {
+    "uroven": null,
+    "text": "U záměrně trvale běžícího procesu určí způsob jeho ukončení."
+   }
+  ]
+ },
+ "informaticke-mysleni-obecnost": {
+  "nazev": "Obecnost",
+  "popis": "Algoritmus není určen pouze pro jeden konkrétní případ. Je určen pro určitou množinu přípustných vstupů, pro které poskytuje odpovídající výstupy.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že algoritmus nemusí fungovat pro libovolná data, ale pro určitou množinu přípustných vstupů."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák rozpozná, pro která vstupní data algoritmus funguje a pro která ne, a na základě toho určí množinu přípustných vstupů."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák zobecní postup vytvořený pro konkrétní případ tak, aby pracoval s různými přípustnými vstupy."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák použije stejný algoritmus pro různé přípustné vstupy."
+   },
+   {
+    "uroven": null,
+    "text": "Žák na základě testování na vhodně zvolených vstupech zobecní, pro jaké vstupy algoritmus funguje a pro jaké ne."
+   },
+   {
+    "uroven": null,
+    "text": "Žák upraví konkrétní postup tak, aby jej bylo možné použít pro širší množinu vstupů."
+   }
+  ]
+ },
+ "informaticke-mysleni-spravnost": {
+  "nazev": "Správnost",
+  "popis": "Správný algoritmus při správném provedení řeší zadaný problém. Správnost je potřeba ověřovat.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe rozdíl mezi správným provedením algoritmu a správností samotného algoritmu."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák ověřuje správnost algoritmu na vhodně zvolených příkladech a hledá případy, pro které algoritmus nefunguje."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák ověří výsledek algoritmu na konkrétním příkladu."
+   },
+   {
+    "uroven": null,
+    "text": "Žák hledá i vstupy, na kterých by se mohla projevit chyba algoritmu."
+   },
+   {
+    "uroven": null,
+    "text": "Žák rozliší chybu algoritmu od chyby při jeho vykonávání."
+   }
+  ]
+ },
+ "informaticke-mysleni-overovani-reseni": {
+  "nazev": "Ověřování řešení",
+  "popis": "Řešení ověřujeme na různých vhodně zvolených vstupech a porovnáváme získané výstupy s očekávanými. Nestačí ověřovat pouze běžné případy – důležité jsou i méně obvyklé a hraniční vstupy. Po úpravě je potřeba znovu ověřit celé řešení, protože změna může ovlivnit i jeho další části.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že úspěšné ověření několika běžných případů ještě nezaručuje správnost řešení."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák ověří řešení na různých vstupech a porovná skutečný výstup s očekávaným."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák cíleně volí vstupy, které mohou odhalit chybu nebo omezení řešení, a podle výsledků rozliší, zda je potřeba řešení opravit, nebo zpřesnit množinu přípustných vstupů."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Žák neověřuje řešení pouze na typických případech."
+   },
+   {
+    "uroven": null,
+    "text": "Žák volí také méně obvyklé a hraniční vstupy."
+   },
+   {
+    "uroven": null,
+    "text": "Pro zvolený vstup určí očekávaný výstup a porovná jej se skutečným."
+   },
+   {
+    "uroven": null,
+    "text": "Při neúspěšném ověření rozlišuje mezi chybou řešení a vstupem, pro který řešení není určeno."
+   },
+   {
+    "uroven": null,
+    "text": "Po úpravě znovu ověří nejen upravenou část, ale také řešení jako celek."
    }
   ]
  },
  "informaticke-mysleni-hodnoceni-a-analyza-chyb": {
-  "nazev": "Hodnocení a analýza chyb",
-  "popis": "Umět se na hotové řešení podívat kriticky: funguje? kde se láme? proč dělá zrovna tohle? Hledání příčiny chyby (ne jen jejího příznaku) je dovednost, kterou využiješ v programování i kdekoli jinde.",
+  "nazev": "Hledání a oprava chyb",
+  "popis": "Pokud řešení nefunguje podle očekávání, hledáme místo a příčinu chyby, chybu opravíme a řešení znovu ověříme. Při hledání chyby nám může pomoci sledování průběhu řešení i vhodná volba vstupních dat.",
   "cile": [
    {
-    "uroven": "hodnoceni",
-    "text": "Žák ověří, zda hotové řešení funguje, a určí krok, ve kterém se láme."
+    "uroven": "porozumeni",
+    "text": "Žák chápe, že nalezení chyby znamená zjistit nejen kde se chyba projevila, ale také její příčinu."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák u jednoduchého chybného řešení vyhledá chybu, opraví ji a řešení znovu ověří."
    },
    {
     "uroven": "analyza",
-    "text": "Žák u chybného postupu odliší příčinu chyby od jejího příznaku."
+    "text": "Žák hledá místo a příčinu chyby pomocí sledování průběhu řešení a vhodně zvolených vstupních dat."
    }
   ],
   "kriteria": [
    {
-    "uroven": "hodnoceni",
-    "text": "Žák u předloženého řešení otestuje jeho funkčnost a pojmenuje místo selhání."
+    "uroven": null,
+    "text": "Žák hledá místo, kde se průběh řešení začne lišit od očekávaného."
    },
    {
-    "uroven": "analyza",
-    "text": "Žák u konkrétní chyby rozliší, co je jen její projev a co skutečná příčina."
+    "uroven": null,
+    "text": "Žák volí vstupní data tak, aby mu pomohla chybu lokalizovat."
+   },
+   {
+    "uroven": null,
+    "text": "Žák hledá příčinu chyby, ne pouze její projev."
+   },
+   {
+    "uroven": null,
+    "text": "Žák provede opravu a následně ověří, zda chyba skutečně zmizela."
    }
   ]
  },

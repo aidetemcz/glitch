@@ -28,7 +28,7 @@ _Glitch typu **Rychlá výzva** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24.
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-rizeni-toku` |
+| koncept | `informaticke-mysleni-opakovani` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení a algoritmizace |
 | vrstva | core |
@@ -99,7 +99,7 @@ _Glitch typu **Rychlá výzva** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24.
 | **vhodné při náladě** | kdykoli; lehké „nabuzení" hlavy |
 | signál dokončení | zodpovězení |
 | fork | `false` |
-| vazby | koncept z mapy: `informaticke-mysleni-rizeni-toku` |
+| vazby | koncept z mapy: `informaticke-mysleni-opakovani` |
 | poznámka | Trasování opakování: 0 → 2 → 4 → 6. |
 
 ---

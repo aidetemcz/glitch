@@ -28,7 +28,7 @@ _Glitch typu **Rychlá výzva** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24.
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-algoritmus` |
+| koncept | `informaticke-mysleni-jednoznacnost` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení a algoritmizace |
 | vrstva | core |
@@ -89,7 +89,7 @@ _Glitch typu **Rychlá výzva** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24.
 | **vhodné při náladě** | kdykoli |
 | signál dokončení | zodpovězení |
 | fork | `false` |
-| vazby | koncept z mapy: `informaticke-mysleni-algoritmus` |
+| vazby | koncept z mapy: `informaticke-mysleni-jednoznacnost` |
 | poznámka | Klíč je jednoznačnost — žádné „nějak" a „tak akorát". |
 
 ---

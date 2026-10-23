@@ -27,7 +27,7 @@ _Glitch typu **Fun fact** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24._
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-zakladni-algoritmy` |
+| koncept | `informaticke-mysleni-efektivita-reseni` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení a algoritmizace |
 | vrstva | navazující |
@@ -120,7 +120,7 @@ Fun fact může mít fork: dítě si vyzkouší „hádání na půl" — kamar�
 | **vhodné při náladě** | i při nižším soustředění — pointa je rychlá |
 | signál dokončení | rozklik (přečtení) · volitelně konverzace |
 | fork | `true` (volitelný) |
-| vazby | koncept z mapy: `informaticke-mysleni-zakladni-algoritmy` |
+| vazby | koncept z mapy: `informaticke-mysleni-efektivita-reseni` |
 
 ---
 

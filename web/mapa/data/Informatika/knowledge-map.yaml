@@ -62,7 +62,7 @@ temata:
   - id: informaticke-mysleni
     nazev: Informatické myšlení a algoritmizace
     vrstva_mapy: 0
-    popis: Tohle téma učí univerzální způsob přemýšlení, který je jádrem celé informatiky a nezávisí na žádném programovacím jazyce. Žák se učí rozložit velký problém na menší části (dekompozice), odfiltrovat nepodstatné detaily (abstrakce), všímat si opakujících se vzorů a popsat řešení jako jednoznačný postup krok za krokem (algoritmus) složený ze sekvence, větvení a opakování. Tyhle dovednosti se v mapě vracejí prakticky všude — v programování, práci s daty, robotice i při přemýšlení o AI — proto stojí hned vedle Digitálních základů jako druhý pilíř, na kterém teprve začíná skutečná tvorba.
+    popis: 'Informatické myšlení a algoritmizace učí, jak z problémové situace udělat řešitelnou úlohu a popsat její řešení jako algoritmus. Žák problém analyzuje, odlišuje podstatné od nepodstatného (abstrakce), rozkládá ho na dílčí úlohy (dekompozice), navrhuje řešení a porovnává jeho efektivitu. Poznává, z čeho se algoritmus skládá — posloupnost elementárních kroků, rozhodování a opakování — a jaké vlastnosti musí mít: jednoznačnost, konečnost, obecnost a správnost. Učí se řešení ověřovat a hledat a opravovat v něm chyby. Tyhle dovednosti nezávisí na programovacím jazyce; Programování na ně přímo navazuje.'
     barva: '#ffff00'
     navazuje_na: []
   - id: programovani
@@ -492,318 +492,579 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
     pokryti_glitchem: []
     stav: draft
-  - id: informaticke-mysleni-dekompozice
-    nazev: Dekompozice
+  - id: informaticke-mysleni-problemova-situace
+    nazev: Problémová situace
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: Rozložení velkého, nepřehledného úkolu na menší kousky, které se dají řešit po jednom. Když plánuješ školní výlet, taky ho rozdělíš na dopravu, ubytování a program — v informatice se to samé dělá s problémy i s programy.
+    popis: Problémová situace je stav, který potřebujeme změnit nebo vyřešit. Nemusí být na první pohled zřejmé, co přesně je třeba řešit ani jakého výsledku chceme dosáhnout.
     rvp:
-      - kod: INF-INF-002-ZV9-006
-        vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+      - kod: null
+        vystup: ''
+        poznamka: Bez samostatného OVU. Řešení problémů je součástí obecného pojetí Informatiky.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, proč se velký úkol snáz řeší, když ho rozloží na menší části.
-        rocnik: 6
-      - uroven: aplikace
-        text: Žák rozdělí zadaný složitější úkol na jednotlivě řešitelné části.
-        rocnik: 6
+        text: Žák chápe rozdíl mezi problémovou situací a již přesně formulovanou úlohou.
+      - uroven: analyza
+        text: Žák v problémové situaci rozpozná, co je potřeba vyjasnit, než začne hledat řešení.
     kriteria:
-      - uroven: aplikace
-        text: Žák u zadaného problému vypíše dílčí části, které jde řešit samostatně.
+      - text: Žák rozpozná, že problémová situace nemusí obsahovat hotové zadání.
+      - text: Žák pojmenuje, co je potřeba o situaci zjistit nebo vyjasnit před hledáním řešení.
     prerekvizity: []
-    souvisi:
-      - tvorba-aplikaci-logika-aplikace
-    tagy:
-      - teoretický základ
+    souvisi: []
+    tagy: []
     zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
+  - id: informaticke-mysleni-analyza-problemu
+    nazev: Analýza problému
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: 'Z problémové situace vytváříme jasné zadání úlohy: určujeme, co máme řešit, čeho chceme dosáhnout, co máme k dispozici a jaké podmínky a omezení musí řešení splňovat.'
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Přímá obsahová vazba na charakteristiku Informatiky – popis a analýza problému před hledáním jeho řešení.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že před hledáním řešení je potřeba problémovou situaci analyzovat a vyjasnit zadání úlohy.
+      - uroven: analyza
+        text: Žák z problémové situace vymezí úlohu, kterou je třeba řešit, a určí její cíl, známé skutečnosti, podmínky a omezení.
+      - uroven: tvorba
+        text: Žák zformuluje z problémové situace srozumitelné zadání úlohy.
+    kriteria:
+      - text: Žák určí, co je třeba vyřešit a jakého výsledku má být dosaženo.
+      - text: Žák určí dostupné informace, podmínky a omezení.
+      - text: Žák vytvoří zadání, podle kterého lze začít hledat řešení.
+    prerekvizity:
+      - informaticke-mysleni-problemova-situace
+    souvisi: []
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
   - id: informaticke-mysleni-abstrakce
     nazev: Abstrakce
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: 'Schopnost odfiltrovat nepodstatné detaily a soustředit se jen na to, co je pro řešení důležité. Mapa metra je skvělá abstrakce: neukazuje skutečné vzdálenosti ani ulice, jen to, jak na sebe stanice navazují — přesně to, co potřebuješ.'
-    rvp: []
+    popis: Při řešení problému se soustředíme na podstatné informace a vlastnosti. Podrobnosti, které řešení neovlivňují, můžeme zanedbat.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Přímá obsahová vazba – RVP při analýze problému pracuje s rozlišováním podstatných a zanedbatelných aspektů.
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí na příkladu (mapa metra), co znamená abstrakce jako vynechání nepodstatných detailů.
-        rocnik: 7
-      - uroven: aplikace
-        text: Žák u zadaného problému vybere, které informace jsou pro řešení podstatné a které lze vynechat.
-        rocnik: 7
+        text: Žák chápe, že pro řešení problému není nutné pracovat se všemi informacemi o problémové situaci.
+      - uroven: analyza
+        text: Žák rozliší informace a vlastnosti podstatné pro řešení od těch, které lze zanedbat.
     kriteria:
-      - uroven: aplikace
-        text: Žák u zadané úlohy oddělí podstatné údaje od nepodstatných a svůj výběr krátce doloží.
-    prerekvizity: []
+      - text: Žák vybere informace potřebné pro řešení.
+      - text: Žák rozpozná informace, které řešení neovlivňují.
+      - text: Žák zdůvodní, proč lze určitou informaci při řešení zanedbat.
+    prerekvizity:
+      - informaticke-mysleni-analyza-problemu
     souvisi:
       - digitalni-zaklady-vrstvy-pocitace
     tagy:
       - teoretický základ
-    zdroj: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-rozpoznavani-vzoru
-    nazev: Rozpoznávání vzorů
+    stav: hotovo
+  - id: informaticke-mysleni-dekompozice
+    nazev: Dekompozice problému
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: Všímání si opakování a pravidelností, které řešení zjednoduší. Když zjistíš, že se v úloze pořád vrací stejný krok, můžeš ho vyřešit jednou a použít znovu — místo abys vymýšlel pokaždé znovu od začátku.
-    rvp: []
+    popis: Složitější problém lze rozdělit na menší dílčí úlohy. Dílčí úlohy mohou být vzájemně závislé a vyžadovat určité pořadí řešení, nebo mohou být nezávislé a řešitelné současně.
+    rvp:
+      - kod: INF-INF-002-ZV9-006
+        vystup: Rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení.
+        poznamka: ''
     cile:
       - uroven: porozumeni
-        text: Žák vlastními slovy vysvětlí, jak všímání si opakování zjednoduší řešení úlohy.
-        rocnik: 6
+        text: Žák chápe, že rozdělení problému na dílčí úlohy usnadňuje jeho řešení a že mezi dílčími úlohami mohou existovat závislosti.
       - uroven: analyza
-        text: Žák v zadané úloze najde opakující se krok nebo vzor.
-        rocnik: 6
+        text: Žák rozpozná dílčí úlohy a jejich vzájemné závislosti.
+      - uroven: tvorba
+        text: Žák rozdělí problém na menší řešitelné části a navrhne vhodné pořadí jejich řešení; rozpozná části, které lze řešit nezávisle nebo současně.
     kriteria:
-      - uroven: analyza
-        text: Žák v předložené posloupnosti nebo úloze označí prvek, který se opakuje.
-    prerekvizity: []
+      - text: Žák rozdělí problém na smysluplné dílčí úlohy.
+      - text: Žák rozpozná, které dílčí úlohy závisejí na výsledku jiných.
+      - text: Žák určí pořadí tam, kde je pořadí řešení nutné.
+      - text: Žák rozpozná dílčí úlohy, které lze řešit nezávisle nebo současně.
+      - text: Žák propojí výsledky dílčích úloh do řešení původního problému.
+    prerekvizity:
+      - informaticke-mysleni-analyza-problemu
     souvisi:
-      - umela-inteligence-ai-se-uci-z-dat
-      - umela-inteligence-strojove-uceni-prakticky
+      - tvorba-aplikaci-logika-aplikace
     tagy:
       - teoretický základ
-    zdroj: []
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
+  - id: informaticke-mysleni-navrh-reseni
+    nazev: Návrh řešení
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Na základě zadání a analýzy problému hledáme způsob, jak dosáhnout požadovaného výsledku. Jeden problém může mít více možných řešení.
+    rvp:
+      - kod: INF-INF-002-ZV5-004
+        vystup: Navrhne posloupnost kroků řešení jednoduchého problému.
+        poznamka: ''
+      - kod: INF-INF-002-ZV9-006
+        vystup: Rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení.
+        poznamka: ''
+    cile:
+      - uroven: aplikace
+        text: Žák při hledání řešení využívá známé postupy a předchozí zkušenosti.
+      - uroven: tvorba
+        text: Žák navrhne řešení, které odpovídá zadání a respektuje stanovené podmínky a omezení.
+      - uroven: analyza
+        text: Žák porovná různé návrhy řešení téhož problému.
+    kriteria:
+      - text: Žák navrhne alespoň jeden způsob řešení.
+      - text: Navržené řešení odpovídá zadání, podmínkám a omezením.
+      - text: Žák dokáže hledat a porovnat více možných řešení.
+    prerekvizity:
+      - informaticke-mysleni-abstrakce
+      - informaticke-mysleni-dekompozice
+    souvisi: []
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-efektivita-reseni
+    nazev: Efektivita
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Efektivitu lze posuzovat na různých úrovních. Při návrhu řešení porovnáváme různé způsoby řešení problému. U algoritmu porovnáváme různé algoritmy řešící stejnou úlohu podle času, počtu kroků nebo dalších potřebných zdrojů.
+    rvp:
+      - kod: INF-INF-002-ZV9-008
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
+        poznamka: přímá vazba na posuzování efektivity postupu a programu.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že problém může mít více správných řešení a stejné řešení může být realizováno různě efektivními algoritmy.
+      - uroven: analyza
+        text: Žák porovná různá řešení nebo algoritmy podle vhodně zvoleného kritéria efektivity.
+      - uroven: hodnoceni
+        text: Žák podle stanoveného kritéria vybere efektivnější řešení nebo algoritmus a svou volbu zdůvodní.
+    kriteria:
+      - text: Žák rozlišuje efektivitu návrhu řešení a efektivitu algoritmu.
+      - text: Žák stanoví nebo použije vhodné kritérium pro porovnání.
+      - text: Žák porovná dvě řešení nebo dva algoritmy podle stejného kritéria.
+      - text: Žák svou volbu efektivnější varianty zdůvodní.
+    prerekvizity:
+      - informaticke-mysleni-navrh-reseni
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - programovani-efektivita
+    tagy:
+      - teoretický základ
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
   - id: informaticke-mysleni-algoritmus
     nazev: Algoritmus
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: 'Přesný návod krok za krokem, jak něco vyřešit — jako recept nebo postup skládání nábytku. Dobrý algoritmus je jednoznačný: kdokoli (i počítač) podle něj dojde ke stejnému výsledku.'
+    popis: Přesně popsaný postup řešení problému. Algoritmus tvoří kroky, které lze podle daných pravidel provést. Pro jeden problém mohou existovat různé algoritmy.
     rvp:
+      - kod: INF-INF-002-ZV5-004
+        vystup: Navrhne posloupnost kroků řešení jednoduchého problému.
+        poznamka: ''
+      - kod: INF-INF-002-ZV9-005
+        vystup: Po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešení.
+        poznamka: ''
       - kod: INF-INF-002-ZV9-006
-        vystup: rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení
+        vystup: Rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení.
+        poznamka: ''
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, čím se vyznačuje dobrý algoritmus, a proč musí být jednoznačný.
-        rocnik: 6
+        text: Žák vysvětlí, co je algoritmus, a z popsaného algoritmu určí, jaký problém řeší.
+      - uroven: analyza
+        text: Žák porovná různé algoritmy řešící stejný problém.
       - uroven: tvorba
-        text: Žák navrhne vlastní algoritmus krok za krokem pro řešení zadané úlohy.
-        rocnik: 7
+        text: Žák navrhne algoritmus pro řešení konkrétního zadaného problému.
     kriteria:
-      - uroven: tvorba
-        text: Žák sestaví postup, podle kterého kdokoli dojde ke stejnému výsledku, a kroky seřadí jednoznačně.
+      - text: Žák přesně vykoná zadaný algoritmus a dodrží jeho kroky bez vlastních úprav.
+      - text: Žák rozpozná různé algoritmy řešící tentýž problém a popíše jejich rozdíly.
+      - text: Žák sestaví postup vedoucí k řešení konkrétního zadaného problému.
     prerekvizity:
-      - informaticke-mysleni-dekompozice
-      - informaticke-mysleni-rozpoznavani-vzoru
+      - informaticke-mysleni-navrh-reseni
     souvisi:
+      - programovani-program
+      - programovani-vstup-a-vystup
       - digitalni-obcanstvi-jak-funguji-algoritmy-siti
     tagy:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-rizeni-toku
-    nazev: Řízení toku
+    stav: hotovo
+  - id: informaticke-mysleni-posloupnost-kroku
+    nazev: Posloupnost kroků
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
     vrstva: core
-    popis: 'Tři způsoby, jak řídit pořadí kroků: sekvence (dělej popořadě), větvení („když platí tohle, udělej tamto") a opakování (dělej dokola, dokud něco platí). Z těchhle tří stavebních kamenů se dá poskládat každý program.'
+    popis: Algoritmus se vykonává krok po kroku v určeném pořadí. Další krok začíná až po dokončení předchozího; vykonavatel pořadí kroků nevolí ani nemění.
     rvp:
-      - kod: INF-INF-002-ZV9-007
-        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
+      - kod: INF-INF-002-ZV5-004
+        vystup: Navrhne posloupnost kroků řešení jednoduchého problému.
+        poznamka: ''
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí rozdíl mezi sekvencí, větvením a opakováním a uvede příklad každého.
-        rocnik: 6
+        text: Žák chápe, že algoritmus se vykonává postupně, krok za krokem, v předepsaném pořadí.
       - uroven: aplikace
-        text: Žák v blokovém prostředí použije větvení a opakování k sestavení funkčního programu.
-        rocnik: 7
+        text: Žák vykoná zadaný algoritmus přesně v určeném pořadí a každý krok dokončí před zahájením dalšího.
+      - uroven: analyza
+        text: Žák posoudí, jak změna pořadí kroků ovlivní průběh nebo výsledek algoritmu.
     kriteria:
+      - text: Žák při vykonávání algoritmu dodržuje pořadí kroků.
+      - text: Žák nepřeskakuje kroky ani jejich pořadí svévolně nemění.
+      - text: Žák dokončí aktuální krok před přechodem k následujícímu.
+      - text: Žák rozpozná situaci, kdy změna pořadí kroků změní výsledek.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - programovani-sekvence-prikazu
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-rozhodovani
+    nazev: Rozhodování
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: V posloupnosti kroků může být podmínka, jejíž splnění určuje další postup. Algoritmus musí určovat, co se má dít při splnění i nesplnění podmínky.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Přímá návaznost na práci s větvením programu na 2. stupni (INF-INF-002-ZV9-007).
+    cile:
       - uroven: porozumeni
-        text: Žák u ukázky kódu určí, kde jde o sekvenci, kde o větvení a kde o opakování.
+        text: Žák chápe, že další postup může záviset na tom, zda je podmínka splněna, nebo není.
       - uroven: aplikace
-        text: Žák odevzdá funkční program, který obsahuje alespoň jedno větvení a jedno opakování.
+        text: Žák správně vykoná algoritmus obsahující podmínku a pokračuje podle jejího výsledku.
+      - uroven: analyza
+        text: Žák pro oba možné výsledky podmínky určí, jak bude vykonávání algoritmu pokračovat.
+      - uroven: tvorba
+        text: Žák navrhne postup s podmínkou tak, aby bylo určeno pokračování při jejím splnění i nesplnění.
+    kriteria:
+      - text: Žák při vykonávání vyhodnotí, zda je podmínka splněna.
+      - text: Podle výsledku podmínky pokračuje odpovídajícím způsobem.
+      - text: Nesplnění podmínky nepovažuje automaticky za konec algoritmu.
+      - text: Při tvorbě algoritmu určí, co následuje při splnění i nesplnění podmínky.
+    prerekvizity:
+      - informaticke-mysleni-posloupnost-kroku
+    souvisi:
+      - programovani-podminky-v-kodu
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-opakovani
+    nazev: Opakování
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Některé kroky nebo jejich posloupnost lze vykonávat opakovaně. Počet opakování může být předem určen nebo může záviset na splnění podmínky.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Přímá návaznost na používání opakování v blokově orientovaném programovacím jazyce (INF-INF-002-ZV5-005, INF-INF-002-ZV9-007).
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe opakování jako způsob opakovaného vykonávání stejné části algoritmu.
+      - uroven: aplikace
+        text: Žák správně vykoná algoritmus obsahující opakování.
+      - uroven: analyza
+        text: Žák určí, která část algoritmu se opakuje a co určuje počet nebo ukončení opakování.
+      - uroven: tvorba
+        text: Žák při návrhu algoritmu použije opakování místo opakovaného zápisu stejných kroků.
+    kriteria:
+      - text: Žák správně vykoná opakovanou část algoritmu.
+      - text: Žák rozpozná část postupu vhodnou k vyjádření opakováním.
+      - text: Žák určí, co řídí počet nebo ukončení opakování.
+      - text: Žák nahradí opakující se zápis kroků vhodným opakováním.
+    prerekvizity:
+      - informaticke-mysleni-posloupnost-kroku
+    souvisi:
+      - informaticke-mysleni-konecnost
+      - programovani-cykly-v-kodu
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-elementarnost-kroku
+    nazev: Elementárnost kroku
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Krok algoritmu musí být dostatečně jednoduchý pro jeho vykonavatele, nikoli pro autora algoritmu. Co je elementární krok, závisí na schopnostech a znalostech vykonavatele.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Bez samostatné přímé vazby.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že různí vykonavatelé mohou potřebovat tentýž postup rozdělit na různě podrobné kroky.
+      - uroven: analyza
+        text: Žák posoudí, zda je daný krok pro konkrétního vykonavatele elementární.
+      - uroven: tvorba
+        text: Žák rozloží příliš složitý krok na jednodušší kroky, které daný vykonavatel dokáže provést.
+    kriteria:
+      - text: Žák rozpozná krok, který daný vykonavatel nedokáže přímo provést.
+      - text: Žák jej rozloží na jednodušší kroky odpovídající schopnostem vykonavatele.
+      - text: Žák při změně vykonavatele přizpůsobí podrobnost postupu.
+    prerekvizity:
+      - informaticke-mysleni-posloupnost-kroku
+    souvisi:
+      - informaticke-mysleni-jednoznacnost
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-vlastnosti-algoritmu
+    nazev: Vlastnosti algoritmu
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Aby byl postup algoritmem, musí splňovat určité vlastnosti.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Bez samostatné vazby – konkrétní očekávané výsledky učení budou přiřazeny ke kartám jednotlivých vlastností.
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, proč musí algoritmus splňovat určité vlastnosti a jaký mají tyto vlastnosti význam.
+      - uroven: analyza
+        text: Žák u konkrétního postupu posoudí, zda splňuje požadované vlastnosti algoritmu, a rozpozná důsledky jejich nesplnění.
+    kriteria:
+      - text: Žák rozpozná postup, který nesplňuje některou z požadovaných vlastností algoritmu.
+      - text: Své rozhodnutí zdůvodní odkazem na konkrétní nesplněnou vlastnost.
+    duraz: Žák nemusí umět jednotlivé vlastnosti algoritmu vyjmenovat. Důležité je porozumět jejich podstatě a významu.
     prerekvizity:
       - informaticke-mysleni-algoritmus
     souvisi: []
-    tagy:
-      - teoretický základ
+    tagy: []
     zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-pseudokod-a-vyvojove-diagramy
-    nazev: Pseudokód a vývojové diagramy
+    stav: hotovo
+  - id: informaticke-mysleni-jednoznacnost
+    nazev: Jednoznačnost
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
-    vrstva: navazujici
-    popis: Způsoby, jak zapsat postup srozumitelně pro člověka ještě předtím, než ho napíšeš v konkrétním programovacím jazyce. Pseudokód je „kód napůl česky", vývojový diagram totéž nakreslené jako schéma se šipkami.
+    vrstva: core
+    popis: Každý krok algoritmu musí být pro jeho vykonavatele srozumitelný a jednoznačně proveditelný. Stejný postup proto může být pro různé vykonavatele popsán různě podrobně.
     rvp:
       - kod: INF-INF-002-ZV9-005
-        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+        vystup: Po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen.
+        poznamka: ''
+      - kod: null
+        vystup: ''
+        poznamka: 'Charakteristika tematického okruhu: RVP explicitně uvádí práci s omezenou sadou instrukcí, jejich doslovnou interpretací a požadavek na jednoznačný popis postupů.'
     cile:
       - uroven: porozumeni
-        text: Žák po přečtení pseudokódu nebo vývojového diagramu vysvětlí, co daný postup dělá.
-        rocnik: 7
-      - uroven: aplikace
-        text: Žák zapíše jednoduchý postup jako pseudokód nebo vývojový diagram.
-        rocnik: 7
-    kriteria:
-      - uroven: porozumeni
-        text: Žák u předloženého diagramu popíše celý postup a určí problém, který řeší.
-    prerekvizity:
-      - informaticke-mysleni-algoritmus
-    souvisi:
-      - programovani-zapis-programu
-      - informaticke-mysleni-modelovani-a-simulace
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-    pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-logika-a-booleovske-vyrazy
-    nazev: Logika a booleovské výrazy
-    tema: informaticke-mysleni
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Rozhodování v programech stojí na výrocích, které jsou buď pravda, nebo nepravda („má hráč míň než nula životů?"). Ty se spojují spojkami A ZÁROVEŇ (AND), NEBO (OR) a NE (NOT) do složitějších podmínek.
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí význam spojek A ZÁROVEŇ, NEBO a NE na konkrétní podmínce.
-        rocnik: 8
-      - uroven: aplikace
-        text: Žák sestaví složenou podmínku pomocí spojek AND, OR a NOT pro zadanou situaci.
-        rocnik: 8
-    kriteria:
-      - uroven: aplikace
-        text: Žák pro zadané pravidlo zapíše správnou složenou podmínku a určí, kdy je pravdivá.
-    prerekvizity:
-      - informaticke-mysleni-rizeni-toku
-    souvisi:
-      - data-databaze-dotazovani-sql
-      - herni-vyvoj-kolize-a-jednoducha-fyzika
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-modelovani-a-simulace
-    nazev: Modelování a simulace
-    tema: informaticke-mysleni
-    oblast: data-modelovani
-    kompetence: null
-    vrstva: navazujici
-    popis: Model je zjednodušený obraz skutečnosti — třeba graf, schéma nebo tabulka — který zachytí to podstatné a zbytek vynechá. Na modelu jde situaci pochopit nebo „přehrát" dopředu (simulovat), aniž bys ji musel zkoušet naostro.
-    rvp:
-      - kod: INF-INF-001-ZV9-003
-        vystup: modeluje situace různými způsoby, včetně grafů nebo obdobných schémat
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, co je model a proč zachycuje jen to podstatné.
-        rocnik: 7
-      - uroven: aplikace
-        text: Žák zadanou situaci znázorní modelem, například grafem nebo schématem.
-        rocnik: 7
-    kriteria:
-      - uroven: aplikace
-        text: Žák vytvoří graf nebo schéma, které zachytí podstatné prvky zadané situace.
-    prerekvizity:
-      - informaticke-mysleni-abstrakce
-    souvisi:
-      - data-databaze-vizualizace-a-volba-grafu
-      - herni-vyvoj-kolize-a-jednoducha-fyzika
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-    pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-efektivita-reseni
-    nazev: Efektivita řešení
-    tema: informaticke-mysleni
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Stejný problém jde vyřešit mnoha způsoby, ale ne všechny stojí stejně — liší se počtem kroků, časem nebo pamětí. Rozpoznat, které řešení je „levnější", začne být důležité, jakmile přibude dat nebo uživatelů.
-    rvp: []
-    cile:
+        text: Žák chápe, že jednoznačnost algoritmu závisí na tom, kdo jej vykonává a jakým pokynům rozumí.
       - uroven: analyza
-        text: Žák porovná dvě řešení stejné úlohy a rozliší, které vyžaduje méně kroků.
-        rocnik: 9
+        text: Žák posoudí, zda je popis algoritmu pro daného vykonavatele dostatečně jednoznačný.
     kriteria:
-      - uroven: analyza
-        text: Žák u dvou postupů spočítá nebo odhadne počet kroků a označí úspornější z nich.
+      - text: Žák rozpozná pokyn, který daný vykonavatel nedokáže jednoznačně provést.
+      - text: Žák posoudí vhodnou míru podrobnosti algoritmu vzhledem k jeho vykonavateli.
+      - text: Žák upraví popis postupu pro vykonavatele s jinými znalostmi nebo schopnostmi.
     prerekvizity:
-      - informaticke-mysleni-algoritmus
-    souvisi:
-      - programovani-ladeni-a-testovani
-      - informaticke-mysleni-zakladni-algoritmy
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: informaticke-mysleni-zakladni-algoritmy
-    nazev: Základní algoritmy
-    tema: informaticke-mysleni
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Osvědčené postupy, které se používají pořád dokola, hlavně hledání (najdi prvek v seznamu) a řazení (seřaď podle velikosti). Jsou to takové „klasické recepty" informatiky, které stojí za to znát.
-    rvp:
-      - kod: INF-INF-002-ZV9-005
-        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
-    cile:
-      - uroven: porozumeni
-        text: Žák po přečtení kroků vyhledávacího nebo řadicího algoritmu vysvětlí, co dělá a jaký problém řeší.
-        rocnik: 8
-      - uroven: aplikace
-        text: Žák podle postupu vyhledávání najde prvek v zadaném seznamu.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák u předloženého algoritmu popíše celý postup a určí, zda jde o hledání, nebo řazení.
-    prerekvizity:
-      - informaticke-mysleni-algoritmus
+      - informaticke-mysleni-vlastnosti-algoritmu
     souvisi: []
-    tagy:
-      - teoretický základ
+    tagy: []
     zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
+  - id: informaticke-mysleni-konecnost
+    nazev: Konečnost
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Algoritmus řešící úlohu musí po konečném počtu kroků dospět k výsledku. Proces, který má běžet stále, musí mít definovaný způsob, jak jej ukončit.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Bez samostatné přímé vazby
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe význam konečnosti a rozlišuje mezi algoritmem, který má dospět k výsledku, a procesem, který má záměrně běžet stále.
+      - uroven: analyza
+        text: Žák u konkrétního postupu posoudí, zda a jak skončí, případně jak lze ukončit trvale běžící proces.
+    kriteria:
+      - text: Žák určí, zda a za jakých podmínek postup skončí.
+      - text: Rozpozná nežádoucí nekonečné opakování.
+      - text: U záměrně trvale běžícího procesu určí způsob jeho ukončení.
+    prerekvizity:
+      - informaticke-mysleni-vlastnosti-algoritmu
+    souvisi: []
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-obecnost
+    nazev: Obecnost
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Algoritmus není určen pouze pro jeden konkrétní případ. Je určen pro určitou množinu přípustných vstupů, pro které poskytuje odpovídající výstupy.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: Obecnost je obsažena v závazné charakteristice tematického okruhu Algoritmizace a programování
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že algoritmus nemusí fungovat pro libovolná data, ale pro určitou množinu přípustných vstupů.
+      - uroven: analyza
+        text: Žák rozpozná, pro která vstupní data algoritmus funguje a pro která ne, a na základě toho určí množinu přípustných vstupů.
+      - uroven: tvorba
+        text: Žák zobecní postup vytvořený pro konkrétní případ tak, aby pracoval s různými přípustnými vstupy.
+    kriteria:
+      - text: Žák použije stejný algoritmus pro různé přípustné vstupy.
+      - text: Žák na základě testování na vhodně zvolených vstupech zobecní, pro jaké vstupy algoritmus funguje a pro jaké ne.
+      - text: Žák upraví konkrétní postup tak, aby jej bylo možné použít pro širší množinu vstupů.
+    prerekvizity:
+      - informaticke-mysleni-vlastnosti-algoritmu
+    souvisi:
+      - programovani-vstup-a-vystup
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-spravnost
+    nazev: Správnost
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Správný algoritmus při správném provedení řeší zadaný problém. Správnost je potřeba ověřovat.
+    rvp:
+      - kod: INF-INF-002-ZV9-008
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
+        poznamka: ''
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe rozdíl mezi správným provedením algoritmu a správností samotného algoritmu.
+      - uroven: analyza
+        text: Žák ověřuje správnost algoritmu na vhodně zvolených příkladech a hledá případy, pro které algoritmus nefunguje.
+    kriteria:
+      - text: Žák ověří výsledek algoritmu na konkrétním příkladu.
+      - text: Žák hledá i vstupy, na kterých by se mohla projevit chyba algoritmu.
+      - text: Žák rozliší chybu algoritmu od chyby při jeho vykonávání.
+    prerekvizity:
+      - informaticke-mysleni-vlastnosti-algoritmu
+    souvisi: []
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
+  - id: informaticke-mysleni-overovani-reseni
+    nazev: Ověřování řešení
+    tema: informaticke-mysleni
+    oblast: algoritmizace
+    kompetence: null
+    vrstva: core
+    popis: Řešení ověřujeme na různých vhodně zvolených vstupech a porovnáváme získané výstupy s očekávanými. Nestačí ověřovat pouze běžné případy – důležité jsou i méně obvyklé a hraniční vstupy. Po úpravě je potřeba znovu ověřit celé řešení, protože změna může ovlivnit i jeho další části.
+    rvp:
+      - kod: INF-INF-002-ZV9-008
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
+        poznamka: ''
+    cile:
+      - uroven: porozumeni
+        text: Žák chápe, že úspěšné ověření několika běžných případů ještě nezaručuje správnost řešení.
+      - uroven: aplikace
+        text: Žák ověří řešení na různých vstupech a porovná skutečný výstup s očekávaným.
+      - uroven: analyza
+        text: Žák cíleně volí vstupy, které mohou odhalit chybu nebo omezení řešení, a podle výsledků rozliší, zda je potřeba řešení opravit, nebo zpřesnit množinu přípustných vstupů.
+    kriteria:
+      - text: Žák neověřuje řešení pouze na typických případech.
+      - text: Žák volí také méně obvyklé a hraniční vstupy.
+      - text: Pro zvolený vstup určí očekávaný výstup a porovná jej se skutečným.
+      - text: Při neúspěšném ověření rozlišuje mezi chybou řešení a vstupem, pro který řešení není určeno.
+      - text: Po úpravě znovu ověří nejen upravenou část, ale také řešení jako celek.
+    duraz: Autor řešení nemusí odhalit všechny problémy. Je-li řešení určeno dalším uživatelům, je vhodné ověřit je také na cílové skupině.
+    prerekvizity:
+      - informaticke-mysleni-algoritmus
+    souvisi:
+      - informaticke-mysleni-hodnoceni-a-analyza-chyb
+      - informaticke-mysleni-spravnost
+      - programovani-overovani
+      - programovani-vstup-a-vystup
+    tagy: []
+    zdroj:
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
+    pokryti_glitchem: []
+    stav: hotovo
   - id: informaticke-mysleni-hodnoceni-a-analyza-chyb
-    nazev: Hodnocení a analýza chyb
+    nazev: Hledání a oprava chyb
     tema: informaticke-mysleni
     oblast: algoritmizace
     kompetence: null
-    vrstva: navazujici
-    popis: 'Umět se na hotové řešení podívat kriticky: funguje? kde se láme? proč dělá zrovna tohle? Hledání příčiny chyby (ne jen jejího příznaku) je dovednost, kterou využiješ v programování i kdekoli jinde.'
+    vrstva: core
+    popis: Pokud řešení nefunguje podle očekávání, hledáme místo a příčinu chyby, chybu opravíme a řešení znovu ověříme. Při hledání chyby nám může pomoci sledování průběhu řešení i vhodná volba vstupních dat.
     rvp:
-      - kod: INF-INF-002-ZV9-005
-        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
+      - kod: INF-INF-002-ZV5-005
+        vystup: Sestaví v blokově orientovaném jazyce program, ve kterém používá opakování a podprogramy, opraví případné chyby.
+        poznamka: ''
+      - kod: INF-INF-002-ZV9-008
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
+        poznamka: ''
     cile:
-      - uroven: hodnoceni
-        text: Žák ověří, zda hotové řešení funguje, a určí krok, ve kterém se láme.
-        rocnik: 8
+      - uroven: porozumeni
+        text: Žák chápe, že nalezení chyby znamená zjistit nejen kde se chyba projevila, ale také její příčinu.
+      - uroven: aplikace
+        text: Žák u jednoduchého chybného řešení vyhledá chybu, opraví ji a řešení znovu ověří.
       - uroven: analyza
-        text: Žák u chybného postupu odliší příčinu chyby od jejího příznaku.
-        rocnik: 9
+        text: Žák hledá místo a příčinu chyby pomocí sledování průběhu řešení a vhodně zvolených vstupních dat.
     kriteria:
-      - uroven: hodnoceni
-        text: Žák u předloženého řešení otestuje jeho funkčnost a pojmenuje místo selhání.
-      - uroven: analyza
-        text: Žák u konkrétní chyby rozliší, co je jen její projev a co skutečná příčina.
-    prerekvizity:
-      - informaticke-mysleni-algoritmus
+      - text: Žák hledá místo, kde se průběh řešení začne lišit od očekávaného.
+      - text: Žák volí vstupní data tak, aby mu pomohla chybu lokalizovat.
+      - text: Žák hledá příčinu chyby, ne pouze její projev.
+      - text: Žák provede opravu a následně ověří, zda chyba skutečně zmizela.
+    duraz: Oprava chyby není dokončena samotnou změnou řešení. Po opravě je nutné řešení znovu ověřit.
+    prerekvizity: []
     souvisi:
       - umela-inteligence-overovani-vystupu
     tagy:
@@ -811,8 +1072,9 @@ concepts:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: programovani-promenne-a-datove-typy
     nazev: Proměnná
     tema: programovani
@@ -892,9 +1154,7 @@ concepts:
     duraz: Pokud podmíněný příkaz nemá větev pro nesplněnou podmínku, nesplnění podmínky neznamená ukončení programu. Program pouze přeskočí příkazy určené pro splněnou podmínku a pokračuje dál.
     prerekvizity:
       - programovani-cykly-v-kodu
-    souvisi:
-      - informaticke-mysleni-rizeni-toku
-      - informaticke-mysleni-logika-a-booleovske-vyrazy
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -941,8 +1201,6 @@ concepts:
       - programovani-funkce-a-procedury
     souvisi:
       - herni-vyvoj-herni-smycka-scena-a-objekty
-      - informaticke-mysleni-zakladni-algoritmy
-      - informaticke-mysleni-rizeni-toku
     tagy:
       - teoretický základ
     zdroj:
@@ -993,9 +1251,7 @@ concepts:
       Podprogramy tak neslouží jen ke zkrácení kódu programu. Umožňují program rozčlenit na smysluplné části, zpřehlednit jej a usnadnit jeho pozdější změny.
     prerekvizity:
       - programovani-sekvence-prikazu
-    souvisi:
-      - informaticke-mysleni-zakladni-algoritmy
-      - informaticke-mysleni-dekompozice
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -1019,7 +1275,7 @@ concepts:
       Po provedení opravy je potřeba program znovu důkladně otestovat. Nestačí zopakovat pouze test, který chybu odhalil. Provedená oprava mohla ovlivnit i jiné části programu.
     rvp:
       - kod: INF-INF-002-ZV9-008
-        vystup: ''
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
         poznamka: přímá vazba na „opravuje chyby“. Metodická podpora požaduje systematické hledání chybných míst, jejich opravu a přepracování částí programu; uvádí také krokování programu.
     cile:
       - uroven: porozumeni
@@ -1037,8 +1293,7 @@ concepts:
       - text: Žák po opravě program znovu otestuje různými testy, aby ověřil nejen odstranění nalezené chyby, ale i to, zda oprava nezpůsobila problém jinde.
     prerekvizity:
       - programovani-testovani
-    souvisi:
-      - informaticke-mysleni-hodnoceni-a-analyza-chyb
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -1069,8 +1324,7 @@ concepts:
       - text: Žák na základě chování jednoduchého programu popíše jeho účel.
     duraz: Algoritmus a program nejsou synonyma. Algoritmus popisuje postup řešení; program je jeho zápisem v programovacím jazyce určeným k vykonání počítačem.
     prerekvizity: []
-    souvisi:
-      - informaticke-mysleni-algoritmus
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -1142,8 +1396,7 @@ concepts:
       Tento model popisuje vykonávání příkazů v jedné sekvenci. Program může mít více částí, které se vykonávají současně. Pak nelze obecně určit vzájemné pořadí příkazů z různých současně vykonávaných částí pouze podle jejich zápisu v kódu programu.
     prerekvizity:
       - programovani-zapis-programu
-    souvisi:
-      - informaticke-mysleni-rizeni-toku
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -1186,8 +1439,7 @@ concepts:
     duraz: Změna hodnoty během vykonávání těla cyklu neznamená okamžité nové vyhodnocení podmínky. O průběhu cyklu rozhoduje výsledek podmínky v okamžiku jejího vyhodnocení.
     prerekvizity:
       - programovani-podminky-v-kodu
-    souvisi:
-      - informaticke-mysleni-rizeni-toku
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -1227,8 +1479,7 @@ concepts:
       - text: Žák vytvoří program, který během svého běhu přijímá vstupy a vytváří odpovídající výstupy.
     prerekvizity:
       - programovani-program
-    souvisi:
-      - informaticke-mysleni-algoritmus
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -1254,7 +1505,7 @@ concepts:
         vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
         poznamka: metodická podpora požaduje uživatelsky přívětivé programy a zvažování dopadů programů na jejich uživatele.
       - kod: INF-INF-002-ZV9-008
-        vystup: ''
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
         poznamka: metodika požaduje testování prototypů s uživateli za účelem ověřování a zlepšování použitelnosti.
     cile:
       - uroven: porozumeni
@@ -1295,7 +1546,7 @@ concepts:
       Průběžné ověřování usnadňuje odhalení problémů. Pokud se chyba projeví po malé změně programu, je snazší určit, která změna ji způsobila.
     rvp:
       - kod: INF-INF-002-ZV9-008
-        vystup: ''
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
         poznamka: přímá vazba na závazný požadavek průběžně ověřovat správnost vytvářeného postupu.
     cile:
       - uroven: porozumeni
@@ -1310,8 +1561,7 @@ concepts:
       - text: Žák při zjištění neočekávaného chování hledá, ve které části programu problém vznikl.
     prerekvizity:
       - programovani-program
-    souvisi:
-      - informaticke-mysleni-hodnoceni-a-analyza-chyb
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -1332,7 +1582,7 @@ concepts:
       Ani důkladné testování však nezaručuje odhalení všech chyb. Program může obsahovat chybu, která se projeví v situaci, kterou jsme při testování nevyzkoušeli.
     rvp:
       - kod: INF-INF-002-ZV9-008
-        vystup: ''
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
         poznamka: přímá vazba na „zkouší program“. Metodika dále explicitně uvádí testování s různými vstupy včetně neobvyklých a nesprávných.
     cile:
       - uroven: porozumeni
@@ -1421,7 +1671,7 @@ concepts:
       Neexistuje vždy jedno nejlepší řešení. Při porovnávání různých řešení záleží na účelu programu a na tom, co je v dané situaci důležité.
     rvp:
       - kod: INF-INF-002-ZV9-008
-        vystup: ''
+        vystup: Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.
         poznamka: závazný OVU přímo požaduje, aby žák posoudil efektivitu postupu a programu. Metodika pracuje s hodnocením efektivity, hledáním vylepšení a porovnáváním různých řešení.
     cile:
       - uroven: porozumeni
@@ -1443,8 +1693,7 @@ concepts:
       - text: Žák porovná výhody a nevýhody různých řešení a svou volbu vzhledem k dané situaci zdůvodní.
     prerekvizity:
       - programovani-overovani
-    souvisi:
-      - informaticke-mysleni-efektivita-reseni
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -1840,7 +2089,6 @@ concepts:
     prerekvizity:
       - umela-inteligence-strojove-uceni-prakticky
     souvisi:
-      - informaticke-mysleni-modelovani-a-simulace
       - fyzicky-computing-ai-primo-na-zarizeni-tinyml
     tagy:
       - teoretický základ
@@ -3264,7 +3512,7 @@ concepts:
       - uroven: aplikace
         text: Žák vytvoří program, v němž se objekty pohybují ve scéně v opakující se smyčce a využívá alespoň jednu proměnnou.
     prerekvizity:
-      - informaticke-mysleni-rizeni-toku
+      - informaticke-mysleni-opakovani
     souvisi: []
     tagy:
       - teoretický základ

@@ -30,10 +30,11 @@ YAML_PATH = HERE.parent / "app" / "data" / "Informatika" / "knowledge-map.yaml"
 CARDS = HERE / "hnizdo-programovani.json"
 
 ZDROJ = "Garant: Hnízdo Programování (2026-10)"
-# Doslovné znění výstupů RVP (RVP_revidované_2024-03-28.pdf). ZV9-008 v této
-# verzi RVP není — garant vychází z novější verze; znění doplnit.
+# Doslovné znění výstupů RVP. ZV9-007 z RVP_revidované_2024-03-28.pdf; ZV9-008 v té
+# verzi není — znění podle karet garanta hnízda Algoritmizace (novější verze RVP).
 RVP_ZNENI = {
     "INF-INF-002-ZV9-007": "v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné",
+    "INF-INF-002-ZV9-008": "Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.",
 }
 
 # titul karty → (id, název, vrstva, tagy); garant: všechny bubliny hnízda jsou jádrové
@@ -72,22 +73,11 @@ SIPKY = [
     ("OVĚŘOVÁNÍ", "EFEKTIVITA"), ("OVĚŘOVÁNÍ", "KOMENTÁŘE"),
 ]
 
-# Vazby do jiných hnízd (symetrické → souvisi). Garantovo hnízdo Algoritmizace
-# zatím v mapě není (chybí karty), proto míří na nejbližší stávající koncept;
-# v komentáři je uzel z garantova schématu.
+# Vazby do jiných hnízd (symetrické → souvisi). Vazby do hnízda Algoritmizace
+# vede apply_hnizdo_algoritmizace.py (jsou uložené na straně Algoritmizace).
 IM = "informaticke-mysleni-"
 SOUVISI = {
-    "PROGRAM": [IM + "algoritmus"],                                  # ↔ Algoritmus (fialová)
-    "SEKVENCE PŘÍKAZŮ": [IM + "rizeni-toku"],                        # ↔ Posloupnost kroků (fialová)
-    "PODMÍNĚNÝ PŘÍKAZ": [IM + "rizeni-toku", IM + "logika-a-booleovske-vyrazy"],  # ↔ Rozhodování (fialová)
-    "OPAKOVÁNÍ S PEVNÝM POČTEM OPAKOVÁNÍ": [IM + "rizeni-toku"],     # ↔ Opakování (podobný název)
-    "CYKLUS S PODMÍNKOU": [IM + "rizeni-toku"],                      # ↔ Opakování (podobný název)
-    "PODPROGRAM (BEZ PARAMETRŮ)": [IM + "dekompozice"],              # ↔ Dekompozice problému
-    "VSTUP A VÝSTUP": [IM + "algoritmus"],                           # ↔ Vstup a výstup (Alg.)
     "UŽIVATELSKÉ ROZHRANÍ": ["data-databaze-ucel-informacnich-systemu"],  # ↔ Informační systémy (fialová)
-    "OVĚŘOVÁNÍ": [IM + "hodnoceni-a-analyza-chyb"],                  # ↔ Ověřování řešení
-    "LADĚNÍ": [IM + "hodnoceni-a-analyza-chyb"],                     # ↔ Hledání a oprava chyb
-    "EFEKTIVITA": [IM + "efektivita-reseni"],                        # ↔ Efektivita (Alg.)
 }
 
 # Dřívější koncepty Programování, které v garantově hnízdě nejsou → smazat.
@@ -154,7 +144,8 @@ def main():
         card = cards[title]
         old = by_id.get(cid)
         # mimo-hnízdové vazby původního konceptu (jiná témata) zůstávají
-        keep_souvisi = [x for x in (old or {}).get("souvisi", []) if x not in hnizdo_ids]
+        keep_souvisi = [x for x in (old or {}).get("souvisi", [])
+                        if x not in hnizdo_ids and not x.startswith(IM)]
         old_prereq_ext = [x for x in (old or {}).get("prerekvizity", [])
                           if not x.startswith("programovani-")]
         souvisi = []

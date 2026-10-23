@@ -31,7 +31,7 @@ _Šablona sekcí Glitche (kontrakt / podání / úrovně / kontext pro bota / be
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-modelovani-a-simulace` |
+| koncept | `informaticke-mysleni-algoritmus` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení |
 | vrstva | navazující |
@@ -256,7 +256,7 @@ Poznáváš to? Jsou to čtyři „když–tak" pravidla — a celé se to opaku
 | **typ zátěže** | soustředění (pozorování + výklad) |
 | **vhodné do tempa (focus)** | spíš vyšší soustředění; při únavě servírovat kratší znalostní Glitch místo tohoto |
 | prerekvizity | `programovani-podminky-v-kodu`, `programovani-cykly-v-kodu` |
-| navazuje | `informaticke-mysleni-modelovani-a-simulace` → aplikační Glitche questu |
+| navazuje | `informaticke-mysleni-algoritmus` → aplikační Glitche questu |
 | signál dokončení | jednoduchá: kvíz \+ vysvětlení · střední: dopočet \+ srovnání · master: forknutelný artefakt |
 | signály pro doporučení dalšího kroku | dokončená úroveň (ne čas na kartě); volba varianty A/B na master úrovni (papír vs. kód) jako slabý signál preference tvorby |
 | poctivá absence | pokud žák žádá podání, které neexistuje (např. „vysvětli mi to na fotbale"), loguje se jako poptávka; nesubstituovat tiše |

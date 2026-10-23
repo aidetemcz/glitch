@@ -33,7 +33,7 @@ _Basic Glitch pro kapitolu Algoritmus, quest „Od návodu k emergenci". Vytvoř
 | vrstva | core |
 | RVP výstup | `INF-INF-002-ZV9-006` — *rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení* |
 | digitální kompetence | — *(koncept nemá přiřazenou KDI)* |
-| prerekvizity (z mapy) | `informaticke-mysleni-dekompozice`, `informaticke-mysleni-rozpoznavani-vzoru` |
+| prerekvizity (z mapy) | `informaticke-mysleni-navrh-reseni` |
 
 ---
 

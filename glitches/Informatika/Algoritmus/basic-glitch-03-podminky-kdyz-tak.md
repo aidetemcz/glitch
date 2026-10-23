@@ -31,7 +31,7 @@ _Basic Glitch pro kapitolu Algoritmus, quest „Od návodu k emergenci". Vytvoř
 | vrstva | core |
 | RVP výstup | `INF-INF-002-ZV9-007` — *v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné* |
 | digitální kompetence | — *(koncept nemá přiřazenou KDI)* |
-| prerekvizity (z mapy) | `programovani-promenne-a-datove-typy`, `informaticke-mysleni-logika-a-booleovske-vyrazy` |
+| prerekvizity (z mapy) | `programovani-promenne-a-datove-typy`, `informaticke-mysleni-rozhodovani` |
 
 ---
 
@@ -205,7 +205,7 @@ A teď to hlavní pro tenhle quest: **pravidla Hry života (úloha 5) jsou přes
 | **energetická náročnost** | střední |
 | **typ zátěže** | výklad + malá stavba |
 | **vhodné při náladě** | spíš vyšší soustředění; při únavě servírovat kratší znalostní Glitch |
-| prerekvizity | `programovani-promenne-a-datove-typy`, `informaticke-mysleni-logika-a-booleovske-vyrazy` |
+| prerekvizity | `programovani-promenne-a-datove-typy`, `informaticke-mysleni-rozhodovani` |
 | navazuje | úloha 4 questu (Cykly: opakování) → Hra života |
 | signál dokončení | jednoduchá: kvíz + vysvětlení · střední: podmínka + tři situace vč. hranice · master: forknutelný artefakt |
 | poctivá absence | pokud žák žádá neexistující podání, loguje se jako poptávka; nesubstituovat tiše |

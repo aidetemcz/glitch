@@ -28,7 +28,7 @@ _Glitch typu **Rychlá výzva** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24.
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-logika-a-booleovske-vyrazy` |
+| koncept | `informaticke-mysleni-rozhodovani` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení a algoritmizace |
 | vrstva | navazující |
@@ -91,7 +91,7 @@ _Glitch typu **Rychlá výzva** pro kapitolu Algoritmus. Vytvořeno: 2026-07-24.
 | **vhodné při náladě** | kdykoli |
 | signál dokončení | zodpovězení |
 | fork | `false` |
-| vazby | koncept z mapy: `informaticke-mysleni-logika-a-booleovske-vyrazy` |
+| vazby | koncept z mapy: `informaticke-mysleni-rozhodovani` |
 | poznámka | AND = obě části musí platit zároveň; pozor na záměnu s OR. |
 
 ---

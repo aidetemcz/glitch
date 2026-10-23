@@ -125,7 +125,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=16")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=17")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -999,8 +999,11 @@
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
-      ? c.rvp.map((r) => `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${r.vystup ? esc(typo(r.vystup)) : '<span class="d-empty">znění výstupu doplnit</span>'}` +
-          (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`).join("")
+      ? c.rvp.map((r) => r.kod
+          ? `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${r.vystup ? esc(typo(r.vystup)) : '<span class="d-empty">znění výstupu doplnit</span>'}` +
+            (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`
+          // poznámka garanta bez kódu výstupu (např. „Bez samostatné přímé vazby")
+          : `<div class="d-rvp"><div class="d-rvp-note">${esc(typo(r.poznamka || ""))}</div></div>`).join("")
       : '<span class="d-empty">—</span>';
     const kdi = komp
       ? `<div class="d-rvp"><span class="kod">${esc(komp.kod)}</span><strong>${esc(komp.nazev)}</strong><br>${esc(typo(komp.vystup))}</div>`

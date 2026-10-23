@@ -25,7 +25,7 @@ _Basic Glitch pro kapitolu Algoritmus, quest „Od návodu k emergenci". Vytvoř
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `informaticke-mysleni-pseudokod-a-vyvojove-diagramy` |
+| koncept | `informaticke-mysleni-algoritmus` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
 | téma | Informatické myšlení a algoritmizace |
 | vrstva | navazující |
