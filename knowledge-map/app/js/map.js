@@ -254,6 +254,9 @@
       elements: [], wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 2.5,
       style: [
         { selector: "node[type='group']", style: {
+          // obdélník clusteru je neviditelný → události propouští do plochy (posun mapy);
+          // oblast se chytá jen uvnitř nakreslené přerušované hranice (initHulls)
+          "events": "no",
           "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "180px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -12,
@@ -363,8 +366,10 @@
       openDetail(evt.target);
     });
     cy.on("tap", (evt) => {
-      if (evt.target !== cy) return;               // klik do prázdna
+      if (evt.target !== cy && !evt.target.isEdge()) return;   // klik do prázdna (čára = prázdno)
       if (editing) return;                          // rozdělaná úprava se klikem do plochy neztratí
+      const uvnitr = window.__groupAt && window.__groupAt(evt.renderedPosition);
+      if (uvnitr) { openDetail(uvnitr); return; }  // klik dovnitř oblasti → detail clusteru
       const pt = evt.position; let best = null, bestD = Infinity;
       cy.nodes("[type='group']").forEach((g) => {
         if (g.hasClass("filtered")) return;
@@ -1464,6 +1469,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     function draw() {
+      polys = [];
       ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.restore();
       ctx.save(); ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3;
       cy.nodes("[type='group']").forEach((group) => {
@@ -1476,10 +1482,61 @@
           const p = n.renderedPosition(), r = n.renderedWidth() / 2 + 16;
           for (let a = 0; a < 12; a++) { const ang = a / 12 * 2 * Math.PI; pts.push([p.x + Math.cos(ang) * r, p.y + Math.sin(ang) * r]); }
         });
-        strokeSmooth(ctx, convexHull(pts));
+        const hull = convexHull(pts);
+        strokeSmooth(ctx, hull);
+        polys.push({ group, hull });
       });
       ctx.restore();
     }
+
+    /* Oblast se táhne jen za přerušovanou hranici nebo zevnitř ní (s malou tolerancí);
+       tah jinde (i v rohu obdélníku clusteru) posouvá celou mapu. */
+    let polys = [];
+    const TOL = 8;
+    const distSeg = (p, a, b) => {
+      const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy || 1;
+      const t = Math.max(0, Math.min(1, ((p.x - a[0]) * dx + (p.y - a[1]) * dy) / l2));
+      return Math.hypot(p.x - a[0] - t * dx, p.y - a[1] - t * dy);
+    };
+    function inHull(p, hull) {
+      let inside = false, near = Infinity;
+      for (let i = 0, j = hull.length - 1; i < hull.length; j = i++) {
+        const a = hull[i], b = hull[j];
+        if ((a[1] > p.y) !== (b[1] > p.y) && p.x < (b[0] - a[0]) * (p.y - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
+        near = Math.min(near, distSeg(p, a, b));
+      }
+      return inside || near <= TOL;
+    }
+    function groupAt(rp) {
+      if (!rp) return null;
+      const hit = polys.find((h) => inHull(rp, h.hull));
+      return hit ? hit.group : null;
+    }
+    window.__groupAt = groupAt;
+
+    let tazena = null, last = null;
+    cy.on("tapstart", (e) => {
+      if (e.target !== cy && !e.target.isEdge()) return;   // čáry přes oblast tah nebrzdí
+      tazena = groupAt(e.renderedPosition);
+      if (!tazena) return;
+      cy.userPanningEnabled(false);
+      last = { x: e.position.x, y: e.position.y };
+    });
+    cy.on("tapdrag", (e) => {
+      if (!tazena) return;
+      tazena.children().shift({ x: e.position.x - last.x, y: e.position.y - last.y });
+      last = { x: e.position.x, y: e.position.y };
+    });
+    cy.on("tapend", () => {
+      if (!tazena) return;
+      tazena = null; cy.userPanningEnabled(true);
+    });
+    // kurzor napoví, kde se oblast dá chytit
+    cy.on("mousemove", (e) => {
+      if (tazena) return;
+      cyDiv.style.cursor = ((e.target === cy || e.target.isEdge()) && groupAt(e.renderedPosition)) ? "move" : "";
+    });
+
     resize();
     window.addEventListener("resize", () => { resize(); draw(); });
     cy.on("render", draw);
