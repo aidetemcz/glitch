@@ -125,7 +125,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=17")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=18")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -693,7 +693,9 @@
   const levelSelect = (sel, allowEmpty) => `<select class="ed-lvl">${
     (allowEmpty ? `<option value=""${sel ? "" : " selected"}>— bez úrovně —</option>` : "") +
     BLOOM.map(([v, l]) => `<option value="${v}"${v === sel ? " selected" : ""}>${l}</option>`).join("")}</select>`;
-  const cileRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<input class="ed-roc" type="number" min="1" max="9" placeholder="roč." value="${it.rocnik != null ? esc(it.rocnik) : ""}"><button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text cíle">${esc(it.text || "")}</textarea></div>`;
+  // ročník je číslo, nebo rozsah od garanta („6–7")
+  const rocnikVal = (v) => (/^\d+$/.test(v.trim()) ? Number(v) : v.trim());
+  const cileRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven)}<input class="ed-roc" type="text" inputmode="numeric" placeholder="roč." value="${it.rocnik != null ? esc(it.rocnik) : ""}"><button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text cíle">${esc(it.text || "")}</textarea></div>`;
   const kritRow = (it) => `<div class="ed-row"><div class="ed-row-head">${levelSelect(it.uroven, true)}<button class="ed-x" data-act="del-row" title="Smazat">✕</button></div><textarea class="ed-text" rows="2" placeholder="Text kritéria">${esc(it.text || "")}</textarea></div>`;
   const readKriteria = () => [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) => {
     const o = { text: r.querySelector(".ed-text").value.trim() };
@@ -753,7 +755,7 @@
     c.vrstva = document.getElementById("ed-vrstva").value;
     c.cile = [...document.querySelectorAll("#ed-cile .ed-row")].map((r) => {
       const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
-      const roc = r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
+      const roc = r.querySelector(".ed-roc").value; if (roc) o.rocnik = rocnikVal(roc);
       return o;
     }).filter((o) => o.text);
     c.kriteria = readKriteria();
@@ -871,7 +873,7 @@
     const rows = (sel) => [...document.querySelectorAll(sel + " .ed-row")];
     const cile = rows("#ed-cile").map((r) => {
       const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
-      const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
+      const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = rocnikVal(roc);
       return o;
     }).filter((o) => o.text);
     const kriteria = readKriteria();
@@ -1088,7 +1090,7 @@
   function readMicroForm() {
     const cile = [...document.querySelectorAll("#ed-cile .ed-row")].map((r) => {
       const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
-      const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = Number(roc);
+      const roc = r.querySelector(".ed-roc") && r.querySelector(".ed-roc").value; if (roc) o.rocnik = rocnikVal(roc);
       return o;
     }).filter((o) => o.text);
     const kriteria = readKriteria();

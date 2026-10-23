@@ -1877,15 +1877,15 @@
  },
  "data-databaze-datova-gramotnost": {
   "nazev": "Datová gramotnost",
-  "popis": "Schopnost data přečíst, správně pochopit a kriticky posoudit — ne s nimi jen technicky pracovat. Ptáš se: odkud data jsou, kdo je sebral, co v nich chybí a jestli závěr opravdu plyne z čísel. Je to i předstupeň porozumění AI.",
+  "popis": "Schopnost data přečíst, správně pochopit a kriticky posoudit — ne s nimi jen technicky pracovat. Ptáš se: odkud data jsou, kdo je sebral, co v nich chybí a jestli závěr opravdu plyne ze sebraných dat. Je to i předstupeň porozumění AI.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vysvětlí rozdíl mezi daty a informací a na konkrétním příkladu popíše, jakou informaci z daných dat získá."
+    "text": "Žák vysvětlí vztah mezi daty a informacemi: data nesou informace, které z nich můžeme získat. K daným datům formuluje různé otázky a popíše, jaké informace lze jejich zodpovězením získat."
    },
    {
     "uroven": "hodnoceni",
-    "text": "Žák posoudí u předloženého závěru opřeného o data, zda z čísel opravdu plyne, a přitom zohlední zdroj dat a to, co v nich chybí."
+    "text": "Žák posoudí u předloženého závěru opřeného o data, zda z údajů opravdu plyne, a přitom zohlední relevantnost, dostatečnost dat a jejich zdroj."
    }
   ],
   "kriteria": [
@@ -1895,13 +1895,13 @@
    },
    {
     "uroven": "hodnoceni",
-    "text": "Žák u tvrzení opřeného o data uvede aspoň dvě otázky (odkud data jsou, co v nich chybí), podle nichž jeho spolehlivost posoudí."
+    "text": "Žák u tvrzení opřeného o data uvede alespoň dvě otázky týkající se původu a kvality dat, podle nichž posoudí jeho důvěryhodnost."
    }
   ]
  },
  "data-databaze-datovy-cyklus": {
   "nazev": "Datový cyklus",
-  "popis": "Práce s daty je příběh o pěti krocích: sběr → čištění → analýza → vizualizace → interpretace. Když některý přeskočíš (třeba čištění), zkreslíš i výsledek na konci.",
+  "popis": "Práce s daty je příběh o pěti krocích: sběr → čištění → analýza → vizualizace → interpretace. Před začátkem příběhu zformulujeme výzkumný úkol = ujasníme si, jaký příběh chceme vyprávět (provedeme přípravu: co chceme zjistit, jaká jsou pravidla a možnosti). Když některý přeskočíš (třeba čištění), zkreslíš i výsledek na konci.",
   "cile": [
    {
     "uroven": "zapamatovani",
@@ -1915,7 +1915,7 @@
   "kriteria": [
    {
     "uroven": "zapamatovani",
-    "text": "Žák vyjmenuje všech pět kroků datového cyklu ve správném pořadí."
+    "text": "Žák vyjmenuje kroky datového cyklu ve správném pořadí."
    },
    {
     "uroven": "analyza",
@@ -1929,11 +1929,15 @@
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák porovná strukturovaná a nestrukturovaná data a ke každému typu uvede příklad a způsob uložení."
+    "text": "Žák porovná strukturovaná a nestrukturovaná data a ke každému typu uvede příklad a způsob uložení (místo, formát nebo datovou strukturu, ve které jsou data fyzicky či logicky uspořádána a uložena, aby se s nimi dalo dále pracovat)."
    },
    {
     "uroven": "analyza",
     "text": "Žák u předložené sady dat (tabulka, fotka, volný text) rozliší, která data jsou strukturovaná a která nestrukturovaná."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne vhodnou strukturu, která umožní z nestrukturovaných dat udělat strukturovaná (například na základě textu zapsaného ve větách navrhne tabulku a tu naplní daty získanými z textu)"
    }
   ],
   "kriteria": [
@@ -1947,9 +1951,69 @@
    }
   ]
  },
+ "data-databaze-kodovani-dat": {
+  "nazev": "Kódování dat, jejich účel a přenos",
+  "popis": "Kódování je způsob, jak podle daných pravidel reprezentovat data, aby je počítač mohl ukládat, přenášet a zpracovávat. Například určuje, jak jsou pomocí bitů reprezentovány znaky, barvy nebo zvuk. Různé typy kódování volíme podle toho, zda potřebujeme ušetřit místo, zachovat kvalitu, nebo data zabezpečit. Speciálním případem je komprese dat, která může být bezeztrátová, kdy lze původní data přesně obnovit, nebo ztrátová, kdy se část informace vypouští.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí účel a princip kódování dat (pro uložení a přenos) a uvede příklady různých způsobů kódování (např. text, obrázky, zvuk, binární kód)."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák u předložené sady dat zdůvodní výhody a nevýhody použitých způsobů kódování pro jejich přenos či uložení."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne vhodný způsob kódování dat pro konkrétní situaci (např. úspora místa, bezpečnost přenosu, reprezentace informací)."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák objasní, proč se data kódují, a popíše alespoň dva různé způsoby kódování dat pro uložení nebo přenos."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák porovná různé způsoby kódování (např. textové formáty vs. binární, komprimované vs. nekomprimované) z hlediska efektivity uložení a přenosu a zdůvodní výběr nejvhodnějšího řešení."
+   }
+  ]
+ },
+ "data-databaze-sifrovani-dat": {
+  "nazev": "Šifrování dat",
+  "popis": "Šifrování je proces převodu čitelné informace (tzv. otevřeného textu) do podoby, která je nesrozumitelná pro nepovolané osoby (tzv. šifrovaného textu). Převod se provádí pomocí šifrovacího algoritmu a/nebo klíče. Zpětný převod do čitelné podoby (dešifrování) je možný s použitím inverzní procedury. Účelem šifrování je chránit obsah dat před neoprávněným přístupem.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí účel šifrování dat a popíše základní princip šifrování a dešifrování pomocí algoritmu se zadaným klíčem (převod otevřeného textu na šifrovaný)."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák posoudí situace, ve kterých je nutné data šifrovat (např. komunikace na internetu, ukládání citlivých údajů), a zhodnotí význam tajnosti klíče."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne a vyzkouší jednoduchý princip utajení zprávy (např. vlastní transpoziční nebo substituční šifru) a vysvětlí jeho slabiny."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák definuje, co je šifrovaný a nešifrovaný text, a popíše roli klíče v procesu šifrování a dešifrování."
+   },
+   {
+    "uroven": "analyza",
+    "text": "Žák zdůvodní, proč běžné kódování dat (např. binární zápis) nestačí k ochraně soukromí a kdy je bezpodmínečně nutné použít šifrování."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák zašifruje data podle zadaného algoritmu s daným klíčem. Žák navrhne inverzní proceduru pro dešifrování."
+   }
+  ]
+ },
  "data-databaze-tabulky-a-relacni-model": {
-  "nazev": "Tabulky a relační model",
-  "popis": "Nejběžnější způsob, jak evidovat data: tabulky s řádky (záznamy) a sloupci (vlastnosti), propojené přes klíče. Tak fungují školní systémy, e-shopy i většina aplikací „na pozadí\".",
+  "nazev": "Tabulková evidence dat",
+  "popis": "Nejběžnější způsob, jak evidovat data: tabulky s řádky (záznamy) a sloupci. Každý sloupec představuje atribut (= vlastnost, kterou sledujeme – například jméno, věk nebo datum narození). Konkrétní buňka v tabulce pak ukazuje hodnotu atributu. Abys mohl s daty správně pracovat (a později je třeba efektivně čistit), je nutné rozlišovat typy dat (např. text, celé číslo, desetinné číslo, datum nebo pravdivostní hodnotu ano/ne). Tak fungují školní systémy, e-shopy i většina aplikací „na pozadí“.",
   "cile": [
    {
     "uroven": "porozumeni",
@@ -1963,35 +2027,63 @@
   "kriteria": [
    {
     "uroven": "porozumeni",
-    "text": "Žák u ukázkové tabulky správně označí, co je záznam, co vlastnost a co klíč."
+    "text": "Žák u ukázkové tabulky správně označí, co je záznam, atribut, jeho hodnota a u vybraných sloupců správně určí a odůvodní jejich datový typ."
    },
    {
     "uroven": "aplikace",
-    "text": "Žák vytvořená tabulka má smysluplné sloupce, jednotný formát záznamů a určený klíč pro práci se záznamy."
+    "text": "Žákem vytvořená tabulka má smysluplné sloupce, jednotný formát záznamů a určený klíč pro práci se záznamy."
+   }
+  ]
+ },
+ "data-databaze-provazanost-tabulek": {
+  "nazev": "Provázanost tabulek a relační model",
+  "popis": "Reálné informační systémy zřídka vystačí s jedinou tabulkou. Abychom nemuseli data opakovat (redundance) a předešli chybám, rozvolňujeme data do více specializovaných tabulek. Tyto tabulky mezi sebou propojujeme pomocí klíčů (jedinečných identifikátorů záznamu, např. ID žáka, Číslo objednávky). Vzniká tak relační model, který tvoří základ složitějších databází školních systémů či e-shopů.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, proč je výhodnější rozdělit rozsáhlá data do více tabulek, a popíše princip klíče jako nástroje pro propojování záznamů mezi tabulkami."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák na jednoduchém příkladu z praxe (např. Žák – Třída nebo Zákazník – Objednávka) navrhne propojení dvou tabulek pomocí společného klíče."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák v modelu dvou propojených tabulek správně ukáže klíčové sloupce a vysvětlí, který záznam z jedné tabulky odpovídá záznamu v druhé tabulce."
+   },
+   {
+    "uroven": "aplikace",
+    "text": "Žák doplní do tabulek vhodný identifikační klíč tak, aby bylo možné jednoznačně propojit související data bez nutnosti opakovat celé textové informace."
    }
   ]
  },
  "data-databaze-vizualizace-a-volba-grafu": {
-  "nazev": "Vizualizace a volba grafu",
-  "popis": "Dobrý graf udělá z čísel srozumitelný příběh — ale jen když zvolíš správný typ (spojnicový na vývoj v čase, sloupcový na porovnání) a čteš osy a měřítka. Špatně zvolený nebo zmanipulovaný graf umí naopak klamat.",
+  "nazev": "Vizualizace a tvorba grafu",
+  "popis": "Cílem vizualizace dat je čitelnější a srozumitelnější náhled na data – lepší porozumění, odhalení souvislostí a případných chyb. Důležitá je přehlednost a čitelnost grafu. Dobrý graf udělá z dat srozumitelný příběh – je-li přehledný a dobře čitelný. Je třeba zvolit správný typ grafu (procesní a strukturální na postupy a hierarchie, relační a síťový na vztahy, spojnicový na vývoj v čase, sloupcový na porovnání) a popisky, vazby, osy, měřítka. Špatně zvolený nebo zmanipulovaný graf umí naopak klamat.",
   "cile": [
    {
     "uroven": "aplikace",
-    "text": "Žák pro daná data vytvoří vhodný typ grafu (spojnicový pro vývoj v čase, sloupcový pro porovnání) s popsanými osami."
+    "text": "Žák pro daná data vytvoří graf vhodného typu a vysvětlí důvody volby."
    },
    {
     "uroven": "analyza",
-    "text": "Žák u předloženého grafu najde zavádějící prvek (useknutá osa, špatné měřítko) a předpoví, k jakému mylnému závěru čtenáře svede."
+    "text": "Žák u předloženého grafu najde zavádějící prvek (například špatná vazba, nelogické uspořádání, useknutá osa, špatné měřítko, …) a předpoví, k jakému mylnému závěru čtenáře svede."
    }
   ],
   "kriteria": [
    {
     "uroven": "aplikace",
-    "text": "Žák zvolí typ grafu odpovídající povaze dat a správně popíše obě osy včetně měřítka."
+    "text": "Žák zvolí typ grafu odpovídající povaze dat a správně popíše prvky grafu (vazby, osy, měřítka, …)"
    },
    {
     "uroven": "analyza",
     "text": "Žák v zavádějícím grafu označí konkrétní manipulaci a předpoví její účinek na čtení."
+   },
+   {
+    "uroven": "tvorba",
+    "text": "Žák pro daná data zformuluje výzkumnou otázku, zkontroluje, že data poskytují potřebné informace a ty pak vizualizuje pomocí grafu. Svoje volby grafického znázornění zdůvodní."
    }
   ]
  },
@@ -2020,26 +2112,26 @@
   ]
  },
  "data-databaze-ucel-informacnich-systemu": {
-  "nazev": "Účel informačních systémů",
-  "popis": "Informační systém je software, který eviduje a zpracovává data pro nějakou potřebu — školní matrika, rezervace, e-shop. Umět posoudit, k čemu systém slouží a jestli je opravdu užitečný, patří k digitální gramotnosti.",
+  "nazev": "Informační systémy",
+  "popis": "Informační systém je software, který eviduje a zpracovává data pro určitou potřebu — například školní matrika, rezervační systém nebo e-shop. K datům přistupují různí uživatelé v různých rolích (např. žák, učitel, rodič, zákazník, administrátor), přičemž každá role má nastavená jiná přístupová práva (co může vidět, vkládat nebo upravovat). Umět posoudit, k čemu systém slouží, kdo a jak v něm s daty pracuje a zda je systém pro svůj účel opravdu užitečný, patří k základní digitální gramotnosti.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák na příkladu systému, který používá (školní systém, rezervace, e-shop), vysvětlí, co je informační systém a jaká data eviduje."
+    "text": "Žák na příkladu konkrétního informačního systému (např. Bakaláři/Edookit, e-shop) vysvětlí jeho účel, popíše, jaké druhy dat eviduje, a rozliší různé uživatelské role a jejich práva k datům (co která role vidí a může měnit)."
    },
    {
     "uroven": "hodnoceni",
-    "text": "Žák posoudí u informačního systému, který používá, k čemu slouží a zda je pro daný účel opravdu užitečný."
+    "text": "Žák posoudí účel a užitečnost vybraného informačního systému i z pohledu jeho různých uživatelů (zda systém usnadňuje práci/přístup k informacím všem cílovým rolím)."
    }
   ],
   "kriteria": [
    {
     "uroven": "porozumeni",
-    "text": "Žák u konkrétního informačního systému uvede jeho účel a druh dat, která uchovává."
+    "text": "Žák u konkrétního informačního systému uvede jeho hlavní účel, typy uchovávaných dat, způsob jejich použití a správně pojmenuje alespoň dvě uživatelské role včetně rozdílu v jejich oprávněních (např. žák známky pouze vidí, učitel je může i zapisovat)."
    },
    {
     "uroven": "hodnoceni",
-    "text": "Žák uvede aspoň jeden argument pro a jeden proti užitečnosti daného systému."
+    "text": "Žák zformuluje alespoň jeden argument pro a jeden proti užitečnosti daného systému s ohledem na jeho uživatele a jejich potřeby."
    }
   ]
  },
@@ -2071,6 +2163,10 @@
   "nazev": "Čištění reálných dat",
   "popis": "Skutečná data jsou „špinavá\" — chybí hodnoty, opakují se, jsou v různých formátech. Jejich úklid zabere většinu práce a je nudný, ale bez něj vyjde ze sebelepší analýzy nesmysl.",
   "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák dokáže vyjmenovat, jaké typy nečistot se v datech mohou vyskytovat a co je tedy vhodné kontrolovat."
+   },
    {
     "uroven": "analyza",
     "text": "Žák v reálné (špinavé) sadě dat najde chyby jako chybějící hodnoty, duplicity a různé formáty zápisu."
@@ -2124,12 +2220,12 @@
   ]
  },
  "data-databaze-programova-analyza-dat": {
-  "nazev": "Programová analýza dat",
-  "popis": "Když je dat moc na ruční klikání, zpracují se kódem (typicky Python + knihovna pandas). Výhoda: je to rychlé, opakovatelné a doložitelné — kdokoli spustí stejný postup a dostane stejný výsledek.",
+  "nazev": "Automatizovaná analýza dat",
+  "popis": "Když je dat moc na ruční klikání, zpracují se kódem (typicky Python + knihovna pandas). Výhoda: je to rychlé, opakovatelné a doložitelné — kdokoli spustí stejný postup a dostane stejný výsledek.\n\nNevýhody: Náročnost přípravy: vytvoření a odladění programu může zabrat více času než jednorázové ruční zpracování. Riziko systematických chyb: chyba v programu může ovlivnit všechny zpracovávané záznamy. Zpracování malé sady dat, může být robustním automatickým systémem dokonce pomalejší.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vysvětlí výhody zpracování dat kódem (rychlost, opakovatelnost, doložitelnost) oproti ručnímu klikání."
+    "text": "Žák porovná automatické a ruční zpracování dat, vysvětlí jejich výhody a omezení a uvede příklady situací, kdy je vhodné použít jednotlivé přístupy."
    }
   ],
   "kriteria": [
