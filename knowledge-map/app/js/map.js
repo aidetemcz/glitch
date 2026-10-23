@@ -661,7 +661,12 @@
       sessionStorage.setItem("km-auth", "1"); sessionStorage.setItem("km-secret", p);
       sessionStorage.setItem("km-login", adminLogin); sessionStorage.setItem("km-role", adminRole);
       closeLogin(); openAbout();
-    } catch (e) { err.textContent = (e && e.message) || "Přihlášení selhalo."; }
+    } catch (e) {
+      const m = (e && e.message) || "";
+      err.textContent = /could not find the function|km_login|PGRST202|404/i.test(m)
+        ? "Na serveru chybí přihlašovací funkce — je potřeba spustit migraci 2026-08-22-mapa-editori.sql v Supabase."
+        : (m || "Přihlášení selhalo.");
+    }
   }
 
   /* editační formulář */
