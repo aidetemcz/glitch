@@ -72,7 +72,7 @@
     const usableW = size * 0.72, usableH = size * 0.72;
     const words = String(label).split(/\s+/);
     const longest = words.reduce((m, w) => Math.max(m, w.length), 0);
-    for (let f = 10; f >= 5; f -= 0.5) {
+    for (let f = Math.max(10, Math.floor(size / 9)); f >= 5; f -= 0.5) {   // velká bublina = větší písmo
       const charW = f * 0.60, lineH = f * LINEH;
       if (longest * charW > usableW) continue;          // nejdelší slovo se musí vejít na šířku
       const maxChars = Math.max(3, Math.floor(usableW / charW));
@@ -198,13 +198,18 @@
         edges.push({ data: { id: "r-" + key, source: c.id, target: s, etype: "related" } });
       });
     });
-    const deg = {};
-    edges.forEach((e) => { deg[e.data.source] = (deg[e.data.source] || 0) + 1; deg[e.data.target] = (deg[e.data.target] || 0) + 1; });
-    const sizeFor = (c) => {
-      let s = 32 + (deg[c.id] || 0) * 6;
-      s = Math.max(s, c.vrstva === "core" ? 58 : 46);
-      return Math.min(s, 84);
+    // velikost bubliny = pro kolik konceptů je prerekvizitou (i nepřímo přes řetěz);
+    // odmocnina, aby základní koncepty (Program ~40 návazných) nepřerostly mapu
+    const naslednici = {};
+    DATA.concepts.forEach((c) => (c.prerekvizity || []).forEach((p) => {
+      if (conceptIds.has(p)) (naslednici[p] = naslednici[p] || []).push(c.id);
+    }));
+    const pocetNavaznych = (id) => {
+      const seen = new Set([id]), stack = [id];
+      while (stack.length) (naslednici[stack.pop()] || []).forEach((x) => { if (!seen.has(x)) { seen.add(x); stack.push(x); } });
+      return seen.size - 1;
     };
+    const sizeFor = (c) => Math.min(124, Math.round(46 + 11 * Math.sqrt(pocetNavaznych(c.id))));
 
     const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
     const GRP_FONT = '600 13px "Inter", "Segoe UI", sans-serif';
@@ -395,24 +400,33 @@
   }
 
   /* Deterministické klastrové rozmístění: každý cluster = packed disk (phyllotaxis),
-     clustery v mřížce. Stabilní, rychlé, blob estetika. */
+     clustery v mřížce. Bubliny mají různou velikost (podle počtu návazných konceptů),
+     proto se každá posune po spirále na první místo, kde se nepřekrývá s předchozími;
+     největší (nejzákladnější) koncept je uprostřed. */
   function clusterLayout() {
     const groups = cy.nodes("[type='group']");
     const G = groups.length;
     const cols = Math.ceil(Math.sqrt(G));
-    const spread = 50;
-    const maxK = Math.max(1, ...groups.map((g) => g.children("[type='concept']").length));
-    const cell = Math.max(560, spread * Math.sqrt(maxK) * 2 + 200);
+    const GAP = 10, STEP = 12;
     const GOLDEN = Math.PI * (3 - Math.sqrt(5));
-    groups.forEach((g, i) => {
-      const gx = (i % cols) * cell;
-      const gy = Math.floor(i / cols) * cell;
+    const packed = groups.map((g) => {
       const kids = g.children("[type='concept']").sort((a, b) => b.data("size") - a.data("size"));
-      kids.forEach((n, j) => {
-        const ang = j * GOLDEN;
-        const rad = spread * Math.sqrt(j + 0.5);
-        n.position({ x: gx + Math.cos(ang) * rad, y: gy + Math.sin(ang) * rad });
+      const placed = []; let radius = 0;
+      kids.forEach((n) => {
+        const r = n.data("size") / 2;
+        for (let t = 0; ; t++) {
+          const x = Math.cos(t * GOLDEN) * STEP * Math.sqrt(t), y = Math.sin(t * GOLDEN) * STEP * Math.sqrt(t);
+          if (placed.every((q) => Math.hypot(q.x - x, q.y - y) >= q.r + r + GAP)) {
+            placed.push({ n, x, y, r }); radius = Math.max(radius, Math.hypot(x, y) + r); break;
+          }
+        }
       });
+      return { placed, radius };
+    });
+    const cell = Math.max(560, 2 * Math.max(0, ...packed.map((p) => p.radius)) + 200);
+    packed.forEach((p, i) => {
+      const gx = (i % cols) * cell, gy = Math.floor(i / cols) * cell;
+      p.placed.forEach((q) => q.n.position({ x: gx + q.x, y: gy + q.y }));
     });
   }
 
