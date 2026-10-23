@@ -12,7 +12,9 @@ Co skript dělá:
     feedu i Supabase na ně odkazují): proměnné, podmínky, cykly, funkce, ladění
   - vazby uvnitř hnízda = prerekvizity podle šipek ve schématu
   - vazby do Algoritmizace jsou podle garanta symetrické → `souvisi`
-  - koncepty mimo garantovo hnízdo (události, OOP, …) zůstávají beze změny
+  - všechny bubliny hnízda jsou jádrové (core)
+  - dřívější koncepty Programování mimo hnízdo (události, OOP, …) se mažou;
+    odkazy na ně z jiných témat se přesměrují (PRESMEROVANI) nebo zruší
 
 Spuštění (idempotentní):
     python3 knowledge-map/garanti/apply_hnizdo_programovani.py
@@ -34,7 +36,7 @@ RVP_ZNENI = {
     "INF-INF-002-ZV9-007": "v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné",
 }
 
-# titul karty → (id, název, vrstva, tagy)
+# titul karty → (id, název, vrstva, tagy); garant: všechny bubliny hnízda jsou jádrové
 P = "programovani-"
 KONCEPTY = {
     "PROGRAM":                             (P + "program", "Program", "core", ["teoretický základ"]),
@@ -45,13 +47,13 @@ KONCEPTY = {
     "PODMÍNĚNÝ PŘÍKAZ":                    (P + "podminky-v-kodu", "Podmíněný příkaz", "core", None),
     "CYKLUS S PODMÍNKOU":                  (P + "cyklus-s-podminkou", "Cyklus s podmínkou", "core", ["teoretický základ"]),
     "PROMĚNNÁ":                            (P + "promenne-a-datove-typy", "Proměnná", "core", None),
-    "VSTUP A VÝSTUP":                      (P + "vstup-a-vystup", "Vstup a výstup", "navazujici", ["praktická dovednost"]),
-    "UŽIVATELSKÉ ROZHRANÍ":                (P + "uzivatelske-rozhrani", "Uživatelské rozhraní", "navazujici", ["praktická dovednost"]),
+    "VSTUP A VÝSTUP":                      (P + "vstup-a-vystup", "Vstup a výstup", "core", ["praktická dovednost"]),
+    "UŽIVATELSKÉ ROZHRANÍ":                (P + "uzivatelske-rozhrani", "Uživatelské rozhraní", "core", ["praktická dovednost"]),
     "OVĚŘOVÁNÍ":                           (P + "overovani", "Ověřování", "core", ["praktická dovednost"]),
     "TESTOVÁNÍ":                           (P + "testovani", "Testování", "core", ["praktická dovednost"]),
     "LADĚNÍ":                              (P + "ladeni-a-testovani", "Ladění", "core", None),
-    "KOMENTÁŘE":                           (P + "komentare", "Komentáře", "navazujici", ["praktická dovednost"]),
-    "EFEKTIVITA":                          (P + "efektivita", "Efektivita", "navazujici", ["praktická dovednost"]),
+    "KOMENTÁŘE":                           (P + "komentare", "Komentáře", "core", ["praktická dovednost"]),
+    "EFEKTIVITA":                          (P + "efektivita", "Efektivita", "core", ["praktická dovednost"]),
 }
 ID = {t: v[0] for t, v in KONCEPTY.items()}
 
@@ -88,6 +90,28 @@ SOUVISI = {
     "EFEKTIVITA": [IM + "efektivita-reseni"],                        # ↔ Efektivita (Alg.)
 }
 
+# Dřívější koncepty Programování, které v garantově hnízdě nejsou → smazat.
+# Odkazy z jiných témat míří na nejbližší koncept hnízda; None = vazba zaniká.
+PRESMEROVANI = {
+    P + "blokove-vs-textove-programovani": P + "zapis-programu",   # různé jazyky a způsoby zápisu
+    P + "udalosti": P + "vstup-a-vystup",                          # stisk klávesy, klik, senzor = vstup
+    P + "seznamy-a-kolekce": None,
+    P + "knihovny-a-volani-api-v-kodu": None,
+    P + "verzovani-kodu": None,
+    P + "cteni-a-hodnoceni-ai-kodu": None,
+    P + "zaklady-objektu-oop": None,
+}
+
+TEMA_POPIS = (
+    "Programování je krok od algoritmu k programu, který počítač skutečně vykoná. Žák poznává, "
+    "jak se program zapisuje v programovacím jazyce, a jeho stavební kameny — sekvenci příkazů, "
+    "podprogramy, opakování, podmíněný příkaz, cyklus s podmínkou a proměnné. Učí se, jak program "
+    "přijímá vstupy a vytváří výstupy a jak s ním komunikuje uživatel. Důraz je na průběžné "
+    "ověřování, testování a ladění, na čitelnost kódu a na posouzení efektivity řešení. "
+    "Programování navazuje na Informatické myšlení a je branou k tvůrčím tématům mapy — webům, "
+    "aplikacím, hrám i robotice."
+)
+
 
 class Dumper(yaml.SafeDumper):
     def increase_indent(self, flow=False, indentless=False):
@@ -103,6 +127,22 @@ def main():
     cards = {c["title"]: c for c in json.loads(CARDS.read_text(encoding="utf-8"))}
     assert set(cards) == set(KONCEPTY), set(cards) ^ set(KONCEPTY)
     concepts = data["concepts"]
+
+    # staré koncepty mimo hnízdo pryč, odkazy na ně přesměrovat / zrušit
+    concepts[:] = [c for c in concepts if c["id"] not in PRESMEROVANI]
+    for c in concepts:
+        for k in ("prerekvizity", "souvisi"):
+            if not c.get(k):
+                continue
+            nove = []
+            for x in c[k]:
+                x = PRESMEROVANI.get(x, x)
+                if x and x != c["id"] and x not in nove:
+                    nove.append(x)
+            c[k] = nove
+    for t in data["temata"]:
+        if t["id"] == "programovani":
+            t["popis"] = TEMA_POPIS
     by_id = {c["id"]: c for c in concepts}
 
     prereq = {t: [] for t in KONCEPTY}

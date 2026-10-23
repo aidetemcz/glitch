@@ -204,7 +204,7 @@
   function loadQuests() {
     if (questsData) return Promise.resolve(questsData);
     if (questsPromise) return questsPromise;
-    questsPromise = fetch("glitches/feed.json?v=47")
+    questsPromise = fetch("glitches/feed.json?v=49")
       .then((r) => (r.ok ? r.json() : null))
       .then((cards) => { questsData = buildQuests(cards); return questsData; })
       .catch(() => { questsData = []; return questsData; });
@@ -338,7 +338,7 @@
   function loadCatalog() {
     if (catalogData) return Promise.resolve(catalogData);
     if (catalogPromise) return catalogPromise;
-    catalogPromise = fetch("glitches/feed.json?v=47")
+    catalogPromise = fetch("glitches/feed.json?v=49")
       .then((r) => (r.ok ? r.json() : []))
       .then((cards) => { catalogData = cards || []; return catalogData; })
       .catch(() => { catalogData = []; return catalogData; });

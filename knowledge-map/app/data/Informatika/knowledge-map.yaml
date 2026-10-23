@@ -68,7 +68,7 @@ temata:
   - id: programovani
     nazev: Programování
     vrstva_mapy: 1
-    popis: Programování je krok od myšlenky ke kódu, který počítač skutečně vykoná. Žák tu poznává stavební kameny každého programu — proměnné, podmínky, cykly a funkce — a hlavně dovednost ladit, tedy hledat a opravovat chyby. Postupuje od blokového prostředí (Scratch) k textovému jazyku (Python) a učí se pracovat s verzováním i s cizím, dnes často AI vygenerovaným kódem; v éře AI se totiž těžiště přesouvá od „napiš každý řádek ručně" k „rozuměj, uprav a odlaď". Programování navazuje na Informatické myšlení a je branou k tvůrčím tématům mapy — webům, aplikacím, hrám i robotice.
+    popis: Programování je krok od algoritmu k programu, který počítač skutečně vykoná. Žák poznává, jak se program zapisuje v programovacím jazyce, a jeho stavební kameny — sekvenci příkazů, podprogramy, opakování, podmíněný příkaz, cyklus s podmínkou a proměnné. Učí se, jak program přijímá vstupy a vytváří výstupy a jak s ním komunikuje uživatel. Důraz je na průběžné ověřování, testování a ladění, na čitelnost kódu a na posouzení efektivity řešení. Programování navazuje na Informatické myšlení a je branou k tvůrčím tématům mapy — webům, aplikacím, hrám i robotice.
     barva: '#ffffff'
     navazuje_na:
       - informaticke-mysleni
@@ -659,7 +659,7 @@ concepts:
     prerekvizity:
       - informaticke-mysleni-algoritmus
     souvisi:
-      - programovani-blokove-vs-textove-programovani
+      - programovani-zapis-programu
       - informaticke-mysleni-modelovani-a-simulace
     tagy:
       - teoretický základ
@@ -773,8 +773,7 @@ concepts:
         text: Žák u předloženého algoritmu popíše celý postup a určí, zda jde o hledání, nebo řazení.
     prerekvizity:
       - informaticke-mysleni-algoritmus
-    souvisi:
-      - programovani-seznamy-a-kolekce
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -1047,201 +1046,6 @@ concepts:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
     stav: hotovo
-  - id: programovani-blokove-vs-textove-programovani
-    nazev: Blokové vs. textové programování
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Na začátku se programuje skládáním barevných bloků (Scratch), kde nejde udělat překlep. Postupně se přechází k psaní textového kódu (třeba v Pythonu), který je mocnější, ale vyžaduje přesnost.
-    rvp:
-      - kod: INF-INF-002-ZV9-007
-        vystup: v blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné
-    cile:
-      - uroven: porozumeni
-        text: Žák porovná blokové a textové programování z hlediska přesnosti zápisu a možností.
-        rocnik: 7
-    kriteria:
-      - uroven: porozumeni
-        text: Žák uvede aspoň jeden důvod, proč začátečník začíná bloky a proč se přechází k textovému kódu.
-    prerekvizity:
-      - programovani-cykly-v-kodu
-      - informaticke-mysleni-algoritmus
-    souvisi: []
-    tagy:
-      - praktická dovednost
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-    pokryti_glitchem: []
-    stav: draft
-  - id: programovani-seznamy-a-kolekce
-    nazev: Seznamy a kolekce
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Když nestačí jedna proměnná, uloží se víc hodnot najednou do seznamu (třeba jména všech hráčů). S kolekcí pak jde pracovat hromadně — projít ji, seřadit, něco v ní najít.
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, kdy je výhodnější uložit hodnoty do seznamu než do samostatných proměnných.
-        rocnik: 8
-      - uroven: aplikace
-        text: Žák použije seznam k uložení více hodnot a projde jeho prvky cyklem.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, co je prvek seznamu a jak se k němu přistupuje.
-      - uroven: aplikace
-        text: Žák sestaví seznam a hromadně s ním provede zvolenou operaci, například jej projde nebo v něm něco najde.
-    prerekvizity:
-      - programovani-promenne-a-datove-typy
-    souvisi:
-      - data-databaze-tabulky-a-relacni-model
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: programovani-udalosti
-    nazev: Události
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Programy často nečekají v jednom sledu, ale reagují na to, co udělá uživatel — klik, stisk klávesy, dotyk. Takovému stylu „když se stane tohle, spusť tamto" se říká událostmi řízené programování.
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí princip událostmi řízeného programování ve tvaru „když se stane X, spusť Y“.
-        rocnik: 8
-      - uroven: aplikace
-        text: Žák vytvoří program, který reaguje na uživatelskou událost, například klik nebo stisk klávesy.
-        rocnik: 8
-    kriteria:
-      - uroven: aplikace
-        text: Žák sestaví obsluhu události, která po zásahu uživatele provede zvolenou akci.
-    prerekvizity:
-      - programovani-podminky-v-kodu
-    souvisi:
-      - fyzicky-computing-senzory-a-aktuatory
-      - herni-vyvoj-kolize-a-jednoducha-fyzika
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: programovani-knihovny-a-volani-api-v-kodu
-    nazev: Knihovny a volání API v kódu
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: kdi-vin
-    vrstva: navazujici
-    popis: Nemusíš psát všechno od nuly — knihovna je hotový cizí kód, který zavoláš a použiješ (třeba na práci s datem nebo grafy). Přes API se stejně tak volají i vzdálené služby, včetně AI modelů.
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, proč se vyplatí použít hotovou knihovnu místo psaní kódu od nuly.
-        rocnik: 9
-      - uroven: aplikace
-        text: Žák použije funkci z knihovny nebo volání API k vyřešení dílčího úkolu.
-        rocnik: 9
-    kriteria:
-      - uroven: aplikace
-        text: Žák zavolá připravenou funkci knihovny a využije její výsledek ve svém programu.
-    prerekvizity:
-      - programovani-funkce-a-procedury
-      - digitalni-zaklady-api
-    souvisi:
-      - tvorba-aplikaci-prace-s-api-a-backendem
-      - tvorba-webu-frameworky
-    tagy:
-      - praktická dovednost
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: programovani-verzovani-kodu
-    nazev: Verzování kódu
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: kdi-zap
-    vrstva: navazujici
-    popis: Git a GitHub ukládají historii změn kódu, takže se vždycky můžeš vrátit k funkční verzi a víc lidí může pracovat na jednom projektu, aniž by si přepsali práci. Je to jako „zpět" a sdílená složka pro programátory dohromady.
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, k čemu slouží verzování kódu a proč umožňuje návrat k dřívější funkční verzi.
-        rocnik: 9
-    kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, jak Git a GitHub pomáhají více lidem pracovat na jednom projektu, aniž si přepíší práci.
-    prerekvizity:
-      - programovani-blokove-vs-textove-programovani
-    souvisi:
-      - herni-vyvoj-publikace-hry
-    tagy:
-      - praktická dovednost
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: programovani-cteni-a-hodnoceni-ai-kodu
-    nazev: Čtení a hodnocení AI kódu
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: kdi-vin
-    vrstva: navazujici
-    popis: Dnes velkou část kódu napíše AI — o to důležitější je umět cizí kód přečíst, pochopit, co dělá, a posoudit, jestli je správný a bezpečný. Bez toho jen slepě věříš něčemu, čemu nerozumíš.
-    rvp:
-      - kod: INF-INF-002-ZV9-005
-        vystup: po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen
-    cile:
-      - uroven: porozumeni
-        text: Žák vlastními slovy vysvětlí, co dělá krátký úsek kódu vygenerovaný AI, a určí problém, který řeší.
-        rocnik: 9
-      - uroven: hodnoceni
-        text: Žák posoudí, zda je vygenerovaný kód správný a bezpečný.
-        rocnik: 9
-    kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, jaký problém daný AI kód řeší a v jakém pořadí probíhají jeho kroky.
-      - uroven: hodnoceni
-        text: Žák zdůvodní, zda kódu důvěřovat, a uvede konkrétní důvod svého závěru.
-    prerekvizity:
-      - programovani-ladeni-a-testovani
-    souvisi:
-      - umela-inteligence-overovani-vystupu
-    tagy:
-      - důvěra a ověřování
-      - lidský dohled a agency
-      - praktická dovednost
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-    pokryti_glitchem: []
-    stav: draft
-  - id: programovani-zaklady-objektu-oop
-    nazev: Základy objektů (OOP)
-    tema: programovani
-    oblast: algoritmizace
-    kompetence: null
-    vrstva: navazujici
-    popis: Objekt spojuje data a to, co s nimi jde dělat, do jednoho celku (třeba „hráč" má životy i umí skočit). Objektové myšlení pomáhá zorganizovat větší programy tak, aby se v nich dalo vyznat.
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, jak objekt spojuje data a chování do jednoho celku.
-        rocnik: 9
-    kriteria:
-      - uroven: porozumeni
-        text: Žák popíše na příkladu, například u objektu „hráč“, jeho vlastnosti a to, co umí.
-    prerekvizity:
-      - programovani-funkce-a-procedury
-    souvisi:
-      - herni-vyvoj-herni-smycka-scena-a-objekty
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
   - id: programovani-program
     nazev: Program
     tema: programovani
@@ -1395,7 +1199,7 @@ concepts:
     tema: programovani
     oblast: algoritmizace
     kompetence: null
-    vrstva: navazujici
+    vrstva: core
     popis: |-
       Program může během svého běhu přijímat vstupy a vytvářet výstupy. Vstupem získává informace z okolí, například hodnotu zadanou uživatelem, stisknutí klávesy, kliknutí myší nebo údaj ze senzoru.
 
@@ -1436,7 +1240,7 @@ concepts:
     tema: programovani
     oblast: algoritmizace
     kompetence: null
-    vrstva: navazujici
+    vrstva: core
     popis: |-
       Uživatelské rozhraní je způsob, kterým uživatel komunikuje s programem. Umožňuje uživateli zadávat vstupy, ovládat program a získávat jeho výstupy. Při návrhu uživatelského rozhraní je důležité dívat se na program z pohledu jeho uživatele.
 
@@ -1560,7 +1364,7 @@ concepts:
     tema: programovani
     oblast: algoritmizace
     kompetence: null
-    vrstva: navazujici
+    vrstva: core
     popis: |-
       Komentáře jsou části kódu programu určené pro člověka, který kód čte. Počítač je při vykonávání programu ignoruje.
 
@@ -1604,7 +1408,7 @@ concepts:
     tema: programovani
     oblast: algoritmizace
     kompetence: null
-    vrstva: navazujici
+    vrstva: core
     popis: |-
       Stejnou úlohu lze často naprogramovat různými způsoby. Jednotlivá řešení mohou vést ke stejnému výsledku, ale lišit se například množstvím vykonávaných činností, složitostí, čitelností nebo snadností dalších úprav.
 
@@ -1856,7 +1660,6 @@ concepts:
     prerekvizity: []
     souvisi:
       - tvorba-aplikaci-iluze-ze-to-umim
-      - programovani-cteni-a-hodnoceni-ai-kodu
       - digitalni-obcanstvi-digitalni-wellbeing
     tagy:
       - lidský dohled a agency
@@ -2528,8 +2331,7 @@ concepts:
         text: Žák uvede aspoň dvě výhody programového zpracování dat oproti ručnímu.
     prerekvizity:
       - data-databaze-datovy-cyklus
-    souvisi:
-      - programovani-seznamy-a-kolekce
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -2710,7 +2512,7 @@ concepts:
         text: Žák popíše na příkladu, jak skript mění DOM a tím i to, co uživatel na stránce vidí.
     prerekvizity:
       - tvorba-webu-html
-      - programovani-udalosti
+      - programovani-vstup-a-vystup
     souvisi:
       - tvorba-aplikaci-logika-aplikace
       - herni-vyvoj-vstup-hrace-stavy-a-skore
@@ -2967,7 +2769,6 @@ concepts:
     prerekvizity:
       - tvorba-aplikaci-logika-aplikace
       - umela-inteligence-prompt-a-promptova-gramotnost
-      - programovani-cteni-a-hodnoceni-ai-kodu
     souvisi: []
     tagy:
       - lidský dohled a agency
@@ -2999,7 +2800,6 @@ concepts:
       - tvorba-aplikaci-vibecoding
     souvisi:
       - umela-inteligence-prompt-a-promptova-gramotnost
-      - programovani-cteni-a-hodnoceni-ai-kodu
     tagy:
       - praktická dovednost
     zdroj: []
@@ -3094,7 +2894,6 @@ concepts:
         text: Žák rozvrhne pro svůj projekt jednotlivé fáze a zařadí do nich testování i zpětnou vazbu.
     prerekvizity:
       - tvorba-aplikaci-logika-aplikace
-      - programovani-verzovani-kodu
     souvisi:
       - programovani-ladeni-a-testovani
       - tvorba-aplikaci-publikace-do-app-storu
@@ -3497,7 +3296,7 @@ concepts:
         text: Žák v předloženém programu najde chybu ve sledování stavu a popíše, proč se hra chová nesprávně.
     prerekvizity:
       - herni-vyvoj-herni-smycka-scena-a-objekty
-      - programovani-udalosti
+      - programovani-vstup-a-vystup
     souvisi: []
     tagy:
       - teoretický základ
@@ -3581,7 +3380,7 @@ concepts:
         text: Žák poskládá funkční program, který obsahuje alespoň jedno opakování, jedno větvení a jednu proměnnou.
     prerekvizity: []
     souvisi:
-      - programovani-blokove-vs-textove-programovani
+      - programovani-zapis-programu
     tagy:
       - praktická dovednost
     zdroj:
@@ -3607,7 +3406,7 @@ concepts:
       - herni-vyvoj-herni-design
     souvisi:
       - herni-vyvoj-scratch-jako-vstup
-      - programovani-blokove-vs-textove-programovani
+      - programovani-zapis-programu
     tagy:
       - praktická dovednost
     zdroj: []
@@ -3630,7 +3429,6 @@ concepts:
         text: Žák uvede alespoň dva rozdíly mezi blokovým a textovým enginem a k oběma příklad vhodného použití.
     prerekvizity:
       - herni-vyvoj-lehke-enginy
-      - programovani-zaklady-objektu-oop
     souvisi:
       - tvorba-webu-frameworky
     tagy:
@@ -3689,7 +3487,6 @@ concepts:
         text: Žák v kódu od AI najde místo, které se chová jinak, než zamýšlel, a popíše potřebnou opravu.
     prerekvizity:
       - herni-vyvoj-skutecne-enginy
-      - programovani-cteni-a-hodnoceni-ai-kodu
     souvisi:
       - umela-inteligence-overovani-vystupu
     tagy:
@@ -3799,7 +3596,7 @@ concepts:
         text: Žák sestaví a nahraje do micro:bitu funkční program, který reaguje na vstup.
     prerekvizity:
       - fyzicky-computing-senzory-a-aktuatory
-      - programovani-blokove-vs-textove-programovani
+      - programovani-zapis-programu
     souvisi:
       - herni-vyvoj-scratch-jako-vstup
     tagy:
@@ -3832,7 +3629,7 @@ concepts:
         text: Žák sestaví obsluhu události, která ovládne LED matici nebo pin zařízení.
     prerekvizity:
       - fyzicky-computing-micro-bit
-      - programovani-udalosti
+      - programovani-vstup-a-vystup
     souvisi:
       - fyzicky-computing-senzory-a-aktuatory
       - tvorba-webu-interaktivita-javascript

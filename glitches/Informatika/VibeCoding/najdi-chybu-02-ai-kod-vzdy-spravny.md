@@ -27,10 +27,10 @@ _Glitch typu **Najdi chybu** pro kapitolu Vibe Coding. Vytvořeno: 2026-07-24._
 
 | pole | hodnota |
 | ----- | ----- |
-| koncept | `programovani-cteni-a-hodnoceni-ai-kodu` |
+| koncept | `tvorba-aplikaci-vibecoding` |
 | oblast (RVP okruh) | Algoritmizace a programování (`INF-INF-002`) |
-| téma | Programování |
-| vrstva | navazující |
+| téma | Tvorba aplikací a vibecoding |
+| vrstva | core |
 | RVP výstup | `INF-INF-002-ZV9-005` — *po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen* |
 | digitální kompetence | Digitální vývoj a inovace (`kdi-vin`) |
 
@@ -142,7 +142,7 @@ Dítě si může Najdi chybu forknout a rozvést — např. sepsat vlastní „k
 | **vhodné při náladě** | spíš vyšší soustředění; při únavě odložit |
 | signál dokončení | označení v kvízu + přečtení vysvětlení |
 | fork | `true` (volitelný) |
-| vazby | koncept z mapy: `programovani-cteni-a-hodnoceni-ai-kodu` |
+| vazby | koncept z mapy: `tvorba-aplikaci-vibecoding` |
 
 ---
 

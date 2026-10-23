@@ -746,7 +746,7 @@
     "type": "spot_the_mistake",
     "category": "Najdi chybu",
     "trust": "Core",
-    "concept_id": "programovani-cteni-a-hodnoceni-ai-kodu",
+    "concept_id": "tvorba-aplikaci-vibecoding",
     "obtiznost": 2,
     "claim": "Co ti AI vygeneruje jako kód, je vždycky správné a bezpečné — stačí zkopírovat.",
     "context": "Vážně vždycky? Rozklikni a najdi, co na tom nesedí.",

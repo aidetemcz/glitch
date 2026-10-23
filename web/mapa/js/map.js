@@ -115,7 +115,7 @@
   }
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/Informatika/knowledge-map.yaml?v=15")
+  fetch("data/Informatika/knowledge-map.yaml?v=16")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
