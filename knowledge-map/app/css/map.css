@@ -99,6 +99,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .d-link { font-size: 13px; padding: 5px 10px; border-radius: 7px; background: var(--c-dark); border: 1px solid var(--c-line); color: var(--c-white); cursor: pointer; }
 .d-link:hover { border-color: var(--c-yellow); }
 .d-empty { color: var(--c-grey-50); font-size: 14px; }
+.d-sub { font-size: 12px; color: var(--c-grey-50); margin: 10px 0 6px; }
+.d-links-indirect .d-link { border-style: dashed; color: var(--c-grey-50); }
+.d-links-indirect .d-link:hover { color: var(--c-white); }
 .d-glitch { font-size: 13px; padding: 5px 10px; border-radius: 7px; background: rgba(255,255,0,0.12); border: 1px solid var(--c-yellow); color: var(--c-white); }
 
 .status { position: fixed; left: 320px; bottom: 18px; font-size: 13px; color: var(--c-grey-50); z-index: 5; }

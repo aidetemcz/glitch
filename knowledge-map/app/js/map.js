@@ -895,6 +895,20 @@
     cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 1) }, { duration: 300 });
     openDetail(n);
   }
+  // všechny koncepty dosažitelné po hranách next(id), od nejbližších; bez startu
+  function reach(start, next) {
+    const seen = new Set([start]), out = [];
+    let vlna = [start];
+    while (vlna.length) {
+      const dalsi = [];
+      vlna.forEach((id) => (next(id) || []).forEach((x) => {
+        if (!seen.has(x) && conceptById[x]) { seen.add(x); out.push(x); dalsi.push(x); }
+      }));
+      vlna = dalsi;
+    }
+    return out;
+  }
+
   function link(id) {
     const c = conceptById[id];
     return `<button class="d-link" data-focus="${esc(id)}">${esc(typo(c ? c.nazev : id))}</button>`;
@@ -978,6 +992,17 @@
     // obousměrné hrany
     const souvisiIds = [...new Set([...(c.souvisi || []), ...(revSouvisi[c.id] || [])])];
     const jePrereqPro = revPrereq[c.id] || [];
+    // prerekvizity jsou tranzitivní: co předchází prerekvizitě, předchází i konceptu
+    const predchazi = reach(c.id, (id) => (conceptById[id] || {}).prerekvizity).filter((id) => !c.prerekvizity.includes(id));
+    const navazuje = reach(c.id, (id) => revPrereq[id]).filter((id) => !jePrereqPro.includes(id));
+    // nepřímé vazby jen v rámci tématu, z ostatních témat jen počet (jinak by se vypsala půlka mapy)
+    const neprimo = (arr) => {
+      const doma = arr.filter((id) => conceptById[id].tema === c.tema), jinde = arr.length - doma.length;
+      if (!arr.length) return "";
+      return `<div class="d-sub">Nepřímo (přes řetěz prerekvizit)</div>` +
+        (doma.length ? `<div class="d-links d-links-indirect">${links(doma)}</div>` : "") +
+        (jinde ? `<div class="d-sub">+ ${jinde} ${jinde === 1 ? "koncept" : jinde < 5 ? "koncepty" : "konceptů"} v jiných tématech</div>` : "");
+    };
     return `
       <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>
       <h2 class="d-title">${esc(c.nazev)}</h2>
@@ -995,8 +1020,8 @@
       ${c.duraz ? `<div class="d-section d-duraz"><h3>Důraz</h3>${paras(c.duraz)}</div>` : ""}
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
       <div class="d-section"><h3>Digitální kompetence</h3>${kdi}</div>
-      <div class="d-section"><h3>Prerekvizity</h3><div class="d-links">${links(c.prerekvizity)}</div></div>
-      <div class="d-section"><h3>Je prerekvizitou pro</h3><div class="d-links">${links(jePrereqPro)}</div></div>
+      <div class="d-section"><h3>Prerekvizity</h3><div class="d-links">${links(c.prerekvizity)}</div>${neprimo(predchazi)}</div>
+      <div class="d-section"><h3>Je prerekvizitou pro</h3><div class="d-links">${links(jePrereqPro)}</div>${neprimo(navazuje)}</div>
       <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(souvisiIds)}</div></div>
       <div class="d-section"><h3>Tagy</h3><div class="d-tags">${tags}</div></div>
       <div class="d-section"><h3>Zdroj</h3>${zdroj}</div>`;
