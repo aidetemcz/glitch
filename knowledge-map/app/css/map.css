@@ -25,6 +25,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-style: italic; font-size: 16px; font-weight: 700; line-height: 1;
   display: flex; align-items: center; justify-content: center; transition: all .12s ease; }
 .info-btn:hover { background: var(--c-yellow); color: var(--c-black); }
+.head-btns { display: flex; align-items: flex-start; gap: 6px; flex: 0 0 auto; }
+.head-btn { flex: 0 0 auto; width: 26px; height: 26px; margin-top: 2px; border-radius: 50%;
+  border: 1.5px solid var(--c-grey-15); color: var(--c-grey-15); display: flex; align-items: center; justify-content: center; transition: all .12s ease; }
+.head-btn:hover { border-color: var(--c-yellow); color: var(--c-yellow); }
+.head-btn.on { background: var(--c-yellow); border-color: var(--c-yellow); color: var(--c-black); }
+.head-btn.hidden { display: none; }
 .control-block { display: flex; flex-direction: column; gap: 9px; }
 
 /* Přepínač zobrazení */

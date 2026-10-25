@@ -362,6 +362,9 @@
 
     /* „O mapě" — info panel */
     document.getElementById("about-btn").addEventListener("click", openAbout);
+    document.getElementById("account-btn").addEventListener("click", () => (authed ? openAccount() : openLogin()));
+    document.getElementById("export-btn").addEventListener("click", () => (authed ? openExport() : openLogin()));
+    refreshHeadBtns();
 
     /* delegované akce v pravém panelu (admin/editor) */
     detailBody.addEventListener("click", onPanelAction);
@@ -560,7 +563,7 @@
     editing = false;
     if (cy) cy.$(":selected").unselect();
     pinned = null; clearNb();
-    const show = (h) => { detailBody.innerHTML = h + adminBlock(); detail.classList.remove("hidden"); detail.scrollTop = 0; };
+    const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
     fetch("data/Informatika/o-mape.md?v=4")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
@@ -569,19 +572,40 @@
   }
 
   /* ---------- Admin / editor ---------- */
-  function adminBlock() {
-    if (!authed) {
-      return `<div class="d-section km-admin"><button class="d-link" data-act="login">🔒 Admin — přihlásit se</button></div>`;
-    }
+  // ikonky vlevo nahoře: účet (plná = přihlášen) a export (jen po přihlášení)
+  function refreshHeadBtns() {
+    const a = document.getElementById("account-btn"), x = document.getElementById("export-btn");
+    if (!a || !x) return;
+    a.classList.toggle("on", authed);
+    a.title = a.ariaLabel = authed ? `Účet: ${adminLogin} (${ROLE[adminRole] || adminRole})` : "Přihlásit se";
+    x.classList.toggle("hidden", !authed);
+  }
+  function openPanel(html) {
+    editing = false;
+    if (cy) cy.$(":selected").unselect();
+    pinned = null; clearNb();
+    detailBody.innerHTML = html; detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+  // panel účtu: kdo je přihlášen, úpravy, správa uživatelů, odhlášení
+  function openAccount() {
     const status = supabaseOk
       ? `Změny se ukládají <strong>živě do Supabase</strong> (uvidí je všichni).`
       : `⚠️ <strong>Supabase je teď nedostupné</strong> — změny se uloží jen lokálně do tohoto prohlížeče.`;
-    const kdo = `Přihlášen*a jako <strong>${esc(adminLogin || "?")}</strong> (${esc(ROLE[adminRole] || adminRole)}).`;
-    return `<div class="d-section km-admin">
-      <h3>${canWrite() ? "Editor" : "Export"}</h3>
-      <p class="d-desc" style="margin-bottom:10px">${kdo} ${canWrite() ? "Klikni na koncept a uprav ho, nebo přidej nový. " + status : "Tenhle účet mapu neupravuje, může stahovat exporty — i jednotlivých témat."}</p>
+    openPanel(`
+      <span class="d-badge" style="background:#ffff00;color:#000000">Účet</span>
+      <h2 class="d-title">${esc(adminName || adminLogin || "?")}</h2>
+      <div class="d-meta"><span class="d-pill">${esc(adminLogin || "?")}</span><span class="d-pill core">${esc(ROLE[adminRole] || adminRole)}</span></div>
+      <p class="d-desc">${canWrite() ? "Klikni na koncept v mapě a uprav ho, nebo přidej nový. " + status : "Tenhle účet mapu neupravuje, může stahovat exporty — i jednotlivých témat (ikonka ⬇ vlevo nahoře)."}</p>
       ${canWrite() ? '<div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>' : ""}
-      <div class="ed-field" style="margin-top:14px"><label>Export — která témata</label>
+      ${adminRole === "admin" ? '<div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="editors">👥 Uživatelé</button></div>' : ""}
+      <div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="open-export">⬇ Export</button><button class="d-link" data-act="logout">Odhlásit</button></div>`);
+  }
+  // panel exportu: výběr témat + YAML / concepts.json
+  function openExport() {
+    openPanel(`
+      <span class="d-badge" style="background:#ffff00;color:#000000">Export</span>
+      <h2 class="d-title">Stáhnout YAML / JSON</h2>
+      <div class="ed-field"><label>Která témata</label>
         <div class="ex-tools"><button class="d-link" data-act="export-all">všechna</button><button class="d-link" data-act="export-none">žádné</button></div>
         <div class="ex-list">${(DATA.temata || []).map((t) =>
           `<label class="ex-item"><input type="checkbox" class="ex-tema" value="${esc(t.id)}" checked> ${esc(t.nazev)} <span class="ex-n">${DATA.concepts.filter((c) => c.tema === t.id).length}</span></label>`).join("")}</div>
@@ -590,10 +614,7 @@
         <button class="km-primary" data-act="export">⬇ YAML</button>
         <button class="km-primary" data-act="export-json">⬇ concepts.json</button>
       </div>
-      ${adminRole === "admin" ? '<div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="editors">👥 Uživatelé</button></div>' : ""}
-      <div class="d-links" style="margin-top:8px"><button class="d-link" data-act="logout">Odhlásit</button></div>
-      <p class="d-empty" style="margin-top:10px">Se všemi tématy export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem témat vznikne výřez; u jednoho tématu dostane soubor název zálohy podle klíče <code>datum_Téma_Jméno_01</code> (pořadové číslo si upravte).</p>
-    </div>`;
+      <p class="d-empty" style="margin-top:10px">Se všemi tématy export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem témat vznikne výřez; u jednoho tématu dostane soubor název zálohy podle klíče <code>datum_Téma_Jméno_01</code> (pořadové číslo si upravte).</p>`);
   }
 
   /* ---------- Správa editorů (jen admin) ---------- */
@@ -646,11 +667,12 @@
     if (!b) return;
     const act = b.dataset.act, id = b.dataset.id;
     if (act === "login") openLogin();
-    else if (act === "logout") { authed = false; adminSecret = ""; adminLogin = ""; adminRole = ""; adminName = ""; ["km-auth","km-secret","km-login","km-role","km-name"].forEach((k) => sessionStorage.removeItem(k)); openAbout(); }
+    else if (act === "logout") { authed = false; adminSecret = ""; adminLogin = ""; adminRole = ""; adminName = ""; ["km-auth","km-secret","km-login","km-role","km-name"].forEach((k) => sessionStorage.removeItem(k)); refreshHeadBtns(); closeDetail(); }
+    else if (act === "open-export") openExport();
     else if (act === "editors") openEditors();
     else if (act === "editor-add") addEditorSubmit();
     else if (act === "editor-del") removeEditorAct(b.dataset.email);
-    else if (act === "editors-back") openAbout();
+    else if (act === "editors-back") openAccount();
     else if (act === "export") exportYAML(exportTemata());
     else if (act === "export-json") exportConceptsJson(exportTemata());
     else if (act === "export-all" || act === "export-none") document.querySelectorAll(".ex-tema").forEach((x) => x.checked = act === "export-all");
@@ -659,7 +681,7 @@
     else if (act === "edit-cancel") openDetail(cy.getElementById(id));
     else if (act === "edit-save") saveEditor(id);
     else if (act === "add-concept") openAddConcept();
-    else if (act === "add-cancel") openAbout();
+    else if (act === "add-cancel") openAccount();
     else if (act === "add-save") saveNewConcept();
     else if (act === "add-prereq") addLinkChip("prereq");
     else if (act === "add-souvisi") addLinkChip("souvisi");
@@ -723,7 +745,7 @@
       authed = true; adminLogin = res.login || u; adminSecret = p; adminRole = res.role || "editor"; adminName = res.name || "";
       sessionStorage.setItem("km-auth", "1"); sessionStorage.setItem("km-secret", p);
       sessionStorage.setItem("km-login", adminLogin); sessionStorage.setItem("km-role", adminRole); sessionStorage.setItem("km-name", adminName);
-      closeLogin(); openAbout();
+      closeLogin(); refreshHeadBtns(); openAccount();
     } catch (e) {
       const m = (e && e.message) || "";
       err.textContent = /could not find the function|km_login|PGRST202|404/i.test(m)
