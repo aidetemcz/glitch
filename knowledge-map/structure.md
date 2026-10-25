@@ -63,7 +63,7 @@ Zdroj pravdy: **`app/data/Informatika/knowledge-map.yaml`**. Dva typy záznamů 
 | `prerekvizity` | seznam id | koncepty, které musí předcházet |
 | `souvisi` | seznam id | příbuzné koncepty (křížové vazby) |
 | `pokryti_glitchem` | seznam id | Glitche, které koncept učí (propojení s obsahem) |
-| `stav` | `draft` \| `hotovo` | stav zpracování |
+| `stav` | `draft` \| `garant` \| `hotovo` | stav rozpracování: `draft` = bez podkladu garanta, `garant` = rozpracováno garantem (podklad zapracovaný, neschválený), `hotovo` = schváleno garantem |
 
 > ⚠️ **YAML:** text s čárkou nebo dvojtečkou dávej do uvozovek.
 

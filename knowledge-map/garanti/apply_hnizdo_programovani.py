@@ -172,7 +172,7 @@ def main():
             "tagy": tagy if tagy is not None else (old or {}).get("tagy", []),
             "zdroj": zdroj,
             "pokryti_glitchem": (old or {}).get("pokryti_glitchem", []),
-            "stav": "hotovo",
+            "stav": "garant",     # rozpracováno garantem; „hotovo" až po schválení
         }
         if not concept["duraz"]:
             del concept["duraz"]

@@ -88,7 +88,7 @@ def pridej_polozku(c, pole, polozka, na_zacatek=False):
 def novy_koncept(cid, **kw):
     c = {"id": cid, "tema": TEMA, "kompetence": None, "rvp": [], "cile": [], "kriteria": [],
          "prerekvizity": [], "souvisi": [], "tagy": [], "zdroj": [ZDROJ], "pokryti_glitchem": [],
-         "stav": "hotovo"}
+         "stav": "garant"}
     c.update(kw)
     poradi = ["id", "nazev", "tema", "oblast", "kompetence", "vrstva", "popis", "rvp", "cile",
               "kriteria", "prerekvizity", "souvisi", "tagy", "zdroj", "pokryti_glitchem", "stav"]
@@ -307,6 +307,8 @@ def main():
         z = by[D + slug].setdefault("zdroj", [])
         if ZDROJ not in z:
             z.append(ZDROJ)
+        # garantka obsah upravila → rozpracováno garantem; Statistická gramotnost „OK" → hotovo
+        by[D + slug]["stav"] = "hotovo" if slug == "statisticka-gramotnost" else "garant"
     for t in data["temata"]:
         if t["id"] == TEMA:
             t["popis"] = TEMA_POPIS

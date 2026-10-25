@@ -11,7 +11,7 @@ Co skript dělá:
     výstup garanta je kritériem doslovně (VYSTUPY)
   - 6 stávajících bublin si nechává id (odkazují na ně jiná témata) a dostává
     obsah odpovídajícího výstupu (PUVODNI_ID); 4 bubliny mimo dokument
-    (Data a informace, Reprezentace dat, API, Vrstvy počítače) zůstávají
+    (Data a informace, Reprezentace dat, API, Vrstvy počítače) se mažou (SMAZAT)
   - prerekvizity garant neuvádí → zatím žádné; vazby „souvisí" jen tam, kde má
     výstup protějšek v jiném tématu (SOUVISI)
   - staré kódy RVP (I-9-4-0x) → INF-INF-004-ZV9-011/012 s poznámkou
@@ -352,9 +352,8 @@ PUVODNI_ID = {
     "I1": Z + "cloud-a-server", "I2": Z + "internet-a-sit", "I5": Z + "adresy-a-protokoly",
     "Z3": Z + "operacni-system-a-soubory", "I17": Z + "kde-jsou-data-fyzicky", "Z11": Z + "hardware-a-software",
 }
-# Stávající bubliny mimo dokument garanta: zůstávají (jiná témata na ně navazují).
-MIMO_DOKUMENT = {Z + "data-a-informace": None, Z + "reprezentace-dat": "zarizeni-a-uloziste",
-                 Z + "api": "internet-a-site", Z + "vrstvy-pocitace": "zarizeni-a-uloziste"}
+# Stávající bubliny mimo dokument garanta → smazat (odkazy z jiných témat zanikají).
+SMAZAT = [Z + "data-a-informace", Z + "reprezentace-dat", Z + "api", Z + "vrstvy-pocitace"]
 # Výstupy se stejným tématem v jiné části mapy → souvisí (duplicitu řeší garant).
 SOUVISI = {
     "O9": ["kyberbezpecnost-zakladni-hygiena"], "Z4": ["data-databaze-kodovani-dat"],
@@ -423,7 +422,7 @@ def koncept(key, old):
         "tagy": old.get("tagy") or TAGY[k],
         "zdroj": [z for z in old.get("zdroj", []) if not z.startswith("Garant: Digitální základy")] + [ZDROJ],
         "pokryti_glitchem": old.get("pokryti_glitchem", []),
-        "stav": "draft",
+        "stav": "garant",     # rozpracováno garantem; „hotovo" až po schválení
     }
     return {k2: c[k2] for k2 in PORADI if k2 in c}
 
@@ -447,11 +446,9 @@ def navrh_md(nove, by_id):
             pozn = "stávající bublina, id zachováno" if key in PUVODNI_ID else ""
             out.append(f"| {key} | **{c['nazev']}** | {c['cile'][0]['uroven']} | {sv} | {pozn} |")
         out.append("")
-    out += ["## Bubliny mimo dokument garanta", "",
-            "Zůstávají, protože na ně navazují jiná témata. Garant rozhodne, jestli je nechat, sloučit, nebo smazat.", "",
-            "| Bublina | Podoblast |", "|---|---|"]
-    for cid, pod in MIMO_DOKUMENT.items():
-        out.append(f"| **{by_id[cid]['nazev']}** | {pod or '—'} |")
+    out += ["## Smazané bubliny", "",
+            "Dřívější bubliny tématu, které v dokumentu garanta nejsou, byly odstraněny: "
+            "Data a informace, Reprezentace dat, API, Vrstvy počítače (včetně vazeb z jiných témat).", ""]
     out += ["", "## Otázky pro garanta", "",
             "1. Sedí názvy bublin a krátké učivo? Je úroveň cíle (porozumění / aplikace / analýza / hodnocení / tvorba) u každého výstupu správně?",
             "2. Prerekvizity dokument neuvádí — zatím žádné nejsou. Které výstupy na sebe navazují?",
@@ -460,6 +457,7 @@ def navrh_md(nove, by_id):
             "4. Kapitoly cituje RVP 2021 (I-9-4-01…05). V RVP 2024 odpovídají INF-INF-004-ZV9-011 a 012; "
             "I-9-4-02 (správa dat) a I-9-4-04 (závady) samostatný výstup nemají. Jaké je aktuální znění?",
             "5. Všechny bubliny jsou zatím jádrové (core). Které jsou navazující?",
+            "5b. Dřívější bubliny Data a informace, Reprezentace dat, API a Vrstvy počítače jsou smazané — nechybí něco z nich?",
             "6. Garant naznačil, že každý výstup půjde rozpracovat do mikrokonceptů — kdy a kdo?", ""]
     return "\n".join(out)
 
@@ -479,16 +477,12 @@ def main():
             c["zdroj"] = [z for z in c.get("zdroj", []) if "Digitální základy" not in z]
 
     nove = []
-    for cid, pod in MIMO_DOKUMENT.items():
-        c = dict(by_id[cid]); c["podoblast"] = pod
-        c["kriteria"] = [k for k in c.get("kriteria", []) if "garant" not in k]
-        nove.append({k: c[k] for k in PORADI if k in c})
     for key in KONCEPTY:
         nove.append(koncept(key, by_id.get(PUVODNI_ID.get(key))))
 
     start = min(i for i, c in enumerate(concepts) if c["tema"] == TEMA)
     concepts[:] = ([c for c in concepts[:start] if c["tema"] != TEMA] + nove +
-                   [c for c in concepts[start:] if c["tema"] != TEMA])
+                   [c for c in concepts[start:] if c["tema"] != TEMA and c["id"] not in SMAZAT])
     by_id = {c["id"]: c for c in concepts}
     ids = set(by_id)
     # odkazy na smazané bubliny tématu (z dřívější verze) pryč; vazba uložená jen jednou
@@ -507,8 +501,8 @@ def main():
     YAML_PATH.write_text(yaml.dump(data, Dumper=Dumper, allow_unicode=True, sort_keys=False,
                                    width=1000, default_flow_style=False), encoding="utf-8")
     NAVRH_PATH.write_text(navrh_md(nove, by_id), encoding="utf-8")
-    print(f"Hotovo: téma Digitální základy má {len(nove)} konceptů ({len(KONCEPTY)} výstupů garanta + "
-          f"{len(MIMO_DOKUMENT)} mimo dokument) ve {len(PODOBLASTI)} podoblastech, celkem {len(concepts)}.")
+    print(f"Hotovo: téma Digitální základy má {len(nove)} konceptů ({len(KONCEPTY)} výstupů garanta) "
+          f"ve {len(PODOBLASTI)} podoblastech, celkem {len(concepts)}.")
 
 
 if __name__ == "__main__":

@@ -97,16 +97,10 @@ Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. P
 | B13 | **Rizika chytrých technologií** | hodnoceni | — |  |
 | B14 | **Použití AI a jeho rizika** | hodnoceni | AI a společnost |  |
 
-## Bubliny mimo dokument garanta
+## Smazané bubliny
 
-Zůstávají, protože na ně navazují jiná témata. Garant rozhodne, jestli je nechat, sloučit, nebo smazat.
+Dřívější bubliny tématu, které v dokumentu garanta nejsou, byly odstraněny: Data a informace, Reprezentace dat, API, Vrstvy počítače (včetně vazeb z jiných témat).
 
-| Bublina | Podoblast |
-|---|---|
-| **Data a informace** | — |
-| **Reprezentace dat** | zarizeni-a-uloziste |
-| **API** | internet-a-site |
-| **Vrstvy počítače** | zarizeni-a-uloziste |
 
 ## Otázky pro garanta
 
@@ -115,4 +109,5 @@ Zůstávají, protože na ně navazují jiná témata. Garant rozhodne, jestli j
 3. Překryvy s jinými tématy (hesla, malware, cookies, digitální stopa, reklama, bezpečné chování, rizika AI) jsou zatím jen jako vazba „souvisí“. Má zůstat obojí, nebo se bubliny sloučí?
 4. Kapitoly cituje RVP 2021 (I-9-4-01…05). V RVP 2024 odpovídají INF-INF-004-ZV9-011 a 012; I-9-4-02 (správa dat) a I-9-4-04 (závady) samostatný výstup nemají. Jaké je aktuální znění?
 5. Všechny bubliny jsou zatím jádrové (core). Které jsou navazující?
+5b. Dřívější bubliny Data a informace, Reprezentace dat, API a Vrstvy počítače jsou smazané — nechybí něco z nich?
 6. Garant naznačil, že každý výstup půjde rozpracovat do mikrokonceptů — kdy a kdo?

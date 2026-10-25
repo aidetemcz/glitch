@@ -105,6 +105,10 @@
   const EDITS_KEY = "km-edits-v1";
   const NEW_KEY = "km-new-v1";
   const EDITABLE = ["nazev", "popis", "vrstva", "podoblast", "cile", "kriteria", "duraz", "stav", "prerekvizity", "souvisi"];
+  const STAV = { draft: "Draft", garant: "Rozpracováno garantem", hotovo: "Hotovo" };
+  const stavSelect = (sel, val) => `<select id="${sel}">${Object.keys(STAV).map((k) =>
+    `<option value="${k}"${(val || "draft") === k ? " selected" : ""}>${STAV[k]}</option>`).join("")}</select>`;
+
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
@@ -125,7 +129,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=20")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=21")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -156,7 +160,7 @@
     c.pokryti_glitchem = c.pokryti_glitchem || [];
     if (!("oblast" in c)) c.oblast = null;
     if (!("kompetence" in c)) c.kompetence = null;
-    if (!c.stav) c.stav = "hotovo";
+    if (!STAV[c.stav]) c.stav = "draft";
     return c;
   }
 
@@ -772,7 +776,7 @@
       <div class="ed-field"><label>Mikrokoncepty</label>${microEditList(c)}
         <button class="d-link ed-add" data-act="edit-then-micro" data-id="${esc(id)}">➕ Přidat mikrokoncept</button></div>
       ${dataListHtml()}
-      <label class="ed-check"><input type="checkbox" id="ed-hotovo" checked> Označit jako <strong>hotovo</strong></label>
+      <div class="ed-field"><label>Stav rozpracování</label>${stavSelect("ed-stav", c.stav)}</div>
       <div class="ed-actions">
         <button class="reset-btn" data-act="edit-cancel" data-id="${esc(id)}">Zrušit</button>
         <button class="km-primary" data-act="edit-save" data-id="${esc(id)}">Uložit</button>
@@ -801,7 +805,7 @@
       .filter((x) => x && x !== id && validIds.has(x));
     c.prerekvizity = readLinks("#add-prereq");
     c.souvisi = readLinks("#add-souvisi");
-    if (document.getElementById("ed-hotovo").checked) c.stav = "hotovo";
+    c.stav = document.getElementById("ed-stav").value;
 
     /* uložit — Supabase (živě pro všechny), jinak lokálně jako záloha */
     const patch = {}; EDITABLE.forEach((k) => patch[k] = c[k]);
@@ -880,6 +884,7 @@
       <div class="ed-field"><label>Oblast RVP</label><select id="add-oblast">${oblastOpts}</select></div>
       <div class="ed-field"><label>Digitální kompetence</label><select id="add-kompetence">${kompOpts}</select></div>
       <div class="ed-field"><label>Vrstva</label><select id="add-vrstva"><option value="core">Core koncept</option><option value="navazujici" selected>Navazující</option></select></div>
+      <div class="ed-field"><label>Stav rozpracování</label>${stavSelect("add-stav", "draft")}</div>
       <div class="ed-field"><label>Popis</label><textarea id="add-popis" rows="4" placeholder="Co koncept je…"></textarea></div>
       <div class="ed-field"><label>Vzdělávací cíle</label><div id="ed-cile"></div><button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
       <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria"></div><button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>
@@ -921,7 +926,7 @@
       popis: (document.getElementById("add-popis").value || "").trim(),
       cile, kriteria,
       prerekvizity: chips("#add-prereq"), souvisi: chips("#add-souvisi"),
-      stav: "hotovo"
+      stav: document.getElementById("add-stav").value
     });
     if (supabaseOk && window.KM) {
       window.KM.addConcept(adminLogin, adminSecret, id, c).catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
@@ -1086,7 +1091,7 @@
       <h2 class="d-title">${esc(c.nazev)}</h2>
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
-        <span class="d-pill">${esc(c.stav || "draft")}</span>
+        <span class="d-pill stav-${esc(c.stav || "draft")}">${esc(STAV[c.stav] || c.stav || "Draft")}</span>
         <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>

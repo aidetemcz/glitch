@@ -84,6 +84,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .d-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 .d-pill { font-size: 12px; padding: 4px 9px; border-radius: 20px; border: 1px solid var(--c-line); color: var(--c-grey-15); }
 .d-pill.core { border-color: var(--c-white); color: var(--c-white); }
+.d-pill.stav-garant { border-color: var(--c-yellow); color: var(--c-yellow); }
+.d-pill.stav-hotovo { background: var(--c-white); color: var(--c-black); border-color: var(--c-white); }
 .d-desc { font-size: 15px; line-height: 1.65; color: var(--c-grey-15); }
 .d-list { margin: 2px 0 12px; padding-left: 20px; }
 .d-list li { font-size: 15px; line-height: 1.6; color: var(--c-grey-15); margin-bottom: 6px; }

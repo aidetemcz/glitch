@@ -205,125 +205,6 @@ tagy:
   - tag: udržitelnost
     pocet: 4
 concepts:
-  - id: digitalni-zaklady-data-a-informace
-    nazev: Data a informace
-    tema: digitalni-zaklady
-    podoblast: null
-    oblast: data-modelovani
-    kompetence: kdi-dat
-    vrstva: core
-    popis: Data jsou holé zaznamenané hodnoty (třeba číslo 21 nebo řada naměřených teplot), informace je jejich význam pro konkrétní situaci („dnes je tepleji než včera"). Stejná data můžou nést různé informace podle toho, na co se ptáš — a umět tyhle dvě věci rozlišit je základ veškeré práce s daty i s AI.
-    rvp:
-      - kod: INF-INF-001-ZV9-001
-        vystup: získá z dat informace, interpretuje data získaná pro řešení konkrétního problému
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí rozdíl mezi daty a informací a uvede příklad, kdy stejná data nesou různé informace.
-        rocnik: 6
-      - uroven: aplikace
-        text: Žák z konkrétní sady dat získá informaci potřebnou k vyřešení zadaného problému.
-        rocnik: 7
-    kriteria:
-      - uroven: porozumeni
-        text: Žák u dané dvojice (data / informace) rozliší, co je záznam hodnoty a co je jeho význam pro situaci.
-      - uroven: aplikace
-        text: Žák z tabulky nebo řady hodnot vyčte odpověď na položenou otázku.
-    prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-reprezentace-dat
-    nazev: Reprezentace dat
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: data-modelovani
-    kompetence: kdi-dat
-    vrstva: navazujici
-    popis: Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.
-    rvp:
-      - kod: INF-INF-001-ZV9-002
-        vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, proč počítač převádí čísla, text i obraz na bity.
-        rocnik: 7
-      - uroven: hodnoceni
-        text: Žák porovná dva způsoby kódování dat a posoudí, který se hodí pro úsporné uložení a který pro bezchybný přenos.
-        rocnik: 9
-    kriteria:
-      - uroven: hodnoceni
-        text: Žák u zadaného účelu (uložení / přenos) vybere vhodnější kódování a volbu zdůvodní.
-    prerekvizity:
-      - digitalni-zaklady-data-a-informace
-    souvisi:
-      - umela-inteligence-ai-se-uci-z-dat
-      - programovani-promenne-a-datove-typy
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-api
-    nazev: API
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: core
-    popis: 'API je domluvené rozhraní, přes které spolu dva programy „mluví" — něco jako jídelní lístek: řekneš, co chceš, a dostaneš to, aniž bys musel vědět, jak se to v kuchyni připravuje. Přes API získávají appky data z jiných služeb (počasí, mapy) a stejně tak se volá i AI.'
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí na příměru (např. jídelní lístek), k čemu slouží API mezi dvěma programy.
-        rocnik: 8
-      - uroven: analyza
-        text: Žák u konkrétní aplikace rozliší, která data si vytváří sama a která získává přes API z jiné služby.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, že přes API dostane program výsledek, aniž musí vědět, jak vzniká.
-      - uroven: analyza
-        text: Žák u zadané appky určí alespoň jeden údaj získaný přes API z jiné služby.
-    prerekvizity:
-      - digitalni-zaklady-cloud-a-server
-    souvisi:
-      - tvorba-webu-jak-funguje-web
-      - data-databaze-ucel-informacnich-systemu
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-vrstvy-pocitace
-    nazev: Vrstvy počítače
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: navazujici
-    popis: 'Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.'
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí na příkladu, jak vrstvy hardware – operační systém – aplikace skrývají složitost té pod sebou.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák seřadí vrstvy od hardwaru po aplikaci a u jedné z nich uvede, co skrývá.
-    prerekvizity:
-      - digitalni-zaklady-hardware-a-software
-    souvisi: []
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
   - id: digitalni-zaklady-typy-souboru-a-pripony
     nazev: Typy souborů a přípony
     tema: digitalni-zaklady
@@ -349,7 +230,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-prevod-do-pdf
     nazev: Převod do PDF
     tema: digitalni-zaklady
@@ -374,7 +255,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-zakladni-ovladani-aplikaci
     nazev: Základní ovládání aplikací
     tema: digitalni-zaklady
@@ -399,7 +280,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-prace-s-casovou-osou
     nazev: Práce s časovou osou
     tema: digitalni-zaklady
@@ -424,7 +305,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-struktura-dokumentu-styly-a-vrstvy
     nazev: 'Struktura dokumentu: styly a vrstvy'
     tema: digitalni-zaklady
@@ -449,7 +330,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-rozliseni-obrazu
     nazev: Rozlišení obrazu
     tema: digitalni-zaklady
@@ -474,7 +355,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-organizace-souboru-do-slozek
     nazev: Organizace souborů do složek
     tema: digitalni-zaklady
@@ -499,7 +380,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-fotky-z-mobilu-do-pocitace
     nazev: Fotky z mobilu do počítače
     tema: digitalni-zaklady
@@ -524,7 +405,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-zalohovani-dat
     nazev: Zálohování dat
     tema: digitalni-zaklady
@@ -550,7 +431,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-zaseknuty-program
     nazev: Když se program zasekne
     tema: digitalni-zaklady
@@ -578,7 +459,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-typy-trvalych-ulozist
     nazev: Typy trvalých úložišť
     tema: digitalni-zaklady
@@ -604,7 +485,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-lokalne-nebo-v-cloudu
     nazev: Lokálně, nebo v cloudu
     tema: digitalni-zaklady
@@ -629,7 +510,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-bezpecne-smazani-dat
     nazev: Bezpečné smazání dat
     tema: digitalni-zaklady
@@ -654,7 +535,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-operacni-system-a-soubory
     nazev: Operační systém
     tema: digitalni-zaklady
@@ -681,7 +562,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-komprese-dat
     nazev: Komprese dat
     tema: digitalni-zaklady
@@ -707,7 +588,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-velikost-dat-mb-a-gb
     nazev: 'Velikost dat: MB a GB'
     tema: digitalni-zaklady
@@ -732,7 +613,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-propojeni-mobilu-a-pocitace
     nazev: Propojení mobilu a počítače
     tema: digitalni-zaklady
@@ -757,7 +638,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-pripojeni-externich-zarizeni
     nazev: Připojení externích zařízení
     tema: digitalni-zaklady
@@ -782,7 +663,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-instalace-a-odinstalace-aplikaci
     nazev: Instalace a odinstalace aplikací
     tema: digitalni-zaklady
@@ -807,7 +688,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-aktualizace-aplikaci
     nazev: Aktualizace aplikací
     tema: digitalni-zaklady
@@ -832,7 +713,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-restart-a-uklid-operacni-pameti
     nazev: Restart a úklid operační paměti
     tema: digitalni-zaklady
@@ -860,7 +741,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-hardware-a-software
     nazev: Hardware a výběr zařízení
     tema: digitalni-zaklady
@@ -887,7 +768,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-proc-se-pocitac-zasekava
     nazev: Proč se počítač zasekává
     tema: digitalni-zaklady
@@ -915,7 +796,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-programy-a-operacni-pamet
     nazev: Programy a operační paměť
     tema: digitalni-zaklady
@@ -943,7 +824,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-kde-je-neulozeny-soubor
     nazev: Kde je neuložený soubor
     tema: digitalni-zaklady
@@ -968,7 +849,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-cloud-a-server
     nazev: Server a cloud
     tema: digitalni-zaklady
@@ -995,7 +876,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-internet-a-sit
     nazev: Internet, web a wifi
     tema: digitalni-zaklady
@@ -1022,7 +903,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-elektricka-sit-vs-internetove-kabely
     nazev: Elektrická síť vs. internetové kabely
     tema: digitalni-zaklady
@@ -1048,7 +929,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-vznik-a-architektura-internetu
     nazev: Vznik a architektura internetu
     tema: digitalni-zaklady
@@ -1073,7 +954,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-adresy-a-protokoly
     nazev: IP adresa, URL a DNS
     tema: digitalni-zaklady
@@ -1100,7 +981,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-jak-prohlizec-zobrazi-stranku
     nazev: Jak prohlížeč zobrazí stránku
     tema: digitalni-zaklady
@@ -1126,7 +1007,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-cesta-pozadavku-k-webovemu-serveru
     nazev: Cesta požadavku k webovému serveru
     tema: digitalni-zaklady
@@ -1151,7 +1032,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-robustnost-internetu
     nazev: Robustnost internetu
     tema: digitalni-zaklady
@@ -1176,7 +1057,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-cesta-e-mailu
     nazev: Cesta e-mailu
     tema: digitalni-zaklady
@@ -1201,7 +1082,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-sifrovana-a-nesifrovana-komunikace
     nazev: Šifrovaná a nešifrovaná komunikace
     tema: digitalni-zaklady
@@ -1227,7 +1108,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-jak-funguje-vyhledavac
     nazev: Jak funguje vyhledávač
     tema: digitalni-zaklady
@@ -1252,7 +1133,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-cookies
     nazev: Cookies
     tema: digitalni-zaklady
@@ -1278,7 +1159,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-personalizovany-obsah
     nazev: Personalizovaný obsah
     tema: digitalni-zaklady
@@ -1304,7 +1185,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-digitalni-stopa-a-digitalni-identita
     nazev: Digitální stopa a digitální identita
     tema: digitalni-zaklady
@@ -1330,7 +1211,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-financovani-socialnich-siti-reklamou
     nazev: Financování sociálních sítí reklamou
     tema: digitalni-zaklady
@@ -1356,7 +1237,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-osobni-data-a-treti-strany
     nazev: Osobní data a třetí strany
     tema: digitalni-zaklady
@@ -1382,7 +1263,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-kde-jsou-data-fyzicky
     nazev: GDPR a právo být zapomenut
     tema: digitalni-zaklady
@@ -1412,7 +1293,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-verejna-vs-domaci-wifi
     nazev: Veřejná vs. domácí wifi
     tema: digitalni-zaklady
@@ -1437,7 +1318,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-pristupova-prava-ke-cloudovemu-dokumentu
     nazev: Přístupová práva ke cloudovému dokumentu
     tema: digitalni-zaklady
@@ -1462,7 +1343,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-cloudovy-dokument-pri-vypadku
     nazev: Cloudový dokument při výpadku
     tema: digitalni-zaklady
@@ -1487,7 +1368,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-uzivatelske-role-v-dokumentech
     nazev: Uživatelské role v dokumentech
     tema: digitalni-zaklady
@@ -1513,7 +1394,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-streamovani-upload-a-download
     nazev: Streamování, upload a download
     tema: digitalni-zaklady
@@ -1538,7 +1419,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-mikroprocesor-a-virus-v-periferii
     nazev: Mikroprocesor a virus v periferii
     tema: digitalni-zaklady
@@ -1563,7 +1444,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-skryty-a-chytry-pocitac
     nazev: Skrytý a chytrý počítač
     tema: digitalni-zaklady
@@ -1589,7 +1470,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-poloha-mobilu-a-operator
     nazev: Poloha mobilu a operátor
     tema: digitalni-zaklady
@@ -1614,7 +1495,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-software-a-cloud-mimo-eu
     nazev: Software a cloud mimo EU
     tema: digitalni-zaklady
@@ -1639,7 +1520,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-bezpecne-heslo
     nazev: Bezpečné heslo
     tema: digitalni-zaklady
@@ -1667,7 +1548,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-ucet-heslo-autentizace-sifrovani-kodovani
     nazev: Účet, heslo, autentizace, šifrování, kódování
     tema: digitalni-zaklady
@@ -1694,7 +1575,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-antivirus
     nazev: Antivirus
     tema: digitalni-zaklady
@@ -1719,7 +1600,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-druhy-malwaru
     nazev: Druhy malwaru
     tema: digitalni-zaklady
@@ -1745,7 +1626,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-chyby-v-programu-aktualizace-a-hackovani
     nazev: Chyby v programu, aktualizace a hackování
     tema: digitalni-zaklady
@@ -1771,7 +1652,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-cile-a-metody-hackeru
     nazev: Cíle a metody hackerů
     tema: digitalni-zaklady
@@ -1796,7 +1677,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-bezpecne-stahovani
     nazev: Bezpečné stahování
     tema: digitalni-zaklady
@@ -1821,7 +1702,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-pravidla-bezpecneho-chovani-na-internetu
     nazev: Pravidla bezpečného chování na internetu
     tema: digitalni-zaklady
@@ -1847,7 +1728,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-prvky-zabezpeceni-pocitace-a-komunikace
     nazev: Prvky zabezpečení počítače a komunikace
     tema: digitalni-zaklady
@@ -1873,7 +1754,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-metadata-fotografii
     nazev: Metadata fotografií
     tema: digitalni-zaklady
@@ -1899,7 +1780,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-vypnuti-sledovani-polohy
     nazev: Vypnutí sledování polohy
     tema: digitalni-zaklady
@@ -1924,7 +1805,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-pristup-aplikaci-ke-kamere-a-periferiim
     nazev: Přístup aplikací ke kameře a periferiím
     tema: digitalni-zaklady
@@ -1949,7 +1830,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-rizika-chytrych-technologii
     nazev: Rizika chytrých technologií
     tema: digitalni-zaklady
@@ -1974,7 +1855,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: digitalni-zaklady-pouziti-ai-a-jeho-rizika
     nazev: Použití AI a jeho rizika
     tema: digitalni-zaklady
@@ -2000,7 +1881,7 @@ concepts:
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: informaticke-mysleni-problemova-situace
     nazev: Problémová situace
     tema: informaticke-mysleni
@@ -2026,7 +1907,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-analyza-problemu
     nazev: Analýza problému
     tema: informaticke-mysleni
@@ -2056,7 +1937,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-abstrakce
     nazev: Abstrakce
     tema: informaticke-mysleni
@@ -2079,14 +1960,13 @@ concepts:
       - text: Žák zdůvodní, proč lze určitou informaci při řešení zanedbat.
     prerekvizity:
       - informaticke-mysleni-analyza-problemu
-    souvisi:
-      - digitalni-zaklady-vrstvy-pocitace
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-dekompozice
     nazev: Dekompozice problému
     tema: informaticke-mysleni
@@ -2121,7 +2001,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-navrh-reseni
     nazev: Návrh řešení
     tema: informaticke-mysleni
@@ -2155,7 +2035,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-efektivita-reseni
     nazev: Efektivita
     tema: informaticke-mysleni
@@ -2189,7 +2069,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-algoritmus
     nazev: Algoritmus
     tema: informaticke-mysleni
@@ -2230,7 +2110,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-posloupnost-kroku
     nazev: Posloupnost kroků
     tema: informaticke-mysleni
@@ -2262,7 +2142,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-rozhodovani
     nazev: Rozhodování
     tema: informaticke-mysleni
@@ -2296,7 +2176,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-opakovani
     nazev: Opakování
     tema: informaticke-mysleni
@@ -2331,7 +2211,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-elementarnost-kroku
     nazev: Elementárnost kroku
     tema: informaticke-mysleni
@@ -2362,7 +2242,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-vlastnosti-algoritmu
     nazev: Vlastnosti algoritmu
     tema: informaticke-mysleni
@@ -2390,7 +2270,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-jednoznacnost
     nazev: Jednoznačnost
     tema: informaticke-mysleni
@@ -2421,7 +2301,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-konecnost
     nazev: Konečnost
     tema: informaticke-mysleni
@@ -2449,7 +2329,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-obecnost
     nazev: Obecnost
     tema: informaticke-mysleni
@@ -2480,7 +2360,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-spravnost
     nazev: Správnost
     tema: informaticke-mysleni
@@ -2508,7 +2388,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-overovani-reseni
     nazev: Ověřování řešení
     tema: informaticke-mysleni
@@ -2545,7 +2425,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: informaticke-mysleni-hodnoceni-a-analyza-chyb
     nazev: Hledání a oprava chyb
     tema: informaticke-mysleni
@@ -2583,7 +2463,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-promenne-a-datove-typy
     nazev: Proměnná
     tema: programovani
@@ -2628,7 +2508,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-podminky-v-kodu
     nazev: Podmíněný příkaz
     tema: programovani
@@ -2670,7 +2550,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-cykly-v-kodu
     nazev: Opakování s pevným počtem opakování
     tema: programovani
@@ -2716,7 +2596,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-funkce-a-procedury
     nazev: Podprogram (bez parametrů)
     tema: programovani
@@ -2767,7 +2647,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-ladeni-a-testovani
     nazev: Ladění
     tema: programovani
@@ -2809,7 +2689,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-program
     nazev: Program
     tema: programovani
@@ -2839,7 +2719,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-zapis-programu
     nazev: Zápis programu
     tema: programovani
@@ -2876,7 +2756,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-sekvence-prikazu
     nazev: Sekvence příkazů
     tema: programovani
@@ -2911,7 +2791,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-cyklus-s-podminkou
     nazev: Cyklus s podmínkou
     tema: programovani
@@ -2954,7 +2834,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-vstup-a-vystup
     nazev: Vstup a výstup
     tema: programovani
@@ -2994,7 +2874,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-uzivatelske-rozhrani
     nazev: Uživatelské rozhraní
     tema: programovani
@@ -3042,7 +2922,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-overovani
     nazev: Ověřování
     tema: programovani
@@ -3076,7 +2956,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-testovani
     nazev: Testování
     tema: programovani
@@ -3117,7 +2997,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-komentare
     nazev: Komentáře
     tema: programovani
@@ -3161,7 +3041,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: programovani-efektivita
     nazev: Efektivita
     tema: programovani
@@ -3208,7 +3088,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Programování (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: umela-inteligence-co-je-a-co-neni-ai
     nazev: Co je a co není AI
     tema: umela-inteligence
@@ -3394,7 +3274,7 @@ concepts:
       - praktická dovednost
     zdroj: []
     pokryti_glitchem: []
-    stav: hotovo
+    stav: draft
   - id: umela-inteligence-vlastni-agency
     nazev: Vlastní agency
     tema: umela-inteligence
@@ -3747,8 +3627,7 @@ concepts:
         text: Žák vlastními slovy vysvětlí, proč stejná data mohou nést různé informace podle položené otázky.
       - uroven: hodnoceni
         text: Žák u tvrzení opřeného o data uvede alespoň dvě otázky týkající se původu a kvality dat, podle nichž posoudí jeho důvěryhodnost.
-    prerekvizity:
-      - digitalni-zaklady-data-a-informace
+    prerekvizity: []
     souvisi:
       - digitalni-obcanstvi-kriticke-mysleni-online
     tagy:
@@ -3758,7 +3637,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-datovy-cyklus
     nazev: Datový cyklus
     tema: data-databaze
@@ -3792,7 +3671,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-strukturovana-vs-nestrukturovana-data
     nazev: Strukturovaná vs. nestrukturovaná data
     tema: data-databaze
@@ -3823,7 +3702,6 @@ concepts:
         text: Žák správně zařadí předložené vzorky dat do kategorií strukturovaná a nestrukturovaná.
     prerekvizity:
       - data-databaze-datova-gramotnost
-      - digitalni-zaklady-reprezentace-dat
     souvisi:
       - data-databaze-nosql-a-dokumentove-databaze
     tagy:
@@ -3832,7 +3710,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-kodovani-dat
     nazev: Kódování dat, jejich účel a přenos
     tema: data-databaze
@@ -3865,7 +3743,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: data-databaze-sifrovani-dat
     nazev: Šifrování dat
     tema: data-databaze
@@ -3904,7 +3782,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: data-databaze-tabulky-a-relacni-model
     nazev: Tabulková evidence dat
     tema: data-databaze
@@ -3936,7 +3814,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-provazanost-tabulek
     nazev: Provázanost tabulek a relační model
     tema: data-databaze
@@ -3967,7 +3845,7 @@ concepts:
     zdroj:
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: hotovo
+    stav: garant
   - id: data-databaze-vizualizace-a-volba-grafu
     nazev: Vizualizace a tvorba grafu
     tema: data-databaze
@@ -4002,7 +3880,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-dotazovani-sql
     nazev: Dotazování (SQL)
     tema: data-databaze
@@ -4070,7 +3948,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-statisticka-gramotnost
     nazev: Statistická gramotnost
     tema: data-databaze
@@ -4106,7 +3984,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: hotovo
   - id: data-databaze-cisteni-realnych-dat
     nazev: Čištění reálných dat
     tema: data-databaze
@@ -4142,7 +4020,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-nosql-a-dokumentove-databaze
     nazev: NoSQL a dokumentové databáze
     tema: data-databaze
@@ -4219,7 +4097,7 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
     pokryti_glitchem: []
-    stav: draft
+    stav: garant
   - id: data-databaze-analyza-dat-pomoci-ai
     nazev: Analýza dat pomocí AI
     tema: data-databaze
@@ -4709,7 +4587,6 @@ concepts:
         text: Žák popíše na příkladu, co aplikaci přidá napojení na backend nebo externí službu.
     prerekvizity:
       - tvorba-aplikaci-logika-aplikace
-      - digitalni-zaklady-api
     souvisi:
       - digitalni-zaklady-cloud-a-server
     tagy:

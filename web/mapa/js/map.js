@@ -103,6 +103,10 @@
   const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
   const EDITS_KEY = "km-edits-v1";
   const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "stav"];
+  const STAV = { draft: "Draft", garant: "Rozpracováno garantem", hotovo: "Hotovo" };
+  const stavSelect = (sel, val) => `<select id="${sel}">${Object.keys(STAV).map((k) =>
+    `<option value="${k}"${(val || "draft") === k ? " selected" : ""}>${STAV[k]}</option>`).join("")}</select>`;
+
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
@@ -115,7 +119,7 @@
   }
 
   /* ---------- Načtení dat ---------- */
-  fetch("data/Informatika/knowledge-map.yaml?v=20")
+  fetch("data/Informatika/knowledge-map.yaml?v=21")
     .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
     .then((txt) => init(jsyaml.load(txt)))
     .catch((e) => setStatus("Chyba načítání dat: " + e.message));
@@ -524,7 +528,7 @@
         <button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
       <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria">${(c.kriteria || []).map(kritRow).join("")}</div>
         <button class="d-link ed-add" data-act="add-krit">+ Přidat kritérium</button></div>
-      <label class="ed-check"><input type="checkbox" id="ed-hotovo" checked> Označit jako <strong>hotovo</strong></label>
+      <div class="ed-field"><label>Stav rozpracování</label>${stavSelect("ed-stav", c.stav)}</div>
       <div class="ed-actions">
         <button class="reset-btn" data-act="edit-cancel" data-id="${esc(id)}">Zrušit</button>
         <button class="km-primary" data-act="edit-save" data-id="${esc(id)}">Uložit</button>
@@ -545,7 +549,7 @@
     }).filter((o) => o.text);
     c.kriteria = [...document.querySelectorAll("#ed-kriteria .ed-row")].map((r) =>
       ({ uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() })).filter((o) => o.text);
-    if (document.getElementById("ed-hotovo").checked) c.stav = "hotovo";
+    c.stav = document.getElementById("ed-stav").value;
 
     /* zapsat do localStorage overlaye */
     const ov = loadEdits();
@@ -680,7 +684,7 @@
       <h2 class="d-title">${esc(c.nazev)}</h2>
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
-        <span class="d-pill">${esc(c.stav || "draft")}</span>
+        <span class="d-pill">${esc(STAV[c.stav] || c.stav || "Draft")}</span>
         <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
