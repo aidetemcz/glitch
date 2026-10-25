@@ -63,7 +63,7 @@
   function textOn(hex) {
     const h = String(hex || "#ffffff").replace("#", "");
     const r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
-    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#000000" : "#ffffff";
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#1c2530" : "#ffffff";
   }
 
   /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem.
@@ -222,7 +222,7 @@
     };
     const sizeFor = (c) => Math.min(124, Math.round(46 + 11 * Math.sqrt(pocetNavaznych(c.id))));
 
-    const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
+    const labelcolor = "#dc5b5b";  // nadpisy clusterů jahodově ve všech režimech
     const GRP_FONT = '600 13px "Inter", "Segoe UI", sans-serif';
     const nodes = [];
     groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id,
@@ -274,7 +274,7 @@
           "events": "no", "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "150px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -6,
-          "color": "#d0d0d0", "font-size": "11px", "font-weight": "600", "line-height": 1.3, "padding": "14px"
+          "color": "#6b7885", "font-size": "11px", "font-weight": "600", "line-height": 1.3, "padding": "14px"
         }},
         { selector: "node[type='group']", style: {
           // obdélník clusteru je neviditelný → události propouští do plochy (posun mapy);
@@ -283,7 +283,7 @@
           "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "180px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -12,
-          "color": "data(labelcolor)", "font-size": "13px", "font-weight": "600",
+          "color": "data(labelcolor)", "font-size": "13px", "font-weight": "700", "font-family": "Space Grotesk, Inter, sans-serif",
           "text-transform": "uppercase", "line-height": 1.4, "padding": "26px"
         }},
         { selector: "node[type='concept']", style: {
@@ -292,39 +292,39 @@
           "text-valign": "center", "text-halign": "center", "line-height": LINEH,
           "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
-        { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
-        { selector: "node[vrstva='navazujici']", style: { "background-color": "#0a0a0c", "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        { selector: "node[vrstva='core']", style: { "background-color": "#1c2530", "color": "#ffffff", "border-width": 0 } },
+        { selector: "node[vrstva='navazujici']", style: { "background-color": "#ffffff", "color": "#1c2530", "border-color": "#1c2530", "border-width": 1.8 } },
         { selector: "edge[etype='prereq']", style: {
-          "line-color": "rgba(255,255,255,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
-          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.6)", "arrow-scale": 0.9
+          "line-color": "rgba(28,37,48,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(28,37,48,0.6)", "arrow-scale": 0.9
         }},
         { selector: "edge[etype='related']", style: {
-          "line-color": "rgba(255,255,255,0.22)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
+          "line-color": "rgba(28,37,48,0.25)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
         }},
-        { selector: "edge.nbedge", style: { "line-color": "#ffff00", "width": 2.4, "target-arrow-color": "#ffff00", "opacity": 1, "z-index": 50 } },
-        { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
-        { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
-        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
-        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
+        { selector: "edge.nbedge", style: { "line-color": "#dc5b5b", "width": 2.4, "target-arrow-color": "#dc5b5b", "opacity": 1, "z-index": 50 } },
+        { selector: "node.nbon", style: { "border-color": "#dc5b5b", "border-width": 2.6, "z-index": 50 } },
+        { selector: ".hl", style: { "border-width": 4, "border-color": "#dc5b5b", "border-opacity": 1 } },
+        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#dc5b5b" } },
+        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#dc5b5b", "color": "#ffffff", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
         { selector: ".filtered", style: { "display": "none" } },
         /* hloubkové ponoření — mikrokoncepty pod konceptem */
         { selector: "node[type='microparent']", style: {
-          "shape": "ellipse", "background-color": "#ffff00", "color": "#0a0a0c",
+          "shape": "ellipse", "background-color": "#dc5b5b", "color": "#ffffff",
           "width": 128, "height": 128, "label": "data(label)", "text-wrap": "wrap",
           "text-max-width": "104px", "text-valign": "center", "text-halign": "center",
           "line-height": LINEH, "font-size": "13px", "font-weight": "600", "border-width": 0
         }},
         { selector: "node[type='micro']", style: {
-          "shape": "round-rectangle", "background-color": "#0a0a0c", "color": "#ffffff",
-          "border-color": "#ffff00", "border-width": 1.5, "width": 108, "height": 60,
+          "shape": "round-rectangle", "background-color": "#ffffff", "color": "#1c2530",
+          "border-color": "#dc5b5b", "border-width": 1.5, "width": 108, "height": 60,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "94px",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH, "font-size": "11px"
         }},
-        { selector: "node[type='micro']:selected", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
+        { selector: "node[type='micro']:selected", style: { "background-color": "#dc5b5b", "color": "#ffffff", "border-width": 0 } },
         { selector: "edge[etype='microedge']", style: {
-          "line-color": "rgba(255,255,0,0.5)", "width": 1.6, "curve-style": "bezier",
-          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,0,0.65)", "arrow-scale": 0.85
+          "line-color": "rgba(220,91,91,0.55)", "width": 1.6, "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(220,91,91,0.7)", "arrow-scale": 0.85
         }}
       ]
     });
@@ -543,7 +543,7 @@
   let aboutCache = null;
   const mdInline = (t) => typo(t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"));
   function renderAbout(md) {
-    let html = '<span class="d-badge" style="background:#ffff00;color:#000000">O mapě</span>';
+    let html = '<span class="d-badge d-badge-acc">O mapě</span>';
     let para = [], list = [], inSec = false;
     const flushPara = () => { if (para.length) { html += `<p class="d-desc" style="margin-bottom:12px">${mdInline(para.join(" "))}</p>`; para = []; } };
     const flushList = () => { if (list.length) { html += `<ul class="d-list">${list.map((li) => `<li>${mdInline(li)}</li>`).join("")}</ul>`; list = []; } };
@@ -592,7 +592,7 @@
       ? `Změny se ukládají <strong>živě do Supabase</strong> (uvidí je všichni).`
       : `⚠️ <strong>Supabase je teď nedostupné</strong> — změny se uloží jen lokálně do tohoto prohlížeče.`;
     openPanel(`
-      <span class="d-badge" style="background:#ffff00;color:#000000">Účet</span>
+      <span class="d-badge d-badge-acc">Účet</span>
       <h2 class="d-title">${esc(adminName || adminLogin || "?")}</h2>
       <div class="d-meta"><span class="d-pill">${esc(adminLogin || "?")}</span><span class="d-pill core">${esc(ROLE[adminRole] || adminRole)}</span></div>
       <p class="d-desc">${canWrite() ? "Klikni na koncept v mapě a uprav ho, nebo přidej nový. " + status : "Tenhle účet mapu neupravuje, může stahovat exporty — i jednotlivých témat (ikonka ⬇ vlevo nahoře)."}</p>
@@ -603,7 +603,7 @@
   // panel exportu: výběr témat + YAML / concepts.json
   function openExport() {
     openPanel(`
-      <span class="d-badge" style="background:#ffff00;color:#000000">Export</span>
+      <span class="d-badge d-badge-acc">Export</span>
       <h2 class="d-title">Stáhnout YAML / JSON</h2>
       <div class="ed-field"><label>Která témata</label>
         <div class="ex-tools"><button class="d-link" data-act="export-all">všechna</button><button class="d-link" data-act="export-none">žádné</button></div>
@@ -619,9 +619,15 @@
 
   /* ---------- Správa editorů (jen admin) ---------- */
   let editorsCache = [];
-  async function openEditors(editEmail) {
+  // heslo pro nového uživatele: 12 znaků bez zaměnitelných (0/O, 1/l/I)
+  function generatePassword() {
+    const abc = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const a = new Uint32Array(12); crypto.getRandomValues(a);
+    return Array.from(a, (x) => abc[x % abc.length]).join("");
+  }
+  async function openEditors(editEmail, note) {
     editing = false;
-    const badge = '<span class="d-badge" style="background:#ffff00;color:#000000">Uživatelé</span>';
+    const badge = '<span class="d-badge d-badge-acc">Uživatelé</span>';
     detailBody.innerHTML = badge + '<p class="d-desc">Načítám…</p>';
     detail.classList.remove("hidden"); detail.scrollTop = 0;
     let list = [];
@@ -641,13 +647,17 @@
           '<button class="mc-del" data-act="editor-del" data-email="' + esc(u.email) + '" title="Smazat">✕</button></div>').join("") + '</div>'
       : '<span class="d-empty">zatím žádní další uživatelé</span>';
     const roleOpts = Object.keys(ROLE).map((r) => '<option value="' + r + '"' + ((u0 ? u0.role : "editor") === r ? ' selected' : '') + '>' + esc(ROLE[r]) + '</option>').join("");
-    detailBody.innerHTML = badge +
+    // po uložení ukázat heslo (nikde jinde už nejde přečíst)
+    const noteHtml = note ? '<div class="us-note">' + esc(note.text) + (note.pass
+      ? '<br>Heslo: <code id="us-pass">' + esc(note.pass) + '</code> <button class="d-link" data-act="copy-pass">Kopírovat</button><br><span class="d-empty">Pošli ho uživateli — po zavření panelu už ho nikde neuvidíš.</span>' : '') + '</div>' : "";
+    detailBody.innerHTML = badge + noteHtml +
       '<p class="d-desc">Admin upravuje mapu i uživatele, editor (garant, konzultant) upravuje mapu, čtenář mapu neupravuje a jen stahuje exporty. Uživatel se přihlásí e-mailem a heslem.</p>' +
       '<div class="d-section"><h3>Uživatelé (' + list.length + ')</h3>' + rows + '</div>' +
       '<div class="d-section" id="us-form"><h3>' + (u0 ? 'Upravit: ' + esc(u0.name || u0.email) : 'Přidat uživatele') + '</h3>' +
       '<div class="ed-field"><label>E-mail *</label><input id="ed-email" type="email" placeholder="jmeno@domena.cz" autocomplete="off" value="' + esc(u0 ? u0.email : "") + '"' + (u0 ? ' readonly' : '') + '></div>' +
       '<div class="ed-field"><label>Jméno</label><input id="ed-name" placeholder="Jméno Příjmení" autocomplete="off" value="' + esc(u0 ? (u0.name || "") : "") + '"></div>' +
-      '<div class="ed-field"><label>' + (u0 ? 'Nové heslo (nech prázdné, pokud se nemění)' : 'Heslo *') + '</label><input id="ed-pass" placeholder="min. 6 znaků" autocomplete="off"></div>' +
+      '<div class="ed-field"><label>' + (u0 ? 'Nové heslo (nech prázdné, pokud se nemění)' : 'Heslo *') + '</label>' +
+      '<div class="ed-pass"><input id="ed-pass" placeholder="min. 6 znaků" autocomplete="off" value="' + (u0 ? '' : esc(generatePassword())) + '"><button class="d-link" data-act="gen-pass" title="Vygenerovat nové heslo">🎲 Vygenerovat</button></div></div>' +
       '<div class="ed-field"><label>Role</label><select id="ed-role">' + roleOpts + '</select></div>' +
       '<div class="ed-actions"><button class="reset-btn" data-act="' + (u0 ? 'editors' : 'editors-back') + '">' + (u0 ? 'Zrušit' : 'Zpět') + '</button>' +
       '<button class="km-primary" data-act="editor-add" data-mode="' + (u0 ? 'update' : 'add') + '">' + (u0 ? 'Uložit změny' : 'Přidat uživatele') + '</button></div></div>';
@@ -662,12 +672,14 @@
     if (!email || email.indexOf("@") < 0) { alert("Zadej platný e-mail."); return; }
     if (pass && pass.length < 6) { alert("Heslo musí mít aspoň 6 znaků."); return; }
     try {
-      if (mode === "update") await window.KM.updateEditor(adminLogin, adminSecret, email, name, role, pass || null);
-      else {
+      if (mode === "update") {
+        await window.KM.updateEditor(adminLogin, adminSecret, email, name, role, pass || null);
+        openEditors(null, { text: "Uloženo: " + (name || email) + (pass ? " — nové heslo:" : ""), pass: pass || "" });
+      } else {
         if (!pass) { alert("Novému uživateli zadej heslo."); return; }
         await window.KM.addEditor(adminLogin, adminSecret, email, pass, name, role);
+        openEditors(null, { text: "Uživatel " + (name || email) + " (" + email + ") přidán.", pass: pass });
       }
-      openEditors();
     } catch (e) {
       const m = (e && e.message) || String(e);
       alert(/could not find the function|km_update_editor|PGRST202|404/i.test(m)
@@ -692,6 +704,8 @@
     else if (act === "editors") openEditors();
     else if (act === "editor-add") addEditorSubmit(b.dataset.mode);
     else if (act === "editor-edit") openEditors(b.dataset.email);
+    else if (act === "gen-pass") document.getElementById("ed-pass").value = generatePassword();
+    else if (act === "copy-pass") { const t = document.getElementById("us-pass").textContent; navigator.clipboard.writeText(t).then(() => { b.textContent = "Zkopírováno"; }).catch(() => { alert("Heslo: " + t); }); }
     else if (act === "editor-del") removeEditorAct(b.dataset.email);
     else if (act === "editors-back") openAccount();
     else if (act === "export") exportYAML(exportTemata());
@@ -809,7 +823,7 @@
     if (!c) return;
     editing = true; pinned = null; clearNb();
     detailBody.innerHTML = `
-      <span class="d-badge" style="background:#ffff00;color:#000000">Úprava konceptu</span>
+      <span class="d-badge d-badge-acc">Úprava konceptu</span>
       <div class="ed-field"><label>Název</label><input id="ed-nazev" value="${esc(c.nazev)}"></div>
       <div class="ed-field"><label>Popis</label><textarea id="ed-popis" rows="4">${esc(c.popis || "")}</textarea></div>
       <div class="ed-field"><label>Vrstva</label><select id="ed-vrstva">
@@ -962,7 +976,7 @@
     const kompOpts = opt("", "— nezařazeno") + (DATA.kompetence || []).map((k) => opt(k.id, k.nazev)).join("");
     const dataList = '<datalist id="km-concept-list">' + DATA.concepts.map((c) => '<option value="' + esc(c.nazev) + '">').join("") + '</datalist>';
     detailBody.innerHTML = `
-      <span class="d-badge" style="background:#ffff00;color:#000000">Nový koncept</span>
+      <span class="d-badge d-badge-acc">Nový koncept</span>
       <div class="ed-field"><label>Název *</label><input id="add-nazev" placeholder="např. Rekurze"></div>
       <div class="ed-field"><label>Téma *</label><select id="add-tema">${temaOpts}</select></div>
       <div class="ed-field"><label>Oblast RVP</label><select id="add-oblast">${oblastOpts}</select></div>
@@ -1063,7 +1077,7 @@
     editing = false;
     cy.$(":selected").unselect(); node.select();
     if (node.data("type") === "group") {
-      detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
+      detailBody.innerHTML = groupHtml(node.data("gid"), "#dc5b5b", node.data("label"));
       pinned = null; clearNb();
     } else if (node.data("type") === "sub") {
       detailBody.innerHTML = subHtml(node.data("gid"), node.data("pid"));
@@ -1114,7 +1128,7 @@
       if (gid === NORVP) fallback = "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky.";
     }
     return `
-      <span class="d-badge" style="background:${bg};color:#000000">${esc(GROUP_LABEL[viewMode])}</span>
+      <span class="d-badge" style="background:${bg};color:#ffffff">${esc(GROUP_LABEL[viewMode])}</span>
       <h2 class="d-title">${esc(src.nazev || label || gid)}</h2>
       ${meta}
       ${paras(src.popis, fallback)}
@@ -1129,7 +1143,7 @@
     const kids = DATA.concepts.filter((c) => c.tema === temaId && c.podoblast === pid);
     const cores = kids.filter((c) => c.vrstva === "core"), nav = kids.filter((c) => c.vrstva !== "core");
     return `
-      <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || temaId)}</span>
+      <span class="d-badge d-badge-tema">${esc(tema.nazev || temaId)}</span>
       <h2 class="d-title">${esc(p.nazev)}</h2>
       <div class="d-meta"><span class="d-pill">podoblast</span></div>
       ${paras(p.popis || "")}
@@ -1171,7 +1185,7 @@
         (jinde ? `<div class="d-sub">+ ${jinde} ${jinde === 1 ? "koncept" : jinde < 5 ? "koncepty" : "konceptů"} v jiných tématech</div>` : "");
     };
     return `
-      <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>${pod ? ` <span class="d-badge d-badge-sub">${esc(pod.nazev)}</span>` : ""}
+      <span class="d-badge d-badge-tema">${esc(tema.nazev || c.tema)}</span>${pod ? ` <span class="d-badge d-badge-sub">${esc(pod.nazev)}</span>` : ""}
       <h2 class="d-title">${esc(c.nazev)}</h2>
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
@@ -1252,7 +1266,7 @@
     const cil = (m.cile || []).length ? goals(m.cile) : '<span class="d-empty">—</span>';
     const krit = (m.kriteria || []).length ? goals(m.kriteria) : '<span class="d-empty">—</span>';
     detailBody.innerHTML =
-      '<span class="d-badge" style="background:#ffff00;color:#000000">Mikrokoncept</span>' +
+      '<span class="d-badge d-badge-acc">Mikrokoncept</span>' +
       '<h2 class="d-title">' + esc(m.nazev || m.id) + '</h2>' +
       '<div class="d-meta">' +
         '<span class="d-pill ' + (m.vrstva === "core" ? "core" : "") + '">' + esc(VRSTVA[m.vrstva] || "Navazující") + '</span>' +
@@ -1269,7 +1283,7 @@
     const c = conceptById[parentId]; if (!c) return;
     editing = true; pinned = null; clearNb();
     detailBody.innerHTML =
-      '<span class="d-badge" style="background:#ffff00;color:#000000">Nový mikrokoncept</span>' +
+      '<span class="d-badge d-badge-acc">Nový mikrokoncept</span>' +
       '<p class="d-desc">Pod koncept <strong>' + esc(c.nazev) + '</strong></p>' +
       microFormHtml({}) +
       '<div class="ed-actions">' +
@@ -1283,7 +1297,7 @@
     const parent = conceptById[m.parent_id];
     editing = true; pinned = null; clearNb();
     detailBody.innerHTML =
-      '<span class="d-badge" style="background:#ffff00;color:#000000">Úprava mikrokonceptu</span>' +
+      '<span class="d-badge d-badge-acc">Úprava mikrokonceptu</span>' +
       (parent ? '<p class="d-desc">Pod koncept <strong>' + esc(parent.nazev) + '</strong></p>' : "") +
       microFormHtml(m) +
       '<div class="ed-actions">' +
@@ -1458,27 +1472,27 @@
   function draw3D() {
     if (!view3d || !ctx3d) return;
     const w = cvs3d.width, h = cvs3d.height;
-    ctx3d.fillStyle = "#0a0a0c"; ctx3d.fillRect(0, 0, w, h);
+    ctx3d.fillStyle = "#ffffff"; ctx3d.fillRect(0, 0, w, h);
     nodes3d.forEach((n) => { n._p = project3D(n, w, h); });
     edges3d.forEach((e) => {
       const A = e.a._p, B = e.b._p;
       ctx3d.beginPath(); ctx3d.moveTo(A.sx, A.sy); ctx3d.lineTo(B.sx, B.sy);
-      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(255,255,0,0.5)"; ctx3d.lineWidth = 1.3; }
-      else { ctx3d.strokeStyle = "rgba(255,255,255,0.07)"; ctx3d.lineWidth = 0.8; }
+      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(220,91,91,0.55)"; ctx3d.lineWidth = 1.3; }
+      else { ctx3d.strokeStyle = "rgba(28,37,48,0.12)"; ctx3d.lineWidth = 0.8; }
       ctx3d.stroke();
     });
     nodes3d.slice().sort((a, b) => a._p.depth - b._p.depth).forEach((n) => {
       const p = n._p, r = Math.max(2, n.r * p.f);
       if (n.kind === "concept") {
         ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
-        ctx3d.fillStyle = n.core ? "#ffffff" : "#141416"; ctx3d.fill();
-        if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
-        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#0a0a0c" : "#e8e8e8");
+        ctx3d.fillStyle = n.core ? "#1c2530" : "#ffffff"; ctx3d.fill();
+        if (!n.core) { ctx3d.strokeStyle = "#1c2530"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
+        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#ffffff" : "#1c2530");
       } else {
-        const s = r * 1.5; ctx3d.fillStyle = "#141416"; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
+        const s = r * 1.5; ctx3d.fillStyle = "#ffffff"; ctx3d.strokeStyle = "#dc5b5b"; ctx3d.lineWidth = 1.1;
         roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
         if (p.f > 0.5) {
-          ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
+          ctx3d.fillStyle = "#dc5b5b"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
           ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy + r + 7);
         }
       }
@@ -1636,7 +1650,7 @@
         if (group.hasClass("filtered")) return;
         const kids = group.descendants("[type='concept']").filter((n) => !n.hasClass("filtered"));
         if (kids.length === 0) return;
-        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3; ctx.strokeStyle = "rgba(255,255,255,0.32)";
+        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3; ctx.strokeStyle = "rgba(28,37,48,0.35)";
         const hull = hullOf(kids, 16 + 10 * z);
         strokeSmooth(ctx, hull);
         polys.push({ group, hull });
@@ -1646,7 +1660,7 @@
           const sk = sub.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
           if (sk.length === 0) return;
           // podoblast = tmavě šedá výplň (jemná čára nebyla vidět)
-          ctx.setLineDash([]); ctx.fillStyle = "rgba(255,255,255,0.10)";
+          ctx.setLineDash([]); ctx.fillStyle = "rgba(179,205,214,0.32)";   // nekonečné nebe
           const sh = hullOf(sk, 12);
           fillSmooth(ctx, sh);
           subPolys.push({ group: sub, hull: sh });
