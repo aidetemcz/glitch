@@ -237,211 +237,17 @@ concepts:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
     pokryti_glitchem: []
     stav: draft
-  - id: digitalni-zaklady-soubory-a-jejich-typy
-    nazev: Soubory a jejich typy
-    tema: digitalni-zaklady
-    podoblast: soubory-a-ovladani
-    oblast: digitalni-technologie
-    kompetence: kdi-dat
-    vrstva: core
-    popis: 'Všechno, co v počítači vytvoříš nebo stáhneš, je soubor určitého typu: obrázek, text, video, hudba. Typ poznáš podle přípony (jpg, pdf, mp4) a podle něj se vybírá i program, který soubor otevře. Některé formáty se hodí na úpravy, jiné na sdílení a tisk — pdf vypadá všude stejně. U obrázků a videa navíc rozhoduje rozlišení: kolik bodů obraz má, jak ostře se zobrazí a jak velký soubor z něj bude.'
-    rvp:
-      - kod: null
-        vystup: ''
-        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, co je typ souboru, jak ho poznat podle přípony a proč k různým typům patří různé programy.
-        rocnik: 6
-      - uroven: aplikace
-        text: Žák převede soubor do formátu vhodného pro zadaný účel (např. do pdf pro tisk) a volbu zdůvodní.
-        rocnik: 7
-    kriteria:
-      - text: Rozpozná základní typy souborů (obrázek, text, video, hudba); vybere vhodný program/aplikaci pro jejich spuštění; uvede ukázky přípon souborů různého typu (např. jpg, pdf, mp4); vysvětlí, proč tyto přípony někdy počítač/mobil zobrazuje a jindy ne.
-        garant: O1
-      - text: Převede soubory různých typů do pdf; vysvětlí výhody pdf formátu z hlediska tisku a zobrazení.
-        garant: O2
-      - text: Vysvětlí vrstevníkovi pojem rozlišení obrazu v kontextu zobrazení na monitoru a displeji mobilu, focení a tvorby videa, tisku a ukládání souborů.
-        garant: O6
-    prerekvizity: []
-    souvisi:
-      - data-databaze-kodovani-dat
-    tagy:
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-ovladani-aplikaci
-    nazev: Ovládání aplikací
-    tema: digitalni-zaklady
-    podoblast: soubory-a-ovladani
-    oblast: digitalni-technologie
-    kompetence: kdi-tdo
-    vrstva: core
-    popis: 'Většina aplikací se ovládá stejnými mechanismy, ať děláš text, obrázek nebo prezentaci: uložit a načíst, kopírovat přes schránku, krok zpět a vpřed, přiblížit lupou, posouvat se v dokumentu. Aplikace na video, zvuk nebo animaci k tomu přidávají časovou osu. Strukturované dokumenty (styly odstavců, vrstvy objektů) se dají měnit hromadně přes jejich strukturu, ne po jednom.'
-    rvp:
-      - kod: null
-        vystup: ''
-        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
-    cile:
-      - uroven: aplikace
-        text: Žák rutinně používá základní mechanismy ovládání aplikací (uložení, schránka, zpět/vpřed, lupa, posun) napříč různými programy.
-        rocnik: 6
-      - uroven: aplikace
-        text: Žák upraví dokument s využitím jeho struktury (styly, vrstvy) nebo časové osy místo ručních úprav po jednom.
-        rocnik: 8
-    kriteria:
-      - text: Rutinně používá základní mechanismy ovládání aplikací pro tvorbu statických dat (např. textu či obrazu) – mechanismus ukládání a načítání dat, kopírování části dat přes střižnu („clip board“), krok zpět („undo“) a vpřed (“redo”), změna velikosti zobrazení (lupa), náhled na jinou část dat („scrolování“) apod.
-        garant: O3
-      - text: V aplikacích pro tvorbu dynamických dat (např. animace v prezentaci, video, zvuk) pracuje s časovou osou.
-        garant: O4
-      - text: Ve strukturovaných dokumentech mění vlastnosti dokumentu s využitím této struktury – například u textových souborů mění styly odstavců, v prezentaci vektorové objekty přesouvá „před“ a „za“ v jednotlivých vrstvách apod.
-        garant: O5
-    prerekvizity:
-      - digitalni-zaklady-soubory-a-jejich-typy
-    souvisi: []
-    tagy:
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-organizace-a-zalohovani-dat
-    nazev: Organizace a zálohování dat
-    tema: digitalni-zaklady
-    podoblast: soubory-a-ovladani
-    oblast: digitalni-technologie
-    kompetence: kdi-dat
-    vrstva: core
-    popis: 'Stovky souborů bez pořádku se nedají najít. Složky s jasnými názvy a soubory pojmenované tak, aby bylo z názvu poznat, co v nich je, jsou základ — ať jde o fotky z mobilu, nebo školní práce. Druhá část pořádku je záloha: kopie důležitých dat na jiném místě, protože disk, mobil i účet v cloudu můžeš ztratit.'
-    rvp:
-      - kod: null
-        vystup: ''
-        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
-    cile:
-      - uroven: aplikace
-        text: Žák navrhne a vytvoří strukturu složek pro větší množství souborů a soubory do ní uspořádá a pojmenuje.
-        rocnik: 6
-      - uroven: porozumeni
-        text: Žák vysvětlí, proč a jak zálohovat, a popíše vlastní pravidla zálohování.
-        rocnik: 7
-    kriteria:
-      - text: Když dostane 100 souborů různých typů, navrhne jejich vhodnou organizaci pomocí složek, složky založí na počítači a soubory do složek rozmístí.
-        garant: O7
-      - text: Přenese desítky až stovky fotografií a videí z mobilního telefonu do počítače, navrhne jejich uspořádání pomocí několika složek a dle tohoto návrhu soubory uspořádá; klíčové fotografie přejmenuje tak, aby z názvu bylo patrné, o jakou fotku jde.
-        garant: O8
-      - text: Vysvětlí význam zálohování dat a popíše svá osobní pravidla, která používá pro zálohování svých dat.
-        garant: O9
-    prerekvizity:
-      - digitalni-zaklady-soubory-a-jejich-typy
-    souvisi:
-      - kyberbezpecnost-zakladni-hygiena
-    tagy:
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-hardware-a-software
-    nazev: Hardware a software
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: core
-    popis: |-
-      Hardware jsou fyzické součástky, na které si můžeš sáhnout (procesor, paměť, displej); software jsou programy, které v nich běží. Každý počítač i telefon přitom pracuje ve smyčce vstup → zpracování → výstup: dostane data, něco s nimi udělá a vrátí výsledek.
-
-      Při výběru nového mobilu nebo notebooku rozhodují parametry základních komponent — procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, bezdrátová připojení).
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí vlastními slovy rozdíl mezi hardwarem a softwarem na konkrétním příkladu zařízení.
-        rocnik: 6
-      - uroven: hodnoceni
-        text: Žák podle zadaných potřeb doporučí vhodný hardware a software a svůj výběr zdůvodní jejich vlastnostmi.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák u konkrétního zařízení určí, které části jsou hardware a které software, a doplní příklad smyčky vstup → zpracování → výstup.
-      - uroven: hodnoceni
-        text: Žák pro zadanou situaci vybere zařízení a v jedné větě zdůvodní volbu jeho vlastností.
-      - text: Na situaci nákupu nového mobilu či notebooku diskutuje o funkcích a parametrech základních komponent počítačového zařízení (zejména jde o procesor/jádra, trvalé úložiště, operační paměť, grafickou kartu), jakož i o možnostech, jak toto zařízení připojit k dalším zařízením (bezdrátová připojení, porty).
-        garant: Z11
-    prerekvizity: []
-    souvisi:
-      - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
-      - tvorba-aplikaci-co-je-aplikace
-      - fyzicky-computing-arduino-a-raspberry-pi
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-uloziste-dat
-    nazev: 'Úložiště dat: lokálně a v cloudu'
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: kdi-bzk
-    vrstva: core
-    popis: |-
-      Data se ukládají na trvalá úložiště: pevný disk nebo SSD v počítači, interní paměť mobilu, USB flash disk, SD kartu, DVD. Každé má jinou kapacitu, rychlost, odolnost a cenu. Druhá možnost je cloud — data leží na cizím serveru a dostaneš se k nim odkudkoli, ale jen s připojením a s důvěrou v poskytovatele.
-
-      A pozor na mazání: smazaný soubor z disku hned nezmizí, systém si jen „přestane pamatovat“, kde ležel. Než zařízení vyhodíš nebo prodáš, musíš data odstranit bezpečně — nebo zařízení raději nevyhazovat.
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
-    cile:
-      - uroven: hodnoceni
-        text: Žák porovná typy trvalých úložišť a uložení lokálně vs. v cloudu a pro danou situaci vybere vhodné úložiště.
-        rocnik: 7
-      - uroven: porozumeni
-        text: Žák vysvětlí, proč běžné smazání dat nestačí, a navrhne, jak data před vyhozením zařízení bezpečně odstranit.
-        rocnik: 8
-    kriteria:
-      - text: Vysvětlí vrstevníkovi výhody a nevýhody různých typů trvalých úložišť dat (například USB flash disk, pevný disk, SD karta, interní paměť mobilu, DVD…).
-        garant: Z0
-      - text: Popíše rozdíl mezi uložením dat lokálně a na cloudu; diskutuje výhody a nevýhody.
-        garant: Z1
-      - text: Vysvětlí mechanismus „líného“ mazání dat uložených lokálně. Vysvětlí, jakým způsobem bezpečně odstranit taková data, pokud zařízení, kde jsou uložena, chceme vyhodit – tzn. jak lze (někdy) zařídit, aby se k datům nebo jejich částem nedostal nikdo, kdo vyhozené zařízení najde. Zejména vysvětlí, proč běžné smazání a zároveň vysypání koše není v této situaci dostačující a kdy je případně lepší zařízení nikdy nevyhazovat (neprodávat).
-        garant: Z2
-    prerekvizity:
-      - digitalni-zaklady-hardware-a-software
-    souvisi:
-      - digitalni-zaklady-cloud-a-server
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
-    tagy:
-      - teoretický základ
-      - soukromí
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
   - id: digitalni-zaklady-reprezentace-dat
-    nazev: Reprezentace a velikost dat
+    nazev: Reprezentace dat
     tema: digitalni-zaklady
     podoblast: zarizeni-a-uloziste
     oblast: data-modelovani
     kompetence: kdi-dat
     vrstva: navazujici
-    popis: |-
-      Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.
-
-      Velikost dat se měří v bytech — megabyty (MB) pro fotky, gigabyty (GB) pro filmy. Komprese data zmenší tím, že odstraní opakování nebo nepodstatné detaily; co je jednou zkomprimované, se další kompresí už skoro nezmenší.
+    popis: Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.
     rvp:
       - kod: INF-INF-001-ZV9-002
         vystup: navrhuje a porovnává různé způsoby kódování dat s cílem jejich uložení a přenosu
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
       - uroven: porozumeni
         text: Žák vysvětlí, proč počítač převádí čísla, text i obraz na bity.
@@ -452,433 +258,15 @@ concepts:
     kriteria:
       - uroven: hodnoceni
         text: Žák u zadaného účelu (uložení / přenos) vybere vhodnější kódování a volbu zdůvodní.
-      - text: Vysvětlí, jak komprese souvisí s velikostí dat, a proč není možné zkomprimovaný soubor zmenšovat opakovanou komprimací do nekonečna.
-        garant: Z4
-      - text: Popíše význam zkratek MB a GB (megabyte a gigabyte) a uvede řádové velikosti fotek a delších videí (např. filmů).
-        garant: Z5
     prerekvizity:
       - digitalni-zaklady-data-a-informace
     souvisi:
       - umela-inteligence-ai-se-uci-z-dat
       - programovani-promenne-a-datove-typy
-      - data-databaze-kodovani-dat
     tagy:
       - teoretický základ
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-operacni-system-a-soubory
-    nazev: Operační systém a aplikace
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: core
-    popis: 'Operační systém (Windows, Android, iOS, macOS) je program, který řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Aplikace se do něj instalují a odinstalují a průběžně aktualizují — aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas ale i změny, které se nehodí.'
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, k čemu slouží operační systém, a přiřadí základní operační systémy k typickým zařízením.
-        rocnik: 6
-      - uroven: aplikace
-        text: Žák nainstaluje, aktualizuje a odinstaluje aplikaci a posoudí výhody a nevýhody aktualizací.
-        rocnik: 7
-    kriteria:
-      - text: Vysvětlí vrstevníkovi, jaký základní význam pro počítač nebo mobil má operační systém; rozpozná základní operační systémy (např. Android, iOS, Windows) a asociuje je s typickými zařízeními (např. mobil vs. počítač).
-        garant: Z3
-      - text: Nainstaluje a odinstaluje aplikaci.
-        garant: Z8
-      - text: Aktualizuje aplikaci; diskutuje o výhodách a nevýhodách aktualizací.
-        garant: Z9
-    prerekvizity:
-      - digitalni-zaklady-hardware-a-software
-    souvisi:
-      - digitalni-zaklady-vrstvy-pocitace
-      - kyberbezpecnost-zakladni-hygiena
-    tagy:
-      - teoretický základ
-      - praktická dovednost
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-propojeni-zarizeni
-    nazev: Propojení zařízení a periferie
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: navazujici
-    popis: 'Počítač a mobil se dají propojit i bez internetu — kabelem přes USB nebo přes Bluetooth — a překopírovat mezi nimi fotky nebo dokumenty. K počítači se připojují i další zařízení (periferie): monitor, projektor, tiskárna, klávesnice. Každé potřebuje správný port nebo bezdrátové spojení a někdy i ovladač.'
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
-    cile:
-      - uroven: aplikace
-        text: Žák propojí mobil s počítačem bez internetu a přenese mezi nimi data.
-        rocnik: 6
-      - uroven: aplikace
-        text: Žák připojí k počítači externí zařízení (monitor, projektor, tiskárnu) a zprovozní ho.
-        rocnik: 7
-    kriteria:
-      - text: Propojí mobilní telefon a počítač bez pomocí internetu/wifi (například přes USB) a překopíruje z jednoho zařízení na druhé data (například fotky).
-        garant: Z6
-      - text: Připojí k počítači externí zařízení, například monitor, projektor nebo tiskárnu.
-        garant: Z7
-    prerekvizity:
-      - digitalni-zaklady-hardware-a-software
-    souvisi:
-      - fyzicky-computing-komunikace-mezi-zarizenimi
-    tagy:
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-zaseknuty-pocitac-a-operacni-pamet
-    nazev: Zaseknutý počítač a operační paměť
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: navazujici
-    popis: 'Rozpracovaný dokument, otevřená stránka i běžící hra žijí v operační paměti (RAM) — rychlé, ale dočasné paměti, která se po vypnutí vymaže. Proto se nový soubor musí uložit na disk, jinak zmizí. Když je spuštěných programů moc, paměť dojde a počítač se „zasekává“: zpomalí, nebo program přestane reagovat. Řešením bývá program zavřít (i násilně) nebo zařízení restartovat, čímž se paměť uklidí.'
-    rvp:
-      - kod: null
-        vystup: ''
-        poznamka: 'RVP 2021: I-9-4-04 – poradí si s typickými závadami a chybovými stavy počítače (v RVP 2024 bez samostatného výstupu)'
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, co je operační paměť, kde je rozpracovaný soubor před uložením a proč restart „uklidí“ paměť.
-        rocnik: 7
-      - uroven: aplikace
-        text: Žák vyřeší situaci, kdy program nereaguje nebo je počítač nezvykle pomalý, a vysvětlí pravděpodobnou příčinu.
-        rocnik: 7
-    kriteria:
-      - text: Vysvětlí, co to znamená, že se program „zasekne“ a jakým způsobem tuto situaci vyřešit.
-        garant: O10
-      - text: Popíše význam zavření aplikace resp. restartu počítače či mobilního zařízení pro „úklid“ operační paměti zařízení.
-        garant: Z10
-      - text: Vysvětlí, co může způsobovat, že se „počítač strašně zasekává“ (je pomalejší než obvykle).
-        garant: Z12
-      - text: Vysvětlí vztah mezi počtem spuštěných programů a operační pamětí počítače.
-        garant: Z13
-      - text: Vysvětlí, kde se v počítači nachází nově založený soubor (např. obrázek či textový dokument nově otevřený v příslušném editoru) předtím, než ho uložíme na lokální úložiště (např. na disk, interní paměť…).
-        garant: Z14
-    prerekvizity:
-      - digitalni-zaklady-hardware-a-software
-    souvisi: []
-    tagy:
-      - teoretický základ
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-vrstvy-pocitace
-    nazev: Vrstvy počítače
-    tema: digitalni-zaklady
-    podoblast: zarizeni-a-uloziste
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: navazujici
-    popis: 'Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.'
-    rvp: []
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí na příkladu, jak vrstvy hardware – operační systém – aplikace skrývají složitost té pod sebou.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák seřadí vrstvy od hardwaru po aplikaci a u jedné z nich uvede, co skrývá.
-    prerekvizity:
-      - digitalni-zaklady-hardware-a-software
-    souvisi: []
-    tagy:
-      - teoretický základ
-    zdroj: []
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-internet-a-sit
-    nazev: Internet, web a wifi
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: core
-    popis: |-
-      Internet je obrovská síť propojených počítačů, které si navzájem posílají data. Když otevřeš stránku, tvůj prohlížeč (klient) pošle požadavek počítači, kde stránka „bydlí" (server), a ten mu obsah pošle zpátky — tomuhle vztahu se říká klient–server.
-
-      Internet není totéž co web: web je jen jedna ze služeb, které po internetu běží (vedle e-mailu, her, streamování). Domů se internet dostane kabelem k routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Veřejná wifi je pohodlná, ale cizí — kdo ji provozuje, může provoz sledovat.
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí vlastními slovy vztah klient–server na příkladu otevření webové stránky.
-        rocnik: 7
-      - uroven: hodnoceni
-        text: Žák pro danou situaci doporučí vhodný způsob připojení zařízení do sítě a volbu zdůvodní.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák popíše, kdo v komunikaci posílá požadavek a kdo odpověď, když načítá stránku.
-      - uroven: hodnoceni
-        text: Žák u zadané potřeby vybere způsob připojení a uvede jeho výhodu i nevýhodu.
-      - text: Vysvětlí rozdíl mezi internetem, webem, wifi sítí, wifi signálem, wifi routerem, mobilním signálem a mobilními daty; schematicky zakreslí vztah mezi nimi.
-        garant: I2
-      - text: Vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely.
-        garant: I3
-      - text: Popíše rozdíly mezi připojením na veřejnou vs. domácí wifi síť; vysvětlí, jaké aktivity považuje za (ne)vhodné pro vykonávání na veřejné wifi a proč.
-        garant: I18
-    prerekvizity: []
-    souvisi: []
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-cesta-dat-internetem
-    nazev: Cesta dat internetem
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: core
-    popis: Internet vznikl jako síť, která má fungovat, i když část vypadne — proto nemá jeden střed, ale spoustu cest. Data se dělí na balíčky a putují od tvého počítače přes router a další routery a switche až k serveru a zpátky; e-mail jde přes servery obou poskytovatelů. Po cestě data může někdo číst, pokud nejsou šifrovaná — šifrování je udělá pro útočníka po cestě nečitelná.
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: porozumeni
-        text: Žák na schematickém modelu internetu zakreslí cestu dat mezi svým počítačem a serverem a vysvětlí, proč je internet odolný proti výpadkům.
-        rocnik: 8
-      - uroven: analyza
-        text: Žák ve schématu označí, kde může útočník nešifrovanou komunikaci číst a jak to mění šifrování.
-        rocnik: 9
-    kriteria:
-      - text: Popíše, jak a proč vznikl internet a jaký to má dopad na architekturu internetu.
-        garant: I4
-      - text: Do schematického modelu části internetu, který obsahuje počítač žáka, webový server a routery či switche, zakreslí, jakým způsobem komunikuje počítač žáka s webovým serverem, když poprvé načítá z tohoto serveru určitou webovou stránku.
-        garant: I7
-      - text: Pro situaci posílání zprávy přes sociální síť ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, server sociální sítě, jiný server a routery či switche, označí a) zařízení, jejichž poškození způsobí, že zaslaná zpráva nedorazí k cíli, a b) zařízení, jejichž poškození toto nezpůsobí. Diskutuje robustnost internetové architektury.
-        garant: I8
-      - text: Pro situaci posílání emailu, kde adresát a příjemce mají jiného emailového poskytovatele, ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, emailový server obou emailových poskytovatelů a routery či switche, označí a) cestu emailu, b) část cesty, kde email bude typicky nezašifrovaný.
-        garant: I9
-      - text: Na schematickém modelu internetu, který znázorňuje posílání nešifrované vs. šifrované zprávy, zhodnotí možností útočníka komunikaci „po cestě“ přečíst.
-        garant: I10
-    prerekvizity:
-      - digitalni-zaklady-internet-a-sit
-    souvisi:
-      - kyberbezpecnost-sifrovani-a-https
-    tagy:
-      - teoretický základ
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-cloud-a-server
-    nazev: Cloud a server
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: core
-    popis: |-
-      „Cloud" zní tajemně, ale je to jen cizí výkonný počítač (server) v datovém centru, ke kterému se připojuješ přes internet. Když si ukládáš fotky „do cloudu" nebo píšeš ChatGPT, ve skutečnosti pracuje někde daleko něčí server, ne tvůj telefon.
-
-      Server je obecně počítač připojený k internetu, který ostatním poskytuje služby — web, e-mail, hry, video. Podle toho, jak s ním pracuješ, mluvíme o stahování (download), nahrávání (upload) nebo streamování, kdy se data přehrávají průběžně bez uložení.
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: porozumeni
-        text: Žák vlastními slovy vysvětlí, co znamená ukládat data „do cloudu“, a popíše, kde data ve skutečnosti leží.
-        rocnik: 7
-      - uroven: analyza
-        text: Žák rozliší, které úkoly řeší jeho vlastní zařízení a které vzdálený server.
-        rocnik: 8
-    kriteria:
-      - uroven: porozumeni
-        text: Žák na příkladu ukládání fotek nebo psaní chatbotu ukáže, kde výpočet a data reálně jsou.
-      - uroven: analyza
-        text: Žák u konkrétní služby označí činnost běžící na jeho zařízení a činnost běžící na serveru.
-      - text: Vysvětlí vrstevníkovi význam serveru ve smyslu počítačového zařízení připojeného k internetu, které poskytuje nějaké služby.
-        garant: I1
-      - text: Vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním.
-        garant: I22
-    prerekvizity:
-      - digitalni-zaklady-internet-a-sit
-    souvisi: []
-    tagy:
-      - teoretický základ
-      - udržitelnost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-adresy-a-protokoly
-    nazev: Adresy a protokoly
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: navazujici
-    popis: 'Aby se zařízení na internetu našla a rozuměla si, používají adresy a dohodnutá pravidla komunikace: doména (seznam.cz) se přes DNS přeloží na číselnou IP adresu a data putují podle protokolu HTTP(S). Je to jako poštovní adresa plus společný jazyk dopisu.'
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: porozumeni
-        text: Žák vlastními slovy vysvětlí, jak se doména přes DNS přeloží na IP adresu.
-        rocnik: 8
-      - uroven: analyza
-        text: Žák rozliší roli domény, IP adresy a protokolu HTTP při načítání stránky.
-        rocnik: 8
-    kriteria:
-      - uroven: analyza
-        text: Žák u načtení stránky přiřadí každému pojmu (doména, IP, protokol) jeho úlohu.
-      - text: Vysvětlí, co je to IP adresa, URL a DNS služba a jaké jsou mezi nimi vztahy.
-        garant: I5
-    prerekvizity:
-      - digitalni-zaklady-internet-a-sit
-    souvisi: []
-    tagy:
-      - teoretický základ
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-prohlizec-a-vyhledavac
-    nazev: Prohlížeč a vyhledávač
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: null
-    vrstva: navazujici
-    popis: Webová stránka je text s instrukcemi (HTML, CSS), které prohlížeč teprve převede na to, co vidíš — proto se stejná stránka zobrazí jinak na mobilu a na počítači a trochu jinak v různých prohlížečích. Vyhledávač zase stránky dopředu prochází roboty a staví si z nich rejstřík (index); když hledáš, neprohledává web, ale ten rejstřík.
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, jak prohlížeč „ví“, jak stránku zobrazit, a proč se zobrazení liší podle zařízení a prohlížeče.
-        rocnik: 8
-      - uroven: porozumeni
-        text: Žák vysvětlí hlavní myšlenku toho, jak si vyhledávač tvoří přehled o obsahu webu.
-        rocnik: 8
-    kriteria:
-      - text: Vysvětlí svému vrstevníkovi, jak prohlížeč webových stránek „ví“, jak přesně má stránku zobrazit; popíše, proč se stránka zobrazuje jinak na telefonu a jinak na počítači a proč se může zobrazovat odlišně v různých prohlížečích.
-        garant: I6
-      - text: Vysvětlí vrstevníkovi hlavní myšlenku toho, jakým způsobem si internetové vyhledávače „tvoří“ přehled o tom, kde lze co na webu najít.
-        garant: I11
-    prerekvizity:
-      - digitalni-zaklady-adresy-a-protokoly
-    souvisi:
-      - tvorba-webu-jak-funguje-web
-    tagy:
-      - teoretický základ
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-cloudove-dokumenty-a-sdileni
-    nazev: Cloudové dokumenty a sdílení
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: informacni-systemy
-    kompetence: kdi-zap
-    vrstva: navazujici
-    popis: 'Dokument v cloudu neleží v tvém počítači, ale na serveru, a může ho upravovat víc lidí najednou. Komu co dovolíš, určují přístupová práva a role: čtenář jen čte, komentátor přidává poznámky, přispěvatel upravuje, správce rozhoduje o sdílení. Když ti vypadne připojení, píšeš do kopie, která se po obnovení spojení sloučí; když vypadne cloud, nemá kam ukládat nikdo.'
-    rvp:
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: aplikace
-        text: Žák nastaví cloudovému dokumentu různým uživatelům různá práva a vysvětlí rozdíly mezi rolemi.
-        rocnik: 7
-      - uroven: analyza
-        text: Žák předpoví, co se s cloudovým dokumentem stane při výpadku připojení nebo služby.
-        rocnik: 8
-    kriteria:
-      - text: Pro cloudovský dokument nastaví různým uživatelům různá přístupová práva.
-        garant: I19
-      - text: Vysvětlí, co se stane s cloudovským dokumentem, když tento žák edituje a a) spadne žákovo připojení k internetu, b) spadne připojení kolegy, který pracuje na jiné části dokumentu ve stejném čase, c) přestane dočasně fungovat cloud.
-        garant: I20
-      - text: Vysvětlí rozdíly mezi uživatelskými rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva nad dokumenty.
-        garant: I21
-    prerekvizity:
-      - digitalni-zaklady-cloud-a-server
-    souvisi:
-      - data-databaze-ucel-informacnich-systemu
-    tagy:
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
-    pokryti_glitchem: []
-    stav: draft
-  - id: digitalni-zaklady-kde-jsou-data-fyzicky
-    nazev: Kde jsou data fyzicky
-    tema: digitalni-zaklady
-    podoblast: internet-a-site
-    oblast: digitalni-technologie
-    kompetence: kdi-bzk
-    vrstva: navazujici
-    popis: |-
-      Data z aplikací neleží „někde v internetu", ale na konkrétních serverech na konkrétním místě na světě. Kde přesně jsou, ovlivňuje rychlost (latenci) i to, jaké zákony na ně platí — třeba jestli je chrání evropské GDPR.
-
-      Pro data na serveru v EU platí GDPR včetně práva „být zapomenut“; u služby mimo EU se trvalého smazání domoci nemusíš a software či cloud z některých zemí může být i bezpečnostní riziko.
-    rvp:
-      - kod: INF-INF-004-ZV9-012
-        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
-      - kod: INF-INF-004-ZV9-011
-        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
-        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
-    cile:
-      - uroven: porozumeni
-        text: Žák vysvětlí, proč místo uložení dat ovlivňuje rychlost i to, jaké zákony na ně platí.
-        rocnik: 9
-      - uroven: hodnoceni
-        text: Žák u konkrétní služby posoudí riziko plynoucí z toho, kde jsou uložena její data.
-        rocnik: 9
-    kriteria:
-      - uroven: hodnoceni
-        text: Žák u zadané služby uvede jedno riziko spojené s umístěním dat a zmíní roli ochrany GDPR.
-      - text: Vysvětlí z perspektivy GDPR a práva „být zapomenut“, jestli lze smazat trvale osobní data z internetového serveru, který je v EU vs. mimo EU.
-        garant: I17
-      - text: Vysvětlí, jaká bezpečnostní rizika obnáší pro občany EU používání softwaru či cloudových služeb zemí mimo EU (např. na příkladu antiviru či cloudu fotovoltaických elektráren); vysvětlí pojem Trojský kůň.
-        garant: I26
-    prerekvizity:
-      - digitalni-zaklady-cloud-a-server
-    souvisi:
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
-    tagy:
-      - bezpečí a rizika
-      - soukromí
-      - teoretický základ
-      - udržitelnost
-    zdroj:
-      - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
     pokryti_glitchem: []
     stav: draft
   - id: digitalni-zaklady-api
@@ -912,126 +300,1705 @@ concepts:
     zdroj: []
     pokryti_glitchem: []
     stav: draft
-  - id: digitalni-zaklady-malware-a-antivirus
-    nazev: Malware, antivirus a aktualizace
+  - id: digitalni-zaklady-vrstvy-pocitace
+    nazev: Vrstvy počítače
     tema: digitalni-zaklady
-    podoblast: zabezpeceni-zarizeni
+    podoblast: zarizeni-a-uloziste
     oblast: digitalni-technologie
-    kompetence: kdi-bzk
-    vrstva: core
-    popis: 'Malware je škodlivý program — virus, trojský kůň, ransomware, spyware — který se do zařízení dostane obvykle s něčím, co si sám stáhneš nebo spustíš. Hacker je člověk, který hledá cesty dovnitř; často využívá chyby v programech, a právě ty opravují aktualizace. Antivirus hlídá známé hrozby, ale nenahradí opatrnost: stahovat jen z prověřených zdrojů a neodkládat aktualizace.'
-    rvp:
-      - kod: INF-INF-004-ZV9-012
-        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
-        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    kompetence: null
+    vrstva: navazujici
+    popis: 'Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.'
+    rvp: []
     cile:
       - uroven: porozumeni
-        text: Žák rozliší druhy malwaru, vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním a odliší malware od hackera.
-        rocnik: 7
-      - uroven: aplikace
-        text: 'Žák zabezpečí vlastní zařízení: vybere a nainstaluje spolehlivý antivirus a popíše vlastní pravidla pro stahování.'
+        text: Žák vysvětlí na příkladu, jak vrstvy hardware – operační systém – aplikace skrývají složitost té pod sebou.
         rocnik: 8
     kriteria:
-      - text: Najde na internetu spolehlivý antivirus a nainstaluje ho na mobil či počítač.
-        garant: B3
-      - text: Rozliší alespoň tři druhy malware a vysvětlí jejich princip, popíše rozdíl mezi malwarem a hackerem.
-        garant: B4
-      - text: Vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním.
-        garant: B5
-      - text: Diskutuje o cílech a metodách hackerů.
-        garant: B6
-      - text: Popíše svá osobní bezpečnostní pravidla pro to, jak hledá na internetu aplikace či soubory ke stažení do svého zařízení (např. stahuje pouze z konkrétních prověřených stránek apod.).
-        garant: B7
+      - uroven: porozumeni
+        text: Žák seřadí vrstvy od hardwaru po aplikaci a u jedné z nich uvede, co skrývá.
     prerekvizity:
-      - digitalni-zaklady-operacni-system-a-soubory
-    souvisi:
-      - kyberbezpecnost-typy-utoku
-      - kyberbezpecnost-zakladni-hygiena
+      - digitalni-zaklady-hardware-a-software
+    souvisi: []
     tagy:
-      - bezpečí a rizika
-      - praktická dovednost
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
+      - teoretický základ
+    zdroj: []
     pokryti_glitchem: []
     stav: draft
-  - id: digitalni-zaklady-soukromi-na-zarizeni
-    nazev: Soukromí na zařízení
+  - id: digitalni-zaklady-typy-souboru-a-pripony
+    nazev: Typy souborů a přípony
     tema: digitalni-zaklady
-    podoblast: zabezpeceni-zarizeni
+    podoblast: soubory-a-ovladani
     oblast: digitalni-technologie
-    kompetence: kdi-bzk
+    kompetence: kdi-dat
     vrstva: core
-    popis: 'Mobil o tobě ví víc, než si myslíš: kde jsi (poloha), co vidí kamera a slyší mikrofon, a každá fotka si nese metadata — čas, model telefonu, často i přesné místo pořízení. Aplikacím se dá přístup k poloze a periferiím zakázat a sledování polohy vypnout; u sdílených fotek stojí za to metadata odstranit.'
+    popis: Obrázek, text, video, hudba — každý soubor má typ a ten poznáš podle přípony (jpg, pdf, mp4). Podle typu se vybírá program, který soubor otevře. Počítač i mobil přípony často skrývají, aby nepletly; zobrazit se dají v nastavení.
     rvp:
-      - kod: INF-INF-004-ZV9-012
-        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
-        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, jaké osobní informace lze zjistit z metadat souboru a z přístupu aplikací k poloze či kameře.
-        rocnik: 7
-      - uroven: aplikace
-        text: Žák na mobilu vypne sledování polohy a zakáže vybrané aplikaci přístup k periferiím.
-        rocnik: 7
+        text: Žák rozpozná typ souboru podle přípony, vybere k němu program a vysvětlí, proč se přípony někdy nezobrazují.
     kriteria:
-      - text: Vysvětlí význam metadat (např. u fotografií) pro možnost útočníka zjistit osobní informace o oběti (např. autorovi fotografie).
-        garant: B10
-      - text: Demonstruje, jak na mobilní zařízení vypnout funkci sledování polohy.
-        garant: B11
-      - text: Demonstruje, jak aplikacím v mobilním telefonu zakázat přístup k periferiím (např. ke kameře).
-        garant: B12
-    prerekvizity:
-      - digitalni-zaklady-operacni-system-a-soubory
-    souvisi:
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
-    tagy:
-      - soukromí
+      - text: Rozpozná základní typy souborů (obrázek, text, video, hudba); vybere vhodný program/aplikaci pro jejich spuštění; uvede ukázky přípon souborů různého typu (např. jpg, pdf, mp4); vysvětlí, proč tyto přípony někdy počítač/mobil zobrazuje a jindy ne.
+        garant: O1
+    prerekvizity: []
+    souvisi: []
+    tagy: &id001
       - praktická dovednost
     zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
     stav: draft
-  - id: digitalni-zaklady-chytra-zarizeni-a-rizika
-    nazev: Chytrá zařízení a jejich rizika
+  - id: digitalni-zaklady-prevod-do-pdf
+    nazev: Převod do PDF
     tema: digitalni-zaklady
-    podoblast: zabezpeceni-zarizeni
+    podoblast: soubory-a-ovladani
     oblast: digitalni-technologie
-    kompetence: kdi-bzk
-    vrstva: navazujici
-    popis: 'Počítač není jen notebook: malý (mikro)procesor je dnes i v myši, USB disku, lampičce nebo autě. Dokud takový „skrytý počítač“ není připojený k internetu, hrozí mu málo; jakmile je „chytrý“ a online, dá se zvenčí ovládnout nebo z něj číst — a mobil navíc operátorovi neustále hlásí svou polohu. Chytré sítě, auta a domácnosti proto přinášejí vedle pohodlí i bezpečnostní a etické otázky.'
+    kompetence: kdi-dat
+    vrstva: core
+    popis: PDF je formát, který vypadá všude stejně — na mobilu, v tiskárně i u někoho s jiným programem. Většina aplikací do něj umí uložit nebo „vytisknout“ dokument, obrázek i prezentaci.
     rvp:
-      - kod: INF-INF-004-ZV9-012
-        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
-        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: aplikace
+        text: Žák převede soubor do pdf a vysvětlí, proč se pdf hodí na tisk a sdílení.
+    kriteria:
+      - text: Převede soubory různých typů do pdf; vysvětlí výhody pdf formátu z hlediska tisku a zobrazení.
+        garant: O2
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-zakladni-ovladani-aplikaci
+    nazev: Základní ovládání aplikací
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Ať tvoříš text, nebo obrázek, aplikace se ovládají stejnými mechanismy: uložit a načíst, kopírovat přes schránku, krok zpět a vpřed, přiblížit lupou, posouvat se v dokumentu. Kdo je ovládá, zvládne i program, který nikdy neviděl.'
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: aplikace
+        text: Žák rutinně používá uložení a načtení, schránku, krok zpět a vpřed, lupu a posun v různých aplikacích.
+    kriteria:
+      - text: Rutinně používá základní mechanismy ovládání aplikací pro tvorbu statických dat (např. textu či obrazu) – mechanismus ukládání a načítání dat, kopírování části dat přes střižnu („clip board“), krok zpět („undo“) a vpřed (“redo”), změna velikosti zobrazení (lupa), náhled na jinou část dat („scrolování“) apod.
+        garant: O3
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-prace-s-casovou-osou
+    nazev: Práce s časovou osou
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Video, zvuk a animace mají navíc čas: v časové ose vidíš, co se kdy stane, a přesouváš, stříháš a zarovnáváš úseky. Stejný princip má střih videa, hudební editor i animace v prezentaci.'
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: aplikace
+        text: Žák v aplikaci pro video, zvuk nebo animaci pracuje s časovou osou.
+    kriteria:
+      - text: V aplikacích pro tvorbu dynamických dat (např. animace v prezentaci, video, zvuk) pracuje s časovou osou.
+        garant: O4
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-struktura-dokumentu-styly-a-vrstvy
+    nazev: 'Struktura dokumentu: styly a vrstvy'
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Dokument není jen hromada písmen: odstavce mají styly, objekty v prezentaci leží ve vrstvách nad sebou. Když změníš styl místo každého nadpisu zvlášť, změna se projeví všude naráz.'
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: aplikace
+        text: Žák mění vlastnosti dokumentu přes jeho strukturu — styly odstavců v textu, vrstvy objektů v prezentaci.
+    kriteria:
+      - text: Ve strukturovaných dokumentech mění vlastnosti dokumentu s využitím této struktury – například u textových souborů mění styly odstavců, v prezentaci vektorové objekty přesouvá „před“ a „za“ v jednotlivých vrstvách apod.
+        garant: O5
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-rozliseni-obrazu
+    nazev: Rozlišení obrazu
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Rozlišení říká, z kolika bodů se obraz skládá. Víc bodů znamená ostřejší obraz na velkém displeji nebo v tisku, ale i větší soubor; na malém displeji mobilu rozdíl často nepoznáš.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co je rozlišení obrazu a jak se projevuje na displeji, při focení, v tisku i ve velikosti souboru.
+    kriteria:
+      - text: Vysvětlí vrstevníkovi pojem rozlišení obrazu v kontextu zobrazení na monitoru a displeji mobilu, focení a tvorby videa, tisku a ukládání souborů.
+        garant: O6
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-organizace-souboru-do-slozek
+    nazev: Organizace souborů do složek
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Sto souborů na ploše se nedá najít. Složky s jasnými názvy — podle předmětu, projektu nebo roku — jsou základní nástroj pořádku, který musíš navrhnout dřív, než začneš soubory přesouvat.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: tvorba
+        text: Žák navrhne pro větší množství souborů strukturu složek, založí ji a soubory do ní rozmístí.
+    kriteria:
+      - text: Když dostane 100 souborů různých typů, navrhne jejich vhodnou organizaci pomocí složek, složky založí na počítači a soubory do složek rozmístí.
+        garant: O7
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-fotky-z-mobilu-do-pocitace
+    nazev: Fotky z mobilu do počítače
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Fotky z mobilu se hromadí po stovkách. Přenést je do počítače, roztřídit do několika složek a ty důležité přejmenovat tak, aby bylo z názvu poznat, co na nich je — bez téhle údržby je sbírka k ničemu.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: aplikace
+        text: Žák přenese fotky a videa z mobilu do počítače, uspořádá je do složek a klíčové přejmenuje.
+    kriteria:
+      - text: Přenese desítky až stovky fotografií a videí z mobilního telefonu do počítače, navrhne jejich uspořádání pomocí několika složek a dle tohoto návrhu soubory uspořádá; klíčové fotografie přejmenuje tak, aby z názvu bylo patrné, o jakou fotku jde.
+        garant: O8
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-zalohovani-dat
+    nazev: Zálohování dat
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: 'Disk se rozbije, mobil ztratí, účet zablokuje. Záloha je kopie důležitých dat na jiném místě — na druhém disku, v cloudu. Důležitá jsou pravidla: co, kam a jak často.'
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí význam zálohování a popíše svá vlastní pravidla zálohování.
+    kriteria:
+      - text: Vysvětlí význam zálohování dat a popíše svá osobní pravidla, která používá pro zálohování svých dat.
+        garant: O9
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-zakladni-hygiena
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-zaseknuty-program
+    nazev: Když se program zasekne
+    tema: digitalni-zaklady
+    podoblast: soubory-a-ovladani
+    oblast: digitalni-technologie
+    kompetence: kdi-dat
+    vrstva: core
+    popis: Program přestane reagovat, když čeká na něco, co nepřijde, nebo mu došla paměť. Většinou pomůže chvíli počkat, pak program násilně ukončit a znovu spustit; rozdělaná práce bez uložení je pryč.
+    rvp:
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-02 – ukládá a spravuje svá data ve vhodném formátu s ohledem na jejich další zpracování či přenos (v RVP 2024 bez samostatného výstupu)'
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-04 – poradí si s typickými závadami a chybovými stavy počítače (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co znamená, že se program „zasekl“, a jak situaci vyřešit.
+    kriteria:
+      - text: Vysvětlí, co to znamená, že se program „zasekne“ a jakým způsobem tuto situaci vyřešit.
+        garant: O10
+    prerekvizity: []
+    souvisi: []
+    tagy: *id001
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-typy-trvalych-ulozist
+    nazev: Typy trvalých úložišť
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Pevný disk, SSD, USB flash disk, SD karta, interní paměť mobilu, DVD — každé úložiště má jinou kapacitu, rychlost, odolnost a cenu. Podle toho se hodí na jiný účel: velký archiv, přenos mezi počítači, fotky v mobilu.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí výhody a nevýhody různých typů trvalých úložišť dat.
+    kriteria:
+      - text: Vysvětlí vrstevníkovi výhody a nevýhody různých typů trvalých úložišť dat (například USB flash disk, pevný disk, SD karta, interní paměť mobilu, DVD…).
+        garant: Z0
+    prerekvizity: []
+    souvisi: []
+    tagy: &id002
+      - teoretický základ
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-lokalne-nebo-v-cloudu
+    nazev: Lokálně, nebo v cloudu
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Lokálně uložená data máš u sebe a fungují i bez internetu; v cloudu leží na cizím serveru, dostaneš se k nim odkudkoli a nepřijdeš o ně se ztraceným zařízením — ale potřebuješ připojení a musíš poskytovateli věřit.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: hodnoceni
+        text: Žák popíše rozdíl mezi uložením dat lokálně a v cloudu a posoudí výhody a nevýhody obou.
+    kriteria:
+      - text: Popíše rozdíl mezi uložením dat lokálně a na cloudu; diskutuje výhody a nevýhody.
+        garant: Z1
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-bezpecne-smazani-dat
+    nazev: Bezpečné smazání dat
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Smazaný soubor z disku hned nezmizí — systém si jen přestane pamatovat, kde ležel, a data tam zůstávají, dokud je něco nepřepíše. Než zařízení vyhodíš nebo prodáš, musíš je přepsat nebo zašifrovat; někdy je lepší ho nevyhazovat vůbec.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí „líné“ mazání dat a popíše, jak data před vyhozením zařízení odstranit bezpečně.
+    kriteria:
+      - text: Vysvětlí mechanismus „líného“ mazání dat uložených lokálně. Vysvětlí, jakým způsobem bezpečně odstranit taková data, pokud zařízení, kde jsou uložena, chceme vyhodit – tzn. jak lze (někdy) zařídit, aby se k datům nebo jejich částem nedostal nikdo, kdo vyhozené zařízení najde. Zejména vysvětlí, proč běžné smazání a zároveň vysypání koše není v této situaci dostačující a kdy je případně lepší zařízení nikdy nevyhazovat (neprodávat).
+        garant: Z2
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-operacni-system-a-soubory
+    nazev: Operační systém
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Operační systém (Windows, Android, iOS, macOS) řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Mobil má jiný systém než počítač, ale oba dělají to samé.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí význam operačního systému a přiřadí základní operační systémy k typickým zařízením.
+    kriteria:
+      - text: Vysvětlí vrstevníkovi, jaký základní význam pro počítač nebo mobil má operační systém; rozpozná základní operační systémy (např. Android, iOS, Windows) a asociuje je s typickými zařízeními (např. mobil vs. počítač).
+        garant: Z3
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-komprese-dat
+    nazev: Komprese dat
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Komprese zmenší soubor tím, že odstraní opakování nebo nepodstatné detaily. Co je jednou zkomprimované, už se znovu skoro nezmenší — zbývající data jsou nahodilá a není v nich co ušetřit.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak komprese souvisí s velikostí dat a proč nejde komprimovat donekonečna.
+    kriteria:
+      - text: Vysvětlí, jak komprese souvisí s velikostí dat, a proč není možné zkomprimovaný soubor zmenšovat opakovanou komprimací do nekonečna.
+        garant: Z4
+    prerekvizity: []
+    souvisi:
+      - data-databaze-kodovani-dat
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-velikost-dat-mb-a-gb
+    nazev: 'Velikost dat: MB a GB'
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Velikost dat se měří v bytech: megabyte (MB) je milion, gigabyte (GB) miliarda bytů. Fotka má jednotky MB, film jednotky GB — podle toho poznáš, co se vejde na kartu nebo do mobilu.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí zkratky MB a GB a odhadne řádové velikosti fotek a filmů.
+    kriteria:
+      - text: Popíše význam zkratek MB a GB (megabyte a gigabyte) a uvede řádové velikosti fotek a delších videí (např. filmů).
+        garant: Z5
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-propojeni-mobilu-a-pocitace
+    nazev: Propojení mobilu a počítače
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Mobil a počítač se dají spojit i bez wifi a internetu — kabelem přes USB nebo přes Bluetooth. Pak se mezi nimi kopírují fotky a soubory jako mezi dvěma složkami.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: aplikace
+        text: Žák propojí mobil s počítačem bez internetu (např. přes USB) a překopíruje mezi nimi data.
+    kriteria:
+      - text: Propojí mobilní telefon a počítač bez pomocí internetu/wifi (například přes USB) a překopíruje z jednoho zařízení na druhé data (například fotky).
+        garant: Z6
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-pripojeni-externich-zarizeni
+    nazev: Připojení externích zařízení
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Monitor, projektor, tiskárna, klávesnice — každé externí zařízení potřebuje správný port nebo bezdrátové spojení a někdy i ovladač. Zapojit, zvolit zdroj či zařízení v nastavení, hotovo.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: aplikace
+        text: Žák připojí k počítači monitor, projektor nebo tiskárnu.
+    kriteria:
+      - text: Připojí k počítači externí zařízení, například monitor, projektor nebo tiskárnu.
+        garant: Z7
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-instalace-a-odinstalace-aplikaci
+    nazev: Instalace a odinstalace aplikací
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Aplikace se instalují z obchodu nebo z instalačního souboru a odinstalují přes nastavení systému — nestačí smazat ikonu. Co nepoužíváš, odinstaluj: zabírá místo a může být bezpečnostní riziko.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: aplikace
+        text: Žák nainstaluje a odinstaluje aplikaci.
+    kriteria:
+      - text: Nainstaluje a odinstaluje aplikaci.
+        garant: Z8
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-aktualizace-aplikaci
+    nazev: Aktualizace aplikací
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas i nové funkce — a občas změny, které se nehodí nebo nefungují na starém zařízení. Odkládat je ale znamená nechat otevřené známé díry.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: hodnoceni
+        text: Žák aktualizuje aplikaci a posoudí výhody a nevýhody aktualizací.
+    kriteria:
+      - text: Aktualizuje aplikaci; diskutuje o výhodách a nevýhodách aktualizací.
+        garant: Z9
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-restart-a-uklid-operacni-pameti
+    nazev: Restart a úklid operační paměti
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Každá spuštěná aplikace si drží kus operační paměti. Zavřením ji vrátí, restartem se vyprázdní celá — proto zpomalený mobil nebo počítač po restartu zase běží.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-04 – poradí si s typickými závadami a chybovými stavy počítače (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, proč zavření aplikace nebo restart „uklidí“ operační paměť zařízení.
+    kriteria:
+      - text: Popíše význam zavření aplikace resp. restartu počítače či mobilního zařízení pro „úklid“ operační paměti zařízení.
+        garant: Z10
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-hardware-a-software
+    nazev: Hardware a výběr zařízení
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Při nákupu rozhodují komponenty: procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, wifi, Bluetooth). Správná volba závisí na tom, k čemu zařízení chceš.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: hodnoceni
+        text: Žák při výběru mobilu či notebooku diskutuje o parametrech základních komponent a možnostech připojení.
+    kriteria:
+      - text: Na situaci nákupu nového mobilu či notebooku diskutuje o funkcích a parametrech základních komponent počítačového zařízení (zejména jde o procesor/jádra, trvalé úložiště, operační paměť, grafickou kartu), jakož i o možnostech, jak toto zařízení připojit k dalším zařízením (bezdrátová připojení, porty).
+        garant: Z11
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-proc-se-pocitac-zasekava
+    nazev: Proč se počítač zasekává
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Pomalý počítač má obvykle plnou operační paměť, plný disk, program běžící na pozadí, přehřátí nebo malware. Rozpoznat příčinu je první krok k nápravě.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-04 – poradí si s typickými závadami a chybovými stavy počítače (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co může způsobovat, že je počítač pomalejší než obvykle.
+    kriteria:
+      - text: Vysvětlí, co může způsobovat, že se „počítač strašně zasekává“ (je pomalejší než obvykle).
+        garant: Z12
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-programy-a-operacni-pamet
+    nazev: Programy a operační paměť
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Operační paměť (RAM) je rychlá, ale omezená. Každý spuštěný program z ní ukrajuje; když dojde, systém začne odkládat data na pomalý disk a všechno se zpomalí.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+      - kod: null
+        vystup: ''
+        poznamka: 'RVP 2021: I-9-4-04 – poradí si s typickými závadami a chybovými stavy počítače (v RVP 2024 bez samostatného výstupu)'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí vztah mezi počtem spuštěných programů a operační pamětí.
+    kriteria:
+      - text: Vysvětlí vztah mezi počtem spuštěných programů a operační pamětí počítače.
+        garant: Z13
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-kde-je-neulozeny-soubor
+    nazev: Kde je neuložený soubor
+    tema: digitalni-zaklady
+    podoblast: zarizeni-a-uloziste
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Nový dokument nebo obrázek existuje nejdřív jen v operační paměti — rychlé, ale dočasné. Dokud ho neuložíš na disk nebo do cloudu, výpadek proudu nebo pád programu ho smaže.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, kde se nachází nově založený soubor předtím, než ho uložíme na disk.
+    kriteria:
+      - text: Vysvětlí, kde se v počítači nachází nově založený soubor (např. obrázek či textový dokument nově otevřený v příslušném editoru) předtím, než ho uložíme na lokální úložiště (např. na disk, interní paměť…).
+        garant: Z14
+    prerekvizity: []
+    souvisi: []
+    tagy: *id002
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cloud-a-server
+    nazev: Server a cloud
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Server je počítač připojený k internetu, který ostatním poskytuje služby: web, e-mail, hry, video. Není nijak kouzelný — je to výkonný počítač v datovém centru, který běží pořád. „Cloud“ je jen jiné slovo pro cizí server, na kterém máš data nebo ti počítá.'
+    rvp:
       - kod: INF-INF-004-ZV9-011
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
       - uroven: porozumeni
-        text: Žák vysvětlí, co je mikroprocesor, a rozliší skrytý počítač bez připojení od chytrého zařízení online včetně jeho rizik.
-        rocnik: 8
+        text: Žák vysvětlí, co je server — počítač připojený k internetu, který poskytuje služby.
+    kriteria:
+      - text: Vysvětlí vrstevníkovi význam serveru ve smyslu počítačového zařízení připojeného k internetu, které poskytuje nějaké služby.
+        garant: I1
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+      - udržitelnost
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-internet-a-sit
+    nazev: Internet, web a wifi
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Internet je síť sítí; web je jedna ze služeb, které po něm běží. Domů internet přivádí kabel do routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Jsou to různé věci, které se v řeči pletou.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi internetem, webem, wifi, routerem, mobilním signálem a mobilními daty a zakreslí jejich vztah.
+    kriteria:
+      - text: Vysvětlí rozdíl mezi internetem, webem, wifi sítí, wifi signálem, wifi routerem, mobilním signálem a mobilními daty; schematicky zakreslí vztah mezi nimi.
+        garant: I2
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-elektricka-sit-vs-internetove-kabely
+    nazev: Elektrická síť vs. internetové kabely
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Obojí jsou „sítě“ s kabely, ale elektřina teče jako energie od elektrárny ke spotřebiči, zatímco po internetových kabelech putují data oběma směry, v balíčcích a po různých cestách.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely.
+    kriteria:
+      - text: Vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely.
+        garant: I3
+    prerekvizity: []
+    souvisi: []
+    tagy: &id003
+      - teoretický základ
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-vznik-a-architektura-internetu
+    nazev: Vznik a architektura internetu
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Internet vznikl jako síť, která má fungovat, i když část vypadne. Proto nemá jeden střed: data se dělí na balíčky a hledají si cestu přes mnoho propojených uzlů.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše, jak a proč vznikl internet a jak to ovlivnilo jeho architekturu.
+    kriteria:
+      - text: Popíše, jak a proč vznikl internet a jaký to má dopad na architekturu internetu.
+        garant: I4
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-adresy-a-protokoly
+    nazev: IP adresa, URL a DNS
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Každé zařízení na internetu má číselnou IP adresu; lidé si pamatují jména (URL jako seznam.cz). DNS je služba, která jméno přeloží na adresu — telefonní seznam internetu.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co je IP adresa, URL a DNS a jaký je mezi nimi vztah.
+    kriteria:
+      - text: Vysvětlí, co je to IP adresa, URL a DNS služba a jaké jsou mezi nimi vztahy.
+        garant: I5
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - teoretický základ
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-jak-prohlizec-zobrazi-stranku
+    nazev: Jak prohlížeč zobrazí stránku
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Stránka přichází jako text s instrukcemi (HTML, CSS) a prohlížeč ji teprve vykreslí. Proto vypadá jinak na úzkém mobilu než na monitoru a trochu jinak v každém prohlížeči.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, jak prohlížeč „ví“, jak stránku zobrazit, a proč se liší na mobilu, počítači a v různých prohlížečích.
+    kriteria:
+      - text: Vysvětlí svému vrstevníkovi, jak prohlížeč webových stránek „ví“, jak přesně má stránku zobrazit; popíše, proč se stránka zobrazuje jinak na telefonu a jinak na počítači a proč se může zobrazovat odlišně v různých prohlížečích.
+        garant: I6
+    prerekvizity: []
+    souvisi:
+      - tvorba-webu-jak-funguje-web
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cesta-pozadavku-k-webovemu-serveru
+    nazev: Cesta požadavku k webovému serveru
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Když načítáš stránku, požadavek jde z tvého počítače přes domácí router, dál přes routery a switche poskytovatelů až k serveru — a odpověď stejnou cestou zpátky.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: aplikace
+        text: Žák ve schématu internetu zakreslí, jak jeho počítač komunikuje s webovým serverem při načtení stránky.
+    kriteria:
+      - text: Do schematického modelu části internetu, který obsahuje počítač žáka, webový server a routery či switche, zakreslí, jakým způsobem komunikuje počítač žáka s webovým serverem, když poprvé načítá z tohoto serveru určitou webovou stránku.
+        garant: I7
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-robustnost-internetu
+    nazev: Robustnost internetu
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Zpráva na sociální síti jde přes server sítě; vypadne-li router po cestě, data si najdou jinou. Zastaví je jen výpadek něčeho, co nemá náhradu — tvého připojení nebo serveru sítě.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: analyza
+        text: Žák ve schématu označí, která zařízení při poškození zprávu zastaví a která ne, a diskutuje robustnost internetu.
+    kriteria:
+      - text: Pro situaci posílání zprávy přes sociální síť ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, server sociální sítě, jiný server a routery či switche, označí a) zařízení, jejichž poškození způsobí, že zaslaná zpráva nedorazí k cíli, a b) zařízení, jejichž poškození toto nezpůsobí. Diskutuje robustnost internetové architektury.
+        garant: I8
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cesta-e-mailu
+    nazev: Cesta e-mailu
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: E-mail putuje z tvého zařízení na server tvého poskytovatele, odtud na server poskytovatele příjemce a k němu. Mezi servery bývá šifrovaný, ale na serverech leží čitelný — kdo k nim má přístup, čte.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: analyza
+        text: Žák ve schématu označí cestu e-mailu mezi dvěma poskytovateli a část, kde je typicky nešifrovaný.
+    kriteria:
+      - text: Pro situaci posílání emailu, kde adresát a příjemce mají jiného emailového poskytovatele, ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, emailový server obou emailových poskytovatelů a routery či switche, označí a) cestu emailu, b) část cesty, kde email bude typicky nezašifrovaný.
+        garant: I9
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-sifrovana-a-nesifrovana-komunikace
+    nazev: Šifrovaná a nešifrovaná komunikace
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Nešifrovaná zpráva je po cestě jako pohlednice — každý uzel ji může číst. Šifrovaná je pro útočníka po cestě nečitelná; dá se přečíst jen u odesílatele a příjemce.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
       - uroven: hodnoceni
-        text: Žák posoudí rizika chytrých technologií a sledování polohy v bezpečnostní i etické rovině.
-        rocnik: 9
+        text: Žák na modelu posílání zprávy zhodnotí, kdy může útočník komunikaci „po cestě“ přečíst.
+    kriteria:
+      - text: Na schematickém modelu internetu, který znázorňuje posílání nešifrované vs. šifrované zprávy, zhodnotí možností útočníka komunikaci „po cestě“ přečíst.
+        garant: I10
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-sifrovani-a-https
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-jak-funguje-vyhledavac
+    nazev: Jak funguje vyhledávač
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Vyhledávač web neprohledává ve chvíli, kdy hledáš. Jeho roboti stránky procházejí dopředu a stavějí z nich rejstřík (index); ty pak prohledáváš rejstřík, ne web.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí hlavní myšlenku toho, jak si vyhledávač tvoří přehled o obsahu webu.
+    kriteria:
+      - text: Vysvětlí vrstevníkovi hlavní myšlenku toho, jakým způsobem si internetové vyhledávače „tvoří“ přehled o tom, kde lze co na webu najít.
+        garant: I11
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cookies
+    nazev: Cookies
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Cookie je malý záznam, který si web uloží v tvém prohlížeči: díky němu zůstaneš přihlášený a nákupní košík se nevysype. Stejný mechanismus ale umožňuje sledovat tě napříč weby.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše výhody a nevýhody cookies.
+    kriteria:
+      - text: Popíše výhody a nevýhody cookies.
+        garant: I12
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-personalizovany-obsah
+    nazev: Personalizovaný obsah
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Reklamy, videa, zprávy i výsledky vyhledávání se přizpůsobují tomu, co o tobě služba ví. Je to pohodlné — a zároveň tě to zavírá do bubliny a prodává tvou pozornost.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: hodnoceni
+        text: Žák uvede příklady personalizovaného obsahu, vysvětlí, jak personalizace funguje, a posoudí její výhody a nevýhody.
+    kriteria:
+      - text: Uvede alespoň tři příklady personalizovaného obsahu webu (např. reklamy, videa, novinové zprávy, výsledky vyhledávání) a vysvětlí, jak je možné, že je tento obsah přizpůsobován na míru uživateli. Diskutuje výhody a nevýhody této personalizace.
+        garant: I13
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-digitalni-stopa-a-digitalni-identita
+    nazev: Digitální stopa a digitální identita
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Digitální identita je to, kým na internetu jsi (účty, profily); digitální stopa je všechno, co po sobě necháváš — příspěvky, lajky, polohu, historii hledání. Stopa vzniká i bez tvého vědomí.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák rozliší digitální stopu a digitální identitu a popíše, čím stopu vytváří.
+    kriteria:
+      - text: Popíše rozdíl mezi digitální stopou a digitální identitou. Diskutuje, čím vším svou digitální stopu vytváří.
+        garant: I14
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-financovani-socialnich-siti-reklamou
+    nazev: Financování sociálních sítí reklamou
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Sociální síť je zdarma, protože platí inzerenti — za tvou pozornost a za možnost cílit reklamu podle toho, co o tobě síť ví. Čím déle tě udrží, tím víc vydělá.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák popíše princip financování sociálních sítí pomocí reklamy.
+    kriteria:
+      - text: Popíše princip financování sociálních sítí pomocí reklamy.
+        garant: I15
+    prerekvizity: []
+    souvisi:
+      - digitalni-obcanstvi-obchodni-modely-platforem
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-osobni-data-a-treti-strany
+    nazev: Osobní data a třetí strany
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Weby, aplikace, operátoři i úřady mohou získat tvou polohu, kontakty, zájmy, historii nákupů. Část toho dovoluješ sám v nastavení a souhlasech — a část se dá omezit, když víš kde.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: hodnoceni
+        text: Žák popíše, jaká osobní data mohou získat třetí osoby a instituce, a jak tomu může uživatel zabránit.
+    kriteria:
+      - text: Popíše, jaká osobní data uživatelů internetu mohou třetí osoby nebo instituce získat; a jakým způsobem a kdy a jak tomu může uživatel zabránit.
+        garant: I16
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-kde-jsou-data-fyzicky
+    nazev: GDPR a právo být zapomenut
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: V EU máš podle GDPR právo žádat smazání svých dat a služba musí vyhovět. U serveru mimo EU se tohoto práva domoci nemusíš — data tam mohou zůstat napořád. Kde fyzicky data leží, proto není jedno.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, zda a jak lze podle GDPR trvale smazat osobní data ze serveru v EU a mimo EU.
+    kriteria:
+      - text: Vysvětlí z perspektivy GDPR a práva „být zapomenut“, jestli lze smazat trvale osobní data z internetového serveru, který je v EU vs. mimo EU.
+        garant: I17
+    prerekvizity: []
+    souvisi: []
+    tagy:
+      - bezpečí a rizika
+      - soukromí
+      - teoretický základ
+      - udržitelnost
+    zdroj:
+      - RVP_revidované_2024-03-28.pdf, s. 54–55
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-verejna-vs-domaci-wifi
+    nazev: Veřejná vs. domácí wifi
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Domácí wifi provozuješ ty; veřejnou někdo cizí, kdo může provoz sledovat nebo podvrhnout. Přihlašování do banky nebo nákupy na veřejnou wifi nepatří — nebo jen přes šifrované spojení.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: hodnoceni
+        text: Žák popíše rozdíl mezi veřejnou a domácí wifi a posoudí, co na veřejné wifi (ne)dělat.
+    kriteria:
+      - text: Popíše rozdíly mezi připojením na veřejnou vs. domácí wifi síť; vysvětlí, jaké aktivity považuje za (ne)vhodné pro vykonávání na veřejné wifi a proč.
+        garant: I18
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-pristupova-prava-ke-cloudovemu-dokumentu
+    nazev: Přístupová práva ke cloudovému dokumentu
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Cloudový dokument sdílíš nastavením práv: kdo může číst, komentovat, upravovat. Odkaz „pro každého“ je nejpohodlnější a nejrizikovější.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: aplikace
+        text: Žák nastaví cloudovému dokumentu různým uživatelům různá přístupová práva.
+    kriteria:
+      - text: Pro cloudovský dokument nastaví různým uživatelům různá přístupová práva.
+        garant: I19
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cloudovy-dokument-pri-vypadku
+    nazev: Cloudový dokument při výpadku
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Když ti vypadne připojení, píšeš do místní kopie, která se po obnovení sloučí; výpadek kolegy tvou práci neovlivní; když vypadne cloud, nemá kam ukládat nikdo.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: analyza
+        text: Žák vysvětlí, co se stane s cloudovým dokumentem při výpadku jeho připojení, připojení kolegy nebo cloudu.
+    kriteria:
+      - text: Vysvětlí, co se stane s cloudovským dokumentem, když tento žák edituje a a) spadne žákovo připojení k internetu, b) spadne připojení kolegy, který pracuje na jiné části dokumentu ve stejném čase, c) přestane dočasně fungovat cloud.
+        garant: I20
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-uzivatelske-role-v-dokumentech
+    nazev: Uživatelské role v dokumentech
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Čtenář jen čte, komentátor přidává poznámky, přispěvatel mění obsah, správce rozhoduje, kdo smí co. Role jsou odstupňovaná důvěra.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíly mezi rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva.
+    kriteria:
+      - text: Vysvětlí rozdíly mezi uživatelskými rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva nad dokumenty.
+        garant: I21
+    prerekvizity: []
+    souvisi:
+      - data-databaze-ucel-informacnich-systemu
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-streamovani-upload-a-download
+    nazev: Streamování, upload a download
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Download stáhne soubor k tobě, upload ho pošle na server, streamování přehrává data průběžně, aniž by se celý soubor uložil — proto video jede hned, ale bez připojení zmizí.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním.
+    kriteria:
+      - text: Vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním.
+        garant: I22
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-mikroprocesor-a-virus-v-periferii
+    nazev: Mikroprocesor a virus v periferii
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Mikroprocesor je malý „mozek“ — a je dnes i v myši, USB disku nebo lampičce. Kde je procesor a paměť, tam může běžet program, a tedy i škodlivý.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, zda může virus napadnout periferní zařízení, a vysvětlí pojem mikroprocesor.
     kriteria:
       - text: Vysvětlí, jestli je principiálně možné, aby počítačový virus napadl periferní zařízení počítačů (např. myš, USB disk, USB lampička apod.); vysvětlí pojem (mikro)procesor.
         garant: I23
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-skryty-a-chytry-pocitac
+    nazev: Skrytý a chytrý počítač
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Počítač v pračce nebo autě bez internetu je „skrytý“ a zvenčí nedosažitelný. Jakmile je zařízení „chytré“ a online, dá se zvenčí ovládnout, odposlouchávat nebo zneužít.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák rozliší skrytý počítač bez připojení od chytrého zařízení online a vysvětlí jeho rizika.
+    kriteria:
       - text: Vysvětlí rozdíl mezi skrytým počítačem, který není připojený k internetu, a chytrým počítačem (smart technologies), který je připojený k internetu. Vysvětlí rizika chytrých počítačů.
         garant: I24
-      - text: Vymyslí alespoň tři různé situace, kdy je pro majitele mobilního telefonu nevýhodné, když se třetí strana od operátora mobilní sítě dozví informace o poloze majitele.
-        garant: I25
-      - text: Diskutuje o rizikách nových „chytrých technologií“ (např. smart grid, smart cars) v etické rovině a rovině bezpečnostní (možnost technologie „hacknout“).
-        garant: B13
-    prerekvizity:
-      - digitalni-zaklady-internet-a-sit
-      - digitalni-zaklady-hardware-a-software
+    prerekvizity: []
     souvisi:
       - fyzicky-computing-iot
-    tagy:
-      - bezpečí a rizika
-      - dopad na společnost
+    tagy: *id003
     zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení'
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-poloha-mobilu-a-operator
+    nazev: Poloha mobilu a operátor
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: Mobil se neustále hlásí vysílačům, takže operátor ví, kde jsi. Když se to dozví třetí strana — zaměstnavatel, bývalý partner, zloděj — může to být nepříjemné i nebezpečné.
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: tvorba
+        text: Žák vymyslí situace, kdy je pro majitele mobilu nevýhodné, že se třetí strana dozví jeho polohu.
+    kriteria:
+      - text: Vymyslí alespoň tři různé situace, kdy je pro majitele mobilního telefonu nevýhodné, když se třetí strana od operátora mobilní sítě dozví informace o poloze majitele.
+        garant: I25
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-software-a-cloud-mimo-eu
+    nazev: Software a cloud mimo EU
+    tema: digitalni-zaklady
+    podoblast: internet-a-site
+    oblast: digitalni-technologie
+    kompetence: null
+    vrstva: core
+    popis: 'Software a cloud z některých zemí mohou podléhat tamním zákonům a tajným službám — antivirus nebo cloud elektrárny tak může být trojský kůň: tváří se užitečně a zevnitř otevírá dveře.'
+    rvp:
+      - kod: INF-INF-004-ZV9-011
+        vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
+        poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí bezpečnostní rizika používání softwaru a cloudových služeb ze zemí mimo EU a pojem trojský kůň.
+    kriteria:
+      - text: Vysvětlí, jaká bezpečnostní rizika obnáší pro občany EU používání softwaru či cloudových služeb zemí mimo EU (např. na příkladu antiviru či cloudu fotovoltaických elektráren); vysvětlí pojem Trojský kůň.
+        garant: I26
+    prerekvizity: []
+    souvisi: []
+    tagy: *id003
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-bezpecne-heslo
+    nazev: Bezpečné heslo
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Bezpečné heslo je dlouhé, jedinečné a neuhodnutelné — třeba fráze z několika slov. Krátké heslo, jméno nebo datum narození prolomí program za sekundy.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: aplikace
+        text: Žák rozpozná více a méně bezpečná hesla a vytvoří si bezpečné heslo.
+    kriteria:
+      - text: Rozpozná více a méně bezpečná hesla; sám si vytvoří bezpečné heslo.
+        garant: B1
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-hesla-a-2fa
+    tagy: &id004
+      - bezpečí a rizika
+      - praktická dovednost
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-ucet-heslo-autentizace-sifrovani-kodovani
+    nazev: Účet, heslo, autentizace, šifrování, kódování
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Účet je tvá identita ve službě, heslo klíč k němu, autentizace ověření, že jsi to ty. Kódování převádí data do jiné podoby, aby se daly uložit; šifrování je převádí tak, aby je bez klíče nikdo nepřečetl.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí rozdíl mezi účtem, heslem, autentizací, šifrováním a kódováním.
+    kriteria:
+      - text: Vysvětlí rozdíl mezi účtem, heslem, autentifikací, šifrováním a kódováním.
+        garant: B2
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-hesla-a-2fa
+      - data-databaze-sifrovani-dat
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-antivirus
+    nazev: Antivirus
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Antivirus hlídá známé hrozby — ale sám může být podvod. Spolehlivý je ten z ověřeného zdroje s dobrou pověstí, ne první výsledek s nápisem „váš počítač je napaden“.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: aplikace
+        text: Žák najde spolehlivý antivirus a nainstaluje ho na mobil či počítač.
+    kriteria:
+      - text: Najde na internetu spolehlivý antivirus a nainstaluje ho na mobil či počítač.
+        garant: B3
+    prerekvizity: []
+    souvisi: []
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-druhy-malwaru
+    nazev: Druhy malwaru
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Virus se šíří připojením k jiným souborům, trojský kůň se tváří jako užitečný program, ransomware zašifruje data a chce výkupné, spyware tě sleduje. Malware je program; hacker je člověk.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: porozumeni
+        text: Žák rozliší alespoň tři druhy malwaru, vysvětlí jejich princip a odliší malware od hackera.
+    kriteria:
+      - text: Rozliší alespoň tři druhy malware a vysvětlí jejich princip, popíše rozdíl mezi malwarem a hackerem.
+        garant: B4
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-typy-utoku
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-chyby-v-programu-aktualizace-a-hackovani
+    nazev: Chyby v programu, aktualizace a hackování
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Každý program má chyby; některé jsou díra, kterou lze zneužít. Útočníci je hledají, výrobci je opravují aktualizacemi. Neaktualizované zařízení má známé a otevřené díry.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním.
+    kriteria:
+      - text: Vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním.
+        garant: B5
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-zakladni-hygiena
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-cile-a-metody-hackeru
+    nazev: Cíle a metody hackerů
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Hackeři chtějí peníze, data, přístup nebo pozornost. Metody sahají od zneužití chyb v programech přes podvodné zprávy až po hádání hesel — a často je nejslabší článek člověk.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: hodnoceni
+        text: Žák diskutuje o cílech a metodách hackerů.
+    kriteria:
+      - text: Diskutuje o cílech a metodách hackerů.
+        garant: B6
+    prerekvizity: []
+    souvisi: []
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-bezpecne-stahovani
+    nazev: Bezpečné stahování
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Stahuj jen z oficiálních obchodů a prověřených stránek, čti, co instalace chce povolit, a nevěř tlačítkům „Stáhnout“ v reklamách. Vlastní pravidla jsou lepší než spoléhání na antivirus.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: aplikace
+        text: Žák popíše svá osobní pravidla pro bezpečné hledání a stahování aplikací a souborů.
+    kriteria:
+      - text: Popíše svá osobní bezpečnostní pravidla pro to, jak hledá na internetu aplikace či soubory ke stažení do svého zařízení (např. stahuje pouze z konkrétních prověřených stránek apod.).
+        garant: B7
+    prerekvizity: []
+    souvisi: []
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-pravidla-bezpecneho-chovani-na-internetu
+    nazev: Pravidla bezpečného chování na internetu
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Bezpečné chování má různé roviny: co sdílíš, komu věříš, na co klikáš, jak chráníš účty. Sepsat pravidla pro mladší spolužáky znamená vybrat to podstatné a vysvětlit proč.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: tvorba
+        text: Žák diskutuje o bezpečném chování na internetu a sepíše pravidla pro žáky 5. třídy.
+    kriteria:
+      - text: Diskutuje o různých módech bezpečného chování na internetu; sepíše pravidla pro bezpečné chování na internetu pro žáky z 5. třídy.
+        garant: B8
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-bezpecne-chovani-na-sitich
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-prvky-zabezpeceni-pocitace-a-komunikace
+    nazev: Prvky zabezpečení počítače a komunikace
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Zabezpečení je víc vrstev: firewall hlídá síťový provoz, antivirus soubory, dvoufaktorová autentizace účty, end-to-end šifrování zprávy. Myšlenková mapa ukáže, co chrání co.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: tvorba
+        text: Žák vytvoří myšlenkovou mapu prvků zabezpečení — firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování.
+    kriteria:
+      - text: Vytvoří myšlenkovou mapu prvků zabezpečení počítače a internetové komunikace (použije koncepty, jako např. firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování apod.).
+        garant: B9
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-zakladni-hygiena
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-metadata-fotografii
+    nazev: Metadata fotografií
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Fotka v sobě nese metadata: čas, model telefonu, nastavení a často i přesnou polohu. Z fotky sdílené s metadaty se dá vyčíst, kde bydlíš nebo kdy nejsi doma.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: porozumeni
+        text: Žák vysvětlí, co útočník zjistí z metadat fotografie o jejím autorovi.
+    kriteria:
+      - text: Vysvětlí význam metadat (např. u fotografií) pro možnost útočníka zjistit osobní informace o oběti (např. autorovi fotografie).
+        garant: B10
+    prerekvizity: []
+    souvisi:
+      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-vypnuti-sledovani-polohy
+    nazev: Vypnutí sledování polohy
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: Poloha se dá vypnout celkově nebo jen pro vybrané aplikace — mapy ji potřebují, hra s baterkou ne. Najít nastavení a rozhodnout, komu polohu dáš, je základní hygiena.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: aplikace
+        text: Žák demonstruje, jak na mobilu vypnout sledování polohy.
+    kriteria:
+      - text: Demonstruje, jak na mobilní zařízení vypnout funkci sledování polohy.
+        garant: B11
+    prerekvizity: []
+    souvisi: []
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-pristup-aplikaci-ke-kamere-a-periferiim
+    nazev: Přístup aplikací ke kameře a periferiím
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Každá aplikace si říká o oprávnění: kamera, mikrofon, kontakty. V nastavení mobilu se dají zkontrolovat a odebrat — aplikace na kalkulačku kameru nepotřebuje.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: aplikace
+        text: Žák demonstruje, jak aplikacím v mobilu zakázat přístup ke kameře a dalším periferiím.
+    kriteria:
+      - text: Demonstruje, jak aplikacím v mobilním telefonu zakázat přístup k periferiím (např. ke kameře).
+        garant: B12
+    prerekvizity: []
+    souvisi: []
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-rizika-chytrych-technologii
+    nazev: Rizika chytrých technologií
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: 'Chytrá síť, chytré auto, chytrá domácnost: pohodlí a úspora, ale i možnost, že technologii někdo hackne nebo že sbírá víc dat, než je nutné. Rizika jsou technická i etická.'
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: hodnoceni
+        text: Žák diskutuje o rizikách chytrých technologií (smart grid, chytrá auta) v etické i bezpečnostní rovině.
+    kriteria:
+      - text: Diskutuje o rizikách nových „chytrých technologií“ (např. smart grid, smart cars) v etické rovině a rovině bezpečnostní (možnost technologie „hacknout“).
+        garant: B13
+    prerekvizity: []
+    souvisi: []
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
+    pokryti_glitchem: []
+    stav: draft
+  - id: digitalni-zaklady-pouziti-ai-a-jeho-rizika
+    nazev: Použití AI a jeho rizika
+    tema: digitalni-zaklady
+    podoblast: zabezpeceni-zarizeni
+    oblast: digitalni-technologie
+    kompetence: kdi-bzk
+    vrstva: core
+    popis: AI doporučuje videa, překládá, řídí auta, rozhoduje o půjčkách. Každé použití nese rizika — chyby, zkreslení, zneužití, ztrátu kontroly — a stojí za to je umět pojmenovat.
+    rvp:
+      - kod: INF-INF-004-ZV9-012
+        vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
+        poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
+    cile:
+      - uroven: hodnoceni
+        text: Žák uvede příklady použití umělé inteligence a popíše jejich možná rizika.
+    kriteria:
+      - text: Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití.
+        garant: B14
+    prerekvizity: []
+    souvisi:
+      - umela-inteligence-ai-a-spolecnost
+    tagy: *id004
+    zdroj:
+      - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
     pokryti_glitchem: []
     stav: draft
   - id: informaticke-mysleni-problemova-situace
@@ -2748,8 +3715,6 @@ concepts:
         text: Žák uvede jednu příležitost a jedno riziko AI pro společnost.
       - uroven: hodnoceni
         text: Žák formuluje stanovisko a podpoří ho alespoň dvěma argumenty.
-      - text: Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití.
-        garant: B14
     prerekvizity:
       - umela-inteligence-hlubsi-etika-ai
     souvisi:
@@ -2757,8 +3722,7 @@ concepts:
     tagy:
       - dopad na společnost
       - moc a peníze
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
+    zdroj: []
     pokryti_glitchem: []
     stav: draft
   - id: data-databaze-datova-gramotnost
@@ -4725,10 +5689,6 @@ concepts:
         text: Žák prakticky zapne 2FA a vytvoří heslo splňující zásady délky a jedinečnosti.
       - uroven: hodnoceni
         text: Žák u konkrétní služby zdůvodní zvolené zabezpečení odkazem na možná rizika ztráty či zneužití dat.
-      - text: Rozpozná více a méně bezpečná hesla; sám si vytvoří bezpečné heslo.
-        garant: B1
-      - text: Vysvětlí rozdíl mezi účtem, heslem, autentifikací, šifrováním a kódováním.
-        garant: B2
     prerekvizity: []
     souvisi: []
     tagy:
@@ -4736,7 +5696,6 @@ concepts:
       - praktická dovednost
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
     pokryti_glitchem: []
     stav: draft
   - id: kyberbezpecnost-phishing-a-socialni-inzenyrstvi
@@ -4794,10 +5753,6 @@ concepts:
         text: Žák na příkladu popíše, jaká data vznikají při běžném používání sítě.
       - uroven: hodnoceni
         text: Žák u zvolené situace zhodnotí riziko a navrhne konkrétní nastavení soukromí.
-      - text: Popíše rozdíl mezi digitální stopou a digitální identitou. Diskutuje, čím vším svou digitální stopu vytváří.
-        garant: I14
-      - text: Popíše, jaká osobní data uživatelů internetu mohou třetí osoby nebo instituce získat; a jakým způsobem a kdy a jak tomu může uživatel zabránit.
-        garant: I16
     prerekvizity: []
     souvisi:
       - digitalni-obcanstvi-digitalni-stopa-a-soukromi
@@ -4806,7 +5761,6 @@ concepts:
       - soukromí
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
     pokryti_glitchem: []
     stav: draft
   - id: kyberbezpecnost-bezpecne-chovani-na-sitich
@@ -4831,8 +5785,6 @@ concepts:
         text: Žák v aplikaci nastaví soukromí a předvede rozhodnutí, komu obsah zpřístupní.
       - uroven: tvorba
         text: Žák sestaví sadu vlastních pravidel a u každého odůvodní, jaké riziko snižuje.
-      - text: Diskutuje o různých módech bezpečného chování na internetu; sepíše pravidla pro bezpečné chování na internetu pro žáky z 5. třídy.
-        garant: B8
     prerekvizity:
       - kyberbezpecnost-soukromi-a-digitalni-stopa
       - kyberbezpecnost-hesla-a-2fa
@@ -4845,7 +5797,6 @@ concepts:
       - soukromí
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
     pokryti_glitchem: []
     stav: draft
   - id: kyberbezpecnost-zakladni-hygiena
@@ -4870,8 +5821,6 @@ concepts:
         text: Žák předvede aktualizaci a zálohu a odliší ověřený zdroj instalace od neověřeného.
       - uroven: tvorba
         text: Žák sestaví plán zabezpečení zařízení, v němž propojí konkrétní opatření s posouzeným rizikem.
-      - text: Vytvoří myšlenkovou mapu prvků zabezpečení počítače a internetové komunikace (použije koncepty, jako např. firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování apod.).
-        garant: B9
     prerekvizity: []
     souvisi:
       - kyberbezpecnost-hesla-a-2fa
@@ -4880,7 +5829,6 @@ concepts:
       - praktická dovednost
     zdroj:
       - RVP_revidované_2024-03-28.pdf, s. 54–55
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
     pokryti_glitchem: []
     stav: draft
   - id: kyberbezpecnost-sifrovani-a-https
@@ -5133,8 +6081,6 @@ concepts:
         text: Žák popíše vztah mezi pozorností, doporučováním a ekonomikou pozornosti.
       - uroven: analyza
         text: Žák na příkladu svého feedu odhalí, proč vidí právě daný obsah.
-      - text: Uvede alespoň tři příklady personalizovaného obsahu webu (např. reklamy, videa, novinové zprávy, výsledky vyhledávání) a vysvětlí, jak je možné, že je tento obsah přizpůsobován na míru uživateli. Diskutuje výhody a nevýhody této personalizace.
-        garant: I13
     prerekvizity:
       - umela-inteligence-doporucovaci-systemy
     souvisi:
@@ -5146,8 +6092,7 @@ concepts:
       - moc a peníze
       - pozornost a wellbeing
       - teoretický základ
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
+    zdroj: []
     pokryti_glitchem: []
     stav: draft
   - id: digitalni-obcanstvi-dezinformace-a-manipulace
@@ -5201,14 +6146,11 @@ concepts:
         text: Žák uvede příklad, jak platforma vydělává na uživatelských datech.
       - uroven: hodnoceni
         text: Žák u konkrétní aplikace zhodnotí poměr mezi získanou službou a poskytnutými daty.
-      - text: Popíše výhody a nevýhody cookies.
-        garant: I12
     prerekvizity: []
     souvisi: []
     tagy:
       - soukromí
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
+    zdroj: []
     pokryti_glitchem: []
     stav: draft
   - id: digitalni-obcanstvi-digitalni-wellbeing
@@ -5379,8 +6321,6 @@ concepts:
     kriteria:
       - uroven: analyza
         text: Žák u dané funkce platformy vysvětlí, jak přispívá k jejímu výdělku.
-      - text: Popíše princip financování sociálních sítí pomocí reklamy.
-        garant: I15
     prerekvizity:
       - digitalni-obcanstvi-jak-funguji-algoritmy-siti
     souvisi:
@@ -5390,8 +6330,7 @@ concepts:
       - moc a peníze
       - pozornost a wellbeing
       - soukromí
-    zdroj:
-      - 'Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost'
+    zdroj: []
     pokryti_glitchem: []
     stav: draft
   - id: digitalni-obcanstvi-aktivni-digitalni-obcanstvi

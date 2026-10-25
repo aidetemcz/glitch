@@ -1,6 +1,6 @@
-# Digitální základy — návrh rozdělení výstupů garanta do konceptů
+# Digitální základy — výstupy garanta jako koncepty
 
-Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez konceptů, učiva a vazeb. Tahle tabulka je návrh redakce, jak výstupy rozdělit do bublin mapy — **ke schválení garantem**. Každý výstup je právě v jednom konceptu jako kritérium (doslovně). Názvy bublin, učivo, cíle i prerekvizity jsou návrh; v mapě mají stav *draft*.
+Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. Podle rozhodnutí redakce je **každý výstup samostatná bublina** mapy; kapitoly dokumentu jsou podoblasti tématu. Výstup je v bublině doslovně jako kritérium; název bubliny, krátké učivo a cíl jsou návrh redakce — **ke schválení garantem** (v mapě stav *draft*).
 
 Číslování: O = Ovládání počítače, Z = Principy zařízení (Z0 = nečíslovaný výstup o úložištích), I = Principy internetu, B = Bezpečnost.
 
@@ -8,79 +8,111 @@ Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez konceptů, učiva
 
 *Jak poznat typ souboru, ovládat aplikace a udržet si v datech pořádek i zálohu.*
 
-| Koncept | Vrstva | Výstupy garanta | Prerekvizity (návrh) | Stávající bublina |
+| Výstup | Bublina | Úroveň cíle | Souvisí (jiné téma) | Pozn. |
 |---|---|---|---|---|
-| **Soubory a jejich typy** | core | O1, O2, O6 | — | nová |
-| **Ovládání aplikací** | core | O3, O4, O5 | Soubory a jejich typy | nová |
-| **Organizace a zálohování dat** | core | O7, O8, O9 | Soubory a jejich typy | nová |
+| O1 | **Typy souborů a přípony** | porozumeni | — |  |
+| O2 | **Převod do PDF** | aplikace | — |  |
+| O3 | **Základní ovládání aplikací** | aplikace | — |  |
+| O4 | **Práce s časovou osou** | aplikace | — |  |
+| O5 | **Struktura dokumentu: styly a vrstvy** | aplikace | — |  |
+| O6 | **Rozlišení obrazu** | porozumeni | — |  |
+| O7 | **Organizace souborů do složek** | tvorba | — |  |
+| O8 | **Fotky z mobilu do počítače** | aplikace | — |  |
+| O9 | **Zálohování dat** | porozumeni | Základní hygiena |  |
+| O10 | **Když se program zasekne** | porozumeni | — |  |
 
 ## Zařízení a úložiště
 
 *Co je uvnitř počítače a mobilu, kam se ukládají data a proč se zařízení někdy zasekne.*
 
-| Koncept | Vrstva | Výstupy garanta | Prerekvizity (návrh) | Stávající bublina |
+| Výstup | Bublina | Úroveň cíle | Souvisí (jiné téma) | Pozn. |
 |---|---|---|---|---|
-| **Hardware a software** | core | Z11 | — | ano |
-| **Úložiště dat: lokálně a v cloudu** | core | Z0, Z1, Z2 | Hardware a software | nová |
-| **Reprezentace a velikost dat** | navazujici | Z4, Z5 | Data a informace | ano |
-| **Operační systém a aplikace** | core | Z3, Z8, Z9 | Hardware a software | ano |
-| **Propojení zařízení a periferie** | navazujici | Z6, Z7 | Hardware a software | nová |
-| **Zaseknutý počítač a operační paměť** | navazujici | O10, Z10, Z12, Z13, Z14 | Hardware a software | nová |
-| **Vrstvy počítače** | navazujici | — | Hardware a software | ano |
+| Z0 | **Typy trvalých úložišť** | porozumeni | — |  |
+| Z1 | **Lokálně, nebo v cloudu** | hodnoceni | — |  |
+| Z2 | **Bezpečné smazání dat** | porozumeni | — |  |
+| Z3 | **Operační systém** | porozumeni | — | stávající bublina, id zachováno |
+| Z4 | **Komprese dat** | porozumeni | Kódování dat, jejich účel a přenos |  |
+| Z5 | **Velikost dat: MB a GB** | porozumeni | — |  |
+| Z6 | **Propojení mobilu a počítače** | aplikace | — |  |
+| Z7 | **Připojení externích zařízení** | aplikace | — |  |
+| Z8 | **Instalace a odinstalace aplikací** | aplikace | — |  |
+| Z9 | **Aktualizace aplikací** | hodnoceni | — |  |
+| Z10 | **Restart a úklid operační paměti** | porozumeni | — |  |
+| Z11 | **Hardware a výběr zařízení** | hodnoceni | — | stávající bublina, id zachováno |
+| Z12 | **Proč se počítač zasekává** | porozumeni | — |  |
+| Z13 | **Programy a operační paměť** | porozumeni | — |  |
+| Z14 | **Kde je neuložený soubor** | porozumeni | — |  |
 
 ## Internet a sítě
 
 *Jak putují data internetem, co je server, cloud a adresa a jak spolu zařízení mluví.*
 
-| Koncept | Vrstva | Výstupy garanta | Prerekvizity (návrh) | Stávající bublina |
+| Výstup | Bublina | Úroveň cíle | Souvisí (jiné téma) | Pozn. |
 |---|---|---|---|---|
-| **Internet, web a wifi** | core | I2, I3, I18 | — | ano |
-| **Cesta dat internetem** | core | I4, I7, I8, I9, I10 | Internet, web a wifi | nová |
-| **Cloud a server** | core | I1, I22 | Internet, web a wifi | ano |
-| **Adresy a protokoly** | navazujici | I5 | Internet, web a wifi | ano |
-| **Prohlížeč a vyhledávač** | navazujici | I6, I11 | Adresy a protokoly | nová |
-| **Cloudové dokumenty a sdílení** | navazujici | I19, I20, I21 | Cloud a server | nová |
-| **Kde jsou data fyzicky** | navazujici | I17, I26 | Cloud a server | ano |
-| **API** | core | — | Cloud a server | ano |
+| I1 | **Server a cloud** | porozumeni | — | stávající bublina, id zachováno |
+| I2 | **Internet, web a wifi** | porozumeni | — | stávající bublina, id zachováno |
+| I3 | **Elektrická síť vs. internetové kabely** | porozumeni | — |  |
+| I4 | **Vznik a architektura internetu** | porozumeni | — |  |
+| I5 | **IP adresa, URL a DNS** | porozumeni | — | stávající bublina, id zachováno |
+| I6 | **Jak prohlížeč zobrazí stránku** | porozumeni | Jak funguje web |  |
+| I7 | **Cesta požadavku k webovému serveru** | aplikace | — |  |
+| I8 | **Robustnost internetu** | analyza | — |  |
+| I9 | **Cesta e-mailu** | analyza | — |  |
+| I10 | **Šifrovaná a nešifrovaná komunikace** | hodnoceni | Šifrování a HTTPS |  |
+| I11 | **Jak funguje vyhledávač** | porozumeni | — |  |
+| I12 | **Cookies** | porozumeni | Digitální stopa a soukromí |  |
+| I13 | **Personalizovaný obsah** | hodnoceni | Jak fungují algoritmy sítí |  |
+| I14 | **Digitální stopa a digitální identita** | porozumeni | Soukromí a digitální stopa |  |
+| I15 | **Financování sociálních sítí reklamou** | porozumeni | Obchodní modely platforem |  |
+| I16 | **Osobní data a třetí strany** | hodnoceni | Soukromí a digitální stopa |  |
+| I17 | **GDPR a právo být zapomenut** | porozumeni | — | stávající bublina, id zachováno |
+| I18 | **Veřejná vs. domácí wifi** | hodnoceni | — |  |
+| I19 | **Přístupová práva ke cloudovému dokumentu** | aplikace | — |  |
+| I20 | **Cloudový dokument při výpadku** | analyza | — |  |
+| I21 | **Uživatelské role v dokumentech** | porozumeni | Informační systémy |  |
+| I22 | **Streamování, upload a download** | porozumeni | — |  |
+| I23 | **Mikroprocesor a virus v periferii** | porozumeni | — |  |
+| I24 | **Skrytý a chytrý počítač** | porozumeni | IoT |  |
+| I25 | **Poloha mobilu a operátor** | tvorba | — |  |
+| I26 | **Software a cloud mimo EU** | porozumeni | — |  |
 
 ## Zabezpečení zařízení
 
 *Jak chránit vlastní zařízení před malwarem a jak si na něm pohlídat soukromí.*
 
-| Koncept | Vrstva | Výstupy garanta | Prerekvizity (návrh) | Stávající bublina |
+| Výstup | Bublina | Úroveň cíle | Souvisí (jiné téma) | Pozn. |
 |---|---|---|---|---|
-| **Malware, antivirus a aktualizace** | core | B3, B4, B5, B6, B7 | Operační systém a aplikace | nová |
-| **Soukromí na zařízení** | core | B10, B11, B12 | Operační systém a aplikace | nová |
-| **Chytrá zařízení a jejich rizika** | navazujici | I23, I24, I25, B13 | Internet, web a wifi, Hardware a software | nová |
+| B1 | **Bezpečné heslo** | aplikace | Hesla a 2FA |  |
+| B2 | **Účet, heslo, autentizace, šifrování, kódování** | porozumeni | Hesla a 2FA, Šifrování dat |  |
+| B3 | **Antivirus** | aplikace | — |  |
+| B4 | **Druhy malwaru** | porozumeni | Typy útoků |  |
+| B5 | **Chyby v programu, aktualizace a hackování** | porozumeni | Základní hygiena |  |
+| B6 | **Cíle a metody hackerů** | hodnoceni | — |  |
+| B7 | **Bezpečné stahování** | aplikace | — |  |
+| B8 | **Pravidla bezpečného chování na internetu** | tvorba | Bezpečné chování na sítích |  |
+| B9 | **Prvky zabezpečení počítače a komunikace** | tvorba | Základní hygiena |  |
+| B10 | **Metadata fotografií** | porozumeni | Soukromí a digitální stopa |  |
+| B11 | **Vypnutí sledování polohy** | aplikace | — |  |
+| B12 | **Přístup aplikací ke kameře a periferiím** | aplikace | — |  |
+| B13 | **Rizika chytrých technologií** | hodnoceni | — |  |
+| B14 | **Použití AI a jeho rizika** | hodnoceni | AI a společnost |  |
 
-## Bez podoblasti
+## Bubliny mimo dokument garanta
 
-| Koncept | Poznámka |
+Zůstávají, protože na ně navazují jiná témata. Garant rozhodne, jestli je nechat, sloučit, nebo smazat.
+
+| Bublina | Podoblast |
 |---|---|
-| **Data a informace** | V garantově dokumentu není; zůstává, protože na něj navazuje téma Data. Garant rozhodne, kam patří. |
-
-## Výstupy zařazené do jiných témat
-
-Tyhle výstupy už mají bublinu v Kyberbezpečnosti, Digitálním občanství nebo Umělé inteligenci. Jsou tam doplněné jako kritéria, aby v mapě nevznikly dvě bubliny „hesla“ nebo „malware“.
-
-| Výstup | Text (zkráceně) | Bublina |
-|---|---|---|
-| I12 | Popíše výhody a nevýhody cookies. | Digitální stopa a soukromí (digitalni-obcanstvi) |
-| I13 | Uvede alespoň tři příklady personalizovaného obsahu webu (např. reklamy, videa, novinové z… | Jak fungují algoritmy sítí (digitalni-obcanstvi) |
-| I14 | Popíše rozdíl mezi digitální stopou a digitální identitou. Diskutuje, čím vším svou digitá… | Soukromí a digitální stopa (kyberbezpecnost) |
-| I15 | Popíše princip financování sociálních sítí pomocí reklamy. | Obchodní modely platforem (digitalni-obcanstvi) |
-| I16 | Popíše, jaká osobní data uživatelů internetu mohou třetí osoby nebo instituce získat; a ja… | Soukromí a digitální stopa (kyberbezpecnost) |
-| B1 | Rozpozná více a méně bezpečná hesla; sám si vytvoří bezpečné heslo. | Hesla a 2FA (kyberbezpecnost) |
-| B2 | Vysvětlí rozdíl mezi účtem, heslem, autentifikací, šifrováním a kódováním. | Hesla a 2FA (kyberbezpecnost) |
-| B8 | Diskutuje o různých módech bezpečného chování na internetu; sepíše pravidla pro bezpečné c… | Bezpečné chování na sítích (kyberbezpecnost) |
-| B9 | Vytvoří myšlenkovou mapu prvků zabezpečení počítače a internetové komunikace (použije konc… | Základní hygiena (kyberbezpecnost) |
-| B14 | Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití. | AI a společnost (umela-inteligence) |
+| **Data a informace** | — |
+| **Reprezentace dat** | zarizeni-a-uloziste |
+| **API** | internet-a-site |
+| **Vrstvy počítače** | zarizeni-a-uloziste |
 
 ## Otázky pro garanta
 
-1. Sedí rozdělení výstupů do bublin a názvy bublin? Které bubliny sloučit / rozdělit?
-2. Prerekvizity a vazby „souvisí“ jsou návrh — dokument je neuvádí.
-3. Výstupy I12–I17 (cookies, personalizace, digitální stopa, reklama, GDPR) a B1, B2, B8, B9, B14 jsou v jiných tématech — souhlas?
+1. Sedí názvy bublin a krátké učivo? Je úroveň cíle (porozumění / aplikace / analýza / hodnocení / tvorba) u každého výstupu správně?
+2. Prerekvizity dokument neuvádí — zatím žádné nejsou. Které výstupy na sebe navazují?
+3. Překryvy s jinými tématy (hesla, malware, cookies, digitální stopa, reklama, bezpečné chování, rizika AI) jsou zatím jen jako vazba „souvisí“. Má zůstat obojí, nebo se bubliny sloučí?
 4. Kapitoly cituje RVP 2021 (I-9-4-01…05). V RVP 2024 odpovídají INF-INF-004-ZV9-011 a 012; I-9-4-02 (správa dat) a I-9-4-04 (závady) samostatný výstup nemají. Jaké je aktuální znění?
-5. Bubliny API, Vrstvy počítače a Data a informace v dokumentu nejsou — nechat?
-6. Které bubliny jsou jádrové (core)? Návrh: 12 core, 9 navazujících.
+5. Všechny bubliny jsou zatím jádrové (core). Které jsou navazující?
+6. Garant naznačil, že každý výstup půjde rozpracovat do mikrokonceptů — kdy a kdo?

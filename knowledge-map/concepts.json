@@ -23,149 +23,9 @@
    }
   ]
  },
- "digitalni-zaklady-soubory-a-jejich-typy": {
-  "nazev": "Soubory a jejich typy",
-  "popis": "Všechno, co v počítači vytvoříš nebo stáhneš, je soubor určitého typu: obrázek, text, video, hudba. Typ poznáš podle přípony (jpg, pdf, mp4) a podle něj se vybírá i program, který soubor otevře. Některé formáty se hodí na úpravy, jiné na sdílení a tisk — pdf vypadá všude stejně. U obrázků a videa navíc rozhoduje rozlišení: kolik bodů obraz má, jak ostře se zobrazí a jak velký soubor z něj bude.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, co je typ souboru, jak ho poznat podle přípony a proč k různým typům patří různé programy."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák převede soubor do formátu vhodného pro zadaný účel (např. do pdf pro tisk) a volbu zdůvodní."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Rozpozná základní typy souborů (obrázek, text, video, hudba); vybere vhodný program/aplikaci pro jejich spuštění; uvede ukázky přípon souborů různého typu (např. jpg, pdf, mp4); vysvětlí, proč tyto přípony někdy počítač/mobil zobrazuje a jindy ne."
-   },
-   {
-    "uroven": null,
-    "text": "Převede soubory různých typů do pdf; vysvětlí výhody pdf formátu z hlediska tisku a zobrazení."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí vrstevníkovi pojem rozlišení obrazu v kontextu zobrazení na monitoru a displeji mobilu, focení a tvorby videa, tisku a ukládání souborů."
-   }
-  ]
- },
- "digitalni-zaklady-ovladani-aplikaci": {
-  "nazev": "Ovládání aplikací",
-  "popis": "Většina aplikací se ovládá stejnými mechanismy, ať děláš text, obrázek nebo prezentaci: uložit a načíst, kopírovat přes schránku, krok zpět a vpřed, přiblížit lupou, posouvat se v dokumentu. Aplikace na video, zvuk nebo animaci k tomu přidávají časovou osu. Strukturované dokumenty (styly odstavců, vrstvy objektů) se dají měnit hromadně přes jejich strukturu, ne po jednom.",
-  "cile": [
-   {
-    "uroven": "aplikace",
-    "text": "Žák rutinně používá základní mechanismy ovládání aplikací (uložení, schránka, zpět/vpřed, lupa, posun) napříč různými programy."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák upraví dokument s využitím jeho struktury (styly, vrstvy) nebo časové osy místo ručních úprav po jednom."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Rutinně používá základní mechanismy ovládání aplikací pro tvorbu statických dat (např. textu či obrazu) – mechanismus ukládání a načítání dat, kopírování části dat přes střižnu („clip board“), krok zpět („undo“) a vpřed (“redo”), změna velikosti zobrazení (lupa), náhled na jinou část dat („scrolování“) apod."
-   },
-   {
-    "uroven": null,
-    "text": "V aplikacích pro tvorbu dynamických dat (např. animace v prezentaci, video, zvuk) pracuje s časovou osou."
-   },
-   {
-    "uroven": null,
-    "text": "Ve strukturovaných dokumentech mění vlastnosti dokumentu s využitím této struktury – například u textových souborů mění styly odstavců, v prezentaci vektorové objekty přesouvá „před“ a „za“ v jednotlivých vrstvách apod."
-   }
-  ]
- },
- "digitalni-zaklady-organizace-a-zalohovani-dat": {
-  "nazev": "Organizace a zálohování dat",
-  "popis": "Stovky souborů bez pořádku se nedají najít. Složky s jasnými názvy a soubory pojmenované tak, aby bylo z názvu poznat, co v nich je, jsou základ — ať jde o fotky z mobilu, nebo školní práce. Druhá část pořádku je záloha: kopie důležitých dat na jiném místě, protože disk, mobil i účet v cloudu můžeš ztratit.",
-  "cile": [
-   {
-    "uroven": "aplikace",
-    "text": "Žák navrhne a vytvoří strukturu složek pro větší množství souborů a soubory do ní uspořádá a pojmenuje."
-   },
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, proč a jak zálohovat, a popíše vlastní pravidla zálohování."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Když dostane 100 souborů různých typů, navrhne jejich vhodnou organizaci pomocí složek, složky založí na počítači a soubory do složek rozmístí."
-   },
-   {
-    "uroven": null,
-    "text": "Přenese desítky až stovky fotografií a videí z mobilního telefonu do počítače, navrhne jejich uspořádání pomocí několika složek a dle tohoto návrhu soubory uspořádá; klíčové fotografie přejmenuje tak, aby z názvu bylo patrné, o jakou fotku jde."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí význam zálohování dat a popíše svá osobní pravidla, která používá pro zálohování svých dat."
-   }
-  ]
- },
- "digitalni-zaklady-hardware-a-software": {
-  "nazev": "Hardware a software",
-  "popis": "Hardware jsou fyzické součástky, na které si můžeš sáhnout (procesor, paměť, displej); software jsou programy, které v nich běží. Každý počítač i telefon přitom pracuje ve smyčce vstup → zpracování → výstup: dostane data, něco s nimi udělá a vrátí výsledek.\n\nPři výběru nového mobilu nebo notebooku rozhodují parametry základních komponent — procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, bezdrátová připojení).",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí vlastními slovy rozdíl mezi hardwarem a softwarem na konkrétním příkladu zařízení."
-   },
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák podle zadaných potřeb doporučí vhodný hardware a software a svůj výběr zdůvodní jejich vlastnostmi."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák u konkrétního zařízení určí, které části jsou hardware a které software, a doplní příklad smyčky vstup → zpracování → výstup."
-   },
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák pro zadanou situaci vybere zařízení a v jedné větě zdůvodní volbu jeho vlastností."
-   },
-   {
-    "uroven": null,
-    "text": "Na situaci nákupu nového mobilu či notebooku diskutuje o funkcích a parametrech základních komponent počítačového zařízení (zejména jde o procesor/jádra, trvalé úložiště, operační paměť, grafickou kartu), jakož i o možnostech, jak toto zařízení připojit k dalším zařízením (bezdrátová připojení, porty)."
-   }
-  ]
- },
- "digitalni-zaklady-uloziste-dat": {
-  "nazev": "Úložiště dat: lokálně a v cloudu",
-  "popis": "Data se ukládají na trvalá úložiště: pevný disk nebo SSD v počítači, interní paměť mobilu, USB flash disk, SD kartu, DVD. Každé má jinou kapacitu, rychlost, odolnost a cenu. Druhá možnost je cloud — data leží na cizím serveru a dostaneš se k nim odkudkoli, ale jen s připojením a s důvěrou v poskytovatele.\n\nA pozor na mazání: smazaný soubor z disku hned nezmizí, systém si jen „přestane pamatovat“, kde ležel. Než zařízení vyhodíš nebo prodáš, musíš data odstranit bezpečně — nebo zařízení raději nevyhazovat.",
-  "cile": [
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák porovná typy trvalých úložišť a uložení lokálně vs. v cloudu a pro danou situaci vybere vhodné úložiště."
-   },
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, proč běžné smazání dat nestačí, a navrhne, jak data před vyhozením zařízení bezpečně odstranit."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Vysvětlí vrstevníkovi výhody a nevýhody různých typů trvalých úložišť dat (například USB flash disk, pevný disk, SD karta, interní paměť mobilu, DVD…)."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše rozdíl mezi uložením dat lokálně a na cloudu; diskutuje výhody a nevýhody."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí mechanismus „líného“ mazání dat uložených lokálně. Vysvětlí, jakým způsobem bezpečně odstranit taková data, pokud zařízení, kde jsou uložena, chceme vyhodit – tzn. jak lze (někdy) zařídit, aby se k datům nebo jejich částem nedostal nikdo, kdo vyhozené zařízení najde. Zejména vysvětlí, proč běžné smazání a zároveň vysypání koše není v této situaci dostačující a kdy je případně lepší zařízení nikdy nevyhazovat (neprodávat)."
-   }
-  ]
- },
  "digitalni-zaklady-reprezentace-dat": {
-  "nazev": "Reprezentace a velikost dat",
-  "popis": "Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.\n\nVelikost dat se měří v bytech — megabyty (MB) pro fotky, gigabyty (GB) pro filmy. Komprese data zmenší tím, že odstraní opakování nebo nepodstatné detaily; co je jednou zkomprimované, se další kompresí už skoro nezmenší.",
+  "nazev": "Reprezentace dat",
+  "popis": "Počítač uvnitř zná jen nuly a jedničky (bity), takže čísla, písmena, obrázky i zvuk se musí zakódovat do čísel. Různé způsoby kódování se hodí pro různé účely — jiné pro úsporné uložení, jiné pro rychlý a bezchybný přenos po síti.",
   "cile": [
    {
     "uroven": "porozumeni",
@@ -180,326 +40,6 @@
    {
     "uroven": "hodnoceni",
     "text": "Žák u zadaného účelu (uložení / přenos) vybere vhodnější kódování a volbu zdůvodní."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí, jak komprese souvisí s velikostí dat, a proč není možné zkomprimovaný soubor zmenšovat opakovanou komprimací do nekonečna."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše význam zkratek MB a GB (megabyte a gigabyte) a uvede řádové velikosti fotek a delších videí (např. filmů)."
-   }
-  ]
- },
- "digitalni-zaklady-operacni-system-a-soubory": {
-  "nazev": "Operační systém a aplikace",
-  "popis": "Operační systém (Windows, Android, iOS, macOS) je program, který řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Aplikace se do něj instalují a odinstalují a průběžně aktualizují — aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas ale i změny, které se nehodí.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, k čemu slouží operační systém, a přiřadí základní operační systémy k typickým zařízením."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák nainstaluje, aktualizuje a odinstaluje aplikaci a posoudí výhody a nevýhody aktualizací."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Vysvětlí vrstevníkovi, jaký základní význam pro počítač nebo mobil má operační systém; rozpozná základní operační systémy (např. Android, iOS, Windows) a asociuje je s typickými zařízeními (např. mobil vs. počítač)."
-   },
-   {
-    "uroven": null,
-    "text": "Nainstaluje a odinstaluje aplikaci."
-   },
-   {
-    "uroven": null,
-    "text": "Aktualizuje aplikaci; diskutuje o výhodách a nevýhodách aktualizací."
-   }
-  ]
- },
- "digitalni-zaklady-propojeni-zarizeni": {
-  "nazev": "Propojení zařízení a periferie",
-  "popis": "Počítač a mobil se dají propojit i bez internetu — kabelem přes USB nebo přes Bluetooth — a překopírovat mezi nimi fotky nebo dokumenty. K počítači se připojují i další zařízení (periferie): monitor, projektor, tiskárna, klávesnice. Každé potřebuje správný port nebo bezdrátové spojení a někdy i ovladač.",
-  "cile": [
-   {
-    "uroven": "aplikace",
-    "text": "Žák propojí mobil s počítačem bez internetu a přenese mezi nimi data."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák připojí k počítači externí zařízení (monitor, projektor, tiskárnu) a zprovozní ho."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Propojí mobilní telefon a počítač bez pomocí internetu/wifi (například přes USB) a překopíruje z jednoho zařízení na druhé data (například fotky)."
-   },
-   {
-    "uroven": null,
-    "text": "Připojí k počítači externí zařízení, například monitor, projektor nebo tiskárnu."
-   }
-  ]
- },
- "digitalni-zaklady-zaseknuty-pocitac-a-operacni-pamet": {
-  "nazev": "Zaseknutý počítač a operační paměť",
-  "popis": "Rozpracovaný dokument, otevřená stránka i běžící hra žijí v operační paměti (RAM) — rychlé, ale dočasné paměti, která se po vypnutí vymaže. Proto se nový soubor musí uložit na disk, jinak zmizí. Když je spuštěných programů moc, paměť dojde a počítač se „zasekává“: zpomalí, nebo program přestane reagovat. Řešením bývá program zavřít (i násilně) nebo zařízení restartovat, čímž se paměť uklidí.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, co je operační paměť, kde je rozpracovaný soubor před uložením a proč restart „uklidí“ paměť."
-   },
-   {
-    "uroven": "aplikace",
-    "text": "Žák vyřeší situaci, kdy program nereaguje nebo je počítač nezvykle pomalý, a vysvětlí pravděpodobnou příčinu."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Vysvětlí, co to znamená, že se program „zasekne“ a jakým způsobem tuto situaci vyřešit."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše význam zavření aplikace resp. restartu počítače či mobilního zařízení pro „úklid“ operační paměti zařízení."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí, co může způsobovat, že se „počítač strašně zasekává“ (je pomalejší než obvykle)."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí vztah mezi počtem spuštěných programů a operační pamětí počítače."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí, kde se v počítači nachází nově založený soubor (např. obrázek či textový dokument nově otevřený v příslušném editoru) předtím, než ho uložíme na lokální úložiště (např. na disk, interní paměť…)."
-   }
-  ]
- },
- "digitalni-zaklady-vrstvy-pocitace": {
-  "nazev": "Vrstvy počítače",
-  "popis": "Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí na příkladu, jak vrstvy hardware – operační systém – aplikace skrývají složitost té pod sebou."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák seřadí vrstvy od hardwaru po aplikaci a u jedné z nich uvede, co skrývá."
-   }
-  ]
- },
- "digitalni-zaklady-internet-a-sit": {
-  "nazev": "Internet, web a wifi",
-  "popis": "Internet je obrovská síť propojených počítačů, které si navzájem posílají data. Když otevřeš stránku, tvůj prohlížeč (klient) pošle požadavek počítači, kde stránka „bydlí\" (server), a ten mu obsah pošle zpátky — tomuhle vztahu se říká klient–server.\n\nInternet není totéž co web: web je jen jedna ze služeb, které po internetu běží (vedle e-mailu, her, streamování). Domů se internet dostane kabelem k routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Veřejná wifi je pohodlná, ale cizí — kdo ji provozuje, může provoz sledovat.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí vlastními slovy vztah klient–server na příkladu otevření webové stránky."
-   },
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák pro danou situaci doporučí vhodný způsob připojení zařízení do sítě a volbu zdůvodní."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák popíše, kdo v komunikaci posílá požadavek a kdo odpověď, když načítá stránku."
-   },
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák u zadané potřeby vybere způsob připojení a uvede jeho výhodu i nevýhodu."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí rozdíl mezi internetem, webem, wifi sítí, wifi signálem, wifi routerem, mobilním signálem a mobilními daty; schematicky zakreslí vztah mezi nimi."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše rozdíly mezi připojením na veřejnou vs. domácí wifi síť; vysvětlí, jaké aktivity považuje za (ne)vhodné pro vykonávání na veřejné wifi a proč."
-   }
-  ]
- },
- "digitalni-zaklady-cesta-dat-internetem": {
-  "nazev": "Cesta dat internetem",
-  "popis": "Internet vznikl jako síť, která má fungovat, i když část vypadne — proto nemá jeden střed, ale spoustu cest. Data se dělí na balíčky a putují od tvého počítače přes router a další routery a switche až k serveru a zpátky; e-mail jde přes servery obou poskytovatelů. Po cestě data může někdo číst, pokud nejsou šifrovaná — šifrování je udělá pro útočníka po cestě nečitelná.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák na schematickém modelu internetu zakreslí cestu dat mezi svým počítačem a serverem a vysvětlí, proč je internet odolný proti výpadkům."
-   },
-   {
-    "uroven": "analyza",
-    "text": "Žák ve schématu označí, kde může útočník nešifrovanou komunikaci číst a jak to mění šifrování."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Popíše, jak a proč vznikl internet a jaký to má dopad na architekturu internetu."
-   },
-   {
-    "uroven": null,
-    "text": "Do schematického modelu části internetu, který obsahuje počítač žáka, webový server a routery či switche, zakreslí, jakým způsobem komunikuje počítač žáka s webovým serverem, když poprvé načítá z tohoto serveru určitou webovou stránku."
-   },
-   {
-    "uroven": null,
-    "text": "Pro situaci posílání zprávy přes sociální síť ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, server sociální sítě, jiný server a routery či switche, označí a) zařízení, jejichž poškození způsobí, že zaslaná zpráva nedorazí k cíli, a b) zařízení, jejichž poškození toto nezpůsobí. Diskutuje robustnost internetové architektury."
-   },
-   {
-    "uroven": null,
-    "text": "Pro situaci posílání emailu, kde adresát a příjemce mají jiného emailového poskytovatele, ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, emailový server obou emailových poskytovatelů a routery či switche, označí a) cestu emailu, b) část cesty, kde email bude typicky nezašifrovaný."
-   },
-   {
-    "uroven": null,
-    "text": "Na schematickém modelu internetu, který znázorňuje posílání nešifrované vs. šifrované zprávy, zhodnotí možností útočníka komunikaci „po cestě“ přečíst."
-   }
-  ]
- },
- "digitalni-zaklady-cloud-a-server": {
-  "nazev": "Cloud a server",
-  "popis": "„Cloud\" zní tajemně, ale je to jen cizí výkonný počítač (server) v datovém centru, ke kterému se připojuješ přes internet. Když si ukládáš fotky „do cloudu\" nebo píšeš ChatGPT, ve skutečnosti pracuje někde daleko něčí server, ne tvůj telefon.\n\nServer je obecně počítač připojený k internetu, který ostatním poskytuje služby — web, e-mail, hry, video. Podle toho, jak s ním pracuješ, mluvíme o stahování (download), nahrávání (upload) nebo streamování, kdy se data přehrávají průběžně bez uložení.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vlastními slovy vysvětlí, co znamená ukládat data „do cloudu“, a popíše, kde data ve skutečnosti leží."
-   },
-   {
-    "uroven": "analyza",
-    "text": "Žák rozliší, které úkoly řeší jeho vlastní zařízení a které vzdálený server."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák na příkladu ukládání fotek nebo psaní chatbotu ukáže, kde výpočet a data reálně jsou."
-   },
-   {
-    "uroven": "analyza",
-    "text": "Žák u konkrétní služby označí činnost běžící na jeho zařízení a činnost běžící na serveru."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí vrstevníkovi význam serveru ve smyslu počítačového zařízení připojeného k internetu, které poskytuje nějaké služby."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním."
-   }
-  ]
- },
- "digitalni-zaklady-adresy-a-protokoly": {
-  "nazev": "Adresy a protokoly",
-  "popis": "Aby se zařízení na internetu našla a rozuměla si, používají adresy a dohodnutá pravidla komunikace: doména (seznam.cz) se přes DNS přeloží na číselnou IP adresu a data putují podle protokolu HTTP(S). Je to jako poštovní adresa plus společný jazyk dopisu.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vlastními slovy vysvětlí, jak se doména přes DNS přeloží na IP adresu."
-   },
-   {
-    "uroven": "analyza",
-    "text": "Žák rozliší roli domény, IP adresy a protokolu HTTP při načítání stránky."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "analyza",
-    "text": "Žák u načtení stránky přiřadí každému pojmu (doména, IP, protokol) jeho úlohu."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí, co je to IP adresa, URL a DNS služba a jaké jsou mezi nimi vztahy."
-   }
-  ]
- },
- "digitalni-zaklady-prohlizec-a-vyhledavac": {
-  "nazev": "Prohlížeč a vyhledávač",
-  "popis": "Webová stránka je text s instrukcemi (HTML, CSS), které prohlížeč teprve převede na to, co vidíš — proto se stejná stránka zobrazí jinak na mobilu a na počítači a trochu jinak v různých prohlížečích. Vyhledávač zase stránky dopředu prochází roboty a staví si z nich rejstřík (index); když hledáš, neprohledává web, ale ten rejstřík.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, jak prohlížeč „ví“, jak stránku zobrazit, a proč se zobrazení liší podle zařízení a prohlížeče."
-   },
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí hlavní myšlenku toho, jak si vyhledávač tvoří přehled o obsahu webu."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Vysvětlí svému vrstevníkovi, jak prohlížeč webových stránek „ví“, jak přesně má stránku zobrazit; popíše, proč se stránka zobrazuje jinak na telefonu a jinak na počítači a proč se může zobrazovat odlišně v různých prohlížečích."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí vrstevníkovi hlavní myšlenku toho, jakým způsobem si internetové vyhledávače „tvoří“ přehled o tom, kde lze co na webu najít."
-   }
-  ]
- },
- "digitalni-zaklady-cloudove-dokumenty-a-sdileni": {
-  "nazev": "Cloudové dokumenty a sdílení",
-  "popis": "Dokument v cloudu neleží v tvém počítači, ale na serveru, a může ho upravovat víc lidí najednou. Komu co dovolíš, určují přístupová práva a role: čtenář jen čte, komentátor přidává poznámky, přispěvatel upravuje, správce rozhoduje o sdílení. Když ti vypadne připojení, píšeš do kopie, která se po obnovení spojení sloučí; když vypadne cloud, nemá kam ukládat nikdo.",
-  "cile": [
-   {
-    "uroven": "aplikace",
-    "text": "Žák nastaví cloudovému dokumentu různým uživatelům různá práva a vysvětlí rozdíly mezi rolemi."
-   },
-   {
-    "uroven": "analyza",
-    "text": "Žák předpoví, co se s cloudovým dokumentem stane při výpadku připojení nebo služby."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": null,
-    "text": "Pro cloudovský dokument nastaví různým uživatelům různá přístupová práva."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí, co se stane s cloudovským dokumentem, když tento žák edituje a a) spadne žákovo připojení k internetu, b) spadne připojení kolegy, který pracuje na jiné části dokumentu ve stejném čase, c) přestane dočasně fungovat cloud."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí rozdíly mezi uživatelskými rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva nad dokumenty."
-   }
-  ]
- },
- "digitalni-zaklady-kde-jsou-data-fyzicky": {
-  "nazev": "Kde jsou data fyzicky",
-  "popis": "Data z aplikací neleží „někde v internetu\", ale na konkrétních serverech na konkrétním místě na světě. Kde přesně jsou, ovlivňuje rychlost (latenci) i to, jaké zákony na ně platí — třeba jestli je chrání evropské GDPR.\n\nPro data na serveru v EU platí GDPR včetně práva „být zapomenut“; u služby mimo EU se trvalého smazání domoci nemusíš a software či cloud z některých zemí může být i bezpečnostní riziko.",
-  "cile": [
-   {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, proč místo uložení dat ovlivňuje rychlost i to, jaké zákony na ně platí."
-   },
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák u konkrétní služby posoudí riziko plynoucí z toho, kde jsou uložena její data."
-   }
-  ],
-  "kriteria": [
-   {
-    "uroven": "hodnoceni",
-    "text": "Žák u zadané služby uvede jedno riziko spojené s umístěním dat a zmíní roli ochrany GDPR."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí z perspektivy GDPR a práva „být zapomenut“, jestli lze smazat trvale osobní data z internetového serveru, který je v EU vs. mimo EU."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí, jaká bezpečnostní rizika obnáší pro občany EU používání softwaru či cloudových služeb zemí mimo EU (např. na příkladu antiviru či cloudu fotovoltaických elektráren); vysvětlí pojem Trojský kůň."
    }
   ]
  },
@@ -527,99 +67,1059 @@
    }
   ]
  },
- "digitalni-zaklady-malware-a-antivirus": {
-  "nazev": "Malware, antivirus a aktualizace",
-  "popis": "Malware je škodlivý program — virus, trojský kůň, ransomware, spyware — který se do zařízení dostane obvykle s něčím, co si sám stáhneš nebo spustíš. Hacker je člověk, který hledá cesty dovnitř; často využívá chyby v programech, a právě ty opravují aktualizace. Antivirus hlídá známé hrozby, ale nenahradí opatrnost: stahovat jen z prověřených zdrojů a neodkládat aktualizace.",
+ "digitalni-zaklady-vrstvy-pocitace": {
+  "nazev": "Vrstvy počítače",
+  "popis": "Počítač je poskládaný z vrstev: úplně dole hardware, nad ním operační systém a nahoře aplikace, kterou používáš. Každá vrstva schová složitost té pod sebou — díky tomu můžeš napsat appku, aniž bys řešil, jak přesně pracuje procesor. Tomuhle skrývání detailů se říká abstrakce.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák rozliší druhy malwaru, vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním a odliší malware od hackera."
-   },
+    "text": "Žák vysvětlí na příkladu, jak vrstvy hardware – operační systém – aplikace skrývají složitost té pod sebou."
+   }
+  ],
+  "kriteria": [
    {
-    "uroven": "aplikace",
-    "text": "Žák zabezpečí vlastní zařízení: vybere a nainstaluje spolehlivý antivirus a popíše vlastní pravidla pro stahování."
+    "uroven": "porozumeni",
+    "text": "Žák seřadí vrstvy od hardwaru po aplikaci a u jedné z nich uvede, co skrývá."
+   }
+  ]
+ },
+ "digitalni-zaklady-typy-souboru-a-pripony": {
+  "nazev": "Typy souborů a přípony",
+  "popis": "Obrázek, text, video, hudba — každý soubor má typ a ten poznáš podle přípony (jpg, pdf, mp4). Podle typu se vybírá program, který soubor otevře. Počítač i mobil přípony často skrývají, aby nepletly; zobrazit se dají v nastavení.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák rozpozná typ souboru podle přípony, vybere k němu program a vysvětlí, proč se přípony někdy nezobrazují."
    }
   ],
   "kriteria": [
    {
     "uroven": null,
-    "text": "Najde na internetu spolehlivý antivirus a nainstaluje ho na mobil či počítač."
-   },
-   {
-    "uroven": null,
-    "text": "Rozliší alespoň tři druhy malware a vysvětlí jejich princip, popíše rozdíl mezi malwarem a hackerem."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním."
-   },
-   {
-    "uroven": null,
-    "text": "Diskutuje o cílech a metodách hackerů."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše svá osobní bezpečnostní pravidla pro to, jak hledá na internetu aplikace či soubory ke stažení do svého zařízení (např. stahuje pouze z konkrétních prověřených stránek apod.)."
+    "text": "Rozpozná základní typy souborů (obrázek, text, video, hudba); vybere vhodný program/aplikaci pro jejich spuštění; uvede ukázky přípon souborů různého typu (např. jpg, pdf, mp4); vysvětlí, proč tyto přípony někdy počítač/mobil zobrazuje a jindy ne."
    }
   ]
  },
- "digitalni-zaklady-soukromi-na-zarizeni": {
-  "nazev": "Soukromí na zařízení",
-  "popis": "Mobil o tobě ví víc, než si myslíš: kde jsi (poloha), co vidí kamera a slyší mikrofon, a každá fotka si nese metadata — čas, model telefonu, často i přesné místo pořízení. Aplikacím se dá přístup k poloze a periferiím zakázat a sledování polohy vypnout; u sdílených fotek stojí za to metadata odstranit.",
+ "digitalni-zaklady-prevod-do-pdf": {
+  "nazev": "Převod do PDF",
+  "popis": "PDF je formát, který vypadá všude stejně — na mobilu, v tiskárně i u někoho s jiným programem. Většina aplikací do něj umí uložit nebo „vytisknout“ dokument, obrázek i prezentaci.",
   "cile": [
    {
-    "uroven": "porozumeni",
-    "text": "Žák vysvětlí, jaké osobní informace lze zjistit z metadat souboru a z přístupu aplikací k poloze či kameře."
-   },
-   {
     "uroven": "aplikace",
-    "text": "Žák na mobilu vypne sledování polohy a zakáže vybrané aplikaci přístup k periferiím."
+    "text": "Žák převede soubor do pdf a vysvětlí, proč se pdf hodí na tisk a sdílení."
    }
   ],
   "kriteria": [
    {
     "uroven": null,
-    "text": "Vysvětlí význam metadat (např. u fotografií) pro možnost útočníka zjistit osobní informace o oběti (např. autorovi fotografie)."
-   },
-   {
-    "uroven": null,
-    "text": "Demonstruje, jak na mobilní zařízení vypnout funkci sledování polohy."
-   },
-   {
-    "uroven": null,
-    "text": "Demonstruje, jak aplikacím v mobilním telefonu zakázat přístup k periferiím (např. ke kameře)."
+    "text": "Převede soubory různých typů do pdf; vysvětlí výhody pdf formátu z hlediska tisku a zobrazení."
    }
   ]
  },
- "digitalni-zaklady-chytra-zarizeni-a-rizika": {
-  "nazev": "Chytrá zařízení a jejich rizika",
-  "popis": "Počítač není jen notebook: malý (mikro)procesor je dnes i v myši, USB disku, lampičce nebo autě. Dokud takový „skrytý počítač“ není připojený k internetu, hrozí mu málo; jakmile je „chytrý“ a online, dá se zvenčí ovládnout nebo z něj číst — a mobil navíc operátorovi neustále hlásí svou polohu. Chytré sítě, auta a domácnosti proto přinášejí vedle pohodlí i bezpečnostní a etické otázky.",
+ "digitalni-zaklady-zakladni-ovladani-aplikaci": {
+  "nazev": "Základní ovládání aplikací",
+  "popis": "Ať tvoříš text, nebo obrázek, aplikace se ovládají stejnými mechanismy: uložit a načíst, kopírovat přes schránku, krok zpět a vpřed, přiblížit lupou, posouvat se v dokumentu. Kdo je ovládá, zvládne i program, který nikdy neviděl.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák rutinně používá uložení a načtení, schránku, krok zpět a vpřed, lupu a posun v různých aplikacích."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Rutinně používá základní mechanismy ovládání aplikací pro tvorbu statických dat (např. textu či obrazu) – mechanismus ukládání a načítání dat, kopírování části dat přes střižnu („clip board“), krok zpět („undo“) a vpřed (“redo”), změna velikosti zobrazení (lupa), náhled na jinou část dat („scrolování“) apod."
+   }
+  ]
+ },
+ "digitalni-zaklady-prace-s-casovou-osou": {
+  "nazev": "Práce s časovou osou",
+  "popis": "Video, zvuk a animace mají navíc čas: v časové ose vidíš, co se kdy stane, a přesouváš, stříháš a zarovnáváš úseky. Stejný princip má střih videa, hudební editor i animace v prezentaci.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák v aplikaci pro video, zvuk nebo animaci pracuje s časovou osou."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "V aplikacích pro tvorbu dynamických dat (např. animace v prezentaci, video, zvuk) pracuje s časovou osou."
+   }
+  ]
+ },
+ "digitalni-zaklady-struktura-dokumentu-styly-a-vrstvy": {
+  "nazev": "Struktura dokumentu: styly a vrstvy",
+  "popis": "Dokument není jen hromada písmen: odstavce mají styly, objekty v prezentaci leží ve vrstvách nad sebou. Když změníš styl místo každého nadpisu zvlášť, změna se projeví všude naráz.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák mění vlastnosti dokumentu přes jeho strukturu — styly odstavců v textu, vrstvy objektů v prezentaci."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Ve strukturovaných dokumentech mění vlastnosti dokumentu s využitím této struktury – například u textových souborů mění styly odstavců, v prezentaci vektorové objekty přesouvá „před“ a „za“ v jednotlivých vrstvách apod."
+   }
+  ]
+ },
+ "digitalni-zaklady-rozliseni-obrazu": {
+  "nazev": "Rozlišení obrazu",
+  "popis": "Rozlišení říká, z kolika bodů se obraz skládá. Víc bodů znamená ostřejší obraz na velkém displeji nebo v tisku, ale i větší soubor; na malém displeji mobilu rozdíl často nepoznáš.",
   "cile": [
    {
     "uroven": "porozumeni",
-    "text": "Žák vysvětlí, co je mikroprocesor, a rozliší skrytý počítač bez připojení od chytrého zařízení online včetně jeho rizik."
-   },
+    "text": "Žák vysvětlí, co je rozlišení obrazu a jak se projevuje na displeji, při focení, v tisku i ve velikosti souboru."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vrstevníkovi pojem rozlišení obrazu v kontextu zobrazení na monitoru a displeji mobilu, focení a tvorby videa, tisku a ukládání souborů."
+   }
+  ]
+ },
+ "digitalni-zaklady-organizace-souboru-do-slozek": {
+  "nazev": "Organizace souborů do složek",
+  "popis": "Sto souborů na ploše se nedá najít. Složky s jasnými názvy — podle předmětu, projektu nebo roku — jsou základní nástroj pořádku, který musíš navrhnout dřív, než začneš soubory přesouvat.",
+  "cile": [
+   {
+    "uroven": "tvorba",
+    "text": "Žák navrhne pro větší množství souborů strukturu složek, založí ji a soubory do ní rozmístí."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Když dostane 100 souborů různých typů, navrhne jejich vhodnou organizaci pomocí složek, složky založí na počítači a soubory do složek rozmístí."
+   }
+  ]
+ },
+ "digitalni-zaklady-fotky-z-mobilu-do-pocitace": {
+  "nazev": "Fotky z mobilu do počítače",
+  "popis": "Fotky z mobilu se hromadí po stovkách. Přenést je do počítače, roztřídit do několika složek a ty důležité přejmenovat tak, aby bylo z názvu poznat, co na nich je — bez téhle údržby je sbírka k ničemu.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák přenese fotky a videa z mobilu do počítače, uspořádá je do složek a klíčové přejmenuje."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Přenese desítky až stovky fotografií a videí z mobilního telefonu do počítače, navrhne jejich uspořádání pomocí několika složek a dle tohoto návrhu soubory uspořádá; klíčové fotografie přejmenuje tak, aby z názvu bylo patrné, o jakou fotku jde."
+   }
+  ]
+ },
+ "digitalni-zaklady-zalohovani-dat": {
+  "nazev": "Zálohování dat",
+  "popis": "Disk se rozbije, mobil ztratí, účet zablokuje. Záloha je kopie důležitých dat na jiném místě — na druhém disku, v cloudu. Důležitá jsou pravidla: co, kam a jak často.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí význam zálohování a popíše svá vlastní pravidla zálohování."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí význam zálohování dat a popíše svá osobní pravidla, která používá pro zálohování svých dat."
+   }
+  ]
+ },
+ "digitalni-zaklady-zaseknuty-program": {
+  "nazev": "Když se program zasekne",
+  "popis": "Program přestane reagovat, když čeká na něco, co nepřijde, nebo mu došla paměť. Většinou pomůže chvíli počkat, pak program násilně ukončit a znovu spustit; rozdělaná práce bez uložení je pryč.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, co znamená, že se program „zasekl“, a jak situaci vyřešit."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, co to znamená, že se program „zasekne“ a jakým způsobem tuto situaci vyřešit."
+   }
+  ]
+ },
+ "digitalni-zaklady-typy-trvalych-ulozist": {
+  "nazev": "Typy trvalých úložišť",
+  "popis": "Pevný disk, SSD, USB flash disk, SD karta, interní paměť mobilu, DVD — každé úložiště má jinou kapacitu, rychlost, odolnost a cenu. Podle toho se hodí na jiný účel: velký archiv, přenos mezi počítači, fotky v mobilu.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí výhody a nevýhody různých typů trvalých úložišť dat."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vrstevníkovi výhody a nevýhody různých typů trvalých úložišť dat (například USB flash disk, pevný disk, SD karta, interní paměť mobilu, DVD…)."
+   }
+  ]
+ },
+ "digitalni-zaklady-lokalne-nebo-v-cloudu": {
+  "nazev": "Lokálně, nebo v cloudu",
+  "popis": "Lokálně uložená data máš u sebe a fungují i bez internetu; v cloudu leží na cizím serveru, dostaneš se k nim odkudkoli a nepřijdeš o ně se ztraceným zařízením — ale potřebuješ připojení a musíš poskytovateli věřit.",
+  "cile": [
    {
     "uroven": "hodnoceni",
-    "text": "Žák posoudí rizika chytrých technologií a sledování polohy v bezpečnostní i etické rovině."
+    "text": "Žák popíše rozdíl mezi uložením dat lokálně a v cloudu a posoudí výhody a nevýhody obou."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše rozdíl mezi uložením dat lokálně a na cloudu; diskutuje výhody a nevýhody."
+   }
+  ]
+ },
+ "digitalni-zaklady-bezpecne-smazani-dat": {
+  "nazev": "Bezpečné smazání dat",
+  "popis": "Smazaný soubor z disku hned nezmizí — systém si jen přestane pamatovat, kde ležel, a data tam zůstávají, dokud je něco nepřepíše. Než zařízení vyhodíš nebo prodáš, musíš je přepsat nebo zašifrovat; někdy je lepší ho nevyhazovat vůbec.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí „líné“ mazání dat a popíše, jak data před vyhozením zařízení odstranit bezpečně."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí mechanismus „líného“ mazání dat uložených lokálně. Vysvětlí, jakým způsobem bezpečně odstranit taková data, pokud zařízení, kde jsou uložena, chceme vyhodit – tzn. jak lze (někdy) zařídit, aby se k datům nebo jejich částem nedostal nikdo, kdo vyhozené zařízení najde. Zejména vysvětlí, proč běžné smazání a zároveň vysypání koše není v této situaci dostačující a kdy je případně lepší zařízení nikdy nevyhazovat (neprodávat)."
+   }
+  ]
+ },
+ "digitalni-zaklady-operacni-system-a-soubory": {
+  "nazev": "Operační systém",
+  "popis": "Operační systém (Windows, Android, iOS, macOS) řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Mobil má jiný systém než počítač, ale oba dělají to samé.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí význam operačního systému a přiřadí základní operační systémy k typickým zařízením."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vrstevníkovi, jaký základní význam pro počítač nebo mobil má operační systém; rozpozná základní operační systémy (např. Android, iOS, Windows) a asociuje je s typickými zařízeními (např. mobil vs. počítač)."
+   }
+  ]
+ },
+ "digitalni-zaklady-komprese-dat": {
+  "nazev": "Komprese dat",
+  "popis": "Komprese zmenší soubor tím, že odstraní opakování nebo nepodstatné detaily. Co je jednou zkomprimované, už se znovu skoro nezmenší — zbývající data jsou nahodilá a není v nich co ušetřit.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, jak komprese souvisí s velikostí dat a proč nejde komprimovat donekonečna."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, jak komprese souvisí s velikostí dat, a proč není možné zkomprimovaný soubor zmenšovat opakovanou komprimací do nekonečna."
+   }
+  ]
+ },
+ "digitalni-zaklady-velikost-dat-mb-a-gb": {
+  "nazev": "Velikost dat: MB a GB",
+  "popis": "Velikost dat se měří v bytech: megabyte (MB) je milion, gigabyte (GB) miliarda bytů. Fotka má jednotky MB, film jednotky GB — podle toho poznáš, co se vejde na kartu nebo do mobilu.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí zkratky MB a GB a odhadne řádové velikosti fotek a filmů."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše význam zkratek MB a GB (megabyte a gigabyte) a uvede řádové velikosti fotek a delších videí (např. filmů)."
+   }
+  ]
+ },
+ "digitalni-zaklady-propojeni-mobilu-a-pocitace": {
+  "nazev": "Propojení mobilu a počítače",
+  "popis": "Mobil a počítač se dají spojit i bez wifi a internetu — kabelem přes USB nebo přes Bluetooth. Pak se mezi nimi kopírují fotky a soubory jako mezi dvěma složkami.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák propojí mobil s počítačem bez internetu (např. přes USB) a překopíruje mezi nimi data."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Propojí mobilní telefon a počítač bez pomocí internetu/wifi (například přes USB) a překopíruje z jednoho zařízení na druhé data (například fotky)."
+   }
+  ]
+ },
+ "digitalni-zaklady-pripojeni-externich-zarizeni": {
+  "nazev": "Připojení externích zařízení",
+  "popis": "Monitor, projektor, tiskárna, klávesnice — každé externí zařízení potřebuje správný port nebo bezdrátové spojení a někdy i ovladač. Zapojit, zvolit zdroj či zařízení v nastavení, hotovo.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák připojí k počítači monitor, projektor nebo tiskárnu."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Připojí k počítači externí zařízení, například monitor, projektor nebo tiskárnu."
+   }
+  ]
+ },
+ "digitalni-zaklady-instalace-a-odinstalace-aplikaci": {
+  "nazev": "Instalace a odinstalace aplikací",
+  "popis": "Aplikace se instalují z obchodu nebo z instalačního souboru a odinstalují přes nastavení systému — nestačí smazat ikonu. Co nepoužíváš, odinstaluj: zabírá místo a může být bezpečnostní riziko.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák nainstaluje a odinstaluje aplikaci."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Nainstaluje a odinstaluje aplikaci."
+   }
+  ]
+ },
+ "digitalni-zaklady-aktualizace-aplikaci": {
+  "nazev": "Aktualizace aplikací",
+  "popis": "Aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas i nové funkce — a občas změny, které se nehodí nebo nefungují na starém zařízení. Odkládat je ale znamená nechat otevřené známé díry.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák aktualizuje aplikaci a posoudí výhody a nevýhody aktualizací."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Aktualizuje aplikaci; diskutuje o výhodách a nevýhodách aktualizací."
+   }
+  ]
+ },
+ "digitalni-zaklady-restart-a-uklid-operacni-pameti": {
+  "nazev": "Restart a úklid operační paměti",
+  "popis": "Každá spuštěná aplikace si drží kus operační paměti. Zavřením ji vrátí, restartem se vyprázdní celá — proto zpomalený mobil nebo počítač po restartu zase běží.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, proč zavření aplikace nebo restart „uklidí“ operační paměť zařízení."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše význam zavření aplikace resp. restartu počítače či mobilního zařízení pro „úklid“ operační paměti zařízení."
+   }
+  ]
+ },
+ "digitalni-zaklady-hardware-a-software": {
+  "nazev": "Hardware a výběr zařízení",
+  "popis": "Při nákupu rozhodují komponenty: procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, wifi, Bluetooth). Správná volba závisí na tom, k čemu zařízení chceš.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák při výběru mobilu či notebooku diskutuje o parametrech základních komponent a možnostech připojení."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Na situaci nákupu nového mobilu či notebooku diskutuje o funkcích a parametrech základních komponent počítačového zařízení (zejména jde o procesor/jádra, trvalé úložiště, operační paměť, grafickou kartu), jakož i o možnostech, jak toto zařízení připojit k dalším zařízením (bezdrátová připojení, porty)."
+   }
+  ]
+ },
+ "digitalni-zaklady-proc-se-pocitac-zasekava": {
+  "nazev": "Proč se počítač zasekává",
+  "popis": "Pomalý počítač má obvykle plnou operační paměť, plný disk, program běžící na pozadí, přehřátí nebo malware. Rozpoznat příčinu je první krok k nápravě.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, co může způsobovat, že je počítač pomalejší než obvykle."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, co může způsobovat, že se „počítač strašně zasekává“ (je pomalejší než obvykle)."
+   }
+  ]
+ },
+ "digitalni-zaklady-programy-a-operacni-pamet": {
+  "nazev": "Programy a operační paměť",
+  "popis": "Operační paměť (RAM) je rychlá, ale omezená. Každý spuštěný program z ní ukrajuje; když dojde, systém začne odkládat data na pomalý disk a všechno se zpomalí.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí vztah mezi počtem spuštěných programů a operační pamětí."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vztah mezi počtem spuštěných programů a operační pamětí počítače."
+   }
+  ]
+ },
+ "digitalni-zaklady-kde-je-neulozeny-soubor": {
+  "nazev": "Kde je neuložený soubor",
+  "popis": "Nový dokument nebo obrázek existuje nejdřív jen v operační paměti — rychlé, ale dočasné. Dokud ho neuložíš na disk nebo do cloudu, výpadek proudu nebo pád programu ho smaže.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, kde se nachází nově založený soubor předtím, než ho uložíme na disk."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, kde se v počítači nachází nově založený soubor (např. obrázek či textový dokument nově otevřený v příslušném editoru) předtím, než ho uložíme na lokální úložiště (např. na disk, interní paměť…)."
+   }
+  ]
+ },
+ "digitalni-zaklady-cloud-a-server": {
+  "nazev": "Server a cloud",
+  "popis": "Server je počítač připojený k internetu, který ostatním poskytuje služby: web, e-mail, hry, video. Není nijak kouzelný — je to výkonný počítač v datovém centru, který běží pořád. „Cloud“ je jen jiné slovo pro cizí server, na kterém máš data nebo ti počítá.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, co je server — počítač připojený k internetu, který poskytuje služby."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vrstevníkovi význam serveru ve smyslu počítačového zařízení připojeného k internetu, které poskytuje nějaké služby."
+   }
+  ]
+ },
+ "digitalni-zaklady-internet-a-sit": {
+  "nazev": "Internet, web a wifi",
+  "popis": "Internet je síť sítí; web je jedna ze služeb, které po něm běží. Domů internet přivádí kabel do routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Jsou to různé věci, které se v řeči pletou.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí rozdíl mezi internetem, webem, wifi, routerem, mobilním signálem a mobilními daty a zakreslí jejich vztah."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí rozdíl mezi internetem, webem, wifi sítí, wifi signálem, wifi routerem, mobilním signálem a mobilními daty; schematicky zakreslí vztah mezi nimi."
+   }
+  ]
+ },
+ "digitalni-zaklady-elektricka-sit-vs-internetove-kabely": {
+  "nazev": "Elektrická síť vs. internetové kabely",
+  "popis": "Obojí jsou „sítě“ s kabely, ale elektřina teče jako energie od elektrárny ke spotřebiči, zatímco po internetových kabelech putují data oběma směry, v balíčcích a po různých cestách.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely."
+   }
+  ]
+ },
+ "digitalni-zaklady-vznik-a-architektura-internetu": {
+  "nazev": "Vznik a architektura internetu",
+  "popis": "Internet vznikl jako síť, která má fungovat, i když část vypadne. Proto nemá jeden střed: data se dělí na balíčky a hledají si cestu přes mnoho propojených uzlů.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák popíše, jak a proč vznikl internet a jak to ovlivnilo jeho architekturu."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše, jak a proč vznikl internet a jaký to má dopad na architekturu internetu."
+   }
+  ]
+ },
+ "digitalni-zaklady-adresy-a-protokoly": {
+  "nazev": "IP adresa, URL a DNS",
+  "popis": "Každé zařízení na internetu má číselnou IP adresu; lidé si pamatují jména (URL jako seznam.cz). DNS je služba, která jméno přeloží na adresu — telefonní seznam internetu.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, co je IP adresa, URL a DNS a jaký je mezi nimi vztah."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, co je to IP adresa, URL a DNS služba a jaké jsou mezi nimi vztahy."
+   }
+  ]
+ },
+ "digitalni-zaklady-jak-prohlizec-zobrazi-stranku": {
+  "nazev": "Jak prohlížeč zobrazí stránku",
+  "popis": "Stránka přichází jako text s instrukcemi (HTML, CSS) a prohlížeč ji teprve vykreslí. Proto vypadá jinak na úzkém mobilu než na monitoru a trochu jinak v každém prohlížeči.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, jak prohlížeč „ví“, jak stránku zobrazit, a proč se liší na mobilu, počítači a v různých prohlížečích."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí svému vrstevníkovi, jak prohlížeč webových stránek „ví“, jak přesně má stránku zobrazit; popíše, proč se stránka zobrazuje jinak na telefonu a jinak na počítači a proč se může zobrazovat odlišně v různých prohlížečích."
+   }
+  ]
+ },
+ "digitalni-zaklady-cesta-pozadavku-k-webovemu-serveru": {
+  "nazev": "Cesta požadavku k webovému serveru",
+  "popis": "Když načítáš stránku, požadavek jde z tvého počítače přes domácí router, dál přes routery a switche poskytovatelů až k serveru — a odpověď stejnou cestou zpátky.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák ve schématu internetu zakreslí, jak jeho počítač komunikuje s webovým serverem při načtení stránky."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Do schematického modelu části internetu, který obsahuje počítač žáka, webový server a routery či switche, zakreslí, jakým způsobem komunikuje počítač žáka s webovým serverem, když poprvé načítá z tohoto serveru určitou webovou stránku."
+   }
+  ]
+ },
+ "digitalni-zaklady-robustnost-internetu": {
+  "nazev": "Robustnost internetu",
+  "popis": "Zpráva na sociální síti jde přes server sítě; vypadne-li router po cestě, data si najdou jinou. Zastaví je jen výpadek něčeho, co nemá náhradu — tvého připojení nebo serveru sítě.",
+  "cile": [
+   {
+    "uroven": "analyza",
+    "text": "Žák ve schématu označí, která zařízení při poškození zprávu zastaví a která ne, a diskutuje robustnost internetu."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Pro situaci posílání zprávy přes sociální síť ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, server sociální sítě, jiný server a routery či switche, označí a) zařízení, jejichž poškození způsobí, že zaslaná zpráva nedorazí k cíli, a b) zařízení, jejichž poškození toto nezpůsobí. Diskutuje robustnost internetové architektury."
+   }
+  ]
+ },
+ "digitalni-zaklady-cesta-e-mailu": {
+  "nazev": "Cesta e-mailu",
+  "popis": "E-mail putuje z tvého zařízení na server tvého poskytovatele, odtud na server poskytovatele příjemce a k němu. Mezi servery bývá šifrovaný, ale na serverech leží čitelný — kdo k nim má přístup, čte.",
+  "cile": [
+   {
+    "uroven": "analyza",
+    "text": "Žák ve schématu označí cestu e-mailu mezi dvěma poskytovateli a část, kde je typicky nešifrovaný."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Pro situaci posílání emailu, kde adresát a příjemce mají jiného emailového poskytovatele, ve schematickém modelu části internetu, který obsahuje počítač adresáta, počítač příjemce, emailový server obou emailových poskytovatelů a routery či switche, označí a) cestu emailu, b) část cesty, kde email bude typicky nezašifrovaný."
+   }
+  ]
+ },
+ "digitalni-zaklady-sifrovana-a-nesifrovana-komunikace": {
+  "nazev": "Šifrovaná a nešifrovaná komunikace",
+  "popis": "Nešifrovaná zpráva je po cestě jako pohlednice — každý uzel ji může číst. Šifrovaná je pro útočníka po cestě nečitelná; dá se přečíst jen u odesílatele a příjemce.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák na modelu posílání zprávy zhodnotí, kdy může útočník komunikaci „po cestě“ přečíst."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Na schematickém modelu internetu, který znázorňuje posílání nešifrované vs. šifrované zprávy, zhodnotí možností útočníka komunikaci „po cestě“ přečíst."
+   }
+  ]
+ },
+ "digitalni-zaklady-jak-funguje-vyhledavac": {
+  "nazev": "Jak funguje vyhledávač",
+  "popis": "Vyhledávač web neprohledává ve chvíli, kdy hledáš. Jeho roboti stránky procházejí dopředu a stavějí z nich rejstřík (index); ty pak prohledáváš rejstřík, ne web.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí hlavní myšlenku toho, jak si vyhledávač tvoří přehled o obsahu webu."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vrstevníkovi hlavní myšlenku toho, jakým způsobem si internetové vyhledávače „tvoří“ přehled o tom, kde lze co na webu najít."
+   }
+  ]
+ },
+ "digitalni-zaklady-cookies": {
+  "nazev": "Cookies",
+  "popis": "Cookie je malý záznam, který si web uloží v tvém prohlížeči: díky němu zůstaneš přihlášený a nákupní košík se nevysype. Stejný mechanismus ale umožňuje sledovat tě napříč weby.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák popíše výhody a nevýhody cookies."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše výhody a nevýhody cookies."
+   }
+  ]
+ },
+ "digitalni-zaklady-personalizovany-obsah": {
+  "nazev": "Personalizovaný obsah",
+  "popis": "Reklamy, videa, zprávy i výsledky vyhledávání se přizpůsobují tomu, co o tobě služba ví. Je to pohodlné — a zároveň tě to zavírá do bubliny a prodává tvou pozornost.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák uvede příklady personalizovaného obsahu, vysvětlí, jak personalizace funguje, a posoudí její výhody a nevýhody."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Uvede alespoň tři příklady personalizovaného obsahu webu (např. reklamy, videa, novinové zprávy, výsledky vyhledávání) a vysvětlí, jak je možné, že je tento obsah přizpůsobován na míru uživateli. Diskutuje výhody a nevýhody této personalizace."
+   }
+  ]
+ },
+ "digitalni-zaklady-digitalni-stopa-a-digitalni-identita": {
+  "nazev": "Digitální stopa a digitální identita",
+  "popis": "Digitální identita je to, kým na internetu jsi (účty, profily); digitální stopa je všechno, co po sobě necháváš — příspěvky, lajky, polohu, historii hledání. Stopa vzniká i bez tvého vědomí.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák rozliší digitální stopu a digitální identitu a popíše, čím stopu vytváří."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše rozdíl mezi digitální stopou a digitální identitou. Diskutuje, čím vším svou digitální stopu vytváří."
+   }
+  ]
+ },
+ "digitalni-zaklady-financovani-socialnich-siti-reklamou": {
+  "nazev": "Financování sociálních sítí reklamou",
+  "popis": "Sociální síť je zdarma, protože platí inzerenti — za tvou pozornost a za možnost cílit reklamu podle toho, co o tobě síť ví. Čím déle tě udrží, tím víc vydělá.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák popíše princip financování sociálních sítí pomocí reklamy."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše princip financování sociálních sítí pomocí reklamy."
+   }
+  ]
+ },
+ "digitalni-zaklady-osobni-data-a-treti-strany": {
+  "nazev": "Osobní data a třetí strany",
+  "popis": "Weby, aplikace, operátoři i úřady mohou získat tvou polohu, kontakty, zájmy, historii nákupů. Část toho dovoluješ sám v nastavení a souhlasech — a část se dá omezit, když víš kde.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák popíše, jaká osobní data mohou získat třetí osoby a instituce, a jak tomu může uživatel zabránit."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše, jaká osobní data uživatelů internetu mohou třetí osoby nebo instituce získat; a jakým způsobem a kdy a jak tomu může uživatel zabránit."
+   }
+  ]
+ },
+ "digitalni-zaklady-kde-jsou-data-fyzicky": {
+  "nazev": "GDPR a právo být zapomenut",
+  "popis": "V EU máš podle GDPR právo žádat smazání svých dat a služba musí vyhovět. U serveru mimo EU se tohoto práva domoci nemusíš — data tam mohou zůstat napořád. Kde fyzicky data leží, proto není jedno.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, zda a jak lze podle GDPR trvale smazat osobní data ze serveru v EU a mimo EU."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí z perspektivy GDPR a práva „být zapomenut“, jestli lze smazat trvale osobní data z internetového serveru, který je v EU vs. mimo EU."
+   }
+  ]
+ },
+ "digitalni-zaklady-verejna-vs-domaci-wifi": {
+  "nazev": "Veřejná vs. domácí wifi",
+  "popis": "Domácí wifi provozuješ ty; veřejnou někdo cizí, kdo může provoz sledovat nebo podvrhnout. Přihlašování do banky nebo nákupy na veřejnou wifi nepatří — nebo jen přes šifrované spojení.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák popíše rozdíl mezi veřejnou a domácí wifi a posoudí, co na veřejné wifi (ne)dělat."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše rozdíly mezi připojením na veřejnou vs. domácí wifi síť; vysvětlí, jaké aktivity považuje za (ne)vhodné pro vykonávání na veřejné wifi a proč."
+   }
+  ]
+ },
+ "digitalni-zaklady-pristupova-prava-ke-cloudovemu-dokumentu": {
+  "nazev": "Přístupová práva ke cloudovému dokumentu",
+  "popis": "Cloudový dokument sdílíš nastavením práv: kdo může číst, komentovat, upravovat. Odkaz „pro každého“ je nejpohodlnější a nejrizikovější.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák nastaví cloudovému dokumentu různým uživatelům různá přístupová práva."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Pro cloudovský dokument nastaví různým uživatelům různá přístupová práva."
+   }
+  ]
+ },
+ "digitalni-zaklady-cloudovy-dokument-pri-vypadku": {
+  "nazev": "Cloudový dokument při výpadku",
+  "popis": "Když ti vypadne připojení, píšeš do místní kopie, která se po obnovení sloučí; výpadek kolegy tvou práci neovlivní; když vypadne cloud, nemá kam ukládat nikdo.",
+  "cile": [
+   {
+    "uroven": "analyza",
+    "text": "Žák vysvětlí, co se stane s cloudovým dokumentem při výpadku jeho připojení, připojení kolegy nebo cloudu."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, co se stane s cloudovským dokumentem, když tento žák edituje a a) spadne žákovo připojení k internetu, b) spadne připojení kolegy, který pracuje na jiné části dokumentu ve stejném čase, c) přestane dočasně fungovat cloud."
+   }
+  ]
+ },
+ "digitalni-zaklady-uzivatelske-role-v-dokumentech": {
+  "nazev": "Uživatelské role v dokumentech",
+  "popis": "Čtenář jen čte, komentátor přidává poznámky, přispěvatel mění obsah, správce rozhoduje, kdo smí co. Role jsou odstupňovaná důvěra.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí rozdíly mezi rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí rozdíly mezi uživatelskými rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva nad dokumenty."
+   }
+  ]
+ },
+ "digitalni-zaklady-streamovani-upload-a-download": {
+  "nazev": "Streamování, upload a download",
+  "popis": "Download stáhne soubor k tobě, upload ho pošle na server, streamování přehrává data průběžně, aniž by se celý soubor uložil — proto video jede hned, ale bez připojení zmizí.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním."
+   }
+  ]
+ },
+ "digitalni-zaklady-mikroprocesor-a-virus-v-periferii": {
+  "nazev": "Mikroprocesor a virus v periferii",
+  "popis": "Mikroprocesor je malý „mozek“ — a je dnes i v myši, USB disku nebo lampičce. Kde je procesor a paměť, tam může běžet program, a tedy i škodlivý.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, zda může virus napadnout periferní zařízení, a vysvětlí pojem mikroprocesor."
    }
   ],
   "kriteria": [
    {
     "uroven": null,
     "text": "Vysvětlí, jestli je principiálně možné, aby počítačový virus napadl periferní zařízení počítačů (např. myš, USB disk, USB lampička apod.); vysvětlí pojem (mikro)procesor."
-   },
+   }
+  ]
+ },
+ "digitalni-zaklady-skryty-a-chytry-pocitac": {
+  "nazev": "Skrytý a chytrý počítač",
+  "popis": "Počítač v pračce nebo autě bez internetu je „skrytý“ a zvenčí nedosažitelný. Jakmile je zařízení „chytré“ a online, dá se zvenčí ovládnout, odposlouchávat nebo zneužít.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák rozliší skrytý počítač bez připojení od chytrého zařízení online a vysvětlí jeho rizika."
+   }
+  ],
+  "kriteria": [
    {
     "uroven": null,
     "text": "Vysvětlí rozdíl mezi skrytým počítačem, který není připojený k internetu, a chytrým počítačem (smart technologies), který je připojený k internetu. Vysvětlí rizika chytrých počítačů."
-   },
+   }
+  ]
+ },
+ "digitalni-zaklady-poloha-mobilu-a-operator": {
+  "nazev": "Poloha mobilu a operátor",
+  "popis": "Mobil se neustále hlásí vysílačům, takže operátor ví, kde jsi. Když se to dozví třetí strana — zaměstnavatel, bývalý partner, zloděj — může to být nepříjemné i nebezpečné.",
+  "cile": [
+   {
+    "uroven": "tvorba",
+    "text": "Žák vymyslí situace, kdy je pro majitele mobilu nevýhodné, že se třetí strana dozví jeho polohu."
+   }
+  ],
+  "kriteria": [
    {
     "uroven": null,
     "text": "Vymyslí alespoň tři různé situace, kdy je pro majitele mobilního telefonu nevýhodné, když se třetí strana od operátora mobilní sítě dozví informace o poloze majitele."
-   },
+   }
+  ]
+ },
+ "digitalni-zaklady-software-a-cloud-mimo-eu": {
+  "nazev": "Software a cloud mimo EU",
+  "popis": "Software a cloud z některých zemí mohou podléhat tamním zákonům a tajným službám — antivirus nebo cloud elektrárny tak může být trojský kůň: tváří se užitečně a zevnitř otevírá dveře.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí bezpečnostní rizika používání softwaru a cloudových služeb ze zemí mimo EU a pojem trojský kůň."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí, jaká bezpečnostní rizika obnáší pro občany EU používání softwaru či cloudových služeb zemí mimo EU (např. na příkladu antiviru či cloudu fotovoltaických elektráren); vysvětlí pojem Trojský kůň."
+   }
+  ]
+ },
+ "digitalni-zaklady-bezpecne-heslo": {
+  "nazev": "Bezpečné heslo",
+  "popis": "Bezpečné heslo je dlouhé, jedinečné a neuhodnutelné — třeba fráze z několika slov. Krátké heslo, jméno nebo datum narození prolomí program za sekundy.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák rozpozná více a méně bezpečná hesla a vytvoří si bezpečné heslo."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Rozpozná více a méně bezpečná hesla; sám si vytvoří bezpečné heslo."
+   }
+  ]
+ },
+ "digitalni-zaklady-ucet-heslo-autentizace-sifrovani-kodovani": {
+  "nazev": "Účet, heslo, autentizace, šifrování, kódování",
+  "popis": "Účet je tvá identita ve službě, heslo klíč k němu, autentizace ověření, že jsi to ty. Kódování převádí data do jiné podoby, aby se daly uložit; šifrování je převádí tak, aby je bez klíče nikdo nepřečetl.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí rozdíl mezi účtem, heslem, autentizací, šifrováním a kódováním."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí rozdíl mezi účtem, heslem, autentifikací, šifrováním a kódováním."
+   }
+  ]
+ },
+ "digitalni-zaklady-antivirus": {
+  "nazev": "Antivirus",
+  "popis": "Antivirus hlídá známé hrozby — ale sám může být podvod. Spolehlivý je ten z ověřeného zdroje s dobrou pověstí, ne první výsledek s nápisem „váš počítač je napaden“.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák najde spolehlivý antivirus a nainstaluje ho na mobil či počítač."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Najde na internetu spolehlivý antivirus a nainstaluje ho na mobil či počítač."
+   }
+  ]
+ },
+ "digitalni-zaklady-druhy-malwaru": {
+  "nazev": "Druhy malwaru",
+  "popis": "Virus se šíří připojením k jiným souborům, trojský kůň se tváří jako užitečný program, ransomware zašifruje data a chce výkupné, spyware tě sleduje. Malware je program; hacker je člověk.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák rozliší alespoň tři druhy malwaru, vysvětlí jejich princip a odliší malware od hackera."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Rozliší alespoň tři druhy malware a vysvětlí jejich princip, popíše rozdíl mezi malwarem a hackerem."
+   }
+  ]
+ },
+ "digitalni-zaklady-chyby-v-programu-aktualizace-a-hackovani": {
+  "nazev": "Chyby v programu, aktualizace a hackování",
+  "popis": "Každý program má chyby; některé jsou díra, kterou lze zneužít. Útočníci je hledají, výrobci je opravují aktualizacemi. Neaktualizované zařízení má známé a otevřené díry.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním."
+   }
+  ]
+ },
+ "digitalni-zaklady-cile-a-metody-hackeru": {
+  "nazev": "Cíle a metody hackerů",
+  "popis": "Hackeři chtějí peníze, data, přístup nebo pozornost. Metody sahají od zneužití chyb v programech přes podvodné zprávy až po hádání hesel — a často je nejslabší článek člověk.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák diskutuje o cílech a metodách hackerů."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Diskutuje o cílech a metodách hackerů."
+   }
+  ]
+ },
+ "digitalni-zaklady-bezpecne-stahovani": {
+  "nazev": "Bezpečné stahování",
+  "popis": "Stahuj jen z oficiálních obchodů a prověřených stránek, čti, co instalace chce povolit, a nevěř tlačítkům „Stáhnout“ v reklamách. Vlastní pravidla jsou lepší než spoléhání na antivirus.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák popíše svá osobní pravidla pro bezpečné hledání a stahování aplikací a souborů."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Popíše svá osobní bezpečnostní pravidla pro to, jak hledá na internetu aplikace či soubory ke stažení do svého zařízení (např. stahuje pouze z konkrétních prověřených stránek apod.)."
+   }
+  ]
+ },
+ "digitalni-zaklady-pravidla-bezpecneho-chovani-na-internetu": {
+  "nazev": "Pravidla bezpečného chování na internetu",
+  "popis": "Bezpečné chování má různé roviny: co sdílíš, komu věříš, na co klikáš, jak chráníš účty. Sepsat pravidla pro mladší spolužáky znamená vybrat to podstatné a vysvětlit proč.",
+  "cile": [
+   {
+    "uroven": "tvorba",
+    "text": "Žák diskutuje o bezpečném chování na internetu a sepíše pravidla pro žáky 5. třídy."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Diskutuje o různých módech bezpečného chování na internetu; sepíše pravidla pro bezpečné chování na internetu pro žáky z 5. třídy."
+   }
+  ]
+ },
+ "digitalni-zaklady-prvky-zabezpeceni-pocitace-a-komunikace": {
+  "nazev": "Prvky zabezpečení počítače a komunikace",
+  "popis": "Zabezpečení je víc vrstev: firewall hlídá síťový provoz, antivirus soubory, dvoufaktorová autentizace účty, end-to-end šifrování zprávy. Myšlenková mapa ukáže, co chrání co.",
+  "cile": [
+   {
+    "uroven": "tvorba",
+    "text": "Žák vytvoří myšlenkovou mapu prvků zabezpečení — firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vytvoří myšlenkovou mapu prvků zabezpečení počítače a internetové komunikace (použije koncepty, jako např. firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování apod.)."
+   }
+  ]
+ },
+ "digitalni-zaklady-metadata-fotografii": {
+  "nazev": "Metadata fotografií",
+  "popis": "Fotka v sobě nese metadata: čas, model telefonu, nastavení a často i přesnou polohu. Z fotky sdílené s metadaty se dá vyčíst, kde bydlíš nebo kdy nejsi doma.",
+  "cile": [
+   {
+    "uroven": "porozumeni",
+    "text": "Žák vysvětlí, co útočník zjistí z metadat fotografie o jejím autorovi."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Vysvětlí význam metadat (např. u fotografií) pro možnost útočníka zjistit osobní informace o oběti (např. autorovi fotografie)."
+   }
+  ]
+ },
+ "digitalni-zaklady-vypnuti-sledovani-polohy": {
+  "nazev": "Vypnutí sledování polohy",
+  "popis": "Poloha se dá vypnout celkově nebo jen pro vybrané aplikace — mapy ji potřebují, hra s baterkou ne. Najít nastavení a rozhodnout, komu polohu dáš, je základní hygiena.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák demonstruje, jak na mobilu vypnout sledování polohy."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Demonstruje, jak na mobilní zařízení vypnout funkci sledování polohy."
+   }
+  ]
+ },
+ "digitalni-zaklady-pristup-aplikaci-ke-kamere-a-periferiim": {
+  "nazev": "Přístup aplikací ke kameře a periferiím",
+  "popis": "Každá aplikace si říká o oprávnění: kamera, mikrofon, kontakty. V nastavení mobilu se dají zkontrolovat a odebrat — aplikace na kalkulačku kameru nepotřebuje.",
+  "cile": [
+   {
+    "uroven": "aplikace",
+    "text": "Žák demonstruje, jak aplikacím v mobilu zakázat přístup ke kameře a dalším periferiím."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Demonstruje, jak aplikacím v mobilním telefonu zakázat přístup k periferiím (např. ke kameře)."
+   }
+  ]
+ },
+ "digitalni-zaklady-rizika-chytrych-technologii": {
+  "nazev": "Rizika chytrých technologií",
+  "popis": "Chytrá síť, chytré auto, chytrá domácnost: pohodlí a úspora, ale i možnost, že technologii někdo hackne nebo že sbírá víc dat, než je nutné. Rizika jsou technická i etická.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák diskutuje o rizikách chytrých technologií (smart grid, chytrá auta) v etické i bezpečnostní rovině."
+   }
+  ],
+  "kriteria": [
    {
     "uroven": null,
     "text": "Diskutuje o rizikách nových „chytrých technologií“ (např. smart grid, smart cars) v etické rovině a rovině bezpečnostní (možnost technologie „hacknout“)."
+   }
+  ]
+ },
+ "digitalni-zaklady-pouziti-ai-a-jeho-rizika": {
+  "nazev": "Použití AI a jeho rizika",
+  "popis": "AI doporučuje videa, překládá, řídí auta, rozhoduje o půjčkách. Každé použití nese rizika — chyby, zkreslení, zneužití, ztrátu kontroly — a stojí za to je umět pojmenovat.",
+  "cile": [
+   {
+    "uroven": "hodnoceni",
+    "text": "Žák uvede příklady použití umělé inteligence a popíše jejich možná rizika."
+   }
+  ],
+  "kriteria": [
+   {
+    "uroven": null,
+    "text": "Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití."
    }
   ]
  },
@@ -2280,10 +2780,6 @@
    {
     "uroven": "hodnoceni",
     "text": "Žák formuluje stanovisko a podpoří ho alespoň dvěma argumenty."
-   },
-   {
-    "uroven": null,
-    "text": "Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití."
    }
   ]
  },
@@ -3752,14 +4248,6 @@
    {
     "uroven": "hodnoceni",
     "text": "Žák u konkrétní služby zdůvodní zvolené zabezpečení odkazem na možná rizika ztráty či zneužití dat."
-   },
-   {
-    "uroven": null,
-    "text": "Rozpozná více a méně bezpečná hesla; sám si vytvoří bezpečné heslo."
-   },
-   {
-    "uroven": null,
-    "text": "Vysvětlí rozdíl mezi účtem, heslem, autentifikací, šifrováním a kódováním."
    }
   ]
  },
@@ -3808,14 +4296,6 @@
    {
     "uroven": "hodnoceni",
     "text": "Žák u zvolené situace zhodnotí riziko a navrhne konkrétní nastavení soukromí."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše rozdíl mezi digitální stopou a digitální identitou. Diskutuje, čím vším svou digitální stopu vytváří."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše, jaká osobní data uživatelů internetu mohou třetí osoby nebo instituce získat; a jakým způsobem a kdy a jak tomu může uživatel zabránit."
    }
   ]
  },
@@ -3840,10 +4320,6 @@
    {
     "uroven": "tvorba",
     "text": "Žák sestaví sadu vlastních pravidel a u každého odůvodní, jaké riziko snižuje."
-   },
-   {
-    "uroven": null,
-    "text": "Diskutuje o různých módech bezpečného chování na internetu; sepíše pravidla pro bezpečné chování na internetu pro žáky z 5. třídy."
    }
   ]
  },
@@ -3868,10 +4344,6 @@
    {
     "uroven": "tvorba",
     "text": "Žák sestaví plán zabezpečení zařízení, v němž propojí konkrétní opatření s posouzeným rizikem."
-   },
-   {
-    "uroven": null,
-    "text": "Vytvoří myšlenkovou mapu prvků zabezpečení počítače a internetové komunikace (použije koncepty, jako např. firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování apod.)."
    }
   ]
  },
@@ -4048,10 +4520,6 @@
    {
     "uroven": "analyza",
     "text": "Žák na příkladu svého feedu odhalí, proč vidí právě daný obsah."
-   },
-   {
-    "uroven": null,
-    "text": "Uvede alespoň tři příklady personalizovaného obsahu webu (např. reklamy, videa, novinové zprávy, výsledky vyhledávání) a vysvětlí, jak je možné, že je tento obsah přizpůsobován na míru uživateli. Diskutuje výhody a nevýhody této personalizace."
    }
   ]
  },
@@ -4100,10 +4568,6 @@
    {
     "uroven": "hodnoceni",
     "text": "Žák u konkrétní aplikace zhodnotí poměr mezi získanou službou a poskytnutými daty."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše výhody a nevýhody cookies."
    }
   ]
  },
@@ -4244,10 +4708,6 @@
    {
     "uroven": "analyza",
     "text": "Žák u dané funkce platformy vysvětlí, jak přispívá k jejímu výdělku."
-   },
-   {
-    "uroven": null,
-    "text": "Popíše princip financování sociálních sítí pomocí reklamy."
    }
   ]
  },

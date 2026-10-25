@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Zapracuje výstupy garanta k tématu Digitální základy a rozdělí téma do podoblastí.
+"""Zapracuje výstupy garanta k tématu Digitální základy: každý výstup = koncept.
 
-Zdroj: Google Doc „Digitální základy" (garant, 2026-10). Garant neposlal karty
-konceptů, ale 65 výstupů („Žák vysvětlí…") ve čtyřech kapitolách bez prerekvizit
-a bez vazeb. Rozdělení výstupů do konceptů, názvy bublin, učivo a cíle jsou
-proto NÁVRH REDAKCE ke schválení garantem — všechny koncepty mají stav „draft".
-Výstupy garanta jsou v kritériích doslovně (VYSTUPY), každý právě jednou.
+Zdroj: Google Doc „Digitální základy" (garant, 2026-10) — 65 výstupů („Žák
+vysvětlí…") ve čtyřech kapitolách, bez učiva, prerekvizit a vazeb. Podle
+rozhodnutí redakce (2026-10-25) je každý výstup samostatná bublina mapy;
+kapitoly dokumentu jsou podoblasti tématu.
 
 Co skript dělá:
-  - téma dostane podoblasti (PODOBLASTI), každý koncept pole `podoblast`
-  - stávajících 10 konceptů zůstává (některé přejmenované / doplněné), přibývá
-    11 nových; nic se nemaže
-  - 10 výstupů z kapitol Internet a Bezpečnost, které už mají bublinu
-    v Kyberbezpečnosti, Digitálním občanství nebo AI, jde tam jako kritéria (JINAM)
-  - staré kódy RVP z dokumentu (I-9-4-0x) → současné INF-INF-004-ZV9-0xx, kde
-    existují; jinak jen poznámka se starým kódem
-  - vygeneruje garanti/digitalni-zaklady-navrh.md — tabulku pro garanta
+  - 65 konceptů: název, krátké učivo a cíl jsou NÁVRH REDAKCE (stav „draft"),
+    výstup garanta je kritériem doslovně (VYSTUPY)
+  - 6 stávajících bublin si nechává id (odkazují na ně jiná témata) a dostává
+    obsah odpovídajícího výstupu (PUVODNI_ID); 4 bubliny mimo dokument
+    (Data a informace, Reprezentace dat, API, Vrstvy počítače) zůstávají
+  - prerekvizity garant neuvádí → zatím žádné; vazby „souvisí" jen tam, kde má
+    výstup protějšek v jiném tématu (SOUVISI)
+  - staré kódy RVP (I-9-4-0x) → INF-INF-004-ZV9-011/012 s poznámkou
+  - vygeneruje garanti/digitalni-zaklady-navrh.md — přehled pro garanta
 
 Spuštění (idempotentní):
     python3 knowledge-map/garanti/apply_hnizdo_digitalni_zaklady.py
@@ -32,8 +32,7 @@ NAVRH_PATH = HERE / "digitalni-zaklady-navrh.md"
 
 TEMA = "digitalni-zaklady"
 Z = TEMA + "-"
-ZDROJ = "Garant: Digitální základy (2026-10) — výstupy; rozdělení do konceptů, učivo a cíle: návrh redakce ke schválení"
-ZDROJ_JINAM = "Garant: Digitální základy (2026-10) — výstup přesunut z kapitoly Internet / Bezpečnost"
+ZDROJ = "Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení"
 
 PODOBLASTI = [
     {"id": "soubory-a-ovladani", "nazev": "Soubory a ovládání počítače",
@@ -45,6 +44,8 @@ PODOBLASTI = [
     {"id": "zabezpeceni-zarizeni", "nazev": "Zabezpečení zařízení",
      "popis": "Jak chránit vlastní zařízení před malwarem a jak si na něm pohlídat soukromí."},
 ]
+KAPITOLA_PODOBLAST = {"O": "soubory-a-ovladani", "Z": "zarizeni-a-uloziste", "I": "internet-a-site", "B": "zabezpeceni-zarizeni"}
+KAPITOLA_RVP = {"O": ["I-9-4-02"], "Z": ["I-9-4-01"], "I": ["I-9-4-03"], "B": ["I-9-4-05"]}
 
 # Výstupy garanta doslovně. O = Ovládání počítače, Z = Principy zařízení, I = Principy internetu, B = Bezpečnost.
 VYSTUPY = {
@@ -114,7 +115,6 @@ VYSTUPY = {
     "B13": "Diskutuje o rizikách nových „chytrých technologií“ (např. smart grid, smart cars) v etické rovině a rovině bezpečnostní (možnost technologie „hacknout“).",
     "B14": "Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití.",
 }
-KAPITOLY = {"O": "Ovládání počítače", "Z": "Principy jednoho počítačového zařízení", "I": "Principy internetu", "B": "Bezpečnost"}
 
 # Staré kódy RVP (2021), kterými garant kapitoly uvozuje → současné výstupy (RVP 2024).
 # I-9-4-02 a I-9-4-04 v RVP 2024 samostatný výstup nemají → jen poznámka.
@@ -135,6 +135,9 @@ RVP_2021 = {
 def rvp(*stare, navic=()):
     """RVP položky z kódů 2021 (garant) + případně přímých kódů 2024."""
     out, seen = [], set()
+    for k in navic:
+        seen.add(k)
+        out.append({"kod": k, "vystup": RVP_2024[k]})
     for s in stare:
         novy, text = RVP_2021[s]
         if novy and novy not in seen:
@@ -142,162 +145,234 @@ def rvp(*stare, navic=()):
             out.append({"kod": novy, "vystup": RVP_2024[novy], "poznamka": f"garant: {s} – {text}"})
         elif not novy:
             out.append({"kod": None, "vystup": "", "poznamka": f"RVP 2021: {s} – {text} (v RVP 2024 bez samostatného výstupu)"})
-    for k in navic:
-        if k not in seen:
-            seen.add(k)
-            out.insert(0, {"kod": k, "vystup": RVP_2024[k]})
     return out
 
 
-def C(uroven, rocnik, text):
-    return {"uroven": uroven, "text": text, "rocnik": rocnik}
-
-
-# Koncepty tématu v pořadí podoblastí. `vystupy` = výstupy garanta → kritéria (doslovně).
-# `zachovat` = pole stávajícího konceptu, která se nepřepisují.
-KONCEPTY = [
-    # --- bez podoblasti (garantův dokument téma Data a informace nepokrývá) ---
-    {"id": Z + "data-a-informace", "podoblast": None, "zachovat": "vse"},
-
-    # --- Soubory a ovládání počítače ---
-    {"id": Z + "soubory-a-jejich-typy", "podoblast": "soubory-a-ovladani", "nazev": "Soubory a jejich typy",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": "kdi-dat", "tagy": ["praktická dovednost"],
-     "popis": "Všechno, co v počítači vytvoříš nebo stáhneš, je soubor určitého typu: obrázek, text, video, hudba. Typ poznáš podle přípony (jpg, pdf, mp4) a podle něj se vybírá i program, který soubor otevře. Některé formáty se hodí na úpravy, jiné na sdílení a tisk — pdf vypadá všude stejně. U obrázků a videa navíc rozhoduje rozlišení: kolik bodů obraz má, jak ostře se zobrazí a jak velký soubor z něj bude.",
-     "cile": [C("porozumeni", 6, "Žák vysvětlí, co je typ souboru, jak ho poznat podle přípony a proč k různým typům patří různé programy."),
-              C("aplikace", 7, "Žák převede soubor do formátu vhodného pro zadaný účel (např. do pdf pro tisk) a volbu zdůvodní.")],
-     "vystupy": ["O1", "O2", "O6"], "rvp": rvp("I-9-4-02"),
-     "prerekvizity": [], "souvisi": ["data-databaze-kodovani-dat"]},
-    {"id": Z + "ovladani-aplikaci", "podoblast": "soubory-a-ovladani", "nazev": "Ovládání aplikací",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": "kdi-tdo", "tagy": ["praktická dovednost"],
-     "popis": "Většina aplikací se ovládá stejnými mechanismy, ať děláš text, obrázek nebo prezentaci: uložit a načíst, kopírovat přes schránku, krok zpět a vpřed, přiblížit lupou, posouvat se v dokumentu. Aplikace na video, zvuk nebo animaci k tomu přidávají časovou osu. Strukturované dokumenty (styly odstavců, vrstvy objektů) se dají měnit hromadně přes jejich strukturu, ne po jednom.",
-     "cile": [C("aplikace", 6, "Žák rutinně používá základní mechanismy ovládání aplikací (uložení, schránka, zpět/vpřed, lupa, posun) napříč různými programy."),
-              C("aplikace", 8, "Žák upraví dokument s využitím jeho struktury (styly, vrstvy) nebo časové osy místo ručních úprav po jednom.")],
-     "vystupy": ["O3", "O4", "O5"], "rvp": rvp("I-9-4-02"),
-     "prerekvizity": [Z + "soubory-a-jejich-typy"], "souvisi": []},
-    {"id": Z + "organizace-a-zalohovani-dat", "podoblast": "soubory-a-ovladani", "nazev": "Organizace a zálohování dat",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": "kdi-dat", "tagy": ["praktická dovednost"],
-     "popis": "Stovky souborů bez pořádku se nedají najít. Složky s jasnými názvy a soubory pojmenované tak, aby bylo z názvu poznat, co v nich je, jsou základ — ať jde o fotky z mobilu, nebo školní práce. Druhá část pořádku je záloha: kopie důležitých dat na jiném místě, protože disk, mobil i účet v cloudu můžeš ztratit.",
-     "cile": [C("aplikace", 6, "Žák navrhne a vytvoří strukturu složek pro větší množství souborů a soubory do ní uspořádá a pojmenuje."),
-              C("porozumeni", 7, "Žák vysvětlí, proč a jak zálohovat, a popíše vlastní pravidla zálohování.")],
-     "vystupy": ["O7", "O8", "O9"], "rvp": rvp("I-9-4-02"),
-     "prerekvizity": [Z + "soubory-a-jejich-typy"], "souvisi": ["kyberbezpecnost-zakladni-hygiena"]},
-
-    # --- Zařízení a úložiště ---
-    {"id": Z + "hardware-a-software", "podoblast": "zarizeni-a-uloziste",
-     "zachovat": ["nazev", "vrstva", "oblast", "kompetence", "tagy", "cile", "kriteria", "prerekvizity", "souvisi"],
-     "popis_pridat": "Při výběru nového mobilu nebo notebooku rozhodují parametry základních komponent — procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, bezdrátová připojení).",
-     "vystupy": ["Z11"], "rvp": rvp("I-9-4-01")},
-    {"id": Z + "uloziste-dat", "podoblast": "zarizeni-a-uloziste", "nazev": "Úložiště dat: lokálně a v cloudu",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": "kdi-bzk", "tagy": ["teoretický základ", "soukromí"],
-     "popis": "Data se ukládají na trvalá úložiště: pevný disk nebo SSD v počítači, interní paměť mobilu, USB flash disk, SD kartu, DVD. Každé má jinou kapacitu, rychlost, odolnost a cenu. Druhá možnost je cloud — data leží na cizím serveru a dostaneš se k nim odkudkoli, ale jen s připojením a s důvěrou v poskytovatele.\n\nA pozor na mazání: smazaný soubor z disku hned nezmizí, systém si jen „přestane pamatovat“, kde ležel. Než zařízení vyhodíš nebo prodáš, musíš data odstranit bezpečně — nebo zařízení raději nevyhazovat.",
-     "cile": [C("hodnoceni", 7, "Žák porovná typy trvalých úložišť a uložení lokálně vs. v cloudu a pro danou situaci vybere vhodné úložiště."),
-              C("porozumeni", 8, "Žák vysvětlí, proč běžné smazání dat nestačí, a navrhne, jak data před vyhozením zařízení bezpečně odstranit.")],
-     "vystupy": ["Z0", "Z1", "Z2"], "rvp": rvp("I-9-4-01"),
-     "prerekvizity": [Z + "hardware-a-software"], "souvisi": [Z + "cloud-a-server", "kyberbezpecnost-soukromi-a-digitalni-stopa"]},
-    {"id": Z + "reprezentace-dat", "podoblast": "zarizeni-a-uloziste", "nazev": "Reprezentace a velikost dat",
-     "zachovat": ["vrstva", "oblast", "kompetence", "tagy", "cile", "kriteria", "prerekvizity"],
-     "popis_pridat": "Velikost dat se měří v bytech — megabyty (MB) pro fotky, gigabyty (GB) pro filmy. Komprese data zmenší tím, že odstraní opakování nebo nepodstatné detaily; co je jednou zkomprimované, se další kompresí už skoro nezmenší.",
-     "vystupy": ["Z4", "Z5"], "rvp": rvp("I-9-4-01", navic=["INF-INF-001-ZV9-002"]),
-     "souvisi": ["umela-inteligence-ai-se-uci-z-dat", "programovani-promenne-a-datove-typy", "data-databaze-kodovani-dat"]},
-    {"id": Z + "operacni-system-a-soubory", "podoblast": "zarizeni-a-uloziste", "nazev": "Operační systém a aplikace",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": None, "tagy": ["teoretický základ", "praktická dovednost"],
-     "popis": "Operační systém (Windows, Android, iOS, macOS) je program, který řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Aplikace se do něj instalují a odinstalují a průběžně aktualizují — aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas ale i změny, které se nehodí.",
-     "cile": [C("porozumeni", 6, "Žák vysvětlí, k čemu slouží operační systém, a přiřadí základní operační systémy k typickým zařízením."),
-              C("aplikace", 7, "Žák nainstaluje, aktualizuje a odinstaluje aplikaci a posoudí výhody a nevýhody aktualizací.")],
-     "vystupy": ["Z3", "Z8", "Z9"], "rvp": rvp("I-9-4-01"),
-     "prerekvizity": [Z + "hardware-a-software"], "souvisi": [Z + "vrstvy-pocitace", "kyberbezpecnost-zakladni-hygiena"]},
-    {"id": Z + "propojeni-zarizeni", "podoblast": "zarizeni-a-uloziste", "nazev": "Propojení zařízení a periferie",
-     "vrstva": "navazujici", "oblast": "digitalni-technologie", "kompetence": None, "tagy": ["praktická dovednost"],
-     "popis": "Počítač a mobil se dají propojit i bez internetu — kabelem přes USB nebo přes Bluetooth — a překopírovat mezi nimi fotky nebo dokumenty. K počítači se připojují i další zařízení (periferie): monitor, projektor, tiskárna, klávesnice. Každé potřebuje správný port nebo bezdrátové spojení a někdy i ovladač.",
-     "cile": [C("aplikace", 6, "Žák propojí mobil s počítačem bez internetu a přenese mezi nimi data."),
-              C("aplikace", 7, "Žák připojí k počítači externí zařízení (monitor, projektor, tiskárnu) a zprovozní ho.")],
-     "vystupy": ["Z6", "Z7"], "rvp": rvp("I-9-4-01"),
-     "prerekvizity": [Z + "hardware-a-software"], "souvisi": ["fyzicky-computing-komunikace-mezi-zarizenimi"]},
-    {"id": Z + "zaseknuty-pocitac-a-operacni-pamet", "podoblast": "zarizeni-a-uloziste", "nazev": "Zaseknutý počítač a operační paměť",
-     "vrstva": "navazujici", "oblast": "digitalni-technologie", "kompetence": None, "tagy": ["teoretický základ", "praktická dovednost"],
-     "popis": "Rozpracovaný dokument, otevřená stránka i běžící hra žijí v operační paměti (RAM) — rychlé, ale dočasné paměti, která se po vypnutí vymaže. Proto se nový soubor musí uložit na disk, jinak zmizí. Když je spuštěných programů moc, paměť dojde a počítač se „zasekává“: zpomalí, nebo program přestane reagovat. Řešením bývá program zavřít (i násilně) nebo zařízení restartovat, čímž se paměť uklidí.",
-     "cile": [C("porozumeni", 7, "Žák vysvětlí, co je operační paměť, kde je rozpracovaný soubor před uložením a proč restart „uklidí“ paměť."),
-              C("aplikace", 7, "Žák vyřeší situaci, kdy program nereaguje nebo je počítač nezvykle pomalý, a vysvětlí pravděpodobnou příčinu.")],
-     "vystupy": ["O10", "Z10", "Z12", "Z13", "Z14"], "rvp": rvp("I-9-4-04", "I-9-4-01"),
-     "prerekvizity": [Z + "hardware-a-software"], "souvisi": []},
-    {"id": Z + "vrstvy-pocitace", "podoblast": "zarizeni-a-uloziste", "zachovat": "vse"},
-
-    # --- Internet a sítě ---
-    {"id": Z + "internet-a-sit", "podoblast": "internet-a-site", "nazev": "Internet, web a wifi",
-     "zachovat": ["vrstva", "oblast", "kompetence", "tagy", "cile", "kriteria", "prerekvizity", "souvisi"],
-     "popis_pridat": "Internet není totéž co web: web je jen jedna ze služeb, které po internetu běží (vedle e-mailu, her, streamování). Domů se internet dostane kabelem k routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Veřejná wifi je pohodlná, ale cizí — kdo ji provozuje, může provoz sledovat.",
-     "vystupy": ["I2", "I3", "I18"], "rvp": rvp("I-9-4-03")},
-    {"id": Z + "cesta-dat-internetem", "podoblast": "internet-a-site", "nazev": "Cesta dat internetem",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": None, "tagy": ["teoretický základ"],
-     "popis": "Internet vznikl jako síť, která má fungovat, i když část vypadne — proto nemá jeden střed, ale spoustu cest. Data se dělí na balíčky a putují od tvého počítače přes router a další routery a switche až k serveru a zpátky; e-mail jde přes servery obou poskytovatelů. Po cestě data může někdo číst, pokud nejsou šifrovaná — šifrování je udělá pro útočníka po cestě nečitelná.",
-     "cile": [C("porozumeni", 8, "Žák na schematickém modelu internetu zakreslí cestu dat mezi svým počítačem a serverem a vysvětlí, proč je internet odolný proti výpadkům."),
-              C("analyza", 9, "Žák ve schématu označí, kde může útočník nešifrovanou komunikaci číst a jak to mění šifrování.")],
-     "vystupy": ["I4", "I7", "I8", "I9", "I10"], "rvp": rvp("I-9-4-03"),
-     "prerekvizity": [Z + "internet-a-sit"], "souvisi": ["kyberbezpecnost-sifrovani-a-https"]},
-    {"id": Z + "cloud-a-server", "podoblast": "internet-a-site",
-     "zachovat": ["nazev", "vrstva", "oblast", "kompetence", "tagy", "cile", "kriteria", "prerekvizity", "souvisi"],
-     "popis_pridat": "Server je obecně počítač připojený k internetu, který ostatním poskytuje služby — web, e-mail, hry, video. Podle toho, jak s ním pracuješ, mluvíme o stahování (download), nahrávání (upload) nebo streamování, kdy se data přehrávají průběžně bez uložení.",
-     "vystupy": ["I1", "I22"], "rvp": rvp("I-9-4-03")},
-    {"id": Z + "adresy-a-protokoly", "podoblast": "internet-a-site",
-     "zachovat": ["nazev", "vrstva", "oblast", "kompetence", "tagy", "cile", "kriteria", "prerekvizity", "souvisi", "popis"],
-     "vystupy": ["I5"], "rvp": rvp("I-9-4-03")},
-    {"id": Z + "prohlizec-a-vyhledavac", "podoblast": "internet-a-site", "nazev": "Prohlížeč a vyhledávač",
-     "vrstva": "navazujici", "oblast": "digitalni-technologie", "kompetence": None, "tagy": ["teoretický základ"],
-     "popis": "Webová stránka je text s instrukcemi (HTML, CSS), které prohlížeč teprve převede na to, co vidíš — proto se stejná stránka zobrazí jinak na mobilu a na počítači a trochu jinak v různých prohlížečích. Vyhledávač zase stránky dopředu prochází roboty a staví si z nich rejstřík (index); když hledáš, neprohledává web, ale ten rejstřík.",
-     "cile": [C("porozumeni", 8, "Žák vysvětlí, jak prohlížeč „ví“, jak stránku zobrazit, a proč se zobrazení liší podle zařízení a prohlížeče."),
-              C("porozumeni", 8, "Žák vysvětlí hlavní myšlenku toho, jak si vyhledávač tvoří přehled o obsahu webu.")],
-     "vystupy": ["I6", "I11"], "rvp": rvp("I-9-4-03"),
-     "prerekvizity": [Z + "adresy-a-protokoly"], "souvisi": ["tvorba-webu-jak-funguje-web"]},
-    {"id": Z + "cloudove-dokumenty-a-sdileni", "podoblast": "internet-a-site", "nazev": "Cloudové dokumenty a sdílení",
-     "vrstva": "navazujici", "oblast": "informacni-systemy", "kompetence": "kdi-zap", "tagy": ["praktická dovednost"],
-     "popis": "Dokument v cloudu neleží v tvém počítači, ale na serveru, a může ho upravovat víc lidí najednou. Komu co dovolíš, určují přístupová práva a role: čtenář jen čte, komentátor přidává poznámky, přispěvatel upravuje, správce rozhoduje o sdílení. Když ti vypadne připojení, píšeš do kopie, která se po obnovení spojení sloučí; když vypadne cloud, nemá kam ukládat nikdo.",
-     "cile": [C("aplikace", 7, "Žák nastaví cloudovému dokumentu různým uživatelům různá práva a vysvětlí rozdíly mezi rolemi."),
-              C("analyza", 8, "Žák předpoví, co se s cloudovým dokumentem stane při výpadku připojení nebo služby.")],
-     "vystupy": ["I19", "I20", "I21"], "rvp": rvp("I-9-4-03"),
-     "prerekvizity": [Z + "cloud-a-server"], "souvisi": ["data-databaze-ucel-informacnich-systemu"]},
-    {"id": Z + "kde-jsou-data-fyzicky", "podoblast": "internet-a-site",
-     "zachovat": ["nazev", "vrstva", "oblast", "kompetence", "tagy", "cile", "kriteria", "prerekvizity", "souvisi"],
-     "popis_pridat": "Pro data na serveru v EU platí GDPR včetně práva „být zapomenut“; u služby mimo EU se trvalého smazání domoci nemusíš a software či cloud z některých zemí může být i bezpečnostní riziko.",
-     "vystupy": ["I17", "I26"], "rvp": rvp("I-9-4-03", navic=["INF-INF-004-ZV9-012"])},
-    {"id": Z + "api", "podoblast": "internet-a-site", "zachovat": "vse"},
-
-    # --- Zabezpečení zařízení ---
-    {"id": Z + "malware-a-antivirus", "podoblast": "zabezpeceni-zarizeni", "nazev": "Malware, antivirus a aktualizace",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": "kdi-bzk", "tagy": ["bezpečí a rizika", "praktická dovednost"],
-     "popis": "Malware je škodlivý program — virus, trojský kůň, ransomware, spyware — který se do zařízení dostane obvykle s něčím, co si sám stáhneš nebo spustíš. Hacker je člověk, který hledá cesty dovnitř; často využívá chyby v programech, a právě ty opravují aktualizace. Antivirus hlídá známé hrozby, ale nenahradí opatrnost: stahovat jen z prověřených zdrojů a neodkládat aktualizace.",
-     "cile": [C("porozumeni", 7, "Žák rozliší druhy malwaru, vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním a odliší malware od hackera."),
-              C("aplikace", 8, "Žák zabezpečí vlastní zařízení: vybere a nainstaluje spolehlivý antivirus a popíše vlastní pravidla pro stahování.")],
-     "vystupy": ["B3", "B4", "B5", "B6", "B7"], "rvp": rvp("I-9-4-05"),
-     "prerekvizity": [Z + "operacni-system-a-soubory"], "souvisi": ["kyberbezpecnost-typy-utoku", "kyberbezpecnost-zakladni-hygiena"]},
-    {"id": Z + "soukromi-na-zarizeni", "podoblast": "zabezpeceni-zarizeni", "nazev": "Soukromí na zařízení",
-     "vrstva": "core", "oblast": "digitalni-technologie", "kompetence": "kdi-bzk", "tagy": ["soukromí", "praktická dovednost"],
-     "popis": "Mobil o tobě ví víc, než si myslíš: kde jsi (poloha), co vidí kamera a slyší mikrofon, a každá fotka si nese metadata — čas, model telefonu, často i přesné místo pořízení. Aplikacím se dá přístup k poloze a periferiím zakázat a sledování polohy vypnout; u sdílených fotek stojí za to metadata odstranit.",
-     "cile": [C("porozumeni", 7, "Žák vysvětlí, jaké osobní informace lze zjistit z metadat souboru a z přístupu aplikací k poloze či kameře."),
-              C("aplikace", 7, "Žák na mobilu vypne sledování polohy a zakáže vybrané aplikaci přístup k periferiím.")],
-     "vystupy": ["B10", "B11", "B12"], "rvp": rvp("I-9-4-05"),
-     "prerekvizity": [Z + "operacni-system-a-soubory"], "souvisi": ["kyberbezpecnost-soukromi-a-digitalni-stopa"]},
-    {"id": Z + "chytra-zarizeni-a-rizika", "podoblast": "zabezpeceni-zarizeni", "nazev": "Chytrá zařízení a jejich rizika",
-     "vrstva": "navazujici", "oblast": "digitalni-technologie", "kompetence": "kdi-bzk", "tagy": ["bezpečí a rizika", "dopad na společnost"],
-     "popis": "Počítač není jen notebook: malý (mikro)procesor je dnes i v myši, USB disku, lampičce nebo autě. Dokud takový „skrytý počítač“ není připojený k internetu, hrozí mu málo; jakmile je „chytrý“ a online, dá se zvenčí ovládnout nebo z něj číst — a mobil navíc operátorovi neustále hlásí svou polohu. Chytré sítě, auta a domácnosti proto přinášejí vedle pohodlí i bezpečnostní a etické otázky.",
-     "cile": [C("porozumeni", 8, "Žák vysvětlí, co je mikroprocesor, a rozliší skrytý počítač bez připojení od chytrého zařízení online včetně jeho rizik."),
-              C("hodnoceni", 9, "Žák posoudí rizika chytrých technologií a sledování polohy v bezpečnostní i etické rovině.")],
-     "vystupy": ["I23", "I24", "I25", "B13"], "rvp": rvp("I-9-4-05", "I-9-4-03"),
-     "prerekvizity": [Z + "internet-a-sit", Z + "hardware-a-software"], "souvisi": ["fyzicky-computing-iot"]},
-]
-
-# Výstupy, které mají bublinu v jiném tématu → tam jako kritérium.
-JINAM = {
-    "I12": "digitalni-obcanstvi-digitalni-stopa-a-soukromi",
-    "I13": "digitalni-obcanstvi-jak-funguji-algoritmy-siti",
-    "I14": "kyberbezpecnost-soukromi-a-digitalni-stopa",
-    "I15": "digitalni-obcanstvi-obchodni-modely-platforem",
-    "I16": "kyberbezpecnost-soukromi-a-digitalni-stopa",
-    "B1": "kyberbezpecnost-hesla-a-2fa",
-    "B2": "kyberbezpecnost-hesla-a-2fa",
-    "B8": "kyberbezpecnost-bezpecne-chovani-na-sitich",
-    "B9": "kyberbezpecnost-zakladni-hygiena",
-    "B14": "umela-inteligence-ai-a-spolecnost",
+# klíč výstupu → (slug, název bubliny, úroveň cíle, cíl, učivo). Vše kromě výstupu = návrh redakce.
+KONCEPTY = {
+    "O1": ("typy-souboru-a-pripony", "Typy souborů a přípony", "porozumeni",
+           "Žák rozpozná typ souboru podle přípony, vybere k němu program a vysvětlí, proč se přípony někdy nezobrazují.",
+           "Obrázek, text, video, hudba — každý soubor má typ a ten poznáš podle přípony (jpg, pdf, mp4). Podle typu se vybírá program, který soubor otevře. Počítač i mobil přípony často skrývají, aby nepletly; zobrazit se dají v nastavení."),
+    "O2": ("prevod-do-pdf", "Převod do PDF", "aplikace",
+           "Žák převede soubor do pdf a vysvětlí, proč se pdf hodí na tisk a sdílení.",
+           "PDF je formát, který vypadá všude stejně — na mobilu, v tiskárně i u někoho s jiným programem. Většina aplikací do něj umí uložit nebo „vytisknout“ dokument, obrázek i prezentaci."),
+    "O3": ("zakladni-ovladani-aplikaci", "Základní ovládání aplikací", "aplikace",
+           "Žák rutinně používá uložení a načtení, schránku, krok zpět a vpřed, lupu a posun v různých aplikacích.",
+           "Ať tvoříš text, nebo obrázek, aplikace se ovládají stejnými mechanismy: uložit a načíst, kopírovat přes schránku, krok zpět a vpřed, přiblížit lupou, posouvat se v dokumentu. Kdo je ovládá, zvládne i program, který nikdy neviděl."),
+    "O4": ("prace-s-casovou-osou", "Práce s časovou osou", "aplikace",
+           "Žák v aplikaci pro video, zvuk nebo animaci pracuje s časovou osou.",
+           "Video, zvuk a animace mají navíc čas: v časové ose vidíš, co se kdy stane, a přesouváš, stříháš a zarovnáváš úseky. Stejný princip má střih videa, hudební editor i animace v prezentaci."),
+    "O5": ("struktura-dokumentu-styly-a-vrstvy", "Struktura dokumentu: styly a vrstvy", "aplikace",
+           "Žák mění vlastnosti dokumentu přes jeho strukturu — styly odstavců v textu, vrstvy objektů v prezentaci.",
+           "Dokument není jen hromada písmen: odstavce mají styly, objekty v prezentaci leží ve vrstvách nad sebou. Když změníš styl místo každého nadpisu zvlášť, změna se projeví všude naráz."),
+    "O6": ("rozliseni-obrazu", "Rozlišení obrazu", "porozumeni",
+           "Žák vysvětlí, co je rozlišení obrazu a jak se projevuje na displeji, při focení, v tisku i ve velikosti souboru.",
+           "Rozlišení říká, z kolika bodů se obraz skládá. Víc bodů znamená ostřejší obraz na velkém displeji nebo v tisku, ale i větší soubor; na malém displeji mobilu rozdíl často nepoznáš."),
+    "O7": ("organizace-souboru-do-slozek", "Organizace souborů do složek", "tvorba",
+           "Žák navrhne pro větší množství souborů strukturu složek, založí ji a soubory do ní rozmístí.",
+           "Sto souborů na ploše se nedá najít. Složky s jasnými názvy — podle předmětu, projektu nebo roku — jsou základní nástroj pořádku, který musíš navrhnout dřív, než začneš soubory přesouvat."),
+    "O8": ("fotky-z-mobilu-do-pocitace", "Fotky z mobilu do počítače", "aplikace",
+           "Žák přenese fotky a videa z mobilu do počítače, uspořádá je do složek a klíčové přejmenuje.",
+           "Fotky z mobilu se hromadí po stovkách. Přenést je do počítače, roztřídit do několika složek a ty důležité přejmenovat tak, aby bylo z názvu poznat, co na nich je — bez téhle údržby je sbírka k ničemu."),
+    "O9": ("zalohovani-dat", "Zálohování dat", "porozumeni",
+           "Žák vysvětlí význam zálohování a popíše svá vlastní pravidla zálohování.",
+           "Disk se rozbije, mobil ztratí, účet zablokuje. Záloha je kopie důležitých dat na jiném místě — na druhém disku, v cloudu. Důležitá jsou pravidla: co, kam a jak často."),
+    "O10": ("zaseknuty-program", "Když se program zasekne", "porozumeni",
+            "Žák vysvětlí, co znamená, že se program „zasekl“, a jak situaci vyřešit.",
+            "Program přestane reagovat, když čeká na něco, co nepřijde, nebo mu došla paměť. Většinou pomůže chvíli počkat, pak program násilně ukončit a znovu spustit; rozdělaná práce bez uložení je pryč."),
+    "Z0": ("typy-trvalych-ulozist", "Typy trvalých úložišť", "porozumeni",
+           "Žák vysvětlí výhody a nevýhody různých typů trvalých úložišť dat.",
+           "Pevný disk, SSD, USB flash disk, SD karta, interní paměť mobilu, DVD — každé úložiště má jinou kapacitu, rychlost, odolnost a cenu. Podle toho se hodí na jiný účel: velký archiv, přenos mezi počítači, fotky v mobilu."),
+    "Z1": ("lokalne-nebo-v-cloudu", "Lokálně, nebo v cloudu", "hodnoceni",
+           "Žák popíše rozdíl mezi uložením dat lokálně a v cloudu a posoudí výhody a nevýhody obou.",
+           "Lokálně uložená data máš u sebe a fungují i bez internetu; v cloudu leží na cizím serveru, dostaneš se k nim odkudkoli a nepřijdeš o ně se ztraceným zařízením — ale potřebuješ připojení a musíš poskytovateli věřit."),
+    "Z2": ("bezpecne-smazani-dat", "Bezpečné smazání dat", "porozumeni",
+           "Žák vysvětlí „líné“ mazání dat a popíše, jak data před vyhozením zařízení odstranit bezpečně.",
+           "Smazaný soubor z disku hned nezmizí — systém si jen přestane pamatovat, kde ležel, a data tam zůstávají, dokud je něco nepřepíše. Než zařízení vyhodíš nebo prodáš, musíš je přepsat nebo zašifrovat; někdy je lepší ho nevyhazovat vůbec."),
+    "Z3": ("operacni-system", "Operační systém", "porozumeni",
+           "Žák vysvětlí význam operačního systému a přiřadí základní operační systémy k typickým zařízením.",
+           "Operační systém (Windows, Android, iOS, macOS) řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Mobil má jiný systém než počítač, ale oba dělají to samé."),
+    "Z4": ("komprese-dat", "Komprese dat", "porozumeni",
+           "Žák vysvětlí, jak komprese souvisí s velikostí dat a proč nejde komprimovat donekonečna.",
+           "Komprese zmenší soubor tím, že odstraní opakování nebo nepodstatné detaily. Co je jednou zkomprimované, už se znovu skoro nezmenší — zbývající data jsou nahodilá a není v nich co ušetřit."),
+    "Z5": ("velikost-dat-mb-a-gb", "Velikost dat: MB a GB", "porozumeni",
+           "Žák vysvětlí zkratky MB a GB a odhadne řádové velikosti fotek a filmů.",
+           "Velikost dat se měří v bytech: megabyte (MB) je milion, gigabyte (GB) miliarda bytů. Fotka má jednotky MB, film jednotky GB — podle toho poznáš, co se vejde na kartu nebo do mobilu."),
+    "Z6": ("propojeni-mobilu-a-pocitace", "Propojení mobilu a počítače", "aplikace",
+           "Žák propojí mobil s počítačem bez internetu (např. přes USB) a překopíruje mezi nimi data.",
+           "Mobil a počítač se dají spojit i bez wifi a internetu — kabelem přes USB nebo přes Bluetooth. Pak se mezi nimi kopírují fotky a soubory jako mezi dvěma složkami."),
+    "Z7": ("pripojeni-externich-zarizeni", "Připojení externích zařízení", "aplikace",
+           "Žák připojí k počítači monitor, projektor nebo tiskárnu.",
+           "Monitor, projektor, tiskárna, klávesnice — každé externí zařízení potřebuje správný port nebo bezdrátové spojení a někdy i ovladač. Zapojit, zvolit zdroj či zařízení v nastavení, hotovo."),
+    "Z8": ("instalace-a-odinstalace-aplikaci", "Instalace a odinstalace aplikací", "aplikace",
+           "Žák nainstaluje a odinstaluje aplikaci.",
+           "Aplikace se instalují z obchodu nebo z instalačního souboru a odinstalují přes nastavení systému — nestačí smazat ikonu. Co nepoužíváš, odinstaluj: zabírá místo a může být bezpečnostní riziko."),
+    "Z9": ("aktualizace-aplikaci", "Aktualizace aplikací", "hodnoceni",
+           "Žák aktualizuje aplikaci a posoudí výhody a nevýhody aktualizací.",
+           "Aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas i nové funkce — a občas změny, které se nehodí nebo nefungují na starém zařízení. Odkládat je ale znamená nechat otevřené známé díry."),
+    "Z10": ("restart-a-uklid-operacni-pameti", "Restart a úklid operační paměti", "porozumeni",
+            "Žák vysvětlí, proč zavření aplikace nebo restart „uklidí“ operační paměť zařízení.",
+            "Každá spuštěná aplikace si drží kus operační paměti. Zavřením ji vrátí, restartem se vyprázdní celá — proto zpomalený mobil nebo počítač po restartu zase běží."),
+    "Z11": ("vyber-zarizeni-komponenty-a-parametry", "Hardware a výběr zařízení", "hodnoceni",
+            "Žák při výběru mobilu či notebooku diskutuje o parametrech základních komponent a možnostech připojení.",
+            "Při nákupu rozhodují komponenty: procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, wifi, Bluetooth). Správná volba závisí na tom, k čemu zařízení chceš."),
+    "Z12": ("proc-se-pocitac-zasekava", "Proč se počítač zasekává", "porozumeni",
+            "Žák vysvětlí, co může způsobovat, že je počítač pomalejší než obvykle.",
+            "Pomalý počítač má obvykle plnou operační paměť, plný disk, program běžící na pozadí, přehřátí nebo malware. Rozpoznat příčinu je první krok k nápravě."),
+    "Z13": ("programy-a-operacni-pamet", "Programy a operační paměť", "porozumeni",
+            "Žák vysvětlí vztah mezi počtem spuštěných programů a operační pamětí.",
+            "Operační paměť (RAM) je rychlá, ale omezená. Každý spuštěný program z ní ukrajuje; když dojde, systém začne odkládat data na pomalý disk a všechno se zpomalí."),
+    "Z14": ("kde-je-neulozeny-soubor", "Kde je neuložený soubor", "porozumeni",
+            "Žák vysvětlí, kde se nachází nově založený soubor předtím, než ho uložíme na disk.",
+            "Nový dokument nebo obrázek existuje nejdřív jen v operační paměti — rychlé, ale dočasné. Dokud ho neuložíš na disk nebo do cloudu, výpadek proudu nebo pád programu ho smaže."),
+    "I1": ("server", "Server a cloud", "porozumeni",
+           "Žák vysvětlí, co je server — počítač připojený k internetu, který poskytuje služby.",
+           "Server je počítač připojený k internetu, který ostatním poskytuje služby: web, e-mail, hry, video. Není nijak kouzelný — je to výkonný počítač v datovém centru, který běží pořád. „Cloud“ je jen jiné slovo pro cizí server, na kterém máš data nebo ti počítá."),
+    "I2": ("internet-web-a-wifi", "Internet, web a wifi", "porozumeni",
+           "Žák vysvětlí rozdíl mezi internetem, webem, wifi, routerem, mobilním signálem a mobilními daty a zakreslí jejich vztah.",
+           "Internet je síť sítí; web je jedna ze služeb, které po něm běží. Domů internet přivádí kabel do routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Jsou to různé věci, které se v řeči pletou."),
+    "I3": ("elektricka-sit-vs-internetove-kabely", "Elektrická síť vs. internetové kabely", "porozumeni",
+           "Žák vysvětlí rozdíly mezi elektrickou rozvodnou sítí a internetovými kabely.",
+           "Obojí jsou „sítě“ s kabely, ale elektřina teče jako energie od elektrárny ke spotřebiči, zatímco po internetových kabelech putují data oběma směry, v balíčcích a po různých cestách."),
+    "I4": ("vznik-a-architektura-internetu", "Vznik a architektura internetu", "porozumeni",
+           "Žák popíše, jak a proč vznikl internet a jak to ovlivnilo jeho architekturu.",
+           "Internet vznikl jako síť, která má fungovat, i když část vypadne. Proto nemá jeden střed: data se dělí na balíčky a hledají si cestu přes mnoho propojených uzlů."),
+    "I5": ("ip-adresa-url-a-dns", "IP adresa, URL a DNS", "porozumeni",
+           "Žák vysvětlí, co je IP adresa, URL a DNS a jaký je mezi nimi vztah.",
+           "Každé zařízení na internetu má číselnou IP adresu; lidé si pamatují jména (URL jako seznam.cz). DNS je služba, která jméno přeloží na adresu — telefonní seznam internetu."),
+    "I6": ("jak-prohlizec-zobrazi-stranku", "Jak prohlížeč zobrazí stránku", "porozumeni",
+           "Žák vysvětlí, jak prohlížeč „ví“, jak stránku zobrazit, a proč se liší na mobilu, počítači a v různých prohlížečích.",
+           "Stránka přichází jako text s instrukcemi (HTML, CSS) a prohlížeč ji teprve vykreslí. Proto vypadá jinak na úzkém mobilu než na monitoru a trochu jinak v každém prohlížeči."),
+    "I7": ("cesta-pozadavku-k-webovemu-serveru", "Cesta požadavku k webovému serveru", "aplikace",
+           "Žák ve schématu internetu zakreslí, jak jeho počítač komunikuje s webovým serverem při načtení stránky.",
+           "Když načítáš stránku, požadavek jde z tvého počítače přes domácí router, dál přes routery a switche poskytovatelů až k serveru — a odpověď stejnou cestou zpátky."),
+    "I8": ("robustnost-internetu", "Robustnost internetu", "analyza",
+           "Žák ve schématu označí, která zařízení při poškození zprávu zastaví a která ne, a diskutuje robustnost internetu.",
+           "Zpráva na sociální síti jde přes server sítě; vypadne-li router po cestě, data si najdou jinou. Zastaví je jen výpadek něčeho, co nemá náhradu — tvého připojení nebo serveru sítě."),
+    "I9": ("cesta-e-mailu", "Cesta e-mailu", "analyza",
+           "Žák ve schématu označí cestu e-mailu mezi dvěma poskytovateli a část, kde je typicky nešifrovaný.",
+           "E-mail putuje z tvého zařízení na server tvého poskytovatele, odtud na server poskytovatele příjemce a k němu. Mezi servery bývá šifrovaný, ale na serverech leží čitelný — kdo k nim má přístup, čte."),
+    "I10": ("sifrovana-a-nesifrovana-komunikace", "Šifrovaná a nešifrovaná komunikace", "hodnoceni",
+            "Žák na modelu posílání zprávy zhodnotí, kdy může útočník komunikaci „po cestě“ přečíst.",
+            "Nešifrovaná zpráva je po cestě jako pohlednice — každý uzel ji může číst. Šifrovaná je pro útočníka po cestě nečitelná; dá se přečíst jen u odesílatele a příjemce."),
+    "I11": ("jak-funguje-vyhledavac", "Jak funguje vyhledávač", "porozumeni",
+            "Žák vysvětlí hlavní myšlenku toho, jak si vyhledávač tvoří přehled o obsahu webu.",
+            "Vyhledávač web neprohledává ve chvíli, kdy hledáš. Jeho roboti stránky procházejí dopředu a stavějí z nich rejstřík (index); ty pak prohledáváš rejstřík, ne web."),
+    "I12": ("cookies", "Cookies", "porozumeni",
+            "Žák popíše výhody a nevýhody cookies.",
+            "Cookie je malý záznam, který si web uloží v tvém prohlížeči: díky němu zůstaneš přihlášený a nákupní košík se nevysype. Stejný mechanismus ale umožňuje sledovat tě napříč weby."),
+    "I13": ("personalizovany-obsah", "Personalizovaný obsah", "hodnoceni",
+            "Žák uvede příklady personalizovaného obsahu, vysvětlí, jak personalizace funguje, a posoudí její výhody a nevýhody.",
+            "Reklamy, videa, zprávy i výsledky vyhledávání se přizpůsobují tomu, co o tobě služba ví. Je to pohodlné — a zároveň tě to zavírá do bubliny a prodává tvou pozornost."),
+    "I14": ("digitalni-stopa-a-digitalni-identita", "Digitální stopa a digitální identita", "porozumeni",
+            "Žák rozliší digitální stopu a digitální identitu a popíše, čím stopu vytváří.",
+            "Digitální identita je to, kým na internetu jsi (účty, profily); digitální stopa je všechno, co po sobě necháváš — příspěvky, lajky, polohu, historii hledání. Stopa vzniká i bez tvého vědomí."),
+    "I15": ("financovani-socialnich-siti-reklamou", "Financování sociálních sítí reklamou", "porozumeni",
+            "Žák popíše princip financování sociálních sítí pomocí reklamy.",
+            "Sociální síť je zdarma, protože platí inzerenti — za tvou pozornost a za možnost cílit reklamu podle toho, co o tobě síť ví. Čím déle tě udrží, tím víc vydělá."),
+    "I16": ("osobni-data-a-treti-strany", "Osobní data a třetí strany", "hodnoceni",
+            "Žák popíše, jaká osobní data mohou získat třetí osoby a instituce, a jak tomu může uživatel zabránit.",
+            "Weby, aplikace, operátoři i úřady mohou získat tvou polohu, kontakty, zájmy, historii nákupů. Část toho dovoluješ sám v nastavení a souhlasech — a část se dá omezit, když víš kde."),
+    "I17": ("gdpr-a-pravo-byt-zapomenut", "GDPR a právo být zapomenut", "porozumeni",
+            "Žák vysvětlí, zda a jak lze podle GDPR trvale smazat osobní data ze serveru v EU a mimo EU.",
+            "V EU máš podle GDPR právo žádat smazání svých dat a služba musí vyhovět. U serveru mimo EU se tohoto práva domoci nemusíš — data tam mohou zůstat napořád. Kde fyzicky data leží, proto není jedno."),
+    "I18": ("verejna-vs-domaci-wifi", "Veřejná vs. domácí wifi", "hodnoceni",
+            "Žák popíše rozdíl mezi veřejnou a domácí wifi a posoudí, co na veřejné wifi (ne)dělat.",
+            "Domácí wifi provozuješ ty; veřejnou někdo cizí, kdo může provoz sledovat nebo podvrhnout. Přihlašování do banky nebo nákupy na veřejnou wifi nepatří — nebo jen přes šifrované spojení."),
+    "I19": ("pristupova-prava-ke-cloudovemu-dokumentu", "Přístupová práva ke cloudovému dokumentu", "aplikace",
+            "Žák nastaví cloudovému dokumentu různým uživatelům různá přístupová práva.",
+            "Cloudový dokument sdílíš nastavením práv: kdo může číst, komentovat, upravovat. Odkaz „pro každého“ je nejpohodlnější a nejrizikovější."),
+    "I20": ("cloudovy-dokument-pri-vypadku", "Cloudový dokument při výpadku", "analyza",
+            "Žák vysvětlí, co se stane s cloudovým dokumentem při výpadku jeho připojení, připojení kolegy nebo cloudu.",
+            "Když ti vypadne připojení, píšeš do místní kopie, která se po obnovení sloučí; výpadek kolegy tvou práci neovlivní; když vypadne cloud, nemá kam ukládat nikdo."),
+    "I21": ("uzivatelske-role-v-dokumentech", "Uživatelské role v dokumentech", "porozumeni",
+            "Žák vysvětlí rozdíly mezi rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva.",
+            "Čtenář jen čte, komentátor přidává poznámky, přispěvatel mění obsah, správce rozhoduje, kdo smí co. Role jsou odstupňovaná důvěra."),
+    "I22": ("streamovani-upload-a-download", "Streamování, upload a download", "porozumeni",
+            "Žák vysvětlí rozdíl mezi streamováním, uploadováním a downloadováním.",
+            "Download stáhne soubor k tobě, upload ho pošle na server, streamování přehrává data průběžně, aniž by se celý soubor uložil — proto video jede hned, ale bez připojení zmizí."),
+    "I23": ("mikroprocesor-a-virus-v-periferii", "Mikroprocesor a virus v periferii", "porozumeni",
+            "Žák vysvětlí, zda může virus napadnout periferní zařízení, a vysvětlí pojem mikroprocesor.",
+            "Mikroprocesor je malý „mozek“ — a je dnes i v myši, USB disku nebo lampičce. Kde je procesor a paměť, tam může běžet program, a tedy i škodlivý."),
+    "I24": ("skryty-a-chytry-pocitac", "Skrytý a chytrý počítač", "porozumeni",
+            "Žák rozliší skrytý počítač bez připojení od chytrého zařízení online a vysvětlí jeho rizika.",
+            "Počítač v pračce nebo autě bez internetu je „skrytý“ a zvenčí nedosažitelný. Jakmile je zařízení „chytré“ a online, dá se zvenčí ovládnout, odposlouchávat nebo zneužít."),
+    "I25": ("poloha-mobilu-a-operator", "Poloha mobilu a operátor", "tvorba",
+            "Žák vymyslí situace, kdy je pro majitele mobilu nevýhodné, že se třetí strana dozví jeho polohu.",
+            "Mobil se neustále hlásí vysílačům, takže operátor ví, kde jsi. Když se to dozví třetí strana — zaměstnavatel, bývalý partner, zloděj — může to být nepříjemné i nebezpečné."),
+    "I26": ("software-a-cloud-mimo-eu", "Software a cloud mimo EU", "porozumeni",
+            "Žák vysvětlí bezpečnostní rizika používání softwaru a cloudových služeb ze zemí mimo EU a pojem trojský kůň.",
+            "Software a cloud z některých zemí mohou podléhat tamním zákonům a tajným službám — antivirus nebo cloud elektrárny tak může být trojský kůň: tváří se užitečně a zevnitř otevírá dveře."),
+    "B1": ("bezpecne-heslo", "Bezpečné heslo", "aplikace",
+           "Žák rozpozná více a méně bezpečná hesla a vytvoří si bezpečné heslo.",
+           "Bezpečné heslo je dlouhé, jedinečné a neuhodnutelné — třeba fráze z několika slov. Krátké heslo, jméno nebo datum narození prolomí program za sekundy."),
+    "B2": ("ucet-heslo-autentizace-sifrovani-kodovani", "Účet, heslo, autentizace, šifrování, kódování", "porozumeni",
+           "Žák vysvětlí rozdíl mezi účtem, heslem, autentizací, šifrováním a kódováním.",
+           "Účet je tvá identita ve službě, heslo klíč k němu, autentizace ověření, že jsi to ty. Kódování převádí data do jiné podoby, aby se daly uložit; šifrování je převádí tak, aby je bez klíče nikdo nepřečetl."),
+    "B3": ("antivirus", "Antivirus", "aplikace",
+           "Žák najde spolehlivý antivirus a nainstaluje ho na mobil či počítač.",
+           "Antivirus hlídá známé hrozby — ale sám může být podvod. Spolehlivý je ten z ověřeného zdroje s dobrou pověstí, ne první výsledek s nápisem „váš počítač je napaden“."),
+    "B4": ("druhy-malwaru", "Druhy malwaru", "porozumeni",
+           "Žák rozliší alespoň tři druhy malwaru, vysvětlí jejich princip a odliší malware od hackera.",
+           "Virus se šíří připojením k jiným souborům, trojský kůň se tváří jako užitečný program, ransomware zašifruje data a chce výkupné, spyware tě sleduje. Malware je program; hacker je člověk."),
+    "B5": ("chyby-v-programu-aktualizace-a-hackovani", "Chyby v programu, aktualizace a hackování", "porozumeni",
+           "Žák vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním.",
+           "Každý program má chyby; některé jsou díra, kterou lze zneužít. Útočníci je hledají, výrobci je opravují aktualizacemi. Neaktualizované zařízení má známé a otevřené díry."),
+    "B6": ("cile-a-metody-hackeru", "Cíle a metody hackerů", "hodnoceni",
+           "Žák diskutuje o cílech a metodách hackerů.",
+           "Hackeři chtějí peníze, data, přístup nebo pozornost. Metody sahají od zneužití chyb v programech přes podvodné zprávy až po hádání hesel — a často je nejslabší článek člověk."),
+    "B7": ("bezpecne-stahovani", "Bezpečné stahování", "aplikace",
+           "Žák popíše svá osobní pravidla pro bezpečné hledání a stahování aplikací a souborů.",
+           "Stahuj jen z oficiálních obchodů a prověřených stránek, čti, co instalace chce povolit, a nevěř tlačítkům „Stáhnout“ v reklamách. Vlastní pravidla jsou lepší než spoléhání na antivirus."),
+    "B8": ("pravidla-bezpecneho-chovani-na-internetu", "Pravidla bezpečného chování na internetu", "tvorba",
+           "Žák diskutuje o bezpečném chování na internetu a sepíše pravidla pro žáky 5. třídy.",
+           "Bezpečné chování má různé roviny: co sdílíš, komu věříš, na co klikáš, jak chráníš účty. Sepsat pravidla pro mladší spolužáky znamená vybrat to podstatné a vysvětlit proč."),
+    "B9": ("prvky-zabezpeceni-pocitace-a-komunikace", "Prvky zabezpečení počítače a komunikace", "tvorba",
+           "Žák vytvoří myšlenkovou mapu prvků zabezpečení — firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování.",
+           "Zabezpečení je víc vrstev: firewall hlídá síťový provoz, antivirus soubory, dvoufaktorová autentizace účty, end-to-end šifrování zprávy. Myšlenková mapa ukáže, co chrání co."),
+    "B10": ("metadata-fotografii", "Metadata fotografií", "porozumeni",
+            "Žák vysvětlí, co útočník zjistí z metadat fotografie o jejím autorovi.",
+            "Fotka v sobě nese metadata: čas, model telefonu, nastavení a často i přesnou polohu. Z fotky sdílené s metadaty se dá vyčíst, kde bydlíš nebo kdy nejsi doma."),
+    "B11": ("vypnuti-sledovani-polohy", "Vypnutí sledování polohy", "aplikace",
+            "Žák demonstruje, jak na mobilu vypnout sledování polohy.",
+            "Poloha se dá vypnout celkově nebo jen pro vybrané aplikace — mapy ji potřebují, hra s baterkou ne. Najít nastavení a rozhodnout, komu polohu dáš, je základní hygiena."),
+    "B12": ("pristup-aplikaci-ke-kamere-a-periferiim", "Přístup aplikací ke kameře a periferiím", "aplikace",
+            "Žák demonstruje, jak aplikacím v mobilu zakázat přístup ke kameře a dalším periferiím.",
+            "Každá aplikace si říká o oprávnění: kamera, mikrofon, kontakty. V nastavení mobilu se dají zkontrolovat a odebrat — aplikace na kalkulačku kameru nepotřebuje."),
+    "B13": ("rizika-chytrych-technologii", "Rizika chytrých technologií", "hodnoceni",
+            "Žák diskutuje o rizikách chytrých technologií (smart grid, chytrá auta) v etické i bezpečnostní rovině.",
+            "Chytrá síť, chytré auto, chytrá domácnost: pohodlí a úspora, ale i možnost, že technologii někdo hackne nebo že sbírá víc dat, než je nutné. Rizika jsou technická i etická."),
+    "B14": ("pouziti-ai-a-jeho-rizika", "Použití AI a jeho rizika", "hodnoceni",
+            "Žák uvede příklady použití umělé inteligence a popíše jejich možná rizika.",
+            "AI doporučuje videa, překládá, řídí auta, rozhoduje o půjčkách. Každé použití nese rizika — chyby, zkreslení, zneužití, ztrátu kontroly — a stojí za to je umět pojmenovat."),
 }
+
+# Stávající bubliny, které odpovídají výstupu → výstup si nechá jejich id (odkazy z jiných témat).
+PUVODNI_ID = {
+    "I1": Z + "cloud-a-server", "I2": Z + "internet-a-sit", "I5": Z + "adresy-a-protokoly",
+    "Z3": Z + "operacni-system-a-soubory", "I17": Z + "kde-jsou-data-fyzicky", "Z11": Z + "hardware-a-software",
+}
+# Stávající bubliny mimo dokument garanta: zůstávají (jiná témata na ně navazují).
+MIMO_DOKUMENT = {Z + "data-a-informace": None, Z + "reprezentace-dat": "zarizeni-a-uloziste",
+                 Z + "api": "internet-a-site", Z + "vrstvy-pocitace": "zarizeni-a-uloziste"}
+# Výstupy se stejným tématem v jiné části mapy → souvisí (duplicitu řeší garant).
+SOUVISI = {
+    "O9": ["kyberbezpecnost-zakladni-hygiena"], "Z4": ["data-databaze-kodovani-dat"],
+    "I6": ["tvorba-webu-jak-funguje-web"], "I10": ["kyberbezpecnost-sifrovani-a-https"],
+    "I12": ["digitalni-obcanstvi-digitalni-stopa-a-soukromi"], "I13": ["digitalni-obcanstvi-jak-funguji-algoritmy-siti"],
+    "I14": ["kyberbezpecnost-soukromi-a-digitalni-stopa"], "I15": ["digitalni-obcanstvi-obchodni-modely-platforem"],
+    "I16": ["kyberbezpecnost-soukromi-a-digitalni-stopa"], "I21": ["data-databaze-ucel-informacnich-systemu"],
+    "I24": ["fyzicky-computing-iot"], "B1": ["kyberbezpecnost-hesla-a-2fa"],
+    "B2": ["kyberbezpecnost-hesla-a-2fa", "data-databaze-sifrovani-dat"], "B4": ["kyberbezpecnost-typy-utoku"],
+    "B5": ["kyberbezpecnost-zakladni-hygiena"], "B8": ["kyberbezpecnost-bezpecne-chovani-na-sitich"],
+    "B9": ["kyberbezpecnost-zakladni-hygiena"], "B10": ["kyberbezpecnost-soukromi-a-digitalni-stopa"],
+    "B14": ["umela-inteligence-ai-a-spolecnost"],
+}
+# Výstup I-9-4-04 (závady) garant „rozprostřel mezi témata" → k výstupům o zasekávání.
+ZAVADY = {"O10", "Z10", "Z12", "Z13"}
+KOMPETENCE = {"O": "kdi-dat", "Z": None, "I": None, "B": "kdi-bzk"}
+TAGY = {"O": ["praktická dovednost"], "Z": ["teoretický základ"], "I": ["teoretický základ"], "B": ["bezpečí a rizika", "praktická dovednost"]}
+OBLAST = {"O": "digitalni-technologie", "Z": "digitalni-technologie", "I": "digitalni-technologie", "B": "digitalni-technologie"}
 
 TEMA_POPIS = (
     "Digitální základy jsou vstupní vrstva celé mapy — vysvětlují, jak vlastně funguje svět, ve kterém se "
@@ -323,125 +398,117 @@ Dumper.add_representer(str, lambda d, s: d.represent_scalar(
     "tag:yaml.org,2002:str", s, style="|" if "\n" in s else None))
 
 
-def garant_krit(key):
-    return {"text": VYSTUPY[key], "garant": key}
+def kapitola(key):
+    return key[0]
 
 
-def sestav(spec, old):
-    """Koncept podle specifikace; `old` = dosavadní koncept (nebo None)."""
+def koncept(key, old):
+    slug, nazev, uroven, cil, popis = KONCEPTY[key]
+    k = kapitola(key)
     old = old or {}
-    zach = spec.get("zachovat", [])
-    if zach == "vse":
-        c = dict(old)
-        c["podoblast"] = spec["podoblast"]
-        return {k: c[k] for k in PORADI if k in c}
-    c = {"id": spec["id"], "tema": TEMA, "podoblast": spec["podoblast"]}
-    for k in ("nazev", "vrstva", "oblast", "kompetence", "tagy", "cile", "prerekvizity", "souvisi", "popis"):
-        c[k] = old[k] if k in zach else spec.get(k, old.get(k))
-    if spec.get("popis_pridat"):
-        base = old["popis"].split("\n\n" + spec["popis_pridat"])[0]
-        c["popis"] = base + "\n\n" + spec["popis_pridat"]
-    stara_krit = [k for k in old.get("kriteria", []) if "garant" not in k] if "kriteria" in zach else []
-    c["kriteria"] = stara_krit + [garant_krit(k) for k in spec.get("vystupy", [])]
-    c["rvp"] = spec.get("rvp", old.get("rvp", []))
-    c["zdroj"] = [z for z in old.get("zdroj", []) if not z.startswith("Garant: Digitální základy")] + [ZDROJ]
-    c["pokryti_glitchem"] = old.get("pokryti_glitchem", [])
-    c["stav"] = "draft"
-    for k in ("cile", "prerekvizity", "souvisi", "tagy"):
-        c[k] = c.get(k) or []
-    return {k: c[k] for k in PORADI if k in c}
+    c = {
+        "id": PUVODNI_ID.get(key, Z + slug),
+        "nazev": nazev,
+        "tema": TEMA,
+        "podoblast": KAPITOLA_PODOBLAST[k],
+        "oblast": OBLAST[k],
+        "kompetence": old.get("kompetence") or KOMPETENCE[k],
+        "vrstva": "core",
+        "popis": popis,
+        "rvp": rvp(*(KAPITOLA_RVP[k] + (["I-9-4-04"] if key in ZAVADY else []))),
+        "cile": [{"uroven": uroven, "text": cil}],
+        "kriteria": [{"text": VYSTUPY[key], "garant": key}],
+        "prerekvizity": [],
+        "souvisi": list(SOUVISI.get(key, [])),
+        "tagy": old.get("tagy") or TAGY[k],
+        "zdroj": [z for z in old.get("zdroj", []) if not z.startswith("Garant: Digitální základy")] + [ZDROJ],
+        "pokryti_glitchem": old.get("pokryti_glitchem", []),
+        "stav": "draft",
+    }
+    return {k2: c[k2] for k2 in PORADI if k2 in c}
 
 
-def navrh_md(concepts, by_id):
-    pod = {p["id"]: p["nazev"] for p in PODOBLASTI}
-    out = ["# Digitální základy — návrh rozdělení výstupů garanta do konceptů", "",
-           "Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez konceptů, učiva a vazeb. "
-           "Tahle tabulka je návrh redakce, jak výstupy rozdělit do bublin mapy — **ke schválení garantem**. "
-           "Každý výstup je právě v jednom konceptu jako kritérium (doslovně). Názvy bublin, učivo, cíle i "
-           "prerekvizity jsou návrh; v mapě mají stav *draft*.", "",
+def navrh_md(nove, by_id):
+    out = ["# Digitální základy — výstupy garanta jako koncepty", "",
+           "Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. Podle rozhodnutí redakce "
+           "je **každý výstup samostatná bublina** mapy; kapitoly dokumentu jsou podoblasti tématu. Výstup je "
+           "v bublině doslovně jako kritérium; název bubliny, krátké učivo a cíl jsou návrh redakce — "
+           "**ke schválení garantem** (v mapě stav *draft*).", "",
            "Číslování: O = Ovládání počítače, Z = Principy zařízení (Z0 = nečíslovaný výstup o úložištích), "
            "I = Principy internetu, B = Bezpečnost.", ""]
     for p in PODOBLASTI:
         out += [f"## {p['nazev']}", "", f"*{p['popis']}*", "",
-                "| Koncept | Vrstva | Výstupy garanta | Prerekvizity (návrh) | Stávající bublina |", "|---|---|---|---|---|"]
-        for c in concepts:
-            if c.get("podoblast") != p["id"]:
+                "| Výstup | Bublina | Úroveň cíle | Souvisí (jiné téma) | Pozn. |", "|---|---|---|---|---|"]
+        for c in nove:
+            if c.get("podoblast") != p["id"] or not any("garant" in k for k in c["kriteria"]):
                 continue
-            vys = ", ".join(k["garant"] for k in c["kriteria"] if "garant" in k) or "—"
-            pre = ", ".join(by_id[x]["nazev"] for x in c["prerekvizity"]) or "—"
-            puv = "ano" if c["id"] in PUVODNI else "nová"
-            out.append(f"| **{c['nazev']}** | {c['vrstva']} | {vys} | {pre} | {puv} |")
+            key = c["kriteria"][0]["garant"]
+            sv = ", ".join(by_id[x]["nazev"] for x in c["souvisi"]) or "—"
+            pozn = "stávající bublina, id zachováno" if key in PUVODNI_ID else ""
+            out.append(f"| {key} | **{c['nazev']}** | {c['cile'][0]['uroven']} | {sv} | {pozn} |")
         out.append("")
-    out += ["## Bez podoblasti", "", "| Koncept | Poznámka |", "|---|---|",
-            "| **Data a informace** | V garantově dokumentu není; zůstává, protože na něj navazuje téma Data. Garant rozhodne, kam patří. |", ""]
-    out += ["## Výstupy zařazené do jiných témat", "",
-            "Tyhle výstupy už mají bublinu v Kyberbezpečnosti, Digitálním občanství nebo Umělé inteligenci. "
-            "Jsou tam doplněné jako kritéria, aby v mapě nevznikly dvě bubliny „hesla“ nebo „malware“.", "",
-            "| Výstup | Text (zkráceně) | Bublina |", "|---|---|---|"]
-    for k, cid in JINAM.items():
-        t = VYSTUPY[k]
-        out.append(f"| {k} | {t[:90]}{'…' if len(t) > 90 else ''} | {by_id[cid]['nazev']} ({by_id[cid]['tema']}) |")
+    out += ["## Bubliny mimo dokument garanta", "",
+            "Zůstávají, protože na ně navazují jiná témata. Garant rozhodne, jestli je nechat, sloučit, nebo smazat.", "",
+            "| Bublina | Podoblast |", "|---|---|"]
+    for cid, pod in MIMO_DOKUMENT.items():
+        out.append(f"| **{by_id[cid]['nazev']}** | {pod or '—'} |")
     out += ["", "## Otázky pro garanta", "",
-            "1. Sedí rozdělení výstupů do bublin a názvy bublin? Které bubliny sloučit / rozdělit?",
-            "2. Prerekvizity a vazby „souvisí“ jsou návrh — dokument je neuvádí.",
-            "3. Výstupy I12–I17 (cookies, personalizace, digitální stopa, reklama, GDPR) a B1, B2, B8, B9, B14 "
-            "jsou v jiných tématech — souhlas?",
+            "1. Sedí názvy bublin a krátké učivo? Je úroveň cíle (porozumění / aplikace / analýza / hodnocení / tvorba) u každého výstupu správně?",
+            "2. Prerekvizity dokument neuvádí — zatím žádné nejsou. Které výstupy na sebe navazují?",
+            "3. Překryvy s jinými tématy (hesla, malware, cookies, digitální stopa, reklama, bezpečné chování, rizika AI) "
+            "jsou zatím jen jako vazba „souvisí“. Má zůstat obojí, nebo se bubliny sloučí?",
             "4. Kapitoly cituje RVP 2021 (I-9-4-01…05). V RVP 2024 odpovídají INF-INF-004-ZV9-011 a 012; "
             "I-9-4-02 (správa dat) a I-9-4-04 (závady) samostatný výstup nemají. Jaké je aktuální znění?",
-            "5. Bubliny API, Vrstvy počítače a Data a informace v dokumentu nejsou — nechat?",
-            "6. Které bubliny jsou jádrové (core)? Návrh: 12 core, 9 navazujících.", ""]
+            "5. Všechny bubliny jsou zatím jádrové (core). Které jsou navazující?",
+            "6. Garant naznačil, že každý výstup půjde rozpracovat do mikrokonceptů — kdy a kdo?", ""]
     return "\n".join(out)
-
-
-PUVODNI = set()
 
 
 def main():
     data = yaml.safe_load(YAML_PATH.read_text(encoding="utf-8"))
     concepts = data["concepts"]
     by_id = {c["id"]: c for c in concepts}
-    PUVODNI.update(c["id"] for c in concepts if c["tema"] == TEMA and
-                   not any(z.startswith("Garant: Digitální základy") for z in c.get("zdroj", [])))
-    # při opakovaném běhu: původní = koncepty, které existovaly před prvním během
-    PUVODNI.update({Z + s for s in ["hardware-a-software", "data-a-informace", "internet-a-sit", "cloud-a-server", "api",
-                                    "reprezentace-dat", "adresy-a-protokoly", "vrstvy-pocitace",
-                                    "operacni-system-a-soubory", "kde-jsou-data-fyzicky"]})
+    assert set(KONCEPTY) == set(VYSTUPY), set(KONCEPTY) ^ set(VYSTUPY)
+    slugs = [PUVODNI_ID.get(k, Z + v[0]) for k, v in KONCEPTY.items()]
+    assert len(set(slugs)) == len(slugs), "duplicitní id"
 
-    # každý výstup právě jednou
-    pouzite = [k for s in KONCEPTY for k in s.get("vystupy", [])] + list(JINAM)
-    assert sorted(pouzite) == sorted(VYSTUPY), set(VYSTUPY) ^ set(pouzite) or "duplicitní výstup"
+    # dřívější verze skriptu přidávala výstupy jako kritéria do jiných témat → uklidit
+    for c in concepts:
+        if c["tema"] != TEMA:
+            c["kriteria"] = [k for k in c.get("kriteria", []) if "garant" not in k]
+            c["zdroj"] = [z for z in c.get("zdroj", []) if "Digitální základy" not in z]
 
-    nove = [sestav(s, by_id.get(s["id"])) for s in KONCEPTY]
+    nove = []
+    for cid, pod in MIMO_DOKUMENT.items():
+        c = dict(by_id[cid]); c["podoblast"] = pod
+        c["kriteria"] = [k for k in c.get("kriteria", []) if "garant" not in k]
+        nove.append({k: c[k] for k in PORADI if k in c})
+    for key in KONCEPTY:
+        nove.append(koncept(key, by_id.get(PUVODNI_ID.get(key))))
+
     start = min(i for i, c in enumerate(concepts) if c["tema"] == TEMA)
     concepts[:] = ([c for c in concepts[:start] if c["tema"] != TEMA] + nove +
                    [c for c in concepts[start:] if c["tema"] != TEMA])
     by_id = {c["id"]: c for c in concepts}
-
-    for k, cid in JINAM.items():
-        c = by_id[cid]
-        if not any(x.get("garant") == k for x in c["kriteria"]):
-            c["kriteria"].append(garant_krit(k))
-        if ZDROJ_JINAM not in c.setdefault("zdroj", []):
-            c["zdroj"].append(ZDROJ_JINAM)
+    ids = set(by_id)
+    # odkazy na smazané bubliny tématu (z dřívější verze) pryč; vazba uložená jen jednou
+    for c in concepts:
+        for k in ("prerekvizity", "souvisi"):
+            c[k] = [x for x in c.get(k, []) if x in ids]
+    for c in nove:
+        for x in c["souvisi"]:
+            by_id[x]["souvisi"] = [y for y in by_id[x].get("souvisi", []) if y != c["id"]]
 
     for t in data["temata"]:
         if t["id"] == TEMA:
             t["podoblasti"] = PODOBLASTI
             t["popis"] = TEMA_POPIS
 
-    # vazba uložená jen jednou
-    for c in nove:
-        for x in c["souvisi"]:
-            by_id[x]["souvisi"] = [y for y in by_id[x].get("souvisi", []) if y != c["id"]]
-    ids = set(by_id)
-    bad = [(c["id"], x) for c in concepts for k in ("prerekvizity", "souvisi") for x in c.get(k, []) if x not in ids]
-    assert not bad, bad
-
     YAML_PATH.write_text(yaml.dump(data, Dumper=Dumper, allow_unicode=True, sort_keys=False,
                                    width=1000, default_flow_style=False), encoding="utf-8")
     NAVRH_PATH.write_text(navrh_md(nove, by_id), encoding="utf-8")
-    print(f"Hotovo: téma Digitální základy má {len(nove)} konceptů ve {len(PODOBLASTI)} podoblastech, "
-          f"{len(JINAM)} výstupů v jiných tématech, celkem {len(concepts)} konceptů.")
+    print(f"Hotovo: téma Digitální základy má {len(nove)} konceptů ({len(KONCEPTY)} výstupů garanta + "
+          f"{len(MIMO_DOKUMENT)} mimo dokument) ve {len(PODOBLASTI)} podoblastech, celkem {len(concepts)}.")
 
 
 if __name__ == "__main__":
