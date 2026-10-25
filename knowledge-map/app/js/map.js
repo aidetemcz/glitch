@@ -116,6 +116,9 @@
   let adminLogin = sessionStorage.getItem("km-login") || "";     // e-mail nebo „aidetem"
   let adminRole = sessionStorage.getItem("km-role") || "";       // 'admin' | 'editor'
   let adminName = sessionStorage.getItem("km-name") || "";       // jméno garanta (do názvu zálohy)
+  const ROLE = { admin: "Admin", editor: "Editor", viewer: "Čtenář (jen export)" };
+  // čtenář se přihlásí a stahuje exporty, ale neupravuje (server zápis stejně odmítne)
+  const canWrite = () => authed && adminRole !== "viewer";
   let editing = false;
   const loadEdits = () => { try { return JSON.parse(localStorage.getItem(EDITS_KEY) || "{}"); } catch (_) { return {}; } };
   const saveEdits = (o) => { try { localStorage.setItem(EDITS_KEY, JSON.stringify(o)); } catch (_) {} };
@@ -573,10 +576,11 @@
     const status = supabaseOk
       ? `Změny se ukládají <strong>živě do Supabase</strong> (uvidí je všichni).`
       : `⚠️ <strong>Supabase je teď nedostupné</strong> — změny se uloží jen lokálně do tohoto prohlížeče.`;
+    const kdo = `Přihlášen*a jako <strong>${esc(adminLogin || "?")}</strong> (${esc(ROLE[adminRole] || adminRole)}).`;
     return `<div class="d-section km-admin">
-      <h3>Editor</h3>
-      <p class="d-desc" style="margin-bottom:10px">Přihlášen*a jako <strong>${esc(adminLogin || "?")}</strong>${adminRole === "admin" ? " (admin)" : ""}. Klikni na koncept a uprav ho, nebo přidej nový. ${status}</p>
-      <div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>
+      <h3>${canWrite() ? "Editor" : "Export"}</h3>
+      <p class="d-desc" style="margin-bottom:10px">${kdo} ${canWrite() ? "Klikni na koncept a uprav ho, nebo přidej nový. " + status : "Tenhle účet mapu neupravuje, může stahovat exporty — i jednotlivých témat."}</p>
+      ${canWrite() ? '<div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>' : ""}
       <div class="ed-field" style="margin-top:14px"><label>Export — která témata</label>
         <div class="ex-tools"><button class="d-link" data-act="export-all">všechna</button><button class="d-link" data-act="export-none">žádné</button></div>
         <div class="ex-list">${(DATA.temata || []).map((t) =>
@@ -606,17 +610,17 @@
       return;
     }
     const rows = list.length
-      ? list.map((u) => '<div class="mc-row"><span class="mc-name">' + esc(u.name || u.email) + ' · ' + esc(u.email) + (u.role === "admin" ? ' · admin' : '') + '</span>' +
+      ? list.map((u) => '<div class="mc-row"><span class="mc-name">' + esc(u.name || u.email) + ' · ' + esc(u.email) + (u.role !== "editor" ? ' · ' + esc(ROLE[u.role] || u.role) : '') + '</span>' +
           '<button class="mc-del" data-act="editor-del" data-email="' + esc(u.email) + '" title="Smazat">✕</button></div>').join("")
       : '<span class="d-empty">zatím žádní další editoři</span>';
     detailBody.innerHTML = badge +
-      '<p class="d-desc">Přidej garanta/konzultanta na e-mail a zadej mu heslo — přihlásí se pak e-mailem + tímhle heslem. Stejným formulářem heslo i změníš.</p>' +
+      '<p class="d-desc">Přidej garanta/konzultanta na e-mail a zadej mu heslo — přihlásí se pak e-mailem + tímhle heslem. Stejným formulářem heslo i roli změníš. Čtenář mapu neupravuje, jen stahuje exporty.</p>' +
       '<div class="d-section"><h3>Editoři</h3>' + rows + '</div>' +
       '<div class="d-section"><h3>Přidat / změnit heslo</h3>' +
       '<div class="ed-field"><label>E-mail *</label><input id="ed-email" type="email" placeholder="jmeno@domena.cz" autocomplete="off"></div>' +
       '<div class="ed-field"><label>Jméno</label><input id="ed-name" placeholder="Jméno Příjmení" autocomplete="off"></div>' +
       '<div class="ed-field"><label>Heslo *</label><input id="ed-pass" placeholder="min. 6 znaků" autocomplete="off"></div>' +
-      '<div class="ed-field"><label>Role</label><select id="ed-role"><option value="editor">Editor</option><option value="admin">Admin</option></select></div>' +
+      '<div class="ed-field"><label>Role</label><select id="ed-role"><option value="editor">Editor</option><option value="admin">Admin</option><option value="viewer">Čtenář (jen export)</option></select></div>' +
       '<div class="ed-actions"><button class="reset-btn" data-act="editors-back">Zpět</button><button class="km-primary" data-act="editor-add">Uložit uživatele</button></div></div>';
   }
 
@@ -1132,7 +1136,7 @@
         <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
-      ${authed ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
+      ${canWrite() ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
       ${paras(c.popis)}
       ${microSection(c)}
       <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
@@ -1159,11 +1163,11 @@
       ? micros.map((m) =>
           '<div class="mc-row"><button class="d-link mc-open" data-act="micro-open" data-micro="' + esc(m.id) + '">' +
           esc(m.nazev || m.id) + '</button>' +
-          (authed ? '<button class="mc-del" data-act="del-micro" data-micro="' + esc(m.id) + '" title="Smazat">✕</button>' : "") +
+          (canWrite() ? '<button class="mc-del" data-act="del-micro" data-micro="' + esc(m.id) + '" title="Smazat">✕</button>' : "") +
           '</div>').join("")
       : '<span class="d-empty">zatím žádné mikrokoncepty</span>';
     const dive = micros.length ? '<button class="km-primary" data-act="dive" data-id="' + esc(c.id) + '">🔬 Ponořit se (' + micros.length + ')</button>' : "";
-    const add = authed ? '<button class="d-link" data-act="micro-add" data-id="' + esc(c.id) + '">➕ Přidat mikrokoncept</button>' : "";
+    const add = canWrite() ? '<button class="d-link" data-act="micro-add" data-id="' + esc(c.id) + '">➕ Přidat mikrokoncept</button>' : "";
     return '<div class="d-section"><h3>Mikrokoncepty</h3>' + list +
       ((dive || add) ? '<div class="d-links" style="margin-top:8px">' + dive + add + '</div>' : "") + '</div>';
   }
@@ -1210,11 +1214,11 @@
       '<div class="d-meta">' +
         '<span class="d-pill ' + (m.vrstva === "core" ? "core" : "") + '">' + esc(VRSTVA[m.vrstva] || "Navazující") + '</span>' +
         (parent ? '<span class="d-pill">pod: ' + esc(parent.nazev) + '</span>' : "") + '</div>' +
-      (authed ? '<button class="km-primary km-editbtn" data-act="micro-edit" data-micro="' + esc(m.id) + '">✎ Upravit mikrokoncept</button>' : "") +
+      (canWrite() ? '<button class="km-primary km-editbtn" data-act="micro-edit" data-micro="' + esc(m.id) + '">✎ Upravit mikrokoncept</button>' : "") +
       '<p class="d-desc">' + esc(typo(m.popis || "")) + '</p>' +
       '<div class="d-section"><h3>Vzdělávací cíle</h3>' + cil + '</div>' +
       '<div class="d-section"><h3>Kritéria hodnocení</h3>' + krit + '</div>' +
-      (authed ? '<div class="d-links"><button class="d-link km-danger" data-act="del-micro" data-micro="' + esc(m.id) + '">Smazat mikrokoncept</button></div>' : "");
+      (canWrite() ? '<div class="d-links"><button class="d-link km-danger" data-act="del-micro" data-micro="' + esc(m.id) + '">Smazat mikrokoncept</button></div>' : "");
     detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
 
