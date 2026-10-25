@@ -59,7 +59,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .legend-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--c-white); }
 .legend-dot.ring { background: #0a0a0c; border: 1.6px solid var(--c-white); }
 .legend-outline { width: 15px; height: 15px; border-radius: 50%; border: 1.4px dashed rgba(255,255,255,0.5); }
-.legend-outline.sub { border-style: dotted; border-color: rgba(255,255,255,0.35); width: 11px; height: 11px; margin: 0 2px; }
+.legend-outline.sub { border: 0; background: rgba(255,255,255,0.14); width: 13px; height: 13px; margin: 0 1px; }
 .legend-size { display: flex; align-items: flex-end; gap: 2px; flex: 0 0 auto; }
 .legend-size i { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--c-white); }
 .legend-size i + i { width: 13px; height: 13px; }

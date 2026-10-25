@@ -1507,14 +1507,16 @@
     for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
     lower.pop(); upper.pop(); return lower.concat(upper);
   }
-  function strokeSmooth(ctx, pts) {
-    const n = pts.length; if (n < 3) return;
+  function pathSmooth(ctx, pts) {
+    const n = pts.length; if (n < 3) return false;
     const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
     ctx.beginPath();
     const m0 = mid(pts[n - 1], pts[0]); ctx.moveTo(m0[0], m0[1]);
     for (let i = 0; i < n; i++) { const cur = pts[i], nxt = pts[(i + 1) % n], m = mid(cur, nxt); ctx.quadraticCurveTo(cur[0], cur[1], m[0], m[1]); }
-    ctx.closePath(); ctx.stroke();
+    ctx.closePath(); return true;
   }
+  function strokeSmooth(ctx, pts) { if (pathSmooth(ctx, pts)) ctx.stroke(); }
+  function fillSmooth(ctx, pts) { if (pathSmooth(ctx, pts)) ctx.fill(); }
   function initHulls(cy) {
     const cyDiv = document.getElementById("cy");
     const canvas = document.createElement("canvas");
@@ -1554,9 +1556,10 @@
           if (sub.hasClass("filtered")) return;
           const sk = sub.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
           if (sk.length === 0) return;
-          ctx.setLineDash([3, 5]); ctx.lineWidth = 1; ctx.strokeStyle = "rgba(255,255,255,0.22)";
-          const sh = hullOf(sk, 10);
-          strokeSmooth(ctx, sh);
+          // podoblast = tmavě šedá výplň (jemná čára nebyla vidět)
+          ctx.setLineDash([]); ctx.fillStyle = "rgba(255,255,255,0.10)";
+          const sh = hullOf(sk, 12);
+          fillSmooth(ctx, sh);
           subPolys.push({ group: sub, hull: sh });
         });
       });
