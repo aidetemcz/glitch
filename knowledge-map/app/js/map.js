@@ -115,6 +115,7 @@
   let adminSecret = sessionStorage.getItem("km-secret") || "";   // plaintext hesla pro RPC
   let adminLogin = sessionStorage.getItem("km-login") || "";     // e-mail nebo „aidetem"
   let adminRole = sessionStorage.getItem("km-role") || "";       // 'admin' | 'editor'
+  let adminName = sessionStorage.getItem("km-name") || "";       // jméno garanta (do názvu zálohy)
   let editing = false;
   const loadEdits = () => { try { return JSON.parse(localStorage.getItem(EDITS_KEY) || "{}"); } catch (_) { return {}; } };
   const saveEdits = (o) => { try { localStorage.setItem(EDITS_KEY, JSON.stringify(o)); } catch (_) {} };
@@ -587,7 +588,7 @@
       </div>
       ${adminRole === "admin" ? '<div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="editors">👥 Uživatelé</button></div>' : ""}
       <div class="d-links" style="margin-top:8px"><button class="d-link" data-act="logout">Odhlásit</button></div>
-      <p class="d-empty" style="margin-top:10px">Se všemi tématy export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem témat vznikne výřez — do názvu souboru se přidají vybraná témata.</p>
+      <p class="d-empty" style="margin-top:10px">Se všemi tématy export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem témat vznikne výřez; u jednoho tématu dostane soubor název zálohy podle klíče <code>datum_Téma_Jméno_01</code> (pořadové číslo si upravte).</p>
     </div>`;
   }
 
@@ -641,7 +642,7 @@
     if (!b) return;
     const act = b.dataset.act, id = b.dataset.id;
     if (act === "login") openLogin();
-    else if (act === "logout") { authed = false; adminSecret = ""; adminLogin = ""; adminRole = ""; ["km-auth","km-secret","km-login","km-role"].forEach((k) => sessionStorage.removeItem(k)); openAbout(); }
+    else if (act === "logout") { authed = false; adminSecret = ""; adminLogin = ""; adminRole = ""; adminName = ""; ["km-auth","km-secret","km-login","km-role","km-name"].forEach((k) => sessionStorage.removeItem(k)); openAbout(); }
     else if (act === "editors") openEditors();
     else if (act === "editor-add") addEditorSubmit();
     else if (act === "editor-del") removeEditorAct(b.dataset.email);
@@ -715,9 +716,9 @@
       if (!window.KM) throw new Error("Server (Supabase) není dostupný.");
       const res = await window.KM.login(u, p);
       if (!res || !res.ok) { err.textContent = "Špatný login nebo heslo."; return; }
-      authed = true; adminLogin = res.login || u; adminSecret = p; adminRole = res.role || "editor";
+      authed = true; adminLogin = res.login || u; adminSecret = p; adminRole = res.role || "editor"; adminName = res.name || "";
       sessionStorage.setItem("km-auth", "1"); sessionStorage.setItem("km-secret", p);
-      sessionStorage.setItem("km-login", adminLogin); sessionStorage.setItem("km-role", adminRole);
+      sessionStorage.setItem("km-login", adminLogin); sessionStorage.setItem("km-role", adminRole); sessionStorage.setItem("km-name", adminName);
       closeLogin(); openAbout();
     } catch (e) {
       const m = (e && e.message) || "";
@@ -847,8 +848,18 @@
     if (!sel.length) { alert("Vyber aspoň jedno téma."); return undefined; }
     return sel.length === boxes.length ? null : sel;
   }
-  // přípona názvu souboru podle výběru témat: knowledge-map.programovani+data-databaze.yaml
-  const exportName = (base, ext, temata) => base + (temata ? "." + temata.join("+") : "") + ext;
+  // Název souboru: celá mapa = knowledge-map.yaml / concepts.json; výřez jednoho tématu = záloha
+  // podle klíče garantů „2026-10-11_Název oblasti_Jméno garanta_01" (pořadové číslo si garant upraví);
+  // víc témat = knowledge-map.programovani+data-databaze.yaml
+  function exportName(base, ext, temata) {
+    if (!temata) return base + ext;
+    if (temata.length === 1) {
+      const t = (DATA.temata || []).find((x) => x.id === temata[0]) || {};
+      const jmeno = (adminName || (adminLogin || "").split("@")[0] || "garant").replace(/[\\/:*?"<>|]/g, "");
+      return new Date().toISOString().slice(0, 10) + "_" + (t.nazev || temata[0]) + "_" + jmeno + "_01" + ext;
+    }
+    return base + "." + temata.join("+") + ext;
+  }
 
   function exportYAML(temata) {
     if (temata === undefined) return;
