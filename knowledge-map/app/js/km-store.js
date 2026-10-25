@@ -78,6 +78,8 @@
     listEditors: function (login, secret) { return rpcJson("km_list_editors", { p_admin_login: login, p_admin_secret: secret }); },
     addEditor: function (login, secret, email, password, name, role) { return rpc("km_add_editor", { p_admin_login: login, p_admin_secret: secret, p_email: email, p_password: password, p_name: name || "", p_role: role || "editor" }); },
     removeEditor: function (login, secret, email) { return rpc("km_remove_editor", { p_admin_login: login, p_admin_secret: secret, p_email: email }); },
+    // úprava jména/role, heslo jen když je zadané (migrace 2026-10-25-mapa-uprava-uzivatele.sql)
+    updateEditor: function (login, secret, email, name, role, password) { return rpc("km_update_editor", { p_admin_login: login, p_admin_secret: secret, p_email: email, p_name: name || "", p_role: role || "editor", p_password: password || null }); },
     // zápisy — posílají i p_login (kdo edituje)
     saveOverride: function (login, secret, id, patch) { return rpc("km_save_override", { p_login: login, p_secret: secret, p_id: id, p_patch: patch }); },
     deleteOverride: function (login, secret, id) { return rpc("km_delete_override", { p_login: login, p_secret: secret, p_id: id }); },

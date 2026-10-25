@@ -618,7 +618,8 @@
   }
 
   /* ---------- Správa editorů (jen admin) ---------- */
-  async function openEditors() {
+  let editorsCache = [];
+  async function openEditors(editEmail) {
     editing = false;
     const badge = '<span class="d-badge" style="background:#ffff00;color:#000000">Uživatelé</span>';
     detailBody.innerHTML = badge + '<p class="d-desc">Načítám…</p>';
@@ -630,30 +631,49 @@
         '<div class="ed-actions"><button class="reset-btn" data-act="editors-back">Zpět</button></div>';
       return;
     }
+    editorsCache = list;
+    const u0 = editEmail ? list.find((u) => u.email === editEmail) : null;   // upravovaný uživatel
     const rows = list.length
-      ? list.map((u) => '<div class="mc-row"><span class="mc-name">' + esc(u.name || u.email) + ' · ' + esc(u.email) + (u.role !== "editor" ? ' · ' + esc(ROLE[u.role] || u.role) : '') + '</span>' +
-          '<button class="mc-del" data-act="editor-del" data-email="' + esc(u.email) + '" title="Smazat">✕</button></div>').join("")
-      : '<span class="d-empty">zatím žádní další editoři</span>';
+      ? '<div class="us-list">' + list.map((u) => '<div class="us-row' + (u0 && u0.email === u.email ? ' us-active' : '') + '">' +
+          '<div class="us-who"><div class="us-name">' + esc(u.name || "—") + '</div><div class="us-mail">' + esc(u.email) + '</div></div>' +
+          '<span class="d-pill us-role role-' + esc(u.role) + '">' + esc(ROLE[u.role] || u.role) + '</span>' +
+          '<button class="d-link us-edit" data-act="editor-edit" data-email="' + esc(u.email) + '" title="Upravit">✎</button>' +
+          '<button class="mc-del" data-act="editor-del" data-email="' + esc(u.email) + '" title="Smazat">✕</button></div>').join("") + '</div>'
+      : '<span class="d-empty">zatím žádní další uživatelé</span>';
+    const roleOpts = Object.keys(ROLE).map((r) => '<option value="' + r + '"' + ((u0 ? u0.role : "editor") === r ? ' selected' : '') + '>' + esc(ROLE[r]) + '</option>').join("");
     detailBody.innerHTML = badge +
-      '<p class="d-desc">Přidej garanta/konzultanta na e-mail a zadej mu heslo — přihlásí se pak e-mailem + tímhle heslem. Stejným formulářem heslo i roli změníš. Čtenář mapu neupravuje, jen stahuje exporty.</p>' +
-      '<div class="d-section"><h3>Editoři</h3>' + rows + '</div>' +
-      '<div class="d-section"><h3>Přidat / změnit heslo</h3>' +
-      '<div class="ed-field"><label>E-mail *</label><input id="ed-email" type="email" placeholder="jmeno@domena.cz" autocomplete="off"></div>' +
-      '<div class="ed-field"><label>Jméno</label><input id="ed-name" placeholder="Jméno Příjmení" autocomplete="off"></div>' +
-      '<div class="ed-field"><label>Heslo *</label><input id="ed-pass" placeholder="min. 6 znaků" autocomplete="off"></div>' +
-      '<div class="ed-field"><label>Role</label><select id="ed-role"><option value="editor">Editor</option><option value="admin">Admin</option><option value="viewer">Čtenář (jen export)</option></select></div>' +
-      '<div class="ed-actions"><button class="reset-btn" data-act="editors-back">Zpět</button><button class="km-primary" data-act="editor-add">Uložit uživatele</button></div></div>';
+      '<p class="d-desc">Admin upravuje mapu i uživatele, editor (garant, konzultant) upravuje mapu, čtenář mapu neupravuje a jen stahuje exporty. Uživatel se přihlásí e-mailem a heslem.</p>' +
+      '<div class="d-section"><h3>Uživatelé (' + list.length + ')</h3>' + rows + '</div>' +
+      '<div class="d-section" id="us-form"><h3>' + (u0 ? 'Upravit: ' + esc(u0.name || u0.email) : 'Přidat uživatele') + '</h3>' +
+      '<div class="ed-field"><label>E-mail *</label><input id="ed-email" type="email" placeholder="jmeno@domena.cz" autocomplete="off" value="' + esc(u0 ? u0.email : "") + '"' + (u0 ? ' readonly' : '') + '></div>' +
+      '<div class="ed-field"><label>Jméno</label><input id="ed-name" placeholder="Jméno Příjmení" autocomplete="off" value="' + esc(u0 ? (u0.name || "") : "") + '"></div>' +
+      '<div class="ed-field"><label>' + (u0 ? 'Nové heslo (nech prázdné, pokud se nemění)' : 'Heslo *') + '</label><input id="ed-pass" placeholder="min. 6 znaků" autocomplete="off"></div>' +
+      '<div class="ed-field"><label>Role</label><select id="ed-role">' + roleOpts + '</select></div>' +
+      '<div class="ed-actions"><button class="reset-btn" data-act="' + (u0 ? 'editors' : 'editors-back') + '">' + (u0 ? 'Zrušit' : 'Zpět') + '</button>' +
+      '<button class="km-primary" data-act="editor-add" data-mode="' + (u0 ? 'update' : 'add') + '">' + (u0 ? 'Uložit změny' : 'Přidat uživatele') + '</button></div></div>';
+    if (u0) document.getElementById("us-form").scrollIntoView({ block: "nearest" });
   }
 
-  async function addEditorSubmit() {
+  async function addEditorSubmit(mode) {
     const email = (document.getElementById("ed-email").value || "").trim();
     const name = (document.getElementById("ed-name").value || "").trim();
     const pass = document.getElementById("ed-pass").value || "";
     const role = document.getElementById("ed-role").value;
     if (!email || email.indexOf("@") < 0) { alert("Zadej platný e-mail."); return; }
-    if (pass.length < 6) { alert("Heslo musí mít aspoň 6 znaků."); return; }
-    try { await window.KM.addEditor(adminLogin, adminSecret, email, pass, name, role); openEditors(); }
-    catch (e) { alert("Uložení selhalo: " + ((e && e.message) || e)); }
+    if (pass && pass.length < 6) { alert("Heslo musí mít aspoň 6 znaků."); return; }
+    try {
+      if (mode === "update") await window.KM.updateEditor(adminLogin, adminSecret, email, name, role, pass || null);
+      else {
+        if (!pass) { alert("Novému uživateli zadej heslo."); return; }
+        await window.KM.addEditor(adminLogin, adminSecret, email, pass, name, role);
+      }
+      openEditors();
+    } catch (e) {
+      const m = (e && e.message) || String(e);
+      alert(/could not find the function|km_update_editor|PGRST202|404/i.test(m)
+        ? "Na serveru chybí funkce pro úpravu uživatele — je potřeba spustit migraci 2026-10-25-mapa-uprava-uzivatele.sql v Supabase."
+        : "Uložení selhalo: " + m);
+    }
   }
 
   function removeEditorAct(email) {
@@ -670,7 +690,8 @@
     else if (act === "logout") { authed = false; adminSecret = ""; adminLogin = ""; adminRole = ""; adminName = ""; ["km-auth","km-secret","km-login","km-role","km-name"].forEach((k) => sessionStorage.removeItem(k)); refreshHeadBtns(); closeDetail(); }
     else if (act === "open-export") openExport();
     else if (act === "editors") openEditors();
-    else if (act === "editor-add") addEditorSubmit();
+    else if (act === "editor-add") addEditorSubmit(b.dataset.mode);
+    else if (act === "editor-edit") openEditors(b.dataset.email);
     else if (act === "editor-del") removeEditorAct(b.dataset.email);
     else if (act === "editors-back") openAccount();
     else if (act === "export") exportYAML(exportTemata());
