@@ -31,7 +31,10 @@ def build():
         tid = c.get("tema")
         if not tid or not c.get("id"):
             continue
-        koncepty.setdefault(tid, []).append({"id": c["id"], "nazev": c.get("nazev")})
+        k = {"id": c["id"], "nazev": c.get("nazev")}
+        if c.get("podoblast"):
+            k["podoblast"] = c["podoblast"]
+        koncepty.setdefault(tid, []).append(k)
 
     # témata v daném pořadí; nezařazená (kdyby přibyla) na konec
     for tid in koncepty:

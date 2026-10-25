@@ -51,6 +51,7 @@ Zdroj pravdy: **`app/data/Informatika/knowledge-map.yaml`**. Dva typy záznamů 
 | `id` | slug | `{oblast}-{nazev}` |
 | `nazev` | text | název konceptu (titulek bubliny) |
 | `oblast` | id oblasti | zařazení |
+| `podoblast` | id podoblasti | volitelné: podoblast tématu (seznam `podoblasti` u tématu v `temata`); v mapě vnořená přerušovaná hranice uvnitř tématu |
 | `vrstva` | `core` \| `navazujici` | pozice v hierarchii |
 | `popis` | text | co koncept je |
 | `cile` | seznam | vzdělávací cíle gradované podle úrovně: `{ uroven, text, orientacne_rocnik? }` |
@@ -160,6 +161,11 @@ Výstupy garantů se do mapy převádějí reprodukovatelně:
 
 - `garanti/parse_hnizdo_pdf.py` — z PDF exportu karet (Google Docs → PDF, `pdftotext -bbox-layout`) vytáhne karty do JSON,
 - `garanti/hnizdo-programovani.json` — rozparsované karty hnízda Programování,
-- `garanti/apply_hnizdo_programovani.py` — aplikuje karty a vazby ze schémat do `knowledge-map.yaml` (idempotentní); pak `python3 knowledge-map/build-concepts.py`.
+- `garanti/apply_hnizdo_programovani.py` — aplikuje karty a vazby ze schémat do `knowledge-map.yaml` (idempotentní),
+- `garanti/hnizdo-algoritmizace.md` + `apply_hnizdo_algoritmizace.py` — hnízdo Informatické myšlení a algoritmizace (karty přepsané z Google Docu),
+- `garanti/apply_hnizdo_data.py` — připomínky garantky k tématu Data (náhrady textů ověřené proti původnímu znění, nové bubliny),
+- `garanti/apply_hnizdo_digitalni_zaklady.py` — téma Digitální základy: 65 výstupů garanta rozdělených do konceptů a 4 podoblastí (návrh redakce, `stav: draft`); generuje `garanti/digitalni-zaklady-navrh.md` pro garanta.
+
+Pořadí skriptů nehraje roli, každý je idempotentní. Po úpravě YAML vždy `python3 knowledge-map/build-concepts.py` a `python3 knowledge-map/build-map-index.py`.
 
 Pozn.: `knowledge-map.yaml` je od editoru a garantských podkladů zdrojem pravdy sám o sobě — `build_map.py` je historický generátor verze 0.12 a jeho spuštění by tyto úpravy přepsalo.

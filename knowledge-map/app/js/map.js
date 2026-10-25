@@ -104,7 +104,7 @@
   const ADMIN_HASH = "f564b3dd35f4abb0b1dc0ea62362d5b8fab3439d0662b5ed557ebb5684bb2f6e";
   const EDITS_KEY = "km-edits-v1";
   const NEW_KEY = "km-new-v1";
-  const EDITABLE = ["nazev", "popis", "vrstva", "cile", "kriteria", "duraz", "stav", "prerekvizity", "souvisi"];
+  const EDITABLE = ["nazev", "popis", "vrstva", "podoblast", "cile", "kriteria", "duraz", "stav", "prerekvizity", "souvisi"];
   const BLOOM = [["zapamatovani", "Zapamatování"], ["porozumeni", "Porozumění"], ["aplikace", "Aplikace"],
     ["analyza", "Analýza"], ["hodnoceni", "Hodnocení"], ["tvorba", "Tvorba"]];
   let authed = sessionStorage.getItem("km-auth") === "1";
@@ -125,7 +125,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=18")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=19")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -183,6 +183,9 @@
     return a;
   }
   const groupOf = (c, mode) => mode === "tema" ? c.tema : mode === "kompetence" ? (c.kompetence || NOKDI) : (c.oblast || NORVP);
+  const subId = (tema, pod) => "sub-" + tema + "-" + pod;
+  const podoblastiOf = (temaId) => ((DATA.temata.find((t) => t.id === temaId) || {}).podoblasti) || [];
+  const podoblastOf = (c) => c.podoblast ? podoblastiOf(c.tema).find((p) => p.id === c.podoblast) || null : null;
   const GROUP_LABEL = { tema: "Téma", oblast: "Oblast RVP", kompetence: "Digitální kompetence" };
 
   function buildElements(mode) {
@@ -216,12 +219,18 @@
     const nodes = [];
     groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id,
       label: wrapLabel(g.nazev, GRP_FONT, 180 * 0.95, true), labelcolor, popis: g.popis } }));
+    // podoblasti tématu = vnořené skupiny uvnitř clusteru (jen v pohledu Témata)
+    const SUB_FONT = '600 11px "Inter", "Segoe UI", sans-serif';
+    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => nodes.push({ data: {
+      id: subId(t.id, p.id), type: "sub", parent: "grp-" + t.id, gid: t.id, pid: p.id,
+      label: wrapLabel(p.nazev, SUB_FONT, 150 * 0.95, true), popis: p.popis } })));
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
       const fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
       const font = '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif';
+      const sub = mode === "tema" && podoblastOf(c);
       nodes.push({ data: {
-        id: c.id, type: "concept", parent: "grp-" + groupOf(c, mode),
+        id: c.id, type: "concept", parent: sub ? subId(c.tema, sub.id) : "grp-" + groupOf(c, mode),
         label: wrapLabel(c.nazev, font, textw * 0.95, false), vrstva: c.vrstva,
         stav: c.stav || "draft", tagy: c.tagy || [],
         size: sz, textw: textw, fontsize: fs, _c: c
@@ -253,6 +262,12 @@
       container: document.getElementById("cy"),
       elements: [], wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 2.5,
       style: [
+        { selector: "node[type='sub']", style: {
+          "events": "no", "background-opacity": 0, "border-width": 0,
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "150px",
+          "text-valign": "top", "text-halign": "center", "text-margin-y": -6,
+          "color": "#d0d0d0", "font-size": "11px", "font-weight": "600", "line-height": 1.3, "padding": "14px"
+        }},
         { selector: "node[type='group']", style: {
           // obdélník clusteru je neviditelný → události propouští do plochy (posun mapy);
           // oblast se chytá jen uvnitř nakreslené přerušované hranice (initHulls)
@@ -414,24 +429,35 @@
     const cols = Math.ceil(Math.sqrt(G));
     const GAP = 10, STEP = 12;
     const GOLDEN = Math.PI * (3 - Math.sqrt(5));
-    const packed = groups.map((g) => {
-      const kids = g.children("[type='concept']").sort((a, b) => b.data("size") - a.data("size"));
+    // kruhy (r) po spirále na první volné místo; největší uprostřed
+    const pack = (items) => {
       const placed = []; let radius = 0;
-      kids.forEach((n) => {
-        const r = n.data("size") / 2;
+      items.sort((a, b) => b.r - a.r).forEach((it) => {
         for (let t = 0; ; t++) {
           const x = Math.cos(t * GOLDEN) * STEP * Math.sqrt(t), y = Math.sin(t * GOLDEN) * STEP * Math.sqrt(t);
-          if (placed.every((q) => Math.hypot(q.x - x, q.y - y) >= q.r + r + GAP)) {
-            placed.push({ n, x, y, r }); radius = Math.max(radius, Math.hypot(x, y) + r); break;
+          if (placed.every((q) => Math.hypot(q.x - x, q.y - y) >= q.r + it.r + GAP)) {
+            placed.push(Object.assign({ x, y }, it)); radius = Math.max(radius, Math.hypot(x, y) + it.r); break;
           }
         }
       });
       return { placed, radius };
+    };
+    const SUB_PAD = 22;   // místo kolem balíku podoblasti (hranice + nadpis)
+    const packed = groups.map((g) => {
+      const items = g.children("[type='concept']").map((n) => ({ n, r: n.data("size") / 2 }));
+      g.children("[type='sub']").forEach((sub) => {
+        const inner = pack(sub.children("[type='concept']").map((n) => ({ n, r: n.data("size") / 2 })));
+        if (inner.placed.length) items.push({ inner: inner.placed, r: inner.radius + SUB_PAD });
+      });
+      return pack(items);
     });
     const cell = Math.max(560, 2 * Math.max(0, ...packed.map((p) => p.radius)) + 200);
     packed.forEach((p, i) => {
       const gx = (i % cols) * cell, gy = Math.floor(i / cols) * cell;
-      p.placed.forEach((q) => q.n.position({ x: gx + q.x, y: gy + q.y }));
+      p.placed.forEach((q) => {
+        if (q.n) q.n.position({ x: gx + q.x, y: gy + q.y });
+        else q.inner.forEach((w) => w.n.position({ x: gx + q.x + w.x, y: gy + q.y + w.y }));
+      });
     });
   }
 
@@ -456,8 +482,11 @@
         n.toggleClass("filtered", !vis);
       });
       cy.nodes("[type='group']").forEach((g) => {
-        const empty = g.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0;
+        const empty = g.descendants("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0;
         g.toggleClass("filtered", empty || !gr.has(g.data("gid")));
+      });
+      cy.nodes("[type='sub']").forEach((s) => {
+        s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0);
       });
       cy.edges().forEach((e) => e.toggleClass("filtered",
         e.source().hasClass("filtered") || e.target().hasClass("filtered") || !eg.has(e.data("etype"))));
@@ -729,6 +758,10 @@
         <option value="core"${c.vrstva === "core" ? " selected" : ""}>Core koncept</option>
         <option value="navazujici"${c.vrstva === "navazujici" ? " selected" : ""}>Navazující</option>
       </select></div>
+      ${podoblastiOf(c.tema).length ? `<div class="ed-field"><label>Podoblast</label><select id="ed-podoblast">
+        <option value=""${!c.podoblast ? " selected" : ""}>— bez podoblasti —</option>
+        ${podoblastiOf(c.tema).map((p) => `<option value="${esc(p.id)}"${c.podoblast === p.id ? " selected" : ""}>${esc(p.nazev)}</option>`).join("")}
+      </select></div>` : ""}
       <div class="ed-field"><label>Vzdělávací cíle</label><div id="ed-cile">${(c.cile || []).map(cileRow).join("")}</div>
         <button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
       <div class="ed-field"><label>Kritéria hodnocení</label><div id="ed-kriteria">${(c.kriteria || []).map(kritRow).join("")}</div>
@@ -753,6 +786,8 @@
     c.nazev = (document.getElementById("ed-nazev").value.trim()) || c.nazev;
     c.popis = document.getElementById("ed-popis").value.trim();
     c.vrstva = document.getElementById("ed-vrstva").value;
+    const edPod = document.getElementById("ed-podoblast");
+    if (edPod) c.podoblast = edPod.value || null;
     c.cile = [...document.querySelectorAll("#ed-cile .ed-row")].map((r) => {
       const o = { uroven: r.querySelector(".ed-lvl").value, text: r.querySelector(".ed-text").value.trim() };
       const roc = r.querySelector(".ed-roc").value; if (roc) o.rocnik = rocnikVal(roc);
@@ -941,6 +976,9 @@
     if (node.data("type") === "group") {
       detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
       pinned = null; clearNb();
+    } else if (node.data("type") === "sub") {
+      detailBody.innerHTML = subHtml(node.data("gid"), node.data("pid"));
+      pinned = null; clearNb();
     } else {
       detailBody.innerHTML = conceptHtml(node.data("_c"));
       pinned = node; focusNb(node);
@@ -996,8 +1034,24 @@
       <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
   }
 
+  function subHtml(temaId, pid) {
+    const tema = DATA.temata.find((t) => t.id === temaId) || {};
+    const p = podoblastiOf(temaId).find((x) => x.id === pid) || { nazev: pid };
+    const kids = DATA.concepts.filter((c) => c.tema === temaId && c.podoblast === pid);
+    const cores = kids.filter((c) => c.vrstva === "core"), nav = kids.filter((c) => c.vrstva !== "core");
+    return `
+      <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || temaId)}</span>
+      <h2 class="d-title">${esc(p.nazev)}</h2>
+      <div class="d-meta"><span class="d-pill">podoblast</span></div>
+      ${paras(p.popis || "")}
+      <div class="d-section"><h3>Konceptů: ${kids.length}</h3></div>
+      <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>
+      <div class="d-section"><h3>Navazující</h3><div class="d-links">${nav.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
+  }
+
   function conceptHtml(c) {
     const tema = (DATA.temata.find((t) => t.id === c.tema) || {});
+    const pod = podoblastOf(c);
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
@@ -1028,7 +1082,7 @@
         (jinde ? `<div class="d-sub">+ ${jinde} ${jinde === 1 ? "koncept" : jinde < 5 ? "koncepty" : "konceptů"} v jiných tématech</div>` : "");
     };
     return `
-      <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>
+      <span class="d-badge" style="background:#ffffff;color:#000000">${esc(tema.nazev || c.tema)}</span>${pod ? ` <span class="d-badge d-badge-sub">${esc(pod.nazev)}</span>` : ""}
       <h2 class="d-title">${esc(c.nazev)}</h2>
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
@@ -1476,21 +1530,37 @@
     function draw() {
       polys = [];
       ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.restore();
-      ctx.save(); ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3;
-      cy.nodes("[type='group']").forEach((group) => {
-        if (group.hasClass("filtered")) return;
-        const kids = group.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
-        if (kids.length === 0) return;
-        ctx.strokeStyle = "rgba(255,255,255,0.32)";
+      ctx.save();
+      const hullOf = (kids, pad) => {
         const pts = [];
         kids.forEach((n) => {
-          const p = n.renderedPosition(), r = n.renderedWidth() / 2 + 16;
+          const p = n.renderedPosition(), r = n.renderedWidth() / 2 + pad;
           for (let a = 0; a < 12; a++) { const ang = a / 12 * 2 * Math.PI; pts.push([p.x + Math.cos(ang) * r, p.y + Math.sin(ang) * r]); }
         });
-        const hull = convexHull(pts);
+        return convexHull(pts);
+      };
+      const z = cy.zoom();
+      const subPolys = [];
+      cy.nodes("[type='group']").forEach((group) => {
+        if (group.hasClass("filtered")) return;
+        const kids = group.descendants("[type='concept']").filter((n) => !n.hasClass("filtered"));
+        if (kids.length === 0) return;
+        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3; ctx.strokeStyle = "rgba(255,255,255,0.32)";
+        const hull = hullOf(kids, 16 + 10 * z);
         strokeSmooth(ctx, hull);
         polys.push({ group, hull });
+        // podoblasti: jemnější hranice uvnitř tématu
+        group.children("[type='sub']").forEach((sub) => {
+          if (sub.hasClass("filtered")) return;
+          const sk = sub.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
+          if (sk.length === 0) return;
+          ctx.setLineDash([3, 5]); ctx.lineWidth = 1; ctx.strokeStyle = "rgba(255,255,255,0.22)";
+          const sh = hullOf(sk, 10);
+          strokeSmooth(ctx, sh);
+          subPolys.push({ group: sub, hull: sh });
+        });
       });
+      polys = subPolys.concat(polys);   // klik/tah: nejdřív podoblast, pak téma
       ctx.restore();
     }
 
@@ -1529,7 +1599,7 @@
     });
     cy.on("tapdrag", (e) => {
       if (!tazena) return;
-      tazena.children().shift({ x: e.position.x - last.x, y: e.position.y - last.y });
+      tazena.descendants("[type='concept']").shift({ x: e.position.x - last.x, y: e.position.y - last.y });
       last = { x: e.position.x, y: e.position.y };
     });
     cy.on("tapend", () => {
