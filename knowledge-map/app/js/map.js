@@ -222,7 +222,7 @@
     };
     const sizeFor = (c) => Math.min(124, Math.round(46 + 11 * Math.sqrt(pocetNavaznych(c.id))));
 
-    const labelcolor = "#dc5b5b";  // nadpisy clusterů jahodově ve všech režimech
+    const labelcolor = "#7da4b2";  // nadpisy témat modře jako jejich hranice
     const GRP_FONT = '600 13px "Inter", "Segoe UI", sans-serif';
     const nodes = [];
     groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id,
@@ -292,20 +292,20 @@
           "text-valign": "center", "text-halign": "center", "line-height": LINEH,
           "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
-        { selector: "node[vrstva='core']", style: { "background-color": "#1c2530", "color": "#ffffff", "border-width": 0 } },
-        { selector: "node[vrstva='navazujici']", style: { "background-color": "#ffffff", "color": "#1c2530", "border-color": "#1c2530", "border-width": 1.8 } },
+        { selector: "node[vrstva='core']", style: { "background-color": "#dc5b5b", "color": "#ffffff", "border-width": 0 } },
+        { selector: "node[vrstva='navazujici']", style: { "background-color": "#ffffff", "color": "#1c2530", "border-color": "#dc5b5b", "border-width": 1.8 } },
         { selector: "edge[etype='prereq']", style: {
-          "line-color": "rgba(28,37,48,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
-          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(28,37,48,0.6)", "arrow-scale": 0.9
+          "line-color": "rgba(220,91,91,0.6)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(220,91,91,0.8)", "arrow-scale": 0.9
         }},
         { selector: "edge[etype='related']", style: {
-          "line-color": "rgba(28,37,48,0.25)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
+          "line-color": "rgba(220,91,91,0.4)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
         }},
-        { selector: "edge.nbedge", style: { "line-color": "#dc5b5b", "width": 2.4, "target-arrow-color": "#dc5b5b", "opacity": 1, "z-index": 50 } },
-        { selector: "node.nbon", style: { "border-color": "#dc5b5b", "border-width": 2.6, "z-index": 50 } },
-        { selector: ".hl", style: { "border-width": 4, "border-color": "#dc5b5b", "border-opacity": 1 } },
-        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#dc5b5b" } },
-        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#dc5b5b", "color": "#ffffff", "border-width": 0 } },
+        { selector: "edge.nbedge", style: { "line-color": "#1c2530", "width": 2.4, "target-arrow-color": "#1c2530", "opacity": 1, "z-index": 50 } },
+        { selector: "node.nbon", style: { "border-color": "#1c2530", "border-width": 2.6, "z-index": 50 } },
+        { selector: ".hl", style: { "border-width": 4, "border-color": "#1c2530", "border-opacity": 1 } },
+        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#1c2530" } },
+        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#1c2530", "color": "#ffffff", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
         { selector: ".filtered", style: { "display": "none" } },
         /* hloubkové ponoření — mikrokoncepty pod konceptem */
@@ -1478,15 +1478,15 @@
       const A = e.a._p, B = e.b._p;
       ctx3d.beginPath(); ctx3d.moveTo(A.sx, A.sy); ctx3d.lineTo(B.sx, B.sy);
       if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(220,91,91,0.55)"; ctx3d.lineWidth = 1.3; }
-      else { ctx3d.strokeStyle = "rgba(28,37,48,0.12)"; ctx3d.lineWidth = 0.8; }
+      else { ctx3d.strokeStyle = "rgba(220,91,91,0.25)"; ctx3d.lineWidth = 0.8; }
       ctx3d.stroke();
     });
     nodes3d.slice().sort((a, b) => a._p.depth - b._p.depth).forEach((n) => {
       const p = n._p, r = Math.max(2, n.r * p.f);
       if (n.kind === "concept") {
         ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
-        ctx3d.fillStyle = n.core ? "#1c2530" : "#ffffff"; ctx3d.fill();
-        if (!n.core) { ctx3d.strokeStyle = "#1c2530"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
+        ctx3d.fillStyle = n.core ? "#dc5b5b" : "#ffffff"; ctx3d.fill();
+        if (!n.core) { ctx3d.strokeStyle = "#dc5b5b"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
         if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#ffffff" : "#1c2530");
       } else {
         const s = r * 1.5; ctx3d.fillStyle = "#ffffff"; ctx3d.strokeStyle = "#dc5b5b"; ctx3d.lineWidth = 1.1;
@@ -1650,7 +1650,7 @@
         if (group.hasClass("filtered")) return;
         const kids = group.descendants("[type='concept']").filter((n) => !n.hasClass("filtered"));
         if (kids.length === 0) return;
-        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3; ctx.strokeStyle = "rgba(28,37,48,0.35)";
+        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.5; ctx.strokeStyle = "#7da4b2";   // nekonečné nebe (před setměním)
         const hull = hullOf(kids, 16 + 10 * z);
         strokeSmooth(ctx, hull);
         polys.push({ group, hull });
