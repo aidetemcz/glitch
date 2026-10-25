@@ -576,13 +576,18 @@
       <h3>Editor</h3>
       <p class="d-desc" style="margin-bottom:10px">Přihlášen*a jako <strong>${esc(adminLogin || "?")}</strong>${adminRole === "admin" ? " (admin)" : ""}. Klikni na koncept a uprav ho, nebo přidej nový. ${status}</p>
       <div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>
-      <div class="d-links" style="margin-top:8px">
-        <button class="km-primary" data-act="export">⬇ Export YAML</button>
-        <button class="km-primary" data-act="export-json">⬇ Export concepts.json</button>
+      <div class="ed-field" style="margin-top:14px"><label>Export — která témata</label>
+        <div class="ex-tools"><button class="d-link" data-act="export-all">všechna</button><button class="d-link" data-act="export-none">žádné</button></div>
+        <div class="ex-list">${(DATA.temata || []).map((t) =>
+          `<label class="ex-item"><input type="checkbox" class="ex-tema" value="${esc(t.id)}" checked> ${esc(t.nazev)} <span class="ex-n">${DATA.concepts.filter((c) => c.tema === t.id).length}</span></label>`).join("")}</div>
+      </div>
+      <div class="d-links">
+        <button class="km-primary" data-act="export">⬇ YAML</button>
+        <button class="km-primary" data-act="export-json">⬇ concepts.json</button>
       </div>
       ${adminRole === "admin" ? '<div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="editors">👥 Uživatelé</button></div>' : ""}
       <div class="d-links" style="margin-top:8px"><button class="d-link" data-act="logout">Odhlásit</button></div>
-      <p class="d-empty" style="margin-top:10px">Export vygeneruje soubory ke commitu na GitHub — YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee.</p>
+      <p class="d-empty" style="margin-top:10px">Se všemi tématy export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem témat vznikne výřez — do názvu souboru se přidají vybraná témata.</p>
     </div>`;
   }
 
@@ -641,8 +646,9 @@
     else if (act === "editor-add") addEditorSubmit();
     else if (act === "editor-del") removeEditorAct(b.dataset.email);
     else if (act === "editors-back") openAbout();
-    else if (act === "export") exportYAML();
-    else if (act === "export-json") exportConceptsJson();
+    else if (act === "export") exportYAML(exportTemata());
+    else if (act === "export-json") exportConceptsJson(exportTemata());
+    else if (act === "export-all" || act === "export-none") document.querySelectorAll(".ex-tema").forEach((x) => x.checked = act === "export-all");
     else if (act === "discard") discardEdits();
     else if (act === "edit") openEditor(id);
     else if (act === "edit-cancel") openDetail(cy.getElementById(id));
@@ -833,20 +839,40 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  function exportYAML() {
+  // zaškrtnutá témata v bloku Export; null = všechna (celý soubor)
+  function exportTemata() {
+    const boxes = [...document.querySelectorAll(".ex-tema")];
+    if (!boxes.length) return null;
+    const sel = boxes.filter((b) => b.checked).map((b) => b.value);
+    if (!sel.length) { alert("Vyber aspoň jedno téma."); return undefined; }
+    return sel.length === boxes.length ? null : sel;
+  }
+  // přípona názvu souboru podle výběru témat: knowledge-map.programovani+data-databaze.yaml
+  const exportName = (base, ext, temata) => base + (temata ? "." + temata.join("+") : "") + ext;
+
+  function exportYAML(temata) {
+    if (temata === undefined) return;
     try {
       // vyhoď přechodná pole (začínají „_", např. _micros) — do YAML nepatří
       const clean = JSON.parse(JSON.stringify(DATA, (k, v) => (k.charAt(0) === "_" ? undefined : v)));
-      download("knowledge-map.yaml", jsyaml.dump(clean, { lineWidth: 1000, noRefs: true, sortKeys: false }), "text/yaml");
+      if (temata) {
+        // výřez: jen vybraná témata a jejich koncepty; vazby na koncepty mimo výřez zůstávají jako id
+        clean.temata = (clean.temata || []).filter((t) => temata.includes(t.id));
+        clean.concepts = (clean.concepts || []).filter((c) => temata.includes(c.tema));
+        clean.meta = Object.assign({}, clean.meta, { vyrez: temata, poznamka_vyrez: "Výřez mapy — jen vybraná témata. Vazby (prerekvizity, souvisí) mohou mířit na koncepty mimo výřez." });
+      }
+      download(exportName("knowledge-map", ".yaml", temata), jsyaml.dump(clean, { lineWidth: 1000, noRefs: true, sortKeys: false }), "text/yaml");
     } catch (e) { alert("Export selhal: " + e.message); }
   }
 
   // concepts.json = mapa id → { nazev, popis, cile, kriteria } (čte ji i chatbot)
-  function exportConceptsJson() {
+  function exportConceptsJson(temata) {
+    if (temata === undefined) return;
     try {
       const out = {};
-      DATA.concepts.forEach((c) => { out[c.id] = { nazev: c.nazev, popis: c.popis || "", cile: c.cile || [], kriteria: c.kriteria || [] }; });
-      download("concepts.json", JSON.stringify(out, null, 1), "application/json");
+      DATA.concepts.filter((c) => !temata || temata.includes(c.tema))
+        .forEach((c) => { out[c.id] = { nazev: c.nazev, popis: c.popis || "", cile: c.cile || [], kriteria: c.kriteria || [] }; });
+      download(exportName("concepts", ".json", temata), JSON.stringify(out, null, 1), "application/json");
     } catch (e) { alert("Export selhal: " + e.message); }
   }
 
