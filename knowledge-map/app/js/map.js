@@ -436,8 +436,6 @@
      největší (nejzákladnější) koncept je uprostřed. */
   function clusterLayout() {
     const groups = cy.nodes("[type='group']");
-    const G = groups.length;
-    const cols = Math.ceil(Math.sqrt(G));
     const GAP = 10, STEP = 12;
     const GOLDEN = Math.PI * (3 - Math.sqrt(5));
     // kruhy (r) po spirále na první volné místo; největší uprostřed
@@ -462,9 +460,12 @@
       });
       return pack(items);
     });
-    const cell = Math.max(560, 2 * Math.max(0, ...packed.map((p) => p.radius)) + 200);
-    packed.forEach((p, i) => {
-      const gx = (i % cols) * cell, gy = Math.floor(i / cols) * cell;
+    // témata se balí stejně jako bubliny: kruhy různé velikosti po spirále k sobě
+    // (mřížka by všem dala rozteč podle největšího tématu a mapa by byla rozlezlá)
+    const GROUP_PAD = 70;   // místo na hranici a nadpis tématu
+    const outer = pack(packed.map((p, i) => ({ i, r: p.radius + GROUP_PAD })));
+    outer.placed.forEach((o) => {
+      const p = packed[o.i], gx = o.x, gy = o.y;
       p.placed.forEach((q) => {
         if (q.n) q.n.position({ x: gx + q.x, y: gy + q.y });
         else q.inner.forEach((w) => w.n.position({ x: gx + q.x + w.x, y: gy + q.y + w.y }));
