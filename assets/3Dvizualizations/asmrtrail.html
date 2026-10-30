@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASMR — světelná stopa</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; width: 100%; height: 100%; }
+  body { min-height: 100vh; }
+  #frame {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    box-sizing: border-box;
+    touch-action: none;
+    cursor: crosshair;
+  }
+  #asmrCanvas { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <canvas id="asmrCanvas"></canvas>
+</div>
+
+<script>
+(function(){
+  var frame = document.getElementById('frame');
+  var canvas = document.getElementById('asmrCanvas');
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, M = 0;
+
+  var WHITE = '#ffffff', YELLOW = '#ffff00';
+  var CHARS = ['*', '+', '·', '×', ':', '#', '@', 'o', '~'];
+
+  // ---- předrenderované sprity (ostré i rozmazané) ----
+  var SPRITES = [];
+  function makeSprite(base, blur, paint){
+    var c = document.createElement('canvas');
+    var px = Math.ceil(base * 3) + (blur ? 36 : 8);
+    c.width = c.height = px;
+    var x = c.getContext('2d');
+    x.translate(px / 2, px / 2);
+    if (blur) x.filter = 'blur(' + blur * 3 + 'px)';
+    paint(x, base * 3);
+    SPRITES.push({ c: c, base: base, pad: px / 3 });
+    return SPRITES.length - 1;
+  }
+  function circle(color){
+    return function(x, s){ x.fillStyle = color; x.beginPath(); x.arc(0, 0, s / 2, 0, Math.PI * 2); x.fill(); };
+  }
+  function square(color){
+    return function(x, s){ x.fillStyle = color; x.fillRect(-s / 2, -s / 2, s, s); };
+  }
+  function glyph(color, ch){
+    return function(x, s){
+      x.fillStyle = color;
+      x.font = '700 ' + Math.round(s) + 'px ui-monospace, "SF Mono", Menlo, Consolas, monospace';
+      x.textAlign = 'center';
+      x.textBaseline = 'middle';
+      x.fillText(ch, 0, 0);
+    };
+  }
+  function softGlow(color){
+    return function(x, s){
+      var g = x.createRadialGradient(0, 0, 0, 0, 0, s / 2);
+      g.addColorStop(0, color);
+      g.addColorStop(0.4, color.replace(')', ',0.5)').replace('rgb', 'rgba'));
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      x.fillStyle = g;
+      x.beginPath(); x.arc(0, 0, s / 2, 0, Math.PI * 2); x.fill();
+    };
+  }
+  // jen bílá (žlutá odstraněna na přání)
+  var GLOWS = [], PXS = [], DOTS = [], GLYPHS = [];
+  GLOWS.push(makeSprite(64, 0, softGlow('rgb(255,255,255)')));
+  [0, 2].forEach(function(bl){
+    PXS.push(makeSprite(7, bl, square(WHITE)));
+    DOTS.push(makeSprite(9, bl, circle(WHITE)));
+    CHARS.forEach(function(ch){
+      GLYPHS.push(makeSprite(15, bl, glyph(WHITE, ch)));
+    });
+  });
+
+  // ---- částice ----
+  // st: 0 = trvalá stopa, 1 = rozstřel, 2 = ťuknutí (rychlý vznik a zánik)
+  var parts = [];
+  var MAX = 6500;
+  function rnd(a, b){ return a + Math.random() * (b - a); }
+  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function addPart(x, y, spr, scale, alpha, st, vx, vy, ttl){
+    parts.push({ x: x, y: y, spr: spr, sc: scale, a: alpha, st: st || 0,
+                 vx: vx || 0, vy: vy || 0, ttl: ttl || 0, ttl0: ttl || 1,
+                 tw: Math.random() * Math.PI * 2, tws: rnd(0.8, 2.4) });
+    if (parts.length > MAX){
+      // strop: nejstarší kousek stopy jen rychleji zhasne (plynule, bez rozstřelu)
+      for (var i = 0; i < parts.length; i++){
+        if (parts[i].st === 0){ parts[i].ttl = Math.min(parts[i].ttl, 0.3); break; }
+      }
+    }
+  }
+
+  function trailTtl(){ return rnd(4.0, 6.0); }   // horní strop životnosti (fakticky zhasne dřív dle exp)
+  function spawnTrail(x, y){
+    // měkká záře jako podklad stopy (řidší — ať stopa není jednolitá, ale jiskřivá)
+    if (Math.random() < 0.32){
+      addPart(x + rnd(-6, 6), y + rnd(-6, 6), pick(GLOWS), rnd(0.7, 1.7) * (M / 420), rnd(0.06, 0.16), 0, 0, 0, trailTtl());
+    }
+    // ostré i rozmazané drobky: pixely, tečky, znaky
+    var n = 2 + (Math.random() < 0.4 ? 1 : 0);
+    for (var i = 0; i < n; i++){
+      var r = Math.pow(Math.random(), 1.6) * M * 0.055;
+      var a = Math.random() * Math.PI * 2;
+      var kind = Math.random();
+      var spr = kind < 0.35 ? pick(PXS) : (kind < 0.7 ? pick(DOTS) : pick(GLYPHS));
+      addPart(x + Math.cos(a) * r, y + Math.sin(a) * r, spr,
+              rnd(0.6, 1.5) * (M / 420), rnd(0.5, 1), 0, 0, 0, trailTtl());
+    }
+  }
+
+  function spawnBurst(x, y){
+    var n = 36;
+    for (var i = 0; i < n; i++){
+      var a = Math.random() * Math.PI * 2;
+      var sp = rnd(0.15, 1.2) * M;
+      var kind = Math.random();
+      var spr = kind < 0.25 ? pick(GLOWS) : kind < 0.5 ? pick(PXS) : (kind < 0.75 ? pick(DOTS) : pick(GLYPHS));
+      addPart(x, y, spr, rnd(0.6, 1.8) * (M / 420), rnd(0.5, 1), 2,
+              Math.cos(a) * sp, Math.sin(a) * sp, rnd(0.22, 0.55));
+    }
+    // krátký záblesk uprostřed
+    addPart(x, y, pick(GLOWS), rnd(2.2, 3.2) * (M / 420), 0.8, 2, 0, 0, 0.28);
+  }
+
+  function shatterAll(x, y){
+    for (var i = 0; i < parts.length; i++){
+      var p = parts[i];
+      if (p.st !== 0) continue;
+      var dx = p.x - x, dy = p.y - y;
+      var d = Math.hypot(dx, dy) || 1;
+      var sp = rnd(0.45, 1.5) * M;
+      p.st = 1;
+      p.vx = dx / d * sp + rnd(-0.2, 0.2) * M;
+      p.vy = dy / d * sp + rnd(-0.2, 0.2) * M;
+      p.ttl = p.ttl0 = rnd(0.5, 1.0);
+    }
+  }
+
+  // ---- ovládání ----
+  // stopa nekreslí přímo pod prstem, ale „dojíždí" za ním (cx,cy → tx,ty) v draw() —
+  // odtud plynulost a jemné zpoždění.
+  var isDown = false, drawing = false;
+  var tx = 0, ty = 0, cx = 0, cy = 0, downX = 0, downY = 0, downT = 0;
+  function toLocal(e){
+    var r = frame.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+  frame.addEventListener('pointerdown', function(e){
+    isDown = true; drawing = false;
+    var p = toLocal(e);
+    tx = cx = downX = p.x; ty = cy = downY = p.y;
+    downT = performance.now();
+    e.preventDefault();
+  });
+  window.addEventListener('pointermove', function(e){
+    if (!isDown) return;
+    var p = toLocal(e);
+    tx = p.x; ty = p.y;                                  // jen cíl; stopu vykreslí draw()
+    if (!drawing && Math.hypot(tx - downX, ty - downY) > 6) drawing = true;
+    e.preventDefault();
+  }, { passive: false });
+  window.addEventListener('pointerup', function(e){
+    if (!isDown) return;
+    isDown = false;
+    if (!drawing && performance.now() - downT < 400){
+      var p = toLocal(e);
+      spawnBurst(p.x, p.y);     // shluk, který hned zanikne
+      shatterAll(p.x, p.y);     // a případná kresba se rozstřelí
+    }
+    drawing = false;
+  });
+
+  function setup(){
+    W = frame.clientWidth;
+    H = frame.clientHeight;
+    M = Math.min(W, H);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  var lastT = 0;
+  function draw(now){
+    var t = now / 1000;
+    var dt = Math.min(0.05, t - lastT || 0.016);
+    lastT = t;
+
+    // stopa plynule dojíždí za prstem (zpoždění) a vykresluje se podél té dráhy
+    if (drawing){
+      var pcx = cx, pcy = cy;
+      var ease = 1 - Math.pow(0.0015, dt);            // menší číslo = větší zpoždění
+      cx += (tx - cx) * ease;
+      cy += (ty - cy) * ease;
+      var ddx = cx - pcx, ddy = cy - pcy;
+      var dd = Math.hypot(ddx, ddy);
+      var step = Math.max(2.5, M * 0.010);
+      for (var sd = 0; sd < dd; sd += step){
+        spawnTrail(pcx + ddx * (sd / dd), pcy + ddy * (sd / dd));
+      }
+    }
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    for (var i = parts.length - 1; i >= 0; i--){
+      var p = parts[i];
+      var a = p.a, sz = 1;
+      if (p.st === 0){
+        p.ttl -= dt;
+        if (p.ttl <= 0){ parts.splice(i, 1); continue; }
+        // kometový ohon: každý kousek od narození exponenciálně chudne — čelo
+        // (pod prstem) je jasné a husté, dozadu okamžitě řídne, dlouho dohasíná
+        var age = p.ttl0 - p.ttl;
+        var env = Math.exp(-age / 1.2);
+        a *= env * (0.8 + 0.2 * Math.sin(t * p.tws + p.tw));
+        sz = 0.45 + 0.55 * env;                          // starší = menší → tenčí ohon
+        if (a < 0.02){ parts.splice(i, 1); continue; }   // neviditelné pryč (výkon)
+      } else {
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        var damp = Math.exp(-2.2 * dt);
+        p.vx *= damp; p.vy *= damp;
+        p.ttl -= dt;
+        if (p.ttl <= 0){ parts.splice(i, 1); continue; }
+        a *= p.ttl / p.ttl0;
+      }
+      var spr = SPRITES[p.spr];
+      var s = spr.pad * p.sc * sz;
+      ctx.globalAlpha = Math.min(1, a);
+      ctx.drawImage(spr.c, p.x - s / 2, p.y - s / 2, s, s);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(ts){
+    requestAnimationFrame(loop);
+    draw(ts);
+  }
+
+  if (window.ResizeObserver){ new ResizeObserver(setup).observe(frame); }
+  window.addEventListener('resize', setup);
+  setup();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

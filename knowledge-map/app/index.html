@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a1a">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <title>Mapa informatických konceptů</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/map.css?v=54">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Ovládací panel: hledání + filtry -->
+    <aside id="controls">
+      <header class="controls-head">
+        <div class="head-row">
+          <img class="brand-logo" src="assets/logo.png" alt="AI dětem" width="42" height="42">
+          <div class="head-btns">
+            <button id="account-btn" class="head-btn" aria-label="Přihlásit se" title="Přihlásit se">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </button>
+            <button id="export-btn" class="head-btn hidden" aria-label="Export YAML / JSON" title="Export YAML / JSON">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>
+            </button>
+            <button id="about-btn" class="info-btn" aria-label="O mapě informatických konceptů" title="O mapě informatických konceptů">i</button>
+          </div>
+        </div>
+        <h1>Mapa informatických konceptů</h1>
+        <p class="subtitle">Informatika · 2. stupeň ZŠ</p>
+      </header>
+
+      <div class="control-block">
+        <div class="viewtoggle" id="viewtoggle">
+          <button class="vt-btn active" data-view="tema">Oblasti</button>
+          <button class="vt-btn" data-view="oblast">Okruhy RVP</button>
+          <button class="vt-btn" data-view="kompetence">Digitální kompetence</button>
+          <button class="vt-btn" data-view="3d">3D</button>
+        </div>
+      </div>
+
+      <div class="control-block">
+        <input type="search" id="search" placeholder="Hledej koncept…" autocomplete="off">
+      </div>
+
+      <div class="control-block">
+        <div class="control-label" id="group-label">Oblast</div>
+        <div id="filter-group" class="chips"></div>
+      </div>
+
+      <div class="control-block">
+        <div class="control-label">Vrstva</div>
+        <div id="filter-vrstva" class="chips">
+          <button class="chip" data-filter="vrstva" data-val="core" aria-pressed="true">Core</button>
+          <button class="chip" data-filter="vrstva" data-val="navazujici" aria-pressed="true">Navazující</button>
+        </div>
+      </div>
+
+      <div class="control-block">
+        <div class="control-label">Stav</div>
+        <div id="filter-stav" class="chips">
+          <button class="chip" data-filter="stav" data-val="draft" aria-pressed="true">Draft</button>
+          <button class="chip" data-filter="stav" data-val="garant" aria-pressed="true">Rozpracováno garantem</button>
+          <button class="chip" data-filter="stav" data-val="hotovo" aria-pressed="true">Hotovo</button>
+        </div>
+      </div>
+
+      <div class="control-block">
+        <div class="control-label">Optika — proč na tom záleží</div>
+        <div id="filter-tagy-optika" class="chips"></div>
+        <div class="control-label" style="margin-top:12px">Povaha konceptu</div>
+        <div id="filter-tagy-povaha" class="chips"></div>
+      </div>
+
+      <div class="control-block">
+        <button id="reset" class="reset-btn">Zrušit filtry</button>
+      </div>
+
+      <div class="legend">
+        <div class="legend-row"><span class="legend-dot big yellow"></span> oblast</div>
+        <div class="legend-row"><span class="legend-dot mid"></span> podoblast</div>
+        <div class="legend-row"><span class="legend-line"></span> návaznost konceptů</div>
+        <div class="legend-row"><span class="legend-dot"></span> core koncept</div>
+        <div class="legend-row"><span class="legend-dot ring"></span> navazující</div>
+        <div class="legend-row"><span class="legend-size"><i></i><i></i></span> velikost = pro kolik konceptů je prerekvizitou</div>
+        <p class="legend-foot">Mapu vytváří <a href="https://aidetem.cz" target="_blank" rel="noopener">AI dětem</a>.</p>
+      </div>
+    </aside>
+
+    <!-- Graf -->
+    <main id="cy"></main>
+
+    <!-- Detail bubliny -->
+    <aside id="detail" class="hidden" aria-live="polite">
+      <button id="detail-close" aria-label="Zavřít">✕</button>
+      <div id="detail-body"></div>
+    </aside>
+
+    <div id="status" class="status">Načítám mapu…</div>
+  </div>
+
+  <script src="js/vendor/cytoscape.min.js"></script>
+  <script src="js/vendor/js-yaml.min.js"></script>
+  <script src="js/km-store.js?v=3"></script>
+  <script src="js/map.js?v=69"></script>
+</body>
+</html>
