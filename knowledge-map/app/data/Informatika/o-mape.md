@@ -16,15 +16,15 @@ Páteří mapy je revidovaný Rámcový vzdělávací program pro informatiku (2
 
 Mapa je ale bohatší a aktuálnější než samotné RVP. Klade velký důraz na umělou inteligenci (má vlastní téma i průřezovou vrstvu, která se vplétá do ostatních oblastí), na tvorbu webů, aplikací, obsahu a her a na bezpečí a odpovědné digitální občanství. Koncepty, které jdou nad rámec RVP, jsou označené jako „nad rámec RVP / průřezové".
 
-Celek tvoří 134 konceptů seskupených do 12 obsahových témat. Každý koncept má krátký popis, jeden až dva výukové cíle a odpovídající kritéria hodnocení, formulované podle revidované Bloomovy taxonomie, a tam, kde to dává smysl, i navázaný výstup RVP a digitální kompetenci.
+Celek tvoří přes 200 konceptů seskupených do 12 oblastí. Každý koncept má krátký popis, jeden až dva výukové cíle a odpovídající kritéria hodnocení, formulované podle revidované Bloomovy taxonomie, a tam, kde to dává smysl, i navázaný výstup RVP a digitální kompetenci.
 
 ## Jak se v mapě pohybovat
 
-Na tytéž koncepty se můžete dívat třemi způsoby a mezi pohledy přepínat: **podle témat** (doporučený výchozí pohled, 12 obsahových celků), **podle oblastí RVP** (čtyři okruhy) a **podle klíčové kompetence digitální** (její oblasti). Uzly zůstávají stejné, mění se jen jejich seskupení.
+Na tytéž koncepty se můžete dívat třemi způsoby a mezi pohledy přepínat: **podle oblastí** (doporučený výchozí pohled, 12 obsahových celků), **podle okruhů RVP** (čtyři okruhy) a **podle klíčové kompetence digitální** (její oblasti). Uzly zůstávají stejné, mění se jen jejich seskupení.
 
-Koncepty spojují dva druhy vazeb. **Prerekvizita** (šipka) říká, co se hodí zvládnout dřív, než se pustíte do dalšího konceptu. **Souvisí** (čára) spojuje příbuzné koncepty, často napříč tématy — je to most mezi myšlenkami, ne pořadí.
+Každá oblast je velká žlutá bublina; koncepty na ni navazují jako satelity a čáry mezi nimi ukazují, co na co navazuje — od základů u středu k pokročilejším konceptům dál od něj. Kliknutím na koncept se otevře jeho detail po stupních škol.
 
-Mapa je rozvržená do **vrstev** od základů a myšlení (0) přes tvorbu a programování (1) a AI (2) po bezpečí a občanství (3). **Tagy** slouží jako filtr napříč tématy: hodnotové filtry jako etika, bezpečí, soukromí nebo digitální wellbeing a povaha konceptu (teoretický základ, nebo praktická dovednost).
+Mapa je rozvržená do **vrstev** od základů a myšlení (0) přes tvorbu a programování (1) a AI (2) po bezpečí a občanství (3). **Tagy** slouží jako filtr napříč oblastmi: hodnotové filtry jako etika, bezpečí, soukromí nebo digitální wellbeing a povaha konceptu (teoretický základ, nebo praktická dovednost).
 
 Kliknutím na kterýkoli uzel otevřete jeho detail — popis, výukové cíle a kritéria hodnocení a případně výstup RVP a digitální kompetenci.
 

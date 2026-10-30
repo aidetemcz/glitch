@@ -194,7 +194,7 @@
   const subId = (tema, pod) => "sub-" + tema + "-" + pod;
   const podoblastiOf = (temaId) => ((DATA.temata.find((t) => t.id === temaId) || {}).podoblasti) || [];
   const podoblastOf = (c) => c.podoblast ? podoblastiOf(c.tema).find((p) => p.id === c.podoblast) || null : null;
-  const GROUP_LABEL = { tema: "Téma", oblast: "Oblast RVP", kompetence: "Digitální kompetence" };
+  const GROUP_LABEL = { tema: "Oblast", oblast: "Okruh RVP", kompetence: "Digitální kompetence" };
 
   const HUB_FONT = '600 22px "Space Grotesk", "Inter", sans-serif';
   const DESC_FONT = '500 14px "Darker Grotesque", "Inter", sans-serif';
@@ -464,7 +464,7 @@
     // fonty bublin témat (Space Grotesk / Darker Grotesque) ať jsou načtené, než se popisky vykreslí
     const go = () => render("tema");
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
-    setStatus(data.concepts.length + " konceptů · " + data.temata.length + " témat · " + data.areas.length + " okruhů RVP");
+    setStatus(data.concepts.length + " konceptů · " + data.temata.length + " oblastí · " + data.areas.length + " okruhů RVP");
   }
 
   /* ---------- Vykreslení režimu ---------- */
@@ -719,7 +719,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/Informatika/o-mape.md?v=4")
+    fetch("data/Informatika/o-mape.md?v=5")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
@@ -749,7 +749,7 @@
       <span class="d-badge d-badge-acc">Účet</span>
       <h2 class="d-title">${esc(adminName || adminLogin || "?")}</h2>
       <div class="d-meta"><span class="d-pill">${esc(adminLogin || "?")}</span><span class="d-pill core">${esc(ROLE[adminRole] || adminRole)}</span></div>
-      <p class="d-desc">${canWrite() ? "Klikni na koncept v mapě a uprav ho, nebo přidej nový. " + status : "Tenhle účet mapu neupravuje, může stahovat exporty — i jednotlivých témat (ikonka ⬇ vlevo nahoře)."}</p>
+      <p class="d-desc">${canWrite() ? "Klikni na koncept v mapě a uprav ho, nebo přidej nový. " + status : "Tenhle účet mapu neupravuje, může stahovat exporty — i jednotlivých oblastí (ikonka ⬇ vlevo nahoře)."}</p>
       ${canWrite() ? '<div class="d-links"><button class="km-primary" data-act="add-concept">➕ Přidat koncept</button></div>' : ""}
       ${adminRole === "admin" ? '<div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="editors">👥 Uživatelé</button></div>' : ""}
       <div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="open-export">⬇ Export</button><button class="d-link" data-act="logout">Odhlásit</button></div>`);
@@ -759,7 +759,7 @@
     openPanel(`
       <span class="d-badge d-badge-acc">Export</span>
       <h2 class="d-title">Stáhnout YAML / JSON</h2>
-      <div class="ed-field"><label>Která témata</label>
+      <div class="ed-field"><label>Které oblasti</label>
         <div class="ex-tools"><button class="d-link" data-act="export-all">všechna</button><button class="d-link" data-act="export-none">žádné</button></div>
         <div class="ex-list">${(DATA.temata || []).map((t) =>
           `<label class="ex-item"><input type="checkbox" class="ex-tema" value="${esc(t.id)}" checked> ${esc(t.nazev)} <span class="ex-n">${DATA.concepts.filter((c) => c.tema === t.id).length}</span></label>`).join("")}</div>
@@ -768,7 +768,7 @@
         <button class="km-primary" data-act="export">⬇ YAML</button>
         <button class="km-primary" data-act="export-json">⬇ concepts.json</button>
       </div>
-      <p class="d-empty" style="margin-top:10px">Se všemi tématy export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem témat vznikne výřez; u jednoho tématu dostane soubor název zálohy podle klíče <code>datum_Téma_Jméno_01</code> (pořadové číslo si upravte).</p>`);
+      <p class="d-empty" style="margin-top:10px">Se všemi oblastmi export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem oblastí vznikne výřez; u jedné oblasti dostane soubor název zálohy podle klíče <code>datum_Oblast_Jméno_01</code> (pořadové číslo si upravte).</p>`);
   }
 
   /* ---------- Správa editorů (jen admin) ---------- */
@@ -1060,7 +1060,7 @@
     const boxes = [...document.querySelectorAll(".ex-tema")];
     if (!boxes.length) return null;
     const sel = boxes.filter((b) => b.checked).map((b) => b.value);
-    if (!sel.length) { alert("Vyber aspoň jedno téma."); return undefined; }
+    if (!sel.length) { alert("Vyber aspoň jednu oblast."); return undefined; }
     return sel.length === boxes.length ? null : sel;
   }
   // Název souboru: celá mapa = knowledge-map.yaml / concepts.json; výřez jednoho tématu = záloha
@@ -1085,7 +1085,7 @@
         // výřez: jen vybraná témata a jejich koncepty; vazby na koncepty mimo výřez zůstávají jako id
         clean.temata = (clean.temata || []).filter((t) => temata.includes(t.id));
         clean.concepts = (clean.concepts || []).filter((c) => temata.includes(c.tema));
-        clean.meta = Object.assign({}, clean.meta, { vyrez: temata, poznamka_vyrez: "Výřez mapy — jen vybraná témata. Vazby (prerekvizity, souvisí) mohou mířit na koncepty mimo výřez." });
+        clean.meta = Object.assign({}, clean.meta, { vyrez: temata, poznamka_vyrez: "Výřez mapy — jen vybrané oblasti. Vazby (prerekvizity, souvisí) mohou mířit na koncepty mimo výřez." });
       }
       download(exportName("knowledge-map", ".yaml", temata), jsyaml.dump(clean, { lineWidth: 1000, noRefs: true, sortKeys: false }), "text/yaml");
     } catch (e) { alert("Export selhal: " + e.message); }
@@ -1132,7 +1132,7 @@
     detailBody.innerHTML = `
       <span class="d-badge d-badge-acc">Nový koncept</span>
       <div class="ed-field"><label>Název *</label><input id="add-nazev" placeholder="např. Rekurze"></div>
-      <div class="ed-field"><label>Téma *</label><select id="add-tema">${temaOpts}</select></div>
+      <div class="ed-field"><label>Oblast *</label><select id="add-tema">${temaOpts}</select></div>
       <div class="ed-field"><label>Oblast RVP</label><select id="add-oblast">${oblastOpts}</select></div>
       <div class="ed-field"><label>Digitální kompetence</label><select id="add-kompetence">${kompOpts}</select></div>
       <div class="ed-field"><label>Vrstva</label><select id="add-vrstva"><option value="core">Core koncept</option><option value="navazujici" selected>Navazující</option></select></div>
@@ -1336,7 +1336,7 @@
       if (!arr.length) return "";
       return `<div class="d-sub">Nepřímo (přes řetěz prerekvizit)</div>` +
         (doma.length ? `<div class="d-links d-links-indirect">${links(doma)}</div>` : "") +
-        (jinde ? `<div class="d-sub">+ ${jinde} ${jinde === 1 ? "koncept" : jinde < 5 ? "koncepty" : "konceptů"} v jiných tématech</div>` : "");
+        (jinde ? `<div class="d-sub">+ ${jinde} ${jinde === 1 ? "koncept" : jinde < 5 ? "koncepty" : "konceptů"} v jiných oblastech</div>` : "");
     };
     return `
       <span class="d-badge d-badge-tema">${esc(tema.nazev || c.tema)}</span>${pod ? ` <span class="d-badge d-badge-sub">${esc(pod.nazev)}</span>` : ""}
@@ -1749,7 +1749,7 @@
     if (raf3d) cancelAnimationFrame(raf3d);
     if (cvs3d) cvs3d.style.display = "none";
     document.getElementById("cy").style.visibility = "visible";
-    setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " témat · " + DATA.areas.length + " okruhů RVP");
+    setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " oblastí · " + DATA.areas.length + " okruhů RVP");
   }
 
 
@@ -1917,6 +1917,12 @@
   /* ---------- Pomocné ---------- */
   function buildChips(containerId, items, filter, pressedDefault = true) {
     const el = document.getElementById(containerId);
+    if (filter === "group") {      // oblasti: bílý text pod sebou se zaškrtávátkem
+      el.className = "chk-list";
+      el.innerHTML = items.map((it) =>
+        `<button class="chip chk" data-filter="${filter}" data-val="${esc(it.val)}" aria-pressed="${pressedDefault}"><span class="chk-box" aria-hidden="true"></span>${esc(it.label)}</button>`).join("");
+      return;
+    }
     el.innerHTML = items.map((it) =>
       `<button class="chip" data-filter="${filter}" data-val="${esc(it.val)}" aria-pressed="${pressedDefault}">${
         it.color ? `<span class="swatch" style="background:${esc(it.color)}"></span>` : ""

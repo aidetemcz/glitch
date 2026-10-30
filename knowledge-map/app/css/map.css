@@ -14,9 +14,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* Ovládací panel */
 #controls {
-  background: var(--c-panel); border-right: 1px solid var(--c-line);
+  background: var(--c-panel); border-right: 1px solid var(--c-white);
   padding: 22px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
+  scrollbar-width: none;            /* bez posuvníku — jen bílá linka na okraji */
 }
+#controls::-webkit-scrollbar { display: none; }
+/* oblasti ve filtru: bílý text pod sebou, zaškrtávátko vlevo (selektory přebíjejí obecný .chip) */
+.chk-list { display: flex; flex-direction: column; gap: 2px; }
+.chk-list .chip.chk, .chk-list .chip.chk[aria-pressed="true"], .chk-list .chip.chk[aria-pressed="false"] {
+  display: flex; align-items: center; gap: 10px; width: 100%; border: 0; border-radius: 6px; padding: 6px 4px;
+  background: transparent; color: var(--c-white); font-size: 14px; font-weight: 400; line-height: 1.35; opacity: 1; }
+.chk-list .chip.chk:hover { background: rgba(255,255,255,0.06); }
+.chk-list .chip.chk .chk-box { flex: 0 0 auto; width: 16px; height: 16px; border: 1.5px solid var(--c-white); border-radius: 4px; position: relative; }
+.chk-list .chip.chk[aria-pressed="true"] .chk-box { background: var(--c-yellow); border-color: var(--c-yellow); }
+.chk-list .chip.chk[aria-pressed="true"] .chk-box::after { content: ""; position: absolute; left: 4.5px; top: 1px; width: 4px; height: 8px;
+  border: solid var(--c-black); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.chk-list .chip.chk[aria-pressed="false"] { color: var(--c-grey-50); }
 .controls-head { display: flex; flex-direction: column; gap: 4px; }
 .head-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
 .brand-logo { width: 42px; height: 42px; flex: 0 0 auto; }

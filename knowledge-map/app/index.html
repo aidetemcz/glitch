@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=52">
+  <link rel="stylesheet" href="css/map.css?v=54">
 </head>
 <body>
   <div id="app">
@@ -35,8 +35,8 @@
 
       <div class="control-block">
         <div class="viewtoggle" id="viewtoggle">
-          <button class="vt-btn active" data-view="tema">Témata</button>
-          <button class="vt-btn" data-view="oblast">RVP oblasti</button>
+          <button class="vt-btn active" data-view="tema">Oblasti</button>
+          <button class="vt-btn" data-view="oblast">Okruhy RVP</button>
           <button class="vt-btn" data-view="kompetence">Digitální kompetence</button>
           <button class="vt-btn" data-view="3d">3D</button>
         </div>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="control-block">
-        <div class="control-label" id="group-label">Téma</div>
+        <div class="control-label" id="group-label">Oblast</div>
         <div id="filter-group" class="chips"></div>
       </div>
 
@@ -80,8 +80,8 @@
       </div>
 
       <div class="legend">
-        <div class="legend-row"><span class="legend-dot big yellow"></span> téma / oblast</div>
-        <div class="legend-row"><span class="legend-dot mid"></span> podoblast tématu</div>
+        <div class="legend-row"><span class="legend-dot big yellow"></span> oblast</div>
+        <div class="legend-row"><span class="legend-dot mid"></span> podoblast</div>
         <div class="legend-row"><span class="legend-line"></span> návaznost konceptů</div>
         <div class="legend-row"><span class="legend-dot"></span> core koncept</div>
         <div class="legend-row"><span class="legend-dot ring"></span> navazující</div>
@@ -105,6 +105,6 @@
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
   <script src="js/km-store.js?v=3"></script>
-  <script src="js/map.js?v=67"></script>
+  <script src="js/map.js?v=69"></script>
 </body>
 </html>
