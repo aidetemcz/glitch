@@ -220,13 +220,13 @@
     const conceptIds = new Set(DATA.concepts.map((c) => c.id));
     const sameSub = (a, b) => mode !== "tema" || ((podoblastOf(a) || {}).id === (podoblastOf(b) || {}).id);
 
-    const edges = []; const seen = new Set();
+    const edges = [];
+    const byIdAll = {}; DATA.concepts.forEach((c) => byIdAll[c.id] = c);
+    // návaznost (prerekvizita) uvnitř tématu = prostá čára mezi bublinami; napříč tématy se zatím nekreslí
     DATA.concepts.forEach((c) => {
-      (c.prerekvizity || []).forEach((p) => { if (conceptIds.has(p)) edges.push({ data: { id: "p-" + p + "-" + c.id, source: p, target: c.id, etype: "prereq" } }); });
-      (c.souvisi || []).forEach((s) => {
-        const key = [c.id, s].sort().join("~");
-        if (seen.has(key) || !conceptIds.has(s)) return; seen.add(key);
-        edges.push({ data: { id: "r-" + key, source: c.id, target: s, etype: "related" } });
+      (c.prerekvizity || []).forEach((p) => {
+        if (conceptIds.has(p) && groupOf(byIdAll[p], mode) === groupOf(c, mode))
+          edges.push({ data: { id: "p-" + p + "-" + c.id, source: p, target: c.id, etype: "tree" } });
       });
     });
     // velikost bubliny = pro kolik konceptů je prerekvizitou (i nepřímo přes řetěz);
@@ -263,7 +263,7 @@
         label: wrapLabel(p.nazev, SUBHUB_FONT, SUB_SIZE * 0.74, false), textw: Math.round(SUB_SIZE * 0.74), tp: hubId(t.id) } });
       edges.push({ data: { id: "t-" + shubId(t.id, p.id), source: hubId(t.id), target: shubId(t.id, p.id), etype: "tree" } });
     }));
-    const byId = {}; DATA.concepts.forEach((c) => byId[c.id] = c);
+    const byId = byIdAll;
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
       const fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
@@ -314,7 +314,7 @@
         // téma / oblast = velká bílá bublina: název (Space Grotesk) nahoře, popis (Darker Grotesque) pod ním
         { selector: "node[type='hub']", style: {
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
-          "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0,
+          "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "text-margin-y": "data(tm)",
           "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "22px", "font-weight": "600", "line-height": 1.15,
@@ -324,7 +324,7 @@
           "events": "no", "shape": "ellipse", "width": 1, "height": 1, "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "text-margin-y": "data(tm)",
-          "color": "#3a3a3e", "font-family": "Darker Grotesque, Inter, sans-serif", "font-size": "14px", "font-weight": "500", "line-height": 1.25,
+          "color": "#2a2a00", "font-family": "Darker Grotesque, Inter, sans-serif", "font-size": "14px", "font-weight": "500", "line-height": 1.25,
           "z-index": 6
         }},
         // podoblast = střední bublina
@@ -441,16 +441,19 @@
 
     /* interakce grafu */
     cy.on("tap", "node", (evt) => {
-      if (evt.target.data("type") === "micro") { openMicroDetail(evt.target.data("_m")); return; }
+      const t = evt.target.data("type");
+      if (t === "micro") { openMicroDetail(evt.target.data("_m")); return; }
+      if (t === "concept" && !drillId) { enterIso(evt.target); return; }
       openDetail(evt.target);
     });
+    initIso();
     cy.on("tap", (evt) => {
       if (evt.target !== cy && !evt.target.isEdge()) return;   // klik do prázdna (čára = prázdno)
       if (editing) return;                          // rozdělaná úprava se klikem do plochy neztratí
       closeDetail();
     });
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeDetail();
+      if (e.key === "Escape") { if (isoBoxOpen()) closeIsoBox(); else if (isoNode) exitIso(); else closeDetail(); }
     });
 
     // fonty bublin témat (Space Grotesk / Darker Grotesque) ať jsou načtené, než se popisky vykreslí
@@ -462,6 +465,7 @@
   /* ---------- Vykreslení režimu ---------- */
   let firstRender = true;
   function render(mode, opts) {
+    if (isoNode) exitIso(true);
     viewMode = mode;
     drillId = null;                       // přepnutí pohledu vynoří z hloubky
     const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
@@ -629,7 +633,7 @@
     return s;
   }
   function applyFilters() {
-    const gr = pressed("group"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy"), eg = pressed("edge");
+    const gr = pressed("group"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy");
     cy.batch(() => {
       cy.nodes("[type='concept']").forEach((n) => {
         const c = n.data("_c");
@@ -645,8 +649,7 @@
         s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0);
       });
       cy.nodes("[type='hub'], [type='hubdesc'], [type='subhub']").forEach((h) => h.toggleClass("filtered", h.parent().hasClass("filtered")));
-      cy.edges().forEach((e) => e.toggleClass("filtered",
-        e.source().hasClass("filtered") || e.target().hasClass("filtered") || !eg.has(e.data("etype"))));
+      cy.edges().forEach((e) => e.toggleClass("filtered", e.source().hasClass("filtered") || e.target().hasClass("filtered")));
     });
     applySearch();
   }
@@ -1742,6 +1745,160 @@
     if (cvs3d) cvs3d.style.display = "none";
     document.getElementById("cy").style.visibility = "visible";
     setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " témat · " + DATA.areas.length + " okruhů RVP");
+  }
+
+
+  /* ==========================================================================
+     Izometrický pohled na koncept
+     Klik na bublinu: mapa se rozostří a ztmavne, bublina se s animací přesune
+     do středu a sklopí do izometrie; nad ní se vysunou vrstvy školských stupňů.
+     Klik na vrstvu nebo její popisek otevře box s cíli a kritérii té vrstvy.
+     ========================================================================== */
+  const ISO_LEVELS = [
+    { id: "zs1", nazev: "1. stupeň ZŠ" },
+    { id: "zs2", nazev: "2. stupeň ZŠ", aktivni: true },   // mapa je pro 2. stupeň → tahle vrstva nese obsah
+    { id: "gym", nazev: "Gymnázia" },
+    { id: "ss", nazev: "Střední školy" },
+  ];
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  let isoNode = null, isoEl = null, isoRaf = 0;
+  const easeOutBack = (t) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+  function tween(dur, step, ease, done) {
+    const t0 = performance.now();
+    const f = (now) => { const t = Math.min(1, (now - t0) / dur); step((ease || easeOutCubic)(t), t); if (t < 1) isoRaf = requestAnimationFrame(f); else if (done) done(); };
+    isoRaf = requestAnimationFrame(f);
+  }
+  const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(SVG_NS, tag); Object.keys(attrs || {}).forEach((k) => e.setAttribute(k, attrs[k])); if (parent) parent.appendChild(e); return e; };
+  const isoBoxOpen = () => { const b = document.getElementById("km-isobox"); return !!(b && b.classList.contains("open")); };
+
+  function initIso() {
+    const host = document.getElementById("cy");
+    isoEl = document.createElement("div"); isoEl.id = "km-iso"; isoEl.className = "km-iso hidden";
+    isoEl.innerHTML = '<svg class="km-iso-svg"></svg>' +
+      '<div class="km-iso-tools"><button type="button" data-iso="detail">Detail konceptu</button><button type="button" data-iso="close" aria-label="Zavřít">✕</button></div>' +
+      '<div id="km-isobox" class="km-isobox"><button type="button" class="km-isobox-x" data-iso="box-close" aria-label="Zavřít">✕</button><div class="km-isobox-body"></div></div>';
+    host.appendChild(isoEl);
+    isoEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-iso]");
+      if (b) {
+        const a = b.dataset.iso;
+        if (a === "close") exitIso();
+        else if (a === "detail") showConceptPanel(isoNode.data("_c"));
+        else if (a === "box-close") closeIsoBox();
+        else if (a === "level") openIsoBox(b.dataset.level);
+        return;
+      }
+      if (isoBoxOpen()) { closeIsoBox(); return; }
+      if (e.target === isoEl || e.target.classList.contains("km-iso-svg")) exitIso();   // klik do pozadí = zpět
+    });
+  }
+
+  function enterIso(node) {
+    if (isoNode) exitIso(true);
+    isoNode = node;
+    const c = node.data("_c"), host = document.getElementById("cy"), W = host.clientWidth, H = host.clientHeight;
+    const svg = isoEl.querySelector(".km-iso-svg");
+    svg.innerHTML = ""; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+    isoEl.classList.remove("hidden"); isoEl.classList.add("on");
+    host.classList.add("iso-blur");
+    closeDetail();
+
+    const p = node.renderedPosition(), r0 = node.renderedWidth() / 2;
+    const TR = Math.max(90, Math.min(W, H) * 0.17);          // cílový poloměr bubliny
+    const tx = Math.min(W * 0.46, W - TR - 300), ty = H * 0.64;
+    const SQ = 0.5, BASE = TR * SQ * 1.35, GAPY = TR * 0.42;   // sklopení, odstup první vrstvy od konceptu, rozestup vrstev
+    const core = c.vrstva === "core";
+    const lines = String(node.data("label") || c.nazev).split("\n");
+
+    // bublina konceptu (letí z místa v mapě do středu a sklápí se)
+    const g = svgEl("g", { class: "iso-concept" }, svg);
+    const disc = svgEl("ellipse", { class: "iso-disc " + (core ? "core" : "nav"), cx: 0, cy: 0 }, g);
+    const txt = svgEl("text", { class: "iso-label " + (core ? "core" : "nav"), "text-anchor": "middle" }, g);
+    lines.forEach((l, i) => { const ts = svgEl("tspan", { x: 0, dy: i === 0 ? ((1 - lines.length) / 2 * 1.15 + 0.35) + "em" : "1.15em" }, txt); ts.textContent = l; });
+    const setConcept = (x, y, r, sq, fs) => {
+      g.setAttribute("transform", `translate(${x},${y})`);
+      disc.setAttribute("rx", r); disc.setAttribute("ry", r * sq);
+      txt.setAttribute("font-size", fs); txt.setAttribute("transform", `scale(1,${Math.max(0.55, sq + 0.2)})`);
+    };
+    setConcept(p.x, p.y, r0, 1, node.data("fontsize") * cy.zoom());
+
+    // vrstvy školských stupňů (vysunou se nad koncept) + popisky s čarami
+    const layers = ISO_LEVELS.map((lv, i) => {
+      const lg = svgEl("g", { class: "iso-layer" + (lv.aktivni ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
+      svgEl("ellipse", { cx: 0, cy: 0, rx: TR, ry: TR * SQ }, lg);
+      const bx = tx + TR + 70, by = () => ty - BASE - GAPY * i;
+      const line = svgEl("line", { class: "iso-line", "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
+      const lab = svgEl("g", { class: "iso-tag" + (lv.aktivni ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
+      svgEl("rect", { x: 0, y: -18, width: 164, height: 36, rx: 9 }, lab);
+      const t = svgEl("text", { x: 82, y: 0, "text-anchor": "middle", "dominant-baseline": "central" }, lab); t.textContent = lv.nazev;
+      lab.setAttribute("transform", `translate(${bx},${by()})`);
+      return { lg, line, lab, i, bx, y: by() };
+    });
+    const placeLayers = (k) => {            // k ∈ 0..1 = míra vysunutí
+      layers.forEach(({ lg, line, lab, i, bx, y }) => {
+        const kk = Math.max(0, Math.min(1, (k * (layers.length + 1) - i) ));    // postupně zespoda
+        const yy = ty - (BASE + GAPY * i) * kk;
+        lg.setAttribute("transform", `translate(${tx},${yy})`); lg.setAttribute("opacity", kk);
+        line.setAttribute("x1", tx + TR * 0.8); line.setAttribute("y1", yy - TR * SQ * 0.35);
+        line.setAttribute("x2", bx - 6); line.setAttribute("y2", y); line.setAttribute("opacity", kk);
+        lab.setAttribute("opacity", kk);
+      });
+    };
+    placeLayers(0);
+
+    // animace: 1) bublina doletí a sklopí se (s přestřelením), 2) vrstvy se vysunou
+    cancelAnimationFrame(isoRaf);
+    tween(650, (e, t) => {
+      const x = p.x + (tx - p.x) * e, y = p.y + (ty - p.y) * e, r = r0 + (TR - r0) * e;
+      const sq = 1 + (SQ - 1) * easeOutCubic(t);
+      setConcept(x, y, Math.max(4, r), sq, (node.data("fontsize") * cy.zoom()) + (TR * 0.13 - node.data("fontsize") * cy.zoom()) * e);
+    }, easeOutBack, () => tween(700, (e) => placeLayers(e), easeOutBack));
+  }
+
+  function exitIso(silent) {
+    if (!isoNode) return;
+    cancelAnimationFrame(isoRaf);
+    closeIsoBox(true);
+    const host = document.getElementById("cy");
+    host.classList.remove("iso-blur");
+    isoEl.classList.remove("on");
+    const svg = isoEl.querySelector(".km-iso-svg");
+    if (silent) { isoEl.classList.add("hidden"); svg.innerHTML = ""; isoNode = null; return; }
+    // bublina se vrátí na místo v mapě, vrstvy se zasunou
+    const node = isoNode, p = node.renderedPosition(), r0 = node.renderedWidth() / 2;
+    const g = svg.querySelector(".iso-concept"), disc = g && g.querySelector("ellipse");
+    const m = g && /translate\(([-\d.]+),([-\d.]+)\)/.exec(g.getAttribute("transform"));
+    const sx = m ? +m[1] : p.x, sy = m ? +m[2] : p.y, sr = disc ? +disc.getAttribute("rx") : r0;
+    svg.querySelectorAll(".iso-layer, .iso-line, .iso-tag").forEach((el) => el.setAttribute("opacity", 0));
+    isoNode = null;
+    tween(380, (e) => {
+      if (!g) return;
+      g.setAttribute("transform", `translate(${sx + (p.x - sx) * e},${sy + (p.y - sy) * e})`);
+      const r = sr + (r0 - sr) * e, sq = 0.5 + 0.5 * e;
+      disc.setAttribute("rx", r); disc.setAttribute("ry", r * sq);
+    }, easeOutCubic, () => { isoEl.classList.add("hidden"); svg.innerHTML = ""; });
+  }
+
+  // box s cíli a kritérii vrstvy (zatím stejný obsah pro všechny stupně — upřesní se)
+  function openIsoBox(levelId) {
+    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[1];
+    const c = isoNode && isoNode.data("_c"); if (!c) return;
+    const box = document.getElementById("km-isobox");
+    box.querySelector(".km-isobox-body").innerHTML = `
+      <span class="d-badge d-badge-acc">${esc(lv.nazev)}</span>
+      <h2 class="d-title">${esc(c.nazev)}</h2>
+      ${lv.aktivni ? "" : '<p class="d-empty">Pro tenhle stupeň zatím cíle a kritéria nejsou — zobrazují se cíle pro 2. stupeň ZŠ.</p>'}
+      <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
+      <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>`;
+    box.classList.add("open");
+    isoEl.querySelectorAll(".iso-layer, .iso-tag").forEach((el) => el.classList.toggle("chosen", el.dataset.level === lv.id));
+  }
+  function closeIsoBox(silent) {
+    const box = document.getElementById("km-isobox"); if (!box) return;
+    box.classList.remove("open");
+    if (isoEl) isoEl.querySelectorAll(".chosen").forEach((el) => el.classList.remove("chosen"));
+    if (silent) box.querySelector(".km-isobox-body").innerHTML = "";
   }
 
   /* ---------- Pomocné ---------- */

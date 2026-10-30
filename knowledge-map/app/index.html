@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=50">
+  <link rel="stylesheet" href="css/map.css?v=51">
 </head>
 <body>
   <div id="app">
@@ -69,14 +69,6 @@
       </div>
 
       <div class="control-block">
-        <div class="control-label">Vazby</div>
-        <div id="filter-edge" class="chips">
-          <button class="chip" data-filter="edge" data-val="prereq" aria-pressed="true">Prerekvizity</button>
-          <button class="chip" data-filter="edge" data-val="related" aria-pressed="true">Souvisí</button>
-        </div>
-      </div>
-
-      <div class="control-block">
         <div class="control-label">Optika — proč na tom záleží</div>
         <div id="filter-tagy-optika" class="chips"></div>
         <div class="control-label" style="margin-top:12px">Povaha konceptu</div>
@@ -88,11 +80,9 @@
       </div>
 
       <div class="legend">
-        <div class="legend-row"><span class="legend-dot big"></span> téma / oblast (velká bublina)</div>
+        <div class="legend-row"><span class="legend-dot big yellow"></span> téma / oblast</div>
         <div class="legend-row"><span class="legend-dot mid"></span> podoblast tématu</div>
-        <div class="legend-row"><span class="legend-line"></span> koncept patří k tématu</div>
-        <div class="legend-row"><span class="legend-line dashed"></span> prerekvizita</div>
-        <div class="legend-row"><span class="legend-line dotted"></span> souvisí</div>
+        <div class="legend-row"><span class="legend-line"></span> návaznost konceptů</div>
         <div class="legend-row"><span class="legend-dot"></span> core koncept</div>
         <div class="legend-row"><span class="legend-dot ring"></span> navazující</div>
         <div class="legend-row"><span class="legend-size"><i></i><i></i></span> velikost = pro kolik konceptů je prerekvizitou</div>
@@ -115,6 +105,6 @@
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
   <script src="js/km-store.js?v=3"></script>
-  <script src="js/map.js?v=65"></script>
+  <script src="js/map.js?v=66"></script>
 </body>
 </html>
