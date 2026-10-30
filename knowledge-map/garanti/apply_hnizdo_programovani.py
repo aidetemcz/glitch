@@ -189,6 +189,10 @@ def main():
         c = by_id[cid]
         c["souvisi"] = [x for x in c["souvisi"] if cid not in by_id[x].get("souvisi", [])]
 
+    # Souvislosti (souvisi) jsou v mapě dočasně zrušené (2026-10-30, rozhodnutí redakce) —
+    # doplní se společně s garanty. Definice vazeb výše zůstávají jako podklad.
+    for c in concepts:
+        c["souvisi"] = []
     # kontrola: žádné visící odkazy
     ids = {c["id"] for c in concepts}
     bad = [(c["id"], x) for c in concepts for k in ("prerekvizity", "souvisi") for x in c.get(k, []) if x not in ids]

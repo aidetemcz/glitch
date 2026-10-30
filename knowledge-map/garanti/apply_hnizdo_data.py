@@ -313,6 +313,10 @@ def main():
         if t["id"] == TEMA:
             t["popis"] = TEMA_POPIS
 
+    # Souvislosti (souvisi) jsou v mapě dočasně zrušené (2026-10-30, rozhodnutí redakce) —
+    # doplní se společně s garanty. Definice vazeb výše zůstávají jako podklad.
+    for c in concepts:
+        c["souvisi"] = []
     ids = set(by)
     bad = [(c["id"], x) for c in concepts for k in ("prerekvizity", "souvisi") for x in c.get(k, []) if x not in ids]
     assert not bad, bad

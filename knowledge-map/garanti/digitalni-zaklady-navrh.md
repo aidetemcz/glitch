@@ -18,7 +18,7 @@ Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. P
 | O6 | **Rozlišení obrazu** | porozumeni | — |  |
 | O7 | **Organizace souborů do složek** | tvorba | — |  |
 | O8 | **Fotky z mobilu do počítače** | aplikace | — |  |
-| O9 | **Zálohování dat** | porozumeni | Základní hygiena |  |
+| O9 | **Zálohování dat** | porozumeni | — |  |
 | O10 | **Když se program zasekne** | porozumeni | — |  |
 
 ## Zařízení a úložiště
@@ -31,7 +31,7 @@ Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. P
 | Z1 | **Lokálně, nebo v cloudu** | hodnoceni | — |  |
 | Z2 | **Bezpečné smazání dat** | porozumeni | — |  |
 | Z3 | **Operační systém** | porozumeni | — | stávající bublina, id zachováno |
-| Z4 | **Komprese dat** | porozumeni | Kódování dat, jejich účel a přenos |  |
+| Z4 | **Komprese dat** | porozumeni | — |  |
 | Z5 | **Velikost dat: MB a GB** | porozumeni | — |  |
 | Z6 | **Propojení mobilu a počítače** | aplikace | — |  |
 | Z7 | **Připojení externích zařízení** | aplikace | — |  |
@@ -54,25 +54,25 @@ Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. P
 | I3 | **Elektrická síť vs. internetové kabely** | porozumeni | — |  |
 | I4 | **Vznik a architektura internetu** | porozumeni | — |  |
 | I5 | **IP adresa, URL a DNS** | porozumeni | — | stávající bublina, id zachováno |
-| I6 | **Jak prohlížeč zobrazí stránku** | porozumeni | Jak funguje web |  |
+| I6 | **Jak prohlížeč zobrazí stránku** | porozumeni | — |  |
 | I7 | **Cesta požadavku k webovému serveru** | aplikace | — |  |
 | I8 | **Robustnost internetu** | analyza | — |  |
 | I9 | **Cesta e-mailu** | analyza | — |  |
-| I10 | **Šifrovaná a nešifrovaná komunikace** | hodnoceni | Šifrování a HTTPS |  |
+| I10 | **Šifrovaná a nešifrovaná komunikace** | hodnoceni | — |  |
 | I11 | **Jak funguje vyhledávač** | porozumeni | — |  |
-| I12 | **Cookies** | porozumeni | Digitální stopa a soukromí |  |
-| I13 | **Personalizovaný obsah** | hodnoceni | Jak fungují algoritmy sítí |  |
-| I14 | **Digitální stopa a digitální identita** | porozumeni | Soukromí a digitální stopa |  |
-| I15 | **Financování sociálních sítí reklamou** | porozumeni | Obchodní modely platforem |  |
-| I16 | **Osobní data a třetí strany** | hodnoceni | Soukromí a digitální stopa |  |
+| I12 | **Cookies** | porozumeni | — |  |
+| I13 | **Personalizovaný obsah** | hodnoceni | — |  |
+| I14 | **Digitální stopa a digitální identita** | porozumeni | — |  |
+| I15 | **Financování sociálních sítí reklamou** | porozumeni | — |  |
+| I16 | **Osobní data a třetí strany** | hodnoceni | — |  |
 | I17 | **GDPR a právo být zapomenut** | porozumeni | — | stávající bublina, id zachováno |
 | I18 | **Veřejná vs. domácí wifi** | hodnoceni | — |  |
 | I19 | **Přístupová práva ke cloudovému dokumentu** | aplikace | — |  |
 | I20 | **Cloudový dokument při výpadku** | analyza | — |  |
-| I21 | **Uživatelské role v dokumentech** | porozumeni | Informační systémy |  |
+| I21 | **Uživatelské role v dokumentech** | porozumeni | — |  |
 | I22 | **Streamování, upload a download** | porozumeni | — |  |
 | I23 | **Mikroprocesor a virus v periferii** | porozumeni | — |  |
-| I24 | **Skrytý a chytrý počítač** | porozumeni | IoT |  |
+| I24 | **Skrytý a chytrý počítač** | porozumeni | — |  |
 | I25 | **Poloha mobilu a operátor** | tvorba | — |  |
 | I26 | **Software a cloud mimo EU** | porozumeni | — |  |
 
@@ -82,20 +82,20 @@ Garantův dokument obsahuje 65 výstupů ve 4 kapitolách, bez učiva a vazeb. P
 
 | Výstup | Bublina | Úroveň cíle | Souvisí (jiné téma) | Pozn. |
 |---|---|---|---|---|
-| B1 | **Bezpečné heslo** | aplikace | Hesla a 2FA |  |
-| B2 | **Účet, heslo, autentizace, šifrování, kódování** | porozumeni | Hesla a 2FA, Šifrování dat |  |
+| B1 | **Bezpečné heslo** | aplikace | — |  |
+| B2 | **Účet, heslo, autentizace, šifrování, kódování** | porozumeni | — |  |
 | B3 | **Antivirus** | aplikace | — |  |
-| B4 | **Druhy malwaru** | porozumeni | Typy útoků |  |
-| B5 | **Chyby v programu, aktualizace a hackování** | porozumeni | Základní hygiena |  |
+| B4 | **Druhy malwaru** | porozumeni | — |  |
+| B5 | **Chyby v programu, aktualizace a hackování** | porozumeni | — |  |
 | B6 | **Cíle a metody hackerů** | hodnoceni | — |  |
 | B7 | **Bezpečné stahování** | aplikace | — |  |
-| B8 | **Pravidla bezpečného chování na internetu** | tvorba | Bezpečné chování na sítích |  |
-| B9 | **Prvky zabezpečení počítače a komunikace** | tvorba | Základní hygiena |  |
-| B10 | **Metadata fotografií** | porozumeni | Soukromí a digitální stopa |  |
+| B8 | **Pravidla bezpečného chování na internetu** | tvorba | — |  |
+| B9 | **Prvky zabezpečení počítače a komunikace** | tvorba | — |  |
+| B10 | **Metadata fotografií** | porozumeni | — |  |
 | B11 | **Vypnutí sledování polohy** | aplikace | — |  |
 | B12 | **Přístup aplikací ke kameře a periferiím** | aplikace | — |  |
 | B13 | **Rizika chytrých technologií** | hodnoceni | — |  |
-| B14 | **Použití AI a jeho rizika** | hodnoceni | AI a společnost |  |
+| B14 | **Použití AI a jeho rizika** | hodnoceni | — |  |
 
 ## Smazané bubliny
 

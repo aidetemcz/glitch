@@ -425,8 +425,7 @@ concepts:
       - text: Vysvětlí význam zálohování dat a popíše svá osobní pravidla, která používá pro zálohování svých dat.
         garant: O9
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-zakladni-hygiena
+    souvisi: []
     tagy: *id001
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -582,8 +581,7 @@ concepts:
       - text: Vysvětlí, jak komprese souvisí s velikostí dat, a proč není možné zkomprimovaný soubor zmenšovat opakovanou komprimací do nekonečna.
         garant: Z4
     prerekvizity: []
-    souvisi:
-      - data-databaze-kodovani-dat
+    souvisi: []
     tagy: *id002
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1001,8 +999,7 @@ concepts:
       - text: Vysvětlí svému vrstevníkovi, jak prohlížeč webových stránek „ví“, jak přesně má stránku zobrazit; popíše, proč se stránka zobrazuje jinak na telefonu a jinak na počítači a proč se může zobrazovat odlišně v různých prohlížečích.
         garant: I6
     prerekvizity: []
-    souvisi:
-      - tvorba-webu-jak-funguje-web
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1102,8 +1099,7 @@ concepts:
       - text: Na schematickém modelu internetu, který znázorňuje posílání nešifrované vs. šifrované zprávy, zhodnotí možností útočníka komunikaci „po cestě“ přečíst.
         garant: I10
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-sifrovani-a-https
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1153,8 +1149,7 @@ concepts:
       - text: Popíše výhody a nevýhody cookies.
         garant: I12
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1179,8 +1174,7 @@ concepts:
       - text: Uvede alespoň tři příklady personalizovaného obsahu webu (např. reklamy, videa, novinové zprávy, výsledky vyhledávání) a vysvětlí, jak je možné, že je tento obsah přizpůsobován na míru uživateli. Diskutuje výhody a nevýhody této personalizace.
         garant: I13
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1205,8 +1199,7 @@ concepts:
       - text: Popíše rozdíl mezi digitální stopou a digitální identitou. Diskutuje, čím vším svou digitální stopu vytváří.
         garant: I14
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1231,8 +1224,7 @@ concepts:
       - text: Popíše princip financování sociálních sítí pomocí reklamy.
         garant: I15
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-obchodni-modely-platforem
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1257,8 +1249,7 @@ concepts:
       - text: Popíše, jaká osobní data uživatelů internetu mohou třetí osoby nebo instituce získat; a jakým způsobem a kdy a jak tomu může uživatel zabránit.
         garant: I16
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1388,8 +1379,7 @@ concepts:
       - text: Vysvětlí rozdíly mezi uživatelskými rolemi Čtenář, Komentátor, Přispěvatel a Správce obsahu a porovná jejich práva nad dokumenty.
         garant: I21
     prerekvizity: []
-    souvisi:
-      - data-databaze-ucel-informacnich-systemu
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1464,8 +1454,7 @@ concepts:
       - text: Vysvětlí rozdíl mezi skrytým počítačem, který není připojený k internetu, a chytrým počítačem (smart technologies), který je připojený k internetu. Vysvětlí rizika chytrých počítačů.
         garant: I24
     prerekvizity: []
-    souvisi:
-      - fyzicky-computing-iot
+    souvisi: []
     tagy: *id003
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1540,8 +1529,7 @@ concepts:
       - text: Rozpozná více a méně bezpečná hesla; sám si vytvoří bezpečné heslo.
         garant: B1
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-hesla-a-2fa
+    souvisi: []
     tagy: &id004
       - bezpečí a rizika
       - praktická dovednost
@@ -1568,9 +1556,7 @@ concepts:
       - text: Vysvětlí rozdíl mezi účtem, heslem, autentifikací, šifrováním a kódováním.
         garant: B2
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-hesla-a-2fa
-      - data-databaze-sifrovani-dat
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1620,8 +1606,7 @@ concepts:
       - text: Rozliší alespoň tři druhy malware a vysvětlí jejich princip, popíše rozdíl mezi malwarem a hackerem.
         garant: B4
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-typy-utoku
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1646,8 +1631,7 @@ concepts:
       - text: Vysvětlí vztah mezi chybami v programu, aktualizacemi a hackováním.
         garant: B5
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-zakladni-hygiena
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1722,8 +1706,7 @@ concepts:
       - text: Diskutuje o různých módech bezpečného chování na internetu; sepíše pravidla pro bezpečné chování na internetu pro žáky z 5. třídy.
         garant: B8
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-bezpecne-chovani-na-sitich
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1748,8 +1731,7 @@ concepts:
       - text: Vytvoří myšlenkovou mapu prvků zabezpečení počítače a internetové komunikace (použije koncepty, jako např. firewall, antivirus, dvoufaktorová autentizace, end-to-end šifrování apod.).
         garant: B9
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-zakladni-hygiena
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1774,8 +1756,7 @@ concepts:
       - text: Vysvětlí význam metadat (např. u fotografií) pro možnost útočníka zjistit osobní informace o oběti (např. autorovi fotografie).
         garant: B10
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1875,8 +1856,7 @@ concepts:
       - text: Uvede alespoň tři příklady použití umělé inteligence a popíše možná rizika těchto použití.
         garant: B14
     prerekvizity: []
-    souvisi:
-      - umela-inteligence-ai-a-spolecnost
+    souvisi: []
     tagy: *id004
     zdroj:
       - 'Garant: Digitální základy (2026-10) — výstup; název, učivo a cíl: návrh redakce ke schválení'
@@ -1993,8 +1973,7 @@ concepts:
       - text: Žák propojí výsledky dílčích úloh do řešení původního problému.
     prerekvizity:
       - informaticke-mysleni-analyza-problemu
-    souvisi:
-      - tvorba-aplikaci-logika-aplikace
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -2062,8 +2041,7 @@ concepts:
     prerekvizity:
       - informaticke-mysleni-navrh-reseni
       - informaticke-mysleni-algoritmus
-    souvisi:
-      - programovani-efektivita
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -2100,10 +2078,7 @@ concepts:
       - text: Žák sestaví postup vedoucí k řešení konkrétního zadaného problému.
     prerekvizity:
       - informaticke-mysleni-navrh-reseni
-    souvisi:
-      - programovani-program
-      - programovani-vstup-a-vystup
-      - digitalni-obcanstvi-jak-funguji-algoritmy-siti
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -2136,8 +2111,7 @@ concepts:
       - text: Žák rozpozná situaci, kdy změna pořadí kroků změní výsledek.
     prerekvizity:
       - informaticke-mysleni-algoritmus
-    souvisi:
-      - programovani-sekvence-prikazu
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
@@ -2170,8 +2144,7 @@ concepts:
       - text: Při tvorbě algoritmu určí, co následuje při splnění i nesplnění podmínky.
     prerekvizity:
       - informaticke-mysleni-posloupnost-kroku
-    souvisi:
-      - programovani-podminky-v-kodu
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
@@ -2204,9 +2177,7 @@ concepts:
       - text: Žák nahradí opakující se zápis kroků vhodným opakováním.
     prerekvizity:
       - informaticke-mysleni-posloupnost-kroku
-    souvisi:
-      - informaticke-mysleni-konecnost
-      - programovani-cykly-v-kodu
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
@@ -2236,8 +2207,7 @@ concepts:
       - text: Žák při změně vykonavatele přizpůsobí podrobnost postupu.
     prerekvizity:
       - informaticke-mysleni-posloupnost-kroku
-    souvisi:
-      - informaticke-mysleni-jednoznacnost
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
@@ -2354,8 +2324,7 @@ concepts:
       - text: Žák upraví konkrétní postup tak, aby jej bylo možné použít pro širší množinu vstupů.
     prerekvizity:
       - informaticke-mysleni-vlastnosti-algoritmu
-    souvisi:
-      - programovani-vstup-a-vystup
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
@@ -2416,11 +2385,7 @@ concepts:
     duraz: Autor řešení nemusí odhalit všechny problémy. Je-li řešení určeno dalším uživatelům, je vhodné ověřit je také na cílové skupině.
     prerekvizity:
       - informaticke-mysleni-algoritmus
-    souvisi:
-      - informaticke-mysleni-hodnoceni-a-analyza-chyb
-      - informaticke-mysleni-spravnost
-      - programovani-overovani
-      - programovani-vstup-a-vystup
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Informatické myšlení a algoritmizace (2026-10)'
@@ -2454,8 +2419,7 @@ concepts:
       - text: Žák provede opravu a následně ověří, zda chyba skutečně zmizela.
     duraz: Oprava chyby není dokončena samotnou změnou řešení. Po opravě je nutné řešení znovu ověřit.
     prerekvizity: []
-    souvisi:
-      - umela-inteligence-overovani-vystupu
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - teoretický základ
@@ -2500,8 +2464,7 @@ concepts:
     duraz: Název proměnné neurčuje její hodnotu ani nezajišťuje její automatickou aktualizaci. Například proměnná pojmenovaná `pocetBodu` nebude sama sledovat počet získaných bodů. Kód programu musí zajistit, aby byla její hodnota ve správných okamžicích nastavena nebo změněna.
     prerekvizity:
       - programovani-cyklus-s-podminkou
-    souvisi:
-      - herni-vyvoj-vstup-hrace-stavy-a-skore
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -2588,8 +2551,7 @@ concepts:
       Při návrhu programu může být potřeba příkazy vhodně uspořádat, aby činnost, která se má provádět vícekrát, tvořila souvislé tělo cyklu.
     prerekvizity:
       - programovani-funkce-a-procedury
-    souvisi:
-      - herni-vyvoj-herni-smycka-scena-a-objekty
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -2915,8 +2877,7 @@ concepts:
       - text: Žák nechá své uživatelské rozhraní vyzkoušet jiným vhodným uživatelem, vyhodnotí průběh testování a podle výsledku rozhraní upraví.
     prerekvizity:
       - programovani-vstup-a-vystup
-    souvisi:
-      - data-databaze-ucel-informacnich-systemu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -3110,9 +3071,7 @@ concepts:
       - uroven: hodnoceni
         text: Žák u tří příkladů rozhodne AI/ne-AI a rozhodnutí doloží konkrétním znakem.
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-rozumet-ai-halucinace-bias
-      - umela-inteligence-ai-a-spolecnost
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -3174,9 +3133,7 @@ concepts:
         text: Žák označí v ukázce odpovědi místa, která je nutné ověřit.
     prerekvizity:
       - umela-inteligence-ai-se-uci-z-dat
-    souvisi:
-      - tvorba-obsahu-prompt-pro-media
-      - umela-inteligence-typy-ai-uloh
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - teoretický základ
@@ -3205,8 +3162,7 @@ concepts:
         text: Žák uvede jedno riziko personalizovaného feedu a zdůvodní, proč jde o riziko.
     prerekvizity:
       - umela-inteligence-ai-se-uci-z-dat
-    souvisi:
-      - data-databaze-vektorove-databaze
+    souvisi: []
     tagy:
       - dopad na společnost
       - moc a peníze
@@ -3266,8 +3222,7 @@ concepts:
         text: Žák u konkrétního tvrzení najde druhý zdroj a rozhodne, zda tvrzení platí.
     prerekvizity:
       - umela-inteligence-jak-funguje-generativni-model
-    souvisi:
-      - digitalni-obcanstvi-kriticke-mysleni-online
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - lidský dohled a agency
@@ -3296,9 +3251,7 @@ concepts:
       - uroven: hodnoceni
         text: Žák u dané situace rozhodne o míře využití AI a rozhodnutí zdůvodní.
     prerekvizity: []
-    souvisi:
-      - tvorba-aplikaci-iluze-ze-to-umim
-      - digitalni-obcanstvi-digitalni-wellbeing
+    souvisi: []
     tagy:
       - lidský dohled a agency
       - pozornost a wellbeing
@@ -3357,8 +3310,7 @@ concepts:
         text: Žák označí ve výstupu skupinu, které by systém mohl nespravedlivě nadržovat či ubližovat.
     prerekvizity:
       - umela-inteligence-ai-se-uci-z-dat
-    souvisi:
-      - digitalni-obcanstvi-dezinformace-a-manipulace
+    souvisi: []
     tagy:
       - férovost a předpojatost
     zdroj: []
@@ -3385,9 +3337,7 @@ concepts:
       - uroven: hodnoceni
         text: Žák u seznamu údajů rozhodne, které je bezpečné zadat, a rozhodnutí zdůvodní.
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-soukromi-a-digitalni-stopa
-      - digitalni-obcanstvi-pravo-a-etika
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - soukromí
@@ -3447,8 +3397,7 @@ concepts:
     prerekvizity:
       - umela-inteligence-ai-se-uci-z-dat
       - data-databaze-datovy-cyklus
-    souvisi:
-      - data-databaze-cisteni-realnych-dat
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -3477,8 +3426,7 @@ concepts:
         text: Žák u tří příkladů správně určí typ úlohy.
     prerekvizity:
       - umela-inteligence-strojove-uceni-prakticky
-    souvisi:
-      - fyzicky-computing-ai-primo-na-zarizeni-tinyml
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -3506,9 +3454,7 @@ concepts:
         text: Žák u příkladu odpovědi určí, zda pochází z obecného modelu, nebo z dokumentů.
     prerekvizity:
       - umela-inteligence-jak-funguje-generativni-model
-    souvisi:
-      - data-databaze-vektorove-databaze
-      - tvorba-aplikaci-ai-nastroje-pro-tvorbu
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -3536,8 +3482,7 @@ concepts:
         text: Žák u dané situace uvede, které etické kritérium je porušeno, a zdůvodní to.
     prerekvizity:
       - umela-inteligence-bias-a-ferovost
-    souvisi:
-      - digitalni-obcanstvi-pravo-a-etika
+    souvisi: []
     tagy:
       - etika a odpovědnost
       - udržitelnost
@@ -3566,9 +3511,7 @@ concepts:
         text: Žák u ukázky uvede znaky nebo postupy (např. SynthID, C2PA), podle kterých ověřuje pravost.
     prerekvizity:
       - umela-inteligence-jak-funguje-generativni-model
-    souvisi:
-      - tvorba-obsahu-puvod-obsahu-a-vodoznaky
-      - digitalni-obcanstvi-dezinformace-a-manipulace
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - důvěra a ověřování
@@ -3597,8 +3540,7 @@ concepts:
         text: Žák formuluje stanovisko a podpoří ho alespoň dvěma argumenty.
     prerekvizity:
       - umela-inteligence-hlubsi-etika-ai
-    souvisi:
-      - digitalni-obcanstvi-dezinformace-a-manipulace
+    souvisi: []
     tagy:
       - dopad na společnost
       - moc a peníze
@@ -3628,8 +3570,7 @@ concepts:
       - uroven: hodnoceni
         text: Žák u tvrzení opřeného o data uvede alespoň dvě otázky týkající se původu a kvality dat, podle nichž posoudí jeho důvěryhodnost.
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-kriticke-mysleni-online
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - teoretický základ
@@ -3662,9 +3603,7 @@ concepts:
         text: Žák v popsaném postupu určí, který krok chybí, a předpoví jeho dopad na výsledek.
     prerekvizity:
       - data-databaze-datova-gramotnost
-    souvisi:
-      - data-databaze-strukturovana-vs-nestrukturovana-data
-      - data-databaze-analyza-dat-pomoci-ai
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -3702,8 +3641,7 @@ concepts:
         text: Žák správně zařadí předložené vzorky dat do kategorií strukturovaná a nestrukturovaná.
     prerekvizity:
       - data-databaze-datova-gramotnost
-    souvisi:
-      - data-databaze-nosql-a-dokumentove-databaze
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj:
@@ -3776,8 +3714,7 @@ concepts:
         text: Žák zašifruje data podle zadaného algoritmu s daným klíčem. Žák navrhne inverzní proceduru pro dešifrování.
     prerekvizity:
       - data-databaze-kodovani-dat
-    souvisi:
-      - kyberbezpecnost-sifrovani-a-https
+    souvisi: []
     tagy: []
     zdroj:
       - 'Garant: Hnízdo Data, Lenka Blehová (2026-10)'
@@ -3906,8 +3843,7 @@ concepts:
     prerekvizity:
       - data-databaze-tabulky-a-relacni-model
       - data-databaze-strukturovana-vs-nestrukturovana-data
-    souvisi:
-      - data-databaze-programova-analyza-dat
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -3938,9 +3874,7 @@ concepts:
         text: Žák zformuluje alespoň jeden argument pro a jeden proti užitečnosti daného systému s ohledem na jeho uživatele a jejich potřeby.
     prerekvizity:
       - data-databaze-tabulky-a-relacni-model
-    souvisi:
-      - digitalni-obcanstvi-obchodni-modely-platforem
-      - tvorba-aplikaci-databaze-a-autentizace
+    souvisi: []
     tagy:
       - dopad na společnost
       - teoretický základ
@@ -3973,9 +3907,7 @@ concepts:
         text: Žák u tvrzení opřeného o statistiku pojmenuje aspoň jedno riziko zkreslení závěru.
     prerekvizity:
       - data-databaze-vizualizace-a-volba-grafu
-    souvisi:
-      - umela-inteligence-bias-a-ferovost
-      - digitalni-obcanstvi-kriticke-mysleni-online
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - férovost a předpojatost
@@ -4011,8 +3943,7 @@ concepts:
         text: Žák výsledná tabulka je bez duplicit a hodnoty v každém sloupci mají jednotný formát.
     prerekvizity:
       - data-databaze-datovy-cyklus
-    souvisi:
-      - umela-inteligence-ai-se-uci-z-dat
+    souvisi: []
     tagy:
       - férovost a předpojatost
       - praktická dovednost
@@ -4038,8 +3969,7 @@ concepts:
         text: Žák uvede příklad obsahu, který nemá pevný tvar, a popíše, proč se pro něj tabulka nehodí.
     prerekvizity:
       - data-databaze-tabulky-a-relacni-model
-    souvisi:
-      - umela-inteligence-jak-funguji-chatboti-llm-rag
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4122,9 +4052,7 @@ concepts:
         text: Žák porovná aspoň jeden údaj z výstupu AI s původními daty a rozhodne o jeho správnosti.
     prerekvizity:
       - data-databaze-dotazovani-sql
-    souvisi:
-      - umela-inteligence-overovani-vystupu
-      - data-databaze-vizualizace-a-volba-grafu
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - praktická dovednost
@@ -4154,8 +4082,7 @@ concepts:
         text: Žák u zadané situace přiřadí jednotlivé úkony ke klientovi, nebo k serveru a zdůvodní zařazení.
     prerekvizity:
       - digitalni-zaklady-internet-a-sit
-    souvisi:
-      - digitalni-zaklady-adresy-a-protokoly
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -4183,8 +4110,7 @@ concepts:
         text: Žák v předloženém kódu určí sémantické značky a vysvětlí, jakou strukturu obsahu vyjadřují.
     prerekvizity:
       - tvorba-webu-jak-funguje-web
-    souvisi:
-      - tvorba-obsahu-vizualni-jazyk
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4212,9 +4138,7 @@ concepts:
         text: Žák na dvou velikostech obrazovky ověří responzivitu a zdůvodní, kde se rozvržení chová dobře a kde ne.
     prerekvizity:
       - tvorba-webu-html
-    souvisi:
-      - tvorba-obsahu-vizualni-jazyk
-      - tvorba-webu-pristupnost-a-seo
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4243,8 +4167,7 @@ concepts:
     prerekvizity:
       - tvorba-webu-jak-funguje-web
       - digitalni-zaklady-cloud-a-server
-    souvisi:
-      - digitalni-zaklady-adresy-a-protokoly
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4273,9 +4196,7 @@ concepts:
     prerekvizity:
       - tvorba-webu-html
       - programovani-vstup-a-vystup
-    souvisi:
-      - tvorba-aplikaci-logika-aplikace
-      - herni-vyvoj-vstup-hrace-stavy-a-skore
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4303,9 +4224,7 @@ concepts:
         text: Žák vyjmenuje konkrétní silné a slabé stránky vygenerovaného webu a zdůvodní, co by změnil.
     prerekvizity:
       - tvorba-webu-css
-    souvisi:
-      - tvorba-aplikaci-vibecoding
-      - umela-inteligence-overovani-vystupu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4329,8 +4248,7 @@ concepts:
     prerekvizity:
       - tvorba-webu-interaktivita-javascript
       - programovani-funkce-a-procedury
-    souvisi:
-      - tvorba-aplikaci-no-code-low-code
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4353,9 +4271,7 @@ concepts:
         text: Žák úspěšně nasadí web a doloží funkční veřejnou adresu, na které se stránka zobrazí.
     prerekvizity:
       - tvorba-webu-domena-a-hosting
-    souvisi:
-      - digitalni-zaklady-cloud-a-server
-      - tvorba-aplikaci-publikace-do-app-storu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4383,8 +4299,7 @@ concepts:
         text: Žák uvede příklad, jak přístupnost nebo SEO ovlivní dosah obsahu k uživatelům.
     prerekvizity:
       - tvorba-webu-html
-    souvisi:
-      - digitalni-obcanstvi-aktivni-digitalni-obcanstvi
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4412,8 +4327,7 @@ concepts:
         text: Žák posoudí srozumitelnost cesty uživatele k cíli a podloží hodnocení konkrétním pozorováním.
     prerekvizity:
       - tvorba-webu-css
-    souvisi:
-      - tvorba-obsahu-vizualni-jazyk
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4440,9 +4354,7 @@ concepts:
       - uroven: analyza
         text: Žák u konkrétní aplikace přiřadí uvedené prvky k frontendu, nebo backendu a zdůvodní zařazení.
     prerekvizity: []
-    souvisi:
-      - tvorba-webu-jak-funguje-web
-      - data-databaze-ucel-informacnich-systemu
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -4470,8 +4382,7 @@ concepts:
         text: Žák uvede konkrétní situaci, v níž no-code postačí, a jinou, kde už je nedostatečný, s odůvodněním.
     prerekvizity:
       - tvorba-aplikaci-co-je-aplikace
-    souvisi:
-      - tvorba-aplikaci-vibecoding
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4558,8 +4469,7 @@ concepts:
         text: Žák zdůvodní, proč navržený kód přijímá, upravuje, nebo odmítá vzhledem ke svému cíli.
     prerekvizity:
       - tvorba-aplikaci-vibecoding
-    souvisi:
-      - umela-inteligence-prompt-a-promptova-gramotnost
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4587,8 +4497,7 @@ concepts:
         text: Žák popíše na příkladu, co aplikaci přidá napojení na backend nebo externí službu.
     prerekvizity:
       - tvorba-aplikaci-logika-aplikace
-    souvisi:
-      - digitalni-zaklady-cloud-a-server
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4621,8 +4530,7 @@ concepts:
     prerekvizity:
       - tvorba-aplikaci-prace-s-api-a-backendem
       - data-databaze-tabulky-a-relacni-model
-    souvisi:
-      - kyberbezpecnost-hesla-a-2fa
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - praktická dovednost
@@ -4653,9 +4561,7 @@ concepts:
         text: Žák rozvrhne pro svůj projekt jednotlivé fáze a zařadí do nich testování i zpětnou vazbu.
     prerekvizity:
       - tvorba-aplikaci-logika-aplikace
-    souvisi:
-      - programovani-ladeni-a-testovani
-      - tvorba-aplikaci-publikace-do-app-storu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4706,9 +4612,7 @@ concepts:
         text: Žák najde v nefunkční aplikaci místo selhání a pojmenuje chybějící porozumění, které k němu vedlo.
     prerekvizity:
       - tvorba-aplikaci-vibecoding
-    souvisi:
-      - programovani-ladeni-a-testovani
-      - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - etika a odpovědnost
@@ -4767,8 +4671,7 @@ concepts:
     prerekvizity:
       - tvorba-obsahu-vizualni-jazyk
       - umela-inteligence-prompt-a-promptova-gramotnost
-    souvisi:
-      - tvorba-obsahu-kontrola-nad-vysledkem
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4825,9 +4728,7 @@ concepts:
         text: Žák u předloženého příspěvku posoudí kvalitu jeho označení a doporučí konkrétní úpravu podle etických nebo zákonných pravidel.
     prerekvizity:
       - tvorba-obsahu-generativni-obraz
-    souvisi:
-      - umela-inteligence-hlubsi-etika-ai
-      - digitalni-obcanstvi-etika-ai-ve-skole
+    souvisi: []
     tagy:
       - etika a odpovědnost
       - moc a peníze
@@ -4853,9 +4754,7 @@ concepts:
     prerekvizity:
       - tvorba-obsahu-generativni-obraz
       - umela-inteligence-deepfakes-a-synteticka-media
-    souvisi:
-      - tvorba-obsahu-strih-a-postprodukce-s-ai
-      - tvorba-obsahu-propojeni-nastroju-obraz-video-zvuk
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4883,8 +4782,7 @@ concepts:
         text: Žák popíše alespoň jednu situaci zneužití hlasu a doporučí pravidlo, které by mu předešlo.
     prerekvizity:
       - tvorba-obsahu-prompt-pro-media
-    souvisi:
-      - kyberbezpecnost-ai-podvody
+    souvisi: []
     tagy:
       - moc a peníze
       - praktická dovednost
@@ -4908,8 +4806,7 @@ concepts:
         text: Žák provede alespoň jednu postprodukční úpravu s AI a doloží rozdíl mezi původním a upraveným výstupem.
     prerekvizity:
       - tvorba-obsahu-vizualni-jazyk
-    souvisi:
-      - tvorba-obsahu-propojeni-nastroju-obraz-video-zvuk
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4937,9 +4834,7 @@ concepts:
         text: Žák rozliší, který krok způsobil ztrátu konzistence, a navrhne, jak výsledek napravit.
     prerekvizity:
       - tvorba-obsahu-generativni-obraz
-    souvisi:
-      - tvorba-aplikaci-iluze-ze-to-umim
-      - umela-inteligence-overovani-vystupu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -4967,8 +4862,7 @@ concepts:
         text: Žák u předloženého souboru rozliší dostupné indicie o původu a určí, které jsou spolehlivé a které ne.
     prerekvizity:
       - tvorba-obsahu-etika-autorstvi-a-oznacovani
-    souvisi:
-      - digitalni-obcanstvi-rozpoznani-ai-obsahu
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - důvěra a ověřování
@@ -4993,8 +4887,7 @@ concepts:
         text: Žák sestaví funkční řetězec alespoň tří nástrojů a odevzdá výsledný propojený výstup s popisem postupu.
     prerekvizity:
       - tvorba-obsahu-kontrola-nad-vysledkem
-    souvisi:
-      - tvorba-aplikaci-prace-s-api-a-backendem
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -5113,8 +5006,7 @@ concepts:
         text: Žák zpracuje původní návrh hry s popsanými pravidly, křivkou obtížnosti a zpětnou vazbou hráči.
     prerekvizity:
       - herni-vyvoj-vstup-hrace-stavy-a-skore
-    souvisi:
-      - digitalni-obcanstvi-digitalni-wellbeing
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -5138,8 +5030,7 @@ concepts:
       - uroven: aplikace
         text: Žák poskládá funkční program, který obsahuje alespoň jedno opakování, jedno větvení a jednu proměnnou.
     prerekvizity: []
-    souvisi:
-      - programovani-zapis-programu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5163,9 +5054,7 @@ concepts:
         text: Žák vytvoří v lehkém enginu funkční hratelnou scénu s alespoň jedním pravidlem událost–akce a odevzdá odkaz ke sdílení.
     prerekvizity:
       - herni-vyvoj-herni-design
-    souvisi:
-      - herni-vyvoj-scratch-jako-vstup
-      - programovani-zapis-programu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -5188,8 +5077,7 @@ concepts:
         text: Žák uvede alespoň dva rozdíly mezi blokovým a textovým enginem a k oběma příklad vhodného použití.
     prerekvizity:
       - herni-vyvoj-lehke-enginy
-    souvisi:
-      - tvorba-webu-frameworky
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -5217,8 +5105,7 @@ concepts:
         text: Žák uvede alespoň dvě kritéria (styl, rozměr, čitelnost) a podle nich rozhodne o použití assetu.
     prerekvizity:
       - herni-vyvoj-herni-design
-    souvisi:
-      - tvorba-obsahu-generativni-obraz
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -5246,8 +5133,7 @@ concepts:
         text: Žák v kódu od AI najde místo, které se chová jinak, než zamýšlel, a popíše potřebnou opravu.
     prerekvizity:
       - herni-vyvoj-skutecne-enginy
-    souvisi:
-      - umela-inteligence-overovani-vystupu
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj: []
@@ -5297,8 +5183,7 @@ concepts:
       - uroven: aplikace
         text: Žák vytvoří program, v němž naměřená hodnota ovlivní výstup, například LED nebo motor.
     prerekvizity: []
-    souvisi:
-      - fyzicky-computing-roboti-a-vozitka
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -5326,8 +5211,7 @@ concepts:
         text: Žák uvede příklad, jak spolu senzor a aktuátor v jednom zařízení spolupracují.
     prerekvizity:
       - fyzicky-computing-vstup-zpracovani-vystup-na-zarizeni
-    souvisi:
-      - umela-inteligence-pet-velkych-ideji-ai
+    souvisi: []
     tagy:
       - teoretický základ
     zdroj: []
@@ -5356,8 +5240,7 @@ concepts:
     prerekvizity:
       - fyzicky-computing-senzory-a-aktuatory
       - programovani-zapis-programu
-    souvisi:
-      - herni-vyvoj-scratch-jako-vstup
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5389,9 +5272,7 @@ concepts:
     prerekvizity:
       - fyzicky-computing-micro-bit
       - programovani-vstup-a-vystup
-    souvisi:
-      - fyzicky-computing-senzory-a-aktuatory
-      - tvorba-webu-interaktivita-javascript
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5417,9 +5298,7 @@ concepts:
         text: Žák uvede aspoň jeden rozdíl mezi Arduinem a Raspberry Pi a příklad projektu pro každé.
     prerekvizity:
       - fyzicky-computing-micro-bit
-    souvisi:
-      - fyzicky-computing-roboti-a-vozitka
-      - fyzicky-computing-iot
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5445,8 +5324,7 @@ concepts:
         text: Žák vytvoří program, díky němuž robot splní jednoduchý úkol, například sledování čáry nebo vyhýbání se překážce.
     prerekvizity:
       - fyzicky-computing-udalosti-a-rizeni-vystupu
-    souvisi:
-      - fyzicky-computing-senzory-a-aktuatory
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5473,9 +5351,7 @@ concepts:
     prerekvizity:
       - fyzicky-computing-senzory-a-aktuatory
       - digitalni-zaklady-cloud-a-server
-    souvisi:
-      - data-databaze-vizualizace-a-volba-grafu
-      - digitalni-zaklady-kde-jsou-data-fyzicky
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5505,9 +5381,7 @@ concepts:
     prerekvizity:
       - fyzicky-computing-micro-bit
       - umela-inteligence-strojove-uceni-prakticky
-    souvisi:
-      - fyzicky-computing-senzory-a-aktuatory
-      - fyzicky-computing-iot
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5536,8 +5410,7 @@ concepts:
         text: Žák sestaví dvojici programů, kde jedno zařízení ovládá nebo informuje druhé.
     prerekvizity:
       - fyzicky-computing-micro-bit
-    souvisi:
-      - digitalni-zaklady-internet-a-sit
+    souvisi: []
     tagy:
       - praktická dovednost
     zdroj:
@@ -5598,8 +5471,7 @@ concepts:
       - uroven: hodnoceni
         text: Žák u dané zprávy rozhodne, zda jde o podvod, a své rozhodnutí zdůvodní posouzením rizika.
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-kriticke-mysleni-online
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - důvěra a ověřování
@@ -5631,8 +5503,7 @@ concepts:
       - uroven: hodnoceni
         text: Žák u zvolené situace zhodnotí riziko a navrhne konkrétní nastavení soukromí.
     prerekvizity: []
-    souvisi:
-      - digitalni-obcanstvi-digitalni-stopa-a-soukromi
+    souvisi: []
     tagy:
       - praktická dovednost
       - soukromí
@@ -5665,9 +5536,7 @@ concepts:
     prerekvizity:
       - kyberbezpecnost-soukromi-a-digitalni-stopa
       - kyberbezpecnost-hesla-a-2fa
-    souvisi:
-      - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
-      - kyberbezpecnost-zakladni-hygiena
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - praktická dovednost
@@ -5699,8 +5568,7 @@ concepts:
       - uroven: tvorba
         text: Žák sestaví plán zabezpečení zařízení, v němž propojí konkrétní opatření s posouzeným rizikem.
     prerekvizity: []
-    souvisi:
-      - kyberbezpecnost-hesla-a-2fa
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - praktická dovednost
@@ -5733,9 +5601,7 @@ concepts:
     prerekvizity:
       - kyberbezpecnost-zakladni-hygiena
       - digitalni-zaklady-adresy-a-protokoly
-    souvisi:
-      - tvorba-webu-jak-funguje-web
-      - kyberbezpecnost-hesla-a-2fa
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - teoretický základ
@@ -5765,9 +5631,7 @@ concepts:
         text: Žák u popsané situace určí typ útoku a uvede znak, podle kterého jej rozpoznal.
     prerekvizity:
       - kyberbezpecnost-zakladni-hygiena
-    souvisi:
-      - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
-      - kyberbezpecnost-bezpecne-chovani-na-sitich
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - teoretický základ
@@ -5800,8 +5664,7 @@ concepts:
     prerekvizity:
       - kyberbezpecnost-phishing-a-socialni-inzenyrstvi
       - umela-inteligence-deepfakes-a-synteticka-media
-    souvisi:
-      - digitalni-obcanstvi-rozpoznani-ai-obsahu
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - důvěra a ověřování
@@ -5832,8 +5695,7 @@ concepts:
         text: Žák u modelové situace popíše konkrétní kroky a jmenuje osobu či instituci, na kterou se obrátí.
     prerekvizity:
       - kyberbezpecnost-ai-podvody
-    souvisi:
-      - tvorba-obsahu-puvod-obsahu-a-vodoznaky
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - pozornost a wellbeing
@@ -5865,9 +5727,7 @@ concepts:
         text: Žák u modelové zprávy předvede konkrétní způsob nezávislého ověření.
     prerekvizity:
       - kyberbezpecnost-ai-podvody
-    souvisi:
-      - digitalni-obcanstvi-dezinformace-a-manipulace
-      - umela-inteligence-overovani-vystupu
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - důvěra a ověřování
@@ -5898,10 +5758,7 @@ concepts:
         text: Žák dokončí zadanou cvičnou úlohu a vysvětlí, proč jde o legální bezpečnostní trénink.
     prerekvizity:
       - kyberbezpecnost-typy-utoku
-    souvisi:
-      - kyberbezpecnost-sifrovani-a-https
-      - digitalni-zaklady-internet-a-sit
-      - digitalni-zaklady-adresy-a-protokoly
+    souvisi: []
     tagy:
       - bezpečí a rizika
       - etika a odpovědnost
@@ -5960,9 +5817,7 @@ concepts:
         text: Žák na příkladu svého feedu odhalí, proč vidí právě daný obsah.
     prerekvizity:
       - umela-inteligence-doporucovaci-systemy
-    souvisi:
-      - digitalni-obcanstvi-digitalni-wellbeing
-      - umela-inteligence-bias-a-ferovost
+    souvisi: []
     tagy:
       - dopad na společnost
       - férovost a předpojatost
@@ -6051,8 +5906,7 @@ concepts:
       - uroven: tvorba
         text: Žák sestaví osobní plán s konkrétními pravidly a odůvodní, jaký problém řeší.
     prerekvizity: []
-    souvisi:
-      - umela-inteligence-doporucovaci-systemy
+    souvisi: []
     tagy:
       - pozornost a wellbeing
     zdroj: []
@@ -6081,9 +5935,7 @@ concepts:
     prerekvizity:
       - digitalni-obcanstvi-kriticke-mysleni-online
       - umela-inteligence-jak-funguje-generativni-model
-    souvisi:
-      - umela-inteligence-bias-a-ferovost
-      - umela-inteligence-overovani-vystupu
+    souvisi: []
     tagy:
       - důvěra a ověřování
       - lidský dohled a agency
@@ -6143,8 +5995,7 @@ concepts:
         text: Žák u své práce jasně vyznačí, kterou část vytvořil s pomocí AI.
     prerekvizity:
       - digitalni-obcanstvi-rozumet-ai-halucinace-bias
-    souvisi:
-      - umela-inteligence-kdy-ai-ne-pouzit-a-disclosure
+    souvisi: []
     tagy:
       - etika a odpovědnost
     zdroj: []
@@ -6200,8 +6051,7 @@ concepts:
         text: Žák u dané funkce platformy vysvětlí, jak přispívá k jejímu výdělku.
     prerekvizity:
       - digitalni-obcanstvi-jak-funguji-algoritmy-siti
-    souvisi:
-      - digitalni-obcanstvi-digitalni-wellbeing
+    souvisi: []
     tagy:
       - dopad na společnost
       - moc a peníze

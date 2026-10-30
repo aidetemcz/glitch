@@ -493,6 +493,10 @@ def main():
         for x in c["souvisi"]:
             by_id[x]["souvisi"] = [y for y in by_id[x].get("souvisi", []) if y != c["id"]]
 
+    # Souvislosti (souvisi) jsou v mapě dočasně zrušené (2026-10-30, rozhodnutí redakce) —
+    # doplní se společně s garanty. Definice vazeb výše zůstávají jako podklad.
+    for c in concepts:
+        c["souvisi"] = []
     for t in data["temata"]:
         if t["id"] == TEMA:
             t["podoblasti"] = PODOBLASTI

@@ -133,7 +133,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=21")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=22")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
