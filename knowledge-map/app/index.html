@@ -8,8 +8,8 @@
   <title>Mapa informatických konceptů</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=49">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/map.css?v=50">
 </head>
 <body>
   <div id="app">
@@ -88,10 +88,11 @@
       </div>
 
       <div class="legend">
+        <div class="legend-row"><span class="legend-dot big"></span> téma / oblast (velká bublina)</div>
+        <div class="legend-row"><span class="legend-dot mid"></span> podoblast tématu</div>
+        <div class="legend-row"><span class="legend-line"></span> koncept patří k tématu</div>
         <div class="legend-row"><span class="legend-line dashed"></span> prerekvizita</div>
         <div class="legend-row"><span class="legend-line dotted"></span> souvisí</div>
-        <div class="legend-row"><span class="legend-outline"></span> cluster (téma / oblast)</div>
-        <div class="legend-row"><span class="legend-outline sub"></span> podoblast tématu</div>
         <div class="legend-row"><span class="legend-dot"></span> core koncept</div>
         <div class="legend-row"><span class="legend-dot ring"></span> navazující</div>
         <div class="legend-row"><span class="legend-size"><i></i><i></i></span> velikost = pro kolik konceptů je prerekvizitou</div>
@@ -114,6 +115,6 @@
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
   <script src="js/km-store.js?v=3"></script>
-  <script src="js/map.js?v=64"></script>
+  <script src="js/map.js?v=65"></script>
 </body>
 </html>

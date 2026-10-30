@@ -196,9 +196,29 @@
   const podoblastOf = (c) => c.podoblast ? podoblastiOf(c.tema).find((p) => p.id === c.podoblast) || null : null;
   const GROUP_LABEL = { tema: "Téma", oblast: "Oblast RVP", kompetence: "Digitální kompetence" };
 
+  const HUB_FONT = '600 22px "Space Grotesk", "Inter", sans-serif';
+  const DESC_FONT = '500 14px "Darker Grotesque", "Inter", sans-serif';
+  const SUBHUB_FONT = '600 12px "Space Grotesk", "Inter", sans-serif';
+  const hubId = (gid) => "hub-" + gid, hubdId = (gid) => "hubd-" + gid, shubId = (tema, pid) => "shub-" + tema + "-" + pid;
+  // velikost bubliny tématu podle počtu konceptů; popis = začátek textu, co se vejde
+  const hubSize = (n) => Math.min(340, Math.round(230 + 1.6 * n));
+  function hubDesc(popis, size, font, maxLines) {
+    const maxW = size * 0.68;
+    const text = String(popis || "").replace(/\s+/g, " ").trim();
+    const lines = wrapLabel(text, font, maxW, false).split("\n");
+    if (lines.length <= maxLines) return lines.join("\n");
+    let cutL = lines.slice(0, maxLines).join(" ");
+    cutL = cutL.replace(/[,;:\s]+\S*$/, "");                 // utnout na slově
+    const m = cutL.match(/^[\s\S]*[.!?](?=\s|$)/);          // raději na konci věty
+    if (m && m[0].length > cutL.length * 0.55) cutL = m[0];
+    else cutL = cutL.replace(/[.,;:]?$/, "…");
+    return wrapLabel(cutL, font, maxW, false).split("\n").slice(0, maxLines).join("\n");
+  }
+
   function buildElements(mode) {
     const groups = groupDefs(mode);
     const conceptIds = new Set(DATA.concepts.map((c) => c.id));
+    const sameSub = (a, b) => mode !== "tema" || ((podoblastOf(a) || {}).id === (podoblastOf(b) || {}).id);
 
     const edges = []; const seen = new Set();
     DATA.concepts.forEach((c) => {
@@ -222,27 +242,44 @@
     };
     const sizeFor = (c) => Math.min(124, Math.round(46 + 11 * Math.sqrt(pocetNavaznych(c.id))));
 
-    const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
-    const GRP_FONT = '600 13px "Inter", "Segoe UI", sans-serif';
     const nodes = [];
-    groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id,
-      label: wrapLabel(g.nazev, GRP_FONT, 180 * 0.95, true), labelcolor, popis: g.popis } }));
-    // podoblasti tématu = vnořené skupiny uvnitř clusteru (jen v pohledu Témata)
-    const SUB_FONT = '600 11px "Inter", "Segoe UI", sans-serif';
-    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => nodes.push({ data: {
-      id: subId(t.id, p.id), type: "sub", parent: "grp-" + t.id, gid: t.id, pid: p.id,
-      label: wrapLabel(p.nazev, SUB_FONT, 150 * 0.95, true), popis: p.popis } })));
+    // téma / oblast = velká bublina (hub) s názvem a popisem; neviditelný rodič drží filtry
+    groups.forEach((g) => {
+      const n = DATA.concepts.filter((c) => groupOf(c, mode) === g.id).length;
+      const size = hubSize(n);
+      nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
+      nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
+        label: wrapLabel(g.nazev, HUB_FONT, size * 0.72, false), textw: Math.round(size * 0.72),
+        tm: -Math.round(size * 0.17) } });
+      nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
+        label: hubDesc(g.popis, size, DESC_FONT, size >= 300 ? 7 : 5), textw: Math.round(size * 0.7),
+        tm: Math.round(size * 0.13) } });
+    });
+    // podoblasti tématu = střední bubliny navázané na téma (jen v pohledu Témata)
+    const SUB_SIZE = 96;
+    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => {
+      nodes.push({ data: { id: subId(t.id, p.id), type: "sub", parent: "grp-" + t.id, gid: t.id, pid: p.id, popis: p.popis } });
+      nodes.push({ data: { id: shubId(t.id, p.id), type: "subhub", parent: subId(t.id, p.id), gid: t.id, pid: p.id, size: SUB_SIZE,
+        label: wrapLabel(p.nazev, SUBHUB_FONT, SUB_SIZE * 0.74, false), textw: Math.round(SUB_SIZE * 0.74), tp: hubId(t.id) } });
+      edges.push({ data: { id: "t-" + shubId(t.id, p.id), source: hubId(t.id), target: shubId(t.id, p.id), etype: "tree" } });
+    }));
+    const byId = {}; DATA.concepts.forEach((c) => byId[c.id] = c);
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
       const fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
       const font = '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif';
       const sub = mode === "tema" && podoblastOf(c);
+      // rodič ve stromu: první prerekvizita ze stejné skupiny (a podoblasti), jinak bublina podoblasti / tématu
+      const gid = groupOf(c, mode);
+      const parentConcept = (c.prerekvizity || []).find((p) => byId[p] && groupOf(byId[p], mode) === gid && sameSub(byId[p], c));
+      const tp = parentConcept || (sub ? shubId(c.tema, sub.id) : hubId(gid));
       nodes.push({ data: {
-        id: c.id, type: "concept", parent: sub ? subId(c.tema, sub.id) : "grp-" + groupOf(c, mode),
+        id: c.id, type: "concept", parent: sub ? subId(c.tema, sub.id) : "grp-" + gid, gid,
         label: wrapLabel(c.nazev, font, textw * 0.95, false), vrstva: c.vrstva,
         stav: c.stav || "draft", tagy: c.tagy || [],
-        size: sz, textw: textw, fontsize: fs, _c: c
+        size: sz, textw: textw, fontsize: fs, tp, _c: c
       }});
+      if (!parentConcept) edges.push({ data: { id: "t-" + c.id, source: tp, target: c.id, etype: "tree" } });
     });
     return [...nodes, ...edges];
   }
@@ -270,21 +307,37 @@
       container: document.getElementById("cy"),
       elements: [], wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 2.5,
       style: [
-        { selector: "node[type='sub']", style: {
-          "events": "no", "background-opacity": 0, "border-width": 0,
-          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "150px",
-          "text-valign": "top", "text-halign": "center", "text-margin-y": -6,
-          "color": "#d0d0d0", "font-size": "11px", "font-weight": "600", "line-height": 1.3, "padding": "14px"
+        // neviditelné rodičovské uzly (téma, podoblast) — jen pro filtry a seskupení
+        { selector: "node[type='group'], node[type='sub']", style: {
+          "events": "no", "background-opacity": 0, "border-width": 0, "label": "", "padding": "0px"
         }},
-        { selector: "node[type='group']", style: {
-          // obdélník clusteru je neviditelný → události propouští do plochy (posun mapy);
-          // oblast se chytá jen uvnitř nakreslené přerušované hranice (initHulls)
-          "events": "no",
-          "background-opacity": 0, "border-width": 0,
-          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "180px",
-          "text-valign": "top", "text-halign": "center", "text-margin-y": -12,
-          "color": "data(labelcolor)", "font-size": "13px", "font-weight": "600",
-          "text-transform": "uppercase", "line-height": 1.4, "padding": "26px"
+        // téma / oblast = velká bílá bublina: název (Space Grotesk) nahoře, popis (Darker Grotesque) pod ním
+        { selector: "node[type='hub']", style: {
+          "shape": "ellipse", "width": "data(size)", "height": "data(size)",
+          "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0,
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
+          "text-valign": "center", "text-halign": "center", "text-margin-y": "data(tm)",
+          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "22px", "font-weight": "600", "line-height": 1.15,
+          "z-index": 5
+        }},
+        { selector: "node[type='hubdesc']", style: {
+          "events": "no", "shape": "ellipse", "width": 1, "height": 1, "background-opacity": 0, "border-width": 0,
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
+          "text-valign": "center", "text-halign": "center", "text-margin-y": "data(tm)",
+          "color": "#3a3a3e", "font-family": "Darker Grotesque, Inter, sans-serif", "font-size": "14px", "font-weight": "500", "line-height": 1.25,
+          "z-index": 6
+        }},
+        // podoblast = střední bublina
+        { selector: "node[type='subhub']", style: {
+          "shape": "ellipse", "width": "data(size)", "height": "data(size)",
+          "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0,
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
+          "text-valign": "center", "text-halign": "center",
+          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "12px", "font-weight": "600", "line-height": 1.2
+        }},
+        // vlákno od tématu / podoblasti ke kořenovým konceptům
+        { selector: "edge[etype='tree']", style: {
+          "line-color": "rgba(255,255,255,0.55)", "width": 1, "line-style": "solid", "curve-style": "straight"
         }},
         { selector: "node[type='concept']", style: {
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
@@ -304,7 +357,7 @@
         { selector: "edge.nbedge", style: { "line-color": "#ffff00", "width": 2.4, "target-arrow-color": "#ffff00", "opacity": 1, "z-index": 50 } },
         { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
-        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node[type='concept']:selected, node[type='hub']:selected, node[type='subhub']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
         { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
         { selector: ".filtered", style: { "display": "none" } },
@@ -329,7 +382,7 @@
       ]
     });
     window.__cy = cy;
-    initHulls(cy);
+    initHubDrag(cy);
 
     /* tagy = dvě ortogonální facetové rodiny (viz data-readme):
        „povaha konceptu" (teoretický základ / praktická dovednost) a „optiky"
@@ -394,28 +447,21 @@
     cy.on("tap", (evt) => {
       if (evt.target !== cy && !evt.target.isEdge()) return;   // klik do prázdna (čára = prázdno)
       if (editing) return;                          // rozdělaná úprava se klikem do plochy neztratí
-      const uvnitr = window.__groupAt && window.__groupAt(evt.renderedPosition);
-      if (uvnitr) { openDetail(uvnitr); return; }  // klik dovnitř oblasti → detail clusteru
-      const pt = evt.position; let best = null, bestD = Infinity;
-      cy.nodes("[type='group']").forEach((g) => {
-        if (g.hasClass("filtered")) return;
-        const bb = g.boundingBox({ includeLabels: false });
-        const d = Math.hypot(pt.x - (bb.x1 + bb.x2) / 2, pt.y - bb.y1);   // vzdálenost od názvu clusteru (nahoře)
-        if (d < bestD) { bestD = d; best = g; }
-      });
-      if (best && bestD < 90 / cy.zoom()) openDetail(best);   // klik poblíž názvu → detail clusteru
-      else closeDetail();
+      closeDetail();
     });
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeDetail();
     });
 
-    render("tema");
+    // fonty bublin témat (Space Grotesk / Darker Grotesque) ať jsou načtené, než se popisky vykreslí
+    const go = () => render("tema");
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
     setStatus(data.concepts.length + " konceptů · " + data.temata.length + " témat · " + data.areas.length + " okruhů RVP");
   }
 
   /* ---------- Vykreslení režimu ---------- */
-  function render(mode) {
+  let firstRender = true;
+  function render(mode, opts) {
     viewMode = mode;
     drillId = null;                       // přepnutí pohledu vynoří z hloubky
     const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
@@ -424,21 +470,20 @@
     cy.add(buildElements(mode));
     buildGroupFilter(mode);
     document.getElementById("group-label").textContent = GROUP_LABEL[mode] || "Skupina";
-    clusterLayout();
-    cy.fit(cy.nodes(), 40);
-    if (window.__drawHulls) window.__drawHulls();
+    radialLayout();
     applyFilters();
+    cy.fit(cy.nodes(":visible"), 40);
+    const animate = !(opts && opts.noAnim) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (animate) burstIn();
+    firstRender = false;
   }
 
-  /* Deterministické klastrové rozmístění: každý cluster = packed disk (phyllotaxis),
-     clustery v mřížce. Bubliny mají různou velikost (podle počtu návazných konceptů),
-     proto se každá posune po spirále na první místo, kde se nepřekrývá s předchozími;
-     největší (nejzákladnější) koncept je uprostřed. */
-  function clusterLayout() {
-    const groups = cy.nodes("[type='group']");
-    const GAP = 10, STEP = 12;
+  /* Radiální rozmístění: každé téma = velká bublina uprostřed, kořenové koncepty
+     (bez prerekvizity v tématu) kolem ní, navazující koncepty dál od středu kolem
+     své prerekvizity. Témata se pak balí k sobě po spirále. */
+  function radialLayout() {
+    const GAP = 14, STEP = 12;
     const GOLDEN = Math.PI * (3 - Math.sqrt(5));
-    // kruhy (r) po spirále na první volné místo; největší uprostřed
     const pack = (items) => {
       const placed = []; let radius = 0;
       items.sort((a, b) => b.r - a.r).forEach((it) => {
@@ -451,26 +496,125 @@
       });
       return { placed, radius };
     };
-    const SUB_PAD = 22;   // místo kolem balíku podoblasti (hranice + nadpis)
-    const packed = groups.map((g) => {
-      const items = g.children("[type='concept']").map((n) => ({ n, r: n.data("size") / 2 }));
+    const sizeR = (n) => (n.data("size") || 1) / 2;
+
+    // Radiální strom: root v (0,0); děti na prstencích podle hloubky, výseče podle počtu listů,
+    // nakonec odtlačení překryvů. `members` = uzly stromu (bez rootu), `rOf` = poloměr uzlu.
+    const layoutTree = (root, members, rOf) => {
+      const kids = {}; members.forEach((n) => { (kids[n.data("tp")] = kids[n.data("tp")] || []).push(n); });
+      const leaves = {};
+      const weigh = (id) => { const ch = kids[id] || []; leaves[id] = ch.length ? ch.reduce((a, c) => a + weigh(c.id()), 0) : 1; return leaves[id]; };
+      weigh(root.id());
+      const depth = {}; const ring = [];
+      const walk = (id, d) => { (kids[id] || []).forEach((c) => { depth[c.id()] = d; (ring[d] = ring[d] || []).push(c); walk(c.id(), d + 1); }); };
+      walk(root.id(), 1);
+      // prstenec s mnoha uzly se rozloží do několika soustředných pásů (jinak by byl obří kruh teček)
+      const PER_RING = 18;
+      const R = [0], lanes = [1], laneStep = [0]; let prevMax = rOf(root);
+      for (let d = 1; d < ring.length; d++) {
+        const maxR = Math.max(...ring[d].map(rOf));
+        lanes[d] = Math.max(1, Math.ceil(ring[d].length / PER_RING));
+        laneStep[d] = 2 * maxR + GAP;
+        const perim = ring[d].reduce((a, n) => a + 2 * rOf(n) + GAP, 0) / lanes[d];
+        R[d] = Math.max(R[d - 1] + prevMax + maxR + GAP * 2.5, perim / (2 * Math.PI));
+        prevMax = maxR + (lanes[d] - 1) * laneStep[d];
+      }
+      const pos = {}; const laneIdx = {};
+      const place = (id, a0, a1) => {
+        const ch = (kids[id] || []).slice().sort((a, b) => rOf(b) - rOf(a));
+        const total = ch.reduce((a, c) => a + leaves[c.id()], 0) || 1;
+        let a = a0;
+        ch.forEach((c) => {
+          const span = (a1 - a0) * leaves[c.id()] / total, mid = a + span / 2, d = depth[c.id()];
+          const lane = (laneIdx[d] = (laneIdx[d] || 0) + 1) % lanes[d];
+          const r = R[d] + lane * laneStep[d];
+          pos[c.id()] = { x: Math.cos(mid) * r, y: Math.sin(mid) * r };
+          place(c.id(), a, a + span); a += span;
+        });
+      };
+      place(root.id(), -Math.PI / 2, 1.5 * Math.PI);
+      const arr = members.toArray();
+      for (let it = 0; it < 40; it++) {
+        let moved = false;
+        for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) {
+          const a = pos[arr[i].id()], b = pos[arr[j].id()], need = rOf(arr[i]) + rOf(arr[j]) + GAP * 0.6;
+          const dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 0.01;
+          if (dist < need) { const push = (need - dist) / 2, ux = dx / dist, uy = dy / dist; a.x -= ux * push; a.y -= uy * push; b.x += ux * push; b.y += uy * push; moved = true; }
+        }
+        arr.forEach((n) => { const q = pos[n.id()], need = rOf(root) + rOf(n) + GAP, dist = Math.hypot(q.x, q.y) || 0.01;
+          if (dist < need) { q.x *= need / dist; q.y *= need / dist; moved = true; } });
+        if (!moved) break;
+      }
+      const radius = Math.max(rOf(root), ...arr.map((n) => Math.hypot(pos[n.id()].x, pos[n.id()].y) + rOf(n)));
+      return { pos, radius };
+    };
+
+    const groups = cy.nodes("[type='group']");
+    const laid = groups.map((g) => {
+      const hub = cy.getElementById(hubId(g.data("gid")));
+      const pos = {};
+      // podoblasti: každá je vlastní malý strom (bublina podoblasti + její koncepty) → disk
+      const discR = {}, subPos = {};
       g.children("[type='sub']").forEach((sub) => {
-        const inner = pack(sub.children("[type='concept']").map((n) => ({ n, r: n.data("size") / 2 })));
-        if (inner.placed.length) items.push({ inner: inner.placed, r: inner.radius + SUB_PAD });
+        const shub = sub.children("[type='subhub']");
+        const t = layoutTree(shub, sub.descendants("[type='concept']"), sizeR);
+        discR[shub.id()] = t.radius; subPos[shub.id()] = t.pos;
       });
-      return pack(items);
+      // téma: děti = disky podoblastí + koncepty mimo podoblasti (a jejich řetězy)
+      const members = g.children("[type='concept']").union(g.children("[type='sub']").children("[type='subhub']"));
+      const rOf = (n) => discR[n.id()] != null ? discR[n.id()] : sizeR(n);
+      const t = layoutTree(hub, members, rOf);
+      Object.assign(pos, t.pos);
+      Object.keys(subPos).forEach((sid) => {
+        const c = t.pos[sid];
+        Object.keys(subPos[sid]).forEach((id) => { pos[id] = { x: c.x + subPos[sid][id].x, y: c.y + subPos[sid][id].y }; });
+      });
+      pos[hub.id()] = { x: 0, y: 0 };
+      return { g, hub, pos, radius: t.radius };
     });
-    // témata se balí stejně jako bubliny: kruhy různé velikosti po spirále k sobě
-    // (mřížka by všem dala rozteč podle největšího tématu a mapa by byla rozlezlá)
-    const GROUP_PAD = 70;   // místo na hranici a nadpis tématu
-    const outer = pack(packed.map((p, i) => ({ i, r: p.radius + GROUP_PAD })));
+    const outer = pack(laid.map((l, i) => ({ i, r: l.radius + 30 })));
     outer.placed.forEach((o) => {
-      const p = packed[o.i], gx = o.x, gy = o.y;
-      p.placed.forEach((q) => {
-        if (q.n) q.n.position({ x: gx + q.x, y: gy + q.y });
-        else q.inner.forEach((w) => w.n.position({ x: gx + q.x + w.x, y: gy + q.y + w.y }));
+      const l = laid[o.i];
+      Object.keys(l.pos).forEach((id) => cy.getElementById(id).position({ x: o.x + l.pos[id].x, y: o.y + l.pos[id].y }));
+      cy.getElementById(hubdId(l.g.data("gid"))).position({ x: o.x, y: o.y });
+    });
+  }
+
+  /* Při načtení se bubliny „rozprsknou": témata ze středu mapy, koncepty ze své bubliny tématu,
+     s přestřelením (bounce). Cílové pozice už jsou spočítané; animace jen k nim doletí. */
+  function burstIn() {
+    const bb = cy.nodes(":visible").boundingBox(), cx = (bb.x1 + bb.x2) / 2, cy0 = (bb.y1 + bb.y2) / 2;
+    const target = {}; cy.nodes("[type='hub'], [type='subhub'], [type='concept']").forEach((n) => target[n.id()] = Object.assign({}, n.position()));
+    const EASE = "cubic-bezier(0.34, 1.56, 0.64, 1)";   // přestřelení = bounce (ease-out-back)
+    cy.batch(() => {
+      cy.nodes("[type='hub']").forEach((h) => h.position({ x: cx, y: cy0 }));
+      cy.nodes("[type='subhub'], [type='concept']").forEach((n) => {
+        const h = target[hubId(n.data("gid"))]; n.position({ x: h.x, y: h.y });
       });
     });
+    cy.nodes("[type='hub']").forEach((h) => h.animate({ position: target[h.id()] }, { duration: 650, easing: EASE }));
+    cy.nodes("[type='subhub'], [type='concept']").forEach((n) => {
+      // vzdálenější od bubliny tématu letí později
+      const h = target[hubId(n.data("gid"))], t = target[n.id()];
+      const delay = 300 + Math.min(600, Math.hypot(t.x - h.x, t.y - h.y) * 0.9);
+      n.delay(delay).animate({ position: t }, { duration: 750, easing: EASE });
+    });
+  }
+
+  /* Tažení za bublinu tématu / podoblasti přesune celou její skupinu; popis tématu drží střed bubliny. */
+  function initHubDrag(cy) {
+    let last = null;
+    cy.on("position", "node[type='hub']", (e) => {
+      const d = cy.getElementById(hubdId(e.target.data("gid"))); if (d.nonempty()) d.position(e.target.position());
+    });
+    cy.on("grab", "node[type='hub'], node[type='subhub']", (e) => { last = Object.assign({}, e.target.position()); });
+    cy.on("drag", "node[type='hub'], node[type='subhub']", (e) => {
+      const n = e.target, p = n.position(); if (!last) { last = Object.assign({}, p); return; }
+      const dx = p.x - last.x, dy = p.y - last.y; last = Object.assign({}, p);
+      const grp = n.data("type") === "hub" ? cy.getElementById("grp-" + n.data("gid")) : cy.getElementById(subId(n.data("gid"), n.data("pid")));
+      grp.descendants("[type='concept'], [type='subhub']").not(n).shift({ x: dx, y: dy });
+    });
+    cy.on("free", "node[type='hub'], node[type='subhub']", () => { last = null; });
   }
 
   function buildGroupFilter(mode) {
@@ -500,6 +644,7 @@
       cy.nodes("[type='sub']").forEach((s) => {
         s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0);
       });
+      cy.nodes("[type='hub'], [type='hubdesc'], [type='subhub']").forEach((h) => h.toggleClass("filtered", h.parent().hasClass("filtered")));
       cy.edges().forEach((e) => e.toggleClass("filtered",
         e.source().hasClass("filtered") || e.target().hasClass("filtered") || !eg.has(e.data("etype"))));
     });
@@ -1077,10 +1222,10 @@
   function openDetail(node) {
     editing = false;
     cy.$(":selected").unselect(); node.select();
-    if (node.data("type") === "group") {
+    if (node.data("type") === "group" || node.data("type") === "hub") {
       detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
       pinned = null; clearNb();
-    } else if (node.data("type") === "sub") {
+    } else if (node.data("type") === "sub" || node.data("type") === "subhub") {
       detailBody.innerHTML = subHtml(node.data("gid"), node.data("pid"));
       pinned = null; clearNb();
     } else {
@@ -1373,7 +1518,6 @@
       const ang = (2 * Math.PI * i / Math.max(1, micros.length)) - Math.PI / 2;
       cy.getElementById("m-" + m.id).position({ x: Math.cos(ang) * R, y: Math.sin(ang) * R });
     });
-    try { if (window.__drawHulls) window.__drawHulls(); } catch (_) {}
     cy.fit(cy.nodes(), 70);
     const bar = document.getElementById("km-drillbar");
     if (bar) { bar.classList.remove("hidden"); bar.querySelector(".km-drill-title").textContent = "🔬 " + c.nazev; }
@@ -1382,7 +1526,7 @@
   function drillOut() {
     drillId = null;
     const bar = document.getElementById("km-drillbar"); if (bar) bar.classList.add("hidden");
-    render(viewMode);
+    render(viewMode, { noAnim: true });
   }
 
   // Detail konceptu bez manipulace s grafem (pro 3D pohled).
@@ -1598,131 +1742,6 @@
     if (cvs3d) cvs3d.style.display = "none";
     document.getElementById("cy").style.visibility = "visible";
     setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " témat · " + DATA.areas.length + " okruhů RVP");
-  }
-
-  /* ---------- Organické obrysy clusterů (canvas overlay) ---------- */
-  function convexHull(points) {
-    const pts = points.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-    if (pts.length < 3) return pts;
-    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
-    const lower = [];
-    for (const p of pts) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
-    const upper = [];
-    for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
-    lower.pop(); upper.pop(); return lower.concat(upper);
-  }
-  function pathSmooth(ctx, pts) {
-    const n = pts.length; if (n < 3) return false;
-    const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-    ctx.beginPath();
-    const m0 = mid(pts[n - 1], pts[0]); ctx.moveTo(m0[0], m0[1]);
-    for (let i = 0; i < n; i++) { const cur = pts[i], nxt = pts[(i + 1) % n], m = mid(cur, nxt); ctx.quadraticCurveTo(cur[0], cur[1], m[0], m[1]); }
-    ctx.closePath(); return true;
-  }
-  function strokeSmooth(ctx, pts) { if (pathSmooth(ctx, pts)) ctx.stroke(); }
-  function fillSmooth(ctx, pts) { if (pathSmooth(ctx, pts)) ctx.fill(); }
-  function initHulls(cy) {
-    const cyDiv = document.getElementById("cy");
-    const canvas = document.createElement("canvas");
-    canvas.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:0";
-    cyDiv.insertBefore(canvas, cyDiv.firstChild);
-    const ctx = canvas.getContext("2d");
-    function resize() {
-      const r = cyDiv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-      canvas.width = r.width * dpr; canvas.height = r.height * dpr;
-      canvas.style.width = r.width + "px"; canvas.style.height = r.height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    function draw() {
-      polys = [];
-      ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.restore();
-      ctx.save();
-      const hullOf = (kids, pad) => {
-        const pts = [];
-        kids.forEach((n) => {
-          const p = n.renderedPosition(), r = n.renderedWidth() / 2 + pad;
-          for (let a = 0; a < 12; a++) { const ang = a / 12 * 2 * Math.PI; pts.push([p.x + Math.cos(ang) * r, p.y + Math.sin(ang) * r]); }
-        });
-        return convexHull(pts);
-      };
-      const z = cy.zoom();
-      const subPolys = [];
-      cy.nodes("[type='group']").forEach((group) => {
-        if (group.hasClass("filtered")) return;
-        const kids = group.descendants("[type='concept']").filter((n) => !n.hasClass("filtered"));
-        if (kids.length === 0) return;
-        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3; ctx.strokeStyle = "rgba(255,255,255,0.32)";
-        const hull = hullOf(kids, 16 + 10 * z);
-        strokeSmooth(ctx, hull);
-        polys.push({ group, hull });
-        // podoblasti: jemnější hranice uvnitř tématu
-        group.children("[type='sub']").forEach((sub) => {
-          if (sub.hasClass("filtered")) return;
-          const sk = sub.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
-          if (sk.length === 0) return;
-          // podoblast = tmavě šedá výplň (jemná čára nebyla vidět)
-          ctx.setLineDash([]); ctx.fillStyle = "rgba(255,255,255,0.10)";
-          const sh = hullOf(sk, 12);
-          fillSmooth(ctx, sh);
-          subPolys.push({ group: sub, hull: sh });
-        });
-      });
-      polys = subPolys.concat(polys);   // klik/tah: nejdřív podoblast, pak téma
-      ctx.restore();
-    }
-
-    /* Oblast se táhne jen za přerušovanou hranici nebo zevnitř ní (s malou tolerancí);
-       tah jinde (i v rohu obdélníku clusteru) posouvá celou mapu. */
-    let polys = [];
-    const TOL = 8;
-    const distSeg = (p, a, b) => {
-      const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy || 1;
-      const t = Math.max(0, Math.min(1, ((p.x - a[0]) * dx + (p.y - a[1]) * dy) / l2));
-      return Math.hypot(p.x - a[0] - t * dx, p.y - a[1] - t * dy);
-    };
-    function inHull(p, hull) {
-      let inside = false, near = Infinity;
-      for (let i = 0, j = hull.length - 1; i < hull.length; j = i++) {
-        const a = hull[i], b = hull[j];
-        if ((a[1] > p.y) !== (b[1] > p.y) && p.x < (b[0] - a[0]) * (p.y - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
-        near = Math.min(near, distSeg(p, a, b));
-      }
-      return inside || near <= TOL;
-    }
-    function groupAt(rp) {
-      if (!rp) return null;
-      const hit = polys.find((h) => inHull(rp, h.hull));
-      return hit ? hit.group : null;
-    }
-    window.__groupAt = groupAt;
-
-    let tazena = null, last = null;
-    cy.on("tapstart", (e) => {
-      if (e.target !== cy && !e.target.isEdge()) return;   // čáry přes oblast tah nebrzdí
-      tazena = groupAt(e.renderedPosition);
-      if (!tazena) return;
-      cy.userPanningEnabled(false);
-      last = { x: e.position.x, y: e.position.y };
-    });
-    cy.on("tapdrag", (e) => {
-      if (!tazena) return;
-      tazena.descendants("[type='concept']").shift({ x: e.position.x - last.x, y: e.position.y - last.y });
-      last = { x: e.position.x, y: e.position.y };
-    });
-    cy.on("tapend", () => {
-      if (!tazena) return;
-      tazena = null; cy.userPanningEnabled(true);
-    });
-    // kurzor napoví, kde se oblast dá chytit
-    cy.on("mousemove", (e) => {
-      if (tazena) return;
-      cyDiv.style.cursor = ((e.target === cy || e.target.isEdge()) && groupAt(e.renderedPosition)) ? "move" : "";
-    });
-
-    resize();
-    window.addEventListener("resize", () => { resize(); draw(); });
-    cy.on("render", draw);
-    window.__drawHulls = draw;
   }
 
   /* ---------- Pomocné ---------- */
