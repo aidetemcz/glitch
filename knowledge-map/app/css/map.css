@@ -245,9 +245,12 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .iso-label { font-weight: 500; pointer-events: none; }
 .iso-label.core { fill: #0a0a0c; }
 .iso-label.nav { fill: #ffffff; }
-.iso-layer ellipse { fill: rgba(40,40,44,0.92); stroke: #ffffff; stroke-width: 1.2; cursor: pointer; transition: fill .15s ease; }
-.iso-layer.active ellipse { fill: rgba(255,255,255,0.22); }
-.iso-layer:hover ellipse, .iso-layer.chosen ellipse { fill: var(--c-yellow); }
+.iso-layer ellipse { fill: rgba(0,0,0,0.001); stroke: #ffffff; stroke-width: 1.2; cursor: pointer; transition: fill .15s ease, stroke .15s ease; }
+.iso-layer.active ellipse { stroke-width: 2.2; }
+.iso-layer:hover ellipse, .iso-layer.chosen ellipse { fill: rgba(255,255,0,0.18); stroke: var(--c-yellow); }
+.iso-concept { cursor: pointer; }
+.iso-concept:hover .iso-disc.core { fill: var(--c-yellow); }
+.iso-concept:hover .iso-disc.nav { stroke: var(--c-yellow); }
 .iso-line { stroke: #ffffff; stroke-width: 1; }
 .iso-tag { cursor: pointer; }
 .iso-tag rect { fill: #16161a; stroke: #ffffff; stroke-width: 1.2; transition: fill .15s ease; }
@@ -264,3 +267,4 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .km-isobox.open { transform: translateX(0); opacity: 1; }
 .km-isobox-x { position: absolute; top: 14px; right: 16px; font-size: 20px; color: var(--c-grey-50); }
 .km-isobox-x:hover { color: var(--c-white); }
+.km-isobox-body .d-links .d-link { cursor: pointer; }

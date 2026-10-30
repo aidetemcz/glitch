@@ -199,6 +199,7 @@
   const HUB_FONT = '600 22px "Space Grotesk", "Inter", sans-serif';
   const DESC_FONT = '500 14px "Darker Grotesque", "Inter", sans-serif';
   const SUBHUB_FONT = '600 12px "Space Grotesk", "Inter", sans-serif';
+  const HUB_LH = 1.15, DESC_LH = 0.85;   // řádkování názvu a popisu tématu (popis o třetinu těsnější)
   const hubId = (gid) => "hub-" + gid, hubdId = (gid) => "hubd-" + gid, shubId = (tema, pid) => "shub-" + tema + "-" + pid;
   // velikost bubliny tématu podle počtu konceptů; popis = začátek textu, co se vejde
   const hubSize = (n) => Math.min(340, Math.round(230 + 1.6 * n));
@@ -248,12 +249,16 @@
       const n = DATA.concepts.filter((c) => groupOf(c, mode) === g.id).length;
       const size = hubSize(n);
       nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
+      // název nahoře, popis pod ním: výšky podle skutečného počtu řádků, ať se nepřekrývají
+      const title = wrapLabel(g.nazev, HUB_FONT, size * 0.72, false);
+      const titleH = title.split("\n").length * HUB_LH * 22, gap = 12;
+      const maxLines = Math.max(2, Math.floor((size * 0.8 - titleH - gap) / (DESC_LH * 14)));
+      const desc = hubDesc(g.popis, size, DESC_FONT, maxLines);
+      const descH = desc.split("\n").length * DESC_LH * 14, total = titleH + gap + descH;
       nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
-        label: wrapLabel(g.nazev, HUB_FONT, size * 0.72, false), textw: Math.round(size * 0.72),
-        tm: -Math.round(size * 0.17) } });
+        label: title, textw: Math.round(size * 0.72), tm: Math.round(-total / 2 + titleH / 2) } });
       nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
-        label: hubDesc(g.popis, size, DESC_FONT, size >= 300 ? 7 : 5), textw: Math.round(size * 0.7),
-        tm: Math.round(size * 0.13) } });
+        label: desc, textw: Math.round(size * 0.7), tm: Math.round(total / 2 - descH / 2) } });
     });
     // podoblasti tématu = střední bubliny navázané na téma (jen v pohledu Témata)
     const SUB_SIZE = 96;
@@ -317,14 +322,14 @@
           "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "text-margin-y": "data(tm)",
-          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "22px", "font-weight": "600", "line-height": 1.15,
+          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "22px", "font-weight": "600", "line-height": HUB_LH,
           "z-index": 5
         }},
         { selector: "node[type='hubdesc']", style: {
           "events": "no", "shape": "ellipse", "width": 1, "height": 1, "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "text-margin-y": "data(tm)",
-          "color": "#2a2a00", "font-family": "Darker Grotesque, Inter, sans-serif", "font-size": "14px", "font-weight": "500", "line-height": 1.25,
+          "color": "#2a2a00", "font-family": "Darker Grotesque, Inter, sans-serif", "font-size": "14px", "font-weight": "500", "line-height": DESC_LH,
           "z-index": 6
         }},
         // podoblast = střední bublina
@@ -1301,7 +1306,7 @@
       <div class="d-section"><h3>Navazující</h3><div class="d-links">${nav.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
   }
 
-  function conceptHtml(c) {
+  function conceptHtml(c, box) {
     const tema = (DATA.temata.find((t) => t.id === c.tema) || {});
     const pod = podoblastOf(c);
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
@@ -1342,11 +1347,11 @@
         <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
-      ${canWrite() ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
+      ${!box && canWrite() ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
       ${paras(c.popis)}
-      ${microSection(c)}
-      <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
-      <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>
+      ${box ? "" : microSection(c) +
+        `<div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
+      <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>`}
       ${c.duraz ? `<div class="d-section d-duraz"><h3>Důraz</h3>${paras(c.duraz)}</div>` : ""}
       <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
       <div class="d-section"><h3>Digitální kompetence</h3>${kdi}</div>
@@ -1789,6 +1794,8 @@
         else if (a === "level") openIsoBox(b.dataset.level);
         return;
       }
+      const f = e.target.closest("[data-focus]");   // odkaz na jiný koncept v boxu → přepnout izometrii na něj
+      if (f) { const n = cy.getElementById(f.dataset.focus); if (n.nonempty() && n.data("type") === "concept") { closeIsoBox(true); enterIso(n); } return; }
       if (isoBoxOpen()) { closeIsoBox(); return; }
       if (e.target === isoEl || e.target.classList.contains("km-iso-svg")) exitIso();   // klik do pozadí = zpět
     });
@@ -1812,7 +1819,7 @@
     const lines = String(node.data("label") || c.nazev).split("\n");
 
     // bublina konceptu (letí z místa v mapě do středu a sklápí se)
-    const g = svgEl("g", { class: "iso-concept" }, svg);
+    const g = svgEl("g", { class: "iso-concept", "data-iso": "level", "data-level": "concept" }, svg);
     const disc = svgEl("ellipse", { class: "iso-disc " + (core ? "core" : "nav"), cx: 0, cy: 0 }, g);
     const txt = svgEl("text", { class: "iso-label " + (core ? "core" : "nav"), "text-anchor": "middle" }, g);
     lines.forEach((l, i) => { const ts = svgEl("tspan", { x: 0, dy: i === 0 ? ((1 - lines.length) / 2 * 1.15 + 0.35) + "em" : "1.15em" }, txt); ts.textContent = l; });
@@ -1882,9 +1889,15 @@
 
   // box s cíli a kritérii vrstvy (zatím stejný obsah pro všechny stupně — upřesní se)
   function openIsoBox(levelId) {
-    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[1];
     const c = isoNode && isoNode.data("_c"); if (!c) return;
     const box = document.getElementById("km-isobox");
+    if (levelId === "concept") {          // spodní kruh = koncept sám: popis, prerekvizity, RVP, kompetence…
+      box.querySelector(".km-isobox-body").innerHTML = conceptHtml(c, true);
+      box.classList.add("open");
+      isoEl.querySelectorAll(".chosen").forEach((el) => el.classList.remove("chosen"));
+      return;
+    }
+    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[1];
     box.querySelector(".km-isobox-body").innerHTML = `
       <span class="d-badge d-badge-acc">${esc(lv.nazev)}</span>
       <h2 class="d-title">${esc(c.nazev)}</h2>
