@@ -63,7 +63,7 @@
   function textOn(hex) {
     const h = String(hex || "#ffffff").replace("#", "");
     const r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
-    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#1c2530" : "#ffffff";
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#000000" : "#ffffff";
   }
 
   /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem.
@@ -222,7 +222,7 @@
     };
     const sizeFor = (c) => Math.min(124, Math.round(46 + 11 * Math.sqrt(pocetNavaznych(c.id))));
 
-    const labelcolor = "#7da4b2";  // nadpisy témat modře jako jejich hranice
+    const labelcolor = "#ffff00";  // nadpisy clusterů žlutě ve všech režimech
     const GRP_FONT = '600 13px "Inter", "Segoe UI", sans-serif';
     const nodes = [];
     groups.forEach((g) => nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id,
@@ -274,7 +274,7 @@
           "events": "no", "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "150px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -6,
-          "color": "#6b7885", "font-size": "11px", "font-weight": "600", "line-height": 1.3, "padding": "14px"
+          "color": "#d0d0d0", "font-size": "11px", "font-weight": "600", "line-height": 1.3, "padding": "14px"
         }},
         { selector: "node[type='group']", style: {
           // obdélník clusteru je neviditelný → události propouští do plochy (posun mapy);
@@ -283,7 +283,7 @@
           "background-opacity": 0, "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "180px",
           "text-valign": "top", "text-halign": "center", "text-margin-y": -12,
-          "color": "data(labelcolor)", "font-size": "13px", "font-weight": "700", "font-family": "Space Grotesk, Inter, sans-serif",
+          "color": "data(labelcolor)", "font-size": "13px", "font-weight": "600",
           "text-transform": "uppercase", "line-height": 1.4, "padding": "26px"
         }},
         { selector: "node[type='concept']", style: {
@@ -292,39 +292,39 @@
           "text-valign": "center", "text-halign": "center", "line-height": LINEH,
           "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
-        { selector: "node[vrstva='core']", style: { "background-color": "#dc5b5b", "color": "#ffffff", "border-width": 0 } },
-        { selector: "node[vrstva='navazujici']", style: { "background-color": "#ffffff", "color": "#1c2530", "border-color": "#dc5b5b", "border-width": 1.8 } },
+        { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
+        { selector: "node[vrstva='navazujici']", style: { "background-color": "#0a0a0c", "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
         { selector: "edge[etype='prereq']", style: {
-          "line-color": "rgba(220,91,91,0.6)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
-          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(220,91,91,0.8)", "arrow-scale": 0.9
+          "line-color": "rgba(255,255,255,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.6)", "arrow-scale": 0.9
         }},
         { selector: "edge[etype='related']", style: {
-          "line-color": "rgba(220,91,91,0.4)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
+          "line-color": "rgba(255,255,255,0.22)", "width": 0.9, "line-style": "dotted", "curve-style": "bezier"
         }},
-        { selector: "edge.nbedge", style: { "line-color": "#1c2530", "width": 2.4, "target-arrow-color": "#1c2530", "opacity": 1, "z-index": 50 } },
-        { selector: "node.nbon", style: { "border-color": "#1c2530", "border-width": 2.6, "z-index": 50 } },
-        { selector: ".hl", style: { "border-width": 4, "border-color": "#1c2530", "border-opacity": 1 } },
-        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#1c2530" } },
-        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#1c2530", "color": "#ffffff", "border-width": 0 } },
+        { selector: "edge.nbedge", style: { "line-color": "#ffff00", "width": 2.4, "target-arrow-color": "#ffff00", "opacity": 1, "z-index": 50 } },
+        { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
+        { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
+        { selector: "node[type='concept']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
         { selector: ".filtered", style: { "display": "none" } },
         /* hloubkové ponoření — mikrokoncepty pod konceptem */
         { selector: "node[type='microparent']", style: {
-          "shape": "ellipse", "background-color": "#dc5b5b", "color": "#ffffff",
+          "shape": "ellipse", "background-color": "#ffff00", "color": "#0a0a0c",
           "width": 128, "height": 128, "label": "data(label)", "text-wrap": "wrap",
           "text-max-width": "104px", "text-valign": "center", "text-halign": "center",
           "line-height": LINEH, "font-size": "13px", "font-weight": "600", "border-width": 0
         }},
         { selector: "node[type='micro']", style: {
-          "shape": "round-rectangle", "background-color": "#ffffff", "color": "#1c2530",
-          "border-color": "#dc5b5b", "border-width": 1.5, "width": 108, "height": 60,
+          "shape": "round-rectangle", "background-color": "#0a0a0c", "color": "#ffffff",
+          "border-color": "#ffff00", "border-width": 1.5, "width": 108, "height": 60,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "94px",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH, "font-size": "11px"
         }},
-        { selector: "node[type='micro']:selected", style: { "background-color": "#dc5b5b", "color": "#ffffff", "border-width": 0 } },
+        { selector: "node[type='micro']:selected", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: "edge[etype='microedge']", style: {
-          "line-color": "rgba(220,91,91,0.55)", "width": 1.6, "curve-style": "bezier",
-          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(220,91,91,0.7)", "arrow-scale": 0.85
+          "line-color": "rgba(255,255,0,0.5)", "width": 1.6, "curve-style": "bezier",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,0,0.65)", "arrow-scale": 0.85
         }}
       ]
     });
@@ -1078,7 +1078,7 @@
     editing = false;
     cy.$(":selected").unselect(); node.select();
     if (node.data("type") === "group") {
-      detailBody.innerHTML = groupHtml(node.data("gid"), "#dc5b5b", node.data("label"));
+      detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
       pinned = null; clearNb();
     } else if (node.data("type") === "sub") {
       detailBody.innerHTML = subHtml(node.data("gid"), node.data("pid"));
@@ -1129,7 +1129,7 @@
       if (gid === NORVP) fallback = "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky.";
     }
     return `
-      <span class="d-badge" style="background:${bg};color:#ffffff">${esc(GROUP_LABEL[viewMode])}</span>
+      <span class="d-badge" style="background:${bg};color:#000000">${esc(GROUP_LABEL[viewMode])}</span>
       <h2 class="d-title">${esc(src.nazev || label || gid)}</h2>
       ${meta}
       ${paras(src.popis, fallback)}
@@ -1473,27 +1473,27 @@
   function draw3D() {
     if (!view3d || !ctx3d) return;
     const w = cvs3d.width, h = cvs3d.height;
-    ctx3d.fillStyle = "#ffffff"; ctx3d.fillRect(0, 0, w, h);
+    ctx3d.fillStyle = "#0a0a0c"; ctx3d.fillRect(0, 0, w, h);
     nodes3d.forEach((n) => { n._p = project3D(n, w, h); });
     edges3d.forEach((e) => {
       const A = e.a._p, B = e.b._p;
       ctx3d.beginPath(); ctx3d.moveTo(A.sx, A.sy); ctx3d.lineTo(B.sx, B.sy);
-      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(220,91,91,0.55)"; ctx3d.lineWidth = 1.3; }
-      else { ctx3d.strokeStyle = "rgba(220,91,91,0.25)"; ctx3d.lineWidth = 0.8; }
+      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(255,255,0,0.5)"; ctx3d.lineWidth = 1.3; }
+      else { ctx3d.strokeStyle = "rgba(255,255,255,0.07)"; ctx3d.lineWidth = 0.8; }
       ctx3d.stroke();
     });
     nodes3d.slice().sort((a, b) => a._p.depth - b._p.depth).forEach((n) => {
       const p = n._p, r = Math.max(2, n.r * p.f);
       if (n.kind === "concept") {
         ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
-        ctx3d.fillStyle = n.core ? "#dc5b5b" : "#ffffff"; ctx3d.fill();
-        if (!n.core) { ctx3d.strokeStyle = "#dc5b5b"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
-        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#ffffff" : "#1c2530");
+        ctx3d.fillStyle = n.core ? "#ffffff" : "#141416"; ctx3d.fill();
+        if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
+        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#0a0a0c" : "#e8e8e8");
       } else {
-        const s = r * 1.5; ctx3d.fillStyle = "#ffffff"; ctx3d.strokeStyle = "#dc5b5b"; ctx3d.lineWidth = 1.1;
+        const s = r * 1.5; ctx3d.fillStyle = "#141416"; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
         roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
         if (p.f > 0.5) {
-          ctx3d.fillStyle = "#dc5b5b"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
+          ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
           ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy + r + 7);
         }
       }
@@ -1651,7 +1651,7 @@
         if (group.hasClass("filtered")) return;
         const kids = group.descendants("[type='concept']").filter((n) => !n.hasClass("filtered"));
         if (kids.length === 0) return;
-        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.5; ctx.strokeStyle = "#7da4b2";   // nekonečné nebe (před setměním)
+        ctx.setLineDash([6, 7]); ctx.lineWidth = 1.3; ctx.strokeStyle = "rgba(255,255,255,0.32)";
         const hull = hullOf(kids, 16 + 10 * z);
         strokeSmooth(ctx, hull);
         polys.push({ group, hull });
@@ -1661,7 +1661,7 @@
           const sk = sub.children("[type='concept']").filter((n) => !n.hasClass("filtered"));
           if (sk.length === 0) return;
           // podoblast = tmavě šedá výplň (jemná čára nebyla vidět)
-          ctx.setLineDash([]); ctx.fillStyle = "rgba(179,205,214,0.32)";   // nekonečné nebe
+          ctx.setLineDash([]); ctx.fillStyle = "rgba(255,255,255,0.10)";
           const sh = hullOf(sk, 12);
           fillSmooth(ctx, sh);
           subPolys.push({ group: sub, hull: sh });
