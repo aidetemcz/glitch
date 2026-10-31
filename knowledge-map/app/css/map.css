@@ -3,7 +3,7 @@
   --c-black: #000; --c-dark: #2b1d3c; --c-panel: #30213f;   /* odstíny fialové Tiny pro panely a vnitřní prvky */
   --c-white: #fff; --c-grey-15: #d0d0d0; --c-grey-50: #747474;
   --c-yellow: #ffff00; --c-line: rgba(208,208,208,0.22);
-  /* Pozadí mapy (plátno grafu + 3D) a výplň „dutých" uzlů — barevnost Tiny, jediné místo pro změnu */
+  /* Pozadí mapy (plátno grafu) a výplň „dutých" uzlů — barevnost Tiny, jediné místo pro změnu */
   --c-bg: #241832; --c-bg-node: #2e2040;
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -235,8 +235,6 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .km-drillbar.hidden { display: none; }
 .km-drillbar button { background: transparent; border: 0; color: var(--c-yellow); font-weight: 600; font-size: 14px; cursor: pointer; }
 .km-drill-title { color: var(--c-white, #fff); font-size: 14px; font-weight: 600; }
-.cy3d { z-index: 4; cursor: grab; touch-action: none; background: var(--c-bg); }
-.cy3d:active { cursor: grabbing; }
 
 /* Mobil */
 @media (max-width: 720px) {

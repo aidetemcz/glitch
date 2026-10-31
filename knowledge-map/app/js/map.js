@@ -625,17 +625,14 @@
     /* delegované akce v pravém panelu (admin/editor) */
     detailBody.addEventListener("click", onPanelAction);
 
-    /* přepínač zobrazení (+ 3D pohled) */
+    /* přepínač zobrazení */
     document.querySelectorAll(".vt-btn").forEach((b) => b.addEventListener("click", () => {
       const v = b.dataset.view;
       document.querySelectorAll(".vt-btn").forEach((x) => x.classList.toggle("active", x === b));
-      if (v === "3d") { enter3D(); return; }
-      const was3d = view3d;
-      if (was3d) exit3D();
       if (v === viewMode) return;
       if (v === "rvp" && !RVP) {
         setStatus("Načítám RVP…");
-        loadRvp().then(() => { if (!view3d) render("rvp"); }, (e) => setStatus("RVP se nepodařilo načíst: " + e.message));
+        loadRvp().then(() => render("rvp"), (e) => setStatus("RVP se nepodařilo načíst: " + e.message));
         return;
       }
       render(v);
@@ -1767,7 +1764,6 @@
     render(viewMode, { noAnim: true });
   }
 
-  // Detail konceptu bez manipulace s grafem (pro 3D pohled).
   /* ==========================================================================
      Pohled RVP Informatika — detail výsledku učení a bublin
      ========================================================================== */
@@ -1872,7 +1868,6 @@
   }
   function switchView(v) {
     document.querySelectorAll(".vt-btn").forEach((x) => x.classList.toggle("active", x.dataset.view === v));
-    if (view3d) exit3D();
     if (v !== viewMode) render(v, { noAnim: true });
   }
   // zajistí, že skupina uzlu není vypnutá ve filtru (jinak by proklik nikam nevedl)
@@ -1899,220 +1894,13 @@
     focusNode(id);
   }
 
+  // Detail konceptu bez manipulace s grafem (z izometrického pohledu)
   function showConceptPanel(c) {
     editing = false;
     detailBody.innerHTML = conceptHtml(c);
     bindPanelLinks();
     detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
-
-  /* ---------- 3D pohled (vlastní projekce, bez knihovny) ----------
-     Koncepty leží v rovině (z=0), mikrokoncepty na vrstvě pod rodičem (z<0).
-     Táhnutím se scéna otáčí, kolečkem přibližuje; klik otevře detail. */
-  let view3d = false, cvs3d = null, ctx3d = null, raf3d = null, drag3d = null;
-  const CAM3D_DEFAULT = { rotX: -0.75, rotY: 0.5, zoom: 0.62, panX: 0, panY: 0 };
-  let cam3d = Object.assign({}, CAM3D_DEFAULT);
-  let nodes3d = [], edges3d = [];
-
-  function build3D() {
-    nodes3d = []; edges3d = [];
-    const byId = {};
-    DATA.concepts.forEach((c) => {
-      const n = cy.getElementById(c.id);
-      const pos = (n && n.nonempty()) ? n.position() : { x: 0, y: 0 };
-      const deg = (n && n.nonempty()) ? (n.data("size") || 40) : 40;
-      const node = { id: c.id, kind: "concept", x: pos.x, y: pos.y, z: 0, r: Math.max(9, deg * 0.2), label: c.nazev, core: c.vrstva === "core", _c: c };
-      nodes3d.push(node); byId[c.id] = node;
-    });
-    const xs = nodes3d.map((n) => n.x), ys = nodes3d.map((n) => n.y);
-    const cxm = (Math.min(...xs) + Math.max(...xs)) / 2, cym = (Math.min(...ys) + Math.max(...ys)) / 2;
-    let maxR = 1;
-    nodes3d.forEach((n) => { n.x -= cxm; n.y -= cym; maxR = Math.max(maxR, Math.hypot(n.x, n.y)); });
-    // rozprostři koncepty dál od sebe (bubliny se nepřekrývají; malé popisky se pak vejdou)
-    const sc = 560 / maxR;
-    nodes3d.forEach((n) => { n.x *= sc; n.y *= sc; });
-    const DEPTH = 260;
-    DATA.concepts.forEach((c) => {
-      const micros = c._micros || []; if (!micros.length) return;
-      const parent = byId[c.id];
-      micros.forEach((m, i) => {
-        const ang = 2 * Math.PI * i / micros.length, rr = 24 + micros.length * 2;
-        const node = { id: "m-" + m.id, kind: "micro", x: parent.x + Math.cos(ang) * rr, y: parent.y + Math.sin(ang) * rr, z: -DEPTH, r: 8, label: m.nazev || m.id, _m: m };
-        nodes3d.push(node); edges3d.push({ a: parent, b: node, kind: "strut" });
-      });
-    });
-    DATA.concepts.forEach((c) => {
-      [...(c.nadrazeny ? [c.nadrazeny] : []), ...(c.prerekvizity || [])].forEach((p) => { if (byId[p] && byId[c.id]) edges3d.push({ a: byId[p], b: byId[c.id], kind: "prereq" }); });
-    });
-  }
-
-  function project3D(n, w, h) {
-    const cosY = Math.cos(cam3d.rotY), sinY = Math.sin(cam3d.rotY), cosX = Math.cos(cam3d.rotX), sinX = Math.sin(cam3d.rotX);
-    const x1 = n.x * cosY + n.z * sinY, z1 = -n.x * sinY + n.z * cosY, y1 = n.y;
-    const y2 = y1 * cosX - z1 * sinX, z2 = y1 * sinX + z1 * cosX, x2 = x1;
-    const CAM = 900, f = CAM / (CAM - z2), s = Math.min(w, h) / 760 * cam3d.zoom;
-    return { sx: w / 2 + cam3d.panX + x2 * s * f, sy: h / 2 + cam3d.panY + y2 * s * f, depth: z2, f: f * s };
-  }
-
-  // Zalomení popisku do max 2 řádků, které se vejdou do šířky maxW (font už nastaven).
-  function wrap2(text, maxW) {
-    const words = String(text).split(/\s+/); let l1 = "", l2 = "", i = 0;
-    for (; i < words.length; i++) { const t = l1 ? l1 + " " + words[i] : words[i]; if (l1 && ctx3d.measureText(t).width > maxW) break; l1 = t; }
-    for (; i < words.length; i++) { const t = l2 ? l2 + " " + words[i] : words[i]; if (l2 && ctx3d.measureText(t).width > maxW) { l2 += "…"; return [l1, l2]; } l2 = t; }
-    return l2 ? [l1, l2] : [l1];
-  }
-  function labelInCircle(text, cx, cy, r, color) {
-    const maxW = r * 1.7;
-    let fs = Math.max(6, Math.min(12, r * 0.42));
-    ctx3d.font = fs + "px Inter, sans-serif";
-    // zmenši font tak, aby se i nejdelší slovo vešlo na šířku
-    let longest = 0;
-    String(text).split(/\s+/).forEach((w) => { longest = Math.max(longest, ctx3d.measureText(w).width); });
-    if (longest > maxW) { fs = Math.max(5, fs * maxW / longest); ctx3d.font = fs + "px Inter, sans-serif"; }
-    const lines = wrap2(text, maxW), lh = fs * 1.05, sy = cy - (lines.length - 1) * lh / 2;
-    ctx3d.save();                                   // ořízni text na bublinu (nikdy nepřeleze)
-    ctx3d.beginPath(); ctx3d.arc(cx, cy, r * 0.95, 0, 2 * Math.PI); ctx3d.clip();
-    ctx3d.fillStyle = color; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
-    lines.forEach((ln, i) => ctx3d.fillText(ln, cx, sy + i * lh));
-    ctx3d.restore();
-  }
-
-  function roundRect3D(x, y, w, h, r) {
-    ctx3d.beginPath();
-    ctx3d.moveTo(x + r, y); ctx3d.arcTo(x + w, y, x + w, y + h, r); ctx3d.arcTo(x + w, y + h, x, y + h, r);
-    ctx3d.arcTo(x, y + h, x, y, r); ctx3d.arcTo(x, y, x + w, y, r); ctx3d.closePath();
-  }
-
-  function draw3D() {
-    if (!view3d || !ctx3d) return;
-    const w = cvs3d.width, h = cvs3d.height;
-    ctx3d.fillStyle = BG; ctx3d.fillRect(0, 0, w, h);
-    nodes3d.forEach((n) => { n._p = project3D(n, w, h); });
-    edges3d.forEach((e) => {
-      const A = e.a._p, B = e.b._p;
-      ctx3d.beginPath(); ctx3d.moveTo(A.sx, A.sy); ctx3d.lineTo(B.sx, B.sy);
-      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(255,255,0,0.5)"; ctx3d.lineWidth = 1.3; }
-      else { ctx3d.strokeStyle = "rgba(255,255,255,0.07)"; ctx3d.lineWidth = 0.8; }
-      ctx3d.stroke();
-    });
-    nodes3d.slice().sort((a, b) => a._p.depth - b._p.depth).forEach((n) => {
-      const p = n._p, r = Math.max(2, n.r * p.f);
-      if (n.kind === "concept") {
-        ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
-        ctx3d.fillStyle = n.core ? "#ffffff" : BG_NODE; ctx3d.fill();
-        if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
-        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#0a0a0c" : "#e8e8e8");
-      } else {
-        const s = r * 1.5; ctx3d.fillStyle = BG_NODE; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
-        roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
-        if (p.f > 0.5) {
-          ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
-          ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy + r + 7);
-        }
-      }
-    });
-  }
-
-  function loop3D() { if (!view3d) return; draw3D(); raf3d = requestAnimationFrame(loop3D); }
-
-  function resize3D() {
-    if (!cvs3d) return;
-    const rect = document.getElementById("cy").getBoundingClientRect();
-    cvs3d.style.position = "fixed";
-    cvs3d.style.left = rect.left + "px"; cvs3d.style.top = rect.top + "px";
-    cvs3d.width = Math.max(100, Math.round(rect.width)); cvs3d.height = Math.max(100, Math.round(rect.height));
-    cvs3d.style.width = rect.width + "px"; cvs3d.style.height = rect.height + "px";
-  }
-
-  function pick3D(clientX, clientY) {
-    const rect = cvs3d.getBoundingClientRect();
-    const mx = clientX - rect.left, my = clientY - rect.top;
-    let hit = null, hitDepth = -Infinity;
-    nodes3d.forEach((n) => {
-      const p = n._p; if (!p) return;
-      const r = Math.max(6, n.r * p.f) + 4;
-      if (Math.hypot(mx - p.sx, my - p.sy) <= r && p.depth > hitDepth) { hit = n; hitDepth = p.depth; }
-    });
-    if (!hit) return;
-    if (hit.kind === "concept") showConceptPanel(hit._c); else openMicroDetail(hit._m);
-  }
-
-  function reset3D() { cam3d = Object.assign({}, CAM3D_DEFAULT); }
-  // Zoom se středem v bodě (mx,my) — obsah pod kurzorem zůstává na místě.
-  function zoomAt(mx, my, k) {
-    const nz = Math.max(0.2, Math.min(6, cam3d.zoom * k)), kk = nz / cam3d.zoom;
-    cam3d.panX = (1 - kk) * (mx - cvs3d.width / 2) + kk * cam3d.panX;
-    cam3d.panY = (1 - kk) * (my - cvs3d.height / 2) + kk * cam3d.panY;
-    cam3d.zoom = nz;
-  }
-  function attach3DEvents() {
-    const localXY = (cx, cy) => { const r = cvs3d.getBoundingClientRect(); return [cx - r.left, cy - r.top]; };
-    const down = (x, y, pan) => { drag3d = { x: x, y: y, ox: x, oy: y, moved: false, pan: pan }; };
-    const move = (x, y) => {
-      if (!drag3d) return;
-      const dx = x - drag3d.x, dy = y - drag3d.y;
-      if (Math.abs(x - drag3d.ox) + Math.abs(y - drag3d.oy) > 4) drag3d.moved = true;
-      if (drag3d.pan) { cam3d.panX += dx; cam3d.panY += dy; }                 // posun (pravé tl. / Shift)
-      else { cam3d.rotY += dx * 0.008; cam3d.rotX += dy * 0.008; cam3d.rotX = Math.max(-1.4, Math.min(1.4, cam3d.rotX)); }
-      drag3d.x = x; drag3d.y = y;
-    };
-    cvs3d.addEventListener("contextmenu", (e) => e.preventDefault());
-    cvs3d.addEventListener("mousedown", (e) => down(e.clientX, e.clientY, (e.button === 2 || e.button === 1 || e.shiftKey)));
-    window.addEventListener("mousemove", (e) => move(e.clientX, e.clientY));
-    window.addEventListener("mouseup", (e) => { if (view3d && drag3d && !drag3d.moved && !drag3d.pan) pick3D(e.clientX, e.clientY); drag3d = null; });
-    cvs3d.addEventListener("dblclick", () => { if (view3d) reset3D(); });
-    cvs3d.addEventListener("wheel", (e) => { e.preventDefault(); const p = localXY(e.clientX, e.clientY); zoomAt(p[0], p[1], e.deltaY < 0 ? 1.12 : 0.89); }, { passive: false });
-    // dotyk: 1 prst = otáčení, 2 prsty = posun + pinch zoom
-    let pinch = null;
-    cvs3d.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 2) {
-        const a = e.touches[0], b = e.touches[1];
-        pinch = { d: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), mx: (a.clientX + b.clientX) / 2, my: (a.clientY + b.clientY) / 2 };
-        drag3d = null;
-      } else { const t = e.touches[0]; down(t.clientX, t.clientY, false); pinch = null; }
-    }, { passive: true });
-    cvs3d.addEventListener("touchmove", (e) => {
-      if (e.touches.length === 2 && pinch) {
-        const a = e.touches[0], b = e.touches[1];
-        const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), mx = (a.clientX + b.clientX) / 2, my = (a.clientY + b.clientY) / 2;
-        cam3d.panX += mx - pinch.mx; cam3d.panY += my - pinch.my;
-        const p = localXY(mx, my); if (pinch.d > 0) zoomAt(p[0], p[1], d / pinch.d);
-        pinch = { d: d, mx: mx, my: my };
-      } else if (e.touches.length === 1) { const t = e.touches[0]; move(t.clientX, t.clientY); }
-    }, { passive: true });
-    cvs3d.addEventListener("touchend", (e) => {
-      if (view3d && drag3d && !drag3d.moved && !drag3d.pan) { const t = (e.changedTouches && e.changedTouches[0]); if (t) pick3D(t.clientX, t.clientY); }
-      drag3d = null; pinch = null;
-    });
-    window.addEventListener("resize", () => { if (view3d) resize3D(); });
-  }
-
-  function enter3D() {
-    if (view3d) return;
-    view3d = true; drillId = null;
-    const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
-    closeDetail();
-    document.getElementById("cy").style.visibility = "hidden";
-    if (!cvs3d) {
-      cvs3d = document.createElement("canvas"); cvs3d.id = "cy3d"; cvs3d.className = "cy3d";
-      document.getElementById("app").appendChild(cvs3d);
-      ctx3d = cvs3d.getContext("2d");
-      attach3DEvents();
-    }
-    cvs3d.style.display = "block";
-    reset3D(); resize3D(); build3D(); loop3D();
-    window.__km3d = { nodes: () => nodes3d, pick: pick3D, cam: () => cam3d };   // testovací/ladicí hook
-    setStatus("3D — táhni: otočit · pravé tl./Shift: posun · kolečko: zoom k místu · dvojklik: vyrovnat");
-  }
-
-  function exit3D() {
-    view3d = false;
-    if (raf3d) cancelAnimationFrame(raf3d);
-    if (cvs3d) cvs3d.style.display = "none";
-    document.getElementById("cy").style.visibility = "visible";
-    setStatus(statusText(viewMode));
-  }
-
 
   /* ==========================================================================
      Izometrický pohled na koncept
