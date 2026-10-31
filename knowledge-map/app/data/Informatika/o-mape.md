@@ -20,7 +20,9 @@ Celek tvoří přes 200 konceptů seskupených do 12 oblastí. Každý koncept m
 
 ## Jak se v mapě pohybovat
 
-Na tytéž koncepty se můžete dívat třemi způsoby a mezi pohledy přepínat: **podle oblastí** (doporučený výchozí pohled, 12 obsahových celků), **podle okruhů RVP** (čtyři okruhy) a **podle klíčové kompetence digitální** (její oblasti). Uzly zůstávají stejné, mění se jen jejich seskupení.
+Koncepty si můžete prohlížet **podle oblastí** (doporučený výchozí pohled, 12 obsahových celků) nebo **podle klíčové kompetence digitální** (její oblasti). Uzly zůstávají stejné, mění se jen jejich seskupení.
+
+Pohled **RVP Informatika** ukazuje přímo Rámcový vzdělávací program: očekávané výsledky učení Informatiky pro 1. a 2. stupeň ZŠ po tematických okruzích a s nimi provázané výsledky klíčových kompetencí a základních gramotností. Detail výsledku obsahuje popis, úrovně s ilustrativními úlohami a koncepty mapy, které výsledek rozvíjejí.
 
 Každá oblast je velká žlutá bublina; koncepty na ni navazují jako satelity a čáry mezi nimi ukazují, co na co navazuje — od základů u středu k pokročilejším konceptům dál od něj. Kliknutím na koncept se otevře jeho detail po stupních škol.
 

@@ -47,10 +47,10 @@ Další pole:
 Mapa má jít přepnout mezi **třemi** logikami seskupení týchž uzlů (přepínač vedle sebe):
 
 1. **Podle témat** (doporučený default) — clustery = `temata` (12). Barva/label uzlu podle `tema`. Rozvržení podle `vrstva_mapy` a `temata[].navazuje_na`.
-2. **Podle oblastí RVP** — clustery = `areas` (4). Uzly seskup podle `concepts[].oblast`. Koncepty s `oblast: null` dej do koše **„Průřezové (digitální kompetence a postoje)"** — jsou to klíčové kompetence / průřezová témata RVP, ne obsah jednoho okruhu.
+2. **RVP Informatika** (od v2 mapy) — nejde o seskupení konceptů, ale o samotné RVP: čtyři velké bubliny *OVU 1. stupeň ZŠ*, *OVU 2. stupeň ZŠ*, *Klíčové kompetence* a *Gramotnosti*, pod nimi tematické okruhy / kompetence / gramotnosti a jako listy očekávané výsledky učení (OVU). Data: `app/data/Informatika/rvp.json`, generuje `build-rvp.py` z `main-sources/rvp_10-26.json`. Kompetence a gramotnosti jsou jen ty, na které OVU Informatiky odkazují (vazba „souvisí"). Detail OVU ukazuje popis, úrovně s ilustrativními úlohami, provázané výsledky a koncepty mapy, které na OVU odkazují přes `concepts[].rvp[].kod`. Pole `concepts[].oblast` a `areas` v datech zůstávají, pohled podle nich se už nekreslí.
 3. **Podle klíčové kompetence digitální (KDI)** — clustery = `kompetence` (5). Uzly seskup podle `concepts[].kompetence`. Koncepty s `kompetence: null` dej do koše **„Nezařazeno (informatická teorie)"** (nebo je v tomto režimu ztlum/skryj). KDI je nezávislá osa: koncept může mít okruh RVP i kompetenci současně (např. „AI podvody" → oblast `digitalni-technologie`, kompetence `kdi-bzk`).
 
-Hrany (`prerekvizity`, `souvisi`) a stav/vrstva/tagy fungují ve všech třech režimech stejně. Přepínač zobrazení = jen jiné seskupení a obarvení týchž uzlů.
+Hrany (`prerekvizity`, `souvisi`) a stav/vrstva/tagy fungují v pohledech na koncepty (1 a 3) stejně; v pohledu RVP se filtry konceptů schovají. Přepínač zobrazení = jen jiné seskupení a obarvení týchž uzlů.
 
 ### Detailní panel konceptu — přidat KDI
 Vedle sekce **RVP — očekávaný výstup** (z `concept.rvp`) přidej sekci **Digitální kompetence**: pokud má koncept `kompetence` != null, dohledej ji v top-level `kompetence[]` podle id a zobraz `nazev`, `kod` a `vystup`. Když je `null`, sekci vynech (nebo „—").

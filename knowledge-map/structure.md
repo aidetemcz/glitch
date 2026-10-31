@@ -153,7 +153,7 @@ concepts:
 
 ## Zdroje
 
-`main-sources/` — RVP (revidované 2024), Marzano-Kendall (Nová taxonomie vzdělávacích cílů) pro gradaci cílů/kritérií, CS učebnice, kognitivní studie. Slouží k tvorbě obsahu, **nedeployují se**.
+`main-sources/` — RVP (revidované 2024; JSON export `rvp_10-26.json` je zdrojem pohledu „RVP Informatika", výtah dělá `build-rvp.py` → `app/data/Informatika/rvp.json`), Marzano-Kendall (Nová taxonomie vzdělávacích cílů) pro gradaci cílů/kritérií, CS učebnice, kognitivní studie. Slouží k tvorbě obsahu, **nedeployují se**.
 
 ## Podklady od garantů (`garanti/`)
 

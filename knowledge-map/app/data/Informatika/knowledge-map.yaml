@@ -468,7 +468,7 @@ concepts:
     vrstva: core
     popis: 'Pevný disk, SSD, USB flash disk, SD karta, interní paměť mobilu, DVD — každé úložiště má jinou kapacitu, rychlost, odolnost a cenu. Podle toho se hodí na jiný účel: velký archiv, přenos mezi počítači, fotky v mobilu.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -494,7 +494,7 @@ concepts:
     vrstva: core
     popis: Lokálně uložená data máš u sebe a fungují i bez internetu; v cloudu leží na cizím serveru, dostaneš se k nim odkudkoli a nepřijdeš o ně se ztraceným zařízením — ale potřebuješ připojení a musíš poskytovateli věřit.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -519,7 +519,7 @@ concepts:
     vrstva: core
     popis: Smazaný soubor z disku hned nezmizí — systém si jen přestane pamatovat, kde ležel, a data tam zůstávají, dokud je něco nepřepíše. Než zařízení vyhodíš nebo prodáš, musíš je přepsat nebo zašifrovat; někdy je lepší ho nevyhazovat vůbec.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -544,7 +544,7 @@ concepts:
     vrstva: core
     popis: 'Operační systém (Windows, Android, iOS, macOS) řídí celé zařízení: spouští aplikace, dává jim přístup k hardwaru a stará se o soubory. Mobil má jiný systém než počítač, ale oba dělají to samé.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -571,7 +571,7 @@ concepts:
     vrstva: core
     popis: Komprese zmenší soubor tím, že odstraní opakování nebo nepodstatné detaily. Co je jednou zkomprimované, už se znovu skoro nezmenší — zbývající data jsou nahodilá a není v nich co ušetřit.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -596,7 +596,7 @@ concepts:
     vrstva: core
     popis: 'Velikost dat se měří v bytech: megabyte (MB) je milion, gigabyte (GB) miliarda bytů. Fotka má jednotky MB, film jednotky GB — podle toho poznáš, co se vejde na kartu nebo do mobilu.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -621,7 +621,7 @@ concepts:
     vrstva: core
     popis: Mobil a počítač se dají spojit i bez wifi a internetu — kabelem přes USB nebo přes Bluetooth. Pak se mezi nimi kopírují fotky a soubory jako mezi dvěma složkami.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -646,7 +646,7 @@ concepts:
     vrstva: core
     popis: Monitor, projektor, tiskárna, klávesnice — každé externí zařízení potřebuje správný port nebo bezdrátové spojení a někdy i ovladač. Zapojit, zvolit zdroj či zařízení v nastavení, hotovo.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -671,7 +671,7 @@ concepts:
     vrstva: core
     popis: 'Aplikace se instalují z obchodu nebo z instalačního souboru a odinstalují přes nastavení systému — nestačí smazat ikonu. Co nepoužíváš, odinstaluj: zabírá místo a může být bezpečnostní riziko.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -696,7 +696,7 @@ concepts:
     vrstva: core
     popis: Aktualizace přinášejí opravy chyb a bezpečnostní záplaty, občas i nové funkce — a občas změny, které se nehodí nebo nefungují na starém zařízení. Odkládat je ale znamená nechat otevřené známé díry.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -721,7 +721,7 @@ concepts:
     vrstva: core
     popis: Každá spuštěná aplikace si drží kus operační paměti. Zavřením ji vrátí, restartem se vyprázdní celá — proto zpomalený mobil nebo počítač po restartu zase běží.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
       - kod: null
@@ -749,7 +749,7 @@ concepts:
     vrstva: core
     popis: 'Při nákupu rozhodují komponenty: procesor a počet jader, operační paměť, trvalé úložiště, grafická karta — a to, jak se zařízení připojí k dalším (porty, wifi, Bluetooth). Správná volba závisí na tom, k čemu zařízení chceš.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -776,7 +776,7 @@ concepts:
     vrstva: core
     popis: Pomalý počítač má obvykle plnou operační paměť, plný disk, program běžící na pozadí, přehřátí nebo malware. Rozpoznat příčinu je první krok k nápravě.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
       - kod: null
@@ -804,7 +804,7 @@ concepts:
     vrstva: core
     popis: Operační paměť (RAM) je rychlá, ale omezená. Každý spuštěný program z ní ukrajuje; když dojde, systém začne odkládat data na pomalý disk a všechno se zpomalí.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
       - kod: null
@@ -832,7 +832,7 @@ concepts:
     vrstva: core
     popis: Nový dokument nebo obrázek existuje nejdřív jen v operační paměti — rychlé, ale dočasné. Dokud ho neuložíš na disk nebo do cloudu, výpadek proudu nebo pád programu ho smaže.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-01 – popíše, jak funguje počítač po stránce hardwaru i operačního systému; diskutuje o fungování digitálních technologií určujících trendy ve světě'
     cile:
@@ -857,7 +857,7 @@ concepts:
     vrstva: core
     popis: 'Server je počítač připojený k internetu, který ostatním poskytuje služby: web, e-mail, hry, video. Není nijak kouzelný — je to výkonný počítač v datovém centru, který běží pořád. „Cloud“ je jen jiné slovo pro cizí server, na kterém máš data nebo ti počítá.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -884,7 +884,7 @@ concepts:
     vrstva: core
     popis: Internet je síť sítí; web je jedna ze služeb, které po něm běží. Domů internet přivádí kabel do routeru, který vysílá wifi signál; mobil se připojuje přes mobilní síť a mobilní data. Jsou to různé věci, které se v řeči pletou.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -911,7 +911,7 @@ concepts:
     vrstva: core
     popis: Obojí jsou „sítě“ s kabely, ale elektřina teče jako energie od elektrárny ke spotřebiči, zatímco po internetových kabelech putují data oběma směry, v balíčcích a po různých cestách.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -937,7 +937,7 @@ concepts:
     vrstva: core
     popis: 'Internet vznikl jako síť, která má fungovat, i když část vypadne. Proto nemá jeden střed: data se dělí na balíčky a hledají si cestu přes mnoho propojených uzlů.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -962,7 +962,7 @@ concepts:
     vrstva: core
     popis: Každé zařízení na internetu má číselnou IP adresu; lidé si pamatují jména (URL jako seznam.cz). DNS je služba, která jméno přeloží na adresu — telefonní seznam internetu.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -989,7 +989,7 @@ concepts:
     vrstva: core
     popis: Stránka přichází jako text s instrukcemi (HTML, CSS) a prohlížeč ji teprve vykreslí. Proto vypadá jinak na úzkém mobilu než na monitoru a trochu jinak v každém prohlížeči.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1014,7 +1014,7 @@ concepts:
     vrstva: core
     popis: Když načítáš stránku, požadavek jde z tvého počítače přes domácí router, dál přes routery a switche poskytovatelů až k serveru — a odpověď stejnou cestou zpátky.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1039,7 +1039,7 @@ concepts:
     vrstva: core
     popis: Zpráva na sociální síti jde přes server sítě; vypadne-li router po cestě, data si najdou jinou. Zastaví je jen výpadek něčeho, co nemá náhradu — tvého připojení nebo serveru sítě.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1064,7 +1064,7 @@ concepts:
     vrstva: core
     popis: E-mail putuje z tvého zařízení na server tvého poskytovatele, odtud na server poskytovatele příjemce a k němu. Mezi servery bývá šifrovaný, ale na serverech leží čitelný — kdo k nim má přístup, čte.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1089,7 +1089,7 @@ concepts:
     vrstva: core
     popis: Nešifrovaná zpráva je po cestě jako pohlednice — každý uzel ji může číst. Šifrovaná je pro útočníka po cestě nečitelná; dá se přečíst jen u odesílatele a příjemce.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1114,7 +1114,7 @@ concepts:
     vrstva: core
     popis: Vyhledávač web neprohledává ve chvíli, kdy hledáš. Jeho roboti stránky procházejí dopředu a stavějí z nich rejstřík (index); ty pak prohledáváš rejstřík, ne web.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1139,7 +1139,7 @@ concepts:
     vrstva: core
     popis: 'Cookie je malý záznam, který si web uloží v tvém prohlížeči: díky němu zůstaneš přihlášený a nákupní košík se nevysype. Stejný mechanismus ale umožňuje sledovat tě napříč weby.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1164,7 +1164,7 @@ concepts:
     vrstva: core
     popis: Reklamy, videa, zprávy i výsledky vyhledávání se přizpůsobují tomu, co o tobě služba ví. Je to pohodlné — a zároveň tě to zavírá do bubliny a prodává tvou pozornost.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1189,7 +1189,7 @@ concepts:
     vrstva: core
     popis: Digitální identita je to, kým na internetu jsi (účty, profily); digitální stopa je všechno, co po sobě necháváš — příspěvky, lajky, polohu, historii hledání. Stopa vzniká i bez tvého vědomí.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1214,7 +1214,7 @@ concepts:
     vrstva: core
     popis: Sociální síť je zdarma, protože platí inzerenti — za tvou pozornost a za možnost cílit reklamu podle toho, co o tobě síť ví. Čím déle tě udrží, tím víc vydělá.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1239,7 +1239,7 @@ concepts:
     vrstva: core
     popis: Weby, aplikace, operátoři i úřady mohou získat tvou polohu, kontakty, zájmy, historii nákupů. Část toho dovoluješ sám v nastavení a souhlasech — a část se dá omezit, když víš kde.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1264,7 +1264,7 @@ concepts:
     vrstva: core
     popis: V EU máš podle GDPR právo žádat smazání svých dat a služba musí vyhovět. U serveru mimo EU se tohoto práva domoci nemusíš — data tam mohou zůstat napořád. Kde fyzicky data leží, proto není jedno.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1294,7 +1294,7 @@ concepts:
     vrstva: core
     popis: Domácí wifi provozuješ ty; veřejnou někdo cizí, kdo může provoz sledovat nebo podvrhnout. Přihlašování do banky nebo nákupy na veřejnou wifi nepatří — nebo jen přes šifrované spojení.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1319,7 +1319,7 @@ concepts:
     vrstva: core
     popis: 'Cloudový dokument sdílíš nastavením práv: kdo může číst, komentovat, upravovat. Odkaz „pro každého“ je nejpohodlnější a nejrizikovější.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1344,7 +1344,7 @@ concepts:
     vrstva: core
     popis: Když ti vypadne připojení, píšeš do místní kopie, která se po obnovení sloučí; výpadek kolegy tvou práci neovlivní; když vypadne cloud, nemá kam ukládat nikdo.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1369,7 +1369,7 @@ concepts:
     vrstva: core
     popis: Čtenář jen čte, komentátor přidává poznámky, přispěvatel mění obsah, správce rozhoduje, kdo smí co. Role jsou odstupňovaná důvěra.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1394,7 +1394,7 @@ concepts:
     vrstva: core
     popis: Download stáhne soubor k tobě, upload ho pošle na server, streamování přehrává data průběžně, aniž by se celý soubor uložil — proto video jede hned, ale bez připojení zmizí.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1419,7 +1419,7 @@ concepts:
     vrstva: core
     popis: Mikroprocesor je malý „mozek“ — a je dnes i v myši, USB disku nebo lampičce. Kde je procesor a paměť, tam může běžet program, a tedy i škodlivý.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1444,7 +1444,7 @@ concepts:
     vrstva: core
     popis: Počítač v pračce nebo autě bez internetu je „skrytý“ a zvenčí nedosažitelný. Jakmile je zařízení „chytré“ a online, dá se zvenčí ovládnout, odposlouchávat nebo zneužít.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1469,7 +1469,7 @@ concepts:
     vrstva: core
     popis: Mobil se neustále hlásí vysílačům, takže operátor ví, kde jsi. Když se to dozví třetí strana — zaměstnavatel, bývalý partner, zloděj — může to být nepříjemné i nebezpečné.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1494,7 +1494,7 @@ concepts:
     vrstva: core
     popis: 'Software a cloud z některých zemí mohou podléhat tamním zákonům a tajným službám — antivirus nebo cloud elektrárny tak může být trojský kůň: tváří se užitečně a zevnitř otevírá dveře.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
         poznamka: 'garant: I-9-4-03 – vybírá nejvhodnější způsob připojení digitálních zařízení do počítačové sítě; uvede příklady sítí a popíše jejich charakteristické znaky'
     cile:
@@ -1519,7 +1519,7 @@ concepts:
     vrstva: core
     popis: Bezpečné heslo je dlouhé, jedinečné a neuhodnutelné — třeba fráze z několika slov. Krátké heslo, jméno nebo datum narození prolomí program za sekundy.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1546,7 +1546,7 @@ concepts:
     vrstva: core
     popis: Účet je tvá identita ve službě, heslo klíč k němu, autentizace ověření, že jsi to ty. Kódování převádí data do jiné podoby, aby se daly uložit; šifrování je převádí tak, aby je bez klíče nikdo nepřečetl.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1571,7 +1571,7 @@ concepts:
     vrstva: core
     popis: Antivirus hlídá známé hrozby — ale sám může být podvod. Spolehlivý je ten z ověřeného zdroje s dobrou pověstí, ne první výsledek s nápisem „váš počítač je napaden“.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1596,7 +1596,7 @@ concepts:
     vrstva: core
     popis: Virus se šíří připojením k jiným souborům, trojský kůň se tváří jako užitečný program, ransomware zašifruje data a chce výkupné, spyware tě sleduje. Malware je program; hacker je člověk.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1621,7 +1621,7 @@ concepts:
     vrstva: core
     popis: Každý program má chyby; některé jsou díra, kterou lze zneužít. Útočníci je hledají, výrobci je opravují aktualizacemi. Neaktualizované zařízení má známé a otevřené díry.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1646,7 +1646,7 @@ concepts:
     vrstva: core
     popis: Hackeři chtějí peníze, data, přístup nebo pozornost. Metody sahají od zneužití chyb v programech přes podvodné zprávy až po hádání hesel — a často je nejslabší článek člověk.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1671,7 +1671,7 @@ concepts:
     vrstva: core
     popis: Stahuj jen z oficiálních obchodů a prověřených stránek, čti, co instalace chce povolit, a nevěř tlačítkům „Stáhnout“ v reklamách. Vlastní pravidla jsou lepší než spoléhání na antivirus.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1696,7 +1696,7 @@ concepts:
     vrstva: core
     popis: 'Bezpečné chování má různé roviny: co sdílíš, komu věříš, na co klikáš, jak chráníš účty. Sepsat pravidla pro mladší spolužáky znamená vybrat to podstatné a vysvětlit proč.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1721,7 +1721,7 @@ concepts:
     vrstva: core
     popis: 'Zabezpečení je víc vrstev: firewall hlídá síťový provoz, antivirus soubory, dvoufaktorová autentizace účty, end-to-end šifrování zprávy. Myšlenková mapa ukáže, co chrání co.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1746,7 +1746,7 @@ concepts:
     vrstva: core
     popis: 'Fotka v sobě nese metadata: čas, model telefonu, nastavení a často i přesnou polohu. Z fotky sdílené s metadaty se dá vyčíst, kde bydlíš nebo kdy nejsi doma.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1771,7 +1771,7 @@ concepts:
     vrstva: core
     popis: Poloha se dá vypnout celkově nebo jen pro vybrané aplikace — mapy ji potřebují, hra s baterkou ne. Najít nastavení a rozhodnout, komu polohu dáš, je základní hygiena.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1796,7 +1796,7 @@ concepts:
     vrstva: core
     popis: 'Každá aplikace si říká o oprávnění: kamera, mikrofon, kontakty. V nastavení mobilu se dají zkontrolovat a odebrat — aplikace na kalkulačku kameru nepotřebuje.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1821,7 +1821,7 @@ concepts:
     vrstva: core
     popis: 'Chytrá síť, chytré auto, chytrá domácnost: pohodlí a úspora, ale i možnost, že technologii někdo hackne nebo že sbírá víc dat, než je nutné. Rizika jsou technická i etická.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -1846,7 +1846,7 @@ concepts:
     vrstva: core
     popis: AI doporučuje videa, překládá, řídí auta, rozhoduje o půjčkách. Každé použití nese rizika — chyby, zkreslení, zneužití, ztrátu kontroly — a stojí za to je umět pojmenovat.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
         poznamka: 'garant: I-9-4-05 – dokáže usměrnit svoji činnost tak, aby minimalizoval riziko ztráty či zneužití dat; popíše fungování a diskutuje omezení zabezpečovacích řešení'
     cile:
@@ -3728,7 +3728,7 @@ concepts:
     vrstva: core
     popis: 'Nejběžnější způsob, jak evidovat data: tabulky s řádky (záznamy) a sloupci. Každý sloupec představuje atribut (= vlastnost, kterou sledujeme – například jméno, věk nebo datum narození). Konkrétní buňka v tabulce pak ukazuje hodnotu atributu. Abys mohl s daty správně pracovat (a později je třeba efektivně čistit), je nutné rozlišovat typy dat (např. text, celé číslo, desetinné číslo, datum nebo pravdivostní hodnotu ano/ne). Tak fungují školní systémy, e-shopy i většina aplikací „na pozadí“.'
     rvp:
-      - kod: INF-INF-003-ZV9-009
+      - kod: INF-INF-003-ZV9-010
         vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
     cile:
       - uroven: porozumeni
@@ -3760,7 +3760,7 @@ concepts:
     vrstva: navazujici
     popis: Reálné informační systémy zřídka vystačí s jedinou tabulkou. Abychom nemuseli data opakovat (redundance) a předešli chybám, rozvolňujeme data do více specializovaných tabulek. Tyto tabulky mezi sebou propojujeme pomocí klíčů (jedinečných identifikátorů záznamu, např. ID žáka, Číslo objednávky). Vzniká tak relační model, který tvoří základ složitějších databází školních systémů či e-shopů.
     rvp:
-      - kod: INF-INF-003-ZV9-009
+      - kod: INF-INF-003-ZV9-010
         vystup: Pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy.
         poznamka: případně navazující výstupy pro databáze/informační systémy
     cile:
@@ -3826,7 +3826,7 @@ concepts:
     vrstva: navazujici
     popis: SQL je jazyk, kterým se databáze ptáš na to, co potřebuješ („vyber všechny žáky z 8.A"). Základní příkazy (SELECT, WHERE, JOIN) umí data filtrovat, propojovat a vybírat z tabulek.
     rvp:
-      - kod: INF-INF-003-ZV9-010
+      - kod: INF-INF-003-ZV9-011
         vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
     cile:
       - uroven: porozumeni
@@ -3858,7 +3858,7 @@ concepts:
     vrstva: core
     popis: Informační systém je software, který eviduje a zpracovává data pro určitou potřebu — například školní matrika, rezervační systém nebo e-shop. K datům přistupují různí uživatelé v různých rolích (např. žák, učitel, rodič, zákazník, administrátor), přičemž každá role má nastavená jiná přístupová práva (co může vidět, vkládat nebo upravovat). Umět posoudit, k čemu systém slouží, kdo a jak v něm s daty pracuje a zda je systém pro svůj účel opravdu užitečný, patří k základní digitální gramotnosti.
     rvp:
-      - kod: INF-INF-003-ZV9-008
+      - kod: INF-INF-003-ZV9-009
         vystup: Posoudí účel a užitečnost informačních systémů, které používá.
     cile:
       - uroven: porozumeni
@@ -3925,7 +3925,7 @@ concepts:
     vrstva: navazujici
     popis: Skutečná data jsou „špinavá" — chybí hodnoty, opakují se, jsou v různých formátech. Jejich úklid zabere většinu práce a je nudný, ale bez něj vyjde ze sebelepší analýzy nesmysl.
     rvp:
-      - kod: INF-INF-003-ZV9-010
+      - kod: INF-INF-003-ZV9-011
         vystup: v evidenci dat nastavuje zobrazení dat a používá funkce pro automatické zpracování dat s cílem řešit potřeby uživatelů
     cile:
       - uroven: porozumeni
@@ -4511,9 +4511,9 @@ concepts:
     vrstva: navazujici
     popis: 'Appky si pamatují data (databáze) a musí poznat, kdo je kdo (autentizace — přihlašování). S tím přichází i odpovědnost: chránit hesla a osobní údaje uživatelů.'
     rvp:
-      - kod: INF-INF-003-ZV9-009
+      - kod: INF-INF-003-ZV9-010
         vystup: pro řešení problému vytvoří tabulku evidence dat a stanoví pravidla pro práci se záznamy
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: aplikace
@@ -5287,7 +5287,7 @@ concepts:
     vrstva: navazujici
     popis: 'Krok dál za micro:bit: Arduino tě přiblíží skutečné elektronice (nepájivé pole, víc senzorů), Raspberry Pi je plnohodnotný malý počítač s Linuxem pro náročnější projekty.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
     cile:
       - uroven: porozumeni
@@ -5313,7 +5313,7 @@ concepts:
     vrstva: navazujici
     popis: Když se k desce přidá podvozek a motory (micro:bit + Maqueen, Lego Spike), vznikne pohyblivý robot. Sleduje čáru, vyhýbá se překážkám — a spojuje programování s pohybem v reálném světě.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
     cile:
       - uroven: aplikace
@@ -5339,7 +5339,7 @@ concepts:
     vrstva: navazujici
     popis: 'Internet věcí (IoT): senzory posílají naměřená data po síti do cloudu, kde se zobrazí na přehledu (dashboardu). Tak funguje chytrá domácnost i měření prostředí — spojení hardwaru, sítě a dat dohromady.'
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
     cile:
       - uroven: porozumeni
@@ -5396,7 +5396,7 @@ concepts:
     vrstva: navazujici
     popis: Zařízení si mohou posílat data bezdrátově — přes rádio nebo Bluetooth. Díky tomu spolu můžou „mluvit" (dva micro:bity, ovladač a robot) a tvořit propojené projekty.
     rvp:
-      - kod: INF-INF-004-ZV9-011
+      - kod: INF-INF-004-ZV9-012
         vystup: vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě na základě porozumění jejich vlastnostem
     cile:
       - uroven: porozumeni
@@ -5425,7 +5425,7 @@ concepts:
     vrstva: core
     popis: Silné a hlavně unikátní heslo ke každé službě je základ; zapamatuje ho za tebe správce hesel. Dvoufaktorové ověření (2FA) přidá druhý zámek (kód z aplikace), takže samotné uhádnuté heslo už útočníkovi nestačí.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: aplikace
@@ -5456,7 +5456,7 @@ concepts:
     vrstva: core
     popis: 'Nejčastější útok necílí na počítač, ale na člověka: podvodná zpráva tě má přimět kliknout nebo vyzradit heslo. Poznat naléhavý tón, falešný odkaz nebo „výhru" je důležitější než jakýkoli antivir.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: analyza
@@ -5488,7 +5488,7 @@ concepts:
     vrstva: core
     popis: Vším, co online děláš, za sebou necháváš stopu — příspěvky, lajky, polohu. Vědět, co po tobě zůstává a jak to omezit (nastavení soukromí, míň sdílet), je základ ochrany sebe sama.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: porozumeni
@@ -5519,7 +5519,7 @@ concepts:
     vrstva: core
     popis: 'Praktická pravidla každodenního bezpečí: rozmyslet, co sdílím a s kým, nastavit soukromí v aplikacích, nepřidávat neznámé. Většina problémů začíná chováním, ne technikou.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: aplikace
@@ -5553,7 +5553,7 @@ concepts:
     vrstva: core
     popis: 'Návyky, které tě ochrání před většinou hrozeb: aktualizovat systém i appky, instalovat jen z ověřených zdrojů, zálohovat a zabezpečit zařízení podle toho, co ti reálně hrozí.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: aplikace
@@ -5584,7 +5584,7 @@ concepts:
     vrstva: navazujici
     popis: Šifrování promění data v nečitelnou změť pro každého, kdo nemá klíč. Zámeček a „https" v adrese znamená, že spojení k webu je šifrované; end-to-end šifrování (třeba v messengerech) zajistí, že zprávu přečte jen příjemce.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: porozumeni
@@ -5617,7 +5617,7 @@ concepts:
     vrstva: navazujici
     popis: 'Přehled hrozeb, se kterými se lze setkat: malware (škodlivý program), ransomware (zašifruje data a žádá výkupné) a další. Vědět, jak se šíří, pomáhá se jim vyhnout.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: porozumeni
@@ -5647,7 +5647,7 @@ concepts:
     vrstva: navazujici
     popis: 'AI posunula podvody na novou úroveň: deepfake video, naklonovaný hlas známého člověka nebo dokonalý phishing bez chyb. Stará rada „poznáš to podle špatné češtiny" už neplatí — nová obrana je ověřit si to jinou cestou.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: analyza
@@ -5681,7 +5681,7 @@ concepts:
     vrstva: navazujici
     popis: Vydírání intimními fotkami — dnes i falešnými, vytvořenými AI. Mimořádně citlivé a aktuální riziko pro nezletilé; klíčové je vědět, že v tom oběť není sama a komu se svěřit, ne mlčet ze studu.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: porozumeni
@@ -5713,7 +5713,7 @@ concepts:
     vrstva: navazujici
     popis: Když ti „kamarád" píše o peníze nebo „banka" chce heslo, ověř si to jinou cestou — zavolej, zeptej se napřímo. Zdravá skepse a zvyk ověřovat (prebunking) je nejlepší obrana proti podvodům, které vypadají dokonale.
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: aplikace
@@ -5744,7 +5744,7 @@ concepts:
     vrstva: navazujici
     popis: 'Pro zvídavé: jak se chrání sítě a jak přemýšlí útočník. Soutěže typu CTF (Capture the Flag) učí etické hackování hravou formou — bezpečnost zevnitř, na cvičných úlohách.'
     rvp:
-      - kod: INF-INF-004-ZV9-012
+      - kod: INF-INF-004-ZV9-013
         vystup: navrhne základní způsoby zabezpečení zařízení a systémů, se kterými pracuje, na základě posouzení rizik ztráty, poškození či zneužití dat
     cile:
       - uroven: porozumeni

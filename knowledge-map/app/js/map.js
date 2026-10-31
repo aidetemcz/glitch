@@ -1,7 +1,8 @@
 /* ==========================================================================
    Mapa informatických konceptů — interaktivní graf (Cytoscape.js)
-   Dvojí seskupení konceptů: podle témat (default) nebo podle okruhů RVP.
-   Data: data/Informatika/knowledge-map.yaml · schéma: ../structure.md
+   Pohledy: koncepty podle oblastí (default) nebo digitální kompetence;
+   pohled „RVP Informatika" ukazuje přímo očekávané výsledky učení z RVP.
+   Data: data/Informatika/knowledge-map.yaml + rvp.json (build-rvp.py) · schéma: ../structure.md
    ========================================================================== */
 (function () {
   "use strict";
@@ -16,7 +17,6 @@
   };
   const VRSTVA = { core: "Core koncept", navazujici: "Navazující" };
   const VRSTVA_MAPY = { 0: "Základy a myšlení", 1: "Tvorba a programování", 2: "Umělá inteligence", 3: "Bezpečí a občanství" };
-  const NORVP = "__norvp__";
   const NOKDI = "__nokdi__";
   const LINEH = 1.35;   // řádkování textu v bublinách (CSS i výpočet fit)
   /* Barvy pozadí bere graf z CSS proměnných (map.css :root) — barevnost Tiny se mění na jednom místě */
@@ -136,7 +136,7 @@
   let supabaseOk = false;
   (async function boot() {
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=22")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=23")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -148,6 +148,23 @@
       init(data);
     } catch (e) { setStatus("Chyba načítání dat: " + e.message); }
   })();
+
+  /* RVP Informatika (výtah z RVP ZV, viz ../build-rvp.py) — načítá se na pozadí,
+     pohled „RVP" a odkazy z detailu konceptu na něj počkají */
+  let RVP = null, rvpByKod = {}, rvpRev = {}, rvpPromise = null;
+  function loadRvp() {
+    if (!rvpPromise) rvpPromise = fetch("data/Informatika/rvp.json?v=1")
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then((d) => {
+        RVP = d; rvpByKod = {}; rvpRev = {};
+        d.ovu.forEach((o) => { rvpByKod[o.kod] = o; });
+        // zpětné vazby: který výsledek informatiky odkazuje na kompetenci / gramotnost
+        d.ovu.forEach((o) => o.souvisi.forEach((k) => { if (rvpByKod[k]) (rvpRev[k] = rvpRev[k] || []).push(o.kod); }));
+        return d;
+      })
+      .catch((e) => { rvpPromise = null; throw e; });
+    return rvpPromise;
+  }
 
   const slug = (s) => String(s == null ? "" : s).toLowerCase().normalize("NFD")
     .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
@@ -189,15 +206,14 @@
       k.push({ id: NOKDI, nazev: "Nezařazeno (informatická teorie)", barva: "#ffffff" });
       return k;
     }
-    const a = DATA.areas.map((x) => ({ id: x.id, nazev: x.nazev, barva: x.barva, popis: x.popis, kod: x.kod }));
-    a.push({ id: NORVP, nazev: "Průřezové (digitální kompetence a postoje)", barva: "#ffffff", popis: "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky." });
-    return a;
+    return ((RVP && RVP.hubs) || []).map((h) => ({ id: h.id, nazev: h.nazev, barva: "#ffff00", popis: h.popis }));   // mode === "rvp"
   }
-  const groupOf = (c, mode) => mode === "tema" ? c.tema : mode === "kompetence" ? (c.kompetence || NOKDI) : (c.oblast || NORVP);
+  const groupOf = (c, mode) => mode === "tema" ? c.tema : mode === "kompetence" ? (c.kompetence || NOKDI) : null;
   const subId = (tema, pod) => "sub-" + tema + "-" + pod;
   const podoblastiOf = (temaId) => ((DATA.temata.find((t) => t.id === temaId) || {}).podoblasti) || [];
   const podoblastOf = (c) => c.podoblast ? podoblastiOf(c.tema).find((p) => p.id === c.podoblast) || null : null;
-  const GROUP_LABEL = { tema: "Oblast", oblast: "Okruh RVP", kompetence: "Digitální kompetence" };
+  const GROUP_LABEL = { tema: "Oblast", rvp: "RVP Informatika", kompetence: "Digitální kompetence" };
+  const LEAF = "[type='concept'], [type='ovu']";   // listy stromu: koncepty, v pohledu RVP očekávané výsledky učení
 
   const HUB_FONT = '600 22px "Space Grotesk", "Inter", sans-serif';
   const DESC_FONT = '500 14px "Darker Grotesque", "Inter", sans-serif';
@@ -219,7 +235,66 @@
     return wrapLabel(cutL, font, maxW, false).split("\n").slice(0, maxLines).join("\n");
   }
 
+  /* Bublina oblasti (hub) + její popis; společné pro koncepty i RVP */
+  function pushHub(nodes, g, n) {
+    const size = hubSize(n);
+    nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
+    // název nahoře, popis pod ním: výšky podle skutečného počtu řádků, ať se nepřekrývají
+    const title = wrapLabel(g.nazev, HUB_FONT, size * 0.72, false);
+    const titleH = title.split("\n").length * HUB_LH * 22, gap = 12;
+    const maxLines = Math.max(2, Math.floor((size * 0.8 - titleH - gap) / (DESC_LH * 14)));
+    const desc = hubDesc(g.popis, size, DESC_FONT, maxLines);
+    const descH = desc.split("\n").length * DESC_LH * 14, total = titleH + gap + descH;
+    nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
+      label: title, textw: Math.round(size * 0.72), tm: Math.round(-total / 2 + titleH / 2) } });
+    nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
+      label: desc, textw: Math.round(size * 0.7), tm: Math.round(total / 2 - descH / 2) } });
+  }
+  const SUB_SIZE = 96, OVU_SIZE = 118;
+  function pushSub(nodes, edges, gid, pid, nazev) {
+    nodes.push({ data: { id: subId(gid, pid), type: "sub", parent: "grp-" + gid, gid, pid } });
+    nodes.push({ data: { id: shubId(gid, pid), type: "subhub", parent: subId(gid, pid), gid, pid, size: SUB_SIZE,
+      label: wrapLabel(nazev, SUBHUB_FONT, SUB_SIZE * 0.74, false), textw: Math.round(SUB_SIZE * 0.74), tp: hubId(gid) } });
+    edges.push({ data: { id: "t-" + shubId(gid, pid), source: hubId(gid), target: shubId(gid, pid), etype: "tree" } });
+  }
+
+  /* Popisek výsledku učení v bublině: doslovný začátek znění, zkrácený na slovo tak,
+     aby se vešel písmem aspoň 9,5 px (celé znění je v detailu). */
+  function ovuLabel(txt, size) {
+    const words = String(txt || "").replace(/[.\s]+$/, "").split(/\s+/);
+    for (let n = words.length; n >= 3; n--) {
+      const l = words.slice(0, n).join(" ").replace(/[,;:–-]+$/, "") + (n < words.length ? "…" : "");
+      if (fitFont(l, size) >= 9.5) return l;
+    }
+    return words.slice(0, 3).join(" ") + "…";
+  }
+  const ovuNodeId = (kod) => "ovu-" + kod;
+
+  /* Pohled „RVP Informatika": čtyři velké bubliny (OVU 1. a 2. stupně, klíčové kompetence,
+     gramotnosti), střední bubliny = tematické okruhy / kompetence / gramotnosti, listy = OVU */
+  function buildRvpElements() {
+    const nodes = [], edges = [];
+    RVP.hubs.forEach((h) => {
+      const leaves = RVP.ovu.filter((o) => o.hub === h.id);
+      pushHub(nodes, h, leaves.length);
+      h.subs.forEach((s) => pushSub(nodes, edges, h.id, s.id, s.nazev));
+      leaves.forEach((o) => {
+        const label = ovuLabel(o.zneni, OVU_SIZE), fs = fitFont(label, OVU_SIZE), textw = Math.round(OVU_SIZE * 0.72);
+        const font = "400 " + fs + 'px "Inter", "Segoe UI", sans-serif';
+        nodes.push({ data: {
+          id: ovuNodeId(o.kod), type: "ovu", parent: subId(h.id, o.sub), gid: h.id, pid: o.sub,
+          strana: h.id === "kk" || h.id === "zg" ? "vazba" : "inf",
+          label: wrapLabel(label, font, textw * 0.95, false), size: OVU_SIZE, textw, fontsize: fs,
+          tp: shubId(h.id, o.sub), kod: o.kod, _o: o
+        }});
+        edges.push({ data: { id: "t-" + ovuNodeId(o.kod), source: shubId(h.id, o.sub), target: ovuNodeId(o.kod), etype: "tree" } });
+      });
+    });
+    return [...nodes, ...edges];
+  }
+
   function buildElements(mode) {
+    if (mode === "rvp") return buildRvpElements();
     const groups = groupDefs(mode);
     const conceptIds = new Set(DATA.concepts.map((c) => c.id));
     const sameSub = (a, b) => mode !== "tema" || ((podoblastOf(a) || {}).id === (podoblastOf(b) || {}).id);
@@ -248,29 +323,9 @@
 
     const nodes = [];
     // téma / oblast = velká bublina (hub) s názvem a popisem; neviditelný rodič drží filtry
-    groups.forEach((g) => {
-      const n = DATA.concepts.filter((c) => groupOf(c, mode) === g.id).length;
-      const size = hubSize(n);
-      nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
-      // název nahoře, popis pod ním: výšky podle skutečného počtu řádků, ať se nepřekrývají
-      const title = wrapLabel(g.nazev, HUB_FONT, size * 0.72, false);
-      const titleH = title.split("\n").length * HUB_LH * 22, gap = 12;
-      const maxLines = Math.max(2, Math.floor((size * 0.8 - titleH - gap) / (DESC_LH * 14)));
-      const desc = hubDesc(g.popis, size, DESC_FONT, maxLines);
-      const descH = desc.split("\n").length * DESC_LH * 14, total = titleH + gap + descH;
-      nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
-        label: title, textw: Math.round(size * 0.72), tm: Math.round(-total / 2 + titleH / 2) } });
-      nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
-        label: desc, textw: Math.round(size * 0.7), tm: Math.round(total / 2 - descH / 2) } });
-    });
+    groups.forEach((g) => pushHub(nodes, g, DATA.concepts.filter((c) => groupOf(c, mode) === g.id).length));
     // podoblasti tématu = střední bubliny navázané na téma (jen v pohledu Témata)
-    const SUB_SIZE = 96;
-    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => {
-      nodes.push({ data: { id: subId(t.id, p.id), type: "sub", parent: "grp-" + t.id, gid: t.id, pid: p.id, popis: p.popis } });
-      nodes.push({ data: { id: shubId(t.id, p.id), type: "subhub", parent: subId(t.id, p.id), gid: t.id, pid: p.id, size: SUB_SIZE,
-        label: wrapLabel(p.nazev, SUBHUB_FONT, SUB_SIZE * 0.74, false), textw: Math.round(SUB_SIZE * 0.74), tp: hubId(t.id) } });
-      edges.push({ data: { id: "t-" + shubId(t.id, p.id), source: hubId(t.id), target: shubId(t.id, p.id), etype: "tree" } });
-    }));
+    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => pushSub(nodes, edges, t.id, p.id, p.nazev)));
     const byId = byIdAll;
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
@@ -355,6 +410,15 @@
         }},
         { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
         { selector: "node[vrstva='navazujici']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        // očekávaný výsledek učení (pohled RVP): informatika = plná bílá, provázaná kompetence / gramotnost = obrys
+        { selector: "node[type='ovu']", style: {
+          "shape": "ellipse", "width": "data(size)", "height": "data(size)",
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
+          "text-valign": "center", "text-halign": "center", "line-height": LINEH,
+          "font-size": "data(fontsize)", "font-weight": "400",
+          "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
+        }},
+        { selector: "node[type='ovu'][strana='vazba']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
         { selector: "edge[etype='prereq']", style: {
           "line-color": "rgba(255,255,255,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
           "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.6)", "arrow-scale": 0.9
@@ -365,7 +429,8 @@
         { selector: "edge.nbedge", style: { "line-color": "#ffff00", "width": 2.4, "target-arrow-color": "#ffff00", "opacity": 1, "z-index": 50 } },
         { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
-        { selector: "node[type='concept']:selected, node[type='hub']:selected, node[type='subhub']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node[type='concept']:selected, node[type='ovu']:selected, node[type='hub']:selected, node[type='subhub']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node[type='ovu'][strana='inf']:selected", style: { "background-color": "#ffff00", "border-width": 0 } },
         { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
         { selector: ".filtered", style: { "display": "none" } },
@@ -437,7 +502,13 @@
       if (v === "3d") { enter3D(); return; }
       const was3d = view3d;
       if (was3d) exit3D();
-      if (v !== viewMode) render(v);
+      if (v === viewMode) return;
+      if (v === "rvp" && !RVP) {
+        setStatus("Načítám RVP…");
+        loadRvp().then(() => { if (!view3d) render("rvp"); }, (e) => setStatus("RVP se nepodařilo načíst: " + e.message));
+        return;
+      }
+      render(v);
     }));
 
     /* breadcrumb pro hloubkové ponoření (překryv nad grafem) */
@@ -452,6 +523,7 @@
       const t = evt.target.data("type");
       if (t === "micro") { openMicroDetail(evt.target.data("_m")); return; }
       if (t === "concept" && !drillId) { enterIso(evt.target); return; }
+      if (t === "ovu") { openOvuDetail(evt.target.data("_o")); return; }
       openDetail(evt.target);
     });
     initIso();
@@ -467,7 +539,16 @@
     // fonty bublin témat (Space Grotesk / Darker Grotesque) ať jsou načtené, než se popisky vykreslí
     const go = () => render("tema");
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
-    setStatus(data.concepts.length + " konceptů · " + data.temata.length + " oblastí · " + data.areas.length + " okruhů RVP");
+    setStatus(statusText("tema"));
+    loadRvp().catch(() => {});   // na pozadí: detail konceptu pak ukáže aktuální znění RVP a odkaz do pohledu RVP
+  }
+
+  function statusText(mode) {
+    if (mode === "rvp" && RVP) {
+      const p = RVP.meta.pocty;
+      return (p.ovu1 + p.ovu2) + " výsledků učení Informatiky · " + p.kk + " klíčových kompetencí · " + p.zg + " gramotností";
+    }
+    return DATA.concepts.length + " konceptů · " + DATA.temata.length + " oblastí";
   }
 
   /* ---------- Vykreslení režimu ---------- */
@@ -482,6 +563,9 @@
     cy.add(buildElements(mode));
     buildGroupFilter(mode);
     document.getElementById("group-label").textContent = GROUP_LABEL[mode] || "Skupina";
+    document.getElementById("controls").dataset.view = mode;
+    document.getElementById("search").placeholder = mode === "rvp" ? "Hledej výsledek učení…" : "Hledej koncept…";
+    if (DATA) setStatus(statusText(mode));
     radialLayout();
     applyFilters();
     cy.fit(cy.nodes(":visible"), 40);
@@ -569,11 +653,11 @@
       const discR = {}, subPos = {};
       g.children("[type='sub']").forEach((sub) => {
         const shub = sub.children("[type='subhub']");
-        const t = layoutTree(shub, sub.descendants("[type='concept']"), sizeR);
+        const t = layoutTree(shub, sub.descendants(LEAF), sizeR);
         discR[shub.id()] = t.radius; subPos[shub.id()] = t.pos;
       });
       // téma: děti = disky podoblastí + koncepty mimo podoblasti (a jejich řetězy)
-      const members = g.children("[type='concept']").union(g.children("[type='sub']").children("[type='subhub']"));
+      const members = g.children(LEAF).union(g.children("[type='sub']").children("[type='subhub']"));
       const rOf = (n) => discR[n.id()] != null ? discR[n.id()] : sizeR(n);
       const t = layoutTree(hub, members, rOf);
       Object.assign(pos, t.pos);
@@ -596,16 +680,16 @@
      s přestřelením (bounce). Cílové pozice už jsou spočítané; animace jen k nim doletí. */
   function burstIn() {
     const bb = cy.nodes(":visible").boundingBox(), cx = (bb.x1 + bb.x2) / 2, cy0 = (bb.y1 + bb.y2) / 2;
-    const target = {}; cy.nodes("[type='hub'], [type='subhub'], [type='concept']").forEach((n) => target[n.id()] = Object.assign({}, n.position()));
+    const target = {}; cy.nodes("[type='hub'], [type='subhub'], " + LEAF).forEach((n) => target[n.id()] = Object.assign({}, n.position()));
     const EASE = "cubic-bezier(0.34, 1.56, 0.64, 1)";   // přestřelení = bounce (ease-out-back)
     cy.batch(() => {
       cy.nodes("[type='hub']").forEach((h) => h.position({ x: cx, y: cy0 }));
-      cy.nodes("[type='subhub'], [type='concept']").forEach((n) => {
+      cy.nodes("[type='subhub'], " + LEAF).forEach((n) => {
         const h = target[hubId(n.data("gid"))]; n.position({ x: h.x, y: h.y });
       });
     });
     cy.nodes("[type='hub']").forEach((h) => h.animate({ position: target[h.id()] }, { duration: 650, easing: EASE }));
-    cy.nodes("[type='subhub'], [type='concept']").forEach((n) => {
+    cy.nodes("[type='subhub'], " + LEAF).forEach((n) => {
       // vzdálenější od bubliny tématu letí později
       const h = target[hubId(n.data("gid"))], t = target[n.id()];
       const delay = 300 + Math.min(600, Math.hypot(t.x - h.x, t.y - h.y) * 0.9);
@@ -624,7 +708,7 @@
       const n = e.target, p = n.position(); if (!last) { last = Object.assign({}, p); return; }
       const dx = p.x - last.x, dy = p.y - last.y; last = Object.assign({}, p);
       const grp = n.data("type") === "hub" ? cy.getElementById("grp-" + n.data("gid")) : cy.getElementById(subId(n.data("gid"), n.data("pid")));
-      grp.descendants("[type='concept'], [type='subhub']").not(n).shift({ x: dx, y: dy });
+      grp.descendants(LEAF + ", [type='subhub']").not(n).shift({ x: dx, y: dy });
     });
     cy.on("free", "node[type='hub'], node[type='subhub']", () => { last = null; });
   }
@@ -649,12 +733,13 @@
           (tg.size === 0 || (c.tagy || []).some((t) => tg.has(t)));
         n.toggleClass("filtered", !vis);
       });
+      cy.nodes("[type='ovu']").forEach((n) => n.toggleClass("filtered", !gr.has(n.data("gid"))));
       cy.nodes("[type='group']").forEach((g) => {
-        const empty = g.descendants("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0;
+        const empty = g.descendants(LEAF).filter((k) => !k.hasClass("filtered")).length === 0;
         g.toggleClass("filtered", empty || !gr.has(g.data("gid")));
       });
       cy.nodes("[type='sub']").forEach((s) => {
-        s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0);
+        s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children(LEAF).filter((k) => !k.hasClass("filtered")).length === 0);
       });
       cy.nodes("[type='hub'], [type='hubdesc'], [type='subhub']").forEach((h) => h.toggleClass("filtered", h.parent().hasClass("filtered")));
       cy.edges().forEach((e) => e.toggleClass("filtered", e.source().hasClass("filtered") || e.target().hasClass("filtered")));
@@ -675,11 +760,12 @@
   function applySearch() {
     const q = document.getElementById("search").value.trim().toLowerCase();
     cy.batch(() => {
-      cy.nodes("[type='concept']").forEach((n) => {
+      cy.nodes(LEAF).forEach((n) => {
         if (n.hasClass("filtered")) { n.removeClass("dim hl"); return; }
         if (!q) { n.removeClass("dim hl"); return; }
-        const c = n.data("_c");
-        const hit = n.data("label").toLowerCase().includes(q) || (c && (c.popis || "").toLowerCase().includes(q));
+        const c = n.data("_c"), o = n.data("_o");
+        const hit = n.data("label").toLowerCase().includes(q) || (c && (c.popis || "").toLowerCase().includes(q)) ||
+          (o && (o.zneni + " " + o.kod).toLowerCase().includes(q));
         n.toggleClass("hl", hit); n.toggleClass("dim", !hit);
       });
       cy.edges().forEach((e) => {
@@ -722,7 +808,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/Informatika/o-mape.md?v=5")
+    fetch("data/Informatika/o-mape.md?v=6")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
@@ -1233,7 +1319,10 @@
   function openDetail(node) {
     editing = false;
     cy.$(":selected").unselect(); node.select();
-    if (node.data("type") === "group" || node.data("type") === "hub") {
+    if (viewMode === "rvp" && /^(group|hub|sub|subhub)$/.test(node.data("type"))) {
+      detailBody.innerHTML = rvpGroupHtml(node.data("gid"), /sub/.test(node.data("type")) ? node.data("pid") : null);
+      pinned = null; clearNb();
+    } else if (node.data("type") === "group" || node.data("type") === "hub") {
       detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
       pinned = null; clearNb();
     } else if (node.data("type") === "sub" || node.data("type") === "subhub") {
@@ -1244,7 +1333,7 @@
       pinned = node; focusNb(node);
       cy.animate({ fit: { eles: node.closedNeighborhood(), padding: 80 }, duration: 350 });
     }
-    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    bindPanelLinks();
     detail.classList.remove("hidden");
   }
 
@@ -1279,10 +1368,6 @@
       if (src.vystup) extra = `<div class="d-section"><h3>Očekávaný výstup KDI</h3><div class="d-rvp">${esc(typo(src.vystup))}</div></div>`;
       if (gid === NOKDI) fallback = "Ryzí informatická teorie — myšlení, primitiva programování, vnitřek infrastruktury, teorie AI.";
       else if (!src.popis) fallback = (DATA.meta && DATA.meta.kompetence_popis) || "";
-    } else {
-      src = DATA.areas.find((a) => a.id === gid) || {};
-      if (src.kod) meta = `<div class="d-meta"><span class="d-pill">${esc(src.kod)}</span></div>`;
-      if (gid === NORVP) fallback = "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky.";
     }
     return `
       <span class="d-badge" style="background:${bg};color:#000000">${esc(GROUP_LABEL[viewMode])}</span>
@@ -1315,7 +1400,10 @@
     const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
-      ? c.rvp.map((r) => r.kod
+      ? c.rvp.map((r) => r.kod && rvpByKod[r.kod]
+          ? `<div class="d-rvp"><button class="kod kod-link" data-ovu="${esc(r.kod)}" title="Otevřít v pohledu RVP Informatika">${esc(r.kod)}</button>${esc(typo(rvpByKod[r.kod].zneni))}` +
+            (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`
+        : r.kod
           ? `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${r.vystup ? esc(typo(r.vystup)) : '<span class="d-empty">znění výstupu doplnit</span>'}` +
             (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`
           // poznámka garanta bez kódu výstupu (např. „Bez samostatné přímé vazby")
@@ -1541,10 +1629,141 @@
   }
 
   // Detail konceptu bez manipulace s grafem (pro 3D pohled).
+  /* ==========================================================================
+     Pohled RVP Informatika — detail výsledku učení a bublin
+     ========================================================================== */
+  const escAttr = (x) => esc(x).replace(/"/g, "&quot;");
+  const rvpHub = (id) => (RVP && RVP.hubs.find((h) => h.id === id)) || { subs: [] };
+  // adresy v textu ilustrativních úloh (např. úložiště RVP) jako odkazy
+  const linkify = (h) => h.replace(/https?:\/\/[^\s"“”<]*[^\s"“”<.,;:)]/g,
+    (u) => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+
+  function blocksHtml(bl) {
+    let out = "", ul = false;
+    (bl || []).forEach((b) => {
+      const x = linkify(esc(typo(b.x)));
+      if (b.t === "li") { if (!ul) { out += '<ul class="r-ul">'; ul = true; } out += `<li>${x}</li>`; return; }
+      if (ul) { out += "</ul>"; ul = false; }
+      out += b.t === "h" ? `<div class="r-h">${x}</div>` : `<p class="r-p">${x}</p>`;
+    });
+    return out + (ul ? "</ul>" : "");
+  }
+
+  function ovuLink(k) {
+    const o = rvpByKod[k];
+    if (!o) return "";
+    return `<button class="r-link" data-ovu="${escAttr(k)}"><span class="r-kod">${esc(k)} · ${esc(o.stupen)}</span>${esc(typo(o.zneni))}</button>`;
+  }
+  const ovuList = (arr) => arr.length ? `<div class="r-links">${arr.map(ovuLink).join("")}</div>` : '<span class="d-empty">—</span>';
+  // výsledky na mapě, které s daným souvisejí (oběma směry) — dostanou žlutý prstenec
+  const ovuRelated = (o) => [...new Set([...o.souvisi, ...o.navaznost, ...(rvpRev[o.kod] || [])])].filter((k) => rvpByKod[k] && k !== o.kod);
+
+  function ovuHtml(o) {
+    const hub = rvpHub(o.hub), sub = hub.subs.find((s) => s.id === o.sub) || {};
+    const inf = o.hub === "ovu1" || o.hub === "ovu2";
+    const onMap = (arr) => arr.filter((k) => rvpByKod[k] && k !== o.kod);
+    const kk = onMap(o.souvisi).filter((k) => rvpByKod[k].hub === "kk");
+    const zg = onMap(o.souvisi).filter((k) => rvpByKod[k].hub === "zg");
+    const jinde = o.souvisi.filter((k) => !rvpByKod[k] && RVP.ext[k]);
+    const extHtml = jinde.length
+      ? jinde.map((k) => `<div class="d-rvp"><span class="kod">${esc(k)}</span>${esc(typo(RVP.ext[k].zneni))}<div class="d-rvp-note">${esc(RVP.ext[k].kde)}</div></div>`).join("")
+      : '<span class="d-empty">—</span>';
+    const koncepty = DATA.concepts.filter((c) => (c.rvp || []).some((r) => r.kod === o.kod));
+    const kHtml = koncepty.length
+      ? `<div class="d-links">${koncepty.map((c) => `<button class="d-link" data-concept="${escAttr(c.id)}">${esc(typo(c.nazev))}</button>`).join("")}</div>`
+      : '<span class="d-empty">zatím žádný koncept mapy</span>';
+    const uloh = (n) => n + " " + (n === 1 ? "úloha" : n < 5 ? "úlohy" : "úloh");
+    const uro = o.urovne.map((u) => `
+      <details class="r-uro"><summary>${esc(u.nazev)}${u.ilustrace.length ? `<span class="r-count">${uloh(u.ilustrace.length)}</span>` : ""}</summary>
+        <div class="r-body">${blocksHtml(u.bloky)}
+        ${u.ilustrace.map((il) => `<details class="r-il"><summary>${esc(typo(il.nazev))}</summary><div class="r-body">${blocksHtml(il.bloky)}` +
+          il.odkazy.map((a) => `<a class="r-a" href="${escAttr(a.h)}" target="_blank" rel="noopener">${esc(a.t)}</a>`).join("") + `</div></details>`).join("")}
+        </div>
+      </details>`).join("");
+    return `
+      <span class="d-badge d-badge-acc">${esc(hub.nazev)}</span> <span class="d-badge d-badge-sub">${esc(sub.plny || sub.nazev || "")}</span>
+      <h2 class="d-title r-title">${esc(typo(o.zneni))}</h2>
+      <div class="d-meta"><span class="d-pill">${esc(o.kod)}</span><span class="d-pill">${esc(o.stupen)}</span>${o.slozka ? `<span class="d-pill">${esc(o.slozka)}</span>` : ""}</div>
+      <div class="d-section"><h3>Popis a zdůvodnění</h3>${blocksHtml(o.popis) || '<span class="d-empty">—</span>'}</div>
+      <div class="d-section"><h3>Úrovně a ilustrativní úlohy</h3>${uro || '<span class="d-empty">—</span>'}</div>
+      ${inf ? `
+      <div class="d-section"><h3>Koncepty mapy</h3>${kHtml}</div>
+      <div class="d-section"><h3>Návaznost v informatice</h3>${ovuList(onMap(o.navaznost))}</div>
+      <div class="d-section"><h3>Souvisí — klíčové kompetence</h3>${ovuList(kk)}</div>
+      <div class="d-section"><h3>Souvisí — gramotnosti</h3>${ovuList(zg)}</div>
+      <div class="d-section"><h3>Souvisí — jiné obory a průřezová témata</h3>${extHtml}</div>`
+      : `<div class="d-section"><h3>Rozvíjí se v informatice</h3>${ovuList(rvpRev[o.kod] || [])}</div>`}`;
+  }
+
+  function rvpGroupHtml(gid, pid) {
+    const hub = rvpHub(gid), sub = pid ? hub.subs.find((s) => s.id === pid) : null;
+    const leaves = RVP.ovu.filter((o) => (sub ? o.sub === pid : o.hub === gid));
+    return `
+      <span class="d-badge d-badge-acc">${esc(sub ? hub.nazev : "RVP Informatika")}</span>
+      <h2 class="d-title">${esc(sub ? (sub.plny || sub.nazev) : hub.nazev)}</h2>
+      ${sub && sub.kod ? `<div class="d-meta"><span class="d-pill">${esc(sub.kod)}</span></div>` : ""}
+      ${paras(sub ? sub.popis : hub.popis)}
+      ${hub.vyber ? `<div class="d-rvp-note r-note">${esc(hub.vyber)}</div>` : ""}
+      <div class="d-section"><h3>Očekávané výsledky učení: ${leaves.length}</h3>${ovuList(leaves.map((o) => o.kod))}</div>
+      ${sub ? "" : `<div class="d-section"><h3>Zdroj</h3><div class="d-rvp-note">${esc(typo(RVP.meta.vydani))}</div></div>`}`;
+  }
+
+  function openOvuDetail(o) {
+    if (!o) return;
+    editing = false;
+    const n = cy.getElementById(ovuNodeId(o.kod));
+    cy.$(":selected").unselect();
+    if (n.nonempty()) n.select();
+    detailBody.innerHTML = ovuHtml(o);
+    bindPanelLinks();
+    const rel = ovuRelated(o);
+    cy.batch(() => {
+      cy.elements().removeClass("nbedge nbon");
+      rel.forEach((k) => cy.getElementById(ovuNodeId(k)).addClass("nbon"));
+    });
+    pinned = n.nonempty() ? n : null;
+    detail.classList.remove("hidden"); detail.scrollTop = 0;
+  }
+
+  /* odkazy v pravém panelu: koncept na mapě, výsledek RVP, koncept z pohledu RVP */
+  function bindPanelLinks() {
+    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    detailBody.querySelectorAll("[data-ovu]").forEach((b) => b.addEventListener("click", () => goOvu(b.dataset.ovu)));
+    detailBody.querySelectorAll("[data-concept]").forEach((b) => b.addEventListener("click", () => goConcept(b.dataset.concept)));
+  }
+  function switchView(v) {
+    document.querySelectorAll(".vt-btn").forEach((x) => x.classList.toggle("active", x.dataset.view === v));
+    if (view3d) exit3D();
+    if (v !== viewMode) render(v, { noAnim: true });
+  }
+  // zajistí, že skupina uzlu není vypnutá ve filtru (jinak by proklik nikam nevedl)
+  function unfilterGroup(gid) {
+    const chip = document.querySelector(`.chip[data-filter='group'][data-val='${gid}']`);
+    if (chip && chip.getAttribute("aria-pressed") !== "true") { chip.setAttribute("aria-pressed", "true"); applyFilters(); }
+  }
+  function goOvu(kod) {
+    loadRvp().then(() => {
+      const o = rvpByKod[kod];
+      if (!o) return;
+      switchView("rvp");
+      unfilterGroup(o.hub);
+      const n = cy.getElementById(ovuNodeId(kod));
+      if (n.nonempty()) cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 0.9) }, { duration: 300 });
+      openOvuDetail(o);
+    }, (e) => setStatus("RVP se nepodařilo načíst: " + e.message));
+  }
+  function goConcept(id) {
+    const c = conceptById[id];
+    if (!c) return;
+    switchView("tema");
+    unfilterGroup(c.tema);
+    focusNode(id);
+  }
+
   function showConceptPanel(c) {
     editing = false;
     detailBody.innerHTML = conceptHtml(c);
-    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    bindPanelLinks();
     detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
 
@@ -1752,7 +1971,7 @@
     if (raf3d) cancelAnimationFrame(raf3d);
     if (cvs3d) cvs3d.style.display = "none";
     document.getElementById("cy").style.visibility = "visible";
-    setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " oblastí · " + DATA.areas.length + " okruhů RVP");
+    setStatus(statusText(viewMode));
   }
 
 
@@ -1797,6 +2016,8 @@
         else if (a === "level") openIsoBox(b.dataset.level);
         return;
       }
+      const ov = e.target.closest("[data-ovu]");    // kód RVP v boxu → pohled RVP Informatika
+      if (ov) { closeIsoBox(true); exitIso(true); goOvu(ov.dataset.ovu); return; }
       const f = e.target.closest("[data-focus]");   // odkaz na jiný koncept v boxu → přepnout izometrii na něj
       if (f) { const n = cy.getElementById(f.dataset.focus); if (n.nonempty() && n.data("type") === "concept") { closeIsoBox(true); enterIso(n); } return; }
       if (isoBoxOpen()) { closeIsoBox(); return; }
