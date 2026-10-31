@@ -1,10 +1,10 @@
 /* Mapa znalostí — styl (Glitch design language) */
 :root {
-  --c-black: #000; --c-dark: #1a1a1a; --c-panel: #202020;
+  --c-black: #000; --c-dark: #2b1d3c; --c-panel: #30213f;   /* odstíny fialové Tiny pro panely a vnitřní prvky */
   --c-white: #fff; --c-grey-15: #d0d0d0; --c-grey-50: #747474;
   --c-yellow: #ffff00; --c-line: rgba(208,208,208,0.22);
   /* Pozadí mapy (plátno grafu + 3D) a výplň „dutých" uzlů — barevnost Tiny, jediné místo pro změnu */
-  --c-bg: #0a0a0c; --c-bg-node: #141416;
+  --c-bg: #241832; --c-bg-node: #2e2040;
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,7 +80,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .legend-line.dashed { border-top-style: dashed; }
 .legend-line.dotted { border-top-style: dotted; }
 .legend-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--c-white); }
-.legend-dot.ring { background: #0a0a0c; border: 1.6px solid var(--c-white); }
+.legend-dot.ring { background: var(--c-bg); border: 1.6px solid var(--c-white); }
 .legend-dot.big { width: 17px; height: 17px; }
 .legend-dot.yellow { background: var(--c-yellow); }
 .legend-dot.mid { width: 11px; height: 11px; margin: 0 3px; }
@@ -256,7 +256,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .km-iso.hidden { display: none; }
 .km-iso-svg { position: absolute; inset: 0; width: 100%; height: 100%; font-family: var(--font); }
 .iso-disc.core { fill: #ffffff; }
-.iso-disc.nav { fill: #0a0a0c; stroke: #ffffff; stroke-width: 1.8; }
+.iso-disc.nav { fill: var(--c-bg); stroke: #ffffff; stroke-width: 1.8; }
 .iso-label { font-weight: 500; pointer-events: none; }
 .iso-label.core { fill: #0a0a0c; }
 .iso-label.nav { fill: #ffffff; }
@@ -268,7 +268,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .iso-concept:hover .iso-disc.nav { stroke: var(--c-yellow); }
 .iso-line { stroke: #ffffff; stroke-width: 1; }
 .iso-tag { cursor: pointer; }
-.iso-tag rect { fill: #16161a; stroke: #ffffff; stroke-width: 1.2; transition: fill .15s ease; }
+.iso-tag rect { fill: var(--c-bg-node); stroke: #ffffff; stroke-width: 1.2; transition: fill .15s ease; }
 .iso-tag text { fill: #ffffff; font-size: 13px; font-weight: 500; }
 .iso-tag.active rect { fill: rgba(255,255,255,0.16); }
 .iso-tag:hover rect, .iso-tag.chosen rect { fill: var(--c-yellow); }
