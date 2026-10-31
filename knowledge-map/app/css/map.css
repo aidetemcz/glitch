@@ -260,9 +260,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .iso-label { font-weight: 500; pointer-events: none; }
 .iso-label.core { fill: #0a0a0c; }
 .iso-label.nav { fill: #ffffff; }
-.iso-layer ellipse { fill: rgba(0,0,0,0.001); stroke: #ffffff; stroke-width: 1.2; cursor: pointer; transition: fill .15s ease, stroke .15s ease; }
+.iso-layer ellipse { fill: rgba(0,0,0,0.001); stroke: var(--c-yellow); stroke-width: 1.2; cursor: pointer; transition: fill .15s ease, stroke .15s ease; }
 .iso-layer.active ellipse { stroke-width: 2.2; }
-.iso-layer:hover ellipse, .iso-layer.chosen ellipse { fill: rgba(255,255,0,0.18); stroke: var(--c-yellow); }
+.iso-layer:hover ellipse, .iso-layer.chosen ellipse { fill: rgba(255,255,0,0.22); stroke: var(--c-yellow); }
 .iso-concept { cursor: pointer; }
 .iso-concept:hover .iso-disc.core { fill: var(--c-yellow); }
 .iso-concept:hover .iso-disc.nav { stroke: var(--c-yellow); }
