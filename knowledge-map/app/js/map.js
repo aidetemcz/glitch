@@ -466,7 +466,11 @@
         stav: c.stav || "draft", tagy: c.tagy || [],
         size: sz, textw: sz, fontsize: fit.fs, tp, _c: c
       }});
+      // čára k rodiči ve stromu: k bublině skupiny / oblasti, nebo k nadřazenému konceptu
+      // (prerekvizity mají vlastní hranu „p-…" z cyklu výše, tu nezdvojujeme)
       if (!parentConcept) edges.push({ data: { id: "t-" + c.id, source: tp, target: c.id, etype: "tree" } });
+      else if (parentConcept === c.nadrazeny && !(c.prerekvizity || []).includes(parentConcept))
+        edges.push({ data: { id: "n-" + parentConcept + "-" + c.id, source: parentConcept, target: c.id, etype: "tree" } });
     });
     return [...nodes, ...edges];
   }
