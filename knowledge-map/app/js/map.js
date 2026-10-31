@@ -69,26 +69,104 @@
     return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#000000" : "#ffffff";
   }
 
-  /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem.
-     Konzervativní: širší odhad znaku + reálné řádkování + větší vnitřní okraj. */
-  function fitFont(label, size) {
-    const usableW = size * 0.72, usableH = size * 0.72;
-    const words = String(label).split(/\s+/);
-    const longest = words.reduce((m, w) => Math.max(m, w.length), 0);
-    for (let f = Math.max(10, Math.floor(size / 9)); f >= 5; f -= 0.5) {   // velká bublina = větší písmo
-      const charW = f * 0.60, lineH = f * LINEH;
-      if (longest * charW > usableW) continue;          // nejdelší slovo se musí vejít na šířku
-      const maxChars = Math.max(3, Math.floor(usableW / charW));
-      let lines = 1, cur = 0;
-      for (const w of words) {
-        if (cur === 0) cur = w.length;
-        else if (cur + 1 + w.length <= maxChars) cur += 1 + w.length;
-        else { lines++; cur = w.length; }
-      }
-      if (lines * lineH <= usableH) return f;
-    }
-    return 5;
+  /* ---------- Text do kruhu ----------
+     Každý řádek dostane šířku tětivy kruhu ve své výšce (minus vnitřní okraj),
+     takže blok textu kopíruje tvar bubliny. Jednoznakové předložky drží u dalšího
+     slova, složená slova se smí zlomit za spojovníkem (Logicko-|matematická).
+     Šířky slov se měří jednou pro každý font (cache), skládání je pak jen sčítání. */
+  const _wcache = new Map();
+  const unitW = (t, font) => {
+    const k = font + "|" + t; let w = _wcache.get(k);
+    if (w == null) { w = measureW(t, font); _wcache.set(k, w); }
+    return w;
+  };
+  function breakUnits(text) {
+    const out = [];
+    unitize(text).forEach((u) => {
+      const parts = u.replace(/([^\s-]{2,}-)(?=[^\s-]{2,})/g, "$1\u0001").split("\u0001");
+      parts.forEach((t, i) => out.push({ t, sp: i === parts.length - 1 }));   // sp = za jednotkou mezera
+    });
+    return out;
   }
+  // šířky řádků výšky lh poskládaných od `top` dolů v kruhu o poloměru R (střed v 0)
+  function chordSlots(top, n, lh, R) {
+    const out = [];
+    for (let i = 0, y = top; i < n; i++, y += lh) {
+      const e = Math.max(Math.abs(y), Math.abs(y + lh));    // užší z hran řádku
+      out.push(e >= R ? 0 : 2 * Math.sqrt(R * R - e * e));
+    }
+    return out;
+  }
+  // hladově plní řádky; ok = vše umístěno (když slova dojdou dřív, zbylé řádky odpadnou)
+  function flow(units, font, slots) {
+    const sp = unitW(" ", font), lines = [];
+    let i = 0;
+    for (const w of slots) {
+      let line = "", lw = 0;
+      while (i < units.length) {
+        const gap = line && units[i - 1].sp ? sp : 0, uw = unitW(units[i].t, font);
+        if (lw + gap + uw > w + 0.5) break;
+        line += (line && units[i - 1].sp ? " " : "") + units[i].t; lw += gap + uw; i++;
+      }
+      if (!line) { if (i === units.length) break; return { lines, used: i, ok: false }; }
+      lines.push(line);
+    }
+    return { lines, used: i, ok: i === units.length };
+  }
+  /* Krátký text (nadpis) přesně do n řádků: vyzkouší všechna rozdělení slov a vybere
+     nejvyrovnanější vůči šířkám kruhu (nahoře užší řádek, dole širší). */
+  function flowBalanced(units, font, slots) {
+    const n = slots.length, sp = unitW(" ", font);
+    if (units.length < n) return { lines: [], ok: false };
+    if (units.length > 12) return flow(units, font, slots);
+    const lineOf = (a, b) => {
+      let t = "", w = 0;
+      for (let i = a; i < b; i++) {
+        if (i > a && units[i - 1].sp) { t += " "; w += sp; }
+        t += units[i].t; w += unitW(units[i].t, font);
+      }
+      return { t, w };
+    };
+    let best = null;
+    const rec = (start, k, acc, minFill) => {
+      if (k === n - 1) {
+        const l = lineOf(start, units.length);
+        if (l.w > slots[k] + 0.5) return;
+        const f = Math.min(minFill, l.w / slots[k]);
+        if (!best || f > best.f) best = { f, lines: [...acc, l.t] };
+        return;
+      }
+      for (let end = start + 1; end <= units.length - (n - 1 - k); end++) {
+        const l = lineOf(start, end);
+        if (l.w > slots[k] + 0.5) break;
+        rec(end, k + 1, [...acc, l.t], Math.min(minFill, l.w / slots[k]));
+      }
+    };
+    rec(0, 0, [], 1);
+    return best ? { lines: best.lines, used: units.length, ok: true } : { lines: [], ok: false };
+  }
+
+  // celý text do kruhu: nejmenší počet řádků, při kterém se vejde (blok svisle na středu)
+  function circleLines(units, font, lh, R) {
+    for (let n = 1; n * lh <= 2 * R; n++) {
+      const r = flow(units, font, chordSlots(-n * lh / 2, n, lh, R));
+      if (r.ok) return r.lines;
+    }
+    return null;
+  }
+  // největší písmo z rozmezí <fmin, fmax>, při kterém se text celý vejde; null = nevejde se
+  function fitCircle(text, fontOf, R, fmax, fmin, lhRatio) {
+    const units = breakUnits(text);
+    for (let f = fmax; f >= fmin - 1e-9; f -= 0.5) {
+      const lines = circleLines(units, fontOf(f), f * lhRatio, R);
+      if (lines) return { fs: f, label: lines.join("\n") };
+    }
+    return null;
+  }
+  const innerR = (size, k) => size / 2 - Math.max(5, size * k);   // poloměr bez vnitřního okraje
+  const LEAF_FAMILY = '"Inter", "Segoe UI", sans-serif';
+  const leafFont = (f) => "400 " + f + "px " + LEAF_FAMILY;
+  const subFont = (f) => "600 " + f + 'px "Space Grotesk", "Inter", sans-serif';
 
   const statusEl = document.getElementById("status");
   const setStatus = (t) => { statusEl.textContent = t; statusEl.classList.toggle("hidden", !t); };
@@ -217,56 +295,93 @@
 
   const HUB_FONT = '600 22px "Space Grotesk", "Inter", sans-serif';
   const DESC_FONT = '500 14px "Darker Grotesque", "Inter", sans-serif';
-  const SUBHUB_FONT = '600 12px "Space Grotesk", "Inter", sans-serif';
   const HUB_LH = 1.15, DESC_LH = 0.85;   // řádkování názvu a popisu tématu (popis o třetinu těsnější)
   const hubId = (gid) => "hub-" + gid, hubdId = (gid) => "hubd-" + gid, shubId = (tema, pid) => "shub-" + tema + "-" + pid;
-  // velikost bubliny tématu podle počtu konceptů; popis = začátek textu, co se vejde
+  // velikost bubliny tématu podle počtu konceptů
   const hubSize = (n) => Math.min(340, Math.round(230 + 1.6 * n));
-  function hubDesc(popis, size, font, maxLines) {
-    const maxW = size * 0.68;
+
+  /* Název a popis velké bubliny jako jeden blok do kruhu: název nahoře, popis pod ním,
+     řádky podle tvaru kruhu. Popis, který se nevejde, se utne na konci věty (nebo „…"). */
+  const HUB_FS = 22, DESC_FS = 14, HUB_GAP = 10;
+  function hubLayout(nazev, popis, size) {
+    const R = innerR(size, 0.075), lhT = HUB_FS * HUB_LH, lhD = DESC_FS * DESC_LH;
+    const T = breakUnits(nazev);
+    const place = (D, nt, nd) => {
+      const H = nt * lhT + (nd ? HUB_GAP + nd * lhD : 0), top = -H / 2;
+      if (H > 2 * R) return null;
+      const t = flowBalanced(T, HUB_FONT, chordSlots(top, nt, lhT, R));
+      if (!t.ok) return null;
+      const dTop = top + nt * lhT + HUB_GAP;
+      const d = nd ? flow(D, DESC_FONT, chordSlots(dTop, nd, lhD, R)) : { lines: [], used: 0, ok: !D.length };
+      return { t, d, tm: top + nt * lhT / 2, dm: dTop + d.lines.length * lhD / 2 };
+    };
+    // vše se vejde: nejmenší počet řádků (blok co nejmenší, na středu)
+    const fitAll = (D) => {
+      for (let nt = 1; nt <= 4; nt++) for (let nd = D.length ? 1 : 0; nd <= 40; nd++) {
+        const r = place(D, nt, nd);
+        if (r && r.d.ok) return r;
+      }
+      return null;
+    };
     const text = String(popis || "").replace(/\s+/g, " ").trim();
-    const lines = wrapLabel(text, font, maxW, false).split("\n");
-    if (lines.length <= maxLines) return lines.join("\n");
-    let cutL = lines.slice(0, maxLines).join(" ");
-    cutL = cutL.replace(/[,;:\s]+\S*$/, "");                 // utnout na slově
-    const m = cutL.match(/^[\s\S]*[.!?](?=\s|$)/);          // raději na konci věty
-    if (m && m[0].length > cutL.length * 0.55) cutL = m[0];
-    else cutL = cutL.replace(/[.,;:]?$/, "…");
-    return wrapLabel(cutL, font, maxW, false).split("\n").slice(0, maxLines).join("\n");
+    let D = breakUnits(text), res = fitAll(D);
+    if (!res && D.length) {
+      // nevejde se celý: kolik slov se vejde při nejlépe zaplněném kruhu
+      let best = 0;
+      for (let nt = 1; nt <= 4; nt++) for (let nd = 1; nd <= 40; nd++) {
+        const r = place(D, nt, nd);
+        if (r && r.d.lines.length === nd) best = Math.max(best, r.d.used);
+      }
+      const joined = (k) => D.slice(0, k).reduce((a, u, i) => a + (i && D[i - 1].sp ? " " : "") + u.t, "");
+      let cut = joined(best);
+      const m = cut.match(/^[\s\S]*[.!?](?=\s|$)/);                  // raději konec věty
+      const ell = (t) => {                                              // „…" bez neuzavřené závorky
+        if ((t.match(/\(/g) || []).length > (t.match(/\)/g) || []).length) t = t.slice(0, t.lastIndexOf("("));
+        return t.replace(/[,;:\s–-]+$/, "") + "…";
+      };
+      cut = m && m[0].length > cut.length * 0.55 ? m[0] : ell(cut);
+      for (let k = best; k > 0 && !res; k--) {
+        res = fitAll(breakUnits(cut));
+        if (!res) cut = ell(joined(k - 1));
+      }
+    }
+    if (!res) res = { t: { lines: [nazev] }, d: { lines: [] }, tm: 0, dm: 0 };
+    return { title: res.t.lines.join("\n"), desc: res.d.lines.join("\n"), tm: Math.round(res.tm), dm: Math.round(res.dm), textw: Math.ceil(2 * R) + 4 };
   }
 
   /* Bublina oblasti (hub) + její popis; společné pro koncepty i RVP */
   function pushHub(nodes, g, n) {
-    const size = hubSize(n);
+    const size = hubSize(n), L = hubLayout(g.nazev, g.popis, size);
     nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
-    // název nahoře, popis pod ním: výšky podle skutečného počtu řádků, ať se nepřekrývají
-    const title = wrapLabel(g.nazev, HUB_FONT, size * 0.72, false);
-    const titleH = title.split("\n").length * HUB_LH * 22, gap = 12;
-    const maxLines = Math.max(2, Math.floor((size * 0.8 - titleH - gap) / (DESC_LH * 14)));
-    const desc = hubDesc(g.popis, size, DESC_FONT, maxLines);
-    const descH = desc.split("\n").length * DESC_LH * 14, total = titleH + gap + descH;
     nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
-      label: title, textw: Math.round(size * 0.72), tm: Math.round(-total / 2 + titleH / 2) } });
+      label: L.title, textw: L.textw, tm: L.tm } });
     nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
-      label: desc, textw: Math.round(size * 0.7), tm: Math.round(total / 2 - descH / 2) } });
+      label: L.desc, textw: L.textw, tm: L.dm } });
   }
-  const SUB_SIZE = 96, OVU_SIZE = 118;
+  /* Střední bublina: název do kruhu písmem 10–12,5 px; když se nevejde, bublina povyroste */
+  function subFit(nazev) {
+    for (let d = 96; d <= 140; d += 4) {
+      const f = fitCircle(nazev, subFont, innerR(d, 0.1), 12.5, 10, 1.2);
+      if (f) return Object.assign({ size: d, textw: Math.ceil(d) }, f);
+    }
+    return { size: 140, fs: 10, label: wrapLabel(nazev, subFont(10), 100, false), textw: 140 };
+  }
   function pushSub(nodes, edges, gid, pid, nazev) {
+    const f = subFit(nazev);
     nodes.push({ data: { id: subId(gid, pid), type: "sub", parent: "grp-" + gid, gid, pid } });
-    nodes.push({ data: { id: shubId(gid, pid), type: "subhub", parent: subId(gid, pid), gid, pid, size: SUB_SIZE,
-      label: wrapLabel(nazev, SUBHUB_FONT, SUB_SIZE * 0.74, false), textw: Math.round(SUB_SIZE * 0.74), tp: hubId(gid) } });
+    nodes.push({ data: { id: shubId(gid, pid), type: "subhub", parent: subId(gid, pid), gid, pid, size: f.size,
+      label: f.label, fontsize: f.fs, textw: f.textw, tp: hubId(gid) } });
     edges.push({ data: { id: "t-" + shubId(gid, pid), source: hubId(gid), target: shubId(gid, pid), etype: "tree" } });
   }
 
-  /* Popisek výsledku učení v bublině: doslovný začátek znění, zkrácený na slovo tak,
-     aby se vešel písmem aspoň 9,5 px (celé znění je v detailu). */
-  function ovuLabel(txt, size) {
-    const words = String(txt || "").replace(/[.\s]+$/, "").split(/\s+/);
-    for (let n = words.length; n >= 3; n--) {
-      const l = words.slice(0, n).join(" ").replace(/[,;:–-]+$/, "") + (n < words.length ? "…" : "");
-      if (fitFont(l, size) >= 9.5) return l;
+  /* Výsledek učení v bublině: celé doslovné znění. Bublina je nejmenší, do které se text
+     vejde písmem 10,5 px; krátké výsledky pak dostanou písmo až 12 px. */
+  function ovuFit(text) {
+    for (let d = 84; d <= 240; d += 4) {
+      const R = innerR(d, 0.1);
+      if (fitCircle(text, leafFont, R, 10.5, 10.5, LINEH)) return Object.assign({ size: d }, fitCircle(text, leafFont, R, 12, 10.5, LINEH));
     }
-    return words.slice(0, 3).join(" ") + "…";
+    return Object.assign({ size: 240 }, fitCircle(text, leafFont, innerR(240, 0.1), 10, 7, LINEH) || { fs: 7, label: text });
   }
   const ovuNodeId = (kod) => "ovu-" + kod;
 
@@ -279,12 +394,11 @@
       pushHub(nodes, h, leaves.length);
       h.subs.forEach((s) => pushSub(nodes, edges, h.id, s.id, s.nazev));
       leaves.forEach((o) => {
-        const label = ovuLabel(o.zneni, OVU_SIZE), fs = fitFont(label, OVU_SIZE), textw = Math.round(OVU_SIZE * 0.72);
-        const font = "400 " + fs + 'px "Inter", "Segoe UI", sans-serif';
+        const f = ovuFit(o.zneni);
         nodes.push({ data: {
           id: ovuNodeId(o.kod), type: "ovu", parent: subId(h.id, o.sub), gid: h.id, pid: o.sub,
           strana: h.id === "kk" || h.id === "zg" ? "vazba" : "inf",
-          label: wrapLabel(label, font, textw * 0.95, false), size: OVU_SIZE, textw, fontsize: fs,
+          label: f.label, size: f.size, textw: f.size, fontsize: f.fs,
           tp: shubId(h.id, o.sub), kod: o.kod, _o: o
         }});
         edges.push({ data: { id: "t-" + ovuNodeId(o.kod), source: shubId(h.id, o.sub), target: ovuNodeId(o.kod), etype: "tree" } });
@@ -329,8 +443,9 @@
     const byId = byIdAll;
     DATA.concepts.forEach((c) => {
       const sz = sizeFor(c);
-      const fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
-      const font = '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif';
+      // název do kruhu: největší písmo do 13 px (malé bubliny 10 px), nejméně 6 px
+      const fit = fitCircle(c.nazev, leafFont, innerR(sz, 0.1), Math.max(10, Math.floor(sz / 9)), 6, LINEH)
+        || { fs: 6, label: wrapLabel(c.nazev, leafFont(6), sz * 0.8, false) };
       const sub = mode === "tema" && podoblastOf(c);
       // rodič ve stromu: první prerekvizita ze stejné skupiny (a podoblasti), jinak bublina podoblasti / tématu
       const gid = groupOf(c, mode);
@@ -338,9 +453,9 @@
       const tp = parentConcept || (sub ? shubId(c.tema, sub.id) : hubId(gid));
       nodes.push({ data: {
         id: c.id, type: "concept", parent: sub ? subId(c.tema, sub.id) : "grp-" + gid, gid,
-        label: wrapLabel(c.nazev, font, textw * 0.95, false), vrstva: c.vrstva,
+        label: fit.label, vrstva: c.vrstva,
         stav: c.stav || "draft", tagy: c.tagy || [],
-        size: sz, textw: textw, fontsize: fs, tp, _c: c
+        size: sz, textw: sz, fontsize: fit.fs, tp, _c: c
       }});
       if (!parentConcept) edges.push({ data: { id: "t-" + c.id, source: tp, target: c.id, etype: "tree" } });
     });
@@ -396,7 +511,7 @@
           "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center",
-          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "12px", "font-weight": "600", "line-height": 1.2
+          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "data(fontsize)", "font-weight": "600", "line-height": 1.2
         }},
         // vlákno od tématu / podoblasti ke kořenovým konceptům
         { selector: "edge[etype='tree']", style: {
@@ -406,7 +521,7 @@
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH,
-          "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
+          "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5, "font-family": LEAF_FAMILY
         }},
         { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
         { selector: "node[vrstva='navazujici']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
@@ -415,7 +530,7 @@
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH,
-          "font-size": "data(fontsize)", "font-weight": "400",
+          "font-size": "data(fontsize)", "font-weight": "400", "font-family": LEAF_FAMILY,
           "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
         }},
         { selector: "node[type='ovu'][strana='vazba']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
