@@ -853,11 +853,11 @@
     return s;
   }
   function applyFilters() {
-    const gr = pressed("group"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy");
+    const gr = pressed("group"), st = pressed("stav"), tg = pressed("tagy");
     cy.batch(() => {
       cy.nodes("[type='concept']").forEach((n) => {
         const c = n.data("_c");
-        const vis = gr.has(groupOf(c, viewMode)) && vr.has(c.vrstva) && st.has(n.data("stav")) &&
+        const vis = gr.has(groupOf(c, viewMode)) && st.has(n.data("stav")) &&
           (tg.size === 0 || (c.tagy || []).some((t) => tg.has(t)));
         n.toggleClass("filtered", !vis);
       });
