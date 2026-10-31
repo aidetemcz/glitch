@@ -314,3 +314,11 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .r-body { padding: 0 12px 10px; }
 .d-rvp .kod-link { cursor: pointer; color: var(--c-yellow); border-color: var(--c-yellow); }
 .d-rvp .kod-link:hover { background: var(--c-yellow); color: var(--c-black); }
+
+/* Detail konceptu: výskyt ve výuce po stupních (V5) */
+.d-stupen { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--c-grey-50); margin-bottom: 5px; }
+.d-stupen.on { color: var(--c-white); }
+.d-stupen-mark { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; display: inline-flex;
+  align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex: 0 0 auto; }
+.d-stupen.on .d-stupen-mark { background: var(--c-yellow); border-color: var(--c-yellow); color: var(--c-black); }
+.control-block[hidden] { display: none; }

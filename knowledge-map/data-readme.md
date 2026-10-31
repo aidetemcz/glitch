@@ -1,5 +1,8 @@
 # Data pro Mapu znalostí — pokyny pro Claude Code
 
+> **Data V5 (31. 10. 2026):** koncepty mapy se generují z `main-sources/Mapa_informatickych_konceptu_V5.md` skriptem `build-concepts-v5.py` (přepíše celý `app/data/Informatika/knowledge-map.yaml`). Struktura: `temata` = 5 oblastí podle CSTA 2026 (`o-…`), `temata[].podoblasti` = 27 skupin (`s-…`), `concepts` = 155 konceptů (`vrstva: core`) a 286 podkonceptů (`vrstva: navazujici`, pole `nadrazeny`). Nová pole: `stupne.zs1` / `stupne.zs2` (obsah v Pojmech a obsazích NPI pro 1. a 2. stupeň), `poznamka` (sloupec Pozn.), `zdroj_popisu`. Pole `areas`, `kompetence`, `tagy`, `rvp`, `cile`, `kriteria`, `prerekvizity`, `souvisi` V5 zatím nemá; zbytek tohoto dokumentu popisuje starší strukturu. `concepts.json` a `map-index.json` (čte je Glitch) jsou zatím ze staré verze konceptů a skripty `build-concepts.py` / `build-map-index.py` by je přepsaly daty V5.
+
+
 Tenhle balíček obsahuje **`knowledge-map.yaml`** — naplněná data pro appku Mapa znalostí. Sestaveno podle datového schématu z původního briefu, **rozšířeného o druhou logiku seskupení** (podle témat), aby šla mapa zobrazit dvojím způsobem.
 
 ## Kam soubor patří

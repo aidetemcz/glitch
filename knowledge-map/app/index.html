@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=58">
+  <link rel="stylesheet" href="css/map.css?v=59">
 </head>
 <body>
   <div id="app">
@@ -37,7 +37,6 @@
         <div class="viewtoggle" id="viewtoggle">
           <button class="vt-btn active" data-view="tema">Oblasti</button>
           <button class="vt-btn" data-view="rvp">RVP Informatika</button>
-          <button class="vt-btn" data-view="kompetence">Digitální kompetence</button>
           <button class="vt-btn" data-view="3d">3D</button>
         </div>
       </div>
@@ -52,10 +51,10 @@
       </div>
 
       <div class="control-block concept-only">
-        <div class="control-label">Vrstva</div>
+        <div class="control-label">Úroveň</div>
         <div id="filter-vrstva" class="chips">
-          <button class="chip" data-filter="vrstva" data-val="core" aria-pressed="true">Core</button>
-          <button class="chip" data-filter="vrstva" data-val="navazujici" aria-pressed="true">Navazující</button>
+          <button class="chip" data-filter="vrstva" data-val="core" aria-pressed="true">Koncepty</button>
+          <button class="chip" data-filter="vrstva" data-val="navazujici" aria-pressed="true">Podkoncepty</button>
         </div>
       </div>
 
@@ -68,7 +67,7 @@
         </div>
       </div>
 
-      <div class="control-block concept-only">
+      <div class="control-block concept-only" id="filter-tagy-block">
         <div class="control-label">Optika — proč na tom záleží</div>
         <div id="filter-tagy-optika" class="chips"></div>
         <div class="control-label" style="margin-top:12px">Povaha konceptu</div>
@@ -81,11 +80,10 @@
 
       <div class="legend">
         <div class="legend-row concept-only"><span class="legend-dot big yellow"></span> oblast</div>
-        <div class="legend-row concept-only"><span class="legend-dot mid"></span> podoblast</div>
-        <div class="legend-row concept-only"><span class="legend-line"></span> návaznost konceptů</div>
-        <div class="legend-row concept-only"><span class="legend-dot"></span> core koncept</div>
-        <div class="legend-row concept-only"><span class="legend-dot ring"></span> navazující</div>
-        <div class="legend-row concept-only"><span class="legend-size"><i></i><i></i></span> velikost = pro kolik konceptů je prerekvizitou</div>
+        <div class="legend-row concept-only"><span class="legend-dot mid"></span> skupina</div>
+        <div class="legend-row concept-only"><span class="legend-dot"></span> koncept</div>
+        <div class="legend-row concept-only"><span class="legend-dot ring"></span> podkoncept</div>
+        <div class="legend-row concept-only"><span class="legend-size"><i></i><i></i></span> velikost = kolik podkonceptů pod konceptem visí</div>
         <div class="legend-row rvp-only"><span class="legend-dot big yellow"></span> část RVP</div>
         <div class="legend-row rvp-only"><span class="legend-dot mid"></span> tematický okruh / kompetence / gramotnost</div>
         <div class="legend-row rvp-only"><span class="legend-dot"></span> očekávaný výsledek učení Informatiky</div>
@@ -109,6 +107,6 @@
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
   <script src="js/km-store.js?v=3"></script>
-  <script src="js/map.js?v=72"></script>
+  <script src="js/map.js?v=74"></script>
 </body>
 </html>
