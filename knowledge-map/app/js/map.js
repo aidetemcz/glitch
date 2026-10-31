@@ -19,6 +19,9 @@
   const NORVP = "__norvp__";
   const NOKDI = "__nokdi__";
   const LINEH = 1.35;   // řádkování textu v bublinách (CSS i výpočet fit)
+  /* Barvy pozadí bere graf z CSS proměnných (map.css :root) — barevnost Tiny se mění na jednom místě */
+  const cssVar = (name, fb) => (getComputedStyle(document.documentElement).getPropertyValue(name) || "").trim() || fb;
+  const BG = cssVar("--c-bg", "#0a0a0c"), BG_NODE = cssVar("--c-bg-node", "#141416");
 
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -351,7 +354,7 @@
           "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
         }},
         { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
-        { selector: "node[vrstva='navazujici']", style: { "background-color": "#0a0a0c", "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        { selector: "node[vrstva='navazujici']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
         { selector: "edge[etype='prereq']", style: {
           "line-color": "rgba(255,255,255,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
           "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.6)", "arrow-scale": 0.9
@@ -374,7 +377,7 @@
           "line-height": LINEH, "font-size": "13px", "font-weight": "600", "border-width": 0
         }},
         { selector: "node[type='micro']", style: {
-          "shape": "round-rectangle", "background-color": "#0a0a0c", "color": "#ffffff",
+          "shape": "round-rectangle", "background-color": BG, "color": "#ffffff",
           "border-color": "#ffff00", "border-width": 1.5, "width": 108, "height": 60,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "94px",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH, "font-size": "11px"
@@ -1625,7 +1628,7 @@
   function draw3D() {
     if (!view3d || !ctx3d) return;
     const w = cvs3d.width, h = cvs3d.height;
-    ctx3d.fillStyle = "#0a0a0c"; ctx3d.fillRect(0, 0, w, h);
+    ctx3d.fillStyle = BG; ctx3d.fillRect(0, 0, w, h);
     nodes3d.forEach((n) => { n._p = project3D(n, w, h); });
     edges3d.forEach((e) => {
       const A = e.a._p, B = e.b._p;
@@ -1638,11 +1641,11 @@
       const p = n._p, r = Math.max(2, n.r * p.f);
       if (n.kind === "concept") {
         ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
-        ctx3d.fillStyle = n.core ? "#ffffff" : "#141416"; ctx3d.fill();
+        ctx3d.fillStyle = n.core ? "#ffffff" : BG_NODE; ctx3d.fill();
         if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
         if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#0a0a0c" : "#e8e8e8");
       } else {
-        const s = r * 1.5; ctx3d.fillStyle = "#141416"; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
+        const s = r * 1.5; ctx3d.fillStyle = BG_NODE; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
         roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
         if (p.f > 0.5) {
           ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
