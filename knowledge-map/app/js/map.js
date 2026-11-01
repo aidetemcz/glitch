@@ -1011,7 +1011,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/Informatika/o-mape.md?v=11")
+    fetch("data/Informatika/o-mape.md?v=12")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
@@ -1991,19 +1991,20 @@
      ========================================================================== */
   /* Šest úrovní zpracování podle Nové taxonomie (Marzano & Kendall, 2007) — prstence nad konceptem,
      zdola od vyvolání z paměti po já-systém. Texty: knowledge-map/documents/ (výcuc z knihy, čísla stran).
-     U každé úrovně: procesy s kritérii splnění a to, jak se úroveň liší podle znalostní domény. */
+     U každé úrovně: procesy s kritérii splnění a to, jak se úroveň liší podle dimenze. */
   const DOMENY = [
-    { id: "informace", nazev: "Informace", pod: "deklarativní znalost — „vím, co a proč“" },
-    { id: "postupy", nazev: "Myšlenkové postupy", pod: "„vím, jak na to“" },
-    { id: "psychomotorika", nazev: "Psychomotorické procedury", pod: "„zvládnu to tělem“" },
+    // názvy a příklady podle tiny.school/mapa
+    { id: "informace", nazev: "Deklarativní znalosti", pod: "vědět, např. co je algoritmus" },
+    { id: "postupy", nazev: "Myšlenkové postupy", pod: "provést v hlavě, např. převést číslo do dvojkové soustavy" },
+    { id: "psychomotorika", nazev: "Psychomotorické dovednosti", pod: "zvládnout rukama, např. psát všemi deseti" },
   ];
   const ISO_LEVELS = [
-    { id: "u1", c: 1, nazev: "Vyvolání z paměti", en: "Retrieval", system: "Kognitivní systém",
+    { id: "u1", c: 1, nazev: "Vybavování", en: "Retrieval", system: "Kognitivní systém",
       popis: "Znalost se přenese z dlouhodobé do pracovní paměti. Může běžet automaticky.",
       procesy: [["Rozpoznání", "Správně potvrdí nebo vyvrátí předložená tvrzení. Sám je vytvořit nemusí.", 67],
         ["Vybavení", "Sám uvede správné údaje, i když nemusí jít o ty nejpodstatnější. U zobecnění a principů uvede příklady, které se probíraly.", "69–70"],
         ["Provedení", "Provede postup bez podstatné chyby. Nemusí vědět, jak a proč postup funguje.", 71]],
-      domeny: { informace: "Jen rozpoznání a vybavení. Provedení u informací neexistuje.",
+      domeny: { informace: "Jen rozpoznání a vybavení. Provedení u deklarativních znalostí neexistuje.",
         postupy: "Rozpoznání a vybavení prokazují jen znalost o postupu. Zvládnutí prokáže až provedení bez podstatné chyby.",
         psychomotorika: "Rozpoznání a vybavení prokazují jen znalost o proceduře. Zvládnutí prokáže až provedení bez podstatné chyby." } },
     { id: "u2", c: 2, nazev: "Porozumění", en: "Comprehension", system: "Kognitivní systém",
@@ -2047,8 +2048,8 @@
         ["Účinnost", "Určí, nakolik věří, že se v dané znalosti zlepší, vysvětlí proč a posoudí, jak logická je jeho úvaha.", "108–109"],
         ["Emoční reakce", "Pojmenuje emoci, kterou se znalostí spojuje, najde myšlenky nebo zkušenosti, ze kterých vychází, a posoudí, jestli jsou rozumné.", "110–111"],
         ["Motivace", "Zohlední důležitost, účinnost i emoce a určí, který z těchto faktorů jeho motivaci ovlivňuje nejvíc.", "111–112"]],
-      domeny: { informace: "Prakticky stejné ve všech doménách.", postupy: "Prakticky stejné ve všech doménách.",
-        psychomotorika: "Prakticky stejné ve všech doménách." } },
+      domeny: { informace: "Prakticky stejné ve všech dimenzích.", postupy: "Prakticky stejné ve všech dimenzích.",
+        psychomotorika: "Prakticky stejné ve všech dimenzích." } },
   ];
   // formulace u konceptu: c.marzano.u3.postupy = { cile: [...], kriteria: [...] }
   const marzanoBunka = (c, lv, d) => ((((c && c.marzano) || {})[lv.id] || {})[d] || {});
@@ -2234,7 +2235,7 @@
       : sub ? subHtml(gid, node.data("pid")) : groupHtml(gid, "#ffff00", node.data("label")));
   }
 
-  /* Obsah prstence: cíle a kritéria podle tří znalostních domén + procesy úrovně s kritérii splnění */
+  /* Obsah prstence: cíle a kritéria ve třech dimenzích + procesy úrovně s kritérii splnění */
   function marzanoHtml(c, lv) {
     const seznam = (arr, prazdne) => (arr && arr.length)
       ? `<ul class="r-ul">${arr.map((x) => `<li>${esc(typo(typeof x === "string" ? x : x.text || ""))}</li>`).join("")}</ul>`
