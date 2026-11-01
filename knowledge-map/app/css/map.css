@@ -37,7 +37,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .brand-logo { height: 30px; width: auto; flex: 0 0 auto; }
 .controls-head h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; }
 .subtitle { color: var(--c-grey-50); font-size: 14px; }
-.info-btn { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+.info-btn { text-decoration: none; flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
   border: 1.5px solid var(--c-yellow); color: var(--c-yellow); font-family: Georgia, "Times New Roman", serif;
   font-style: italic; font-size: 16px; font-weight: 700; line-height: 1;
   display: flex; align-items: center; justify-content: center; transition: all .12s ease; }

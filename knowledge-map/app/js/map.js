@@ -660,7 +660,7 @@
     document.getElementById("search").addEventListener("input", applySearch);
 
     /* „O mapě" — info panel */
-    document.getElementById("about-btn").addEventListener("click", openAbout);
+    // „i" vede na stránku mapy na tiny.school (odkaz v index.html); panel O mapě (openAbout) zůstává k dispozici v kódu
     document.getElementById("account-btn").addEventListener("click", () => (authed ? openAccount() : openLogin()));
     document.getElementById("export-btn").addEventListener("click", () => (authed ? openExport() : openLogin()));
     refreshHeadBtns();
