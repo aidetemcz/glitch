@@ -1011,7 +1011,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/Informatika/o-mape.md?v=10")
+    fetch("data/Informatika/o-mape.md?v=11")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
@@ -1989,14 +1989,71 @@
      do středu a sklopí do izometrie; nad ní se vysunou vrstvy školských stupňů.
      Klik na vrstvu nebo její popisek otevře box s cíli a kritérii té vrstvy.
      ========================================================================== */
-  const ISO_LEVELS = [
-    { id: "zs1", nazev: "1. stupeň ZŠ", ovu: "ZV5" },
-    { id: "zs2", nazev: "2. stupeň ZŠ", ovu: "ZV9" },
-    { id: "gym", nazev: "Gymnázia" },
-    { id: "ss", nazev: "Střední školy" },
+  /* Šest úrovní zpracování podle Nové taxonomie (Marzano & Kendall, 2007) — prstence nad konceptem,
+     zdola od vyvolání z paměti po já-systém. Texty: knowledge-map/documents/ (výcuc z knihy, čísla stran).
+     U každé úrovně: procesy s kritérii splnění a to, jak se úroveň liší podle znalostní domény. */
+  const DOMENY = [
+    { id: "informace", nazev: "Informace", pod: "deklarativní znalost — „vím, co a proč“" },
+    { id: "postupy", nazev: "Myšlenkové postupy", pod: "„vím, jak na to“" },
+    { id: "psychomotorika", nazev: "Psychomotorické procedury", pod: "„zvládnu to tělem“" },
   ];
-  // vrstva svítí, když má koncept na tom stupni obsah v RVP (sloupce 1. st. / 2. st. mapy V5)
-  const isoAktivni = (c, lv) => !!(c && c.stupne && c.stupne[lv.id]);
+  const ISO_LEVELS = [
+    { id: "u1", c: 1, nazev: "Vyvolání z paměti", en: "Retrieval", system: "Kognitivní systém",
+      popis: "Znalost se přenese z dlouhodobé do pracovní paměti. Může běžet automaticky.",
+      procesy: [["Rozpoznání", "Správně potvrdí nebo vyvrátí předložená tvrzení. Sám je vytvořit nemusí.", 67],
+        ["Vybavení", "Sám uvede správné údaje, i když nemusí jít o ty nejpodstatnější. U zobecnění a principů uvede příklady, které se probíraly.", "69–70"],
+        ["Provedení", "Provede postup bez podstatné chyby. Nemusí vědět, jak a proč postup funguje.", 71]],
+      domeny: { informace: "Jen rozpoznání a vybavení. Provedení u informací neexistuje.",
+        postupy: "Rozpoznání a vybavení prokazují jen znalost o postupu. Zvládnutí prokáže až provedení bez podstatné chyby.",
+        psychomotorika: "Rozpoznání a vybavení prokazují jen znalost o proceduře. Zvládnutí prokáže až provedení bez podstatné chyby." } },
+    { id: "u2", c: 2, nazev: "Porozumění", en: "Comprehension", system: "Kognitivní systém",
+      popis: "Znalost se převede do úsporné podoby a odliší se podstatné od nepodstatného.",
+      procesy: [["Integrace", "Vyjádří jádro znalosti a odliší podstatné od nepodstatného. U principu popíše proměnné a vztah mezi nimi, u postupu kroky, jejich pořadí a logiku tohoto pořadí.", "41, 72–74"],
+        ["Symbolizace", "Znázornění je přesné a odlišuje podstatné od nepodstatného.", 75]],
+      domeny: { informace: "Integrace: podstatné vs. nepodstatné, u principů vztah proměnných. Symbolizace: grafický organizér nebo graf.",
+        postupy: "Integrace: kroky, jejich pořadí a logika pořadí. Symbolizace: vývojový diagram.",
+        psychomotorika: "Integrace: kroky, jejich pořadí a logika pořadí. Symbolizace: diagram toku činnosti." } },
+    { id: "u3", c: 3, nazev: "Analýza", en: "Analysis", system: "Kognitivní systém",
+      popis: "Žák znalost úvahou rozšiřuje a vzniká nové poznání.",
+      procesy: [["Porovnávání", "Určí znaky, podle kterých porovnává, a ty jsou pro věc důležité. Podobnosti i rozdíly popíše co nejpřesněji.", "45, 154"],
+        ["Třídění", "Určí určující znaky věci, zařadí ji do nadřazené kategorie a zdůvodní proč. Případně určí podkategorie a vysvětlí jejich vztah.", "46, 154"],
+        ["Analýza chyb", "U informací posoudí platnost tvrzení podle výslovných kritérií a pojmenuje chybu v úvaze. U postupů najde chybu v provedení a posoudí, co každý krok přispívá k celku.", "46–48"],
+        ["Zobecňování", "Z konkrétních informací najde souvislosti a formuluje obecné tvrzení, které je vysvětluje. Ověří, že tvrzení s informacemi sedí, a uvede výjimky.", "50, 157"],
+        ["Specifikace", "Najde pravidlo, které na situaci platí, ověří, že situace splňuje jeho podmínky, a vyvodí z něj závěr nebo předpověď.", "50, 157"]],
+      domeny: { informace: "Analýza chyb: podloženost tvrzení a chyby v úvaze.",
+        postupy: "Analýza chyb: chyby v provedení a přínos jednotlivých kroků. Specifikace: jak se postup změní za jiných podmínek.",
+        psychomotorika: "Analýza chyb: chyby v provedení. Při třídění dovedností lze určit jen nadřazenou kategorii." } },
+    { id: "u4", c: 4, nazev: "Použití znalostí", en: "Knowledge Utilization", system: "Kognitivní systém",
+      popis: "Znalost se použije v konkrétním úkolu a vznikne nový výsledek.",
+      procesy: [["Rozhodování", "Určí možnosti a kritéria dobrého rozhodnutí a vybere možnost, která kritéria splňuje nejlépe.", "51, 158"],
+        ["Řešení problému", "Pojmenuje cíl a překážky, najde jiné cesty k cíli, vyhodnotí je, vybere jednu a vyzkouší ji. Když nevyjde, zkusí jinou.", "52, 159"],
+        ["Experimentování", "Odvodí předpověď ze známého principu, navrhne pokus, který ji ověří, a podle výsledku posoudí, jestli princip platí.", "52, 160"],
+        ["Zkoumání", "Určí, co je známé a kde je nejasnost nebo spor, navrhne odpověď a podpoří ji logickým argumentem.", "53, 160"]],
+      domeny: { informace: "Znalost slouží jako podklad nebo kritérium řešení.",
+        postupy: "Postup slouží jako nástroj. Úkol ho musí nezbytně vyžadovat a žák vysvětlí, jak mu pomohl.",
+        psychomotorika: "Procedura slouží jako nástroj. U rozhodování jde většinou o volbu nejvhodnější dovednosti pro situaci." } },
+    { id: "u5", c: 5, nazev: "Metakognice", en: "Metacognition", system: "Metakognitivní systém",
+      popis: "Řídí a hlídá ostatní myšlení.",
+      procesy: [["Stanovení cílů", "Cíl má konkrétní znak dokončení, plán, potřebné zdroje, přibližný časový rámec a milníky.", "102, 161"],
+        ["Sledování průběhu", "Před úkolem si stanoví cíl. Během práce popisuje, co funguje, co ne a co změní.", "102–103, 162"],
+        ["Sledování jasnosti", "Přesně pojmenuje, čemu nerozumí a co tu nejasnost způsobuje.", "104–105"],
+        ["Sledování přesnosti", "Svůj úsudek o tom, co má správně, doloží vnějším zdrojem.", "105–106"]],
+      domeny: { informace: "Sledování průběhu: jak se porozumění vyvíjí v čase.",
+        postupy: "Sledování průběhu: v reálném čase během provádění, situaci navodí krátkodobý cíl.",
+        psychomotorika: "Sledování průběhu: v reálném čase během provádění, situaci navodí krátkodobý cíl." } },
+    { id: "u6", c: 6, nazev: "Já-systém", en: "Self-system", system: "Já-systém",
+      popis: "Rozhoduje, jestli se žák do úkolu pustí a kolik do něj dá energie.",
+      procesy: [["Důležitost", "Určí, jak je pro něj znalost důležitá, vysvětlí proč a posoudí, jak logická je jeho úvaha.", 108],
+        ["Účinnost", "Určí, nakolik věří, že se v dané znalosti zlepší, vysvětlí proč a posoudí, jak logická je jeho úvaha.", "108–109"],
+        ["Emoční reakce", "Pojmenuje emoci, kterou se znalostí spojuje, najde myšlenky nebo zkušenosti, ze kterých vychází, a posoudí, jestli jsou rozumné.", "110–111"],
+        ["Motivace", "Zohlední důležitost, účinnost i emoce a určí, který z těchto faktorů jeho motivaci ovlivňuje nejvíc.", "111–112"]],
+      domeny: { informace: "Prakticky stejné ve všech doménách.", postupy: "Prakticky stejné ve všech doménách.",
+        psychomotorika: "Prakticky stejné ve všech doménách." } },
+  ];
+  // formulace u konceptu: c.marzano.u3.postupy = { cile: [...], kriteria: [...] }
+  const marzanoBunka = (c, lv, d) => ((((c && c.marzano) || {})[lv.id] || {})[d] || {});
+  // prstenec svítí, když má koncept na té úrovni aspoň jeden zformulovaný cíl
+  const isoAktivni = (c, lv) => DOMENY.some((d) => (marzanoBunka(c, lv, d.id).cile || []).length);
   const SVG_NS = "http://www.w3.org/2000/svg";
   let isoNode = null, isoEl = null, isoRaf = 0;
   const easeOutBack = (t) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
@@ -2056,9 +2113,10 @@
     closeDetail();
 
     const p = node.renderedPosition(), r0 = node.renderedWidth() / 2;
-    const TR = Math.max(90, Math.min(W, H) * 0.17);          // cílový poloměr bubliny
-    const tx = Math.min(W * 0.46, W - TR - 300), ty = H * 0.64;
-    const SQ = 0.5, BASE = TR * SQ * 1.35, GAPY = TR * 0.42;   // sklopení, odstup první vrstvy od konceptu, rozestup vrstev
+    const TR = Math.max(80, Math.min(W, H) * 0.15);          // cílový poloměr bubliny
+    const tx = Math.min(W * 0.44, W - TR - 320), ty = H * 0.7;
+    // sklopení, odstup první vrstvy od konceptu, rozestup šesti vrstev (vejdou se nad koncept)
+    const SQ = 0.5, BASE = TR * SQ * 1.3, GAPY = Math.min(TR * 0.31, (ty - TR * SQ - 40 - TR * SQ * 1.3) / 5);
     const core = c.vrstva === "core";
     const lines = String(node.data("label") || c.nazev).split("\n");
 
@@ -2074,15 +2132,15 @@
     };
     setConcept(p.x, p.y, r0, 1, node.data("fontsize") * cy.zoom());
 
-    // vrstvy školských stupňů (vysunou se nad koncept) + popisky s čarami
+    // šest úrovní zpracování (vysunou se nad koncept, zdola úroveň 1) + popisky s čarami
     const layers = ISO_LEVELS.map((lv, i) => {
       const lg = svgEl("g", { class: "iso-layer" + (isoAktivni(c, lv) ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
       svgEl("ellipse", { cx: 0, cy: 0, rx: TR, ry: TR * SQ }, lg);
       const bx = tx + TR + 70, by = () => ty - BASE - GAPY * i;
       const line = svgEl("line", { class: "iso-line", "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
       const lab = svgEl("g", { class: "iso-tag" + (isoAktivni(c, lv) ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
-      svgEl("rect", { x: 0, y: -18, width: 164, height: 36, rx: 9 }, lab);
-      const t = svgEl("text", { x: 82, y: 0, "text-anchor": "middle", "dominant-baseline": "central" }, lab); t.textContent = lv.nazev;
+      svgEl("rect", { x: 0, y: -16, width: 196, height: 32, rx: 9 }, lab);
+      const t = svgEl("text", { x: 98, y: 0, "text-anchor": "middle", "dominant-baseline": "central" }, lab); t.textContent = lv.c + " · " + lv.nazev;
       lab.setAttribute("transform", `translate(${bx},${by()})`);
       return { lg, line, lab, i, bx, y: by() };
     });
@@ -2141,17 +2199,8 @@
       isoEl.querySelectorAll(".chosen").forEach((el) => el.classList.remove("chosen"));
       return;
     }
-    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[1];
-    box.querySelector(".km-isobox-body").innerHTML = `
-      <span class="d-badge d-badge-acc">${esc(lv.nazev)}</span>
-      <h2 class="d-title">${esc(c.nazev)}</h2>
-      <div class="d-section"><h3>Ve výuce podle RVP</h3>${
-        !lv.ovu ? '<p class="d-empty">Střední školy mapa zatím nezpracovává.</p>'
-        : isoAktivni(c, lv) ? `<p class="d-desc">Koncept má obsah v Pojmech a obsazích Informatiky pro ${esc(lv.nazev)} (výstupy ${lv.ovu}).</p>`
-        : `<p class="d-empty">Na ${lv.id === "zs1" ? "1." : "2."} stupni ZŠ RVP tento koncept neuvádí.</p>`}
-        ${c.poznamka ? `<div class="d-rvp-note">${esc(typo(c.poznamka))}</div>` : ""}</div>
-      <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
-      <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>`;
+    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[0];
+    box.querySelector(".km-isobox-body").innerHTML = marzanoHtml(c, lv);
     box.classList.add("open");
     isoEl.querySelectorAll(".iso-layer, .iso-tag").forEach((el) => el.classList.toggle("chosen", el.dataset.level === lv.id));
   }
@@ -2183,6 +2232,33 @@
     cy.$(":selected").unselect();
     openCard(viewMode === "rvp" ? rvpGroupHtml(gid, sub ? node.data("pid") : null)
       : sub ? subHtml(gid, node.data("pid")) : groupHtml(gid, "#ffff00", node.data("label")));
+  }
+
+  /* Obsah prstence: cíle a kritéria podle tří znalostních domén + procesy úrovně s kritérii splnění */
+  function marzanoHtml(c, lv) {
+    const seznam = (arr, prazdne) => (arr && arr.length)
+      ? `<ul class="r-ul">${arr.map((x) => `<li>${esc(typo(typeof x === "string" ? x : x.text || ""))}</li>`).join("")}</ul>`
+      : `<p class="d-empty">${prazdne}</p>`;
+    const domeny = DOMENY.map((d) => {
+      const b = marzanoBunka(c, lv, d.id);
+      return `<div class="m-dom">
+        <div class="m-dom-head"><h3>${esc(d.nazev)}</h3><span class="m-dom-pod">${esc(d.pod)}</span></div>
+        <div class="m-dom-cast"><div class="m-label">Vzdělávací cíle</div>${seznam(b.cile, "zatím nezformulováno")}</div>
+        <div class="m-dom-cast"><div class="m-label">Kritéria splnění</div>${seznam(b.kriteria, "zatím nezformulováno")}</div>
+        <div class="d-rvp-note">${esc(typo(lv.domeny[d.id] || ""))}</div>
+      </div>`;
+    }).join("");
+    const procesy = lv.procesy.map(([n, k, str]) =>
+      `<li><strong>${esc(n)}</strong> — ${esc(typo(k))} <span class="m-str">(s. ${esc(str)})</span></li>`).join("");
+    return `
+      <span class="d-badge d-badge-acc">Úroveň ${lv.c} · ${esc(lv.nazev)}</span> <span class="d-badge d-badge-sub">${esc(lv.system)}</span>
+      <h2 class="d-title">${esc(c.nazev)}</h2>
+      <p class="d-desc">${esc(typo(lv.popis))}</p>
+      <div class="m-doms">${domeny}</div>
+      <details class="r-uro"><summary>Procesy úrovně a podle čeho poznat splnění</summary>
+        <div class="r-body"><ul class="r-ul">${procesy}</ul>
+        <p class="d-rvp-note">Marzano, R. J. & Kendall, J. S. (2007). The New Taxonomy of Educational Objectives. Kritéria říkají, co znamená proces splnit; výkonnostní laťku pro ročník doplňuje výukový cíl.</p></div>
+      </details>`;
   }
 
   function closeIsoBox(silent) {

@@ -24,7 +24,7 @@ Pohled **RVP Informatika** ukazuje přímo Rámcový vzdělávací program: oče
 
 Pohled **Journeys** ukazuje cestu, kterou určil garant: koncepty cesty v mapě svítí a spojují je čáry jejich návaznosti, ostatní koncepty zůstávají na svých místech jen jako slabé rozmazané tečky v pozadí.
 
-Kliknutím na koncept se otevře jeho izometrický pohled po stupních škol: rozsvícené vrstvy ukazují stupně, na kterých koncept v RVP má obsah. Spodní kruh otevře detail konceptu s popisem, nadřazeným konceptem a podkoncepty.
+Kliknutím na koncept se nad ním vysune šest prstenců podle úrovní zpracování z Nové taxonomie vzdělávacích cílů (Marzano & Kendall): vyvolání z paměti, porozumění, analýza, použití znalostí, metakognice a já-systém. Prstenec otevře vzdělávací cíle a kritéria splnění dané úrovně, rozdělené podle tří znalostních domén (informace, myšlenkové postupy, psychomotorické procedury). Spodní kruh otevře detail konceptu s popisem, výskytem v RVP, nadřazeným konceptem a podkoncepty.
 
 Mapu vytváří a vylepšuje organizace AI dětem.
 Poslední aktualizace: 31/10/26

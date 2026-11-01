@@ -323,3 +323,14 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .km-iso.card [data-iso="detail"], .km-iso.card [data-iso="edit"] { display: none; }
 .legend-dot.glow { box-shadow: 0 0 8px 2px rgba(255,255,255,0.75); }
 .legend-dot.faint { opacity: 0.25; filter: blur(1.5px); }
+
+/* Prstenec úrovně zpracování: cíle a kritéria podle tří znalostních domén */
+.m-doms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0 12px; }
+@media (max-width: 900px) { .m-doms { grid-template-columns: 1fr; } }
+.m-dom { border: 1px solid var(--c-line); border-radius: 12px; padding: 12px 14px; background: var(--c-dark); display: flex; flex-direction: column; gap: 10px; }
+.m-dom-head h3 { margin: 0; font-size: 15px; color: var(--c-white); text-transform: none; letter-spacing: 0; }
+.m-dom-pod { font-size: 12px; color: var(--c-grey-50); }
+.m-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-yellow); margin-bottom: 4px; }
+.m-dom .d-empty { margin: 0; font-size: 13px; }
+.m-dom .r-ul { margin-bottom: 0; }
+.m-str { color: var(--c-grey-50); font-size: 12px; }
