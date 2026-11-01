@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=62">
+  <link rel="stylesheet" href="css/map.css?v=63">
 </head>
 <body>
   <div id="app">
@@ -37,6 +37,7 @@
         <div class="viewtoggle" id="viewtoggle">
           <button class="vt-btn active" data-view="tema">Oblasti</button>
           <button class="vt-btn" data-view="rvp">RVP Informatika</button>
+          <button class="vt-btn" data-view="journey">Journeys</button>
         </div>
       </div>
 
@@ -78,6 +79,10 @@
         <div class="legend-row rvp-only"><span class="legend-dot"></span> tematický okruh / kompetence / gramotnost</div>
         <div class="legend-row rvp-only"><span class="legend-dot"></span> očekávaný výsledek učení Informatiky</div>
         <div class="legend-row rvp-only"><span class="legend-dot ring"></span> provázaný výsledek kompetence či gramotnosti</div>
+        <div class="legend-row journey-only"><span class="legend-dot"></span> koncept mapy</div>
+        <div class="legend-row journey-only"><span class="legend-dot ring"></span> podkoncept mapy</div>
+        <div class="legend-row journey-only"><span class="legend-dot ring dashed"></span> krok mimo mapu konceptů (praktika)</div>
+        <p class="legend-note journey-only">Šipky ukazují návaznost určenou garantem. Plná šipka vede hlavní cestou, čárkovaná je další návaznost.</p>
         <p class="legend-foot">Mapu vytváří <a href="https://aidetem.cz" target="_blank" rel="noopener">AI dětem</a>.</p>
       </div>
     </aside>
@@ -97,6 +102,6 @@
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
   <script src="js/km-store.js?v=3"></script>
-  <script src="js/map.js?v=78"></script>
+  <script src="js/map.js?v=79"></script>
 </body>
 </html>

@@ -1,0 +1,101 @@
+# Journeys — návaznosti konceptů určené garantem.
+#
+# Každá journey je orientovaný graf kroků. Krok:
+#   id       … jedinečné v rámci journey
+#   nazev    … popisek kroku tak, jak ho garant pojmenoval
+#   koncept  … id konceptu mapy (knowledge-map.yaml); bez něj je krok „mimo mapu konceptů"
+#   popis    … jen u kroků mimo mapu (u konceptů se bere popis z mapy)
+#   dalsi    … id kroků, které na tento krok navazují (šipky)
+# Pořadí v `dalsi` určuje pořadí větví zleva doprava.
+
+journeys:
+  - id: j-programovani
+    nazev: Programování
+    garant: garant Programování
+    popis: >-
+      Cesta od pojmu program přes jeho zápis a řídicí struktury k proměnné,
+      od vstupu a výstupu k uživatelskému rozhraní a od průběžného ověřování
+      k testování a ladění. Šipka ukazuje, co na co navazuje.
+    kroky:
+      - id: program
+        nazev: Program
+        koncept: k-program
+        dalsi: [zapis, vstup-vystup, overovani]
+
+      - id: zapis
+        nazev: Zápis programu
+        koncept: k-zapis-programu
+        dalsi: [sekvence]
+      - id: sekvence
+        nazev: Sekvence příkazů
+        koncept: k-sekvence-prikazu
+        dalsi: [podprogram]
+      - id: podprogram
+        nazev: Podprogram (bez parametrů)
+        koncept: k-podprogram
+        dalsi: [opakovani]
+      - id: opakovani
+        nazev: Opakování s pevným počtem opakování
+        koncept: k-cyklus-s-pevnym-poctem-opakovani
+        dalsi: [podmineny]
+      - id: podmineny
+        nazev: Podmíněný příkaz
+        koncept: k-podmineny-prikaz-vetveni
+        dalsi: [cyklus-podminka]
+      - id: cyklus-podminka
+        nazev: Cyklus s podmínkou
+        koncept: k-cyklus-s-podminkou
+        dalsi: [promenna]
+      - id: promenna
+        nazev: Proměnná
+        koncept: k-promenna
+
+      - id: vstup-vystup
+        nazev: Vstup a výstup
+        koncept: k-vstup-a-vystup-programu
+        dalsi: [rozhrani]
+      - id: rozhrani
+        nazev: Uživatelské rozhraní
+        koncept: k-uzivatelske-rozhrani
+        dalsi: [testovani]
+
+      - id: overovani
+        nazev: Ověřování
+        popis: >-
+          Při tvorbě programu průběžně ověřujeme, zda program funguje podle očekávání.
+          Program je vhodné vytvářet po menších částech a jejich funkčnost ověřovat dříve,
+          než přidáme další části. Průběžné ověřování usnadňuje odhalení problémů. Pokud se
+          chyba projeví po malé změně programu, je snazší určit, která změna ji způsobila.
+        zdroj: garant Programování (V5, příloha B – praktika Ověřovat, testovat a ladit)
+        dalsi: [testovani, efektivita, komentare]
+      - id: testovani
+        nazev: Testování
+        popis: >-
+          Testování je záměrné ověřování programu pomocí vhodně zvolených testů. Pro každý
+          test předem určíme vstup nebo situaci a očekávaný výsledek či chování programu.
+          Očekávaný výsledek potom porovnáme se skutečným. Jeden úspěšný test nestačí.
+          Volíme různé testy tak, aby zahrnovaly běžné, hraniční i méně obvyklé situace.
+          Vhodný výběr testů zvyšuje šanci, že chyby odhalíme. Ani důkladné testování však
+          nezaručuje odhalení všech chyb. Program může obsahovat chybu, která se projeví
+          v situaci, kterou jsme při testování nevyzkoušeli.
+        zdroj: garant Programování (V5, příloha B – praktika Ověřovat, testovat a ladit)
+        dalsi: [ladeni]
+      - id: ladeni
+        nazev: Ladění
+        popis: >-
+          Pokud se program nechová podle očekávání, hledáme příčinu problému a opravujeme ji.
+          Tento postup označujeme jako ladění. Příčina problému může být v jiné části programu,
+          než kde se problém projeví. Při ladění proto nestačí odstranit pouze viditelný projev
+          problému. Je potřeba najít jeho příčinu a opravit ji. Při ladění můžeme sledovat
+          vykonávání programu krok po kroku, hodnoty proměnných nebo si nechat zobrazovat pomocné
+          informace – ladicí výstupy. Porovnáváme přitom skutečný průběh programu s tím, co jsme
+          očekávali. Po provedení opravy je potřeba program znovu důkladně otestovat. Nestačí
+          zopakovat pouze test, který chybu odhalil. Provedená oprava mohla ovlivnit i jiné
+          části programu.
+        zdroj: garant Programování (V5, příloha B – praktika Ověřovat, testovat a ladit)
+      - id: efektivita
+        nazev: Efektivita
+        koncept: k-efektivita-programu
+      - id: komentare
+        nazev: Komentáře
+        koncept: k-komentar

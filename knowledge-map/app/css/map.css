@@ -281,6 +281,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 /* Pohled „RVP Informatika": filtry a legenda konceptů se schovají, ukáže se legenda RVP */
 #controls[data-view="rvp"] .concept-only { display: none; }
 #controls:not([data-view="rvp"]) .rvp-only { display: none; }
+/* Pohled „Journeys": filtry a legenda konceptů pryč, výběr journey + vlastní legenda */
+#controls[data-view="journey"] .concept-only { display: none; }
+#controls:not([data-view="journey"]) .journey-only { display: none; }
 
 /* Detail očekávaného výsledku učení */
 .r-title { font-size: 20px; line-height: 1.3; }
@@ -318,3 +321,5 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .control-block[hidden] { display: none; }
 /* popis uprostřed bez prstenců: tlačítko „Detail konceptu“ nedává smysl */
 .km-iso.card [data-iso="detail"], .km-iso.card [data-iso="edit"] { display: none; }
+.legend-dot.ring.dashed { border-style: dashed; }
+.d-tag.j-mimo { border-style: dashed; }
