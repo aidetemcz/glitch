@@ -10,14 +10,14 @@ meta:
     Rozsah: 5 oblastí, 27 skupin, 155 konceptů, 286 podkonceptů. Zpracováno 31. 10. 2026.
 
 
-    Oblast Algoritmy a návrh se zabývá tím, jak problém vymezit, rozložit a vyřešit přesným postupem – algoritmem – a jak navrhovat řešení s ohledem na lidi, kteří je budou používat. Patří sem také umělá inteligence a strojové učení, při kterém postup řešení nevzniká zapsáním jednotlivých kroků, ale učením z dat. Oblast navazuje na Programování, kde se algoritmy zapisují jako programy.'
+    Oblast Algoritmy a design se zabývá tím, jak problém vymezit, rozložit a vyřešit přesným postupem – algoritmem – a jak navrhovat řešení s ohledem na lidi, kteří je budou používat. Patří sem také umělá inteligence a strojové učení, při kterém postup řešení nevzniká zapsáním jednotlivých kroků, ale učením z dat. Oblast navazuje na Programování, kde se algoritmy zapisují jako programy.'
   zdroj: Mapa_informatickych_konceptu_V5.md
   struktura: temata = oblasti (CSTA 2026), podoblasti = skupiny, concepts = koncepty (vrstva core) a podkoncepty (vrstva navazujici, pole nadrazeny). stupne.zs1/zs2 = obsah v Pojmech a obsazích NPI pro 1. a 2. stupeň ZŠ.
 temata:
 - id: o-algoritmy-a-navrh
-  nazev: Algoritmy a návrh
+  nazev: Algoritmy a design
   nazev_en: Algorithms & Design
-  popis: Oblast Algoritmy a návrh se zabývá tím, jak problém vymezit, rozložit a vyřešit přesným postupem – algoritmem – a jak navrhovat řešení s ohledem na lidi, kteří je budou používat. Patří sem také umělá inteligence a strojové učení, při kterém postup řešení nevzniká zapsáním jednotlivých kroků, ale učením z dat. Oblast navazuje na Programování, kde se algoritmy zapisují jako programy.
+  popis: Oblast Algoritmy a design se zabývá tím, jak problém vymezit, rozložit a vyřešit přesným postupem – algoritmem – a jak navrhovat řešení s ohledem na lidi, kteří je budou používat. Patří sem také umělá inteligence a strojové učení, při kterém postup řešení nevzniká zapsáním jednotlivých kroků, ale učením z dat. Oblast navazuje na Programování, kde se algoritmy zapisují jako programy.
   barva: '#ffff00'
   podoblasti:
   - id: s-problem
@@ -35,7 +35,7 @@ temata:
 - id: o-programovani
   nazev: Programování
   nazev_en: Programming
-  popis: 'Programování je tvorba programů, tedy převádění algoritmů do zápisu, který dokáže vykonat počítač, a jejich zkoušení a opravování. Oblast zahrnuje pojem program a jeho zápis, řízení běhu programu, práci s daty v programu, podprogramy, chyby a kvalitu kódu i různé druhy jazyků, kterými lidé počítači zadávají, co má dělat. Navazuje na oblast Algoritmy a návrh: program je konkrétní realizací algoritmu v určitém programovacím jazyce.'
+  popis: 'Programování je tvorba programů, tedy převádění algoritmů do zápisu, který dokáže vykonat počítač, a jejich zkoušení a opravování. Oblast zahrnuje pojem program a jeho zápis, řízení běhu programu, práci s daty v programu, podprogramy, chyby a kvalitu kódu i různé druhy jazyků, kterými lidé počítači zadávají, co má dělat. Navazuje na oblast Algoritmy a design: program je konkrétní realizací algoritmu v určitém programovacím jazyce.'
   barva: '#ffff00'
   podoblasti:
   - id: s-program
@@ -43,7 +43,7 @@ temata:
     popis: Skupina zahrnuje pojem program, jeho zápis v programovacím jazyce, překlad a spuštění programu, vstupy a výstupy programu a programovací prostředí, ve kterém program vzniká.
   - id: s-rizeni-behu-programu
     nazev: Řízení běhu programu
-    popis: 'Skupina zahrnuje způsoby, jimiž program určuje, který příkaz se vykoná jako další: vykonávání v zapsaném pořadí, opakování, větvení podle podmínky, reakci na událost, přechody mezi stavy a herní smyčku. Jde o programové podoby algoritmických struktur z oblasti Algoritmy a návrh, doplněné o mechanismy typické pro interaktivní programy.'
+    popis: 'Skupina zahrnuje způsoby, jimiž program určuje, který příkaz se vykoná jako další: vykonávání v zapsaném pořadí, opakování, větvení podle podmínky, reakci na událost, přechody mezi stavy a herní smyčku. Jde o programové podoby algoritmických struktur z oblasti Algoritmy a design, doplněné o mechanismy typické pro interaktivní programy.'
   - id: s-data-v-programu
     nazev: Data v programu
     popis: 'Skupina zahrnuje pojmy, které popisují, jak si program pamatuje a zpracovává hodnoty: proměnnou, datové typy, výraz a logický výraz.'

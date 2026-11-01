@@ -12,7 +12,7 @@ Cílem je, aby mapa sloužila jako podklad pro plánování výuky a zároveň j
 
 ## Jak vznikla
 
-Strukturu mapy určuje pět oblastí podle mezinárodních standardů *2026 CSTA PK–12 Computer Science Standards*: Algoritmy a návrh, Programování, Data a analýza, Systémy a bezpečnost a Informatika a společnost. Oblasti se dělí na 27 skupin a v nich je 155 konceptů a 286 podkonceptů. Mapa popisuje znalosti; činnosti a gramotnosti budou mít vlastní vrstvu.
+Strukturu mapy určuje pět oblastí podle mezinárodních standardů *2026 CSTA PK–12 Computer Science Standards*: Algoritmy a design, Programování, Data a analýza, Systémy a bezpečnost a Informatika a společnost. Oblasti se dělí na 27 skupin a v nich je 155 konceptů a 286 podkonceptů. Mapa popisuje znalosti; činnosti a gramotnosti budou mít vlastní vrstvu.
 
 U každého konceptu je vidět, zda má obsah v *Pojmech a obsazích ke vzdělávacím oborům – Informatika* (NPI) pro 1. stupeň ZŠ (výstupy ZV5) a pro 2. stupeň ZŠ (výstupy ZV9). Poznámka uvádí, odkud obsah v RVP pochází, nebo že koncept jde nad rámec RVP. Popisy vycházejí z textů garantů, ze slovníčku AI dětem a z glosáře informatiky; zdroj je uvedený u každého konceptu.
 

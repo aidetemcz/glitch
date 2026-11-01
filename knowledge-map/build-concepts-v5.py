@@ -26,6 +26,18 @@ from pathlib import Path
 import yaml
 
 HERE = Path(__file__).resolve().parent
+
+# Přejmenování oproti zdrojovému dokumentu (rozhodnutí AI dětem). Platí pro názvy
+# i všechny texty; id oblasti se dál odvozuje z původního názvu, aby se neměnilo.
+PREJMENOVANI = {
+    "Algoritmy a návrh": "Algoritmy a design",
+}
+
+
+def prejmenuj(s):
+    for a, b in PREJMENOVANI.items():
+        s = s.replace(a, b)
+    return s
 SRC = HERE / "main-sources" / "Mapa_informatickych_konceptu_V5.md"
 OUT = HERE / "app" / "data" / "Informatika" / "knowledge-map.yaml"
 
@@ -41,7 +53,7 @@ def clean(s):
     s = re.sub(r"\*\*(.+?)\*\*", r"\1", s)          # tučné
     s = re.sub(r"(?<!\w)\*(\S.*?\S|\S)\*(?!\w)", r"\1", s)   # kurzíva
     s = s.replace("<br>", "\n").replace("\\|", "|")
-    return s.strip()
+    return prejmenuj(s.strip())
 
 
 def mark(s):
@@ -54,7 +66,7 @@ def main():
         sys.exit(f"Chybí zdroj {SRC}")
     lines = SRC.read_text(encoding="utf-8").split("\n")
 
-    meta_text = [l.strip() for l in lines[1:12] if l.strip() and not l.startswith("#")]
+    meta_text = [prejmenuj(l.strip()) for l in lines[1:12] if l.strip() and not l.startswith("#")]
     temata, concepts = [], []
     used_ids = set()
     tema = sub = parent = None
@@ -78,7 +90,7 @@ def main():
                 continue
             m = re.match(r"(.+?)\s*\((.+)\)\s*$", title)
             nazev, en = (m.group(1), m.group(2)) if m else (title, "")
-            tema = {"id": "o-" + slug(nazev), "nazev": nazev, "nazev_en": en, "popis": "",
+            tema = {"id": "o-" + slug(nazev), "nazev": prejmenuj(nazev), "nazev_en": en, "popis": "",
                     "barva": "#ffff00", "podoblasti": []}
             temata.append(tema)
             sub = parent = None
