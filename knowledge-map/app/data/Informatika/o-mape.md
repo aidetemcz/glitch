@@ -22,7 +22,7 @@ Pohled **Oblasti** ukazuje koncepty: každá oblast je velká žlutá bublina, s
 
 Pohled **RVP Informatika** ukazuje přímo Rámcový vzdělávací program: očekávané výsledky učení Informatiky pro 1. a 2. stupeň ZŠ po tematických okruzích a s nimi provázané výsledky klíčových kompetencí a základních gramotností. Detail výsledku obsahuje popis a úrovně s ilustrativními úlohami.
 
-Pohled **Journeys** ukazuje jen koncepty jedné cesty, kterou určil garant, a šipkami jejich návaznost — od výchozího konceptu k pokročilejším. Kroky, které nejsou znalostním konceptem, ale činností (například ověřování, testování a ladění), mají čárkovaný obrys.
+Pohled **Journeys** ukazuje cestu, kterou určil garant: koncepty cesty v mapě svítí a spojují je čáry jejich návaznosti, ostatní koncepty zůstávají na svých místech jen jako slabé rozmazané tečky v pozadí.
 
 Kliknutím na koncept se otevře jeho izometrický pohled po stupních škol: rozsvícené vrstvy ukazují stupně, na kterých koncept v RVP má obsah. Spodní kruh otevře detail konceptu s popisem, nadřazeným konceptem a podkoncepty.
 

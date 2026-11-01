@@ -321,5 +321,5 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .control-block[hidden] { display: none; }
 /* popis uprostřed bez prstenců: tlačítko „Detail konceptu“ nedává smysl */
 .km-iso.card [data-iso="detail"], .km-iso.card [data-iso="edit"] { display: none; }
-.legend-dot.ring.dashed { border-style: dashed; }
-.d-tag.j-mimo { border-style: dashed; }
+.legend-dot.glow { box-shadow: 0 0 8px 2px rgba(255,255,255,0.75); }
+.legend-dot.faint { opacity: 0.25; filter: blur(1.5px); }
