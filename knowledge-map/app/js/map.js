@@ -651,6 +651,7 @@
       if (t === "micro") { openMicroDetail(evt.target.data("_m")); return; }
       if (t === "concept" && !drillId) { enterIso(evt.target); return; }
       if (t === "ovu") { openOvuDetail(evt.target.data("_o")); return; }
+      if (/^(group|hub|sub|subhub)$/.test(t) && !drillId) { openGroupCard(evt.target); return; }
       openDetail(evt.target);
     });
     initIso();
@@ -660,7 +661,7 @@
       closeDetail();
     });
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { if (isoBoxOpen()) closeIsoBox(); else if (isoNode) exitIso(); else closeDetail(); }
+      if (e.key === "Escape") { if (isoCard) closeCard(); else if (isoBoxOpen()) closeIsoBox(); else if (isoNode) exitIso(); else closeDetail(); }
     });
 
     // fonty bublin témat (Space Grotesk / Darker Grotesque) ať jsou načtené, než se popisky vykreslí
@@ -683,6 +684,7 @@
   let firstRender = true;
   function render(mode, opts) {
     if (isoNode) exitIso(true);
+    closeCard();
     viewMode = mode;
     drillId = null;                       // přepnutí pohledu vynoří z hloubky
     const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
@@ -1416,7 +1418,14 @@
   function focusNode(id) {
     const n = cy.getElementById(id);
     if (!n || n.empty() || n.hasClass("filtered")) return;
+    const t = n.data("type");
+    if (t === "concept" && !drillId) {               // koncept / podkoncept → prstence uprostřed
+      closeDetail(); closeCard();
+      cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 1) }, { duration: 300, complete: () => enterIso(n) });
+      return;
+    }
     cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 1) }, { duration: 300 });
+    if (/^(group|hub|sub|subhub)$/.test(t) && !drillId) { openGroupCard(n); return; }
     openDetail(n);
   }
   // všechny koncepty dosažitelné po hranách next(id), od nejbližších; bez startu
@@ -1849,15 +1858,13 @@
     const n = cy.getElementById(ovuNodeId(o.kod));
     cy.$(":selected").unselect();
     if (n.nonempty()) n.select();
-    detailBody.innerHTML = ovuHtml(o);
-    bindPanelLinks();
+    openCard(ovuHtml(o));
     const rel = ovuRelated(o);
     cy.batch(() => {
       cy.elements().removeClass("nbedge nbon");
       rel.forEach((k) => cy.getElementById(ovuNodeId(k)).addClass("nbon"));
     });
     pinned = n.nonempty() ? n : null;
-    detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
 
   /* odkazy v pravém panelu: koncept na mapě, výsledek RVP, koncept z pohledu RVP */
@@ -1932,23 +1939,31 @@
     const host = document.getElementById("cy");
     isoEl = document.createElement("div"); isoEl.id = "km-iso"; isoEl.className = "km-iso hidden";
     isoEl.innerHTML = '<svg class="km-iso-svg"></svg>' +
-      '<div class="km-iso-tools"><button type="button" data-iso="detail">Detail konceptu</button><button type="button" data-iso="close" aria-label="Zavřít">✕</button></div>' +
+      '<div class="km-iso-tools"><button type="button" data-iso="detail">Detail konceptu</button><button type="button" data-iso="edit" hidden>✎ Upravit</button><button type="button" data-iso="close" aria-label="Zavřít">✕</button></div>' +
       '<div id="km-isobox" class="km-isobox"><button type="button" class="km-isobox-x" data-iso="box-close" aria-label="Zavřít">✕</button><div class="km-isobox-body"></div></div>';
     host.appendChild(isoEl);
+    // překryv leží uvnitř kontejneru grafu: bez tohohle by Cytoscape bral klik do překryvu
+    // jako klik na bublinu pod ním (otevřel by se jiný detail) a kolečko by hýbalo mapou
+    ["mousedown", "mouseup", "touchstart", "touchmove", "touchend", "pointerdown", "pointerup", "wheel"]
+      .forEach((ev) => isoEl.addEventListener(ev, (e) => e.stopPropagation(), { passive: true }));
     isoEl.addEventListener("click", (e) => {
       const b = e.target.closest("[data-iso]");
       if (b) {
         const a = b.dataset.iso;
-        if (a === "close") exitIso();
-        else if (a === "detail") showConceptPanel(isoNode.data("_c"));
-        else if (a === "box-close") closeIsoBox();
+        if (a === "close") { if (isoCard) closeCard(); else exitIso(); }
+        else if (a === "detail") openIsoBox("concept");
+        else if (a === "edit") { const c = isoNode && isoNode.data("_c"); exitIso(true); if (c) showConceptPanel(c); }
+        else if (a === "box-close") { if (isoCard) closeCard(); else closeIsoBox(); }
         else if (a === "level") openIsoBox(b.dataset.level);
         return;
       }
       const ov = e.target.closest("[data-ovu]");    // kód RVP v boxu → pohled RVP Informatika
-      if (ov) { closeIsoBox(true); exitIso(true); goOvu(ov.dataset.ovu); return; }
-      const f = e.target.closest("[data-focus]");   // odkaz na jiný koncept v boxu → přepnout izometrii na něj
-      if (f) { const n = cy.getElementById(f.dataset.focus); if (n.nonempty() && n.data("type") === "concept") { closeIsoBox(true); enterIso(n); } return; }
+      if (ov) { closeIsoBox(true); exitIso(true); closeCard(); goOvu(ov.dataset.ovu); return; }
+      const k = e.target.closest("[data-concept]"); // koncept z výsledku RVP → pohled Oblasti
+      if (k) { closeCard(); goConcept(k.dataset.concept); return; }
+      const f = e.target.closest("[data-focus]");   // odkaz na koncept v boxu → jeho prstence
+      if (f) { closeIsoBox(true); focusNode(f.dataset.focus); return; }
+      if (isoCard) { if (!e.target.closest("#km-isobox")) closeCard(); return; }
       if (isoBoxOpen()) { closeIsoBox(); return; }
       if (e.target === isoEl || e.target.classList.contains("km-iso-svg")) exitIso();   // klik do pozadí = zpět
     });
@@ -1956,7 +1971,9 @@
 
   function enterIso(node) {
     if (isoNode) exitIso(true);
+    closeCard();
     isoNode = node;
+    isoEl.querySelector('[data-iso="edit"]').hidden = !canWrite();   // úprava konceptu jen pro editory
     const c = node.data("_c"), host = document.getElementById("cy"), W = host.clientWidth, H = host.clientHeight;
     const svg = isoEl.querySelector(".km-iso-svg");
     svg.innerHTML = ""; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
@@ -2064,6 +2081,36 @@
     box.classList.add("open");
     isoEl.querySelectorAll(".iso-layer, .iso-tag").forEach((el) => el.classList.toggle("chosen", el.dataset.level === lv.id));
   }
+  /* ---------- Popis uprostřed (oblast, skupina, výsledek RVP) ----------
+     Stejný box a rozostřené pozadí jako u prstenců konceptu, jen bez prstenců. */
+  let isoCard = false;
+  function openCard(html) {
+    if (isoNode) exitIso(true);
+    closeDetail();
+    isoCard = true;
+    isoEl.querySelector(".km-iso-svg").innerHTML = "";
+    isoEl.classList.remove("hidden"); isoEl.classList.add("on", "card");
+    document.getElementById("cy").classList.add("iso-blur");
+    const box = document.getElementById("km-isobox");
+    box.querySelector(".km-isobox-body").innerHTML = html;
+    box.scrollTop = 0;
+    requestAnimationFrame(() => box.classList.add("open"));
+  }
+  function closeCard() {
+    if (!isoCard) return;
+    isoCard = false;
+    closeIsoBox(true);
+    document.getElementById("cy").classList.remove("iso-blur");
+    isoEl.classList.remove("on", "card"); isoEl.classList.add("hidden");
+    clearNb();
+  }
+  function openGroupCard(node) {
+    const t = node.data("type"), gid = node.data("gid"), sub = t === "sub" || t === "subhub";
+    cy.$(":selected").unselect();
+    openCard(viewMode === "rvp" ? rvpGroupHtml(gid, sub ? node.data("pid") : null)
+      : sub ? subHtml(gid, node.data("pid")) : groupHtml(gid, "#ffff00", node.data("label")));
+  }
+
   function closeIsoBox(silent) {
     const box = document.getElementById("km-isobox"); if (!box) return;
     box.classList.remove("open");

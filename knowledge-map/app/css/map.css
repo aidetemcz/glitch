@@ -316,3 +316,5 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
   align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex: 0 0 auto; }
 .d-stupen.on .d-stupen-mark { background: var(--c-yellow); border-color: var(--c-yellow); color: var(--c-black); }
 .control-block[hidden] { display: none; }
+/* popis uprostřed bez prstenců: tlačítko „Detail konceptu“ nedává smysl */
+.km-iso.card [data-iso="detail"], .km-iso.card [data-iso="edit"] { display: none; }
