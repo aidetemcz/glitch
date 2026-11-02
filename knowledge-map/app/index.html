@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Darker+Grotesque:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/map.css?v=68">
+  <link rel="stylesheet" href="css/map.css?v=69">
 </head>
 <body>
   <div id="app">
@@ -89,6 +89,9 @@
     <!-- Graf -->
     <main id="cy"></main>
 
+    <!-- Praktiky: plovoucí tabulka nad mapou (pohled Oblasti), plní ji map.js -->
+    <section id="km-praktiky" class="km-praktiky hidden" aria-label="Praktiky"></section>
+
     <!-- Detail bubliny -->
     <aside id="detail" class="hidden" aria-live="polite">
       <button id="detail-close" aria-label="Zavřít">✕</button>
@@ -101,6 +104,6 @@
   <script src="js/vendor/cytoscape.min.js"></script>
   <script src="js/vendor/js-yaml.min.js"></script>
   <script src="js/km-store.js?v=3"></script>
-  <script src="js/map.js?v=88"></script>
+  <script src="js/map.js?v=89"></script>
 </body>
 </html>

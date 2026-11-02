@@ -723,6 +723,7 @@
     const go = () => render("tema");
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
     setStatus(statusText("tema"));
+    loadPraktiky().then(() => showPraktiky(viewMode === "tema"), () => {});
     loadRvp().catch(() => {});   // na pozadí: detail konceptu pak ukáže aktuální znění RVP a odkaz do pohledu RVP
   }
 
@@ -771,6 +772,7 @@
     buildGroupFilter(mode);
     document.getElementById("group-label").textContent = GROUP_LABEL[mode] || "Skupina";
     document.getElementById("controls").dataset.view = mode;
+    showPraktiky(mode === "tema");
     document.getElementById("search").placeholder = mode === "rvp" ? "Hledej výsledek učení…" : "Hledej koncept…";
     if (DATA) setStatus(statusText(mode));
     radialLayout();
@@ -2157,6 +2159,8 @@
       }
       const ov = e.target.closest("[data-ovu]");    // kód RVP v boxu → pohled RVP Informatika
       if (ov) { closeIsoBox(true); exitIso(true); closeCard(); goOvu(ov.dataset.ovu); return; }
+      const pr = e.target.closest("[data-praktika]"); // příbuzná praktika → její popis
+      if (pr) { openPraktika(pr.dataset.praktika); return; }
       const k = e.target.closest("[data-concept]"); // koncept z výsledku RVP → pohled Oblasti
       if (k) { closeCard(); goConcept(k.dataset.concept); return; }
       const f = e.target.closest("[data-focus]");   // odkaz na koncept v boxu → jeho prstence
@@ -2303,6 +2307,100 @@
     isoEl.classList.remove("on", "card"); isoEl.classList.add("hidden");
     clearNb();
   }
+  /* ---------- Praktiky: plovoucí tabulka nad mapou (pohled Oblasti) ----------
+     Leží mimo kontejner mapy, takže kolečko a tažení neovlivní graf. Poloha a sbalení
+     se pamatují v prohlížeči (localStorage, jen pohodlí jednoho uživatele). */
+  let PRAKTIKY = null, praktikyPromise = null;
+  const PR_KEY = "km-praktiky-panel";
+  function loadPraktiky() {
+    if (!praktikyPromise) praktikyPromise = fetch("data/Informatika/praktiky.json?v=1")
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then((d) => { PRAKTIKY = d.praktiky || []; buildPraktikyPanel(); return PRAKTIKY; })
+      .catch((e) => { praktikyPromise = null; throw e; });
+    return praktikyPromise;
+  }
+  const prState = () => { try { return JSON.parse(localStorage.getItem(PR_KEY) || "{}"); } catch (_) { return {}; } };
+  const prSave = (o) => { try { localStorage.setItem(PR_KEY, JSON.stringify(Object.assign(prState(), o))); } catch (_) {} };
+
+  function buildPraktikyPanel() {
+    const el = document.getElementById("km-praktiky");
+    if (!el || !PRAKTIKY) return;
+    el.innerHTML = `
+      <div class="pr-head" title="Táhni za záhlaví a přesuň tabulku">
+        <span class="pr-grip" aria-hidden="true">⋮⋮</span><span class="pr-title">Praktiky</span><span class="pr-count">${PRAKTIKY.length}</span>
+        <button type="button" class="pr-toggle" aria-label="Sbalit nebo rozbalit tabulku praktik">–</button>
+      </div>
+      <div class="pr-body"><table class="pr-table">
+        <thead><tr><th>Sloveso</th><th>Krátký popis</th></tr></thead>
+        <tbody>${PRAKTIKY.map((p) => `<tr data-praktika="${escAttr(p.id)}" tabindex="0"><td class="pr-verb">${esc(p.sloveso)}</td><td>${esc(typo(p.kratky))}</td></tr>`).join("")}</tbody>
+      </table></div>`;
+    const st = prState();
+    el.classList.toggle("collapsed", !!st.collapsed);
+    el.querySelector(".pr-toggle").textContent = st.collapsed ? "+" : "–";
+    el.querySelector("tbody").addEventListener("click", (e) => { const tr = e.target.closest("tr[data-praktika]"); if (tr) openPraktika(tr.dataset.praktika); });
+    el.querySelector("tbody").addEventListener("keydown", (e) => {
+      const tr = e.target.closest("tr[data-praktika]");
+      if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openPraktika(tr.dataset.praktika); }
+    });
+    el.querySelector(".pr-toggle").addEventListener("click", () => {
+      const c = !el.classList.contains("collapsed");
+      el.classList.toggle("collapsed", c); el.querySelector(".pr-toggle").textContent = c ? "+" : "–"; prSave({ collapsed: c }); placePraktiky();
+    });
+    // tažení za záhlaví (myš i dotyk)
+    const head = el.querySelector(".pr-head");
+    let drag = null;
+    head.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".pr-toggle")) return;
+      const r = el.getBoundingClientRect();
+      drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+      head.setPointerCapture(e.pointerId); el.classList.add("dragging"); e.preventDefault();
+    });
+    head.addEventListener("pointermove", (e) => { if (drag) placePraktiky(e.clientX - drag.dx, e.clientY - drag.dy); });
+    const end = () => { if (!drag) return; drag = null; el.classList.remove("dragging"); const r = el.getBoundingClientRect(); prSave({ x: r.left, y: r.top }); };
+    head.addEventListener("pointerup", end); head.addEventListener("pointercancel", end);
+    window.addEventListener("resize", () => placePraktiky());
+    placePraktiky();
+  }
+  // umístí panel (výchozí: pravý horní roh mapy) a udrží ho celý v okně
+  function placePraktiky(x, y) {
+    const el = document.getElementById("km-praktiky");
+    if (!el) return;
+    const map = document.getElementById("cy").getBoundingClientRect(), st = prState();
+    if (x == null) { x = st.x != null ? st.x : map.right - el.offsetWidth - 16; y = st.y != null ? st.y : map.top + 16; }
+    x = Math.max(4, Math.min(x, window.innerWidth - el.offsetWidth - 4));
+    y = Math.max(4, Math.min(y, window.innerHeight - el.querySelector(".pr-head").offsetHeight - 4));
+    el.style.left = x + "px"; el.style.top = y + "px";
+  }
+  function showPraktiky(on) {
+    const el = document.getElementById("km-praktiky");
+    if (!el) return;
+    el.classList.toggle("hidden", !on || !PRAKTIKY);
+    if (on && PRAKTIKY) placePraktiky();
+  }
+
+  function praktikaHtml(p) {
+    const byId = {}; (PRAKTIKY || []).forEach((x) => { byId[x.id] = x; });
+    const v = p.vyskyt;
+    const vyskyt = v ? `<p class="d-desc">${v.celkem}× celkem: ${v.ovu}× ve formulacích OVU a ${v.cinnosti}× v Činnostech a dovednostech · ${p.vystupu} ${p.vystupu === 1 ? "výstup" : p.vystupu < 5 ? "výstupy" : "výstupů"}</p>` : "";
+    const okruhy = p.okruhy.length ? `<div class="d-tags">${p.okruhy.map((o) => `<span class="d-tag">${esc(o.kod)} · ${esc(o.nazev)}</span>`).join("")}</div>` : "";
+    const ovuKod = p.priklad.ovu ? "INF-INF-" + p.priklad.ovu : "";
+    const priklad = `<div class="d-rvp">„${esc(typo(p.priklad.text))}“${ovuKod ? `<div class="d-rvp-note"><button class="kod kod-link" data-ovu="${escAttr(ovuKod)}" title="Otevřít v pohledu RVP Informatika">${esc(ovuKod)}</button></div>` : ""}</div>`;
+    const pribuzne = p.pribuzne.filter((id) => byId[id]).map((id) => `<button class="d-link" data-praktika="${escAttr(id)}">${esc(byId[id].sloveso)}</button>`).join("");
+    return `
+      <span class="d-badge d-badge-acc">Praktika</span>${p.skupina ? ` <span class="d-badge d-badge-sub">${esc(p.skupina)}</span>` : ""}
+      <h2 class="d-title">${esc(p.sloveso)}</h2>
+      ${p.tvary ? `<div class="d-meta"><span class="d-pill">${esc(p.tvary)}</span></div>` : ""}
+      ${paras(p.popis)}
+      <div class="d-section"><h3>Výskyt v RVP Informatika</h3>${vyskyt}${okruhy}</div>
+      <div class="d-section"><h3>Příklad z RVP</h3>${priklad}</div>
+      <div class="d-section"><h3>Nová taxonomie (orientačně)</h3><p class="d-desc">${esc(typo(p.taxonomie || "—"))}</p></div>
+      ${pribuzne ? `<div class="d-section"><h3>Příbuzná slovesa</h3><div class="d-links">${pribuzne}</div></div>` : ""}`;
+  }
+  function openPraktika(id) {
+    const p = (PRAKTIKY || []).find((x) => x.id === id);
+    if (p) openCard(praktikaHtml(p));
+  }
+
   function openGroupCard(node) {
     const t = node.data("type"), gid = node.data("gid"), sub = t === "sub" || t === "subhub";
     cy.$(":selected").unselect();
