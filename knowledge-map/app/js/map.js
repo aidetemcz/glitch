@@ -213,6 +213,8 @@
   // ze Supabase: úpravy stávajících konceptů, nové koncepty a mikrokoncepty.
   let supabaseOk = false;
   (async function boot() {
+    // praktiky souběžně s daty mapy: tabulka je součástí plochy, první vykreslení ji má zahrnout
+    const prFetch = fetch("data/Informatika/praktiky.json?v=1").then((r) => (r.ok ? r.json() : null)).catch(() => null);
     try {
       const txt = await fetch("data/Informatika/knowledge-map.yaml?v=25")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
@@ -223,6 +225,8 @@
           if (!ov.offline) { supabaseOk = true; mergeOverlay(data, ov); }
         }
       } catch (_) { /* offline → jen základ */ }
+      const pr = await prFetch;
+      if (pr && pr.praktiky) PRAKTIKY = pr.praktiky;
       init(data);
     } catch (e) { setStatus("Chyba načítání dat: " + e.message); }
   })();
@@ -533,7 +537,7 @@
 
     cy = cytoscape({
       container: document.getElementById("cy"),
-      elements: [], wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 2.5,
+      elements: [], wheelSensitivity: 0.25, minZoom: 0.1, maxZoom: 2.5,
       style: [
         // neviditelné rodičovské uzly (téma, podoblast) — jen pro filtry a seskupení
         { selector: "node[type='group'], node[type='sub']", style: {
@@ -584,6 +588,9 @@
           "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
         }},
         { selector: "node[type='ovu'][strana='vazba']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        // neviditelný uzel pod tabulkou praktik (drží její místo a velikost na ploše)
+        { selector: "node[type='praktiky']", style: { "shape": "rectangle", "width": "data(w)", "height": "data(h)",
+          "background-opacity": 0, "border-width": 0, "label": "", "events": "no" } },
         // Journey: čáry mezi koncepty cesty (souhvězdí)
         { selector: "edge[etype='jflow']", style: {
           "line-color": "rgba(255,255,255,0.85)", "width": 1.6, "curve-style": "straight",
@@ -723,7 +730,6 @@
     const go = () => render("tema");
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
     setStatus(statusText("tema"));
-    loadPraktiky().then(() => showPraktiky(viewMode === "tema"), () => {});
     loadRvp().catch(() => {});   // na pozadí: detail konceptu pak ukáže aktuální znění RVP a odkaz do pohledu RVP
   }
 
@@ -772,10 +778,10 @@
     buildGroupFilter(mode);
     document.getElementById("group-label").textContent = GROUP_LABEL[mode] || "Skupina";
     document.getElementById("controls").dataset.view = mode;
-    showPraktiky(mode === "tema");
     document.getElementById("search").placeholder = mode === "rvp" ? "Hledej výsledek učení…" : "Hledej koncept…";
     if (DATA) setStatus(statusText(mode));
     radialLayout();
+    placePraktiky(mode);                  // tabulka praktik na ploše (jen Oblasti), ať ji fit zahrne
     applyFilters();
     cy.fit(cy.nodes(":visible"), 40);
     if (mode === "journey") applyJourney();
@@ -2307,75 +2313,78 @@
     isoEl.classList.remove("on", "card"); isoEl.classList.add("hidden");
     clearNb();
   }
-  /* ---------- Praktiky: plovoucí tabulka nad mapou (pohled Oblasti) ----------
-     Leží mimo kontejner mapy, takže kolečko a tažení neovlivní graf. Poloha a sbalení
-     se pamatují v prohlížeči (localStorage, jen pohodlí jednoho uživatele). */
-  let PRAKTIKY = null, praktikyPromise = null;
-  const PR_KEY = "km-praktiky-panel";
-  function loadPraktiky() {
-    if (!praktikyPromise) praktikyPromise = fetch("data/Informatika/praktiky.json?v=1")
-      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .then((d) => { PRAKTIKY = d.praktiky || []; buildPraktikyPanel(); return PRAKTIKY; })
-      .catch((e) => { praktikyPromise = null; throw e; });
-    return praktikyPromise;
-  }
-  const prState = () => { try { return JSON.parse(localStorage.getItem(PR_KEY) || "{}"); } catch (_) { return {}; } };
-  const prSave = (o) => { try { localStorage.setItem(PR_KEY, JSON.stringify(Object.assign(prState(), o))); } catch (_) {} };
+  /* ---------- Praktiky: tabulka na ploše mapy (pohled Oblasti) ----------
+     HTML tabulka ukotvená k neviditelnému uzlu grafu: posouvá a zoomuje se s mapou jako bubliny,
+     dá se přetáhnout, úvodní přiblížení mapy ji zahrne. Celá, bez posuvníku. Poloha v souřadnicích
+     mapy se pamatuje v prohlížeči (localStorage, jen pohodlí jednoho uživatele). */
+  let PRAKTIKY = null, prEl = null;
+  const PR_KEY = "km-praktiky-pos", PR_NODE = "praktiky-tabulka";
+  const prPos = () => { try { return JSON.parse(localStorage.getItem(PR_KEY) || "null"); } catch (_) { return null; } };
+  const prSavePos = (p) => { try { localStorage.setItem(PR_KEY, JSON.stringify({ x: Math.round(p.x), y: Math.round(p.y) })); } catch (_) {} };
 
-  function buildPraktikyPanel() {
-    const el = document.getElementById("km-praktiky");
-    if (!el || !PRAKTIKY) return;
-    el.innerHTML = `
-      <div class="pr-head" title="Táhni za záhlaví a přesuň tabulku">
-        <span class="pr-grip" aria-hidden="true">⋮⋮</span><span class="pr-title">Praktiky</span><span class="pr-count">${PRAKTIKY.length}</span>
-        <button type="button" class="pr-toggle" aria-label="Sbalit nebo rozbalit tabulku praktik">–</button>
-      </div>
-      <div class="pr-body"><table class="pr-table">
+  function buildPraktikyTable() {
+    if (prEl || !PRAKTIKY) return;
+    prEl = document.createElement("section");
+    prEl.className = "km-praktiky hidden"; prEl.setAttribute("aria-label", "Praktiky");
+    prEl.innerHTML = `
+      <div class="pr-head"><span class="pr-title">Praktiky</span><span class="pr-count">${PRAKTIKY.length}</span></div>
+      <table class="pr-table">
         <thead><tr><th>Sloveso</th><th>Krátký popis</th></tr></thead>
         <tbody>${PRAKTIKY.map((p) => `<tr data-praktika="${escAttr(p.id)}" tabindex="0"><td class="pr-verb">${esc(p.sloveso)}</td><td>${esc(typo(p.kratky))}</td></tr>`).join("")}</tbody>
-      </table></div>`;
-    const st = prState();
-    el.classList.toggle("collapsed", !!st.collapsed);
-    el.querySelector(".pr-toggle").textContent = st.collapsed ? "+" : "–";
-    el.querySelector("tbody").addEventListener("click", (e) => { const tr = e.target.closest("tr[data-praktika]"); if (tr) openPraktika(tr.dataset.praktika); });
-    el.querySelector("tbody").addEventListener("keydown", (e) => {
+      </table>`;
+    document.getElementById("cy").appendChild(prEl);
+    // graf nesmí brát stisk v tabulce jako začátek posunu mapy (kolečko naopak mapu zoomuje jako nad bublinou)
+    ["mousedown", "touchstart", "touchmove"].forEach((ev) => prEl.addEventListener(ev, (e) => e.stopPropagation(), { passive: true }));
+    // tažení kdekoli v tabulce; bez pohybu = klik na řádek
+    let drag = null;
+    prEl.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      const n = cy.getElementById(PR_NODE); if (n.empty()) return;
+      drag = { x: e.clientX, y: e.clientY, p: Object.assign({}, n.position()), moved: false, row: e.target.closest("tr[data-praktika]") };
+      prEl.setPointerCapture(e.pointerId);
+    });
+    prEl.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+      drag.moved = true; prEl.classList.add("dragging");
+      const z = cy.zoom();
+      cy.getElementById(PR_NODE).position({ x: drag.p.x + dx / z, y: drag.p.y + dy / z });
+    });
+    const end = () => {
+      if (!drag) return;
+      const d = drag; drag = null; prEl.classList.remove("dragging");
+      if (d.moved) prSavePos(cy.getElementById(PR_NODE).position());
+      else if (d.row) openPraktika(d.row.dataset.praktika);
+    };
+    prEl.addEventListener("pointerup", end); prEl.addEventListener("pointercancel", () => { drag = null; prEl.classList.remove("dragging"); });
+    prEl.addEventListener("keydown", (e) => {
       const tr = e.target.closest("tr[data-praktika]");
       if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openPraktika(tr.dataset.praktika); }
     });
-    el.querySelector(".pr-toggle").addEventListener("click", () => {
-      const c = !el.classList.contains("collapsed");
-      el.classList.toggle("collapsed", c); el.querySelector(".pr-toggle").textContent = c ? "+" : "–"; prSave({ collapsed: c }); placePraktiky();
-    });
-    // tažení za záhlaví (myš i dotyk)
-    const head = el.querySelector(".pr-head");
-    let drag = null;
-    head.addEventListener("pointerdown", (e) => {
-      if (e.target.closest(".pr-toggle")) return;
-      const r = el.getBoundingClientRect();
-      drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
-      head.setPointerCapture(e.pointerId); el.classList.add("dragging"); e.preventDefault();
-    });
-    head.addEventListener("pointermove", (e) => { if (drag) placePraktiky(e.clientX - drag.dx, e.clientY - drag.dy); });
-    const end = () => { if (!drag) return; drag = null; el.classList.remove("dragging"); const r = el.getBoundingClientRect(); prSave({ x: r.left, y: r.top }); };
-    head.addEventListener("pointerup", end); head.addEventListener("pointercancel", end);
-    window.addEventListener("resize", () => placePraktiky());
-    placePraktiky();
+    cy.on("viewport", syncPraktiky);
+    cy.on("position", "#" + PR_NODE, syncPraktiky);
+    window.addEventListener("resize", syncPraktiky);
   }
-  // umístí panel (výchozí: pravý horní roh mapy) a udrží ho celý v okně
-  function placePraktiky(x, y) {
-    const el = document.getElementById("km-praktiky");
-    if (!el) return;
-    const map = document.getElementById("cy").getBoundingClientRect(), st = prState();
-    if (x == null) { x = st.x != null ? st.x : map.right - el.offsetWidth - 16; y = st.y != null ? st.y : map.top + 16; }
-    x = Math.max(4, Math.min(x, window.innerWidth - el.offsetWidth - 4));
-    y = Math.max(4, Math.min(y, window.innerHeight - el.querySelector(".pr-head").offsetHeight - 4));
-    el.style.left = x + "px"; el.style.top = y + "px";
+  // po vykreslení pohledu: v Oblastech přidá uzel pod tabulku (vpravo od mapy, nebo na uloženém místě)
+  function placePraktiky(mode) {
+    buildPraktikyTable();
+    if (!prEl) return;
+    const on = mode === "tema";
+    prEl.classList.toggle("hidden", !on);
+    if (!on) return;
+    const w = prEl.offsetWidth, h = prEl.offsetHeight;        // rozměry bez měřítka = rozměry na ploše
+    const bb = cy.nodes().boundingBox();
+    const saved = prPos();
+    const pos = saved || { x: bb.x2 + 220 + w / 2, y: bb.y1 + h / 2 };
+    cy.add({ group: "nodes", data: { id: PR_NODE, type: "praktiky", w, h }, position: pos });
+    syncPraktiky();
   }
-  function showPraktiky(on) {
-    const el = document.getElementById("km-praktiky");
-    if (!el) return;
-    el.classList.toggle("hidden", !on || !PRAKTIKY);
-    if (on && PRAKTIKY) placePraktiky();
+  function syncPraktiky() {
+    if (!prEl || prEl.classList.contains("hidden")) return;
+    const n = cy.getElementById(PR_NODE); if (n.empty()) return;
+    const z = cy.zoom(), p = n.renderedPosition(), w = n.data("w"), h = n.data("h");
+    prEl.style.transform = `translate(${p.x - (w * z) / 2}px, ${p.y - (h * z) / 2}px) scale(${z})`;
   }
 
   function praktikaHtml(p) {

@@ -372,26 +372,18 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .tx-vk-proc { font-size: 12px; }
 @media (max-width: 720px) { .tx-lbl { flex-basis: 100%; } }
 
-/* Praktiky: plovoucí tabulka nad mapou, ohraničení a řádky světlou fialovou */
-.km-praktiky { --pr-line: #c8b6f0; position: fixed; z-index: 12; width: min(400px, calc(100vw - 32px));
-  background: var(--c-panel); border: 1.5px solid var(--pr-line); border-radius: 12px; overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; max-height: min(62vh, 560px); }
+/* Praktiky: tabulka na ploše mapy (pozici a měřítko nastavuje map.js podle zoomu), světle fialové linky */
+.km-praktiky { --pr-line: #c8b6f0; position: absolute; left: 0; top: 0; z-index: 5; width: 720px; transform-origin: 0 0;
+  background: var(--c-panel); border: 2px solid var(--pr-line); border-radius: 14px; overflow: hidden;
+  cursor: grab; user-select: none; touch-action: none; will-change: transform; }
 .km-praktiky.hidden { display: none; }
-.km-praktiky.dragging { opacity: 0.92; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5); }
-.pr-head { display: flex; align-items: center; gap: 8px; padding: 9px 10px 9px 12px; cursor: grab; user-select: none; touch-action: none;
-  border-bottom: 1.5px solid var(--pr-line); flex: 0 0 auto; }
-.km-praktiky.dragging .pr-head { cursor: grabbing; }
-.km-praktiky.collapsed .pr-head { border-bottom: 0; }
-.pr-grip { color: var(--pr-line); font-size: 12px; letter-spacing: -2px; }
-.pr-title { font-weight: 600; font-size: 14px; }
-.pr-count { font-size: 12px; color: var(--c-grey-50); }
-.pr-toggle { margin-left: auto; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--pr-line); color: var(--c-white);
-  font-size: 15px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
-.pr-toggle:hover { background: var(--pr-line); color: var(--c-black); }
-.pr-body { overflow-y: auto; flex: 1 1 auto; scrollbar-width: thin; }
-.km-praktiky.collapsed .pr-body { display: none; }
+.km-praktiky.dragging { cursor: grabbing; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45); }
+#cy.iso-blur .km-praktiky { filter: blur(10px) brightness(0.45) grayscale(0.4); }
+.pr-head { display: flex; align-items: baseline; gap: 8px; padding: 12px 14px; border-bottom: 2px solid var(--pr-line); }
+.pr-title { font-family: "Space Grotesk", "Inter", sans-serif; font-weight: 600; font-size: 20px; color: var(--c-white); }
+.pr-count { font-size: 13px; color: var(--c-grey-50); }
 .pr-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.pr-table th { position: sticky; top: 0; background: var(--c-panel); text-align: left; font-size: 11px; font-weight: 600;
+.pr-table th { background: var(--c-panel); text-align: left; font-size: 11px; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-grey-50); padding: 8px 12px; border-bottom: 1.5px solid var(--pr-line); }
 .pr-table td { padding: 8px 12px; border-bottom: 1px solid var(--pr-line); vertical-align: top; color: var(--c-grey-15); line-height: 1.4; }
 .pr-table tr:last-child td { border-bottom: 0; }
