@@ -2171,6 +2171,7 @@
     if (isoNode) exitIso(true);
     closeCard();
     isoNode = node;
+    lockMap(true);
     isoEl.querySelector('[data-iso="edit"]').hidden = !canWrite();   // úprava konceptu jen pro editory
     const c = node.data("_c"), host = document.getElementById("cy"), W = host.clientWidth, H = host.clientHeight;
     const svg = isoEl.querySelector(".km-iso-svg");
@@ -2234,6 +2235,7 @@
 
   function exitIso(silent) {
     if (!isoNode) return;
+    lockMap(false);
     cancelAnimationFrame(isoRaf);
     closeIsoBox(true);
     const host = document.getElementById("cy");
@@ -2273,11 +2275,17 @@
   }
   /* ---------- Popis uprostřed (oblast, skupina, výsledek RVP) ----------
      Stejný box a rozostřené pozadí jako u prstenců konceptu, jen bez prstenců. */
+  /* Mapa pod překryvem (prstence, popis uprostřed) se nesmí přibližovat ani posouvat:
+     Cytoscape odebírá kolečko ve fázi zachycení na kontejneru, takže stopPropagation v překryvu
+     nestačí. S vypnutým uživatelským zoomem/posunem kolečko nechá být a box se dá posouvat. */
+  const lockMap = (on) => { if (cy) { cy.userZoomingEnabled(!on); cy.userPanningEnabled(!on); } };
+
   let isoCard = false;
   function openCard(html) {
     if (isoNode) exitIso(true);
     closeDetail();
     isoCard = true;
+    lockMap(true);
     isoEl.querySelector(".km-iso-svg").innerHTML = "";
     isoEl.classList.remove("hidden"); isoEl.classList.add("on", "card");
     document.getElementById("cy").classList.add("iso-blur");
@@ -2289,6 +2297,7 @@
   function closeCard() {
     if (!isoCard) return;
     isoCard = false;
+    lockMap(false);
     closeIsoBox(true);
     document.getElementById("cy").classList.remove("iso-blur");
     isoEl.classList.remove("on", "card"); isoEl.classList.add("hidden");
