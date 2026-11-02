@@ -1884,12 +1884,13 @@
   const ovuRelated = (o) => [...new Set([...o.souvisi, ...o.navaznost, ...(rvpRev[o.kod] || [])])].filter((k) => rvpByKod[k] && k !== o.kod);
 
   /* ---------- Nová taxonomie u OVU: legenda, stupnice úrovní, výkony ----------
-     Úroveň = číslo v kolečku + stupnice žluté (pořadí 1→6, ověřeno jako ordinální řada);
+     Úroveň = číslo ve žlutém kolečku (použitá svítí, ostatní zhasnuté);
      dimenze = barva obrysu (3 kategorické barvy, ověřeno pro všechny dvojice). */
   const TX_UROVNE = [
-    { c: 1, n: "Vybavování", col: "#87783e" }, { c: 2, n: "Porozumění", col: "#a0913d" },
-    { c: 3, n: "Analýza", col: "#b9aa3d" }, { c: 4, n: "Použití znalostí", col: "#d1c23d" },
-    { c: 5, n: "Metakognice", col: "#e8d93c" }, { c: 6, n: "Já-systém", col: "#fff03c" },
+    // všechny úrovně stejnou žlutou (barva značky); použité svítí, ostatní jsou zhasnuté
+    { c: 1, n: "Vybavování", col: "var(--c-yellow)" }, { c: 2, n: "Porozumění", col: "var(--c-yellow)" },
+    { c: 3, n: "Analýza", col: "var(--c-yellow)" }, { c: 4, n: "Použití znalostí", col: "var(--c-yellow)" },
+    { c: 5, n: "Metakognice", col: "var(--c-yellow)" }, { c: 6, n: "Já-systém", col: "var(--c-yellow)" },
   ];
   const TX_DIMENZE = {
     deklarativni: { n: "Deklarativní znalosti", col: "#3987e5" },
@@ -1935,8 +1936,7 @@
           <div class="tx-meter" role="img" aria-label="${escAttr(`Formulace sahá na úroveň ${f}, metodická podpora Splněno na úroveň ${spl}`)}">${meter}</div>
           <span class="tx-meter-cap">formulace: <b>${f}</b>${spl > f ? ` · „Splněno“ v metodice: až <b>${spl}</b>` : spl < f ? ` · „Splněno“ v metodice: jen <b>${spl}</b>` : " · „Splněno“ stejně"}</span></div>
         <details class="r-uro tx-det"><summary>Výkony a jejich klasifikace<span class="r-count">${t.vykony.length}</span></summary>
-          <div class="r-body"><ul class="tx-vykony">${vykony}</ul>
-          <p class="d-rvp-note">Vyhodnocení podle Nové taxonomie (Marzano & Kendall): úroveň určuje formulace OVU v nejnižším výkladu, který připouští. Pracovní verze.</p></div>
+          <div class="r-body"><ul class="tx-vykony">${vykony}</ul></div>
         </details>
       </div>`;
   }
