@@ -334,3 +334,38 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .m-dom .d-empty { margin: 0; font-size: 13px; }
 .m-dom .r-ul { margin-bottom: 0; }
 .m-str { color: var(--c-grey-50); font-size: 12px; }
+
+/* Nová taxonomie u OVU (pohled RVP): úroveň = číslo v kolečku ve stupnici žluté, dimenze = barva obrysu.
+   Text pilulek zůstává bílý; barvu nese jen obrys a kolečko. */
+.tx-verb { display: inline-flex; align-items: center; gap: 0.3em; padding: 0 0.42em 0 0.16em; margin: 0 0.04em;
+  border: 2px solid var(--d); border-radius: 999px; background: color-mix(in srgb, var(--d) 16%, transparent); line-height: 1.35; white-space: nowrap; }
+.tx-num { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; width: 1.25em; height: 1.25em;
+  border-radius: 50%; background: var(--l); color: #1a1a1a; font-style: normal; font-weight: 700; font-size: 0.62em; line-height: 1; }
+.tx-verb .tx-num { font-size: 0.6em; width: 1.5em; height: 1.5em; }
+.tx { margin: 4px 0 16px; padding: 12px 14px; border: 1px solid var(--c-line); border-radius: 12px; background: var(--c-dark);
+  display: flex; flex-direction: column; gap: 10px; }
+.tx-legend { display: flex; flex-direction: column; gap: 8px; }
+.tx-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tx-lbl { flex: 0 0 132px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-grey-50); }
+.tx-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.tx-lv, .tx-dim { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--c-white);
+  padding: 3px 10px 3px 4px; border-radius: 999px; border: 1px solid var(--c-line); }
+.tx-lv .tx-num { font-size: 11px; width: 18px; height: 18px; }
+.tx-dim { padding-left: 10px; border: 2px solid var(--d); }
+.tx-lv.off, .tx-dim.off { opacity: 0.35; }
+.tx-meter { display: inline-flex; gap: 3px; }
+.tx-cell { width: 26px; height: 18px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--c-grey-50); border: 1px solid var(--c-line); }
+.tx-cell.on { background: var(--l); border-color: var(--l); color: #1a1a1a; }
+.tx-cell.spl { border: 1.5px dashed var(--l); color: var(--c-white); }
+.tx-meter-cap { font-size: 12px; color: var(--c-grey-15); }
+.tx-meter-cap b { color: var(--c-white); }
+.tx-det { margin: 0; }
+.tx-vykony { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tx-vykony li { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; }
+.tx-vykony .tx-verb { font-size: 13px; flex: 0 0 auto; }
+.tx-vk-text { display: flex; flex-direction: column; gap: 2px; color: var(--c-grey-15); line-height: 1.45; }
+.tx-vk-text strong { color: var(--c-white); font-weight: 500; }
+.tx-vk-meta { font-size: 12px; color: var(--c-grey-50); }
+.tx-vk-proc { font-size: 12px; }
+@media (max-width: 720px) { .tx-lbl { flex-basis: 100%; } }

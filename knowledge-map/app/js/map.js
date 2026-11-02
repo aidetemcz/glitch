@@ -230,10 +230,17 @@
   /* RVP Informatika (výtah z RVP ZV, viz ../build-rvp.py) — načítá se na pozadí,
      pohled „RVP" a odkazy z detailu konceptu na něj počkají */
   let RVP = null, rvpByKod = {}, rvpRev = {}, rvpPromise = null;
+  /* Vyhodnocení OVU podle Nové taxonomie (rvp-taxonomie.yaml): klíč = konec kódu OVU, např. ZV9-005 */
+  let TAX = {};
+  // jen OVU Informatiky (INF-…); kompetence a gramotnosti mají stejné konce kódů (např. KKK-VYJ-000-ZV5-001)
+  const taxOf = (kod) => (/^INF-/.test(String(kod || "")) && TAX[String(kod).slice(-7)]) || null;
   function loadRvp() {
-    if (!rvpPromise) rvpPromise = fetch("data/Informatika/rvp.json?v=1")
-      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .then((d) => {
+    if (!rvpPromise) rvpPromise = Promise.all([
+      fetch("data/Informatika/rvp.json?v=1").then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }),
+      fetch("data/Informatika/rvp-taxonomie.yaml?v=1").then((r) => (r.ok ? r.text() : "")).then((t) => (t ? (jsyaml.load(t) || {}).ovu || {} : {})).catch(() => ({}))
+    ])
+      .then(([d, tax]) => {
+        TAX = tax;
         RVP = d; rvpByKod = {}; rvpRev = {};
         d.ovu.forEach((o) => { rvpByKod[o.kod] = o; });
         // zpětné vazby: který výsledek informatiky odkazuje na kompetenci / gramotnost
@@ -1876,6 +1883,64 @@
   // výsledky na mapě, které s daným souvisejí (oběma směry) — dostanou žlutý prstenec
   const ovuRelated = (o) => [...new Set([...o.souvisi, ...o.navaznost, ...(rvpRev[o.kod] || [])])].filter((k) => rvpByKod[k] && k !== o.kod);
 
+  /* ---------- Nová taxonomie u OVU: legenda, stupnice úrovní, výkony ----------
+     Úroveň = číslo v kolečku + stupnice žluté (pořadí 1→6, ověřeno jako ordinální řada);
+     dimenze = barva obrysu (3 kategorické barvy, ověřeno pro všechny dvojice). */
+  const TX_UROVNE = [
+    { c: 1, n: "Vybavování", col: "#87783e" }, { c: 2, n: "Porozumění", col: "#a0913d" },
+    { c: 3, n: "Analýza", col: "#b9aa3d" }, { c: 4, n: "Použití znalostí", col: "#d1c23d" },
+    { c: 5, n: "Metakognice", col: "#e8d93c" }, { c: 6, n: "Já-systém", col: "#fff03c" },
+  ];
+  const TX_DIMENZE = {
+    deklarativni: { n: "Deklarativní znalosti", col: "#3987e5" },
+    postupy: { n: "Myšlenkové postupy", col: "#d95926" },
+    psychomotorika: { n: "Psychomotorické dovednosti", col: "#199e70" },
+  };
+  const txLv = (c) => TX_UROVNE[c - 1] || TX_UROVNE[0];
+  const txNum = (c) => `<i class="tx-num" style="--l:${txLv(c).col}">${c}</i>`;
+  const txVerbPill = (v, text) => `<span class="tx-verb" style="--d:${(TX_DIMENZE[v.dimenze] || {}).col || "#fff"}" ` +
+    `title="${escAttr(txLv(v.uroven).c + " " + txLv(v.uroven).n + " · " + v.proces + " · " + ((TX_DIMENZE[v.dimenze] || {}).n || ""))}">${txNum(v.uroven)}${text}</span>`;
+
+  // znění OVU s aktivními slovesy zvýrazněnými pilulkou (přes zástupné znaky, ať se nenahrazuje uvnitř HTML)
+  function taxZneni(o) {
+    const t = taxOf(o.kod);
+    let h = esc(typo(o.zneni));
+    if (!t) return h;
+    const hits = [];
+    t.vykony.forEach((v, i) => {
+      const re = new RegExp(`(?<![\\p{L}])(${v.sloveso.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})(?![\\p{L}])`, "iu");
+      h = h.replace(re, (m) => { hits.push([i, m]); return "\u0001" + (hits.length - 1) + "\u0002"; });
+    });
+    return h.replace(/\u0001(\d+)\u0002/g, (_, k) => txVerbPill(t.vykony[hits[k][0]], hits[k][1]));
+  }
+
+  function taxHtml(o) {
+    const t = taxOf(o.kod);
+    if (!t) return "";
+    const lvUsed = new Set(t.vykony.map((v) => v.uroven)), dimUsed = new Set(t.vykony.map((v) => v.dimenze));
+    const legLv = TX_UROVNE.map((l) => `<span class="tx-lv${lvUsed.has(l.c) ? "" : " off"}">${txNum(l.c)}${esc(l.n)}</span>`).join("");
+    const legDim = Object.entries(TX_DIMENZE).map(([id, d]) => `<span class="tx-dim${dimUsed.has(id) ? "" : " off"}" style="--d:${d.col}">${esc(d.n)}</span>`).join("");
+    const f = t.formulace, spl = t.splneno || f, sp = Math.max(spl, f);
+    const meter = TX_UROVNE.map((l) => `<span class="tx-cell ${l.c <= f ? "on" : l.c <= sp ? "spl" : ""}" style="--l:${l.col}" title="${escAttr(l.c + " " + l.n)}">${l.c}</span>`).join("");
+    const vykony = t.vykony.map((v) => `<li>${txVerbPill(v, esc(v.sloveso.toLowerCase()))}
+        <span class="tx-vk-text"><strong>${esc(typo(v.citace))}</strong><span class="tx-vk-meta">${esc(txLv(v.uroven).n)} · ${esc(v.proces)} · ${esc((TX_DIMENZE[v.dimenze] || {}).n || v.dimenze)}</span>
+        <span class="tx-vk-proc">${esc(typo(v.proc || ""))}</span></span></li>`).join("");
+    return `
+      <div class="tx">
+        <div class="tx-legend">
+          <div class="tx-row"><span class="tx-lbl">Úrovně zpracování</span><div class="tx-pills">${legLv}</div></div>
+          <div class="tx-row"><span class="tx-lbl">Dimenze</span><div class="tx-pills">${legDim}</div></div>
+        </div>
+        <div class="tx-row tx-meter-row"><span class="tx-lbl">Nejvyšší úroveň</span>
+          <div class="tx-meter" role="img" aria-label="${escAttr(`Formulace sahá na úroveň ${f}, metodická podpora Splněno na úroveň ${spl}`)}">${meter}</div>
+          <span class="tx-meter-cap">formulace: <b>${f}</b>${spl > f ? ` · „Splněno“ v metodice: až <b>${spl}</b>` : spl < f ? ` · „Splněno“ v metodice: jen <b>${spl}</b>` : " · „Splněno“ stejně"}</span></div>
+        <details class="r-uro tx-det"><summary>Výkony a jejich klasifikace<span class="r-count">${t.vykony.length}</span></summary>
+          <div class="r-body"><ul class="tx-vykony">${vykony}</ul>
+          <p class="d-rvp-note">Vyhodnocení podle Nové taxonomie (Marzano & Kendall): úroveň určuje formulace OVU v nejnižším výkladu, který připouští. Pracovní verze.</p></div>
+        </details>
+      </div>`;
+  }
+
   function ovuHtml(o) {
     const hub = rvpHub(o.hub), sub = hub.subs.find((s) => s.id === o.sub) || {};
     const inf = o.hub === "ovu1" || o.hub === "ovu2";
@@ -1900,8 +1965,9 @@
       </details>`).join("");
     return `
       <span class="d-badge d-badge-acc">${esc(hub.nazev)}</span> <span class="d-badge d-badge-sub">${esc(sub.plny || sub.nazev || "")}</span>
-      <h2 class="d-title r-title">${esc(typo(o.zneni))}</h2>
+      <h2 class="d-title r-title">${taxZneni(o)}</h2>
       <div class="d-meta"><span class="d-pill">${esc(o.kod)}</span><span class="d-pill">${esc(o.stupen)}</span>${o.slozka ? `<span class="d-pill">${esc(o.slozka)}</span>` : ""}</div>
+      ${taxHtml(o)}
       <div class="d-section"><h3>Popis a zdůvodnění</h3>${blocksHtml(o.popis) || '<span class="d-empty">—</span>'}</div>
       <div class="d-section"><h3>Úrovně a ilustrativní úlohy</h3>${uro || '<span class="d-empty">—</span>'}</div>
       ${inf ? `
