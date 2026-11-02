@@ -2373,7 +2373,8 @@
     const on = mode === "tema";
     prEl.classList.toggle("hidden", !on);
     if (!on) return;
-    const w = prEl.offsetWidth, h = prEl.offsetHeight;        // rozměry bez měřítka = rozměry na ploše
+    prEl.style.fontSize = "16px"; prEl._R = 1;               // základní velikost písma = rozměry na ploše
+    const w = prEl.offsetWidth, h = prEl.offsetHeight;
     const bb = cy.nodes().boundingBox();
     const saved = prPos();
     const pos = saved || { x: bb.x2 + 220 + w / 2, y: bb.y1 + h / 2 };
@@ -2384,7 +2385,11 @@
     if (!prEl || prEl.classList.contains("hidden")) return;
     const n = cy.getElementById(PR_NODE); if (n.empty()) return;
     const z = cy.zoom(), p = n.renderedPosition(), w = n.data("w"), h = n.data("h");
-    prEl.style.transform = `translate(${p.x - (w * z) / 2}px, ${p.y - (h * z) / 2}px) scale(${z})`;
+    // Text se vysází v písmu ~ velikosti na obrazovce (krok 0,25, ať se nepřepočítává při každém pohybu),
+    // scale doladí jen zbytek, takže se nikdy nezvětšuje rastr malého písma → ostré i při přiblížení.
+    const R = Math.min(4, Math.max(0.25, Math.round(z * 4) / 4));
+    if (prEl._R !== R) { prEl.style.fontSize = 16 * R + "px"; prEl._R = R; }
+    prEl.style.transform = `translate(${p.x - (w * z) / 2}px, ${p.y - (h * z) / 2}px) scale(${z / R})`;
   }
 
   function praktikaHtml(p) {
