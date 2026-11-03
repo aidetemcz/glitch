@@ -236,6 +236,9 @@
   let RVP = null, rvpByKod = {}, rvpRev = {}, rvpPromise = null;
   /* Vyhodnocení OVU podle Nové taxonomie (rvp-taxonomie.yaml): klíč = konec kódu OVU, např. ZV9-005 */
   let TAX = {};
+  // úpravy analýzy a stavu kontroly OVU (Supabase km_concept_overrides pod klíčem „ovu:<kód>“, offline localStorage)
+  let OVU_EDITS = {};
+  const takeOvuEdits = (map) => Object.keys(map || {}).forEach((k) => { if (k.indexOf("ovu:") === 0) OVU_EDITS[k.slice(4)] = map[k]; });
   // jen OVU Informatiky (INF-…); kompetence a gramotnosti mají stejné konce kódů (např. KKK-VYJ-000-ZV5-001)
   const taxOf = (kod) => (/^INF-/.test(String(kod || "")) && TAX[String(kod).slice(-7)]) || null;
   function loadRvp() {
@@ -245,6 +248,9 @@
     ])
       .then(([d, tax]) => {
         TAX = tax;
+        Object.keys(OVU_EDITS).forEach((kod) => {
+          if (/^INF-/.test(kod)) TAX[kod.slice(-7)] = Object.assign({ vykony: [] }, TAX[kod.slice(-7)] || {}, OVU_EDITS[kod]);
+        });
         RVP = d; rvpByKod = {}; rvpRev = {};
         d.ovu.forEach((o) => { rvpByKod[o.kod] = o; });
         // zpětné vazby: který výsledek informatiky odkazuje na kompetenci / gramotnost
@@ -294,6 +300,7 @@
 
   // Navrství Supabase překryv na základní data (in-place).
   function mergeOverlay(data, ov) {
+    takeOvuEdits(ov.overrides);
     data.concepts.forEach((c) => { if (ov.overrides[c.id]) Object.assign(c, ov.overrides[c.id]); });
     const have = new Set(data.concepts.map((c) => c.id));
     const temata = new Set((data.temata || []).map((t) => t.id));   // koncepty ze starších verzí mapy (jiné oblasti) se nenačtou
@@ -426,6 +433,7 @@
         nodes.push({ data: {
           id: ovuNodeId(o.kod), type: "ovu", parent: subId(h.id, o.sub), gid: h.id, pid: o.sub,
           strana: h.id === "kk" || h.id === "zg" ? "vazba" : "inf",
+          kontrola: (taxOf(o.kod) || {}).stav || "",
           label: f.label, size: f.size, textw: f.size, fontsize: f.fs,
           tp: shubId(h.id, o.sub), kod: o.kod, _o: o
         }});
@@ -525,6 +533,7 @@
     /* offline záloha: lokální úpravy i nové koncepty (localStorage) jen když Supabase není */
     if (!supabaseOk) {
       const overlay = loadEdits();
+      takeOvuEdits(overlay);
       data.concepts.forEach((c) => { if (overlay[c.id]) Object.assign(c, overlay[c.id]); });
       try {
         JSON.parse(localStorage.getItem(NEW_KEY) || "[]").forEach((n) => {
@@ -588,6 +597,9 @@
           "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
         }},
         { selector: "node[type='ovu'][strana='vazba']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        // stav kontroly analýzy OVU: zkontrolováno = žlutý prstenec, k diskusi = čárkovaný žlutý
+        { selector: "node[type='ovu'][kontrola='zkontrolovano']", style: { "border-color": "#ffff00", "border-width": 6, "border-style": "solid" } },
+        { selector: "node[type='ovu'][kontrola='k-diskusi']", style: { "border-color": "#ffff00", "border-width": 4, "border-style": "dashed" } },
         // neviditelný uzel pod tabulkou praktik (drží její místo a velikost na ploše)
         { selector: "node[type='praktiky']", style: { "shape": "rectangle", "width": "data(w)", "height": "data(h)",
           "background-opacity": 0, "border-width": 0, "label": "", "events": "no" } },
@@ -1075,6 +1087,8 @@
         <button class="km-primary" data-act="export">⬇ YAML</button>
         <button class="km-primary" data-act="export-json">⬇ concepts.json</button>
       </div>
+      <div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="export-tax">⬇ rvp-taxonomie.yaml</button></div>
+      <p class="d-empty" style="margin-top:6px">Analýza OVU podle Nové taxonomie včetně úprav a stavu kontroly.</p>
       <p class="d-empty" style="margin-top:10px">Se všemi oblastmi export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem oblastí vznikne výřez; u jedné oblasti dostane soubor název zálohy podle klíče <code>datum_Oblast_Jméno_01</code> (pořadové číslo si upravte).</p>`);
   }
 
@@ -1171,6 +1185,7 @@
     else if (act === "editors-back") openAccount();
     else if (act === "export") exportYAML(exportTemata());
     else if (act === "export-json") exportConceptsJson(exportTemata());
+    else if (act === "export-tax") exportTaxonomie();
     else if (act === "export-all" || act === "export-none") document.querySelectorAll(".ex-tema").forEach((x) => x.checked = act === "export-all");
     else if (act === "discard") discardEdits();
     else if (act === "edit") openEditor(id);
@@ -1934,8 +1949,16 @@
     const vykony = t.vykony.map((v) => `<li>${txVerbPill(v, esc(v.sloveso.toLowerCase()))}
         <span class="tx-vk-text"><strong>${esc(typo(v.citace))}</strong><span class="tx-vk-meta">${esc(txLv(v.uroven).n)} · ${esc(v.proces)} · ${esc((TX_DIMENZE[v.dimenze] || {}).n || v.dimenze)}</span>
         <span class="tx-vk-proc">${esc(typo(v.proc || ""))}</span></span></li>`).join("");
+    const stav = t.stav || "nezkontrolovano";
+    const kdo = t.kontrola_kdo ? `<span class="tx-kdo">${esc(t.kontrola_kdo)}${t.kontrola_kdy ? " · " + esc(czDate(t.kontrola_kdy)) : ""}</span>` : "";
+    const stavUi = canWrite()
+      ? `<div class="tx-seg" role="group" aria-label="Stav kontroly">${Object.entries(OVU_STAV).map(([id, n]) =>
+          `<button type="button" class="tx-seg-b${id === stav ? " on" : ""}" data-ovu-act="stav" data-stav="${id}" data-kod="${escAttr(o.kod)}">${esc(n)}</button>`).join("")}</div>`
+      : `<span class="tx-stav tx-stav-${stav}">${esc(OVU_STAV[stav] || stav)}</span>`;
     return `
       <div class="tx">
+        <div class="tx-row tx-stav-row"><span class="tx-lbl">Kontrola analýzy</span>${stavUi}${kdo}
+          ${canWrite() ? `<button type="button" class="d-link tx-edit" data-ovu-act="edit" data-kod="${escAttr(o.kod)}">✎ Upravit analýzu</button>` : ""}</div>
         <div class="tx-legend">
           <div class="tx-row"><span class="tx-lbl">Úrovně zpracování</span><div class="tx-pills">${legLv}</div></div>
           <div class="tx-row"><span class="tx-lbl">Dimenze</span><div class="tx-pills">${legDim}</div></div>
@@ -1947,6 +1970,109 @@
           <div class="r-body"><ul class="tx-vykony">${vykony}</ul></div>
         </details>
       </div>`;
+  }
+
+  /* ---------- Editor analýzy OVU (jen editoři) ---------- */
+  const OVU_STAV = { "nezkontrolovano": "Nezkontrolováno", "k-diskusi": "K diskusi", "zkontrolovano": "Zkontrolováno" };
+  const czDate = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ""); return m ? `${+m[3]}. ${+m[2]}. ${m[1]}` : iso || ""; };
+  const procesyUrovne = (c) => (ISO_LEVELS[c - 1] ? ISO_LEVELS[c - 1].procesy.map((x) => x[0].toLowerCase()) : []);
+  function oxProcesOpts(c, val) {
+    const list = procesyUrovne(c);
+    if (val && !list.includes(val)) list.unshift(val);                 // vlastní proces z dat nezahodit
+    return list.map((x) => `<option value="${escAttr(x)}"${x === val ? " selected" : ""}>${esc(x)}</option>`).join("");
+  }
+  function oxRow(v) {
+    v = v || { sloveso: "", citace: "", dimenze: "deklarativni", uroven: 1, proces: "", proc: "" };
+    return `<div class="ox-row">
+      <div class="ox-grid">
+        <label>Sloveso<input class="ox-sl" value="${escAttr(v.sloveso)}" placeholder="např. Navrhne"></label>
+        <label class="ox-wide">Výkon (citace)<input class="ox-ci" value="${escAttr(v.citace)}" placeholder="navrhne posloupnost kroků…"></label>
+        <label>Dimenze<select class="ox-dim">${Object.entries(TX_DIMENZE).map(([id, d]) => `<option value="${id}"${id === v.dimenze ? " selected" : ""}>${esc(d.n)}</option>`).join("")}</select></label>
+        <label>Úroveň<select class="ox-lv">${TX_UROVNE.map((l) => `<option value="${l.c}"${l.c === +v.uroven ? " selected" : ""}>${l.c} ${esc(l.n)}</option>`).join("")}</select></label>
+        <label>Proces<select class="ox-pr">${oxProcesOpts(+v.uroven || 1, v.proces)}</select></label>
+        <label class="ox-wide">Zdůvodnění<textarea class="ox-zd" rows="2">${esc(v.proc || "")}</textarea></label>
+      </div>
+      <button type="button" class="mc-del ox-del" data-ovu-act="del-vykon" title="Odebrat výkon">✕</button>
+    </div>`;
+  }
+  function ovuEditHtml(o) {
+    const t = taxOf(o.kod) || { vykony: [], splneno: 1 };
+    return `
+      <span class="d-badge d-badge-acc">Úprava analýzy OVU</span> <span class="d-badge d-badge-sub">${esc(o.kod)}</span>
+      <h2 class="d-title r-title">${esc(typo(o.zneni))}</h2>
+      <div class="ox" data-kod="${escAttr(o.kod)}">
+        <div class="ox-top">
+          <label>Stav kontroly<select class="ox-stav">${Object.entries(OVU_STAV).map(([id, n]) => `<option value="${id}"${id === (t.stav || "nezkontrolovano") ? " selected" : ""}>${esc(n)}</option>`).join("")}</select></label>
+          <label>„Splněno“ v metodice sahá na úroveň<select class="ox-spl">${TX_UROVNE.map((l) => `<option value="${l.c}"${l.c === +(t.splneno || t.formulace || 1) ? " selected" : ""}>${l.c} ${esc(l.n)}</option>`).join("")}</select></label>
+        </div>
+        <p class="d-rvp-note">Nejvyšší úroveň formulace se spočítá z výkonů. Sloveso napište přesně v tom tvaru, v jakém stojí ve znění OVU, jinak se ve znění nezvýrazní.</p>
+        <div class="ox-list">${(t.vykony || []).map(oxRow).join("")}</div>
+        <button type="button" class="d-link" data-ovu-act="add-vykon">+ Přidat výkon</button>
+        <div class="ed-actions">
+          <button type="button" class="reset-btn" data-ovu-act="cancel" data-kod="${escAttr(o.kod)}">Zrušit</button>
+          <button type="button" class="km-primary" data-ovu-act="save" data-kod="${escAttr(o.kod)}">Uložit analýzu</button>
+        </div>
+      </div>`;
+  }
+  // uloží úpravu OVU (Supabase pro všechny, jinak lokálně) a promítne ji do karty i bubliny
+  function saveOvuTax(kod, patch) {
+    const full = Object.assign({}, OVU_EDITS[kod] || {}, patch, { kontrola_kdo: adminName || adminLogin || "", kontrola_kdy: new Date().toISOString().slice(0, 10) });
+    OVU_EDITS[kod] = full;
+    const suf = kod.slice(-7);
+    TAX[suf] = Object.assign({ vykony: [] }, TAX[suf] || {}, full);
+    if (supabaseOk && window.KM) window.KM.saveOverride(adminLogin, adminSecret, "ovu:" + kod, full)
+      .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+    else { const ov = loadEdits(); ov["ovu:" + kod] = full; saveEdits(ov); }
+    const n = cy.getElementById(ovuNodeId(kod)); if (n.nonempty()) n.data("kontrola", TAX[suf].stav || "");
+  }
+  function refreshOvuCard(kod, keepScroll) {
+    const o = rvpByKod[kod], box = document.getElementById("km-isobox");
+    if (!o || !box) return;
+    const top = box.scrollTop;
+    box.querySelector(".km-isobox-body").innerHTML = ovuHtml(o);
+    box.scrollTop = keepScroll ? top : 0;
+  }
+  function ovuAction(btn) {
+    const act = btn.dataset.ovuAct, kod = btn.dataset.kod || (btn.closest(".ox") || {}).dataset && btn.closest(".ox").dataset.kod;
+    if (!canWrite() && act !== "cancel") return;
+    if (act === "stav") { saveOvuTax(kod, { stav: btn.dataset.stav }); refreshOvuCard(kod, true); }
+    else if (act === "edit") { const o = rvpByKod[kod]; if (o) { const box = document.getElementById("km-isobox"); box.querySelector(".km-isobox-body").innerHTML = ovuEditHtml(o); box.scrollTop = 0; } }
+    else if (act === "cancel") refreshOvuCard(kod);
+    else if (act === "add-vykon") { btn.parentElement.querySelector(".ox-list").insertAdjacentHTML("beforeend", oxRow()); }
+    else if (act === "del-vykon") btn.closest(".ox-row").remove();
+    else if (act === "save") {
+      const box = btn.closest(".ox"), o = rvpByKod[kod];
+      const vykony = [...box.querySelectorAll(".ox-row")].map((r) => ({
+        sloveso: r.querySelector(".ox-sl").value.trim(), citace: r.querySelector(".ox-ci").value.trim(),
+        dimenze: r.querySelector(".ox-dim").value, uroven: +r.querySelector(".ox-lv").value,
+        proces: r.querySelector(".ox-pr").value, proc: r.querySelector(".ox-zd").value.trim(),
+      })).filter((v) => v.sloveso || v.citace);
+      if (!vykony.length) { alert("Přidejte aspoň jeden výkon."); return; }
+      if (vykony.some((v) => !v.sloveso)) { alert("Každý výkon potřebuje sloveso."); return; }
+      const lower = (o.zneni || "").toLowerCase();
+      const chybi = vykony.filter((v) => !new RegExp(`(?<![\\p{L}])${v.sloveso.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}])`, "u").test(lower)).map((v) => v.sloveso);
+      if (chybi.length && !confirm(`Tato slovesa ve znění OVU nejsou a nezvýrazní se: ${chybi.join(", ")}. Uložit i tak?`)) return;
+      saveOvuTax(kod, {
+        stav: box.querySelector(".ox-stav").value, splneno: +box.querySelector(".ox-spl").value,
+        formulace: Math.max(...vykony.map((v) => v.uroven)), vykony,
+      });
+      refreshOvuCard(kod);
+    }
+  }
+  // export upravené analýzy ve formátu rvp-taxonomie.yaml (ke commitu do repa)
+  function exportTaxonomie() {
+    loadRvp().then(() => {
+      const ovu = {};
+      Object.keys(TAX).sort((a, b) => a.localeCompare(b)).forEach((k) => {
+        const t = TAX[k], o = {};
+        ["formulace", "splneno", "stav", "kontrola_kdo", "kontrola_kdy"].forEach((f) => { if (t[f] != null && t[f] !== "") o[f] = t[f]; });
+        o.vykony = (t.vykony || []).map((v) => ({ sloveso: v.sloveso, citace: v.citace, dimenze: v.dimenze, uroven: v.uroven, proces: v.proces, proc: v.proc }));
+        ovu[k] = o;
+      });
+      const head = "# Vyhodnocení OVU Informatiky podle Nové taxonomie (Marzano & Kendall)\n# Export z editoru mapy " +
+        new Date().toISOString().slice(0, 10) + ". Formát viz knowledge-map/data-readme.md.\n\n";
+      download("rvp-taxonomie.yaml", head + jsyaml.dump({ ovu }, { lineWidth: -1, noRefs: true }), "text/yaml");
+    }, (e) => alert("RVP se nepodařilo načíst: " + e.message));
   }
 
   function ovuHtml(o) {
@@ -2152,6 +2278,11 @@
     // jako klik na bublinu pod ním (otevřel by se jiný detail) a kolečko by hýbalo mapou
     ["mousedown", "mouseup", "touchstart", "touchmove", "touchend", "pointerdown", "pointerup", "wheel"]
       .forEach((ev) => isoEl.addEventListener(ev, (e) => e.stopPropagation(), { passive: true }));
+    // editor analýzy OVU: změna úrovně výkonu → nabídka procesů té úrovně
+    isoEl.addEventListener("change", (e) => {
+      const lv = e.target.closest(".ox-lv");
+      if (lv) lv.closest(".ox-row").querySelector(".ox-pr").innerHTML = oxProcesOpts(+lv.value, "");
+    });
     isoEl.addEventListener("click", (e) => {
       const b = e.target.closest("[data-iso]");
       if (b) {
@@ -2163,6 +2294,8 @@
         else if (a === "level") openIsoBox(b.dataset.level);
         return;
       }
+      const oa = e.target.closest("[data-ovu-act]"); // editor analýzy OVU
+      if (oa) { ovuAction(oa); return; }
       const ov = e.target.closest("[data-ovu]");    // kód RVP v boxu → pohled RVP Informatika
       if (ov) { closeIsoBox(true); exitIso(true); closeCard(); goOvu(ov.dataset.ovu); return; }
       const pr = e.target.closest("[data-praktika]"); // příbuzná praktika → její popis

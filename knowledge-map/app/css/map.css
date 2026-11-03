@@ -393,3 +393,29 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .pr-table tbody tr { cursor: pointer; }
 .pr-table tbody tr:hover td, .pr-table tbody tr:focus td { background: rgba(200, 182, 240, 0.12); }
 .pr-table tbody tr:focus { outline: none; }
+
+/* Kontrola a editor analýzy OVU */
+.legend-dot.checked { background: var(--c-white); box-shadow: 0 0 0 2.5px var(--c-yellow); }
+.tx-stav-row { gap: 8px; }
+.tx-seg { display: inline-flex; border: 1px solid var(--c-line); border-radius: 999px; overflow: hidden; }
+.tx-seg-b { font-size: 12px; padding: 4px 11px; color: var(--c-grey-15); }
+.tx-seg-b + .tx-seg-b { border-left: 1px solid var(--c-line); }
+.tx-seg-b:hover { color: var(--c-white); background: rgba(255, 255, 255, 0.06); }
+.tx-seg-b.on { background: var(--c-yellow); color: var(--c-black); font-weight: 600; }
+.tx-stav { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--c-line); color: var(--c-grey-15); }
+.tx-stav-zkontrolovano { background: var(--c-yellow); border-color: var(--c-yellow); color: var(--c-black); font-weight: 600; }
+.tx-stav-k-diskusi { border: 1.5px dashed var(--c-yellow); color: var(--c-white); }
+.tx-kdo { font-size: 12px; color: var(--c-grey-50); }
+.tx-edit { margin-left: auto; }
+.ox { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.ox label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--c-grey-50); }
+.ox input, .ox select, .ox textarea { font: inherit; font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--c-white);
+  background: var(--c-dark); border: 1px solid var(--c-line); border-radius: 8px; padding: 7px 9px; }
+.ox input:focus, .ox select:focus, .ox textarea:focus { outline: none; border-color: var(--c-yellow); }
+.ox-top { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ox-list { display: flex; flex-direction: column; gap: 10px; }
+.ox-row { position: relative; border: 1px solid var(--c-line); border-radius: 10px; padding: 10px 36px 10px 10px; background: rgba(0, 0, 0, 0.18); }
+.ox-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.ox-grid .ox-wide { grid-column: span 3; }
+.ox-del { position: absolute; top: 8px; right: 8px; }
+@media (max-width: 720px) { .ox-top, .ox-grid { grid-template-columns: 1fr; } .ox-grid .ox-wide { grid-column: auto; } }
