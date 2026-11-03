@@ -1,7 +1,8 @@
 /* ==========================================================================
    Mapa informatických konceptů — interaktivní graf (Cytoscape.js)
-   Dvojí seskupení konceptů: podle témat (default) nebo podle okruhů RVP.
-   Data: data/Informatika/knowledge-map.yaml · schéma: ../structure.md
+   Pohledy: koncepty podle oblastí (default) nebo digitální kompetence;
+   pohled „RVP Informatika" ukazuje přímo očekávané výsledky učení z RVP.
+   Data: data/Informatika/knowledge-map.yaml + rvp.json (build-rvp.py) · schéma: ../structure.md
    ========================================================================== */
 (function () {
   "use strict";
@@ -14,11 +15,13 @@
     // Marzano-Kendall (starší data — zpětná kompatibilita)
     "vybaveni": "Vybavení", "vyuziti-znalosti": "Využití znalostí"
   };
-  const VRSTVA = { core: "Core koncept", navazujici: "Navazující" };
+  const VRSTVA = { core: "Koncept", navazujici: "Podkoncept" };
   const VRSTVA_MAPY = { 0: "Základy a myšlení", 1: "Tvorba a programování", 2: "Umělá inteligence", 3: "Bezpečí a občanství" };
-  const NORVP = "__norvp__";
   const NOKDI = "__nokdi__";
   const LINEH = 1.35;   // řádkování textu v bublinách (CSS i výpočet fit)
+  /* Barvy pozadí bere graf z CSS proměnných (map.css :root) — barevnost Tiny se mění na jednom místě */
+  const cssVar = (name, fb) => (getComputedStyle(document.documentElement).getPropertyValue(name) || "").trim() || fb;
+  const BG = cssVar("--c-bg", "#0a0a0c"), BG_NODE = cssVar("--c-bg-node", "#141416");
 
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -66,26 +69,104 @@
     return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#000000" : "#ffffff";
   }
 
-  /* Největší velikost písma, při níž se zalomený popisek vejde do kruhu s okrajem.
-     Konzervativní: širší odhad znaku + reálné řádkování + větší vnitřní okraj. */
-  function fitFont(label, size) {
-    const usableW = size * 0.72, usableH = size * 0.72;
-    const words = String(label).split(/\s+/);
-    const longest = words.reduce((m, w) => Math.max(m, w.length), 0);
-    for (let f = Math.max(10, Math.floor(size / 9)); f >= 5; f -= 0.5) {   // velká bublina = větší písmo
-      const charW = f * 0.60, lineH = f * LINEH;
-      if (longest * charW > usableW) continue;          // nejdelší slovo se musí vejít na šířku
-      const maxChars = Math.max(3, Math.floor(usableW / charW));
-      let lines = 1, cur = 0;
-      for (const w of words) {
-        if (cur === 0) cur = w.length;
-        else if (cur + 1 + w.length <= maxChars) cur += 1 + w.length;
-        else { lines++; cur = w.length; }
-      }
-      if (lines * lineH <= usableH) return f;
-    }
-    return 5;
+  /* ---------- Text do kruhu ----------
+     Každý řádek dostane šířku tětivy kruhu ve své výšce (minus vnitřní okraj),
+     takže blok textu kopíruje tvar bubliny. Jednoznakové předložky drží u dalšího
+     slova, složená slova se smí zlomit za spojovníkem (Logicko-|matematická).
+     Šířky slov se měří jednou pro každý font (cache), skládání je pak jen sčítání. */
+  const _wcache = new Map();
+  const unitW = (t, font) => {
+    const k = font + "|" + t; let w = _wcache.get(k);
+    if (w == null) { w = measureW(t, font); _wcache.set(k, w); }
+    return w;
+  };
+  function breakUnits(text) {
+    const out = [];
+    unitize(text).forEach((u) => {
+      const parts = u.replace(/([^\s-]{2,}-)(?=[^\s-]{2,})/g, "$1\u0001").split("\u0001");
+      parts.forEach((t, i) => out.push({ t, sp: i === parts.length - 1 }));   // sp = za jednotkou mezera
+    });
+    return out;
   }
+  // šířky řádků výšky lh poskládaných od `top` dolů v kruhu o poloměru R (střed v 0)
+  function chordSlots(top, n, lh, R) {
+    const out = [];
+    for (let i = 0, y = top; i < n; i++, y += lh) {
+      const e = Math.max(Math.abs(y), Math.abs(y + lh));    // užší z hran řádku
+      out.push(e >= R ? 0 : 2 * Math.sqrt(R * R - e * e));
+    }
+    return out;
+  }
+  // hladově plní řádky; ok = vše umístěno (když slova dojdou dřív, zbylé řádky odpadnou)
+  function flow(units, font, slots) {
+    const sp = unitW(" ", font), lines = [];
+    let i = 0;
+    for (const w of slots) {
+      let line = "", lw = 0;
+      while (i < units.length) {
+        const gap = line && units[i - 1].sp ? sp : 0, uw = unitW(units[i].t, font);
+        if (lw + gap + uw > w + 0.5) break;
+        line += (line && units[i - 1].sp ? " " : "") + units[i].t; lw += gap + uw; i++;
+      }
+      if (!line) { if (i === units.length) break; return { lines, used: i, ok: false }; }
+      lines.push(line);
+    }
+    return { lines, used: i, ok: i === units.length };
+  }
+  /* Krátký text (nadpis) přesně do n řádků: vyzkouší všechna rozdělení slov a vybere
+     nejvyrovnanější vůči šířkám kruhu (nahoře užší řádek, dole širší). */
+  function flowBalanced(units, font, slots) {
+    const n = slots.length, sp = unitW(" ", font);
+    if (units.length < n) return { lines: [], ok: false };
+    if (units.length > 12) return flow(units, font, slots);
+    const lineOf = (a, b) => {
+      let t = "", w = 0;
+      for (let i = a; i < b; i++) {
+        if (i > a && units[i - 1].sp) { t += " "; w += sp; }
+        t += units[i].t; w += unitW(units[i].t, font);
+      }
+      return { t, w };
+    };
+    let best = null;
+    const rec = (start, k, acc, minFill) => {
+      if (k === n - 1) {
+        const l = lineOf(start, units.length);
+        if (l.w > slots[k] + 0.5) return;
+        const f = Math.min(minFill, l.w / slots[k]);
+        if (!best || f > best.f) best = { f, lines: [...acc, l.t] };
+        return;
+      }
+      for (let end = start + 1; end <= units.length - (n - 1 - k); end++) {
+        const l = lineOf(start, end);
+        if (l.w > slots[k] + 0.5) break;
+        rec(end, k + 1, [...acc, l.t], Math.min(minFill, l.w / slots[k]));
+      }
+    };
+    rec(0, 0, [], 1);
+    return best ? { lines: best.lines, used: units.length, ok: true } : { lines: [], ok: false };
+  }
+
+  // celý text do kruhu: nejmenší počet řádků, při kterém se vejde (blok svisle na středu)
+  function circleLines(units, font, lh, R) {
+    for (let n = 1; n * lh <= 2 * R; n++) {
+      const r = flow(units, font, chordSlots(-n * lh / 2, n, lh, R));
+      if (r.ok) return r.lines;
+    }
+    return null;
+  }
+  // největší písmo z rozmezí <fmin, fmax>, při kterém se text celý vejde; null = nevejde se
+  function fitCircle(text, fontOf, R, fmax, fmin, lhRatio) {
+    const units = breakUnits(text);
+    for (let f = fmax; f >= fmin - 1e-9; f -= 0.5) {
+      const lines = circleLines(units, fontOf(f), f * lhRatio, R);
+      if (lines) return { fs: f, label: lines.join("\n") };
+    }
+    return null;
+  }
+  const innerR = (size, k) => size / 2 - Math.max(5, size * k);   // poloměr bez vnitřního okraje
+  const LEAF_FAMILY = '"Inter", "Segoe UI", sans-serif';
+  const leafFont = (f) => "400 " + f + "px " + LEAF_FAMILY;
+  const subFont = (f) => "600 " + f + 'px "Space Grotesk", "Inter", sans-serif';
 
   const statusEl = document.getElementById("status");
   const setStatus = (t) => { statusEl.textContent = t; statusEl.classList.toggle("hidden", !t); };
@@ -132,8 +213,10 @@
   // ze Supabase: úpravy stávajících konceptů, nové koncepty a mikrokoncepty.
   let supabaseOk = false;
   (async function boot() {
+    // praktiky souběžně s daty mapy: tabulka je součástí plochy, první vykreslení ji má zahrnout
+    const prFetch = fetch("data/Informatika/praktiky.json?v=1").then((r) => (r.ok ? r.json() : null)).catch(() => null);
     try {
-      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=22")
+      const txt = await fetch("data/Informatika/knowledge-map.yaml?v=25")
         .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); });
       const data = jsyaml.load(txt);
       try {
@@ -142,9 +225,56 @@
           if (!ov.offline) { supabaseOk = true; mergeOverlay(data, ov); }
         }
       } catch (_) { /* offline → jen základ */ }
+      const pr = await prFetch;
+      if (pr && pr.praktiky) PRAKTIKY = pr.praktiky;
       init(data);
     } catch (e) { setStatus("Chyba načítání dat: " + e.message); }
   })();
+
+  /* RVP Informatika (výtah z RVP ZV, viz ../build-rvp.py) — načítá se na pozadí,
+     pohled „RVP" a odkazy z detailu konceptu na něj počkají */
+  let RVP = null, rvpByKod = {}, rvpRev = {}, rvpPromise = null;
+  /* Vyhodnocení OVU podle Nové taxonomie (rvp-taxonomie.yaml): klíč = konec kódu OVU, např. ZV9-005 */
+  let TAX = {};
+  // úpravy analýzy a stavu kontroly OVU (Supabase km_concept_overrides pod klíčem „ovu:<kód>“, offline localStorage)
+  let OVU_EDITS = {};
+  const takeOvuEdits = (map) => Object.keys(map || {}).forEach((k) => { if (k.indexOf("ovu:") === 0) OVU_EDITS[k.slice(4)] = map[k]; });
+  // jen OVU Informatiky (INF-…); kompetence a gramotnosti mají stejné konce kódů (např. KKK-VYJ-000-ZV5-001)
+  const taxOf = (kod) => (/^INF-/.test(String(kod || "")) && TAX[String(kod).slice(-7)]) || null;
+  function loadRvp() {
+    if (!rvpPromise) rvpPromise = Promise.all([
+      fetch("data/Informatika/rvp.json?v=1").then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }),
+      fetch("data/Informatika/rvp-taxonomie.yaml?v=1").then((r) => (r.ok ? r.text() : "")).then((t) => (t ? (jsyaml.load(t) || {}).ovu || {} : {})).catch(() => ({}))
+    ])
+      .then(([d, tax]) => {
+        TAX = tax;
+        Object.keys(OVU_EDITS).forEach((kod) => {
+          if (/^INF-/.test(kod)) TAX[kod.slice(-7)] = Object.assign({ vykony: [] }, TAX[kod.slice(-7)] || {}, OVU_EDITS[kod]);
+        });
+        RVP = d; rvpByKod = {}; rvpRev = {};
+        d.ovu.forEach((o) => { rvpByKod[o.kod] = o; });
+        // zpětné vazby: který výsledek informatiky odkazuje na kompetenci / gramotnost
+        d.ovu.forEach((o) => o.souvisi.forEach((k) => { if (rvpByKod[k]) (rvpRev[k] = rvpRev[k] || []).push(o.kod); }));
+        return d;
+      })
+      .catch((e) => { rvpPromise = null; throw e; });
+    return rvpPromise;
+  }
+
+  /* Journeys — návaznosti konceptů určené garantem (data/Informatika/journeys.yaml) */
+  let JOURNEYS = null, journeyId = null, journeysPromise = null;
+  function loadJourneys() {
+    if (!journeysPromise) journeysPromise = fetch("data/Informatika/journeys.yaml?v=2")
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then((t) => {
+        JOURNEYS = (jsyaml.load(t) || {}).journeys || [];
+        if (!journeyId && JOURNEYS.length) journeyId = JOURNEYS[0].id;
+        return JOURNEYS;
+      })
+      .catch((e) => { journeysPromise = null; throw e; });
+    return journeysPromise;
+  }
+  const curJourney = () => (JOURNEYS || []).find((j) => j.id === journeyId) || null;
 
   const slug = (s) => String(s == null ? "" : s).toLowerCase().normalize("NFD")
     .replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
@@ -170,9 +300,11 @@
 
   // Navrství Supabase překryv na základní data (in-place).
   function mergeOverlay(data, ov) {
+    takeOvuEdits(ov.overrides);
     data.concepts.forEach((c) => { if (ov.overrides[c.id]) Object.assign(c, ov.overrides[c.id]); });
     const have = new Set(data.concepts.map((c) => c.id));
-    ov.news.forEach((n) => { if (n && n.id && !have.has(n.id)) { data.concepts.push(normalizeConcept(n)); have.add(n.id); } });
+    const temata = new Set((data.temata || []).map((t) => t.id));   // koncepty ze starších verzí mapy (jiné oblasti) se nenačtou
+    ov.news.forEach((n) => { if (n && n.id && !have.has(n.id) && temata.has(n.tema)) { data.concepts.push(normalizeConcept(n)); have.add(n.id); } });
     const byId = {}; data.concepts.forEach((c) => byId[c.id] = c);
     ov.micros.forEach((m) => { const p = byId[m.parent_id]; if (p) (p._micros = p._micros || []).push(m); });
     data._micros = ov.micros;
@@ -186,37 +318,147 @@
       k.push({ id: NOKDI, nazev: "Nezařazeno (informatická teorie)", barva: "#ffffff" });
       return k;
     }
-    const a = DATA.areas.map((x) => ({ id: x.id, nazev: x.nazev, barva: x.barva, popis: x.popis, kod: x.kod }));
-    a.push({ id: NORVP, nazev: "Průřezové (digitální kompetence a postoje)", barva: "#ffffff", popis: "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky." });
-    return a;
+    if (mode === "journey") return (JOURNEYS || []).map((j) => ({ id: j.id, nazev: j.nazev, popis: j.popis }));
+    return ((RVP && RVP.hubs) || []).map((h) => ({ id: h.id, nazev: h.nazev, barva: "#ffff00", popis: h.popis }));   // mode === "rvp"
   }
-  const groupOf = (c, mode) => mode === "tema" ? c.tema : mode === "kompetence" ? (c.kompetence || NOKDI) : (c.oblast || NORVP);
+  const groupOf = (c, mode) => mode === "tema" ? c.tema : mode === "kompetence" ? (c.kompetence || NOKDI) : null;
   const subId = (tema, pod) => "sub-" + tema + "-" + pod;
   const podoblastiOf = (temaId) => ((DATA.temata.find((t) => t.id === temaId) || {}).podoblasti) || [];
   const podoblastOf = (c) => c.podoblast ? podoblastiOf(c.tema).find((p) => p.id === c.podoblast) || null : null;
-  const GROUP_LABEL = { tema: "Oblast", oblast: "Okruh RVP", kompetence: "Digitální kompetence" };
+  const GROUP_LABEL = { tema: "Oblast", rvp: "RVP Informatika", kompetence: "Digitální kompetence", journey: "Journey" };
+  const LEAF = "[type='concept'], [type='ovu']";   // listy stromu: koncepty, v pohledu RVP očekávané výsledky učení
 
   const HUB_FONT = '600 22px "Space Grotesk", "Inter", sans-serif';
   const DESC_FONT = '500 14px "Darker Grotesque", "Inter", sans-serif';
-  const SUBHUB_FONT = '600 12px "Space Grotesk", "Inter", sans-serif';
   const HUB_LH = 1.15, DESC_LH = 0.85;   // řádkování názvu a popisu tématu (popis o třetinu těsnější)
   const hubId = (gid) => "hub-" + gid, hubdId = (gid) => "hubd-" + gid, shubId = (tema, pid) => "shub-" + tema + "-" + pid;
-  // velikost bubliny tématu podle počtu konceptů; popis = začátek textu, co se vejde
+  // velikost bubliny tématu podle počtu konceptů
   const hubSize = (n) => Math.min(340, Math.round(230 + 1.6 * n));
-  function hubDesc(popis, size, font, maxLines) {
-    const maxW = size * 0.68;
+
+  /* Název a popis velké bubliny jako jeden blok do kruhu: název nahoře, popis pod ním,
+     řádky podle tvaru kruhu. Popis, který se nevejde, se utne na konci věty (nebo „…"). */
+  const HUB_FS = 22, DESC_FS = 14, HUB_GAP = 10;
+  function hubLayout(nazev, popis, size) {
+    const R = innerR(size, 0.075), lhT = HUB_FS * HUB_LH, lhD = DESC_FS * DESC_LH;
+    const T = breakUnits(nazev);
+    const place = (D, nt, nd) => {
+      const H = nt * lhT + (nd ? HUB_GAP + nd * lhD : 0), top = -H / 2;
+      if (H > 2 * R) return null;
+      const t = flowBalanced(T, HUB_FONT, chordSlots(top, nt, lhT, R));
+      if (!t.ok) return null;
+      const dTop = top + nt * lhT + HUB_GAP;
+      const d = nd ? flow(D, DESC_FONT, chordSlots(dTop, nd, lhD, R)) : { lines: [], used: 0, ok: !D.length };
+      return { t, d, tm: top + nt * lhT / 2, dm: dTop + d.lines.length * lhD / 2 };
+    };
+    // vše se vejde: nejmenší počet řádků (blok co nejmenší, na středu)
+    const fitAll = (D) => {
+      for (let nt = 1; nt <= 4; nt++) for (let nd = D.length ? 1 : 0; nd <= 40; nd++) {
+        const r = place(D, nt, nd);
+        if (r && r.d.ok) return r;
+      }
+      return null;
+    };
     const text = String(popis || "").replace(/\s+/g, " ").trim();
-    const lines = wrapLabel(text, font, maxW, false).split("\n");
-    if (lines.length <= maxLines) return lines.join("\n");
-    let cutL = lines.slice(0, maxLines).join(" ");
-    cutL = cutL.replace(/[,;:\s]+\S*$/, "");                 // utnout na slově
-    const m = cutL.match(/^[\s\S]*[.!?](?=\s|$)/);          // raději na konci věty
-    if (m && m[0].length > cutL.length * 0.55) cutL = m[0];
-    else cutL = cutL.replace(/[.,;:]?$/, "…");
-    return wrapLabel(cutL, font, maxW, false).split("\n").slice(0, maxLines).join("\n");
+    let D = breakUnits(text), res = fitAll(D);
+    if (!res && D.length) {
+      // nevejde se celý: kolik slov se vejde při nejlépe zaplněném kruhu
+      let best = 0;
+      for (let nt = 1; nt <= 4; nt++) for (let nd = 1; nd <= 40; nd++) {
+        const r = place(D, nt, nd);
+        if (r && r.d.lines.length === nd) best = Math.max(best, r.d.used);
+      }
+      const joined = (k) => D.slice(0, k).reduce((a, u, i) => a + (i && D[i - 1].sp ? " " : "") + u.t, "");
+      let cut = joined(best);
+      const m = cut.match(/^[\s\S]*[.!?](?=\s|$)/);                  // raději konec věty
+      const ell = (t) => {                                              // „…" bez neuzavřené závorky
+        if ((t.match(/\(/g) || []).length > (t.match(/\)/g) || []).length) t = t.slice(0, t.lastIndexOf("("));
+        return t.replace(/[,;:\s–-]+$/, "") + "…";
+      };
+      cut = m && m[0].length > cut.length * 0.55 ? m[0] : ell(cut);
+      for (let k = best; k > 0 && !res; k--) {
+        res = fitAll(breakUnits(cut));
+        if (!res) cut = ell(joined(k - 1));
+      }
+    }
+    if (!res) res = { t: { lines: [nazev] }, d: { lines: [] }, tm: 0, dm: 0 };
+    return { title: res.t.lines.join("\n"), desc: res.d.lines.join("\n"), tm: Math.round(res.tm), dm: Math.round(res.dm), textw: Math.ceil(2 * R) + 4 };
+  }
+
+  /* Bublina oblasti (hub) + její popis; společné pro koncepty i RVP */
+  function pushHub(nodes, g, n) {
+    const size = hubSize(n), L = hubLayout(g.nazev, g.popis, size);
+    nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
+    nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
+      label: L.title, textw: L.textw, tm: L.tm } });
+    nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
+      label: L.desc, textw: L.textw, tm: L.dm } });
+  }
+  /* Střední bublina: název do kruhu písmem 10–12,5 px; když se nevejde, bublina povyroste */
+  function subFit(nazev) {
+    for (let d = 96; d <= 140; d += 4) {
+      const f = fitCircle(nazev, subFont, innerR(d, 0.1), 12.5, 10, 1.2);
+      if (f) return Object.assign({ size: d, textw: Math.ceil(d) }, f);
+    }
+    return { size: 140, fs: 10, label: wrapLabel(nazev, subFont(10), 100, false), textw: 140 };
+  }
+  function pushSub(nodes, edges, gid, pid, nazev) {
+    const f = subFit(nazev);
+    nodes.push({ data: { id: subId(gid, pid), type: "sub", parent: "grp-" + gid, gid, pid } });
+    nodes.push({ data: { id: shubId(gid, pid), type: "subhub", parent: subId(gid, pid), gid, pid, size: f.size,
+      label: f.label, fontsize: f.fs, textw: f.textw, tp: hubId(gid) } });
+    edges.push({ data: { id: "t-" + shubId(gid, pid), source: hubId(gid), target: shubId(gid, pid), etype: "tree" } });
+  }
+
+  /* Výsledek učení v bublině: celé doslovné znění. Bublina je nejmenší, do které se text
+     vejde písmem 10,5 px; krátké výsledky pak dostanou písmo až 12 px. */
+  function ovuFit(text) {
+    for (let d = 84; d <= 240; d += 4) {
+      const R = innerR(d, 0.1);
+      if (fitCircle(text, leafFont, R, 10.5, 10.5, LINEH)) return Object.assign({ size: d }, fitCircle(text, leafFont, R, 12, 10.5, LINEH));
+    }
+    return Object.assign({ size: 240 }, fitCircle(text, leafFont, innerR(240, 0.1), 10, 7, LINEH) || { fs: 7, label: text });
+  }
+  const ovuNodeId = (kod) => "ovu-" + kod;
+
+  /* Pohled „RVP Informatika": čtyři velké bubliny (OVU 1. a 2. stupně, klíčové kompetence,
+     gramotnosti), střední bubliny = tematické okruhy / kompetence / gramotnosti, listy = OVU */
+  function buildRvpElements() {
+    const nodes = [], edges = [];
+    RVP.hubs.forEach((h) => {
+      const leaves = RVP.ovu.filter((o) => o.hub === h.id);
+      pushHub(nodes, h, leaves.length);
+      h.subs.forEach((s) => pushSub(nodes, edges, h.id, s.id, s.nazev));
+      leaves.forEach((o) => {
+        const f = ovuFit(o.zneni);
+        nodes.push({ data: {
+          id: ovuNodeId(o.kod), type: "ovu", parent: subId(h.id, o.sub), gid: h.id, pid: o.sub,
+          strana: h.id === "kk" || h.id === "zg" ? "vazba" : "inf",
+          kontrola: (taxOf(o.kod) || {}).stav || "",
+          label: f.label, size: f.size, textw: f.size, fontsize: f.fs,
+          tp: shubId(h.id, o.sub), kod: o.kod, _o: o
+        }});
+        edges.push({ data: { id: "t-" + ovuNodeId(o.kod), source: shubId(h.id, o.sub), target: ovuNodeId(o.kod), etype: "tree" } });
+      });
+    });
+    return [...nodes, ...edges];
+  }
+
+  /* Journey: celá mapa Oblastí (bubliny na stejných místech) + čáry mezi koncepty journey.
+     Koncepty mimo journey se v render() ztlumí (třída jdim), koncepty journey svítí (jon). */
+  const journeyConcepts = (j) => new Set(((j && j.kroky) || []).map((k) => k.koncept).filter((id) => id && conceptById[id]));
+  function journeyEdges(j) {
+    const kroky = (j && j.kroky) || [], byId = {}, edges = [];
+    kroky.forEach((k) => { byId[k.id] = k; });
+    kroky.forEach((k) => (k.dalsi || []).forEach((d) => {
+      const a = k.koncept, b = byId[d] && byId[d].koncept;
+      if (conceptById[a] && conceptById[b]) edges.push({ data: { id: "jf-" + k.id + "-" + d, source: a, target: b, etype: "jflow" } });
+    }));
+    return edges;
   }
 
   function buildElements(mode) {
+    if (mode === "journey") return [...buildElements("tema"), ...journeyEdges(curJourney())];
+    if (mode === "rvp") return buildRvpElements();
     const groups = groupDefs(mode);
     const conceptIds = new Set(DATA.concepts.map((c) => c.id));
     const sameSub = (a, b) => mode !== "tema" || ((podoblastOf(a) || {}).id === (podoblastOf(b) || {}).id);
@@ -230,10 +472,10 @@
           edges.push({ data: { id: "p-" + p + "-" + c.id, source: p, target: c.id, etype: "tree" } });
       });
     });
-    // velikost bubliny = pro kolik konceptů je prerekvizitou (i nepřímo přes řetěz);
-    // odmocnina, aby základní koncepty (Program ~40 návazných) nepřerostly mapu
+    // velikost bubliny = kolik pod ní visí podkonceptů a navazujících konceptů (i nepřímo);
+    // odmocnina, aby velké koncepty nepřerostly mapu
     const naslednici = {};
-    DATA.concepts.forEach((c) => (c.prerekvizity || []).forEach((p) => {
+    DATA.concepts.forEach((c) => [...(c.prerekvizity || []), ...(c.nadrazeny ? [c.nadrazeny] : [])].forEach((p) => {
       if (conceptIds.has(p)) (naslednici[p] = naslednici[p] || []).push(c.id);
     }));
     const pocetNavaznych = (id) => {
@@ -241,50 +483,43 @@
       while (stack.length) (naslednici[stack.pop()] || []).forEach((x) => { if (!seen.has(x)) { seen.add(x); stack.push(x); } });
       return seen.size - 1;
     };
-    const sizeFor = (c) => Math.min(124, Math.round(46 + 11 * Math.sqrt(pocetNavaznych(c.id))));
+    // koncept 84–124 px, podkoncept 64 px (víc místa pro název v kruhu)
+    const sizeFor = (c) => c.vrstva === "core" ? Math.min(124, Math.round(84 + 10 * Math.sqrt(pocetNavaznych(c.id)))) : 64;
 
     const nodes = [];
     // téma / oblast = velká bublina (hub) s názvem a popisem; neviditelný rodič drží filtry
-    groups.forEach((g) => {
-      const n = DATA.concepts.filter((c) => groupOf(c, mode) === g.id).length;
-      const size = hubSize(n);
-      nodes.push({ data: { id: "grp-" + g.id, type: "group", gid: g.id, popis: g.popis } });
-      // název nahoře, popis pod ním: výšky podle skutečného počtu řádků, ať se nepřekrývají
-      const title = wrapLabel(g.nazev, HUB_FONT, size * 0.72, false);
-      const titleH = title.split("\n").length * HUB_LH * 22, gap = 12;
-      const maxLines = Math.max(2, Math.floor((size * 0.8 - titleH - gap) / (DESC_LH * 14)));
-      const desc = hubDesc(g.popis, size, DESC_FONT, maxLines);
-      const descH = desc.split("\n").length * DESC_LH * 14, total = titleH + gap + descH;
-      nodes.push({ data: { id: hubId(g.id), type: "hub", parent: "grp-" + g.id, gid: g.id, size,
-        label: title, textw: Math.round(size * 0.72), tm: Math.round(-total / 2 + titleH / 2) } });
-      nodes.push({ data: { id: hubdId(g.id), type: "hubdesc", parent: "grp-" + g.id, gid: g.id, hub: hubId(g.id),
-        label: desc, textw: Math.round(size * 0.7), tm: Math.round(total / 2 - descH / 2) } });
-    });
+    groups.forEach((g) => pushHub(nodes, g, DATA.concepts.filter((c) => groupOf(c, mode) === g.id).length));
     // podoblasti tématu = střední bubliny navázané na téma (jen v pohledu Témata)
-    const SUB_SIZE = 96;
-    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => {
-      nodes.push({ data: { id: subId(t.id, p.id), type: "sub", parent: "grp-" + t.id, gid: t.id, pid: p.id, popis: p.popis } });
-      nodes.push({ data: { id: shubId(t.id, p.id), type: "subhub", parent: subId(t.id, p.id), gid: t.id, pid: p.id, size: SUB_SIZE,
-        label: wrapLabel(p.nazev, SUBHUB_FONT, SUB_SIZE * 0.74, false), textw: Math.round(SUB_SIZE * 0.74), tp: hubId(t.id) } });
-      edges.push({ data: { id: "t-" + shubId(t.id, p.id), source: hubId(t.id), target: shubId(t.id, p.id), etype: "tree" } });
-    }));
+    if (mode === "tema") DATA.temata.forEach((t) => (t.podoblasti || []).forEach((p) => pushSub(nodes, edges, t.id, p.id, p.nazev)));
     const byId = byIdAll;
     DATA.concepts.forEach((c) => {
-      const sz = sizeFor(c);
-      const fs = fitFont(c.nazev, sz), textw = Math.round(sz * 0.72);
-      const font = '400 ' + fs + 'px "Inter", "Segoe UI", sans-serif';
+      // název do kruhu: největší písmo do 13 px; když by klesl pod 8,5 px (dlouhé slovo),
+      // bublina povyroste (nejvýš o 32 px), teprve pak se písmo zmenší až na 6 px
+      let sz = sizeFor(c), fit = null;
+      for (let d = sz; d <= sz + 32 && !fit; d += 4) {
+        fit = fitCircle(c.nazev, leafFont, innerR(d, 0.1), Math.max(10, Math.floor(d / 9)), 8.5, LINEH);
+        if (fit) sz = d;
+      }
+      fit = fit || fitCircle(c.nazev, leafFont, innerR(sz, 0.1), 8, 6, LINEH)
+        || { fs: 6, label: wrapLabel(c.nazev, leafFont(6), sz * 0.8, false) };
       const sub = mode === "tema" && podoblastOf(c);
-      // rodič ve stromu: první prerekvizita ze stejné skupiny (a podoblasti), jinak bublina podoblasti / tématu
+      // rodič ve stromu: nadřazený koncept, jinak první prerekvizita ze stejné skupiny (a podoblasti),
+      // jinak bublina podoblasti / tématu
       const gid = groupOf(c, mode);
-      const parentConcept = (c.prerekvizity || []).find((p) => byId[p] && groupOf(byId[p], mode) === gid && sameSub(byId[p], c));
+      const parentConcept = [...(c.nadrazeny ? [c.nadrazeny] : []), ...(c.prerekvizity || [])]
+        .find((p) => byId[p] && groupOf(byId[p], mode) === gid && sameSub(byId[p], c));
       const tp = parentConcept || (sub ? shubId(c.tema, sub.id) : hubId(gid));
       nodes.push({ data: {
         id: c.id, type: "concept", parent: sub ? subId(c.tema, sub.id) : "grp-" + gid, gid,
-        label: wrapLabel(c.nazev, font, textw * 0.95, false), vrstva: c.vrstva,
+        label: fit.label, vrstva: c.vrstva,
         stav: c.stav || "draft", tagy: c.tagy || [],
-        size: sz, textw: textw, fontsize: fs, tp, _c: c
+        size: sz, textw: sz, fontsize: fit.fs, tp, _c: c
       }});
+      // čára k rodiči ve stromu: k bublině skupiny / oblasti, nebo k nadřazenému konceptu
+      // (prerekvizity mají vlastní hranu „p-…" z cyklu výše, tu nezdvojujeme)
       if (!parentConcept) edges.push({ data: { id: "t-" + c.id, source: tp, target: c.id, etype: "tree" } });
+      else if (parentConcept === c.nadrazeny && !(c.prerekvizity || []).includes(parentConcept))
+        edges.push({ data: { id: "n-" + parentConcept + "-" + c.id, source: parentConcept, target: c.id, etype: "tree" } });
     });
     return [...nodes, ...edges];
   }
@@ -294,14 +529,15 @@
      ========================================================================== */
   function init(data) {
     DATA = data; window.__data = data;
-    data.concepts.forEach((c) => conceptById[c.id] = c);
+    data.concepts.forEach((c) => { normalizeConcept(c); conceptById[c.id] = c; });   // data V5 nemají všechna pole
     /* offline záloha: lokální úpravy i nové koncepty (localStorage) jen když Supabase není */
     if (!supabaseOk) {
       const overlay = loadEdits();
+      takeOvuEdits(overlay);
       data.concepts.forEach((c) => { if (overlay[c.id]) Object.assign(c, overlay[c.id]); });
       try {
         JSON.parse(localStorage.getItem(NEW_KEY) || "[]").forEach((n) => {
-          if (n && n.id && !conceptById[n.id]) { normalizeConcept(n); data.concepts.push(n); conceptById[n.id] = n; }
+          if (n && n.id && !conceptById[n.id] && data.temata.some((t) => t.id === n.tema)) { normalizeConcept(n); data.concepts.push(n); conceptById[n.id] = n; }
         });
       } catch (_) {}
     }
@@ -310,7 +546,7 @@
 
     cy = cytoscape({
       container: document.getElementById("cy"),
-      elements: [], wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 2.5,
+      elements: [], wheelSensitivity: 0.25, minZoom: 0.1, maxZoom: 2.5,
       style: [
         // neviditelné rodičovské uzly (téma, podoblast) — jen pro filtry a seskupení
         { selector: "node[type='group'], node[type='sub']", style: {
@@ -338,7 +574,7 @@
           "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center",
-          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "12px", "font-weight": "600", "line-height": 1.2
+          "font-family": "Space Grotesk, Inter, sans-serif", "font-size": "data(fontsize)", "font-weight": "600", "line-height": 1.2
         }},
         // vlákno od tématu / podoblasti ke kořenovým konceptům
         { selector: "edge[etype='tree']", style: {
@@ -348,10 +584,30 @@
           "shape": "ellipse", "width": "data(size)", "height": "data(size)",
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH,
-          "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5
+          "font-size": "data(fontsize)", "font-weight": "400", "border-width": 1.5, "font-family": LEAF_FAMILY
         }},
         { selector: "node[vrstva='core']", style: { "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0 } },
-        { selector: "node[vrstva='navazujici']", style: { "background-color": "#0a0a0c", "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        { selector: "node[vrstva='navazujici']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        // očekávaný výsledek učení (pohled RVP): informatika = plná bílá, provázaná kompetence / gramotnost = obrys
+        { selector: "node[type='ovu']", style: {
+          "shape": "ellipse", "width": "data(size)", "height": "data(size)",
+          "label": "data(label)", "text-wrap": "wrap", "text-max-width": "data(textw)",
+          "text-valign": "center", "text-halign": "center", "line-height": LINEH,
+          "font-size": "data(fontsize)", "font-weight": "400", "font-family": LEAF_FAMILY,
+          "background-color": "#ffffff", "color": "#0a0a0c", "border-width": 0
+        }},
+        { selector: "node[type='ovu'][strana='vazba']", style: { "background-color": BG, "color": "#ffffff", "border-color": "#ffffff", "border-width": 1.8 } },
+        // stav kontroly analýzy OVU: zkontrolováno = žlutý prstenec, k diskusi = čárkovaný žlutý
+        { selector: "node[type='ovu'][kontrola='zkontrolovano']", style: { "border-color": "#ffff00", "border-width": 6, "border-style": "solid" } },
+        { selector: "node[type='ovu'][kontrola='k-diskusi']", style: { "border-color": "#ffff00", "border-width": 4, "border-style": "dashed" } },
+        // neviditelný uzel pod tabulkou praktik (drží její místo a velikost na ploše)
+        { selector: "node[type='praktiky']", style: { "shape": "rectangle", "width": "data(w)", "height": "data(h)",
+          "background-opacity": 0, "border-width": 0, "label": "", "events": "no" } },
+        // Journey: čáry mezi koncepty cesty (souhvězdí)
+        { selector: "edge[etype='jflow']", style: {
+          "line-color": "rgba(255,255,255,0.85)", "width": 1.6, "curve-style": "straight",
+          "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.9)", "arrow-scale": 0.8, "z-index": 60
+        }},
         { selector: "edge[etype='prereq']", style: {
           "line-color": "rgba(255,255,255,0.45)", "width": 1.2, "line-style": "dashed", "curve-style": "bezier",
           "target-arrow-shape": "triangle", "target-arrow-color": "rgba(255,255,255,0.6)", "arrow-scale": 0.9
@@ -362,9 +618,17 @@
         { selector: "edge.nbedge", style: { "line-color": "#ffff00", "width": 2.4, "target-arrow-color": "#ffff00", "opacity": 1, "z-index": 50 } },
         { selector: "node.nbon", style: { "border-color": "#ffff00", "border-width": 2.6, "z-index": 50 } },
         { selector: ".hl", style: { "border-width": 4, "border-color": "#ffff00", "border-opacity": 1 } },
-        { selector: "node[type='concept']:selected, node[type='hub']:selected, node[type='subhub']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node[type='concept']:selected, node[type='ovu']:selected, node[type='hub']:selected, node[type='subhub']:selected", style: { "border-width": 4, "border-color": "#ffff00" } },
+        { selector: "node[type='ovu'][strana='inf']:selected", style: { "background-color": "#ffff00", "border-width": 0 } },
         { selector: "node.nbon[vrstva='core'], node[type='concept']:selected[vrstva='core']", style: { "background-color": "#ffff00", "color": "#0a0a0c", "border-width": 0 } },
         { selector: ".dim", style: { "opacity": 0.08 } },
+        /* Journey jako hvězdné nebe: mimo journey = 10 % a rozmazaný obrys (stín bez posunu, bez popisku),
+           koncepty journey svítí */
+        { selector: "node.jdim", style: { "opacity": 0.1, "label": "", "shadow-blur": 16, "shadow-color": "#ffffff",
+          "shadow-opacity": 1, "shadow-offset-x": 0, "shadow-offset-y": 0 } },
+        { selector: "edge.jdim", style: { "opacity": 0.05 } },
+        { selector: "node.jon", style: { "shadow-blur": 30, "shadow-color": "#ffffff", "shadow-opacity": 0.75,
+          "shadow-offset-x": 0, "shadow-offset-y": 0, "z-index": 70 } },
         { selector: ".filtered", style: { "display": "none" } },
         /* hloubkové ponoření — mikrokoncepty pod konceptem */
         { selector: "node[type='microparent']", style: {
@@ -374,7 +638,7 @@
           "line-height": LINEH, "font-size": "13px", "font-weight": "600", "border-width": 0
         }},
         { selector: "node[type='micro']", style: {
-          "shape": "round-rectangle", "background-color": "#0a0a0c", "color": "#ffffff",
+          "shape": "round-rectangle", "background-color": BG, "color": "#ffffff",
           "border-color": "#ffff00", "border-width": 1.5, "width": 108, "height": 60,
           "label": "data(label)", "text-wrap": "wrap", "text-max-width": "94px",
           "text-valign": "center", "text-halign": "center", "line-height": LINEH, "font-size": "11px"
@@ -403,11 +667,14 @@
     const povaha = all.filter((t) => POVAHA.has(t));
     buildChips("filter-tagy-optika", optiky.map((t) => ({ val: t, label: t })), "tagy", false);
     buildChips("filter-tagy-povaha", povaha.map((t) => ({ val: t, label: t })), "tagy", false);
+    const tagBlock = document.getElementById("filter-tagy-block");
+    if (tagBlock) tagBlock.hidden = !all.length;
 
     /* delegované klikání na chipy */
     document.getElementById("controls").addEventListener("click", (e) => {
       const chip = e.target.closest(".chip");
       if (!chip) return;
+      if (viewMode === "journey" && chip.dataset.filter === "group") { journeyId = chip.dataset.val; render("journey"); return; }
       chip.setAttribute("aria-pressed", chip.getAttribute("aria-pressed") === "true" ? "false" : "true");
       applyFilters();
     });
@@ -419,7 +686,7 @@
     document.getElementById("search").addEventListener("input", applySearch);
 
     /* „O mapě" — info panel */
-    document.getElementById("about-btn").addEventListener("click", openAbout);
+    // „i" vede na stránku mapy na tiny.school (odkaz v index.html); panel O mapě (openAbout) zůstává k dispozici v kódu
     document.getElementById("account-btn").addEventListener("click", () => (authed ? openAccount() : openLogin()));
     document.getElementById("export-btn").addEventListener("click", () => (authed ? openExport() : openLogin()));
     refreshHeadBtns();
@@ -427,14 +694,22 @@
     /* delegované akce v pravém panelu (admin/editor) */
     detailBody.addEventListener("click", onPanelAction);
 
-    /* přepínač zobrazení (+ 3D pohled) */
+    /* přepínač zobrazení */
     document.querySelectorAll(".vt-btn").forEach((b) => b.addEventListener("click", () => {
       const v = b.dataset.view;
       document.querySelectorAll(".vt-btn").forEach((x) => x.classList.toggle("active", x === b));
-      if (v === "3d") { enter3D(); return; }
-      const was3d = view3d;
-      if (was3d) exit3D();
-      if (v !== viewMode) render(v);
+      if (v === viewMode) return;
+      if (v === "journey" && !JOURNEYS) {
+        setStatus("Načítám journeys…");
+        loadJourneys().then(() => render("journey"), (e) => setStatus("Journeys se nepodařilo načíst: " + e.message));
+        return;
+      }
+      if (v === "rvp" && !RVP) {
+        setStatus("Načítám RVP…");
+        loadRvp().then(() => render("rvp"), (e) => setStatus("RVP se nepodařilo načíst: " + e.message));
+        return;
+      }
+      render(v);
     }));
 
     /* breadcrumb pro hloubkové ponoření (překryv nad grafem) */
@@ -449,6 +724,8 @@
       const t = evt.target.data("type");
       if (t === "micro") { openMicroDetail(evt.target.data("_m")); return; }
       if (t === "concept" && !drillId) { enterIso(evt.target); return; }
+      if (t === "ovu") { openOvuDetail(evt.target.data("_o")); return; }
+      if (/^(group|hub|sub|subhub)$/.test(t) && !drillId) { openGroupCard(evt.target); return; }
       openDetail(evt.target);
     });
     initIso();
@@ -458,19 +735,52 @@
       closeDetail();
     });
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { if (isoBoxOpen()) closeIsoBox(); else if (isoNode) exitIso(); else closeDetail(); }
+      if (e.key === "Escape") { if (isoCard) closeCard(); else if (isoBoxOpen()) closeIsoBox(); else if (isoNode) exitIso(); else closeDetail(); }
     });
 
     // fonty bublin témat (Space Grotesk / Darker Grotesque) ať jsou načtené, než se popisky vykreslí
     const go = () => render("tema");
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
-    setStatus(data.concepts.length + " konceptů · " + data.temata.length + " oblastí · " + data.areas.length + " okruhů RVP");
+    setStatus(statusText("tema"));
+    loadRvp().catch(() => {});   // na pozadí: detail konceptu pak ukáže aktuální znění RVP a odkaz do pohledu RVP
+  }
+
+  function statusText(mode) {
+    if (mode === "journey") {
+      const j = curJourney();
+      if (!j) return "Žádná journey";
+      return "Journey " + j.nazev + " · " + journeyConcepts(j).size + " konceptů";
+    }
+    if (mode === "rvp" && RVP) {
+      const p = RVP.meta.pocty;
+      return (p.ovu1 + p.ovu2) + " výsledků učení Informatiky · " + p.kk + " klíčových kompetencí · " + p.zg + " gramotností";
+    }
+    const k = DATA.concepts.filter((c) => c.vrstva === "core").length;
+    return k + " konceptů · " + (DATA.concepts.length - k) + " podkonceptů · " + DATA.temata.length + " oblastí";
+  }
+
+  /* Journey: ztlum vše kromě konceptů cesty a jejich čar; pohled přiblíží na cestu */
+  function applyJourney() {
+    const on = journeyConcepts(curJourney());
+    cy.batch(() => {
+      cy.elements().removeClass("jdim jon");
+      // rodičovské uzly (group, sub) se neztlumují: průhlednost rodiče by se v Cytoscape násobila i svítícím konceptům
+      cy.nodes().forEach((n) => {
+        const t = n.data("type");
+        if (t === "group" || t === "sub") return;
+        if (t === "concept" && on.has(n.id())) n.addClass("jon"); else n.addClass("jdim");
+      });
+      cy.edges().forEach((e) => { if (e.data("etype") !== "jflow") e.addClass("jdim"); });
+    });
+    const act = cy.nodes(".jon");
+    if (act.nonempty()) cy.animate({ fit: { eles: act, padding: 140 } }, { duration: 500 });
   }
 
   /* ---------- Vykreslení režimu ---------- */
   let firstRender = true;
   function render(mode, opts) {
     if (isoNode) exitIso(true);
+    closeCard();
     viewMode = mode;
     drillId = null;                       // přepnutí pohledu vynoří z hloubky
     const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
@@ -479,11 +789,16 @@
     cy.add(buildElements(mode));
     buildGroupFilter(mode);
     document.getElementById("group-label").textContent = GROUP_LABEL[mode] || "Skupina";
+    document.getElementById("controls").dataset.view = mode;
+    document.getElementById("search").placeholder = mode === "rvp" ? "Hledej výsledek učení…" : "Hledej koncept…";
+    if (DATA) setStatus(statusText(mode));
     radialLayout();
+    placePraktiky(mode);                  // tabulka praktik na ploše (jen Oblasti), ať ji fit zahrne
     applyFilters();
     cy.fit(cy.nodes(":visible"), 40);
+    if (mode === "journey") applyJourney();
     const animate = !(opts && opts.noAnim) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (animate) burstIn();
+    if (animate && mode !== "journey") burstIn();
     firstRender = false;
   }
 
@@ -566,11 +881,11 @@
       const discR = {}, subPos = {};
       g.children("[type='sub']").forEach((sub) => {
         const shub = sub.children("[type='subhub']");
-        const t = layoutTree(shub, sub.descendants("[type='concept']"), sizeR);
+        const t = layoutTree(shub, sub.descendants(LEAF), sizeR);
         discR[shub.id()] = t.radius; subPos[shub.id()] = t.pos;
       });
       // téma: děti = disky podoblastí + koncepty mimo podoblasti (a jejich řetězy)
-      const members = g.children("[type='concept']").union(g.children("[type='sub']").children("[type='subhub']"));
+      const members = g.children(LEAF).union(g.children("[type='sub']").children("[type='subhub']"));
       const rOf = (n) => discR[n.id()] != null ? discR[n.id()] : sizeR(n);
       const t = layoutTree(hub, members, rOf);
       Object.assign(pos, t.pos);
@@ -593,16 +908,16 @@
      s přestřelením (bounce). Cílové pozice už jsou spočítané; animace jen k nim doletí. */
   function burstIn() {
     const bb = cy.nodes(":visible").boundingBox(), cx = (bb.x1 + bb.x2) / 2, cy0 = (bb.y1 + bb.y2) / 2;
-    const target = {}; cy.nodes("[type='hub'], [type='subhub'], [type='concept']").forEach((n) => target[n.id()] = Object.assign({}, n.position()));
+    const target = {}; cy.nodes("[type='hub'], [type='subhub'], " + LEAF).forEach((n) => target[n.id()] = Object.assign({}, n.position()));
     const EASE = "cubic-bezier(0.34, 1.56, 0.64, 1)";   // přestřelení = bounce (ease-out-back)
     cy.batch(() => {
       cy.nodes("[type='hub']").forEach((h) => h.position({ x: cx, y: cy0 }));
-      cy.nodes("[type='subhub'], [type='concept']").forEach((n) => {
+      cy.nodes("[type='subhub'], " + LEAF).forEach((n) => {
         const h = target[hubId(n.data("gid"))]; n.position({ x: h.x, y: h.y });
       });
     });
     cy.nodes("[type='hub']").forEach((h) => h.animate({ position: target[h.id()] }, { duration: 650, easing: EASE }));
-    cy.nodes("[type='subhub'], [type='concept']").forEach((n) => {
+    cy.nodes("[type='subhub'], " + LEAF).forEach((n) => {
       // vzdálenější od bubliny tématu letí později
       const h = target[hubId(n.data("gid"))], t = target[n.id()];
       const delay = 300 + Math.min(600, Math.hypot(t.x - h.x, t.y - h.y) * 0.9);
@@ -621,7 +936,7 @@
       const n = e.target, p = n.position(); if (!last) { last = Object.assign({}, p); return; }
       const dx = p.x - last.x, dy = p.y - last.y; last = Object.assign({}, p);
       const grp = n.data("type") === "hub" ? cy.getElementById("grp-" + n.data("gid")) : cy.getElementById(subId(n.data("gid"), n.data("pid")));
-      grp.descendants("[type='concept'], [type='subhub']").not(n).shift({ x: dx, y: dy });
+      grp.descendants(LEAF + ", [type='subhub']").not(n).shift({ x: dx, y: dy });
     });
     cy.on("free", "node[type='hub'], node[type='subhub']", () => { last = null; });
   }
@@ -629,6 +944,8 @@
   function buildGroupFilter(mode) {
     const groups = groupDefs(mode);
     buildChips("filter-group", groups.map((g) => ({ val: g.id, label: typo(g.nazev) })), "group", true);
+    if (mode === "journey")      // jedna journey najednou: zaškrtnutá je jen ta zobrazená
+      document.querySelectorAll("#filter-group .chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.val === journeyId)));
   }
 
   /* ---------- Filtry ---------- */
@@ -638,20 +955,21 @@
     return s;
   }
   function applyFilters() {
-    const gr = pressed("group"), vr = pressed("vrstva"), st = pressed("stav"), tg = pressed("tagy");
+    const gr = pressed("group"), st = pressed("stav"), tg = pressed("tagy");
     cy.batch(() => {
       cy.nodes("[type='concept']").forEach((n) => {
         const c = n.data("_c");
-        const vis = gr.has(groupOf(c, viewMode)) && vr.has(c.vrstva) && st.has(n.data("stav")) &&
+        const vis = (viewMode === "journey" || gr.has(groupOf(c, viewMode))) && st.has(n.data("stav")) &&
           (tg.size === 0 || (c.tagy || []).some((t) => tg.has(t)));
         n.toggleClass("filtered", !vis);
       });
+      cy.nodes("[type='ovu']").forEach((n) => n.toggleClass("filtered", !gr.has(n.data("gid"))));
       cy.nodes("[type='group']").forEach((g) => {
-        const empty = g.descendants("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0;
-        g.toggleClass("filtered", empty || !gr.has(g.data("gid")));
+        const empty = g.descendants(LEAF).filter((k) => !k.hasClass("filtered")).length === 0;
+        g.toggleClass("filtered", empty || (viewMode !== "journey" && !gr.has(g.data("gid"))));
       });
       cy.nodes("[type='sub']").forEach((s) => {
-        s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children("[type='concept']").filter((k) => !k.hasClass("filtered")).length === 0);
+        s.toggleClass("filtered", s.parent().hasClass("filtered") || s.children(LEAF).filter((k) => !k.hasClass("filtered")).length === 0);
       });
       cy.nodes("[type='hub'], [type='hubdesc'], [type='subhub']").forEach((h) => h.toggleClass("filtered", h.parent().hasClass("filtered")));
       cy.edges().forEach((e) => e.toggleClass("filtered", e.source().hasClass("filtered") || e.target().hasClass("filtered")));
@@ -672,11 +990,12 @@
   function applySearch() {
     const q = document.getElementById("search").value.trim().toLowerCase();
     cy.batch(() => {
-      cy.nodes("[type='concept']").forEach((n) => {
+      cy.nodes(LEAF).forEach((n) => {
         if (n.hasClass("filtered")) { n.removeClass("dim hl"); return; }
         if (!q) { n.removeClass("dim hl"); return; }
-        const c = n.data("_c");
-        const hit = n.data("label").toLowerCase().includes(q) || (c && (c.popis || "").toLowerCase().includes(q));
+        const c = n.data("_c"), o = n.data("_o");
+        const hit = !!(n.data("label").toLowerCase().includes(q) || (c && (c.popis || "").toLowerCase().includes(q)) ||
+          (o && (o.zneni + " " + o.kod).toLowerCase().includes(q)));   // boolean: toggleClass s undefined by třídu přepnul
         n.toggleClass("hl", hit); n.toggleClass("dim", !hit);
       });
       cy.edges().forEach((e) => {
@@ -719,7 +1038,7 @@
     pinned = null; clearNb();
     const show = (h) => { detailBody.innerHTML = h; detail.classList.remove("hidden"); detail.scrollTop = 0; };
     if (aboutCache) { show(aboutCache); return; }
-    fetch("data/Informatika/o-mape.md?v=5")
+    fetch("data/Informatika/o-mape.md?v=12")
       .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
       .then((md) => { aboutCache = renderAbout(md); show(aboutCache); })
       .catch((e) => show(`<h2 class="d-title">O mapě</h2><p class="d-desc">Nepodařilo se načíst text (${esc(e.message)}).</p>`));
@@ -768,6 +1087,8 @@
         <button class="km-primary" data-act="export">⬇ YAML</button>
         <button class="km-primary" data-act="export-json">⬇ concepts.json</button>
       </div>
+      <div class="d-links" style="margin-top:8px"><button class="km-primary" data-act="export-tax">⬇ rvp-taxonomie.yaml</button></div>
+      <p class="d-empty" style="margin-top:6px">Analýza OVU podle Nové taxonomie včetně úprav a stavu kontroly.</p>
       <p class="d-empty" style="margin-top:10px">Se všemi oblastmi export vygeneruje celé soubory ke commitu na GitHub (YAML je základ mapy, <code>concepts.json</code> čte i chatbot Glitchee). S výběrem oblastí vznikne výřez; u jedné oblasti dostane soubor název zálohy podle klíče <code>datum_Oblast_Jméno_01</code> (pořadové číslo si upravte).</p>`);
   }
 
@@ -864,6 +1185,7 @@
     else if (act === "editors-back") openAccount();
     else if (act === "export") exportYAML(exportTemata());
     else if (act === "export-json") exportConceptsJson(exportTemata());
+    else if (act === "export-tax") exportTaxonomie();
     else if (act === "export-all" || act === "export-none") document.querySelectorAll(".ex-tema").forEach((x) => x.checked = act === "export-all");
     else if (act === "discard") discardEdits();
     else if (act === "edit") openEditor(id);
@@ -981,8 +1303,8 @@
       <div class="ed-field"><label>Název</label><input id="ed-nazev" value="${esc(c.nazev)}"></div>
       <div class="ed-field"><label>Popis</label><textarea id="ed-popis" rows="4">${esc(c.popis || "")}</textarea></div>
       <div class="ed-field"><label>Vrstva</label><select id="ed-vrstva">
-        <option value="core"${c.vrstva === "core" ? " selected" : ""}>Core koncept</option>
-        <option value="navazujici"${c.vrstva === "navazujici" ? " selected" : ""}>Navazující</option>
+        <option value="core"${c.vrstva === "core" ? " selected" : ""}>Koncept</option>
+        <option value="navazujici"${c.vrstva === "navazujici" ? " selected" : ""}>Podkoncept</option>
       </select></div>
       ${podoblastiOf(c.tema).length ? `<div class="ed-field"><label>Podoblast</label><select id="ed-podoblast">
         <option value=""${!c.podoblast ? " selected" : ""}>— bez podoblasti —</option>
@@ -1126,16 +1448,12 @@
     editing = true; pinned = null; if (typeof clearNb === "function") clearNb();
     const opt = (v, l, sel) => '<option value="' + esc(v) + '"' + (sel ? " selected" : "") + '>' + esc(l) + '</option>';
     const temaOpts = (DATA.temata || []).map((t) => opt(t.id, t.nazev)).join("");
-    const oblastOpts = opt("", "— průřezový (bez okruhu RVP)") + (DATA.areas || []).map((a) => opt(a.id, a.nazev)).join("");
-    const kompOpts = opt("", "— nezařazeno") + (DATA.kompetence || []).map((k) => opt(k.id, k.nazev)).join("");
     const dataList = '<datalist id="km-concept-list">' + DATA.concepts.map((c) => '<option value="' + esc(c.nazev) + '">').join("") + '</datalist>';
     detailBody.innerHTML = `
       <span class="d-badge d-badge-acc">Nový koncept</span>
       <div class="ed-field"><label>Název *</label><input id="add-nazev" placeholder="např. Rekurze"></div>
       <div class="ed-field"><label>Oblast *</label><select id="add-tema">${temaOpts}</select></div>
-      <div class="ed-field"><label>Oblast RVP</label><select id="add-oblast">${oblastOpts}</select></div>
-      <div class="ed-field"><label>Digitální kompetence</label><select id="add-kompetence">${kompOpts}</select></div>
-      <div class="ed-field"><label>Vrstva</label><select id="add-vrstva"><option value="core">Core koncept</option><option value="navazujici" selected>Navazující</option></select></div>
+      <div class="ed-field"><label>Vrstva</label><select id="add-vrstva"><option value="core">Koncept</option><option value="navazujici" selected>Podkoncept</option></select></div>
       <div class="ed-field"><label>Stav rozpracování</label>${stavSelect("add-stav", "draft")}</div>
       <div class="ed-field"><label>Popis</label><textarea id="add-popis" rows="4" placeholder="Co koncept je…"></textarea></div>
       <div class="ed-field"><label>Vzdělávací cíle</label><div id="ed-cile"></div><button class="d-link ed-add" data-act="add-cile">+ Přidat cíl</button></div>
@@ -1172,8 +1490,6 @@
     const chips = (sel) => [...document.querySelectorAll(sel + " .ed-chip")].map((ch) => ch.dataset.id);
     const c = normalizeConcept({
       id, nazev, tema,
-      oblast: document.getElementById("add-oblast").value || null,
-      kompetence: document.getElementById("add-kompetence").value || null,
       vrstva: document.getElementById("add-vrstva").value,
       popis: (document.getElementById("add-popis").value || "").trim(),
       cile, kriteria,
@@ -1204,8 +1520,16 @@
 
   function focusNode(id) {
     const n = cy.getElementById(id);
+    if ((!n || n.empty()) && viewMode !== "tema" && conceptById[id]) { goConcept(id); return; }
     if (!n || n.empty() || n.hasClass("filtered")) return;
+    const t = n.data("type");
+    if (t === "concept" && !drillId) {               // koncept / podkoncept → prstence uprostřed
+      closeDetail(); closeCard();
+      cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 1) }, { duration: 300, complete: () => enterIso(n) });
+      return;
+    }
     cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 1) }, { duration: 300 });
+    if (/^(group|hub|sub|subhub)$/.test(t) && !drillId) { openGroupCard(n); return; }
     openDetail(n);
   }
   // všechny koncepty dosažitelné po hranách next(id), od nejbližších; bez startu
@@ -1230,7 +1554,10 @@
   function openDetail(node) {
     editing = false;
     cy.$(":selected").unselect(); node.select();
-    if (node.data("type") === "group" || node.data("type") === "hub") {
+    if (viewMode === "rvp" && /^(group|hub|sub|subhub)$/.test(node.data("type"))) {
+      detailBody.innerHTML = rvpGroupHtml(node.data("gid"), /sub/.test(node.data("type")) ? node.data("pid") : null);
+      pinned = null; clearNb();
+    } else if (node.data("type") === "group" || node.data("type") === "hub") {
       detailBody.innerHTML = groupHtml(node.data("gid"), "#ffff00", node.data("label"));
       pinned = null; clearNb();
     } else if (node.data("type") === "sub" || node.data("type") === "subhub") {
@@ -1241,7 +1568,7 @@
       pinned = node; focusNb(node);
       cy.animate({ fit: { eles: node.closedNeighborhood(), padding: 80 }, duration: 350 });
     }
-    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    bindPanelLinks();
     detail.classList.remove("hidden");
   }
 
@@ -1267,6 +1594,7 @@
     let src = {}, meta = "", extra = "", fallback = "";
     if (viewMode === "tema") {
       src = DATA.temata.find((t) => t.id === gid) || {};
+      if (src.nazev_en) meta = `<div class="d-meta"><span class="d-pill">${esc(src.nazev_en)}</span></div>`;
       if (src.vrstva_mapy != null) meta = `<div class="d-meta"><span class="d-pill">${esc(VRSTVA_MAPY[src.vrstva_mapy] || ("vrstva " + src.vrstva_mapy))}</span></div>`;
       const nav = (src.navazuje_na || []).map((id) => { const t = DATA.temata.find((x) => x.id === id); return `<span class="d-tag">${esc(t ? t.nazev : id)}</span>`; }).join("");
       if (nav) extra = `<div class="d-section"><h3>Navazuje na</h3><div class="d-tags">${nav}</div></div>`;
@@ -1276,10 +1604,6 @@
       if (src.vystup) extra = `<div class="d-section"><h3>Očekávaný výstup KDI</h3><div class="d-rvp">${esc(typo(src.vystup))}</div></div>`;
       if (gid === NOKDI) fallback = "Ryzí informatická teorie — myšlení, primitiva programování, vnitřek infrastruktury, teorie AI.";
       else if (!src.popis) fallback = (DATA.meta && DATA.meta.kompetence_popis) || "";
-    } else {
-      src = DATA.areas.find((a) => a.id === gid) || {};
-      if (src.kod) meta = `<div class="d-meta"><span class="d-pill">${esc(src.kod)}</span></div>`;
-      if (gid === NORVP) fallback = "Klíčové kompetence a průřezová témata RVP — koncepty mimo jeden okruh Informatiky.";
     }
     return `
       <span class="d-badge" style="background:${bg};color:#000000">${esc(GROUP_LABEL[viewMode])}</span>
@@ -1287,8 +1611,8 @@
       ${meta}
       ${paras(src.popis, fallback)}
       ${extra}
-      <div class="d-section"><h3>Konceptů: ${count}</h3></div>
-      <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
+      <div class="d-section"><h3>Konceptů a podkonceptů: ${count}</h3></div>
+      <div class="d-section"><h3>Koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
   }
 
   function subHtml(temaId, pid) {
@@ -1299,20 +1623,23 @@
     return `
       <span class="d-badge d-badge-tema">${esc(tema.nazev || temaId)}</span>
       <h2 class="d-title">${esc(p.nazev)}</h2>
-      <div class="d-meta"><span class="d-pill">podoblast</span></div>
+      <div class="d-meta"><span class="d-pill">skupina</span></div>
       ${paras(p.popis || "")}
-      <div class="d-section"><h3>Konceptů: ${kids.length}</h3></div>
-      <div class="d-section"><h3>Core koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>
-      <div class="d-section"><h3>Navazující</h3><div class="d-links">${nav.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
+      <div class="d-section"><h3>Konceptů a podkonceptů: ${kids.length}</h3></div>
+      <div class="d-section"><h3>Koncepty</h3><div class="d-links">${cores.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>
+      <div class="d-section"><h3>Podkoncepty</h3><div class="d-links">${nav.map((c) => link(c.id)).join("") || '<span class="d-empty">—</span>'}</div></div>`;
   }
 
   function conceptHtml(c, box) {
     const tema = (DATA.temata.find((t) => t.id === c.tema) || {});
     const pod = podoblastOf(c);
-    const oblast = c.oblast ? (DATA.areas.find((a) => a.id === c.oblast) || {}) : null;
+    const oblast = c.oblast ? ((DATA.areas || []).find((a) => a.id === c.oblast) || null) : null;
     const komp = c.kompetence ? ((DATA.kompetence || []).find((k) => k.id === c.kompetence) || null) : null;
     const rvp = (c.rvp || []).length
-      ? c.rvp.map((r) => r.kod
+      ? c.rvp.map((r) => r.kod && rvpByKod[r.kod]
+          ? `<div class="d-rvp"><button class="kod kod-link" data-ovu="${esc(r.kod)}" title="Otevřít v pohledu RVP Informatika">${esc(r.kod)}</button>${esc(typo(rvpByKod[r.kod].zneni))}` +
+            (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`
+        : r.kod
           ? `<div class="d-rvp"><span class="kod">${esc(r.kod)}</span>${r.vystup ? esc(typo(r.vystup)) : '<span class="d-empty">znění výstupu doplnit</span>'}` +
             (r.poznamka ? `<div class="d-rvp-note">${esc(typo(r.poznamka))}</div>` : "") + `</div>`
           // poznámka garanta bez kódu výstupu (např. „Bez samostatné přímé vazby")
@@ -1338,28 +1665,41 @@
         (doma.length ? `<div class="d-links d-links-indirect">${links(doma)}</div>` : "") +
         (jinde ? `<div class="d-sub">+ ${jinde} ${jinde === 1 ? "koncept" : jinde < 5 ? "koncepty" : "konceptů"} v jiných oblastech</div>` : "");
     };
+    // V5: hierarchie koncept → podkoncept a výskyt ve výuce po stupních
+    const nadrazeny = c.nadrazeny && conceptById[c.nadrazeny];
+    const podkoncepty = DATA.concepts.filter((x) => x.nadrazeny === c.id).map((x) => x.id);
+    const st = c.stupne || {};
+    const stupen = (v, nazev) => `<div class="d-stupen ${v ? "on" : ""}"><span class="d-stupen-mark">${v ? "✓" : "—"}</span>${esc(nazev)}</div>`;
+    const vyuka = (st.zs1 != null || st.zs2 != null || c.poznamka)
+      ? `<div class="d-section"><h3>Ve výuce podle RVP</h3>${stupen(st.zs1, "1. stupeň ZŠ (výstupy ZV5)")}${stupen(st.zs2, "2. stupeň ZŠ (výstupy ZV9)")}` +
+        (c.poznamka ? `<div class="d-rvp-note">${esc(typo(c.poznamka))}</div>` : "") + `</div>` : "";
+    const sekce = (h, html, show) => show ? `<div class="d-section"><h3>${h}</h3>${html}</div>` : "";
     return `
       <span class="d-badge d-badge-tema">${esc(tema.nazev || c.tema)}</span>${pod ? ` <span class="d-badge d-badge-sub">${esc(pod.nazev)}</span>` : ""}
       <h2 class="d-title">${esc(c.nazev)}</h2>
       <div class="d-meta">
         <span class="d-pill ${c.vrstva === "core" ? "core" : ""}">${esc(VRSTVA[c.vrstva] || c.vrstva)}</span>
         <span class="d-pill stav-${esc(c.stav || "draft")}">${esc(STAV[c.stav] || c.stav || "Draft")}</span>
-        <span class="d-pill">${oblast ? esc(oblast.nazev) : "průřezové"}</span>
+        ${oblast ? `<span class="d-pill">${esc(oblast.nazev)}</span>` : ""}
         ${komp ? `<span class="d-pill">${esc(komp.nazev)}</span>` : ""}
       </div>
       ${!box && canWrite() ? `<button class="km-primary km-editbtn" data-act="edit" data-id="${esc(c.id)}">✎ Upravit koncept</button>` : ""}
       ${paras(c.popis)}
+      ${vyuka}
+      ${sekce("Nadřazený koncept", `<div class="d-links">${nadrazeny ? link(c.nadrazeny) : ""}</div>`, !!nadrazeny)}
+      ${sekce("Podkoncepty", `<div class="d-links">${links(podkoncepty)}</div>`, podkoncepty.length)}
       ${box ? "" : microSection(c) +
         `<div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
       <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>`}
       ${c.duraz ? `<div class="d-section d-duraz"><h3>Důraz</h3>${paras(c.duraz)}</div>` : ""}
-      <div class="d-section"><h3>RVP — očekávaný výstup</h3>${rvp}</div>
-      <div class="d-section"><h3>Digitální kompetence</h3>${kdi}</div>
-      <div class="d-section"><h3>Prerekvizity</h3><div class="d-links">${links(c.prerekvizity)}</div>${neprimo(predchazi)}</div>
-      <div class="d-section"><h3>Je prerekvizitou pro</h3><div class="d-links">${links(jePrereqPro)}</div>${neprimo(navazuje)}</div>
-      <div class="d-section"><h3>Souvisí</h3><div class="d-links">${links(souvisiIds)}</div></div>
-      <div class="d-section"><h3>Tagy</h3><div class="d-tags">${tags}</div></div>
-      <div class="d-section"><h3>Zdroj</h3>${zdroj}</div>`;
+      ${sekce("RVP — očekávaný výstup", rvp, (c.rvp || []).length)}
+      ${sekce("Digitální kompetence", kdi, !!komp)}
+      ${sekce("Prerekvizity", `<div class="d-links">${links(c.prerekvizity)}</div>${neprimo(predchazi)}`, c.prerekvizity.length || predchazi.length)}
+      ${sekce("Je prerekvizitou pro", `<div class="d-links">${links(jePrereqPro)}</div>${neprimo(navazuje)}`, jePrereqPro.length || navazuje.length)}
+      ${sekce("Souvisí", `<div class="d-links">${links(souvisiIds)}</div>`, souvisiIds.length)}
+      ${sekce("Tagy", `<div class="d-tags">${tags}</div>`, (c.tagy || []).length)}
+      ${sekce("Zdroj popisu", `<div class="d-rvp-note">${esc(c.zdroj_popisu || "")}</div>`, !!c.zdroj_popisu)}
+      ${sekce("Zdroj", zdroj, (c.zdroj || []).length)}`;
   }
 
   /* ---------- Mikrokoncepty + hloubkové ponoření ---------- */
@@ -1537,221 +1877,311 @@
     render(viewMode, { noAnim: true });
   }
 
-  // Detail konceptu bez manipulace s grafem (pro 3D pohled).
+  /* ==========================================================================
+     Pohled RVP Informatika — detail výsledku učení a bublin
+     ========================================================================== */
+  const escAttr = (x) => esc(x).replace(/"/g, "&quot;");
+  const rvpHub = (id) => (RVP && RVP.hubs.find((h) => h.id === id)) || { subs: [] };
+  // adresy v textu ilustrativních úloh (např. úložiště RVP) jako odkazy
+  const linkify = (h) => h.replace(/https?:\/\/[^\s"“”<]*[^\s"“”<.,;:)]/g,
+    (u) => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+
+  function blocksHtml(bl) {
+    let out = "", ul = false;
+    (bl || []).forEach((b) => {
+      const x = linkify(esc(typo(b.x)));
+      if (b.t === "li") { if (!ul) { out += '<ul class="r-ul">'; ul = true; } out += `<li>${x}</li>`; return; }
+      if (ul) { out += "</ul>"; ul = false; }
+      out += b.t === "h" ? `<div class="r-h">${x}</div>` : `<p class="r-p">${x}</p>`;
+    });
+    return out + (ul ? "</ul>" : "");
+  }
+
+  function ovuLink(k) {
+    const o = rvpByKod[k];
+    if (!o) return "";
+    return `<button class="r-link" data-ovu="${escAttr(k)}"><span class="r-kod">${esc(k)} · ${esc(o.stupen)}</span>${esc(typo(o.zneni))}</button>`;
+  }
+  const ovuList = (arr) => arr.length ? `<div class="r-links">${arr.map(ovuLink).join("")}</div>` : '<span class="d-empty">—</span>';
+  // výsledky na mapě, které s daným souvisejí (oběma směry) — dostanou žlutý prstenec
+  const ovuRelated = (o) => [...new Set([...o.souvisi, ...o.navaznost, ...(rvpRev[o.kod] || [])])].filter((k) => rvpByKod[k] && k !== o.kod);
+
+  /* ---------- Nová taxonomie u OVU: legenda, stupnice úrovní, výkony ----------
+     Úroveň = číslo ve žlutém kolečku (použitá svítí, ostatní zhasnuté);
+     dimenze = barva obrysu (3 kategorické barvy, ověřeno pro všechny dvojice). */
+  const TX_UROVNE = [
+    // všechny úrovně stejnou žlutou (barva značky); použité svítí, ostatní jsou zhasnuté
+    { c: 1, n: "Vybavování", col: "var(--c-yellow)" }, { c: 2, n: "Porozumění", col: "var(--c-yellow)" },
+    { c: 3, n: "Analýza", col: "var(--c-yellow)" }, { c: 4, n: "Použití znalostí", col: "var(--c-yellow)" },
+    { c: 5, n: "Metakognice", col: "var(--c-yellow)" }, { c: 6, n: "Já-systém", col: "var(--c-yellow)" },
+  ];
+  const TX_DIMENZE = {
+    deklarativni: { n: "Deklarativní znalosti", col: "#3987e5" },
+    postupy: { n: "Myšlenkové postupy", col: "#d95926" },
+    psychomotorika: { n: "Psychomotorické dovednosti", col: "#199e70" },
+  };
+  const txLv = (c) => TX_UROVNE[c - 1] || TX_UROVNE[0];
+  const txNum = (c) => `<i class="tx-num" style="--l:${txLv(c).col}">${c}</i>`;
+  const txVerbPill = (v, text) => `<span class="tx-verb" style="--d:${(TX_DIMENZE[v.dimenze] || {}).col || "#fff"}" ` +
+    `title="${escAttr(txLv(v.uroven).c + " " + txLv(v.uroven).n + " · " + v.proces + " · " + ((TX_DIMENZE[v.dimenze] || {}).n || ""))}">${txNum(v.uroven)}${text}</span>`;
+
+  // znění OVU s aktivními slovesy zvýrazněnými pilulkou (přes zástupné znaky, ať se nenahrazuje uvnitř HTML)
+  function taxZneni(o) {
+    const t = taxOf(o.kod);
+    let h = esc(typo(o.zneni));
+    if (!t) return h;
+    const hits = [];
+    t.vykony.forEach((v, i) => {
+      const re = new RegExp(`(?<![\\p{L}])(${v.sloveso.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})(?![\\p{L}])`, "iu");
+      h = h.replace(re, (m) => { hits.push([i, m]); return "\u0001" + (hits.length - 1) + "\u0002"; });
+    });
+    return h.replace(/\u0001(\d+)\u0002/g, (_, k) => txVerbPill(t.vykony[hits[k][0]], hits[k][1]));
+  }
+
+  function taxHtml(o) {
+    const t = taxOf(o.kod);
+    if (!t) return "";
+    const lvUsed = new Set(t.vykony.map((v) => v.uroven)), dimUsed = new Set(t.vykony.map((v) => v.dimenze));
+    const legLv = TX_UROVNE.map((l) => `<span class="tx-lv${lvUsed.has(l.c) ? "" : " off"}">${txNum(l.c)}${esc(l.n)}</span>`).join("");
+    const legDim = Object.entries(TX_DIMENZE).map(([id, d]) => `<span class="tx-dim${dimUsed.has(id) ? "" : " off"}" style="--d:${d.col}">${esc(d.n)}</span>`).join("");
+    const f = t.formulace, spl = t.splneno || f, sp = Math.max(spl, f);
+    const meter = TX_UROVNE.map((l) => `<span class="tx-cell ${l.c <= f ? "on" : l.c <= sp ? "spl" : ""}" style="--l:${l.col}" title="${escAttr(l.c + " " + l.n)}">${l.c}</span>`).join("");
+    const vykony = t.vykony.map((v) => `<li>${txVerbPill(v, esc(v.sloveso.toLowerCase()))}
+        <span class="tx-vk-text"><strong>${esc(typo(v.citace))}</strong><span class="tx-vk-meta">${esc(txLv(v.uroven).n)} · ${esc(v.proces)} · ${esc((TX_DIMENZE[v.dimenze] || {}).n || v.dimenze)}</span>
+        <span class="tx-vk-proc">${esc(typo(v.proc || ""))}</span></span></li>`).join("");
+    const stav = t.stav || "nezkontrolovano";
+    const kdo = t.kontrola_kdo ? `<span class="tx-kdo">${esc(t.kontrola_kdo)}${t.kontrola_kdy ? " · " + esc(czDate(t.kontrola_kdy)) : ""}</span>` : "";
+    const stavUi = canWrite()
+      ? `<div class="tx-seg" role="group" aria-label="Stav kontroly">${Object.entries(OVU_STAV).map(([id, n]) =>
+          `<button type="button" class="tx-seg-b${id === stav ? " on" : ""}" data-ovu-act="stav" data-stav="${id}" data-kod="${escAttr(o.kod)}">${esc(n)}</button>`).join("")}</div>`
+      : `<span class="tx-stav tx-stav-${stav}">${esc(OVU_STAV[stav] || stav)}</span>`;
+    return `
+      <div class="tx">
+        <div class="tx-row tx-stav-row"><span class="tx-lbl">Kontrola analýzy</span>${stavUi}${kdo}
+          ${canWrite() ? `<button type="button" class="d-link tx-edit" data-ovu-act="edit" data-kod="${escAttr(o.kod)}">✎ Upravit analýzu</button>` : ""}</div>
+        <div class="tx-legend">
+          <div class="tx-row"><span class="tx-lbl">Úrovně zpracování</span><div class="tx-pills">${legLv}</div></div>
+          <div class="tx-row"><span class="tx-lbl">Dimenze</span><div class="tx-pills">${legDim}</div></div>
+        </div>
+        <div class="tx-row tx-meter-row"><span class="tx-lbl">Nejvyšší úroveň</span>
+          <div class="tx-meter" role="img" aria-label="${escAttr(`Formulace sahá na úroveň ${f}, metodická podpora Splněno na úroveň ${spl}`)}">${meter}</div>
+          <span class="tx-meter-cap">formulace: <b>${f}</b>${spl > f ? ` · „Splněno“ v metodice: až <b>${spl}</b>` : spl < f ? ` · „Splněno“ v metodice: jen <b>${spl}</b>` : " · „Splněno“ stejně"}</span></div>
+        <details class="r-uro tx-det"><summary>Výkony a jejich klasifikace<span class="r-count">${t.vykony.length}</span></summary>
+          <div class="r-body"><ul class="tx-vykony">${vykony}</ul></div>
+        </details>
+      </div>`;
+  }
+
+  /* ---------- Editor analýzy OVU (jen editoři) ---------- */
+  const OVU_STAV = { "nezkontrolovano": "Nezkontrolováno", "k-diskusi": "K diskusi", "zkontrolovano": "Zkontrolováno" };
+  const czDate = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ""); return m ? `${+m[3]}. ${+m[2]}. ${m[1]}` : iso || ""; };
+  const procesyUrovne = (c) => (ISO_LEVELS[c - 1] ? ISO_LEVELS[c - 1].procesy.map((x) => x[0].toLowerCase()) : []);
+  function oxProcesOpts(c, val) {
+    const list = procesyUrovne(c);
+    if (val && !list.includes(val)) list.unshift(val);                 // vlastní proces z dat nezahodit
+    return list.map((x) => `<option value="${escAttr(x)}"${x === val ? " selected" : ""}>${esc(x)}</option>`).join("");
+  }
+  function oxRow(v) {
+    v = v || { sloveso: "", citace: "", dimenze: "deklarativni", uroven: 1, proces: "", proc: "" };
+    return `<div class="ox-row">
+      <div class="ox-grid">
+        <label>Sloveso<input class="ox-sl" value="${escAttr(v.sloveso)}" placeholder="např. Navrhne"></label>
+        <label class="ox-wide">Výkon (citace)<input class="ox-ci" value="${escAttr(v.citace)}" placeholder="navrhne posloupnost kroků…"></label>
+        <label>Dimenze<select class="ox-dim">${Object.entries(TX_DIMENZE).map(([id, d]) => `<option value="${id}"${id === v.dimenze ? " selected" : ""}>${esc(d.n)}</option>`).join("")}</select></label>
+        <label>Úroveň<select class="ox-lv">${TX_UROVNE.map((l) => `<option value="${l.c}"${l.c === +v.uroven ? " selected" : ""}>${l.c} ${esc(l.n)}</option>`).join("")}</select></label>
+        <label>Proces<select class="ox-pr">${oxProcesOpts(+v.uroven || 1, v.proces)}</select></label>
+        <label class="ox-wide">Zdůvodnění<textarea class="ox-zd" rows="2">${esc(v.proc || "")}</textarea></label>
+      </div>
+      <button type="button" class="mc-del ox-del" data-ovu-act="del-vykon" title="Odebrat výkon">✕</button>
+    </div>`;
+  }
+  function ovuEditHtml(o) {
+    const t = taxOf(o.kod) || { vykony: [], splneno: 1 };
+    return `
+      <span class="d-badge d-badge-acc">Úprava analýzy OVU</span> <span class="d-badge d-badge-sub">${esc(o.kod)}</span>
+      <h2 class="d-title r-title">${esc(typo(o.zneni))}</h2>
+      <div class="ox" data-kod="${escAttr(o.kod)}">
+        <div class="ox-top">
+          <label>Stav kontroly<select class="ox-stav">${Object.entries(OVU_STAV).map(([id, n]) => `<option value="${id}"${id === (t.stav || "nezkontrolovano") ? " selected" : ""}>${esc(n)}</option>`).join("")}</select></label>
+          <label>„Splněno“ v metodice sahá na úroveň<select class="ox-spl">${TX_UROVNE.map((l) => `<option value="${l.c}"${l.c === +(t.splneno || t.formulace || 1) ? " selected" : ""}>${l.c} ${esc(l.n)}</option>`).join("")}</select></label>
+        </div>
+        <p class="d-rvp-note">Nejvyšší úroveň formulace se spočítá z výkonů. Sloveso napište přesně v tom tvaru, v jakém stojí ve znění OVU, jinak se ve znění nezvýrazní.</p>
+        <div class="ox-list">${(t.vykony || []).map(oxRow).join("")}</div>
+        <button type="button" class="d-link" data-ovu-act="add-vykon">+ Přidat výkon</button>
+        <div class="ed-actions">
+          <button type="button" class="reset-btn" data-ovu-act="cancel" data-kod="${escAttr(o.kod)}">Zrušit</button>
+          <button type="button" class="km-primary" data-ovu-act="save" data-kod="${escAttr(o.kod)}">Uložit analýzu</button>
+        </div>
+      </div>`;
+  }
+  // uloží úpravu OVU (Supabase pro všechny, jinak lokálně) a promítne ji do karty i bubliny
+  function saveOvuTax(kod, patch) {
+    const full = Object.assign({}, OVU_EDITS[kod] || {}, patch, { kontrola_kdo: adminName || adminLogin || "", kontrola_kdy: new Date().toISOString().slice(0, 10) });
+    OVU_EDITS[kod] = full;
+    const suf = kod.slice(-7);
+    TAX[suf] = Object.assign({ vykony: [] }, TAX[suf] || {}, full);
+    if (supabaseOk && window.KM) window.KM.saveOverride(adminLogin, adminSecret, "ovu:" + kod, full)
+      .catch((e) => alert("Uložení do Supabase selhalo: " + ((e && e.message) || e)));
+    else { const ov = loadEdits(); ov["ovu:" + kod] = full; saveEdits(ov); }
+    const n = cy.getElementById(ovuNodeId(kod)); if (n.nonempty()) n.data("kontrola", TAX[suf].stav || "");
+  }
+  function refreshOvuCard(kod, keepScroll) {
+    const o = rvpByKod[kod], box = document.getElementById("km-isobox");
+    if (!o || !box) return;
+    const top = box.scrollTop;
+    box.querySelector(".km-isobox-body").innerHTML = ovuHtml(o);
+    box.scrollTop = keepScroll ? top : 0;
+  }
+  function ovuAction(btn) {
+    const act = btn.dataset.ovuAct, kod = btn.dataset.kod || (btn.closest(".ox") || {}).dataset && btn.closest(".ox").dataset.kod;
+    if (!canWrite() && act !== "cancel") return;
+    if (act === "stav") { saveOvuTax(kod, { stav: btn.dataset.stav }); refreshOvuCard(kod, true); }
+    else if (act === "edit") { const o = rvpByKod[kod]; if (o) { const box = document.getElementById("km-isobox"); box.querySelector(".km-isobox-body").innerHTML = ovuEditHtml(o); box.scrollTop = 0; } }
+    else if (act === "cancel") refreshOvuCard(kod);
+    else if (act === "add-vykon") { btn.parentElement.querySelector(".ox-list").insertAdjacentHTML("beforeend", oxRow()); }
+    else if (act === "del-vykon") btn.closest(".ox-row").remove();
+    else if (act === "save") {
+      const box = btn.closest(".ox"), o = rvpByKod[kod];
+      const vykony = [...box.querySelectorAll(".ox-row")].map((r) => ({
+        sloveso: r.querySelector(".ox-sl").value.trim(), citace: r.querySelector(".ox-ci").value.trim(),
+        dimenze: r.querySelector(".ox-dim").value, uroven: +r.querySelector(".ox-lv").value,
+        proces: r.querySelector(".ox-pr").value, proc: r.querySelector(".ox-zd").value.trim(),
+      })).filter((v) => v.sloveso || v.citace);
+      if (!vykony.length) { alert("Přidejte aspoň jeden výkon."); return; }
+      if (vykony.some((v) => !v.sloveso)) { alert("Každý výkon potřebuje sloveso."); return; }
+      const lower = (o.zneni || "").toLowerCase();
+      const chybi = vykony.filter((v) => !new RegExp(`(?<![\\p{L}])${v.sloveso.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}])`, "u").test(lower)).map((v) => v.sloveso);
+      if (chybi.length && !confirm(`Tato slovesa ve znění OVU nejsou a nezvýrazní se: ${chybi.join(", ")}. Uložit i tak?`)) return;
+      saveOvuTax(kod, {
+        stav: box.querySelector(".ox-stav").value, splneno: +box.querySelector(".ox-spl").value,
+        formulace: Math.max(...vykony.map((v) => v.uroven)), vykony,
+      });
+      refreshOvuCard(kod);
+    }
+  }
+  // export upravené analýzy ve formátu rvp-taxonomie.yaml (ke commitu do repa)
+  function exportTaxonomie() {
+    loadRvp().then(() => {
+      const ovu = {};
+      Object.keys(TAX).sort((a, b) => a.localeCompare(b)).forEach((k) => {
+        const t = TAX[k], o = {};
+        ["formulace", "splneno", "stav", "kontrola_kdo", "kontrola_kdy"].forEach((f) => { if (t[f] != null && t[f] !== "") o[f] = t[f]; });
+        o.vykony = (t.vykony || []).map((v) => ({ sloveso: v.sloveso, citace: v.citace, dimenze: v.dimenze, uroven: v.uroven, proces: v.proces, proc: v.proc }));
+        ovu[k] = o;
+      });
+      const head = "# Vyhodnocení OVU Informatiky podle Nové taxonomie (Marzano & Kendall)\n# Export z editoru mapy " +
+        new Date().toISOString().slice(0, 10) + ". Formát viz knowledge-map/data-readme.md.\n\n";
+      download("rvp-taxonomie.yaml", head + jsyaml.dump({ ovu }, { lineWidth: -1, noRefs: true }), "text/yaml");
+    }, (e) => alert("RVP se nepodařilo načíst: " + e.message));
+  }
+
+  function ovuHtml(o) {
+    const hub = rvpHub(o.hub), sub = hub.subs.find((s) => s.id === o.sub) || {};
+    const inf = o.hub === "ovu1" || o.hub === "ovu2";
+    const onMap = (arr) => arr.filter((k) => rvpByKod[k] && k !== o.kod);
+    const kk = onMap(o.souvisi).filter((k) => rvpByKod[k].hub === "kk");
+    const zg = onMap(o.souvisi).filter((k) => rvpByKod[k].hub === "zg");
+    const jinde = o.souvisi.filter((k) => !rvpByKod[k] && RVP.ext[k]);
+    const extHtml = jinde.length
+      ? jinde.map((k) => `<div class="d-rvp"><span class="kod">${esc(k)}</span>${esc(typo(RVP.ext[k].zneni))}<div class="d-rvp-note">${esc(RVP.ext[k].kde)}</div></div>`).join("")
+      : '<span class="d-empty">—</span>';
+    const koncepty = DATA.concepts.filter((c) => (c.rvp || []).some((r) => r.kod === o.kod));
+    const kHtml = koncepty.length
+      ? `<div class="d-links">${koncepty.map((c) => `<button class="d-link" data-concept="${escAttr(c.id)}">${esc(typo(c.nazev))}</button>`).join("")}</div>`
+      : '<span class="d-empty">zatím žádný koncept mapy</span>';
+    const uloh = (n) => n + " " + (n === 1 ? "úloha" : n < 5 ? "úlohy" : "úloh");
+    const uro = o.urovne.map((u) => `
+      <details class="r-uro"><summary>${esc(u.nazev)}${u.ilustrace.length ? `<span class="r-count">${uloh(u.ilustrace.length)}</span>` : ""}</summary>
+        <div class="r-body">${blocksHtml(u.bloky)}
+        ${u.ilustrace.map((il) => `<details class="r-il"><summary>${esc(typo(il.nazev))}</summary><div class="r-body">${blocksHtml(il.bloky)}` +
+          il.odkazy.map((a) => `<a class="r-a" href="${escAttr(a.h)}" target="_blank" rel="noopener">${esc(a.t)}</a>`).join("") + `</div></details>`).join("")}
+        </div>
+      </details>`).join("");
+    return `
+      <span class="d-badge d-badge-acc">${esc(hub.nazev)}</span> <span class="d-badge d-badge-sub">${esc(sub.plny || sub.nazev || "")}</span>
+      <h2 class="d-title r-title">${taxZneni(o)}</h2>
+      <div class="d-meta"><span class="d-pill">${esc(o.kod)}</span><span class="d-pill">${esc(o.stupen)}</span>${o.slozka ? `<span class="d-pill">${esc(o.slozka)}</span>` : ""}</div>
+      ${taxHtml(o)}
+      <div class="d-section"><h3>Popis a zdůvodnění</h3>${blocksHtml(o.popis) || '<span class="d-empty">—</span>'}</div>
+      <div class="d-section"><h3>Úrovně a ilustrativní úlohy</h3>${uro || '<span class="d-empty">—</span>'}</div>
+      ${inf ? `
+      <div class="d-section"><h3>Koncepty mapy</h3>${kHtml}</div>
+      <div class="d-section"><h3>Návaznost v informatice</h3>${ovuList(onMap(o.navaznost))}</div>
+      <div class="d-section"><h3>Souvisí — klíčové kompetence</h3>${ovuList(kk)}</div>
+      <div class="d-section"><h3>Souvisí — gramotnosti</h3>${ovuList(zg)}</div>
+      <div class="d-section"><h3>Souvisí — jiné obory a průřezová témata</h3>${extHtml}</div>`
+      : `<div class="d-section"><h3>Rozvíjí se v informatice</h3>${ovuList(rvpRev[o.kod] || [])}</div>`}`;
+  }
+
+  function rvpGroupHtml(gid, pid) {
+    const hub = rvpHub(gid), sub = pid ? hub.subs.find((s) => s.id === pid) : null;
+    const leaves = RVP.ovu.filter((o) => (sub ? o.sub === pid : o.hub === gid));
+    return `
+      <span class="d-badge d-badge-acc">${esc(sub ? hub.nazev : "RVP Informatika")}</span>
+      <h2 class="d-title">${esc(sub ? (sub.plny || sub.nazev) : hub.nazev)}</h2>
+      ${sub && sub.kod ? `<div class="d-meta"><span class="d-pill">${esc(sub.kod)}</span></div>` : ""}
+      ${paras(sub ? sub.popis : hub.popis)}
+      ${hub.vyber ? `<div class="d-rvp-note r-note">${esc(hub.vyber)}</div>` : ""}
+      <div class="d-section"><h3>Očekávané výsledky učení: ${leaves.length}</h3>${ovuList(leaves.map((o) => o.kod))}</div>
+      ${sub ? "" : `<div class="d-section"><h3>Zdroj</h3><div class="d-rvp-note">${esc(typo(RVP.meta.vydani))}</div></div>`}`;
+  }
+
+  function openOvuDetail(o) {
+    if (!o) return;
+    editing = false;
+    const n = cy.getElementById(ovuNodeId(o.kod));
+    cy.$(":selected").unselect();
+    if (n.nonempty()) n.select();
+    openCard(ovuHtml(o));
+    const rel = ovuRelated(o);
+    cy.batch(() => {
+      cy.elements().removeClass("nbedge nbon");
+      rel.forEach((k) => cy.getElementById(ovuNodeId(k)).addClass("nbon"));
+    });
+    pinned = n.nonempty() ? n : null;
+  }
+
+  /* odkazy v pravém panelu: koncept na mapě, výsledek RVP, koncept z pohledu RVP */
+  function bindPanelLinks() {
+    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    detailBody.querySelectorAll("[data-ovu]").forEach((b) => b.addEventListener("click", () => goOvu(b.dataset.ovu)));
+    detailBody.querySelectorAll("[data-concept]").forEach((b) => b.addEventListener("click", () => goConcept(b.dataset.concept)));
+  }
+  function switchView(v) {
+    document.querySelectorAll(".vt-btn").forEach((x) => x.classList.toggle("active", x.dataset.view === v));
+    if (v !== viewMode) render(v, { noAnim: true });
+  }
+  // zajistí, že skupina uzlu není vypnutá ve filtru (jinak by proklik nikam nevedl)
+  function unfilterGroup(gid) {
+    const chip = document.querySelector(`.chip[data-filter='group'][data-val='${gid}']`);
+    if (chip && chip.getAttribute("aria-pressed") !== "true") { chip.setAttribute("aria-pressed", "true"); applyFilters(); }
+  }
+  function goOvu(kod) {
+    loadRvp().then(() => {
+      const o = rvpByKod[kod];
+      if (!o) return;
+      switchView("rvp");
+      unfilterGroup(o.hub);
+      const n = cy.getElementById(ovuNodeId(kod));
+      if (n.nonempty()) cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 0.9) }, { duration: 300 });
+      openOvuDetail(o);
+    }, (e) => setStatus("RVP se nepodařilo načíst: " + e.message));
+  }
+  function goConcept(id) {
+    const c = conceptById[id];
+    if (!c) return;
+    switchView("tema");
+    unfilterGroup(c.tema);
+    focusNode(id);
+  }
+
+  // Detail konceptu bez manipulace s grafem (z izometrického pohledu)
   function showConceptPanel(c) {
     editing = false;
     detailBody.innerHTML = conceptHtml(c);
-    detailBody.querySelectorAll("[data-focus]").forEach((b) => b.addEventListener("click", () => focusNode(b.dataset.focus)));
+    bindPanelLinks();
     detail.classList.remove("hidden"); detail.scrollTop = 0;
   }
-
-  /* ---------- 3D pohled (vlastní projekce, bez knihovny) ----------
-     Koncepty leží v rovině (z=0), mikrokoncepty na vrstvě pod rodičem (z<0).
-     Táhnutím se scéna otáčí, kolečkem přibližuje; klik otevře detail. */
-  let view3d = false, cvs3d = null, ctx3d = null, raf3d = null, drag3d = null;
-  const CAM3D_DEFAULT = { rotX: -0.75, rotY: 0.5, zoom: 0.62, panX: 0, panY: 0 };
-  let cam3d = Object.assign({}, CAM3D_DEFAULT);
-  let nodes3d = [], edges3d = [];
-
-  function build3D() {
-    nodes3d = []; edges3d = [];
-    const byId = {};
-    DATA.concepts.forEach((c) => {
-      const n = cy.getElementById(c.id);
-      const pos = (n && n.nonempty()) ? n.position() : { x: 0, y: 0 };
-      const deg = (n && n.nonempty()) ? (n.data("size") || 40) : 40;
-      const node = { id: c.id, kind: "concept", x: pos.x, y: pos.y, z: 0, r: Math.max(9, deg * 0.2), label: c.nazev, core: c.vrstva === "core", _c: c };
-      nodes3d.push(node); byId[c.id] = node;
-    });
-    const xs = nodes3d.map((n) => n.x), ys = nodes3d.map((n) => n.y);
-    const cxm = (Math.min(...xs) + Math.max(...xs)) / 2, cym = (Math.min(...ys) + Math.max(...ys)) / 2;
-    let maxR = 1;
-    nodes3d.forEach((n) => { n.x -= cxm; n.y -= cym; maxR = Math.max(maxR, Math.hypot(n.x, n.y)); });
-    // rozprostři koncepty dál od sebe (bubliny se nepřekrývají; malé popisky se pak vejdou)
-    const sc = 560 / maxR;
-    nodes3d.forEach((n) => { n.x *= sc; n.y *= sc; });
-    const DEPTH = 260;
-    DATA.concepts.forEach((c) => {
-      const micros = c._micros || []; if (!micros.length) return;
-      const parent = byId[c.id];
-      micros.forEach((m, i) => {
-        const ang = 2 * Math.PI * i / micros.length, rr = 24 + micros.length * 2;
-        const node = { id: "m-" + m.id, kind: "micro", x: parent.x + Math.cos(ang) * rr, y: parent.y + Math.sin(ang) * rr, z: -DEPTH, r: 8, label: m.nazev || m.id, _m: m };
-        nodes3d.push(node); edges3d.push({ a: parent, b: node, kind: "strut" });
-      });
-    });
-    DATA.concepts.forEach((c) => {
-      (c.prerekvizity || []).forEach((p) => { if (byId[p] && byId[c.id]) edges3d.push({ a: byId[p], b: byId[c.id], kind: "prereq" }); });
-    });
-  }
-
-  function project3D(n, w, h) {
-    const cosY = Math.cos(cam3d.rotY), sinY = Math.sin(cam3d.rotY), cosX = Math.cos(cam3d.rotX), sinX = Math.sin(cam3d.rotX);
-    const x1 = n.x * cosY + n.z * sinY, z1 = -n.x * sinY + n.z * cosY, y1 = n.y;
-    const y2 = y1 * cosX - z1 * sinX, z2 = y1 * sinX + z1 * cosX, x2 = x1;
-    const CAM = 900, f = CAM / (CAM - z2), s = Math.min(w, h) / 760 * cam3d.zoom;
-    return { sx: w / 2 + cam3d.panX + x2 * s * f, sy: h / 2 + cam3d.panY + y2 * s * f, depth: z2, f: f * s };
-  }
-
-  // Zalomení popisku do max 2 řádků, které se vejdou do šířky maxW (font už nastaven).
-  function wrap2(text, maxW) {
-    const words = String(text).split(/\s+/); let l1 = "", l2 = "", i = 0;
-    for (; i < words.length; i++) { const t = l1 ? l1 + " " + words[i] : words[i]; if (l1 && ctx3d.measureText(t).width > maxW) break; l1 = t; }
-    for (; i < words.length; i++) { const t = l2 ? l2 + " " + words[i] : words[i]; if (l2 && ctx3d.measureText(t).width > maxW) { l2 += "…"; return [l1, l2]; } l2 = t; }
-    return l2 ? [l1, l2] : [l1];
-  }
-  function labelInCircle(text, cx, cy, r, color) {
-    const maxW = r * 1.7;
-    let fs = Math.max(6, Math.min(12, r * 0.42));
-    ctx3d.font = fs + "px Inter, sans-serif";
-    // zmenši font tak, aby se i nejdelší slovo vešlo na šířku
-    let longest = 0;
-    String(text).split(/\s+/).forEach((w) => { longest = Math.max(longest, ctx3d.measureText(w).width); });
-    if (longest > maxW) { fs = Math.max(5, fs * maxW / longest); ctx3d.font = fs + "px Inter, sans-serif"; }
-    const lines = wrap2(text, maxW), lh = fs * 1.05, sy = cy - (lines.length - 1) * lh / 2;
-    ctx3d.save();                                   // ořízni text na bublinu (nikdy nepřeleze)
-    ctx3d.beginPath(); ctx3d.arc(cx, cy, r * 0.95, 0, 2 * Math.PI); ctx3d.clip();
-    ctx3d.fillStyle = color; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
-    lines.forEach((ln, i) => ctx3d.fillText(ln, cx, sy + i * lh));
-    ctx3d.restore();
-  }
-
-  function roundRect3D(x, y, w, h, r) {
-    ctx3d.beginPath();
-    ctx3d.moveTo(x + r, y); ctx3d.arcTo(x + w, y, x + w, y + h, r); ctx3d.arcTo(x + w, y + h, x, y + h, r);
-    ctx3d.arcTo(x, y + h, x, y, r); ctx3d.arcTo(x, y, x + w, y, r); ctx3d.closePath();
-  }
-
-  function draw3D() {
-    if (!view3d || !ctx3d) return;
-    const w = cvs3d.width, h = cvs3d.height;
-    ctx3d.fillStyle = "#0a0a0c"; ctx3d.fillRect(0, 0, w, h);
-    nodes3d.forEach((n) => { n._p = project3D(n, w, h); });
-    edges3d.forEach((e) => {
-      const A = e.a._p, B = e.b._p;
-      ctx3d.beginPath(); ctx3d.moveTo(A.sx, A.sy); ctx3d.lineTo(B.sx, B.sy);
-      if (e.kind === "strut") { ctx3d.strokeStyle = "rgba(255,255,0,0.5)"; ctx3d.lineWidth = 1.3; }
-      else { ctx3d.strokeStyle = "rgba(255,255,255,0.07)"; ctx3d.lineWidth = 0.8; }
-      ctx3d.stroke();
-    });
-    nodes3d.slice().sort((a, b) => a._p.depth - b._p.depth).forEach((n) => {
-      const p = n._p, r = Math.max(2, n.r * p.f);
-      if (n.kind === "concept") {
-        ctx3d.beginPath(); ctx3d.arc(p.sx, p.sy, r, 0, 2 * Math.PI);
-        ctx3d.fillStyle = n.core ? "#ffffff" : "#141416"; ctx3d.fill();
-        if (!n.core) { ctx3d.strokeStyle = "#ffffff"; ctx3d.lineWidth = 1.1; ctx3d.stroke(); }
-        if (r > 8) labelInCircle(n.label, p.sx, p.sy, r, n.core ? "#0a0a0c" : "#e8e8e8");
-      } else {
-        const s = r * 1.5; ctx3d.fillStyle = "#141416"; ctx3d.strokeStyle = "#ffff00"; ctx3d.lineWidth = 1.1;
-        roundRect3D(p.sx - s, p.sy - s * 0.6, s * 2, s * 1.2, 3); ctx3d.fill(); ctx3d.stroke();
-        if (p.f > 0.5) {
-          ctx3d.fillStyle = "#ffff00"; ctx3d.font = "9px Inter, sans-serif"; ctx3d.textAlign = "center"; ctx3d.textBaseline = "middle";
-          ctx3d.fillText(n.label.length > 16 ? n.label.slice(0, 14) + "…" : n.label, p.sx, p.sy + r + 7);
-        }
-      }
-    });
-  }
-
-  function loop3D() { if (!view3d) return; draw3D(); raf3d = requestAnimationFrame(loop3D); }
-
-  function resize3D() {
-    if (!cvs3d) return;
-    const rect = document.getElementById("cy").getBoundingClientRect();
-    cvs3d.style.position = "fixed";
-    cvs3d.style.left = rect.left + "px"; cvs3d.style.top = rect.top + "px";
-    cvs3d.width = Math.max(100, Math.round(rect.width)); cvs3d.height = Math.max(100, Math.round(rect.height));
-    cvs3d.style.width = rect.width + "px"; cvs3d.style.height = rect.height + "px";
-  }
-
-  function pick3D(clientX, clientY) {
-    const rect = cvs3d.getBoundingClientRect();
-    const mx = clientX - rect.left, my = clientY - rect.top;
-    let hit = null, hitDepth = -Infinity;
-    nodes3d.forEach((n) => {
-      const p = n._p; if (!p) return;
-      const r = Math.max(6, n.r * p.f) + 4;
-      if (Math.hypot(mx - p.sx, my - p.sy) <= r && p.depth > hitDepth) { hit = n; hitDepth = p.depth; }
-    });
-    if (!hit) return;
-    if (hit.kind === "concept") showConceptPanel(hit._c); else openMicroDetail(hit._m);
-  }
-
-  function reset3D() { cam3d = Object.assign({}, CAM3D_DEFAULT); }
-  // Zoom se středem v bodě (mx,my) — obsah pod kurzorem zůstává na místě.
-  function zoomAt(mx, my, k) {
-    const nz = Math.max(0.2, Math.min(6, cam3d.zoom * k)), kk = nz / cam3d.zoom;
-    cam3d.panX = (1 - kk) * (mx - cvs3d.width / 2) + kk * cam3d.panX;
-    cam3d.panY = (1 - kk) * (my - cvs3d.height / 2) + kk * cam3d.panY;
-    cam3d.zoom = nz;
-  }
-  function attach3DEvents() {
-    const localXY = (cx, cy) => { const r = cvs3d.getBoundingClientRect(); return [cx - r.left, cy - r.top]; };
-    const down = (x, y, pan) => { drag3d = { x: x, y: y, ox: x, oy: y, moved: false, pan: pan }; };
-    const move = (x, y) => {
-      if (!drag3d) return;
-      const dx = x - drag3d.x, dy = y - drag3d.y;
-      if (Math.abs(x - drag3d.ox) + Math.abs(y - drag3d.oy) > 4) drag3d.moved = true;
-      if (drag3d.pan) { cam3d.panX += dx; cam3d.panY += dy; }                 // posun (pravé tl. / Shift)
-      else { cam3d.rotY += dx * 0.008; cam3d.rotX += dy * 0.008; cam3d.rotX = Math.max(-1.4, Math.min(1.4, cam3d.rotX)); }
-      drag3d.x = x; drag3d.y = y;
-    };
-    cvs3d.addEventListener("contextmenu", (e) => e.preventDefault());
-    cvs3d.addEventListener("mousedown", (e) => down(e.clientX, e.clientY, (e.button === 2 || e.button === 1 || e.shiftKey)));
-    window.addEventListener("mousemove", (e) => move(e.clientX, e.clientY));
-    window.addEventListener("mouseup", (e) => { if (view3d && drag3d && !drag3d.moved && !drag3d.pan) pick3D(e.clientX, e.clientY); drag3d = null; });
-    cvs3d.addEventListener("dblclick", () => { if (view3d) reset3D(); });
-    cvs3d.addEventListener("wheel", (e) => { e.preventDefault(); const p = localXY(e.clientX, e.clientY); zoomAt(p[0], p[1], e.deltaY < 0 ? 1.12 : 0.89); }, { passive: false });
-    // dotyk: 1 prst = otáčení, 2 prsty = posun + pinch zoom
-    let pinch = null;
-    cvs3d.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 2) {
-        const a = e.touches[0], b = e.touches[1];
-        pinch = { d: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), mx: (a.clientX + b.clientX) / 2, my: (a.clientY + b.clientY) / 2 };
-        drag3d = null;
-      } else { const t = e.touches[0]; down(t.clientX, t.clientY, false); pinch = null; }
-    }, { passive: true });
-    cvs3d.addEventListener("touchmove", (e) => {
-      if (e.touches.length === 2 && pinch) {
-        const a = e.touches[0], b = e.touches[1];
-        const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), mx = (a.clientX + b.clientX) / 2, my = (a.clientY + b.clientY) / 2;
-        cam3d.panX += mx - pinch.mx; cam3d.panY += my - pinch.my;
-        const p = localXY(mx, my); if (pinch.d > 0) zoomAt(p[0], p[1], d / pinch.d);
-        pinch = { d: d, mx: mx, my: my };
-      } else if (e.touches.length === 1) { const t = e.touches[0]; move(t.clientX, t.clientY); }
-    }, { passive: true });
-    cvs3d.addEventListener("touchend", (e) => {
-      if (view3d && drag3d && !drag3d.moved && !drag3d.pan) { const t = (e.changedTouches && e.changedTouches[0]); if (t) pick3D(t.clientX, t.clientY); }
-      drag3d = null; pinch = null;
-    });
-    window.addEventListener("resize", () => { if (view3d) resize3D(); });
-  }
-
-  function enter3D() {
-    if (view3d) return;
-    view3d = true; drillId = null;
-    const dbar = document.getElementById("km-drillbar"); if (dbar) dbar.classList.add("hidden");
-    closeDetail();
-    document.getElementById("cy").style.visibility = "hidden";
-    if (!cvs3d) {
-      cvs3d = document.createElement("canvas"); cvs3d.id = "cy3d"; cvs3d.className = "cy3d";
-      document.getElementById("app").appendChild(cvs3d);
-      ctx3d = cvs3d.getContext("2d");
-      attach3DEvents();
-    }
-    cvs3d.style.display = "block";
-    reset3D(); resize3D(); build3D(); loop3D();
-    window.__km3d = { nodes: () => nodes3d, pick: pick3D, cam: () => cam3d };   // testovací/ladicí hook
-    setStatus("3D — táhni: otočit · pravé tl./Shift: posun · kolečko: zoom k místu · dvojklik: vyrovnat");
-  }
-
-  function exit3D() {
-    view3d = false;
-    if (raf3d) cancelAnimationFrame(raf3d);
-    if (cvs3d) cvs3d.style.display = "none";
-    document.getElementById("cy").style.visibility = "visible";
-    setStatus(DATA.concepts.length + " konceptů · " + DATA.temata.length + " oblastí · " + DATA.areas.length + " okruhů RVP");
-  }
-
 
   /* ==========================================================================
      Izometrický pohled na koncept
@@ -1759,12 +2189,72 @@
      do středu a sklopí do izometrie; nad ní se vysunou vrstvy školských stupňů.
      Klik na vrstvu nebo její popisek otevře box s cíli a kritérii té vrstvy.
      ========================================================================== */
-  const ISO_LEVELS = [
-    { id: "zs1", nazev: "1. stupeň ZŠ" },
-    { id: "zs2", nazev: "2. stupeň ZŠ", aktivni: true },   // mapa je pro 2. stupeň → tahle vrstva nese obsah
-    { id: "gym", nazev: "Gymnázia" },
-    { id: "ss", nazev: "Střední školy" },
+  /* Šest úrovní zpracování podle Nové taxonomie (Marzano & Kendall, 2007) — prstence nad konceptem,
+     zdola od vyvolání z paměti po já-systém. Texty: knowledge-map/documents/ (výcuc z knihy, čísla stran).
+     U každé úrovně: procesy s kritérii splnění a to, jak se úroveň liší podle dimenze. */
+  const DOMENY = [
+    // názvy a příklady podle tiny.school/mapa
+    { id: "informace", nazev: "Deklarativní znalosti", pod: "vědět, např. co je algoritmus" },
+    { id: "postupy", nazev: "Myšlenkové postupy", pod: "provést v hlavě, např. převést číslo do dvojkové soustavy" },
+    { id: "psychomotorika", nazev: "Psychomotorické dovednosti", pod: "zvládnout rukama, např. psát všemi deseti" },
   ];
+  const ISO_LEVELS = [
+    { id: "u1", c: 1, nazev: "Vybavování", en: "Retrieval", system: "Kognitivní systém",
+      popis: "Znalost se přenese z dlouhodobé do pracovní paměti. Může běžet automaticky.",
+      procesy: [["Rozpoznání", "Správně potvrdí nebo vyvrátí předložená tvrzení. Sám je vytvořit nemusí.", 67],
+        ["Vybavení", "Sám uvede správné údaje, i když nemusí jít o ty nejpodstatnější. U zobecnění a principů uvede příklady, které se probíraly.", "69–70"],
+        ["Provedení", "Provede postup bez podstatné chyby. Nemusí vědět, jak a proč postup funguje.", 71]],
+      domeny: { informace: "Jen rozpoznání a vybavení. Provedení u deklarativních znalostí neexistuje.",
+        postupy: "Rozpoznání a vybavení prokazují jen znalost o postupu. Zvládnutí prokáže až provedení bez podstatné chyby.",
+        psychomotorika: "Rozpoznání a vybavení prokazují jen znalost o proceduře. Zvládnutí prokáže až provedení bez podstatné chyby." } },
+    { id: "u2", c: 2, nazev: "Porozumění", en: "Comprehension", system: "Kognitivní systém",
+      popis: "Znalost se převede do úsporné podoby a odliší se podstatné od nepodstatného.",
+      procesy: [["Integrace", "Vyjádří jádro znalosti a odliší podstatné od nepodstatného. U principu popíše proměnné a vztah mezi nimi, u postupu kroky, jejich pořadí a logiku tohoto pořadí.", "41, 72–74"],
+        ["Symbolizace", "Znázornění je přesné a odlišuje podstatné od nepodstatného.", 75]],
+      domeny: { informace: "Integrace: podstatné vs. nepodstatné, u principů vztah proměnných. Symbolizace: grafický organizér nebo graf.",
+        postupy: "Integrace: kroky, jejich pořadí a logika pořadí. Symbolizace: vývojový diagram.",
+        psychomotorika: "Integrace: kroky, jejich pořadí a logika pořadí. Symbolizace: diagram toku činnosti." } },
+    { id: "u3", c: 3, nazev: "Analýza", en: "Analysis", system: "Kognitivní systém",
+      popis: "Žák znalost úvahou rozšiřuje a vzniká nové poznání.",
+      procesy: [["Porovnávání", "Určí znaky, podle kterých porovnává, a ty jsou pro věc důležité. Podobnosti i rozdíly popíše co nejpřesněji.", "45, 154"],
+        ["Třídění", "Určí určující znaky věci, zařadí ji do nadřazené kategorie a zdůvodní proč. Případně určí podkategorie a vysvětlí jejich vztah.", "46, 154"],
+        ["Analýza chyb", "U informací posoudí platnost tvrzení podle výslovných kritérií a pojmenuje chybu v úvaze. U postupů najde chybu v provedení a posoudí, co každý krok přispívá k celku.", "46–48"],
+        ["Zobecňování", "Z konkrétních informací najde souvislosti a formuluje obecné tvrzení, které je vysvětluje. Ověří, že tvrzení s informacemi sedí, a uvede výjimky.", "50, 157"],
+        ["Specifikace", "Najde pravidlo, které na situaci platí, ověří, že situace splňuje jeho podmínky, a vyvodí z něj závěr nebo předpověď.", "50, 157"]],
+      domeny: { informace: "Analýza chyb: podloženost tvrzení a chyby v úvaze.",
+        postupy: "Analýza chyb: chyby v provedení a přínos jednotlivých kroků. Specifikace: jak se postup změní za jiných podmínek.",
+        psychomotorika: "Analýza chyb: chyby v provedení. Při třídění dovedností lze určit jen nadřazenou kategorii." } },
+    { id: "u4", c: 4, nazev: "Použití znalostí", en: "Knowledge Utilization", system: "Kognitivní systém",
+      popis: "Znalost se použije v konkrétním úkolu a vznikne nový výsledek.",
+      procesy: [["Rozhodování", "Určí možnosti a kritéria dobrého rozhodnutí a vybere možnost, která kritéria splňuje nejlépe.", "51, 158"],
+        ["Řešení problému", "Pojmenuje cíl a překážky, najde jiné cesty k cíli, vyhodnotí je, vybere jednu a vyzkouší ji. Když nevyjde, zkusí jinou.", "52, 159"],
+        ["Experimentování", "Odvodí předpověď ze známého principu, navrhne pokus, který ji ověří, a podle výsledku posoudí, jestli princip platí.", "52, 160"],
+        ["Zkoumání", "Určí, co je známé a kde je nejasnost nebo spor, navrhne odpověď a podpoří ji logickým argumentem.", "53, 160"]],
+      domeny: { informace: "Znalost slouží jako podklad nebo kritérium řešení.",
+        postupy: "Postup slouží jako nástroj. Úkol ho musí nezbytně vyžadovat a žák vysvětlí, jak mu pomohl.",
+        psychomotorika: "Procedura slouží jako nástroj. U rozhodování jde většinou o volbu nejvhodnější dovednosti pro situaci." } },
+    { id: "u5", c: 5, nazev: "Metakognice", en: "Metacognition", system: "Metakognitivní systém",
+      popis: "Řídí a hlídá ostatní myšlení.",
+      procesy: [["Stanovení cílů", "Cíl má konkrétní znak dokončení, plán, potřebné zdroje, přibližný časový rámec a milníky.", "102, 161"],
+        ["Sledování průběhu", "Před úkolem si stanoví cíl. Během práce popisuje, co funguje, co ne a co změní.", "102–103, 162"],
+        ["Sledování jasnosti", "Přesně pojmenuje, čemu nerozumí a co tu nejasnost způsobuje.", "104–105"],
+        ["Sledování přesnosti", "Svůj úsudek o tom, co má správně, doloží vnějším zdrojem.", "105–106"]],
+      domeny: { informace: "Sledování průběhu: jak se porozumění vyvíjí v čase.",
+        postupy: "Sledování průběhu: v reálném čase během provádění, situaci navodí krátkodobý cíl.",
+        psychomotorika: "Sledování průběhu: v reálném čase během provádění, situaci navodí krátkodobý cíl." } },
+    { id: "u6", c: 6, nazev: "Já-systém", en: "Self-system", system: "Já-systém",
+      popis: "Rozhoduje, jestli se žák do úkolu pustí a kolik do něj dá energie.",
+      procesy: [["Důležitost", "Určí, jak je pro něj znalost důležitá, vysvětlí proč a posoudí, jak logická je jeho úvaha.", 108],
+        ["Účinnost", "Určí, nakolik věří, že se v dané znalosti zlepší, vysvětlí proč a posoudí, jak logická je jeho úvaha.", "108–109"],
+        ["Emoční reakce", "Pojmenuje emoci, kterou se znalostí spojuje, najde myšlenky nebo zkušenosti, ze kterých vychází, a posoudí, jestli jsou rozumné.", "110–111"],
+        ["Motivace", "Zohlední důležitost, účinnost i emoce a určí, který z těchto faktorů jeho motivaci ovlivňuje nejvíc.", "111–112"]],
+      domeny: { informace: "Prakticky stejné ve všech dimenzích.", postupy: "Prakticky stejné ve všech dimenzích.",
+        psychomotorika: "Prakticky stejné ve všech dimenzích." } },
+  ];
+  // formulace u konceptu: c.marzano.u3.postupy = { cile: [...], kriteria: [...] }
+  const marzanoBunka = (c, lv, d) => ((((c && c.marzano) || {})[lv.id] || {})[d] || {});
+  // prstenec svítí, když má koncept na té úrovni aspoň jeden zformulovaný cíl
+  const isoAktivni = (c, lv) => DOMENY.some((d) => (marzanoBunka(c, lv, d.id).cile || []).length);
   const SVG_NS = "http://www.w3.org/2000/svg";
   let isoNode = null, isoEl = null, isoRaf = 0;
   const easeOutBack = (t) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
@@ -1781,21 +2271,40 @@
     const host = document.getElementById("cy");
     isoEl = document.createElement("div"); isoEl.id = "km-iso"; isoEl.className = "km-iso hidden";
     isoEl.innerHTML = '<svg class="km-iso-svg"></svg>' +
-      '<div class="km-iso-tools"><button type="button" data-iso="detail">Detail konceptu</button><button type="button" data-iso="close" aria-label="Zavřít">✕</button></div>' +
+      '<div class="km-iso-tools"><button type="button" data-iso="detail">Detail konceptu</button><button type="button" data-iso="edit" hidden>✎ Upravit</button><button type="button" data-iso="close" aria-label="Zavřít">✕</button></div>' +
       '<div id="km-isobox" class="km-isobox"><button type="button" class="km-isobox-x" data-iso="box-close" aria-label="Zavřít">✕</button><div class="km-isobox-body"></div></div>';
     host.appendChild(isoEl);
+    // překryv leží uvnitř kontejneru grafu: bez tohohle by Cytoscape bral klik do překryvu
+    // jako klik na bublinu pod ním (otevřel by se jiný detail) a kolečko by hýbalo mapou
+    ["mousedown", "mouseup", "touchstart", "touchmove", "touchend", "pointerdown", "pointerup", "wheel"]
+      .forEach((ev) => isoEl.addEventListener(ev, (e) => e.stopPropagation(), { passive: true }));
+    // editor analýzy OVU: změna úrovně výkonu → nabídka procesů té úrovně
+    isoEl.addEventListener("change", (e) => {
+      const lv = e.target.closest(".ox-lv");
+      if (lv) lv.closest(".ox-row").querySelector(".ox-pr").innerHTML = oxProcesOpts(+lv.value, "");
+    });
     isoEl.addEventListener("click", (e) => {
       const b = e.target.closest("[data-iso]");
       if (b) {
         const a = b.dataset.iso;
-        if (a === "close") exitIso();
-        else if (a === "detail") showConceptPanel(isoNode.data("_c"));
-        else if (a === "box-close") closeIsoBox();
+        if (a === "close") { if (isoCard) closeCard(); else exitIso(); }
+        else if (a === "detail") openIsoBox("concept");
+        else if (a === "edit") { const c = isoNode && isoNode.data("_c"); exitIso(true); if (c) showConceptPanel(c); }
+        else if (a === "box-close") { if (isoCard) closeCard(); else closeIsoBox(); }
         else if (a === "level") openIsoBox(b.dataset.level);
         return;
       }
-      const f = e.target.closest("[data-focus]");   // odkaz na jiný koncept v boxu → přepnout izometrii na něj
-      if (f) { const n = cy.getElementById(f.dataset.focus); if (n.nonempty() && n.data("type") === "concept") { closeIsoBox(true); enterIso(n); } return; }
+      const oa = e.target.closest("[data-ovu-act]"); // editor analýzy OVU
+      if (oa) { ovuAction(oa); return; }
+      const ov = e.target.closest("[data-ovu]");    // kód RVP v boxu → pohled RVP Informatika
+      if (ov) { closeIsoBox(true); exitIso(true); closeCard(); goOvu(ov.dataset.ovu); return; }
+      const pr = e.target.closest("[data-praktika]"); // příbuzná praktika → její popis
+      if (pr) { openPraktika(pr.dataset.praktika); return; }
+      const k = e.target.closest("[data-concept]"); // koncept z výsledku RVP → pohled Oblasti
+      if (k) { closeCard(); goConcept(k.dataset.concept); return; }
+      const f = e.target.closest("[data-focus]");   // odkaz na koncept v boxu → jeho prstence
+      if (f) { closeIsoBox(true); focusNode(f.dataset.focus); return; }
+      if (isoCard) { if (!e.target.closest("#km-isobox")) closeCard(); return; }
       if (isoBoxOpen()) { closeIsoBox(); return; }
       if (e.target === isoEl || e.target.classList.contains("km-iso-svg")) exitIso();   // klik do pozadí = zpět
     });
@@ -1803,7 +2312,10 @@
 
   function enterIso(node) {
     if (isoNode) exitIso(true);
+    closeCard();
     isoNode = node;
+    lockMap(true);
+    isoEl.querySelector('[data-iso="edit"]').hidden = !canWrite();   // úprava konceptu jen pro editory
     const c = node.data("_c"), host = document.getElementById("cy"), W = host.clientWidth, H = host.clientHeight;
     const svg = isoEl.querySelector(".km-iso-svg");
     svg.innerHTML = ""; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
@@ -1812,9 +2324,10 @@
     closeDetail();
 
     const p = node.renderedPosition(), r0 = node.renderedWidth() / 2;
-    const TR = Math.max(90, Math.min(W, H) * 0.17);          // cílový poloměr bubliny
-    const tx = Math.min(W * 0.46, W - TR - 300), ty = H * 0.64;
-    const SQ = 0.5, BASE = TR * SQ * 1.35, GAPY = TR * 0.42;   // sklopení, odstup první vrstvy od konceptu, rozestup vrstev
+    const TR = Math.max(80, Math.min(W, H) * 0.15);          // cílový poloměr bubliny
+    const tx = Math.min(W * 0.44, W - TR - 320), ty = H * 0.7;
+    // sklopení, odstup první vrstvy od konceptu, rozestup šesti vrstev (vejdou se nad koncept)
+    const SQ = 0.5, BASE = TR * SQ * 1.3, GAPY = Math.min(TR * 0.31, (ty - TR * SQ - 40 - TR * SQ * 1.3) / 5);
     const core = c.vrstva === "core";
     const lines = String(node.data("label") || c.nazev).split("\n");
 
@@ -1830,15 +2343,15 @@
     };
     setConcept(p.x, p.y, r0, 1, node.data("fontsize") * cy.zoom());
 
-    // vrstvy školských stupňů (vysunou se nad koncept) + popisky s čarami
+    // šest úrovní zpracování (vysunou se nad koncept, zdola úroveň 1) + popisky s čarami
     const layers = ISO_LEVELS.map((lv, i) => {
-      const lg = svgEl("g", { class: "iso-layer" + (lv.aktivni ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
+      const lg = svgEl("g", { class: "iso-layer" + (isoAktivni(c, lv) ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
       svgEl("ellipse", { cx: 0, cy: 0, rx: TR, ry: TR * SQ }, lg);
       const bx = tx + TR + 70, by = () => ty - BASE - GAPY * i;
       const line = svgEl("line", { class: "iso-line", "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
-      const lab = svgEl("g", { class: "iso-tag" + (lv.aktivni ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
-      svgEl("rect", { x: 0, y: -18, width: 164, height: 36, rx: 9 }, lab);
-      const t = svgEl("text", { x: 82, y: 0, "text-anchor": "middle", "dominant-baseline": "central" }, lab); t.textContent = lv.nazev;
+      const lab = svgEl("g", { class: "iso-tag" + (isoAktivni(c, lv) ? " active" : ""), "data-iso": "level", "data-level": lv.id, opacity: 0 }, svg);
+      svgEl("rect", { x: 0, y: -16, width: 196, height: 32, rx: 9 }, lab);
+      const t = svgEl("text", { x: 98, y: 0, "text-anchor": "middle", "dominant-baseline": "central" }, lab); t.textContent = lv.c + " · " + lv.nazev;
       lab.setAttribute("transform", `translate(${bx},${by()})`);
       return { lg, line, lab, i, bx, y: by() };
     });
@@ -1865,6 +2378,7 @@
 
   function exitIso(silent) {
     if (!isoNode) return;
+    lockMap(false);
     cancelAnimationFrame(isoRaf);
     closeIsoBox(true);
     const host = document.getElementById("cy");
@@ -1897,16 +2411,177 @@
       isoEl.querySelectorAll(".chosen").forEach((el) => el.classList.remove("chosen"));
       return;
     }
-    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[1];
-    box.querySelector(".km-isobox-body").innerHTML = `
-      <span class="d-badge d-badge-acc">${esc(lv.nazev)}</span>
-      <h2 class="d-title">${esc(c.nazev)}</h2>
-      ${lv.aktivni ? "" : '<p class="d-empty">Pro tenhle stupeň zatím cíle a kritéria nejsou — zobrazují se cíle pro 2. stupeň ZŠ.</p>'}
-      <div class="d-section"><h3>Vzdělávací cíle</h3>${goals(c.cile)}</div>
-      <div class="d-section"><h3>Kritéria hodnocení</h3>${goals(c.kriteria)}</div>`;
+    const lv = ISO_LEVELS.find((l) => l.id === levelId) || ISO_LEVELS[0];
+    box.querySelector(".km-isobox-body").innerHTML = marzanoHtml(c, lv);
     box.classList.add("open");
     isoEl.querySelectorAll(".iso-layer, .iso-tag").forEach((el) => el.classList.toggle("chosen", el.dataset.level === lv.id));
   }
+  /* ---------- Popis uprostřed (oblast, skupina, výsledek RVP) ----------
+     Stejný box a rozostřené pozadí jako u prstenců konceptu, jen bez prstenců. */
+  /* Mapa pod překryvem (prstence, popis uprostřed) se nesmí přibližovat ani posouvat:
+     Cytoscape odebírá kolečko ve fázi zachycení na kontejneru, takže stopPropagation v překryvu
+     nestačí. S vypnutým uživatelským zoomem/posunem kolečko nechá být a box se dá posouvat. */
+  const lockMap = (on) => { if (cy) { cy.userZoomingEnabled(!on); cy.userPanningEnabled(!on); } };
+
+  let isoCard = false;
+  function openCard(html) {
+    if (isoNode) exitIso(true);
+    closeDetail();
+    isoCard = true;
+    lockMap(true);
+    isoEl.querySelector(".km-iso-svg").innerHTML = "";
+    isoEl.classList.remove("hidden"); isoEl.classList.add("on", "card");
+    document.getElementById("cy").classList.add("iso-blur");
+    const box = document.getElementById("km-isobox");
+    box.querySelector(".km-isobox-body").innerHTML = html;
+    box.scrollTop = 0;
+    requestAnimationFrame(() => box.classList.add("open"));
+  }
+  function closeCard() {
+    if (!isoCard) return;
+    isoCard = false;
+    lockMap(false);
+    closeIsoBox(true);
+    document.getElementById("cy").classList.remove("iso-blur");
+    isoEl.classList.remove("on", "card"); isoEl.classList.add("hidden");
+    clearNb();
+  }
+  /* ---------- Praktiky: tabulka na ploše mapy (pohled Oblasti) ----------
+     HTML tabulka ukotvená k neviditelnému uzlu grafu: posouvá a zoomuje se s mapou jako bubliny,
+     dá se přetáhnout, úvodní přiblížení mapy ji zahrne. Celá, bez posuvníku. Poloha v souřadnicích
+     mapy se pamatuje v prohlížeči (localStorage, jen pohodlí jednoho uživatele). */
+  let PRAKTIKY = null, prEl = null;
+  const PR_KEY = "km-praktiky-pos", PR_NODE = "praktiky-tabulka";
+  const prPos = () => { try { return JSON.parse(localStorage.getItem(PR_KEY) || "null"); } catch (_) { return null; } };
+  const prSavePos = (p) => { try { localStorage.setItem(PR_KEY, JSON.stringify({ x: Math.round(p.x), y: Math.round(p.y) })); } catch (_) {} };
+
+  function buildPraktikyTable() {
+    if (prEl || !PRAKTIKY) return;
+    prEl = document.createElement("section");
+    prEl.className = "km-praktiky hidden"; prEl.setAttribute("aria-label", "Praktiky");
+    prEl.innerHTML = `
+      <div class="pr-head"><span class="pr-title">Praktiky</span><span class="pr-count">${PRAKTIKY.length}</span></div>
+      <table class="pr-table">
+        <thead><tr><th>Sloveso</th><th>Krátký popis</th></tr></thead>
+        <tbody>${PRAKTIKY.map((p) => `<tr data-praktika="${escAttr(p.id)}" tabindex="0"><td class="pr-verb">${esc(p.sloveso)}</td><td>${esc(typo(p.kratky))}</td></tr>`).join("")}</tbody>
+      </table>`;
+    document.getElementById("cy").appendChild(prEl);
+    // graf nesmí brát stisk v tabulce jako začátek posunu mapy (kolečko naopak mapu zoomuje jako nad bublinou)
+    ["mousedown", "touchstart", "touchmove"].forEach((ev) => prEl.addEventListener(ev, (e) => e.stopPropagation(), { passive: true }));
+    // tažení kdekoli v tabulce; bez pohybu = klik na řádek
+    let drag = null;
+    prEl.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      const n = cy.getElementById(PR_NODE); if (n.empty()) return;
+      drag = { x: e.clientX, y: e.clientY, p: Object.assign({}, n.position()), moved: false, row: e.target.closest("tr[data-praktika]") };
+      prEl.setPointerCapture(e.pointerId);
+    });
+    prEl.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+      drag.moved = true; prEl.classList.add("dragging");
+      const z = cy.zoom();
+      cy.getElementById(PR_NODE).position({ x: drag.p.x + dx / z, y: drag.p.y + dy / z });
+    });
+    const end = () => {
+      if (!drag) return;
+      const d = drag; drag = null; prEl.classList.remove("dragging");
+      if (d.moved) prSavePos(cy.getElementById(PR_NODE).position());
+      else if (d.row) openPraktika(d.row.dataset.praktika);
+    };
+    prEl.addEventListener("pointerup", end); prEl.addEventListener("pointercancel", () => { drag = null; prEl.classList.remove("dragging"); });
+    prEl.addEventListener("keydown", (e) => {
+      const tr = e.target.closest("tr[data-praktika]");
+      if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openPraktika(tr.dataset.praktika); }
+    });
+    cy.on("viewport", syncPraktiky);
+    cy.on("position", "#" + PR_NODE, syncPraktiky);
+    window.addEventListener("resize", syncPraktiky);
+  }
+  // po vykreslení pohledu: v Oblastech přidá uzel pod tabulku (vpravo od mapy, nebo na uloženém místě)
+  function placePraktiky(mode) {
+    buildPraktikyTable();
+    if (!prEl) return;
+    const on = mode === "tema";
+    prEl.classList.toggle("hidden", !on);
+    if (!on) return;
+    prEl.style.fontSize = "16px"; prEl._R = 1;               // základní velikost písma = rozměry na ploše
+    const w = prEl.offsetWidth, h = prEl.offsetHeight;
+    const bb = cy.nodes().boundingBox();
+    const saved = prPos();
+    const pos = saved || { x: bb.x2 + 220 + w / 2, y: bb.y1 + h / 2 };
+    cy.add({ group: "nodes", data: { id: PR_NODE, type: "praktiky", w, h }, position: pos });
+    syncPraktiky();
+  }
+  function syncPraktiky() {
+    if (!prEl || prEl.classList.contains("hidden")) return;
+    const n = cy.getElementById(PR_NODE); if (n.empty()) return;
+    const z = cy.zoom(), p = n.renderedPosition(), w = n.data("w"), h = n.data("h");
+    // Text se vysází v písmu ~ velikosti na obrazovce (krok 0,25, ať se nepřepočítává při každém pohybu),
+    // scale doladí jen zbytek, takže se nikdy nezvětšuje rastr malého písma → ostré i při přiblížení.
+    const R = Math.min(4, Math.max(0.25, Math.round(z * 4) / 4));
+    if (prEl._R !== R) { prEl.style.fontSize = 16 * R + "px"; prEl._R = R; }
+    prEl.style.transform = `translate(${p.x - (w * z) / 2}px, ${p.y - (h * z) / 2}px) scale(${z / R})`;
+  }
+
+  function praktikaHtml(p) {
+    const byId = {}; (PRAKTIKY || []).forEach((x) => { byId[x.id] = x; });
+    const v = p.vyskyt;
+    const vyskyt = v ? `<p class="d-desc">${v.celkem}× celkem: ${v.ovu}× ve formulacích OVU a ${v.cinnosti}× v Činnostech a dovednostech · ${p.vystupu} ${p.vystupu === 1 ? "výstup" : p.vystupu < 5 ? "výstupy" : "výstupů"}</p>` : "";
+    const okruhy = p.okruhy.length ? `<div class="d-tags">${p.okruhy.map((o) => `<span class="d-tag">${esc(o.kod)} · ${esc(o.nazev)}</span>`).join("")}</div>` : "";
+    const ovuKod = p.priklad.ovu ? "INF-INF-" + p.priklad.ovu : "";
+    const priklad = `<div class="d-rvp">„${esc(typo(p.priklad.text))}“${ovuKod ? `<div class="d-rvp-note"><button class="kod kod-link" data-ovu="${escAttr(ovuKod)}" title="Otevřít v pohledu RVP Informatika">${esc(ovuKod)}</button></div>` : ""}</div>`;
+    const pribuzne = p.pribuzne.filter((id) => byId[id]).map((id) => `<button class="d-link" data-praktika="${escAttr(id)}">${esc(byId[id].sloveso)}</button>`).join("");
+    return `
+      <span class="d-badge d-badge-acc">Praktika</span>${p.skupina ? ` <span class="d-badge d-badge-sub">${esc(p.skupina)}</span>` : ""}
+      <h2 class="d-title">${esc(p.sloveso)}</h2>
+      ${p.tvary ? `<div class="d-meta"><span class="d-pill">${esc(p.tvary)}</span></div>` : ""}
+      ${paras(p.popis)}
+      <div class="d-section"><h3>Výskyt v RVP Informatika</h3>${vyskyt}${okruhy}</div>
+      <div class="d-section"><h3>Příklad z RVP</h3>${priklad}</div>
+      <div class="d-section"><h3>Nová taxonomie (orientačně)</h3><p class="d-desc">${esc(typo(p.taxonomie || "—"))}</p></div>
+      ${pribuzne ? `<div class="d-section"><h3>Příbuzná slovesa</h3><div class="d-links">${pribuzne}</div></div>` : ""}`;
+  }
+  function openPraktika(id) {
+    const p = (PRAKTIKY || []).find((x) => x.id === id);
+    if (p) openCard(praktikaHtml(p));
+  }
+
+  function openGroupCard(node) {
+    const t = node.data("type"), gid = node.data("gid"), sub = t === "sub" || t === "subhub";
+    cy.$(":selected").unselect();
+    openCard(viewMode === "rvp" ? rvpGroupHtml(gid, sub ? node.data("pid") : null)
+      : sub ? subHtml(gid, node.data("pid")) : groupHtml(gid, "#ffff00", node.data("label")));
+  }
+
+  /* Obsah prstence: cíle a kritéria ve třech dimenzích + procesy úrovně s kritérii splnění */
+  function marzanoHtml(c, lv) {
+    const seznam = (arr, prazdne) => (arr && arr.length)
+      ? `<ul class="r-ul">${arr.map((x) => `<li>${esc(typo(typeof x === "string" ? x : x.text || ""))}</li>`).join("")}</ul>`
+      : `<p class="d-empty">${prazdne}</p>`;
+    const domeny = DOMENY.map((d) => {
+      const b = marzanoBunka(c, lv, d.id);
+      return `<div class="m-dom">
+        <div class="m-dom-head"><h3>${esc(d.nazev)}</h3><span class="m-dom-pod">${esc(d.pod)}</span></div>
+        <div class="m-dom-cast"><div class="m-label">Vzdělávací cíle</div>${seznam(b.cile, "zatím nezformulováno")}</div>
+        <div class="m-dom-cast"><div class="m-label">Kritéria splnění</div>${seznam(b.kriteria, "zatím nezformulováno")}</div>
+        <div class="d-rvp-note">${esc(typo(lv.domeny[d.id] || ""))}</div>
+      </div>`;
+    }).join("");
+    const procesy = lv.procesy.map(([n, k, str]) =>
+      `<li><strong>${esc(n)}</strong> — ${esc(typo(k))} <span class="m-str">(s. ${esc(str)})</span></li>`).join("");
+    return `
+      <span class="d-badge d-badge-acc">Úroveň ${lv.c} · ${esc(lv.nazev)}</span> <span class="d-badge d-badge-sub">${esc(lv.system)}</span>
+      <h2 class="d-title">${esc(c.nazev)}</h2>
+      <p class="d-desc">${esc(typo(lv.popis))}</p>
+      <div class="m-doms">${domeny}</div>
+      <details class="r-uro"><summary>Procesy úrovně a podle čeho poznat splnění</summary>
+        <div class="r-body"><ul class="r-ul">${procesy}</ul>
+        <p class="d-rvp-note">Marzano, R. J. & Kendall, J. S. (2007). The New Taxonomy of Educational Objectives. Kritéria říkají, co znamená proces splnit; výkonnostní laťku pro ročník doplňuje výukový cíl.</p></div>
+      </details>`;
+  }
+
   function closeIsoBox(silent) {
     const box = document.getElementById("km-isobox"); if (!box) return;
     box.classList.remove("open");

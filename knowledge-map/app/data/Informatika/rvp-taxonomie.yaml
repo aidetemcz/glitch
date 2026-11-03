@@ -1,0 +1,191 @@
+# Vyhodnocení OVU Informatiky podle Nové taxonomie (Marzano & Kendall)
+#
+# Zdroj: Google dokument „Klasifikace aktivních slov OVU v RVP ZV Informatika“
+#   https://docs.google.com/document/d/16G-1pWDffcWpqepKbPA81yot1uHwgIiLt7d-TWAx0dg
+#   (stav k 2. 11. 2026 — dokument se ještě může měnit, tento soubor je jeho přepis)
+#
+# Klíč = konec kódu OVU (ZV5-001 … ZV9-014), stejný jako v rvp.json.
+#   formulace … nejvyšší úroveň, kterou připouští samotná formulace OVU
+#   splneno   … orientační nejvyšší úroveň v metodické podpoře „Splněno“
+#   vykony    … výkony, na které se formulace rozkládá:
+#     sloveso   … aktivní sloveso přesně tak, jak stojí ve znění (zvýrazní se pilulkou)
+#     citace    … výkon citovaný z formulace
+#     dimenze   … deklarativni | postupy | psychomotorika
+#     uroven    … 1 Vybavování · 2 Porozumění · 3 Analýza · 4 Použití znalostí · 5 Metakognice · 6 Já-systém
+#     proces    … proces dané úrovně
+#     proc      … zdůvodnění klasifikace
+
+ovu:
+  # ---------- 1. stupeň ----------
+  ZV5-001:
+    formulace: 1
+    splneno: 4
+    vykony:
+      - { sloveso: Uvede, citace: "uvede příklady dat, která ho obklopují", dimenze: deklarativni, uroven: 1, proces: vybavení,
+          proc: "Žák uvádí data, která zná z výuky a ze svého okolí, nové příklady vymýšlet nemusí." }
+      - { sloveso: vyslovuje, citace: "vyslovuje odpovědi na základě dat", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Žák vyčte odpověď ze zadaných dat naučeným postupem." }
+  ZV5-002:
+    formulace: 2
+    splneno: 4
+    vykony:
+      - { sloveso: Znázorní, citace: "znázorní konkrétní situaci", dimenze: deklarativni, uroven: 2, proces: symbolizace,
+          proc: "Žák vytvoří znázornění, které zachycuje podstatné prvky situace a vztahy mezi nimi." }
+  ZV5-003:
+    formulace: 3
+    splneno: 3
+    vykony:
+      - { sloveso: Odvodí, citace: "odvodí informace z daného modelu", dimenze: deklarativni, uroven: 3, proces: specifikace,
+          proc: "Žák z toho, co model zachycuje, vyvozuje skutečnosti, které v něm nejsou přímo uvedené." }
+  ZV5-004:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: Navrhne, citace: "navrhne posloupnost kroků řešení jednoduchého problému", dimenze: postupy, uroven: 4, proces: řešení problému,
+          proc: "Žák sám vytváří postup vedoucí k cíli a kapitola 4 uvádí „navrhne řešení“ právě u tohoto procesu." }
+  ZV5-005:
+    formulace: 1
+    splneno: 4
+    vykony:
+      - { sloveso: Sestaví, citace: "sestaví v blokově orientovaném jazyce program", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Formulace nevyžaduje nový problém ani překážku a kapitola 4 řadí „sestaví“ k provedení naučeného postupu." }
+      - { sloveso: opraví, citace: "opraví případné chyby", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Kapitola 6 řadí opravu chyby naučeným postupem k provedení." }
+  ZV5-006:
+    formulace: 1
+    splneno: 3
+    vykony:
+      - { sloveso: Rozezná, citace: "rozezná, s jakými daty pracuje vybraný informační systém a jaký je jeho účel", dimenze: deklarativni, uroven: 1, proces: vybavení,
+          proc: "Žák uvádí data a účel systému, který zná ze svého okolí, a formulace nepředpokládá nabídku odpovědí." }
+  ZV5-007:
+    formulace: 1
+    splneno: 2
+    vykony:
+      - { sloveso: Zaznamenává, citace: "zaznamenává do existující tabulky nebo seznamu číselná i nečíselná data", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Zápis dat do připravené struktury je naučený postup, který žák provádí." }
+  ZV5-008:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: Vybírá, citace: "vybírá na základě zkušenosti aplikace a data pro řešení problému", dimenze: deklarativni, uroven: 4, proces: rozhodování,
+          proc: "Žák volí, co se k danému problému hodí, a znalost toho, co aplikace a data umožňují, je podkladem rozhodnutí." }
+  ZV5-009:
+    formulace: 1
+    splneno: 3
+    vykony:
+      - { sloveso: Používá, citace: "používá digitální technologie připojené k síti nebo k sobě navzájem k posílání a získávání dat", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Posílání a získávání dat je naučený postup a formulace nechce volbu způsobu ani vysvětlení." }
+  ZV5-010:
+    formulace: 1
+    splneno: 3
+    vykony:
+      - { sloveso: Rozpoznává, citace: "rozpoznává rizika ztráty, poškození či zneužití dat", dimenze: deklarativni, uroven: 1, proces: rozpoznání,
+          proc: "Formulace nevyžaduje nový materiál ani odhalení chyby, platí tedy výchozí výklad, že žák rozpozná probraná rizika." }
+
+  # ---------- 2. stupeň ----------
+  ZV9-001:
+    formulace: 3
+    splneno: 4
+    vykony:
+      - { sloveso: Získá, citace: "získá z dat informace", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Žák ze zadaných dat vyčte údaje naučeným postupem." }
+      - { sloveso: interpretuje, citace: "interpretuje data získaná pro řešení konkrétního problému", dimenze: deklarativni, uroven: 3, proces: zobecňování,
+          proc: "Žák z dat vyvozuje závěry k danému problému, tedy tvrzení, které v datech není přímo uvedené." }
+  ZV9-002:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: Navrhuje, citace: "navrhuje … různé způsoby kódování dat", dimenze: postupy, uroven: 4, proces: řešení problému,
+          proc: "Žák vytváří kódování, které má splnit cíl uložení nebo přenosu za daných omezení." }
+      - { sloveso: porovnává, citace: "porovnává různé způsoby kódování dat", dimenze: deklarativni, uroven: 3, proces: porovnávání,
+          proc: "Žák určuje podobnosti a rozdíly kódování podle vlastností, které jsou pro daný účel podstatné." }
+  ZV9-003:
+    formulace: 2
+    splneno: 4
+    vykony:
+      - { sloveso: Modeluje, citace: "modeluje situace různými způsoby, včetně grafů nebo obdobných schémat", dimenze: deklarativni, uroven: 2, proces: symbolizace,
+          proc: "Kapitola 4 řadí sestavení modelu, grafu nebo schématu k symbolizaci a formulace nevyžaduje výběr mezi modely." }
+  ZV9-004:
+    formulace: 3
+    splneno: 4
+    vykony:
+      - { sloveso: Natrénuje, citace: "natrénuje model strojového učení", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Žák v připraveném nástroji provede naučený postup tréninku." }
+      - { sloveso: vyhodnotí, citace: "vyhodnotí, jak dobře model funguje", dimenze: postupy, uroven: 3, proces: analýza chyb,
+          proc: "Žák posuzuje výsledek tréninku a hledá, kde a jak často model chybuje." }
+  ZV9-005:
+    formulace: 3
+    splneno: 5
+    vykony:
+      - { sloveso: vysvětlí, citace: "vysvětlí celý postup", dimenze: postupy, uroven: 2, proces: integrace,
+          proc: "Žák z přečtených kroků skládá logiku celého postupu a dimenze zůstává postup, i když ho jen vysvětluje." }
+      - { sloveso: určí, citace: "určí problém, který je daným algoritmem řešen", dimenze: postupy, uroven: 3, proces: zobecňování,
+          proc: "Účel algoritmu není v jeho krocích uvedený, žák ho z nich vyvozuje." }
+  ZV9-006:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: Rozdělí, citace: "rozdělí problém na jednotlivě řešitelné části", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Rozklad problému je naučená taktika a formulace nevyžaduje vážení různých rozkladů." }
+      - { sloveso: navrhne, citace: "navrhne postupy a algoritmy pro jeho řešení", dimenze: postupy, uroven: 4, proces: řešení problému,
+          proc: "Žák sám vytváří postupy vedoucí k cíli." }
+  ZV9-007:
+    formulace: 1
+    splneno: 4
+    vykony:
+      - { sloveso: vytvoří, citace: "v blokově orientovaném programovacím jazyce vytvoří přehledný program", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Formulace nevyžaduje nový problém ani překážku a slovo „přehledný“ jen popisuje kvalitu výsledku." }
+  ZV9-008:
+    formulace: 5
+    splneno: 4
+    vykony:
+      - { sloveso: ověřuje, citace: "průběžně ověřuje správnost vytvářeného postupu", dimenze: postupy, uroven: 5, proces: sledování průběhu,
+          proc: "Žák během práce sleduje vlastní postup, což tabulka 14.3 řadí k metakognici." }
+      - { sloveso: zkouší, citace: "zkouší program", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Spuštění a vyzkoušení programu je naučený postup." }
+      - { sloveso: opravuje, citace: "opravuje chyby", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Kapitola 6 řadí opravu chyby naučeným postupem k provedení." }
+      - { sloveso: posoudí, citace: "posoudí efektivitu postupu, programu", dimenze: postupy, uroven: 3, proces: analýza chyb,
+          proc: "Žák hodnotí postup a kapitola 6 řadí hodnocení postupu k analýze chyb." }
+  ZV9-009:
+    formulace: 3
+    splneno: 3
+    vykony:
+      - { sloveso: Posoudí, citace: "posoudí účel a užitečnost vybraného informačního systému", dimenze: deklarativni, uroven: 3, proces: analýza chyb,
+          proc: "Užitečnost nejde jen vybavit, žák posuzuje, nakolik je přínos systému podložený." }
+      - { sloveso: popíše, citace: "popíše jeho vnitřní fungování", dimenze: deklarativni, uroven: 2, proces: integrace,
+          proc: "Žák popisuje, jak systém funguje, tedy vztahy a logiku jeho částí, ne jen výčet vlastností." }
+  ZV9-010:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: vytvoří, citace: "pro řešení problému vytvoří tabulku evidence dat", dimenze: postupy, uroven: 4, proces: řešení problému,
+          proc: "Žák navrhuje strukturu tabulky tak, aby pomohla vyřešit daný problém." }
+      - { sloveso: stanoví, citace: "stanoví pravidla pro práci se záznamy", dimenze: postupy, uroven: 4, proces: řešení problému,
+          proc: "Pravidla jsou součástí řešení a žák je vytváří pro konkrétní evidenci." }
+  ZV9-011:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: používá, citace: "používá funkce pro automatické zpracování dat", dimenze: postupy, uroven: 1, proces: provedení,
+          proc: "Použití funkcí je naučený postup a formulace nechce jejich návrh." }
+      - { sloveso: nastavuje, citace: "nastavuje zobrazení dat s cílem řešit potřeby uživatelů", dimenze: postupy, uroven: 4, proces: řešení problému,
+          proc: "Žák musí zobrazení přizpůsobit tomu, co uživatelé potřebují, takže nestačí provést jedno naučené nastavení." }
+  ZV9-012:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: Vybírá, citace: "vybírá pro své potřeby hardware, software a způsob připojení digitálních zařízení do sítě", dimenze: deklarativni, uroven: 4, proces: rozhodování,
+          proc: "Žák volí mezi podobnými možnostmi a porozumění jejich vlastnostem je podkladem rozhodnutí." }
+  ZV9-013:
+    formulace: 4
+    splneno: 4
+    vykony:
+      - { sloveso: Navrhne, citace: "navrhne základní způsoby zabezpečení zařízení a systémů", dimenze: deklarativni, uroven: 4, proces: řešení problému,
+          proc: "Žák ze znalosti rizik a opatření vytváří řešení pro zařízení a systémy, se kterými pracuje." }
+  ZV9-014:
+    formulace: 2
+    splneno: 3
+    vykony:
+      - { sloveso: Diskutuje, citace: "diskutuje o fungování digitálních technologií", dimenze: deklarativni, uroven: 2, proces: integrace,
+          proc: "Diskuse o tom, jak technologie fungují, vyžaduje vyjádřit jejich podstatu vlastními slovy, ne jen zopakovat výklad." }
