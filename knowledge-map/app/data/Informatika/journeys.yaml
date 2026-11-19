@@ -1,0 +1,67 @@
+# Journeys — návaznosti konceptů určené garantem.
+#
+# Každá journey je orientovaný graf kroků. Krok:
+#   id       … jedinečné v rámci journey
+#   nazev    … popisek kroku tak, jak ho garant pojmenoval
+#   koncept  … id konceptu mapy (knowledge-map.yaml) — povinné; journey vede jen přes koncepty
+#   dalsi    … id kroků, které na tento krok navazují (čáry mezi koncepty)
+# Praktiky (ověřování, testování, ladění…) do journey nepatří, budou součástí
+# vzdělávacích cílů konceptů.
+# Pořadí v `dalsi` určuje pořadí větví zleva doprava.
+
+journeys:
+  - id: j-programovani
+    nazev: Programování
+    garant: garant Programování
+    popis: >-
+      Cesta od pojmu program přes jeho zápis a řídicí struktury k proměnné,
+      od vstupu a výstupu k uživatelskému rozhraní a k efektivitě programu
+      a komentářům. Čára ukazuje, co na co navazuje.
+    kroky:
+      - id: program
+        nazev: Program
+        koncept: k-program
+        dalsi: [zapis, vstup-vystup, efektivita, komentare]
+
+      - id: zapis
+        nazev: Zápis programu
+        koncept: k-zapis-programu
+        dalsi: [sekvence]
+      - id: sekvence
+        nazev: Sekvence příkazů
+        koncept: k-sekvence-prikazu
+        dalsi: [podprogram]
+      - id: podprogram
+        nazev: Podprogram (bez parametrů)
+        koncept: k-podprogram
+        dalsi: [opakovani]
+      - id: opakovani
+        nazev: Opakování s pevným počtem opakování
+        koncept: k-cyklus-s-pevnym-poctem-opakovani
+        dalsi: [podmineny]
+      - id: podmineny
+        nazev: Podmíněný příkaz
+        koncept: k-podmineny-prikaz-vetveni
+        dalsi: [cyklus-podminka]
+      - id: cyklus-podminka
+        nazev: Cyklus s podmínkou
+        koncept: k-cyklus-s-podminkou
+        dalsi: [promenna]
+      - id: promenna
+        nazev: Proměnná
+        koncept: k-promenna
+
+      - id: vstup-vystup
+        nazev: Vstup a výstup
+        koncept: k-vstup-a-vystup-programu
+        dalsi: [rozhrani]
+      - id: rozhrani
+        nazev: Uživatelské rozhraní
+        koncept: k-uzivatelske-rozhrani
+
+      - id: efektivita
+        nazev: Efektivita
+        koncept: k-efektivita-programu
+      - id: komentare
+        nazev: Komentáře
+        koncept: k-komentar

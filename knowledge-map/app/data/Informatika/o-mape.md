@@ -1,32 +1,65 @@
-# O Mapě informatických konceptů
+# Mapa konceptů
 
-Mapa informatických konceptů je přehled toho, co tvoří moderní informatické vzdělávání — od digitálních základů přes informatické myšlení, programování, data a umělou inteligenci až po tvorbu, bezpečí a digitální občanství. Není to osnova ani seznam učiva. Je to síť, která ukazuje nejen jednotlivé koncepty, ale hlavně to, jak spolu souvisejí.
+Co mají žáci na základních školách vědět a umět? Mapa konceptů rozkládá jednotlivé vzdělávací obory na dílčí koncepty a ukazuje, jak spolu souvisejí. Ke každému nabízí vzdělávací cíle, kritéria a provazbu na RVP.
 
-Záměrně mluvíme o konceptech, ne o znalostech. Mapa totiž nezahrnuje jen to, co má žák vědět, ale i to, co má umět (třeba sestavit prompt nebo ověřit výstup AI) a jak se má rozhodovat (kdy AI nepoužít, jak nakládat se soukromím). Postoje a dovednosti sem patří stejně jako teoretické znalosti.
+Jedná se o pracovní verzi mapy a její prototyp vzniká pro informatiku na 1. a 2. stupni ZŠ. Další obory budou následovat.
 
-## K čemu slouží
+## Co je mapa konceptů
 
-Mapa umožňuje pedagogovi i tvůrci vzdělávacích materiálů orientovat se v celku. Na jednom místě je vidět, co všechno do oboru patří, co na co navazuje a kudy vede cesta od základů k pokročilejším tématům. Odhaluje i mosty, které v lineární osnově zaniknou — že cyklus v kódu je totéž co herní smyčka, že logické výrazy se vracejí v databázových dotazech nebo že doporučovací algoritmus, bias a digitální wellbeing jsou tři pohledy na jednu věc.
+Mapa konceptů je přehled toho, co tvoří vzdělávání v jednom oboru: jeho základní pojmy, principy a rozvíjené dovednosti. Je to zdroj pravdy pro vzdělávací nástroje využívající generativní umělou inteligenci.
 
-Cílem je, aby mapa sloužila jako podklad pro plánování výuky a zároveň jako průvodce cesty pro žáka v Glitchi. U každého konceptu proto najdete nejen popis, ale i příklady konkrétních výukových cílů a kritérií, podle nichž se pozná, že ho žák skutečně zvládl.
+Mapu tvoří nukleární jednotky, které jsme pojmenovali koncepty. Každý koncept má krátký popis, vazbu na revidované RVP a sadu vzdělávacích cílů a kritérií. Cíle a hodnoticí kritéria jsou vytvářeny podle Nové taxonomie vzdělávacích cílů autorů Marzano a Kendall.
 
-## Jak vznikla
+Na prototypu vznikajícím pro oblast informatiky ověřujeme strukturu mapy i její obsah. V tuto chvíli mapa obsahuje přes 150 konceptů a téměř 300 podkonceptů v pěti oblastech. Tvoříme ji v AI dětem spolu s vyučujícími a didaktiky informatiky.
 
-Páteří mapy je revidovaný Rámcový vzdělávací program pro informatiku (2024) — jeho čtyři tematické okruhy a dvanáct očekávaných výstupů pro 2. stupeň. Znění OVU z RVP je opsané doslovně, nic si k němu nepřidáváme. Dále pak rámec klíčové kompetence digitální tak, jak ji formuluje revidované RVP.
+## Komu mapa slouží
 
-Mapa je ale bohatší a aktuálnější než samotné RVP. Klade velký důraz na umělou inteligenci (má vlastní téma i průřezovou vrstvu, která se vplétá do ostatních oblastí), na tvorbu webů, aplikací, obsahu a her a na bezpečí a odpovědné digitální občanství. Koncepty, které jdou nad rámec RVP, jsou označené jako „nad rámec RVP / průřezové".
+Mapa konceptů je místem pravdy, ze které čerpají informace a jejich provazby nástroje generativní umělé inteligence. Může se jednat o běžné chatboty nebo konkrétní výukové aplikace.
 
-Celek tvoří přes 200 konceptů seskupených do 12 oblastí. Každý koncept má krátký popis, jeden až dva výukové cíle a odpovídající kritéria hodnocení, formulované podle revidované Bloomovy taxonomie, a tam, kde to dává smysl, i navázaný výstup RVP a digitální kompetenci.
+- **Výukové aplikace:** Z mapy čerpají při generování úloh, vysvětlení nebo otázek, které odpovídají úrovni žáka.
+- **Tvůrci materiálů:** Z mapy lze čerpat při tvorbě metodických materiálů, pracovních listů nebo například kurzů.
+- **Učitelé:** Mapa pomáhá při plánování výuky, psaní vzdělávacích cílů nebo například hodnocení žáků.
+- **Žáci:** Mapu si žáci mohou nahrát do studijního režimu AI, který je pak provede tím, co a jak se učit.
+
+## Jak je mapa postavená
+
+Každý koncept má šest vrstev ve třech dimenzích. Společně odpovídají na tyto otázky:
+
+- jaké znalosti se žák učí,
+- jaké dovednosti rozvíjí,
+- jak to lze vyhodnotit,
+- jaká je provazba na RVP.
+
+**Koncept** je základní jednotka mapy. Koncepty jsou seskupené do oblastí, kterých je v prototypu pro informatiku pět: Algoritmy a design, Programování, Data a analýza, Systémy a bezpečnost, Informatika a společnost. Oblasti vycházejí z amerických standardů CSTA 2026.
+
+Každý koncept je propojený s **očekávanými výsledky učení (OVU) revidovaného RVP** daného oboru a klíčovými kompetencemi, v informatice hlavně s **kompetencí digitální**. OVU jsou rozděleny na 1. a 2. stupeň ZŠ.
+
+**Dimenze Nové taxonomie** určují nejen vzdělávací cíle, ale také způsoby, jak znalost nebo dovednost ověřujeme. Žák může něco vědět (např. co je algoritmus), umět to provést v hlavě (např. převést číslo do dvojkové soustavy), nebo zvládnout rukama (např. psát všemi deseti).
+
+**Úrovně zpracování** popisují, co žák se znalostí dělá. Může si ji jen vybavit, porozumět jí, vyvozovat z ní nové věci, nebo ji použít k řešení konkrétního úkolu. Další dvě úrovně se týkají toho, jak žák řídí vlastní učení a co ho k němu motivuje.
+
+**Praktiky** jsou dovednosti, které jsou pro daný obor charakteristické. V informatice je to například ladění a testování, které žák aplikuje od tvorby webové stránky po tvorbu počítačové hry. Proto praktiky nejsou součástí konceptů, ale mají v mapě vlastní vrstvu.
+
+**Vazby mezi jednotlivými koncepty** (nazvali jsme je Journeys, tedy cesty učením) určují, v jakém pořadí je vhodné postupovat při učení. Journeys mají také svou vlastní vrstvu.
+
+## Jak vytváříme cíle a kritéria
+
+Cíle (a hodnoticí kritéria) v mapě formulujeme podle Nové taxonomie vzdělávacích cílů, kterou v roce 2007 popsali Robert Marzano a John Kendall. Každý cíl v ní vzniká spojením dvou věcí: dimenze (co se žák učí) a úrovně, na které ji zpracovává.
+
+Úrovně zpracování: 1 Vybavování, 2 Porozumění, 3 Analýza, 4 Použití znalostí, 5 Metakognice, 6 Já-systém. Dimenze: deklarativní znalosti, myšlenkové postupy, psychomotorické dovednosti.
 
 ## Jak se v mapě pohybovat
 
-Na tytéž koncepty se můžete dívat třemi způsoby a mezi pohledy přepínat: **podle oblastí** (doporučený výchozí pohled, 12 obsahových celků), **podle okruhů RVP** (čtyři okruhy) a **podle klíčové kompetence digitální** (její oblasti). Uzly zůstávají stejné, mění se jen jejich seskupení.
+Pohled **Oblasti** ukazuje koncepty: každá oblast je velká žlutá bublina, skupiny jsou střední bubliny a kolem nich koncepty (plné bílé bubliny) se svými podkoncepty (bubliny s obrysem).
 
-Každá oblast je velká žlutá bublina; koncepty na ni navazují jako satelity a čáry mezi nimi ukazují, co na co navazuje — od základů u středu k pokročilejším konceptům dál od něj. Kliknutím na koncept se otevře jeho detail po stupních škol.
+Kliknutím na koncept se nad ním vysune šest prstenců podle úrovní zpracování. Prstenec otevře vzdělávací cíle a kritéria dané úrovně ve třech dimenzích. Spodní kruh otevře detail konceptu s popisem, provazbou na RVP, nadřazeným konceptem a podkoncepty.
 
-Mapa je rozvržená do **vrstev** od základů a myšlení (0) přes tvorbu a programování (1) a AI (2) po bezpečí a občanství (3). **Tagy** slouží jako filtr napříč oblastmi: hodnotové filtry jako etika, bezpečí, soukromí nebo digitální wellbeing a povaha konceptu (teoretický základ, nebo praktická dovednost).
+Pohled **RVP Informatika** ukazuje přímo očekávané výsledky učení Informatiky pro 1. a 2. stupeň ZŠ a s nimi provázané výsledky klíčových kompetencí a základních gramotností.
 
-Kliknutím na kterýkoli uzel otevřete jeho detail — popis, výukové cíle a kritéria hodnocení a případně výstup RVP a digitální kompetenci.
+Pohled **Journeys** ukazuje cestu učením: koncepty cesty v mapě svítí a spojují je čáry jejich návaznosti, ostatní koncepty zůstávají na svých místech jen jako slabé tečky v pozadí.
+
+## Kontakt
+
+Máte-li zájem dozvědět se více o mapě konceptů, kontaktujte nás e-mailem na tiny@aidetem.cz.
 
 Mapu vytváří a vylepšuje organizace AI dětem.
-Poslední aktualizace: 11/07/26

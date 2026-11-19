@@ -1,0 +1,1419 @@
+{
+ "zdroj": "Praktiky_slovesa_RVP_Informatika.md",
+ "praktiky": [
+  {
+   "id": "p-rozpoznat",
+   "poradi": 1,
+   "sloveso": "Rozpoznat",
+   "tvary": "rozpozná, rozpoznává",
+   "kratky": "Poznat, že konkrétní věc, situace nebo informace patří do určité kategorie nebo má určitou vlastnost.",
+   "popis": "Poznat, že konkrétní věc, situace nebo informace patří do určité kategorie nebo má určitou vlastnost: že jde o data, o riziko, o chybu nebo o manipulaci. Žák musí znát znaky dané kategorie a umět je najít v novém materiálu. Na 1. stupni jde hlavně o data a rizika v okolí, na 2. stupni o chybné interpretace dat, manipulativní informace a skryté technologie.",
+   "vyskyt": {
+    "celkem": 12,
+    "ovu": 1,
+    "cinnosti": 11
+   },
+   "vystupu": 10,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "rozpozná chybné interpretace dat, včetně běžných způsobů možné manipulace",
+    "ovu": "001-ZV9-001"
+   },
+   "taxonomie": "1 rozpoznání; v novém materiálu 3 analýza chyb",
+   "skupina": "Rozpoznávat a určovat",
+   "pribuzne": [
+    "p-urcit",
+    "p-identifikovat"
+   ]
+  },
+  {
+   "id": "p-pouzivat",
+   "poradi": 2,
+   "sloveso": "Používat",
+   "tvary": "používá, použije",
+   "kratky": "Cíleně uplatnit nástroj, konstrukci nebo funkci k dosažení výsledku.",
+   "popis": "Cíleně uplatnit nástroj, konstrukci nebo funkci k dosažení výsledku: opakování a podprogram v programu, funkce v tabulce, aplikaci nebo zařízení připojené k síti. Nejde jen o ovládání, ale o zapojení toho, co se k úloze hodí, správným způsobem. Spolu s „navrhnout“ jde o nejčastější sloveso přímo ve formulacích OVU.",
+   "vyskyt": {
+    "celkem": 11,
+    "ovu": 4,
+    "cinnosti": 7
+   },
+   "vystupu": 7,
+   "okruhy": [
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "V evidenci dat používá funkce pro automatické zpracování dat a nastavuje zobrazení dat s cílem řešit potřeby uživatelů.",
+    "ovu": "003-ZV9-011"
+   },
+   "taxonomie": "1 provedení; při volbě nástroje 4 řešení problému",
+   "skupina": "Používat nástroje",
+   "pribuzne": [
+    "p-vyuzit",
+    "p-kombinovat",
+    "p-nastavit"
+   ]
+  },
+  {
+   "id": "p-urcit",
+   "poradi": 3,
+   "sloveso": "Určit",
+   "tvary": "určí, určuje",
+   "kratky": "Na základě rozboru jednoznačně stanovit, co platí.",
+   "popis": "Na základě rozboru jednoznačně stanovit, co platí: klíčové prvky situace, logické pořadí kroků, vstupy a výstupy, jaká data jsou potřeba, účel systému nebo práva uživatelů. Výsledkem je konkrétní odpověď, kterou lze ověřit. V RVP často navazuje na analýzu („analyzuje problém a určí…“).",
+   "vyskyt": {
+    "celkem": 11,
+    "ovu": 1,
+    "cinnosti": 10
+   },
+   "vystupu": 10,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "určí logické pořadí kroků vedoucí k cíli",
+    "ovu": "002-ZV5-004"
+   },
+   "taxonomie": "podle úlohy 1 provedení až 3 specifikace",
+   "skupina": "Rozpoznávat a určovat",
+   "pribuzne": [
+    "p-rozpoznat",
+    "p-identifikovat"
+   ]
+  },
+  {
+   "id": "p-navrhnout",
+   "poradi": 4,
+   "sloveso": "Navrhnout",
+   "tvary": "navrhne, navrhuje",
+   "kratky": "Vytvořit plán nebo podobu řešení dřív, než se řešení uskuteční.",
+   "popis": "Vytvořit plán nebo podobu řešení dřív, než se řešení uskuteční: posloupnost kroků, algoritmus, způsob kódování, informační systém nebo pravidla zabezpečení. Návrh vychází ze zadání a jeho omezení a často vzniká ve více variantách, mezi kterými se pak vybírá. Je to nejčastější sloveso ve formulacích OVU a prochází všemi čtyřmi okruhy.",
+   "vyskyt": {
+    "celkem": 10,
+    "ovu": 4,
+    "cinnosti": 6
+   },
+   "vystupu": 8,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "Rozdělí problém na jednotlivě řešitelné části a navrhne postupy a algoritmy pro jeho řešení.",
+    "ovu": "002-ZV9-006"
+   },
+   "taxonomie": "4 řešení problému",
+   "skupina": "Navrhovat a tvořit",
+   "pribuzne": [
+    "p-vytvorit",
+    "p-znazornit"
+   ]
+  },
+  {
+   "id": "p-vybrat",
+   "poradi": 5,
+   "sloveso": "Vybrat",
+   "tvary": "vybere, vybírá",
+   "kratky": "Zvolit z několika možností tu, která nejlépe odpovídá účelu, podle zadaných nebo vlastních kritérií.",
+   "popis": "Zvolit z několika možností tu, která nejlépe odpovídá účelu, podle zadaných nebo vlastních kritérií: aplikaci, data, model, postup, algoritmus nebo hardware. V RVP se výběr téměř vždy pojí se zdůvodněním volby. Stejný význam má sloveso „zvolit“.",
+   "vyskyt": {
+    "celkem": 10,
+    "ovu": 2,
+    "cinnosti": 8
+   },
+   "vystupu": 8,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "z několika různých postupů vybere ten v dané situaci nejvhodnější a své rozhodnutí zdůvodní",
+    "ovu": "002-ZV5-004"
+   },
+   "taxonomie": "4 rozhodování",
+   "skupina": "Vybírat a rozhodovat",
+   "pribuzne": [
+    "p-rozhodnout",
+    "p-zduvodnit",
+    "p-zvolit",
+    "p-zvazit"
+   ]
+  },
+  {
+   "id": "p-vytvorit",
+   "poradi": 6,
+   "sloveso": "Vytvořit",
+   "tvary": "vytvoří, vytváří, tvoří",
+   "kratky": "Zhotovit funkční výsledek.",
+   "popis": "Zhotovit funkční výsledek: program, vlastní blok s parametry, model, tabulku evidence dat nebo znázornění situace. Na rozdíl od navrhování vzniká hotový výtvor, který lze vyzkoušet a ověřit. Při tvorbě se praktika vždy potkává s konkrétním konceptem.",
+   "vyskyt": {
+    "celkem": 10,
+    "ovu": 2,
+    "cinnosti": 8
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "V blokově orientovaném programovacím jazyce vytvoří přehledný program, používá opakování, větvení programu, proměnné.",
+    "ovu": "002-ZV9-007"
+   },
+   "taxonomie": "1 provedení (podle vzoru); vlastní projekt 4 řešení problému; schéma či model 2 symbolizace",
+   "skupina": "Navrhovat a tvořit",
+   "pribuzne": [
+    "p-navrhnout",
+    "p-znazornit"
+   ]
+  },
+  {
+   "id": "p-porovnat",
+   "poradi": 7,
+   "sloveso": "Porovnat",
+   "tvary": "porovná, porovnává",
+   "kratky": "Najít podstatné podobnosti a rozdíly mezi dvěma nebo více věcmi podle zvoleného hlediska.",
+   "popis": "Najít podstatné podobnosti a rozdíly mezi dvěma nebo více věcmi podle zvoleného hlediska: mezi daty, modely, postupy, způsoby kódování nebo aplikacemi. Porovnání bývá podkladem pro výběr nebo zhodnocení.",
+   "vyskyt": {
+    "celkem": 7,
+    "ovu": 1,
+    "cinnosti": 6
+   },
+   "vystupu": 6,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "porovnává informace z různých modelů o téže situaci",
+    "ovu": "001-ZV5-003"
+   },
+   "taxonomie": "3 porovnávání",
+   "skupina": "",
+   "pribuzne": []
+  },
+  {
+   "id": "p-rozhodnout",
+   "poradi": 8,
+   "sloveso": "Rozhodnout (se)",
+   "tvary": "rozhodne, rozhoduje se",
+   "kratky": "Na základě dat, kritérií nebo výsledků určit další postup či řešení a převzít za volbu odpovědnost.",
+   "popis": "Na základě dat, kritérií nebo výsledků určit další postup či řešení a převzít za volbu odpovědnost: kudy jít do školy, jakou přesnost kódování použít, jak upravit trénovací data. Na rozdíl od výběru nemusí být možnosti předem dané a součástí rozhodnutí je i to, jak dál postupovat.",
+   "vyskyt": {
+    "celkem": 7,
+    "ovu": 0,
+    "cinnosti": 7
+   },
+   "vystupu": 6,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "otestuje model, kvantifikuje chybovost modelu a rozhodne se, jak upravit trénovací data a nastavení modelu",
+    "ovu": "001-ZV9-004"
+   },
+   "taxonomie": "4 rozhodování",
+   "skupina": "Vybírat a rozhodovat",
+   "pribuzne": [
+    "p-vybrat",
+    "p-zduvodnit",
+    "p-zvolit",
+    "p-zvazit"
+   ]
+  },
+  {
+   "id": "p-vysvetlit",
+   "poradi": 9,
+   "sloveso": "Vysvětlit",
+   "tvary": "vysvětlí, vysvětluje",
+   "kratky": "Vlastními slovy srozumitelně vyjádřit, jak nebo proč něco funguje nebo proč žák postupoval určitým způsobem.",
+   "popis": "Vlastními slovy srozumitelně vyjádřit, jak nebo proč něco funguje nebo proč žák postupoval určitým způsobem: co znázorňuje model, co dělá algoritmus, jak funguje technologie, jak dospěl k závěru. Vysvětlení dokládá porozumění; v RVP je někdy určené spolužákům.",
+   "vyskyt": {
+    "celkem": 7,
+    "ovu": 1,
+    "cinnosti": 6
+   },
+   "vystupu": 7,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "Po přečtení jednotlivých kroků algoritmu vysvětlí celý postup a určí problém, který je daným algoritmem řešen.",
+    "ovu": "002-ZV9-005"
+   },
+   "taxonomie": "2 integrace",
+   "skupina": "Vysvětlovat a popisovat",
+   "pribuzne": [
+    "p-popsat",
+    "p-formulovat"
+   ]
+  },
+  {
+   "id": "p-vyuzit",
+   "poradi": 10,
+   "sloveso": "Využít",
+   "tvary": "využije, využívá",
+   "kratky": "Použít dostupný prostředek – nástroj, metodu, hotový podprogram, službu nebo vlastní zkušenost – ve prospěch řešení.",
+   "popis": "Použít dostupný prostředek – nástroj, metodu, hotový podprogram, službu nebo vlastní zkušenost – ve prospěch řešení. Oproti „používat“ zdůrazňuje přínos: žák pozná, kde mu prostředek pomůže, a vědomě po něm sáhne.",
+   "vyskyt": {
+    "celkem": 7,
+    "ovu": 0,
+    "cinnosti": 7
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "využívá znalosti a zkušenosti se standardními přístupy (viz výše) při návrhu vlastních kódování",
+    "ovu": "001-ZV9-002"
+   },
+   "taxonomie": "1 provedení; při volbě prostředku 4 řešení problému",
+   "skupina": "Používat nástroje",
+   "pribuzne": [
+    "p-pouzivat",
+    "p-kombinovat",
+    "p-nastavit"
+   ]
+  },
+  {
+   "id": "p-popsat",
+   "poradi": 11,
+   "sloveso": "Popsat",
+   "tvary": "popíše, popisuje",
+   "kratky": "Věcně a úplně vyjádřit, jak něco vypadá, z čeho se skládá nebo jak probíhá.",
+   "popis": "Věcně a úplně vyjádřit, jak něco vypadá, z čeho se skládá nebo jak probíhá: situaci, uživatele systému, tok dat v informačním systému, kde jsou data fyzicky uložená. Na rozdíl od vysvětlení nemusí odpovídat na otázku „proč“.",
+   "vyskyt": {
+    "celkem": 6,
+    "ovu": 1,
+    "cinnosti": 5
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "popíše tok dat a činnosti v informačním systému (kdo zadává data, kde se ukládají, kdo je čte a jak se mění)",
+    "ovu": "003-ZV9-009"
+   },
+   "taxonomie": "1 vybavení; popis souvislostí 2 integrace",
+   "skupina": "Vysvětlovat a popisovat",
+   "pribuzne": [
+    "p-vysvetlit",
+    "p-formulovat"
+   ]
+  },
+  {
+   "id": "p-sledovat",
+   "poradi": 12,
+   "sloveso": "Sledovat",
+   "tvary": "sleduje",
+   "kratky": "Soustavně pozorovat průběh nebo vývoj něčeho v čase.",
+   "popis": "Soustavně pozorovat průběh nebo vývoj něčeho v čase: provádění algoritmu, průběh programu a hodnoty proměnných, ale také aktuální bezpečnostní situaci a vývoj technologií. Sledování umožňuje odhalit, kde se skutečnost liší od očekávání.",
+   "vyskyt": {
+    "celkem": 6,
+    "ovu": 0,
+    "cinnosti": 6
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "krokuje program s proměnnými, sleduje vývoj jejich hodnot",
+    "ovu": "002-ZV9-007"
+   },
+   "taxonomie": "1 provedení (trasování); sledování trendů 4 zkoumání",
+   "skupina": "",
+   "pribuzne": []
+  },
+  {
+   "id": "p-zduvodnit",
+   "poradi": 13,
+   "sloveso": "Zdůvodnit",
+   "tvary": "zdůvodní, zdůvodňuje",
+   "kratky": "Uvést důvody a kritéria, o které se volba nebo závěr opírá, tak aby je mohl posoudit i někdo jiný.",
+   "popis": "Uvést důvody a kritéria, o které se volba nebo závěr opírá, tak aby je mohl posoudit i někdo jiný. V RVP se pojí téměř výhradně s výběrem aplikace, postupu, modelu, algoritmu nebo pravidel.",
+   "vyskyt": {
+    "celkem": 6,
+    "ovu": 0,
+    "cinnosti": 6
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "vybere aplikaci a zdůvodní svou volbu",
+    "ovu": "004-ZV5-008"
+   },
+   "taxonomie": "součást 4 rozhodování, ne samostatný výkon",
+   "skupina": "Vybírat a rozhodovat",
+   "pribuzne": [
+    "p-vybrat",
+    "p-rozhodnout",
+    "p-zvolit",
+    "p-zvazit"
+   ]
+  },
+  {
+   "id": "p-zhodnotit",
+   "poradi": 14,
+   "sloveso": "Zhodnotit",
+   "tvary": "zhodnotí, hodnotí",
+   "kratky": "Posoudit kvalitu, užitečnost nebo spolehlivost něčeho podle kritérií a dojít k závěru.",
+   "popis": "Posoudit kvalitu, užitečnost nebo spolehlivost něčeho podle kritérií a dojít k závěru: zda postup funguje, jak spolehlivé jsou vlastní závěry, jak přehledné a použitelné je rozhraní, jaké přínosy a rizika má technologie. Blízká slovesa jsou „posoudit“ a „vyhodnotit“.",
+   "vyskyt": {
+    "celkem": 6,
+    "ovu": 0,
+    "cinnosti": 6
+   },
+   "vystupu": 6,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "zkoumá uživatelské rozhraní IS, zhodnotí jeho přehlednost a použitelnost, nápovědu a podporu uživatele",
+    "ovu": "003-ZV9-009"
+   },
+   "taxonomie": "3 analýza chyb",
+   "skupina": "Hodnotit",
+   "pribuzne": [
+    "p-posoudit",
+    "p-vyhodnotit"
+   ]
+  },
+  {
+   "id": "p-analyzovat",
+   "poradi": 15,
+   "sloveso": "Analyzovat",
+   "tvary": "analyzuje, zanalyzuje",
+   "kratky": "Rozebrat problém, zadání nebo model na části a zjistit, co je podstatné, jaké jsou mezi částmi vztahy a co je potřeba zjistit nebo vytvořit.",
+   "popis": "Rozebrat problém, zadání nebo model na části a zjistit, co je podstatné, jaké jsou mezi částmi vztahy a co je potřeba zjistit nebo vytvořit. Analýza je výchozím krokem před navrhováním řešení.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "analyzuje problém a určí, co je třeba zjistit nebo vytvořit",
+    "ovu": "004-ZV5-008"
+   },
+   "taxonomie": "2 integrace; s vyvozováním 3 analýza",
+   "skupina": "",
+   "pribuzne": []
+  },
+  {
+   "id": "p-formulovat",
+   "poradi": 16,
+   "sloveso": "Formulovat",
+   "tvary": "formuluje",
+   "kratky": "Přesně a srozumitelně vyjádřit slovy vlastní myšlenku.",
+   "popis": "Přesně a srozumitelně vyjádřit slovy vlastní myšlenku: problém, účel systému, odpovědi a závěry, požadavek na opravu nebo vlastní názor podložený argumenty. Dobrá formulace je jednoznačná a dá se ověřit.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "formuluje problém, určí informace, které má evidence dat shromažďovat a jaké výstupy má poskytovat",
+    "ovu": "003-ZV9-010"
+   },
+   "taxonomie": "2 integrace; formulace závěrů 3 zobecňování",
+   "skupina": "Vysvětlovat a popisovat",
+   "pribuzne": [
+    "p-vysvetlit",
+    "p-popsat"
+   ]
+  },
+  {
+   "id": "p-otestovat",
+   "poradi": 17,
+   "sloveso": "Otestovat",
+   "tvary": "otestuje, testuje",
+   "kratky": "Záměrně vyzkoušet řešení na předem zvolených vstupech nebo situacích a porovnat skutečný výsledek s očekávaným.",
+   "popis": "Záměrně vyzkoušet řešení na předem zvolených vstupech nebo situacích a porovnat skutečný výsledek s očekávaným: program na běžných, hraničních a neplatných vstupech, model strojového učení na testovacích datech, evidenci dat s pomocí spolužáků. Testování chyby odhaluje, ale nedokáže, že žádné nejsou.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "otestuje program prostřednictvím spolužáků, na základě testování vylepšuje navržený postup",
+    "ovu": "002-ZV9-008"
+   },
+   "taxonomie": "4 experimentování",
+   "skupina": "Ověřovat, testovat a opravovat",
+   "pribuzne": [
+    "p-overit",
+    "p-opravit",
+    "p-kontrolovat",
+    "p-upravit"
+   ]
+  },
+  {
+   "id": "p-overit",
+   "poradi": 18,
+   "sloveso": "Ověřit",
+   "tvary": "ověří, ověřuje",
+   "kratky": "Zjistit, zda řešení, výsledek nebo nástroj skutečně splňuje to, co má.",
+   "popis": "Zjistit, zda řešení, výsledek nebo nástroj skutečně splňuje to, co má: zda je postup správný, zda model řeší problém, zda evidence plní účel, zda fungují bezpečnostní nástroje. Ověřování probíhá průběžně, ne až na konci práce. Blízká slovesa jsou „otestovat“ a „kontrolovat“.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 1,
+    "cinnosti": 4
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "Průběžně ověřuje správnost vytvářeného postupu, zkouší program, opravuje chyby, posoudí efektivitu postupu, programu.",
+    "ovu": "002-ZV9-008"
+   },
+   "taxonomie": "3 analýza chyb; ověření hypotézy 4 experimentování",
+   "skupina": "Ověřovat, testovat a opravovat",
+   "pribuzne": [
+    "p-otestovat",
+    "p-opravit",
+    "p-kontrolovat",
+    "p-upravit"
+   ]
+  },
+  {
+   "id": "p-posoudit",
+   "poradi": 19,
+   "sloveso": "Posoudit",
+   "tvary": "posoudí, posuzuje",
+   "kratky": "Vytvořit si podložený úsudek o tom, jak dobře něco splňuje požadavky.",
+   "popis": "Vytvořit si podložený úsudek o tom, jak dobře něco splňuje požadavky: účel a užitečnost informačního systému, efektivitu programu, úspornost kódování nebo dostatečnou míru rozkladu problému. Posouzení vychází z kritérií, která žák umí pojmenovat.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 2,
+    "cinnosti": 3
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "Posoudí účel a užitečnost vybraného informačního systému, popíše jeho vnitřní fungování.",
+    "ovu": "003-ZV9-009"
+   },
+   "taxonomie": "3 analýza chyb",
+   "skupina": "Hodnotit",
+   "pribuzne": [
+    "p-zhodnotit",
+    "p-vyhodnotit"
+   ]
+  },
+  {
+   "id": "p-sdilet",
+   "poradi": 20,
+   "sloveso": "Sdílet",
+   "tvary": "sdílí",
+   "kratky": "Zpřístupnit ostatním vlastní výsledek, závěr nebo digitální obsah.",
+   "popis": "Zpřístupnit ostatním vlastní výsledek, závěr nebo digitální obsah: znázornění, závěry z modelu, zdůvodnění volby, dokument nebo fotografii. V RVP má sdílení dvě roviny: komunikační (předat výsledek k diskusi) a technickou (bezpečně sdílet data).",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "sdílí a porovnává své znázornění s ostatními a diskutuje o rozdílech",
+    "ovu": "001-ZV5-002"
+   },
+   "taxonomie": "mimo taxonomii (komunikace); technické sdílení 1 provedení",
+   "skupina": "Spolupracovat a komunikovat",
+   "pribuzne": [
+    "p-spolupracovat",
+    "p-diskutovat"
+   ]
+  },
+  {
+   "id": "p-spolupracovat",
+   "poradi": 21,
+   "sloveso": "Spolupracovat",
+   "tvary": "spolupracuje",
+   "kratky": "Řešit úlohu společně s ostatními.",
+   "popis": "Řešit úlohu společně s ostatními: dělit si práci, hledat a porovnávat postupy, vyvozovat společné závěry a vytvářet pravidla. Všech pět výskytů je ve výstupech 1. stupně.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 5,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "spolupracuje s ostatními při hledání a porovnávání postupů řešení",
+    "ovu": "002-ZV5-004"
+   },
+   "taxonomie": "mimo taxonomii (sociální dovednost)",
+   "skupina": "Spolupracovat a komunikovat",
+   "pribuzne": [
+    "p-sdilet",
+    "p-diskutovat"
+   ]
+  },
+  {
+   "id": "p-vyhodnotit",
+   "poradi": 22,
+   "sloveso": "Vyhodnotit",
+   "tvary": "vyhodnotí",
+   "kratky": "Na základě výsledků, měření nebo kritérií dojít k závěru, jak dobře něco funguje nebo zda je vhodné.",
+   "popis": "Na základě výsledků, měření nebo kritérií dojít k závěru, jak dobře něco funguje nebo zda je vhodné: jak dobře funguje natrénovaný model, zda je pro úlohu slibné strojové učení, jaké přínosy a rizika má personalizovaný obsah. Oproti „zhodnotit“ se obvykle opírá o konkrétní výsledky, například o chybovost.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 1,
+    "cinnosti": 4
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "Natrénuje model strojového učení a vyhodnotí, jak dobře model funguje.",
+    "ovu": "001-ZV9-004"
+   },
+   "taxonomie": "3 analýza chyb; volba podle výsledků 4 rozhodování",
+   "skupina": "Hodnotit",
+   "pribuzne": [
+    "p-zhodnotit",
+    "p-posoudit"
+   ]
+  },
+  {
+   "id": "p-zvolit",
+   "poradi": 23,
+   "sloveso": "Zvolit",
+   "tvary": "zvolí, volí",
+   "kratky": "Vybrat z možností tu, která se hodí pro daný účel.",
+   "popis": "Vybrat z možností tu, která se hodí pro daný účel: vymezení problému, způsob prezentace dat, nástroj pro vizualizaci, typ počítače nebo síť. Význam je stejný jako u „vybrat“, RVP obě slovesa střídá.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "zvolí vhodnou síť pro danou činnost (kabelová LAN, Wi-Fi, GSM, Bluetooth)",
+    "ovu": "004-ZV9-012"
+   },
+   "taxonomie": "4 rozhodování",
+   "skupina": "Vybírat a rozhodovat",
+   "pribuzne": [
+    "p-vybrat",
+    "p-rozhodnout",
+    "p-zduvodnit",
+    "p-zvazit"
+   ]
+  },
+  {
+   "id": "p-zvazit",
+   "poradi": 24,
+   "sloveso": "Zvážit",
+   "tvary": "zvažuje",
+   "kratky": "Brát při rozhodování v úvahu protichůdné požadavky a důsledky.",
+   "popis": "Brát při rozhodování v úvahu protichůdné požadavky a důsledky: velikost proti kvalitě záznamu, úspornost zápisu proti přehlednosti, reprezentativnost trénovacích dat nebo dopady programu na uživatele. Zvažování nevede k jedné správné odpovědi, ale k vědomému kompromisu.",
+   "vyskyt": {
+    "celkem": 5,
+    "ovu": 0,
+    "cinnosti": 5
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    }
+   ],
+   "priklad": {
+    "text": "zvažuje dopady svých programů na jejich uživatele, promýšlí možné neočekávané důsledky",
+    "ovu": "002-ZV9-007"
+   },
+   "taxonomie": "4 rozhodování",
+   "skupina": "Vybírat a rozhodovat",
+   "pribuzne": [
+    "p-vybrat",
+    "p-rozhodnout",
+    "p-zduvodnit",
+    "p-zvolit"
+   ]
+  },
+  {
+   "id": "p-diskutovat",
+   "poradi": 25,
+   "sloveso": "Diskutovat",
+   "tvary": "diskutuje",
+   "kratky": "Vyměňovat si s ostatními názory a argumenty k tématu.",
+   "popis": "Vyměňovat si s ostatními názory a argumenty k tématu: o rozdílech mezi znázorněními, o závěrech z modelu, o výhodách a rizicích práce s daty nebo o technologiích, které určují trendy. Diskuse vyžaduje naslouchat, reagovat na argumenty druhých a podložit ty vlastní.",
+   "vyskyt": {
+    "celkem": 4,
+    "ovu": 1,
+    "cinnosti": 3
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "Diskutuje o fungování digitálních technologií určujících trendy ve světě.",
+    "ovu": "004-ZV9-014"
+   },
+   "taxonomie": "mimo taxonomii (komunikace); obsahem bývá 4 zkoumání",
+   "skupina": "Spolupracovat a komunikovat",
+   "pribuzne": [
+    "p-sdilet",
+    "p-spolupracovat"
+   ]
+  },
+  {
+   "id": "p-opravit",
+   "poradi": 26,
+   "sloveso": "Opravit",
+   "tvary": "opraví, opravuje",
+   "kratky": "Odstranit nalezenou chybu tak, aby řešení fungovalo podle zadání.",
+   "popis": "Odstranit nalezenou chybu tak, aby řešení fungovalo podle zadání: v programu, v modelu nebo v evidenci dat. Oprava předpokládá najít příčinu chyby, ne jen její projev, a po opravě řešení znovu ověřit.",
+   "vyskyt": {
+    "celkem": 4,
+    "ovu": 2,
+    "cinnosti": 2
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "Sestaví v blokově orientovaném jazyce program, ve kterém používá opakování a podprogramy, opraví případné chyby.",
+    "ovu": "002-ZV5-005"
+   },
+   "taxonomie": "1 provedení; hledání příčiny 3 analýza chyb",
+   "skupina": "Ověřovat, testovat a opravovat",
+   "pribuzne": [
+    "p-otestovat",
+    "p-overit",
+    "p-kontrolovat",
+    "p-upravit"
+   ]
+  },
+  {
+   "id": "p-vyhledat",
+   "poradi": 27,
+   "sloveso": "Vyhledat",
+   "tvary": "vyhledá, vyhledává",
+   "kratky": "Cíleně najít požadovanou informaci, vztah nebo zdroj.",
+   "popis": "Cíleně najít požadovanou informaci, vztah nebo zdroj: konkrétní hodnoty v modelu, vztahy mezi prvky situace, data pro odpověď na otázku nebo odbornou pomoc. Vyžaduje vědět, co přesně hledám a kde to může být.",
+   "vyskyt": {
+    "celkem": 4,
+    "ovu": 0,
+    "cinnosti": 4
+   },
+   "vystupu": 4,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "vyhledává v modelu konkrétní informace (např. hodnoty, vztahy, pořadí, směry)",
+    "ovu": "001-ZV5-003"
+   },
+   "taxonomie": "1 provedení; hledání odpovědi ze zdrojů 4 zkoumání",
+   "skupina": "Pracovat s daty",
+   "pribuzne": [
+    "p-doplnit",
+    "p-tridit",
+    "p-vyvodit",
+    "p-zaznamenat"
+   ]
+  },
+  {
+   "id": "p-doplnit",
+   "poradi": 28,
+   "sloveso": "Doplnit",
+   "tvary": "doplní, doplňuje",
+   "kratky": "Zjistit, co v datech, záznamech nebo modelu chybí, a chybějící údaje přidat tak, aby byl celek úplný a správný.",
+   "popis": "Zjistit, co v datech, záznamech nebo modelu chybí, a chybějící údaje přidat tak, aby byl celek úplný a správný.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "rozpozná chybějící data a doplní je",
+    "ovu": "001-ZV5-001"
+   },
+   "taxonomie": "1 provedení",
+   "skupina": "Pracovat s daty",
+   "pribuzne": [
+    "p-vyhledat",
+    "p-tridit",
+    "p-vyvodit",
+    "p-zaznamenat"
+   ]
+  },
+  {
+   "id": "p-identifikovat",
+   "poradi": 29,
+   "sloveso": "Identifikovat",
+   "tvary": "identifikuje",
+   "kratky": "Přesně určit konkrétní místo nebo prvek, o který jde.",
+   "popis": "Přesně určit konkrétní místo nebo prvek, o který jde: opakující se části programu, chybná místa v kódu nebo běžné problémy hardwaru, softwaru a sítě. Je to první krok k nápravě nebo zlepšení. Blízká slovesa jsou „rozpoznat“ a „určit“.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "identifikuje chybná místa a odstraňuje funkční chyby programu",
+    "ovu": "002-ZV9-008"
+   },
+   "taxonomie": "3 analýza chyb",
+   "skupina": "Rozpoznávat a určovat",
+   "pribuzne": [
+    "p-rozpoznat",
+    "p-urcit"
+   ]
+  },
+  {
+   "id": "p-kombinovat",
+   "poradi": 30,
+   "sloveso": "Kombinovat",
+   "tvary": "kombinuje",
+   "kratky": "Skládat jednodušší prvky do většího celku.",
+   "popis": "Skládat jednodušší prvky do většího celku: příkazy a bloky do programu, více nástrojů do jednoho pracovního postupu. Složitější chování tak vzniká z jednoduchých stavebních prvků.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "kombinuje různé příkazy, využívá opakování a podprogramy v jednoduchých úlohách",
+    "ovu": "002-ZV5-005"
+   },
+   "taxonomie": "1 provedení; vlastní řešení 4 řešení problému",
+   "skupina": "Používat nástroje",
+   "pribuzne": [
+    "p-pouzivat",
+    "p-vyuzit",
+    "p-nastavit"
+   ]
+  },
+  {
+   "id": "p-kontrolovat",
+   "poradi": 31,
+   "sloveso": "Kontrolovat",
+   "tvary": "kontroluje",
+   "kratky": "Porovnávat skutečný stav s tím, jaký má být.",
+   "popis": "Porovnávat skutečný stav s tím, jaký má být: zda provedení kroků odpovídá zápisu algoritmu, zda jsou zapsané údaje úplné a přesné, zda vstup dat odpovídá pravidlům. Kontrola bývá průběžná a opakovaná.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "kontroluje úplnost a přesnost zapsaných údajů",
+    "ovu": "003-ZV5-007"
+   },
+   "taxonomie": "3 analýza chyb",
+   "skupina": "Ověřovat, testovat a opravovat",
+   "pribuzne": [
+    "p-otestovat",
+    "p-overit",
+    "p-opravit",
+    "p-upravit"
+   ]
+  },
+  {
+   "id": "p-nastavit",
+   "poradi": 32,
+   "sloveso": "Nastavit",
+   "tvary": "nastaví, nastavuje",
+   "kratky": "Upravit vlastnosti nástroje nebo systému tak, aby odpovídal účelu.",
+   "popis": "Upravit vlastnosti nástroje nebo systému tak, aby odpovídal účelu: přístupová práva ke sdílení, pravidla pro práci se záznamy nebo způsob zobrazení dat. Nastavení rozhoduje o tom, kdo s daty může pracovat a jak se zobrazí.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 1,
+    "cinnosti": 2
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    },
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "nastaví přístupová práva a pravidla pro práci se záznamy",
+    "ovu": "003-ZV9-010"
+   },
+   "taxonomie": "1 provedení; volba nastavení podle potřeb 4 rozhodování",
+   "skupina": "Používat nástroje",
+   "pribuzne": [
+    "p-pouzivat",
+    "p-vyuzit",
+    "p-kombinovat"
+   ]
+  },
+  {
+   "id": "p-tridit",
+   "poradi": 33,
+   "sloveso": "Třídit",
+   "tvary": "třídí",
+   "kratky": "Rozdělovat data nebo záznamy do skupin či pořadí podle zvolených kritérií.",
+   "popis": "Rozdělovat data nebo záznamy do skupin či pořadí podle zvolených kritérií. Třídění zpřehledňuje data a připravuje je pro další zpracování, například pro trénování modelu strojového učení.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "třídí a porovnává data podle zvolených kritérií",
+    "ovu": "001-ZV5-001"
+   },
+   "taxonomie": "3 třídění; prosté seřazení 1 provedení",
+   "skupina": "Pracovat s daty",
+   "pribuzne": [
+    "p-vyhledat",
+    "p-doplnit",
+    "p-vyvodit",
+    "p-zaznamenat"
+   ]
+  },
+  {
+   "id": "p-upravit",
+   "poradi": 34,
+   "sloveso": "Upravit",
+   "tvary": "upraví",
+   "kratky": "Změnit existující postup, program nebo seznam tak, aby lépe odpovídal zadání, novým požadavkům nebo zjištěné chybě.",
+   "popis": "Změnit existující postup, program nebo seznam tak, aby lépe odpovídal zadání, novým požadavkům nebo zjištěné chybě. Úprava navazuje na zkoušení a ověřování a je součástí postupného zlepšování řešení.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "upraví postup, pokud zjistí chybu nebo složité řešení",
+    "ovu": "002-ZV5-004"
+   },
+   "taxonomie": "1 provedení; přizpůsobení novým podmínkám 4 řešení problému",
+   "skupina": "Ověřovat, testovat a opravovat",
+   "pribuzne": [
+    "p-otestovat",
+    "p-overit",
+    "p-opravit",
+    "p-kontrolovat"
+   ]
+  },
+  {
+   "id": "p-vyvodit",
+   "poradi": 35,
+   "sloveso": "Vyvodit",
+   "tvary": "vyvodí, vyvozuje",
+   "kratky": "Dojít z dat nebo modelu k novému závěru, který v nich není přímo zapsaný, a umět ho obhájit.",
+   "popis": "Dojít z dat nebo modelu k novému závěru, který v nich není přímo zapsaný, a umět ho obhájit: co data ukazují, co model zjednodušuje a co nezachycuje. V RVP se objevuje jen na 1. stupni v okruhu Data, informace a modelování.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 2,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    }
+   ],
+   "priklad": {
+    "text": "vyvodí závěry na základě dat a vysvětlí, jak k nim dospěl",
+    "ovu": "001-ZV5-001"
+   },
+   "taxonomie": "3 zobecňování",
+   "skupina": "Pracovat s daty",
+   "pribuzne": [
+    "p-vyhledat",
+    "p-doplnit",
+    "p-tridit",
+    "p-zaznamenat"
+   ]
+  },
+  {
+   "id": "p-zaznamenat",
+   "poradi": 36,
+   "sloveso": "Zaznamenat",
+   "tvary": "zaznamená, zaznamenává",
+   "kratky": "Zapsat zjištěná data do tabulky, seznamu nebo jiného záznamu tak, aby se s nimi dalo dál pracovat.",
+   "popis": "Zapsat zjištěná data do tabulky, seznamu nebo jiného záznamu tak, aby se s nimi dalo dál pracovat. Důležitý je jednotný formát zápisu: stejné jednotky, pořadí a označení.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 1,
+    "cinnosti": 2
+   },
+   "vystupu": 2,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "003",
+     "nazev": "Informační systémy"
+    }
+   ],
+   "priklad": {
+    "text": "zaznamená data a dodržuje jednotný formát zápisu (např. jednotky, pořadí, označení)",
+    "ovu": "003-ZV5-007"
+   },
+   "taxonomie": "1 provedení",
+   "skupina": "Pracovat s daty",
+   "pribuzne": [
+    "p-vyhledat",
+    "p-doplnit",
+    "p-tridit",
+    "p-vyvodit"
+   ]
+  },
+  {
+   "id": "p-znazornit",
+   "poradi": 37,
+   "sloveso": "Znázornit",
+   "tvary": "znázorní, znázorňuje",
+   "kratky": "Převést situaci nebo řešení do grafické či symbolické podoby.",
+   "popis": "Převést situaci nebo řešení do grafické či symbolické podoby: schématu, náčrtu, mapy, piktogramu nebo zápisu kroků. Dobré znázornění zachycuje podstatné prvky a vztahy a nepodstatné vynechává.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 1,
+    "cinnosti": 2
+   },
+   "vystupu": 2,
+   "okruhy": [
+    {
+     "kod": "001",
+     "nazev": "Data, informace a modelování"
+    },
+    {
+     "kod": "002",
+     "nazev": "Algoritmizace a programování"
+    }
+   ],
+   "priklad": {
+    "text": "znázorní řešení pomocí schématu, piktogramu nebo zápisu kroků",
+    "ovu": "002-ZV5-004"
+   },
+   "taxonomie": "2 symbolizace",
+   "skupina": "Navrhovat a tvořit",
+   "pribuzne": [
+    "p-navrhnout",
+    "p-vytvorit"
+   ]
+  },
+  {
+   "id": "p-resit",
+   "poradi": 38,
+   "sloveso": "Řešit",
+   "tvary": "řeší",
+   "kratky": "Samostatně odstranit konkrétní problém nebo nedostatek.",
+   "popis": "Samostatně odstranit konkrétní problém nebo nedostatek: drobné potíže s připojením, jednoduché problémy se zařízením nebo nalezené bezpečnostní nedostatky. U složitějších problémů k tomu patří i poznat hranici vlastních možností a vyhledat odbornou pomoc.",
+   "vyskyt": {
+    "celkem": 3,
+    "ovu": 0,
+    "cinnosti": 3
+   },
+   "vystupu": 3,
+   "okruhy": [
+    {
+     "kod": "004",
+     "nazev": "Digitální technologie"
+    }
+   ],
+   "priklad": {
+    "text": "řeší jednoduché problémy, formuluje požadavky na opravu u složitějších",
+    "ovu": "004-ZV9-012"
+   },
+   "taxonomie": "4 řešení problému",
+   "skupina": "",
+   "pribuzne": []
+  }
+ ]
+}

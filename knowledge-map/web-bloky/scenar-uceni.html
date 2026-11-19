@@ -1,0 +1,237 @@
+<!--
+  Blok pro web tiny.school/mapa — „Scénáře učení": průběh scénáře rozhovoru žáka
+  s chatbotem napříč úrovněmi Nové taxonomie (Marzano & Kendall), ve stylu kvádru.
+  Při pohybu myší nad osou se rozsvítí krok, nad kterým myš je (na dotyku po klepnutí).
+
+  Vložení: celý soubor zkopírovat do HTML bloku (WordPress / Elementor „HTML").
+  Žádné externí závislosti, styly jsou pod třídou .tsu, skript se týká jen tohoto bloku.
+  Písmo dědí z webu. Na úzkém displeji se časová osa posouvá do strany.
+-->
+<section class="tsu" aria-label="Scénář učení 1: Chyba jako vstup do hloubky">
+<style>
+.tsu{--bg:#241832;--box:#30213f;--line:#c8b6f0;--y:#ffff00;--tx:#fff;--mut:#cbbfdc;
+  color:var(--tx);background:var(--bg);font:inherit;line-height:1.5;padding:48px 16px;box-sizing:border-box}
+.tsu *,.tsu *::before,.tsu *::after{box-sizing:border-box}
+.tsu p{margin:0}
+.tsu .tsu-in{max-width:1240px;margin:0 auto}
+.tsu .tsu-osa{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:4px}
+.tsu .tsu-svg{display:block;width:100%;min-width:920px;height:auto;font-family:inherit;touch-action:pan-x pan-y}
+.tsu-svg .g{stroke:rgba(255,255,255,.16);stroke-width:1}
+.tsu-svg .pas{fill:#fff;opacity:0;transition:opacity .2s}
+.tsu-svg .box-f{fill:var(--box)}
+.tsu-svg .box{fill:none;stroke:#fff;stroke-width:1.8;transition:stroke .2s,stroke-width .2s}
+.tsu-svg .krok{cursor:default;outline:none;transition:opacity .2s}
+.tsu-svg .vod{stroke:rgba(255,255,255,.28);stroke-width:1;stroke-dasharray:2 4;transition:stroke .2s}
+.tsu-svg .cesta{stroke:#fff;stroke-width:2.5;stroke-linecap:round}
+.tsu-svg .bod{fill:#fff;transform-box:fill-box;transform-origin:center;transition:transform .2s,fill .2s}
+.tsu-svg .bod-v{fill:var(--bg);stroke:#fff;stroke-width:2}
+.tsu-svg .chyba-bod{fill:var(--bg);stroke:var(--y);stroke-width:2}
+.tsu-svg .chyba-x{stroke:var(--y);stroke-width:2;stroke-linecap:round}
+.tsu-svg .smycka{fill:none;stroke:var(--line);stroke-width:1.5;stroke-dasharray:5 5}
+.tsu-svg text{fill:#fff}
+.tsu-svg .t-osa{fill:var(--line);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.tsu-svg .t-n{fill:var(--y);font-size:19px;font-weight:700}
+.tsu-svg .t-u{font-size:16px}
+.tsu-svg .uroven{transition:opacity .2s}
+.tsu-svg .uroven.off{opacity:.35}
+.tsu-svg .t-kdo{fill:var(--line);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.tsu-svg .t-h{font-size:15px;font-weight:700}
+.tsu-svg .t-k{fill:var(--mut);font-size:12px}
+.tsu-svg .t-v{fill:var(--line);font-size:11.5px}
+.tsu-svg .t-ch{fill:var(--y);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+
+/* zvýraznění kroku pod myší */
+.tsu-svg.akt .krok{opacity:.38}
+.tsu-svg.akt .krok.on{opacity:1}
+.tsu-svg .krok.on .box{stroke:var(--y);stroke-width:2.6}
+.tsu-svg .krok.on .t-h{fill:var(--y)}
+.tsu-svg .krok.on .t-k{fill:#fff}
+.tsu-svg .pas.on{opacity:.06}
+.tsu-svg .vod.on{stroke:var(--y)}
+.tsu-svg .bod.on{fill:var(--y);transform:scale(1.45)}
+.tsu-svg.akt .uroven{opacity:.3}
+.tsu-svg.akt .uroven.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.tsu-svg *{transition:none!important}}
+.tsu .tsu-posun{display:none;color:var(--mut);font-size:.85rem;margin-top:6px}
+
+/* struktura pro chatbota */
+.tsu details{margin-top:28px;border:1px solid rgba(200,182,240,.35);border-radius:14px}
+.tsu summary{cursor:pointer;padding:14px 18px;font-weight:700;color:var(--y);list-style:none;display:flex;
+  justify-content:space-between;gap:12px}
+.tsu summary::-webkit-details-marker{display:none}
+.tsu summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--line)}
+.tsu details[open] summary::after{content:"–"}
+.tsu summary:focus-visible{outline:2px solid var(--y);outline-offset:2px;border-radius:14px}
+.tsu .tsu-struktura{padding:0 18px 18px}
+.tsu .tsu-struktura p{color:var(--mut);font-size:.92rem;margin-bottom:12px}
+.tsu .tsu-struktura ol{margin:0;padding:0 0 0 1.4em;display:grid;gap:10px}
+.tsu .tsu-struktura li{padding-left:4px}
+.tsu .tsu-struktura li::marker{color:var(--y);font-weight:700}
+.tsu .tsu-struktura strong{color:var(--tx)}
+.tsu .tsu-struktura small{display:block;color:var(--mut);font-size:.85rem}
+.tsu .tsu-struktura .tsu-pravidla{margin:14px 0 0;border-left:3px solid var(--y);padding:2px 0 2px 12px}
+@media (max-width:900px){.tsu .tsu-posun{display:block}}
+@media (max-width:600px){.tsu{padding:36px 16px}}
+</style>
+<div class="tsu-in">
+  <div class="tsu-osa">
+<svg class="tsu-svg" viewBox="0 0 1240 560" role="img" aria-labelledby="tsu-svg-t tsu-svg-d">
+<title id="tsu-svg-t">Scénář 1: průběh rozhovoru napříč úrovněmi zpracování</title>
+<desc id="tsu-svg-d">Rozhovor začíná otázkami a vybavováním (úroveň 1). Po chybě žák s chatbotem chybu analyzuje (3), navrhne korekci (2) a dostane zpětnou vazbu (5). Následuje hlubší otázka (3); ať žák odpoví správně, nebo špatně, chatbot se vrátí k první otázce v jiné podobě (2). Po správné odpovědi jde do hloubky jinou cestou (4). Při další chybě se rozhovor vrací k analýze chyby.</desc>
+<defs><filter id="tsu-glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1240" height="560"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="tsu-glow2" filterUnits="userSpaceOnUse" x="0" y="0" width="1240" height="560"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="tsu-sipka" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#c8b6f0"/></marker></defs>
+<rect class="pas" data-i="0" x="165.0" y="186" width="152.1" height="300"/>
+<rect class="pas" data-i="1" x="317.1" y="186" width="152.1" height="300"/>
+<rect class="pas" data-i="2" x="469.3" y="186" width="152.1" height="300"/>
+<rect class="pas" data-i="3" x="621.4" y="186" width="152.1" height="300"/>
+<rect class="pas" data-i="4" x="773.6" y="186" width="152.1" height="300"/>
+<rect class="pas" data-i="5" x="925.7" y="186" width="152.1" height="300"/>
+<rect class="pas" data-i="6" x="1077.9" y="186" width="152.1" height="300"/>
+<text class="t-osa" x="241.1" y="26" text-anchor="middle">Vybavení</text>
+<text class="t-osa" x="545.4" y="26" text-anchor="middle">Práce s chybou</text>
+<text class="t-osa" x="849.6" y="26" text-anchor="middle">Do hloubky</text>
+<text class="t-osa" x="1077.9" y="26" text-anchor="middle">Návrat a ověření</text>
+<line class="g" x1="317.1" y1="10" x2="317.1" y2="486"/>
+<line class="g" x1="773.6" y1="10" x2="773.6" y2="486"/>
+<line class="g" x1="925.7" y1="10" x2="925.7" y2="486"/>
+<text class="t-osa" x="0" y="66">Průběh</text><text class="t-osa" x="0" y="84">rozhovoru</text>
+<text class="t-osa" x="0" y="172">Úrovně zpracování</text>
+<line class="g" x1="165" y1="186.0" x2="1230" y2="186.0"/>
+<line class="g" x1="165" y1="236.0" x2="1230" y2="236.0"/>
+<line class="g" x1="165" y1="286.0" x2="1230" y2="286.0"/>
+<line class="g" x1="165" y1="336.0" x2="1230" y2="336.0"/>
+<line class="g" x1="165" y1="386.0" x2="1230" y2="386.0"/>
+<line class="g" x1="165" y1="436.0" x2="1230" y2="436.0"/>
+<line class="g" x1="165" y1="486.0" x2="1230" y2="486.0"/>
+<g class="uroven" data-l="1"><text class="t-n" x="0" y="467.0">1</text><text class="t-u" x="22" y="467.0">Vybavování</text></g>
+<g class="uroven" data-l="2"><text class="t-n" x="0" y="417.0">2</text><text class="t-u" x="22" y="417.0">Porozumění</text></g>
+<g class="uroven" data-l="3"><text class="t-n" x="0" y="367.0">3</text><text class="t-u" x="22" y="367.0">Analýza</text></g>
+<g class="uroven" data-l="4"><text class="t-n" x="0" y="317.0">4</text><text class="t-u" x="22" y="317.0">Použití znalostí</text></g>
+<g class="uroven" data-l="5"><text class="t-n" x="0" y="267.0">5</text><text class="t-u" x="22" y="267.0">Metakognice</text></g>
+<g class="uroven off" data-l="6"><text class="t-n" x="0" y="217.0">6</text><text class="t-u" x="22" y="217.0">Já-systém</text></g>
+<line class="vod" data-i="0" x1="241.1" y1="146" x2="241.1" y2="461.0"/>
+<line class="vod" data-i="1" x1="393.2" y1="146" x2="393.2" y2="361.0"/>
+<line class="vod" data-i="2" x1="545.4" y1="146" x2="545.4" y2="411.0"/>
+<line class="vod" data-i="3" x1="697.5" y1="146" x2="697.5" y2="261.0"/>
+<line class="vod" data-i="4" x1="849.6" y1="146" x2="849.6" y2="361.0"/>
+<line class="vod" data-i="5" x1="1001.8" y1="146" x2="1001.8" y2="411.0"/>
+<line class="vod" data-i="6" x1="1153.9" y1="146" x2="1153.9" y2="311.0"/>
+<g class="krok" data-i="0" tabindex="0" aria-label="Otázky a vybavení: Žák si vybavuje odpovědi z paměti. Úroveň 1 Vybavování.">
+<rect class="box-f" x="170.0" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="170.0" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="241.1" y="70" text-anchor="middle">Chatbot a žák</text>
+<text class="t-h" x="241.1" y="94" text-anchor="middle">Otázky a vybavení</text>
+<text class="t-k" x="241.1" y="116" text-anchor="middle">Žák si vybavuje</text>
+<text class="t-k" x="241.1" y="132" text-anchor="middle">odpovědi z paměti.</text>
+</g>
+<g class="krok" data-i="1" tabindex="0" aria-label="Analýza chyby: Hledá, kde a proč chybu udělal. Úroveň 3 Analýza.">
+<rect class="box-f" x="322.1" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="322.1" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="393.2" y="70" text-anchor="middle">Žák s chatbotem</text>
+<text class="t-h" x="393.2" y="94" text-anchor="middle">Analýza chyby</text>
+<text class="t-k" x="393.2" y="116" text-anchor="middle">Hledá, kde a proč</text>
+<text class="t-k" x="393.2" y="132" text-anchor="middle">chybu udělal.</text>
+</g>
+<g class="krok" data-i="2" tabindex="0" aria-label="Korekce: Sám navrhne opravu. Úroveň 2 Porozumění.">
+<rect class="box-f" x="474.3" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="474.3" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="545.4" y="70" text-anchor="middle">Žák</text>
+<text class="t-h" x="545.4" y="94" text-anchor="middle">Korekce</text>
+<text class="t-k" x="545.4" y="116" text-anchor="middle">Sám navrhne</text>
+<text class="t-k" x="545.4" y="132" text-anchor="middle">opravu.</text>
+</g>
+<g class="krok" data-i="3" tabindex="0" aria-label="Zpětná vazba: Žák porovná opravu se zpětnou vazbou. Úroveň 5 Metakognice.">
+<rect class="box-f" x="626.4" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="626.4" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="697.5" y="70" text-anchor="middle">Chatbot</text>
+<text class="t-h" x="697.5" y="94" text-anchor="middle">Zpětná vazba</text>
+<text class="t-k" x="697.5" y="116" text-anchor="middle">Žák porovná opravu</text>
+<text class="t-k" x="697.5" y="132" text-anchor="middle">se zpětnou vazbou.</text>
+</g>
+<g class="krok" data-i="4" tabindex="0" aria-label="Hlubší otázka: Ať odpoví správně, nebo špatně, jde dál. Úroveň 3 Analýza.">
+<rect class="box-f" x="778.6" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="778.6" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="849.6" y="70" text-anchor="middle">Chatbot a žák</text>
+<text class="t-h" x="849.6" y="94" text-anchor="middle">Hlubší otázka</text>
+<text class="t-k" x="849.6" y="116" text-anchor="middle">Ať odpoví správně,</text>
+<text class="t-k" x="849.6" y="132" text-anchor="middle">nebo špatně, jde dál.</text>
+</g>
+<g class="krok" data-i="5" tabindex="0" aria-label="Návrat jinak: První otázka v jiné podobě, odpověď sedí. Úroveň 2 Porozumění.">
+<rect class="box-f" x="930.7" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="930.7" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="1001.8" y="70" text-anchor="middle">Chatbot a žák</text>
+<text class="t-h" x="1001.8" y="94" text-anchor="middle">Návrat jinak</text>
+<text class="t-k" x="1001.8" y="116" text-anchor="middle">První otázka v jiné</text>
+<text class="t-k" x="1001.8" y="132" text-anchor="middle">podobě, odpověď sedí.</text>
+</g>
+<g class="krok" data-i="6" tabindex="0" aria-label="Hlouběji jinudy: Použití znalosti v nové situaci. Úroveň 4 Použití znalostí.">
+<rect class="box-f" x="1082.9" y="46" width="142.1" height="100" rx="16"/><rect class="box" x="1082.9" y="46" width="142.1" height="100" rx="16" filter="url(#tsu-glow2)"/>
+<text class="t-kdo" x="1153.9" y="70" text-anchor="middle">Chatbot</text>
+<text class="t-h" x="1153.9" y="94" text-anchor="middle">Hlouběji jinudy</text>
+<text class="t-k" x="1153.9" y="116" text-anchor="middle">Použití znalosti</text>
+<text class="t-k" x="1153.9" y="132" text-anchor="middle">v nové situaci.</text>
+</g>
+<line class="cesta" x1="241.1" y1="461.0" x2="393.2" y2="361.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="393.2" y1="361.0" x2="545.4" y2="411.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="545.4" y1="411.0" x2="697.5" y2="261.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="697.5" y1="261.0" x2="849.6" y2="361.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="849.6" y1="361.0" x2="910.5" y2="363.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="910.5" y1="363.0" x2="1001.8" y2="411.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="849.6" y1="361.0" x2="910.5" y2="399.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="910.5" y1="399.0" x2="1001.8" y2="411.0" filter="url(#tsu-glow)"/>
+<line class="cesta" x1="1001.8" y1="411.0" x2="1153.9" y2="311.0" filter="url(#tsu-glow)"/>
+<circle class="chyba-bod" cx="317.1" cy="411.0" r="9"/><path class="chyba-x" d="M313.6 407.5l7 7m0-7l-7 7"/><text class="t-ch" x="333.1" y="416.0">chyba</text>
+<circle class="bod-v" cx="910.5" cy="363.0" r="4.5"/><text class="t-v" x="910.5" y="353.0" text-anchor="middle">správně</text>
+<circle class="bod-v" cx="910.5" cy="399.0" r="4.5"/><text class="t-v" x="910.5" y="421.0" text-anchor="middle">špatně</text>
+<circle class="bod" data-i="0" cx="241.1" cy="461.0" r="7" filter="url(#tsu-glow)"/>
+<circle class="bod" data-i="1" cx="393.2" cy="361.0" r="7" filter="url(#tsu-glow)"/>
+<circle class="bod" data-i="2" cx="545.4" cy="411.0" r="7" filter="url(#tsu-glow)"/>
+<circle class="bod" data-i="3" cx="697.5" cy="261.0" r="7" filter="url(#tsu-glow)"/>
+<circle class="bod" data-i="4" cx="849.6" cy="361.0" r="7" filter="url(#tsu-glow)"/>
+<circle class="bod" data-i="5" cx="1001.8" cy="411.0" r="7" filter="url(#tsu-glow)"/>
+<circle class="bod" data-i="6" cx="1153.9" cy="311.0" r="7" filter="url(#tsu-glow)"/>
+<path class="smycka" d="M1001.8 496 C1001.8 552 393.2 552 393.2 496" marker-end="url(#tsu-sipka)"/>
+<text class="t-v" x="697.5" y="530" text-anchor="middle">při další chybě zpět k analýze chyby</text>
+</svg>
+  </div>
+  <p class="tsu-posun">Časovou osu posunete do strany.</p>
+
+    <details>
+      <summary>Struktura konverzace pro chatbota</summary>
+      <div class="tsu-struktura">
+        <p>Takto lze scénář předat chatbotu jako postup rozhovoru. Koncept, otázky a&nbsp;kritéria bere chatbot z&nbsp;mapy konceptů.</p>
+        <ol>
+          <li><strong>Polož otázku na vybavení</strong><small>Úroveň 1. Ptej se na fakta, pojmy nebo kroky postupu konceptu. Nenapovídej.</small></li>
+          <li><strong>Když žák chybuje, nesděluj správnou odpověď</strong><small>Úroveň 3. Veď žáka otázkami k&nbsp;tomu, kde a&nbsp;proč chyba vznikla.</small></li>
+          <li><strong>Vyžádej si korekci od žáka</strong><small>Úroveň 2. Žák opravu formuluje sám, vlastními slovy.</small></li>
+          <li><strong>Dej zpětnou vazbu ke korekci</strong><small>Úroveň 5. Nech žáka porovnat jeho opravu se zpětnou vazbou a&nbsp;říct, v&nbsp;čem se lišila.</small></li>
+          <li><strong>Polož hlubší otázku</strong><small>Úroveň 3. Navazuje na stejný koncept: srovnání, třídění, zobecnění, hledání příčin.</small></li>
+          <li><strong>Vyhodnoť odpověď</strong><small>Správně: potvrď. Špatně: krátce ukaž, co chybí. V&nbsp;obou případech pokračuj krokem 7.</small></li>
+          <li><strong>Vrať se k&nbsp;první otázce v&nbsp;jiné podobě</strong><small>Úroveň 2. Jiná formulace, příklad nebo reprezentace. Ověřuješ, že oprava z&nbsp;kroku 3 drží.</small></li>
+          <li><strong>Při správné odpovědi jdi do hloubky jinou cestou</strong><small>Úroveň 4. Použití v&nbsp;nové situaci: rozhodnutí, řešení problému, experiment. Při chybě se vrať ke kroku 2.</small></li>
+        </ol>
+        <p class="tsu-pravidla">Chatbot v&nbsp;každém kroku čeká na odpověď žáka a&nbsp;klade vždy jen jednu otázku.</p>
+      </div>
+    </details>
+
+</div>
+<script>
+(function(){
+  var svg=document.currentScript.parentNode.querySelector(".tsu-svg");
+  if(!svg)return;
+  var N=7, X0=165, CW=152.143, UR=[1, 3, 2, 5, 3, 2, 4], last=-1;
+  function set(i){
+    if(i===last)return; last=i;
+    svg.classList.toggle("akt",i>=0);
+    svg.querySelectorAll("[data-i]").forEach(function(el){el.classList.toggle("on",+el.getAttribute("data-i")===i);});
+    svg.querySelectorAll("[data-l]").forEach(function(el){el.classList.toggle("on",i>=0&&+el.getAttribute("data-l")===UR[i]);});
+  }
+  function fromEvent(e){
+    var m=svg.getScreenCTM(); if(!m)return;
+    var p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY;
+    var x=p.matrixTransform(m.inverse()).x;
+    set(x<X0-20?-1:Math.max(0,Math.min(N-1,Math.floor((x-X0)/CW))));
+  }
+  svg.addEventListener("pointermove",fromEvent);
+  svg.addEventListener("pointerdown",fromEvent);
+  svg.addEventListener("pointerleave",function(e){if(e.pointerType==="mouse")set(-1);});
+  svg.querySelectorAll(".krok").forEach(function(g){
+    g.addEventListener("focus",function(){set(+g.getAttribute("data-i"));});
+    g.addEventListener("blur",function(){set(-1);});
+  });
+})();
+</script>
+</section>
